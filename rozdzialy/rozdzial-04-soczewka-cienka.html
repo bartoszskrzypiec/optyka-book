@@ -43,7 +43,345 @@ window.SKY3D_MESSAGES = {
   <h1>Soczewka cienka i co znaczy „pięćdziesiątka”</h1>
   <p class="subtitle">Ogniskowa to nie długość obiektywu ani odległość do matrycy. To liczba mówiąca, gdzie zbiegną się promienie z nieskończoności — i wszystko inne z niej wynika.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li><strong>Ogniskowa nie jest długością obiektywu</strong> ani odległością do matrycy. To odległość, po której soczewka skupia promienie przychodzące z nieskończoności — i tylko dla nieskończoności ta liczba jest równa odległości do matrycy.</li>
+      <li>Jedno równanie wiąże odległość przedmiotu, odległość obrazu i ogniskową. Wynika z niego, że <span class="term-amber">ostrzenie to przesuwanie obiektywu</span>, a nie zmiana czegokolwiek w szkle.</li>
+      <li>Prawdziwy obiektyw nie jest cienką soczewką. Zastępujemy go dwiema <span class="term-cyan">płaszczyznami głównymi</span> — i dopiero względem nich mierzy się ogniskową. Dlatego teleobiektyw bywa krótszy, a szeroki kąt dłuższy, niż liczba na tubusie.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Definicja · skąd ta liczba</div>
+    <h2>Co dokładnie znaczy „pięćdziesiąt milimetrów”</h2>
+
+    <p>Weź soczewkę skupiającą i skieruj ją na coś bardzo odległego — na Księżyc, na latarnię na końcu ulicy. Promienie stamtąd przychodzą praktycznie równolegle, bo źródło jest tak daleko, że rozbieżność wiązki zdążyła zniknąć. Soczewka zbierze je w jednym punkcie za sobą. <strong>Odległość od soczewki do tego punktu to ogniskowa</strong> i to jest cała definicja.</p>
+
+    <p>Wynika z niej kilka rzeczy, które warto od razu ustawić na swoim miejscu, bo są źródłem nieporozumień:</p>
+
+    <ul>
+      <li><strong>Ogniskowa jest właściwością soczewki, nie kamery.</strong> Zależy od krzywizn powierzchni i od współczynnika załamania szkła — czyli od tego, jak mocno szkło zagina. Nie zależy od tego, do jakiego korpusu ją przykręcisz.</li>
+      <li><strong>Matryca leży w odległości ogniskowej tylko przy ostrości na nieskończoność.</strong> Przy każdej innej odległości obraz powstaje dalej niż f, więc obiektyw musi się od matrycy odsunąć. Tak działa ostrzenie.</li>
+      <li><strong>Krótsza ogniskowa znaczy mocniejsze zaginanie.</strong> Obiektyw 24 mm zagina światło agresywniej niż 200 mm i dlatego jest trudniejszy do skorygowania — wrócimy do tego w <a href="rozdzial-18-skrajne-ogniskowe.html">Rozdziale 18</a>.</li>
+    </ul>
+
+    <p>Obraz konstruuje się trzema promieniami, z których każdy słucha jednej reguły. Ta konstrukcja jest podstawą praktycznie każdego diagramu w tej książce, więc warto ją mieć w palcach:</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Konstrukcja obrazu</span><span>trzy promienie, trzy reguły</span></div>
+      <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Konstrukcja obrazu trzema promieniami: równoległy przechodzi przez ognisko, środkowy nie zmienia kierunku, przez ognisko wychodzi równolegle.">
+        <defs><marker id="l4a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#e8a33d"/></marker></defs>
+        <line x1="20" y1="150" x2="740" y2="150" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 6"/>
+        <path d="M 340 60 Q 362 150 340 240 Q 318 150 340 60 Z" fill="#4fc3c0" fill-opacity="0.13" stroke="#4fc3c0" stroke-width="1.6"/>
+
+        <g fill="#8b909b" font-family="IBM Plex Mono" font-size="10.5">
+          <circle cx="220" cy="150" r="3.5"/><text x="206" y="170">F</text>
+          <circle cx="460" cy="150" r="3.5"/><text x="452" y="170">F′</text>
+        </g>
+
+        <line x1="140" y1="150" x2="140" y2="92" stroke="#6e93be" stroke-width="2.6" marker-end="url(#l4a)"/>
+        <text x="104" y="86" font-family="IBM Plex Mono" font-size="10.5" fill="#6e93be">przedmiot</text>
+
+        <g stroke="#e8a33d" stroke-width="1.8" fill="none">
+          <path d="M 140 92 L 340 92 L 620 214"/>
+          <path d="M 140 92 L 340 150 L 620 214" opacity="0.85"/>
+          <path d="M 140 92 L 220 150 L 340 122 L 620 122 L 620 214" opacity="0" />
+          <path d="M 140 92 L 340 122 L 620 122" opacity="0.55"/>
+        </g>
+        <line x1="620" y1="150" x2="620" y2="214" stroke="#6e93be" stroke-width="2.6" marker-end="url(#l4a)"/>
+        <text x="586" y="238" font-family="IBM Plex Mono" font-size="10.5" fill="#6e93be">obraz</text>
+
+        <g font-family="IBM Plex Mono" font-size="9.5" fill="#e8a33d">
+          <text x="150" y="86">1 · równoległy → przez F′</text>
+          <text x="150" y="140">2 · przez środek → prosto</text>
+          <text x="150" y="116">3 · przez F → równoległy</text>
+        </g>
+        <text x="20" y="284" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">Obraz jest tam, gdzie promienie znów się spotykają — odwrócony i po drugiej stronie.</text>
+      </svg>
+      <div class="diagram-caption">Trzy promienie wystarczą, choć w rzeczywistości bierze udział cała wiązka. Wybieramy te trzy, bo dla nich reguła jest natychmiastowa.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Równanie · jedno na wszystko</div>
+    <h2>Gdzie powstaje obraz</h2>
+
+    <p>Konstrukcja graficzna jest ładna, ale liczby daje wzór. Wiąże trzy wielkości: odległość przedmiotu od soczewki, odległość obrazu i ogniskową.</p>
+
+    <div class="formula">
+      1 / <span class="vec" data-tip="Ogniskowa — odległość, po której soczewka skupia promienie z nieskończoności">f</span> = 1 / <span class="vec" data-tip="Odległość przedmiotu od soczewki (po stronie sceny)">s</span> + 1 / <span class="vec" data-tip="Odległość obrazu od soczewki (po stronie matrycy)">s′</span>
+      <span class="sub">f — ogniskowa, s — odległość przedmiotu, s′ — odległość obrazu. Wszystkie trzy w tych samych jednostkach. Dla s dążącego do nieskończoności 1/s znika i zostaje s′ = f — czyli definicja z poprzedniej sekcji.</span>
+      <div class="formula-action"><button class="reveal-btn" data-modal-target="explain-soczewka">Wyjaśnij ten wzór</button></div>
+    </div>
+
+    <p>Praktyczna treść tego wzoru jest jedna: <strong>im bliżej jest przedmiot, tym dalej za soczewką powstaje jego obraz</strong>. A skoro matryca stoi w miejscu, to żeby obraz na nią trafił, obiektyw musi się od niej odsunąć. To jest cała mechanika ostrzenia — pierścień ostrości przesuwa szkło do przodu, i nic poza tym.</p>
+
+    <p>Przesuń suwak i zobacz, jak to wygląda w liczbach. Zwróć uwagę na dwie rzeczy: przy dużych odległościach obraz prawie nie drgnie, a przy małych ucieka gwałtownie. Dlatego pierścień ostrości ma na skali stłoczone metry od pięciu do nieskończoności, a rozciągnięte centymetry przy końcu bliskim.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Równanie soczewki</span><span>f = 50 mm</span></div>
+      <div class="diagram-controls">
+        <label for="odlPrzedmiotu">Odległość przedmiotu</label>
+        <input id="odlPrzedmiotu" type="range" min="0" max="100" step="1" value="60">
+        <span class="value-readout" id="odlOdczyt">2,0 m</span>
+      </div>
+      <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Wykres odległości obrazu i powiększenia w funkcji odległości przedmiotu dla obiektywu 50 mm.">
+        <g stroke="#2a2f38" stroke-width="1"><line x1="80" y1="250" x2="710" y2="250"/><line x1="80" y1="30" x2="80" y2="250"/></g>
+        <g stroke="#2a2f38" stroke-width="0.6" opacity="0.55">
+          <line x1="80" y1="195" x2="710" y2="195"/><line x1="80" y1="140" x2="710" y2="140"/><line x1="80" y1="85" x2="710" y2="85"/>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="10" fill="#8b909b">
+          <text x="34" y="254">50,0</text><text x="34" y="199">52,5</text><text x="34" y="144">55,0</text><text x="34" y="89">57,5</text><text x="34" y="34">60,0</text>
+          <text x="20" y="22">s′ [mm]</text>
+          <text x="74" y="270">0,1 m</text><text x="360" y="270">1 m</text><text x="672" y="270">10 m</text>
+          <text x="340" y="290">odległość przedmiotu (skala logarytmiczna)</text>
+        </g>
+        <path id="krzywaObrazu" fill="none" stroke="#e8a33d" stroke-width="2.6"/>
+        <line id="wskaznikOdl" y1="30" y2="250" stroke="#ecebe4" stroke-width="1" opacity="0.45"/>
+        <circle id="punktObrazu" r="5" fill="#e8a33d"/>
+        <line x1="80" y1="250" x2="710" y2="250" stroke="#4fc3c0" stroke-width="1.4" stroke-dasharray="5 5" opacity="0.8"/>
+        <text x="614" y="242" font-family="IBM Plex Mono" font-size="10" fill="#4fc3c0">granica: s′ = f</text>
+      </svg>
+      <div class="diagram-caption" id="odlPodpis">Przy 2,0 m obraz powstaje 51,3 mm za soczewką — 1,3 mm dalej niż dla nieskończoności. Powiększenie 0,026×.</div>
+    </div>
+
+    <p>Ten sam wzór tłumaczy, dlaczego makrofotografia jest trudna mechanicznie. Żeby uzyskać powiększenie 1:1, obraz musi powstać w odległości dwóch ogniskowych — czyli obiektyw 50 mm trzeba odsunąć od matrycy o całe pięćdziesiąt milimetrów ponad normę. Stąd biorą się długie tubusy makro, pierścienie pośrednie i utrata światła, którą policzymy w <a href="rozdzial-06-przyslona-f-i-t.html">Rozdziale 6</a>. Ta sama arytmetyka wyjaśnia, dlaczego obiektyw makro ustawiony na nieskończoność zachowuje się jak zwykła stałka i dopiero przy bliskiej ostrości zaczyna być drogi w świetle.</p>
+
+    <div class="subsection">
+      <h3>Trzy sposoby ostrzenia, trzy różne skutki uboczne</h3>
+      <p>Skoro ostrzenie polega na zmianie odległości między szkłem a matrycą, konstruktor ma kilka sposobów, żeby to osiągnąć — i każdy zostawia w obrazie inny ślad.</p>
+      <p><strong>Ostrzenie całym układem</strong> to metoda najstarsza i najprostsza: cały blok soczewek wyjeżdża do przodu na gwincie. Ogniskowa nie zmienia się wcale, więc obraz jest optycznie identyczny; zmienia się tylko odległość, a wraz z nią powiększenie. Skutek uboczny: przy ostrzeniu z bliska kadr zauważalnie się zawęża, bo obraz powstaje dalej i wycinek matrycy odpowiada mniejszemu kątowi. To jest klasyczny <em>oddech</em>, i w tej metodzie jest nieunikniony.</p>
+      <p><strong>Ostrzenie wewnętrzne</strong> przesuwa tylko jedną grupę w środku układu. Tubus nie zmienia długości, przednia soczewka się nie kręci (co ma znaczenie przy filtrze polaryzacyjnym), a autofokus działa szybciej, bo rusza mniejszą masę. Cena: przesunięcie grupy wewnętrznej <span class="term-violet">zmienia efektywną ogniskową</span>, zwykle skracając ją przy bliskiej ostrości. Oddech bywa tu silniejszy niż przy ostrzeniu całym układem, a nie słabszy — wbrew intuicji.</p>
+      <p><strong>Ostrzenie tylną grupą</strong> to wariant pośredni, popularny w tanich zoomach. Najlżejszy mechanicznie, ale najbardziej podatny na zmianę charakterystyki aberracji z odległością — obiektyw potrafi być ostry na nieskończoność i wyraźnie słabszy z bliska, albo odwrotnie.</p>
+      <p>Obiektywy kinowe są zwykle ostrzone całym układem właśnie dlatego, że jego skutek uboczny jest przewidywalny i powtarzalny. Operator wolałby oddech, który da się zmierzyć i zaplanować, niż mniejszy oddech o nieprzewidywalnym przebiegu.</p>
+      <p class="deeper-inline">Oddech obiektywu z liczbami i jego konsekwencje dla trackingu — <a href="rozdzial-32-czas.html">Rozdział 32</a>.</p>
+    </div>
+
+    <div class="subsection">
+      <h3>Skąd wzięła się „normalna” pięćdziesiątka</h3>
+      <p>Istnieje umowa, powtarzana od stu lat, że obiektywem normalnym jest ten, którego ogniskowa równa się <strong>przekątnej matrycy</strong>. Dla klatki 24×36 mm przekątna wynosi 43,3 mm — i stąd, po zaokrągleniu w górę do wygodnej liczby, wzięło się „pięćdziesiąt”.</p>
+      <p>Uzasadnienie tej umowy bywa podawane jako „taki obiektyw widzi tyle, co ludzkie oko”, co jest nieprawdą — oko widzi znacznie szerzej, choć ostro tylko w małym środku. Prawdziwy powód jest inny i czysto geometryczny: przy ogniskowej równej przekątnej <span class="term-cyan">perspektywa na odbitce oglądanej z normalnej odległości wygląda naturalnie</span>. Ani nie rozpycha bliskiego planu, jak szeroki kąt, ani nie spłaszcza, jak tele. Jest to więc umowa o wrażeniu, nie o anatomii.</p>
+      <p>Przelicznik działa dla każdego formatu. Na Super 35 przekątna to około 28 mm, więc obiektywem normalnym jest tam trzydziestka. Na formacie 65 mm — około 60 mm. Kiedy więc słyszysz, że jakiś film „kręcono głównie normalną”, to znaczy co innego w milimetrach na każdym z tych formatów, choć znaczy to samo w kadrze.</p>
+    </div>
+
+    <p>Powiększenie liczy się przy okazji, jednym ilorazem:</p>
+
+    <div class="formula">
+      m = − s′ / s
+      <span class="sub">m — powiększenie liniowe. Znak minus oznacza, że obraz jest odwrócony; jego wartość bezwzględna mówi, ile razy obraz jest mniejszy (m &lt; 1) albo większy (m &gt; 1) od przedmiotu.</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Poprawka · prawdziwy obiektyw nie jest cienki</div>
+    <h2>Dwie płaszczyzny zamiast jednej soczewki</h2>
+
+    <p>Wszystko powyżej zakładało soczewkę nieskończenie cienką — taką, w której promień wchodzi i wychodzi w tym samym miejscu. Prawdziwy obiektyw ma kilkanaście centymetrów długości i kilkanaście soczewek. Wydawałoby się, że cała powyższa arytmetyka bierze w łeb.</p>
+
+    <p>Nie bierze, i to jest jedno z ładniejszych uproszczeń w optyce. Okazuje się, że <strong>dowolnie skomplikowany układ soczewek zachowuje się z zewnątrz dokładnie jak jedna cienka soczewka</strong> — trzeba tylko wiedzieć, gdzie ją postawić. A ściślej: gdzie postawić dwie, bo wejście i wyjście mają własne odniesienia. Nazywają się płaszczyznami głównymi.</p>
+
+    <p>Reguła jest taka: promień wchodzący mierzy się do pierwszej płaszczyzny głównej, wychodzący — od drugiej, a między nimi promień „przeskakuje” bez zmiany wysokości. Ogniskową mierzy się od drugiej płaszczyzny głównej do ogniska. <span class="term-cyan">Nie od przedniej soczewki i nie od bagnetu</span> — i tu zaczynają się niespodzianki.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Płaszczyzny główne</span><span>trzy konstrukcje, ta sama ogniskowa</span></div>
+      <svg viewBox="0 0 760 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Trzy układy: soczewka cienka, teleobiektyw z płaszczyzną główną przed obiektywem i retrofokus z płaszczyzną główną za nim. Wszystkie mają tę samą ogniskową.">
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">
+          <text x="20" y="26">SOCZEWKA CIENKA</text>
+          <text x="20" y="136">TELEOBIEKTYW — tubus krótszy niż f</text>
+          <text x="20" y="246">RETROFOKUS — tubus dłuższy niż f</text>
+        </g>
+
+        <g>
+          <path d="M 200 44 Q 214 70 200 96 Q 186 70 200 44 Z" fill="#4fc3c0" fill-opacity="0.15" stroke="#4fc3c0" stroke-width="1.4"/>
+          <line x1="200" y1="38" x2="200" y2="102" stroke="#9c82d8" stroke-width="1.6" stroke-dasharray="3 3"/>
+          <line x1="200" y1="70" x2="520" y2="70" stroke="#e8a33d" stroke-width="1.6"/>
+          <line x1="520" y1="56" x2="520" y2="84" stroke="#6e93be" stroke-width="2.4"/>
+          <text x="330" y="62" font-family="IBM Plex Mono" font-size="10.5" fill="#e8a33d" text-anchor="middle">f</text>
+          <text x="528" y="74" font-family="IBM Plex Mono" font-size="10" fill="#6e93be">matryca</text>
+        </g>
+
+        <g>
+          <path d="M 250 154 Q 264 180 250 206 Q 236 180 250 154 Z" fill="#4fc3c0" fill-opacity="0.15" stroke="#4fc3c0" stroke-width="1.4"/>
+          <path d="M 320 158 Q 310 180 320 202 L 336 202 L 336 158 Z" fill="#9c82d8" fill-opacity="0.16" stroke="#9c82d8" stroke-width="1.4"/>
+          <line x1="200" y1="148" x2="200" y2="212" stroke="#9c82d8" stroke-width="1.6" stroke-dasharray="3 3"/>
+          <text x="176" y="144" font-family="IBM Plex Mono" font-size="9.5" fill="#9c82d8">H′</text>
+          <line x1="200" y1="180" x2="520" y2="180" stroke="#e8a33d" stroke-width="1.6"/>
+          <line x1="520" y1="166" x2="520" y2="194" stroke="#6e93be" stroke-width="2.4"/>
+          <line x1="250" y1="214" x2="520" y2="214" stroke="#4fc3c0" stroke-width="1.2"/>
+          <text x="380" y="228" font-family="IBM Plex Mono" font-size="10" fill="#4fc3c0" text-anchor="middle">długość tubusu &lt; f</text>
+          <text x="330" y="172" font-family="IBM Plex Mono" font-size="10.5" fill="#e8a33d" text-anchor="middle">f</text>
+        </g>
+
+        <g>
+          <path d="M 180 264 Q 170 290 180 316 L 196 316 L 196 264 Z" fill="#9c82d8" fill-opacity="0.16" stroke="#9c82d8" stroke-width="1.4"/>
+          <path d="M 300 268 Q 314 290 300 312 Q 286 290 300 268 Z" fill="#4fc3c0" fill-opacity="0.15" stroke="#4fc3c0" stroke-width="1.4"/>
+          <line x1="360" y1="258" x2="360" y2="322" stroke="#9c82d8" stroke-width="1.6" stroke-dasharray="3 3"/>
+          <text x="366" y="254" font-family="IBM Plex Mono" font-size="9.5" fill="#9c82d8">H′</text>
+          <line x1="360" y1="290" x2="520" y2="290" stroke="#e8a33d" stroke-width="1.6"/>
+          <line x1="520" y1="276" x2="520" y2="304" stroke="#6e93be" stroke-width="2.4"/>
+          <line x1="180" y1="324" x2="520" y2="324" stroke="#4fc3c0" stroke-width="1.2"/>
+          <text x="350" y="338" font-family="IBM Plex Mono" font-size="10" fill="#4fc3c0" text-anchor="middle">długość tubusu &gt; f</text>
+          <text x="440" y="282" font-family="IBM Plex Mono" font-size="10.5" fill="#e8a33d" text-anchor="middle">f</text>
+        </g>
+      </svg>
+      <div class="diagram-caption">Płaszczyzna główna może leżeć poza fizycznym obiektywem — nawet metr przed nim. To nie jest sztuczka rachunkowa, tylko realny opis zachowania układu.</div>
+    </div>
+
+    <p>Konsekwencja pierwsza: <strong>obiektyw 300 mm nie musi mieć 300 mm długości</strong>. Jeśli konstruktor umieści z tyłu grupę rozpraszającą, druga płaszczyzna główna przesunie się do przodu — nawet przed przednią soczewkę — i tubus może być o jedną trzecią krótszy. Tak działa układ teleobiektywowy i to jedyny powód, dla którego da się nosić dwustumilimetrówkę w jednej ręce.</p>
+
+    <p>Konsekwencja druga, odwrotna: <strong>szeroki kąt na lustrzance musi być dłuższy niż jego ogniskowa</strong>. Między tylną soczewką a matrycą musi się zmieścić lustro, a to bywa czterdzieści milimetrów. Obiektyw 20 mm nie może więc siedzieć dwadzieścia milimetrów od matrycy — trzeba przesunąć płaszczyznę główną do tyłu grupą rozpraszającą z przodu. To układ retrofokusowy, źródło większości kłopotów szerokich kątów, i wracamy do niego w <a href="rozdzial-18-skrajne-ogniskowe.html">Rozdziale 18</a>.</p>
+    <div class="subsection">
+      <h3>Jak zmierzyć ogniskową obiektywu, którego danych nie masz</h3>
+      <p>Równanie soczewki jest symetryczne względem zamiany s i s′ — zamień je miejscami, a wzór pozostanie prawdziwy. Wynika z tego fakt na pierwszy rzut oka zaskakujący: przy <strong>ustalonej</strong> odległości między przedmiotem a matrycą istnieją zwykle <em>dwa</em> położenia obiektywu, w których obraz jest ostry. W jednym dostajesz obraz pomniejszony, w drugim powiększony, i oba są równie ostre.</p>
+      <p>Ta symetria jest podstawą metody pomiarowej, którą da się wykonać na planie z linijką. Ustawiasz przedmiot i matrycę w stałej odległości <em>D</em>, znajdujesz oba położenia ostrości i mierzysz odległość <em>e</em> między nimi. Ogniskowa wypada z jednego działania:</p>
+      <div class="formula">
+        f = (D² − e²) / (4 · D)
+        <span class="sub">D — całkowita odległość przedmiot–matryca, e — odległość między dwoma położeniami obiektywu dającymi ostry obraz. Metoda Bessela; działa dla dowolnego układu, także wielosoczewkowego, bo nie wymaga wiedzy o tym, gdzie leżą płaszczyzny główne.</span>
+      </div>
+      <p>Ostatnie zdanie jest tu najważniejsze. Wszystkie prostsze sposoby pomiaru wymagają wiedzy, od którego punktu obiektywu mierzyć — a tego, jak widzieliśmy, nie da się odczytać z zewnątrz. Metoda Bessela ten problem omija, bo mierzy <span class="term-cyan">różnicę</span> dwóch położeń, a nie odległość bezwzględną. Płaszczyzny główne skracają się w rachunku.</p>
+      <p>Praktyczne zastosowanie w pracy z plate'em: gdy masz metrykę zdjęciową z nazwą obiektywu, ale podejrzewasz, że nominał odbiega od rzeczywistości — a przy zoomach odbiega zawsze — to jest najprostszy sposób, żeby sprawdzić to na sprzęcie zamiast zgadywać z trackera.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Punkt obrotu · gdzie kamera naprawdę stoi</div>
+    <h2>Punkt węzłowy, czyli wokół czego kręcić</h2>
+
+    <p>Z płaszczyzn głównych wynika jeszcze jedna wielkość, o którą potyka się każdy, kto składał panoramę albo dopasowywał wirtualną kamerę do plate'u. Pytanie brzmi: <em>gdzie właściwie jest kamera?</em></p>
+
+    <p>Nie na bagnecie, nie na matrycy i nie na gwincie statywu. Z punktu widzenia perspektywy kamera jest tam, gdzie leży <span class="term-cyan">źrenica wejściowa</span> — pozorny obraz przysłony widziany od przodu. Obróć obiektyw wokół tego punktu, a wzajemne położenie bliskich i dalekich obiektów w kadrze nie drgnie. Obróć wokół dowolnego innego, a bliskie przesuną się względem dalekich i sklejenie panoramy przestanie się zgadzać.</p>
+
+    <p>W literaturze fotograficznej punkt ten bywa nazywany „punktem nodalnym”, co jest pomyłką utrwaloną przez dekady — punkty węzłowe to co innego i leżą gdzie indziej. Poprawna nazwa to <strong>punkt bezparalaksowy</strong>, i to on jest odpowiedzią na pytanie, gdzie postawić wirtualną kamerę w scenie 3D, żeby zgadzała się z realną. Sama źrenica wejściowa dostaje osobny rozdział, bo wynika z niej znacznie więcej — <a href="rozdzial-07-zrenice.html">Rozdział 7</a>.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Punkt bezparalaksowy</span><span>obrót wokół źrenicy kontra wokół statywu</span></div>
+      <svg viewBox="0 0 760 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Obrót kamery wokół źrenicy wejściowej zachowuje wzajemne położenie bliskiego i dalekiego obiektu; obrót wokół gwintu statywu je przesuwa.">
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">
+          <text x="20" y="24">OBRÓT WOKÓŁ ŹRENICY · paralaksa zerowa</text>
+          <text x="410" y="24">OBRÓT WOKÓŁ STATYWU · bliskie ucieka</text>
+        </g>
+        <g>
+          <rect x="60" y="86" width="70" height="44" fill="#2a2f38" stroke="#8b909b" stroke-width="1"/>
+          <circle cx="140" cy="108" r="5" fill="#4fc3c0"/>
+          <text x="122" y="146" font-family="IBM Plex Mono" font-size="9.5" fill="#4fc3c0">źrenica</text>
+          <g stroke="#e8a33d" stroke-width="1.5" fill="none">
+            <path d="M 140 108 L 330 60"/><path d="M 140 108 L 330 156"/>
+          </g>
+          <circle cx="230" cy="84" r="6" fill="#6e93be"/><text x="216" y="74" font-family="IBM Plex Mono" font-size="9.5" fill="#6e93be">bliski</text>
+          <circle cx="322" cy="62" r="6" fill="#9c82d8"/><text x="292" y="50" font-family="IBM Plex Mono" font-size="9.5" fill="#9c82d8">daleki</text>
+          <path d="M 168 108 A 28 28 0 0 0 158 88" fill="none" stroke="#4fc3c0" stroke-width="1.2"/>
+          <text x="60" y="188" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">Oba obiekty leżą na tym samym promieniu —</text>
+          <text x="60" y="204" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">obrót nie zmienia ich wzajemnego położenia.</text>
+        </g>
+        <line x1="380" y1="16" x2="380" y2="230" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 5"/>
+        <g>
+          <rect x="420" y="86" width="70" height="44" fill="#2a2f38" stroke="#8b909b" stroke-width="1"/>
+          <circle cx="455" cy="130" r="4" fill="#8b909b"/>
+          <text x="428" y="152" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">gwint statywu</text>
+          <circle cx="500" cy="108" r="5" fill="#4fc3c0" opacity="0.5"/>
+          <g stroke="#e8a33d" stroke-width="1.5" fill="none" opacity="0.55">
+            <path d="M 500 108 L 690 60"/>
+          </g>
+          <g stroke="#c23b3b" stroke-width="1.5" fill="none">
+            <path d="M 512 92 L 690 88"/>
+          </g>
+          <circle cx="590" cy="84" r="6" fill="#6e93be"/>
+          <circle cx="682" cy="62" r="6" fill="#9c82d8"/>
+          <text x="500" y="188" font-family="IBM Plex Mono" font-size="10" fill="#c23b3b">Źrenica zatoczyła łuk, więc bliski obiekt</text>
+          <text x="500" y="204" font-family="IBM Plex Mono" font-size="10" fill="#c23b3b">przesunął się względem dalekiego.</text>
+        </g>
+      </svg>
+      <div class="diagram-caption">Ta sama różnica decyduje o tym, czy panorama się sklei i czy wirtualna kamera trafi w plate.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">W CG · milimetry bez kontekstu nic nie znaczą</div>
+    <h2>Ogniskowa, format i pole widzenia</h2>
+
+    <p>W rendererze wpisujesz w kamerę „50 mm” i dostajesz kadr. Ale sama ogniskowa nie mówi jeszcze, ile świata widać — decyduje o tym dopiero jej stosunek do rozmiaru matrycy. Ta sama pięćdziesiątka na Super 35 daje kadr wyraźnie ciaśniejszy niż na pełnej klatce, a na formacie 65 mm — znacznie szerszy.</p>
+
+    <div class="formula">
+      FOV = 2 · arctan( <span class="vec" data-tip="Wymiar matrycy w tym kierunku, w którym liczymy pole widzenia — zwykle szerokość">d</span> / (2 · <span class="vec" data-tip="Ogniskowa obiektywu">f</span>) )
+      <span class="sub">FOV — pole widzenia w stopniach, d — wymiar matrycy (szerokość, wysokość albo przekątna — trzeba wiedzieć który), f — ogniskowa. Ważne dla ostrości na nieskończoność; przy bliskiej ostrości kadr się nieco zawęża, i to jest oddech obiektywu z Rozdziału 32.</span>
+    </div>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Ogniskowa a pole widzenia</span><span>trzy formaty</span></div>
+      <div class="diagram-controls">
+        <label for="ogniskowaSuwak">Ogniskowa</label>
+        <input id="ogniskowaSuwak" type="range" min="12" max="200" step="1" value="50">
+        <span class="value-readout" id="ogniskowaOdczyt">50 mm</span>
+      </div>
+      <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Trzy krzywe poziomego pola widzenia w funkcji ogniskowej dla formatów Super 35, pełnej klatki i 65 mm.">
+        <g stroke="#2a2f38" stroke-width="1"><line x1="80" y1="250" x2="710" y2="250"/><line x1="80" y1="30" x2="80" y2="250"/></g>
+        <g stroke="#2a2f38" stroke-width="0.6" opacity="0.55">
+          <line x1="80" y1="195" x2="710" y2="195"/><line x1="80" y1="140" x2="710" y2="140"/><line x1="80" y1="85" x2="710" y2="85"/>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="10" fill="#8b909b">
+          <text x="46" y="254">0°</text><text x="40" y="199">30°</text><text x="40" y="144">60°</text><text x="40" y="89">90°</text><text x="34" y="34">120°</text>
+          <text x="74" y="270">12</text><text x="380" y="270">100</text><text x="694" y="270">200 mm</text>
+          <text x="350" y="290">ogniskowa</text>
+        </g>
+        <path id="krzywa65" fill="none" stroke="#9c82d8" stroke-width="2.4"/>
+        <path id="krzywaFF" fill="none" stroke="#e8a33d" stroke-width="2.6"/>
+        <path id="krzywaS35" fill="none" stroke="#4fc3c0" stroke-width="2.4"/>
+        <line id="wskaznikOgn" y1="30" y2="250" stroke="#ecebe4" stroke-width="1" opacity="0.45"/>
+        <circle id="punkt65" r="4.5" fill="#9c82d8"/><circle id="punktFF" r="4.5" fill="#e8a33d"/><circle id="punktS35" r="4.5" fill="#4fc3c0"/>
+        <g font-family="IBM Plex Mono" font-size="11">
+          <rect x="430" y="52" width="14" height="3" fill="#9c82d8"/><text x="452" y="58" fill="#8b909b">65 mm · 54,1 mm szer.</text>
+          <rect x="430" y="74" width="14" height="3" fill="#e8a33d"/><text x="452" y="80" fill="#ecebe4">pełna klatka · 36,0 mm</text>
+          <rect x="430" y="96" width="14" height="3" fill="#4fc3c0"/><text x="452" y="102" fill="#8b909b">Super 35 · 24,9 mm</text>
+        </g>
+      </svg>
+      <div class="diagram-caption" id="ogniskowaPodpis">50 mm daje 28,0° na S35, 39,6° na pełnej klatce i 56,8° na 65 mm.</div>
+    </div>
+
+    <p>Stąd bierze się cały bałagan z „ekwiwalentami”. Zdanie „to jest jak trzydziestka piątka na pełnej klatce” znaczy tylko tyle, że kadr jest podobny — nie że obraz jest taki sam. Głębia ostrości, kompresja rysunku i skala aberracji zależą od rzeczywistej ogniskowej i rzeczywistej średnicy źrenicy, a nie od ekwiwalentu. Wrócimy do tego z liczbami w <a href="rozdzial-05-ogniskowa-format-perspektywa.html">Rozdziale 5</a> i w <a href="../dodatki/dodatek-aa-formaty-i-ekwiwalencja.html">Dodatku AA</a>.</p>
+
+    <p>Praktyczna pułapka przy dopasowywaniu kamery: <strong>renderer musi znać rozmiar matrycy</strong>, a domyślna wartość rzadko odpowiada kamerze, którą kręcono plate. Wpisanie ogniskowej z metryki zdjęciowej do kamery ustawionej na inny format daje kadr niezgodny z materiałem, i to niezgodny w sposób, którego nie da się naprawić przesunięciem kamery — bo zmienia się perspektywa, nie tylko wycinek.</p>
+  </div>
+
+    <p>Warto też wiedzieć, że renderery nazywają ten sam parametr na kilka sposobów i nie wszystkie znaczą to samo. „Sensor width” to zwykle szerokość w milimetrach i o to nam chodzi. „Film aperture” w starszych narzędziach bywa podawane w calach, co przy przepisywaniu z metryki daje błąd o czynnik 25,4. A „aperture” bez przymiotnika oznacza w połowie programów rozmiar matrycy, a w drugiej połowie przysłonę — sprawdzenie, która to wersja, zajmuje dziesięć sekund i oszczędza godzinę zastanawiania się, dlaczego kadr nie siada.</p>
+
+    <p>Drugą pułapką jest niezgodność między matrycą a kadrem. Kamera rejestruje pełną powierzchnię sensora, ale montaż i finalny kadr bywają z niej wycięte — inaczej dla 2.39, inaczej dla 1.85, jeszcze inaczej przy zapasie na stabilizację. Renderer trzeba ustawić na <strong>rzeczywisty wymiar rejestrowany</strong>, a kadrowanie zrobić dopiero potem, tak jak zrobiono to z materiałem. Ustawienie od razu wymiaru finalnego kadru daje pole widzenia zgodne pozornie, a niezgodne w perspektywie — i błąd ten ujawnia się dopiero wtedy, gdy w ujęciu pojawi się ruch kamery.</p>
+
+  <div class="panel practice">
+    <div class="panel-label">Z praktyki</div>
+    <p><strong>Ustaw rozmiar matrycy, zanim ustawisz ogniskową.</strong> W każdym rendererze kamera ma pole „sensor size”, „film back” albo „aperture” (mylące, bo nie chodzi o przysłonę). Dopóki nie zgadza się z kamerą, z której pochodzi plate, ogniskowa jest liczbą bez znaczenia. Kolejność jest zawsze ta sama: format, potem ogniskowa, potem pozycja.</p>
+    <p><strong>Nie ufaj liczbie na tubusie co do milimetra.</strong> Oznaczenia obiektywów są zaokrąglane i marketingowane — „50 mm” bywa w rzeczywistości 51,6 mm, a zoomy potrafią odbiegać znacznie mocniej na krańcach zakresu. Przy dokładnym dopasowaniu do plate'u ogniskową wyznacza się z materiału, siatką albo trackerem, a nie odczytuje z pierścienia.</p>
+    <p><strong>Wirtualna kamera obraca się wokół źrenicy wejściowej, nie wokół węzła origin.</strong> Jeśli twoja kamera w scenie ma pivot na matrycy albo na środku bryły, panoramowanie wprowadzi paralaksę, której w plate nie ma. Przy statycznym ujęciu to bez znaczenia; przy panoramie albo przy odtwarzaniu ruchu głowicy — decyduje o tym, czy tracking się utrzyma.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>ogniskowa (f)</dt>
+      <dd>Odległość, po której układ skupia promienie przychodzące z nieskończoności — mierzona od tylnej płaszczyzny głównej, nie od przedniej soczewki.</dd>
+      <dt>ognisko</dt>
+      <dd>Punkt, w którym te promienie się spotykają. Każdy układ ma dwa: przednie i tylne.</dd>
+      <dt>równanie soczewki</dt>
+      <dd>1/f = 1/s + 1/s′. Wiąże odległość przedmiotu, obrazu i ogniskową. Podstawa mechaniki ostrzenia.</dd>
+      <dt>powiększenie (m)</dt>
+      <dd>Stosunek rozmiaru obrazu do rozmiaru przedmiotu, równy −s′/s. Znak minus oznacza odwrócenie obrazu.</dd>
+      <dt>płaszczyzny główne</dt>
+      <dd>Dwie umowne płaszczyzny, względem których dowolnie złożony układ zachowuje się jak pojedyncza cienka soczewka. Mogą leżeć poza fizycznym obiektywem.</dd>
+      <dt>układ teleobiektywowy</dt>
+      <dd>Konstrukcja, w której tylna płaszczyzna główna leży przed obiektywem, dzięki czemu tubus jest krótszy od ogniskowej.</dd>
+      <dt>układ retrofokusowy</dt>
+      <dd>Konstrukcja odwrotna: płaszczyzna główna przesunięta do tyłu, żeby zmieścić lustro. Tubus dłuższy od ogniskowej.</dd>
+      <dt>punkt bezparalaksowy</dt>
+      <dd>Punkt, wokół którego obrót kamery nie wprowadza paralaksy — pokrywa się ze źrenicą wejściową. Popularnie, choć błędnie, nazywany punktem nodalnym.</dd>
+      <dt>pole widzenia (FOV)</dt>
+      <dd>Kąt, pod jakim kamera widzi scenę. Zależy od ogniskowej i od rozmiaru matrycy — sama ogniskowa go nie wyznacza.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Mamy komplet narzędzi Części I: promień, załamanie, cenę wejścia do szkła i sposób, w jaki powstaje obraz. Czas zacząć ich używać. <a href="rozdzial-05-ogniskowa-format-perspektywa.html">Część II</a> otwiera rozdział o tym, co ogniskowa robi z perspektywą — a właściwie o tym, czego wbrew powszechnemu przekonaniu z perspektywą nie robi wcale.</p>
+  </div>
 
   <div class="deeper">
     <div class="deeper-label">Idź głębiej</div>
@@ -56,8 +394,121 @@ window.SKY3D_MESSAGES = {
       <a class="nav-next" href="rozdzial-05-ogniskowa-format-perspektywa.html">Następny →</a>
   </div>
 
+  <template id="explain-soczewka">
+    <h3>Skąd bierze się równanie soczewki</h3>
+
+    <div class="formula">1 / f = 1 / s + 1 / s′</div>
+
+    <p><strong>Co mówi w jednym zdaniu.</strong> Soczewka ma stałą „moc zaginania”, a rozdziela ją między dwa zadania: doprowadzenie rozbieżnej wiązki z przedmiotu do równoległości i skupienie jej z powrotem w obraz. Im bardziej rozbieżna wiązka wchodzi — czyli im bliżej jest przedmiot — tym mniej mocy zostaje na skupianie, więc obraz powstaje dalej.</p>
+
+    <p><strong>Dlaczego odwrotności.</strong> To nie kaprys zapisu. Wielkością, która dodaje się liniowo, nie jest odległość, tylko jej odwrotność — nazywana zbieżnością wiązki. Płaska fala ma zbieżność zero, fala schodząca się w punkt odległy o metr ma zbieżność 1 na metr. Soczewka po prostu dodaje do zbieżności stałą wartość 1/f. Stąd cały wzór: zbieżność wejściowa plus moc soczewki równa się zbieżność wyjściowa.</p>
+
+    <p>W optometrii ta odwrotność ma nawet własną jednostkę — dioptrię, czyli odwrotność metra. Soczewka o mocy 2 dioptrii ma ogniskową pół metra. Recepta na okulary to nic innego niż zapisana w ten sposób wartość 1/f.</p>
+
+    <p><strong>Trzy przypadki, które warto sprawdzić w pamięci:</strong></p>
+    <ul>
+      <li><strong>s dąży do nieskończoności</strong> — 1/s znika, zostaje s′ = f. Obraz gwiazd powstaje dokładnie w ognisku.</li>
+      <li><strong>s = 2f</strong> — wychodzi s′ = 2f i powiększenie równe −1. Obraz jest tej samej wielkości co przedmiot, odwrócony. To jest makro 1:1.</li>
+      <li><strong>s = f</strong> — 1/s′ wychodzi zero, czyli s′ jest nieskończone. Przedmiot w ognisku daje wiązkę równoległą i żadnego obrazu. Dlatego nie da się ustawić ostrości na przedmiot bliższy niż ogniskowa.</li>
+    </ul>
+
+    <p><strong>Konwencja znaków.</strong> Wzór w tej postaci zakłada, że s i s′ liczymy jako dodatnie odległości po przeciwnych stronach soczewki. W literaturze spotkasz też wersję z minusem, w której obie odległości mierzy się w tym samym kierunku od soczewki. Obie są poprawne i dają te same liczby — trzeba tylko nie mieszać ich w jednym rachunku, co jest najczęstszym źródłem błędu przy pierwszym podejściu.</p>
+
+    <p><em>Uwaga: wzór milczy o jakości obrazu. Mówi, gdzie promienie się spotkają przy założeniu, że wszystkie spotykają się w jednym punkcie. To założenie jest fałszywe dla każdej realnej soczewki i cała Część III jest o tym, jak bardzo.</em></p>
+  </template>
+
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-panel">
+      <button class="modal-close" data-modal-close aria-label="Zamknij">×</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
 </div>
 
 <script src="../assets/interactive.js"></script>
+<script>
+/* 1. Rownanie soczewki: 1/f = 1/s + 1/s'. Suwak logarytmiczny po odleglosci
+      przedmiotu, bo interesujacy zakres to od 0,1 m do 10 m. */
+(function () {
+  var sl = document.getElementById('odlPrzedmiotu');
+  if (!sl) return;
+  var F = 50;                                   // mm
+  var X0 = 80, X1 = 710, Y0 = 250, Y1 = 30;
+  var S0 = 0.1, S1 = 10;                        // metry
+  function odl(v) { return S0 * Math.pow(S1 / S0, v / 100); }
+  function px(s) { return X0 + Math.log(s / S0) / Math.log(S1 / S0) * (X1 - X0); }
+  function py(sp) { return Y0 - (sp - 50) / 10 * (Y0 - Y1); }   // os 50..60 mm
+  function obraz(sM) { var sMm = sM * 1000; return 1 / (1 / F - 1 / sMm); }
+
+  var d = '';
+  for (var i = 0; i <= 200; i++) {
+    var s = odl(i / 2);
+    d += (i === 0 ? 'M ' : ' L ') + px(s).toFixed(1) + ' ' + Math.max(Y1, py(obraz(s))).toFixed(1);
+  }
+  document.getElementById('krzywaObrazu').setAttribute('d', d);
+
+  function odswiez() {
+    var s = odl(parseFloat(sl.value));
+    var sp = obraz(s);
+    var m = sp / (s * 1000);
+    var x = px(s), w = document.getElementById('wskaznikOdl');
+    w.setAttribute('x1', x); w.setAttribute('x2', x);
+    var p = document.getElementById('punktObrazu');
+    p.setAttribute('cx', x); p.setAttribute('cy', Math.max(Y1, py(sp)));
+    document.getElementById('odlOdczyt').textContent =
+      (s < 1 ? (s * 100).toFixed(0) + ' cm' : s.toFixed(1).replace('.', ',') + ' m');
+    document.getElementById('odlPodpis').textContent =
+      'Przy ' + (s < 1 ? (s * 100).toFixed(0) + ' cm' : s.toFixed(1).replace('.', ',') + ' m') +
+      ' obraz powstaje ' + sp.toFixed(1).replace('.', ',') + ' mm za soczewką — ' +
+      (sp - F).toFixed(1).replace('.', ',') + ' mm dalej niż dla nieskończoności. Powiększenie ' +
+      m.toFixed(3).replace('.', ',') + '×.';
+  }
+  sl.addEventListener('input', odswiez);
+  odswiez();
+})();
+
+/* 2. Pole widzenia w funkcji ogniskowej dla trzech formatow.
+      FOV = 2 * arctan(d / 2f), d = szerokosc matrycy. */
+(function () {
+  var sl = document.getElementById('ogniskowaSuwak');
+  if (!sl) return;
+  var FORMATY = [
+    { d: 54.12, krzywa: 'krzywa65',  punkt: 'punkt65',  nazwa: '65 mm' },
+    { d: 36.00, krzywa: 'krzywaFF',  punkt: 'punktFF',  nazwa: 'pełnej klatce' },
+    { d: 24.89, krzywa: 'krzywaS35', punkt: 'punktS35', nazwa: 'S35' }
+  ];
+  var X0 = 80, X1 = 710, F0 = 12, F1 = 200, Y0 = 250, Y1 = 30, FOVMAX = 120;
+  function px(f) { return X0 + (f - F0) / (F1 - F0) * (X1 - X0); }
+  function py(a) { return Y0 - a / FOVMAX * (Y0 - Y1); }
+  function fov(d, f) { return 2 * Math.atan(d / (2 * f)) * 180 / Math.PI; }
+
+  FORMATY.forEach(function (fm) {
+    var d = '';
+    for (var f = F0; f <= F1; f++) {
+      d += (f === F0 ? 'M ' : ' L ') + px(f).toFixed(1) + ' ' + py(fov(fm.d, f)).toFixed(1);
+    }
+    document.getElementById(fm.krzywa).setAttribute('d', d);
+  });
+
+  function odswiez() {
+    var f = parseFloat(sl.value), x = px(f);
+    var w = document.getElementById('wskaznikOgn');
+    w.setAttribute('x1', x); w.setAttribute('x2', x);
+    var opis = [];
+    FORMATY.forEach(function (fm) {
+      var a = fov(fm.d, f);
+      var el = document.getElementById(fm.punkt);
+      el.setAttribute('cx', x); el.setAttribute('cy', py(a));
+      opis.push(a.toFixed(1).replace('.', ',') + '° na ' + fm.nazwa);
+    });
+    document.getElementById('ogniskowaOdczyt').textContent = f.toFixed(0) + ' mm';
+    document.getElementById('ogniskowaPodpis').textContent =
+      f.toFixed(0) + ' mm daje ' + opis.reverse().join(', ') + '.';
+  }
+  sl.addEventListener('input', odswiez);
+  odswiez();
+})();
+</script>
 </body>
 </html>

@@ -364,6 +364,28 @@ def cmd_sprawdz():
                 f'BRAK WARTOWNIKA {os.path.relpath(path, ROOT)}: widget 3D bez '
                 f'sky3d-fallback.js (pusty prostokat przy file://)')
 
+    # 6b. .subsection musi lezec wewnatrz .section
+    #     Osierocona podsekcja miedzy sekcjami renderuje sie prawie poprawnie,
+    #     wiec przechodzi wzrokowo, ale lamie strukture strony i wypada
+    #     z licznika slow. Latwo o to przy wstawianiu tresci skryptem.
+    #     Liczymy WSZYSTKIE divy, nie tylko sekcyjne — inaczej kazdy
+    #     .diagram-frame czy .formula rozjezdza licznik zagniezdzenia.
+    for path in all_pages():
+        html = open(path, encoding='utf-8').read()
+        stos = []
+        for m in re.finditer(r'<div([^>]*)>|</div>', html):
+            if m.group(0) == '</div>':
+                if stos:
+                    stos.pop()
+                continue
+            kl = re.search(r'class="([^"]*)"', m.group(1) or '')
+            klasy = kl.group(1).split() if kl else []
+            if 'subsection' in klasy and 'section' not in stos:
+                problems.append(
+                    f'PODSEKCJA    {os.path.relpath(path, ROOT)}: .subsection poza .section '
+                    f'(znak {m.start()})')
+            stos.append('section' if 'section' in klasy else '-')
+
     # 7. znaczniki stanu w spisie tresci musza zgadzac sie z rzeczywistoscia
     #    Bez tego czytelnik klika w rozdzial oznaczony jako gotowy i trafia
     #    na szkielet. Naprawa: python dev/stan.py
