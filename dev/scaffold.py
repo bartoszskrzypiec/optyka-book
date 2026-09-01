@@ -29,6 +29,12 @@ import os
 import re
 import sys
 
+# Konsola Windows startuje w cp1250 i wywraca sie na pierwszym lepszym n₁,
+# − albo →, a tresc ksiazki jest ich pelna. Bez tego "sprawdz" potrafi
+# przerwac raport w polowie wyjatkiem zamiast pokazac problemy.
+if hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(encoding='utf-8', errors='replace')
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SPIS = json.load(open(os.path.join(ROOT, 'dev', 'spis.json'), encoding='utf-8'))
 
@@ -274,14 +280,31 @@ def cmd_sprawdz():
         html = open(path, encoding='utf-8').read()
         prev_s = rozdz[i - 1]['slug'] + '.html' if i > 0 else None
         next_s = rozdz[i + 1]['slug'] + '.html' if i < len(rozdz) - 1 else None
+        # Liczymy w DWOCH konkretnych blokach, nie na calej stronie. Proza
+        # rozdzialu legalnie odsyla do sasiadow ("w nastepnym rozdziale
+        # zajmiemy sie..."), a liczenie globalne uznawalo kazdy taki odsylacz
+        # za zdublowana nawigacje.
+        bloki = {}
+        mt = re.search(r'<nav class="topnav">.*?</nav>', html, re.S)
+        bloki['topnav'] = mt.group(0) if mt else None
+        ms = re.search(r'<div class="site-nav[^"]*">.*?</div>', html, re.S)
+        bloki['site-nav'] = ms.group(0) if ms else None
+
+        for nazwa, tresc in bloki.items():
+            if tresc is None:
+                problems.append(f'NAWIGACJA    R.{ch["nr"]}: brak bloku {nazwa}')
+
         for label, slug in (('Poprzedni', prev_s), ('Nastepny', next_s)):
             if slug is None:
                 continue
-            n = html.count(f'href="{slug}"')
-            if n != 2:
-                problems.append(
-                    f'NAWIGACJA    R.{ch["nr"]}: link {label} ({slug}) wystepuje {n}x, '
-                    f'a powinien 2x (topnav + site-nav)')
+            for nazwa, tresc in bloki.items():
+                if tresc is None:
+                    continue
+                n = tresc.count(f'href="{slug}"')
+                if n != 1:
+                    problems.append(
+                        f'NAWIGACJA    R.{ch["nr"]}: link {label} ({slug}) w bloku '
+                        f'{nazwa} wystepuje {n}x, a powinien 1x')
 
     # 3. EXT OF <-> "Idz glebiej", obustronnie
     for d in SPIS['dodatki']:
@@ -349,7 +372,10 @@ def cmd_sprawdz():
     ostrzezenia = []
     for path in all_pages():
         html = open(path, encoding='utf-8').read()
-        for m in re.finditer(r'<div class="formula"[^>]*>(.*?)</div>', html, re.S):
+        # Wzor w <template> to wnetrze modala "Wyjasnij ten wzor" — tam symbole
+        # objasnia otaczajaca proza, wiec .sub bylby powtorzeniem.
+        bez_szablonow = re.sub(r'<template.*?</template>', '', html, flags=re.S)
+        for m in re.finditer(r'<div class="formula"[^>]*>(.*?)</div>', bez_szablonow, re.S):
             if 'class="sub"' not in m.group(1):
                 frag = re.sub(r'\s+', ' ', re.sub(r'<[^>]+>', '', m.group(1))).strip()[:60]
                 ostrzezenia.append(

@@ -43,7 +43,399 @@ window.SKY3D_MESSAGES = {
   <h1>Fresnel: dlaczego każda powierzchnia szkła świeci</h1>
   <p class="subtitle">Niepowlekana powierzchnia szkła odbija cztery procent światła. Obiektyw ma ich trzydzieści. To jedno zdanie wyjaśnia flarę, ghosting i połowę różnicy między szkłem z 1970 a z 2020 roku.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li>Na każdej granicy powietrza i szkła część światła zawraca. Nie dlatego, że szkło jest brudne albo tanie — <strong>dlatego, że jest granicą</strong>. Dla typowego szkła optycznego to około <span class="term-amber">cztery procent</span> na każdą powierzchnię.</li>
+      <li>Soczewka ma dwie powierzchnie. Obiektyw ma ich od dwudziestu do czterdziestu. Bez powłok przeciwodblaskowych taki układ przepuszcza ledwie <strong>jedną czwartą</strong> światła — a reszta nie znika, tylko zostaje w środku i szuka wyjścia.</li>
+      <li>To zbłąkane światło jest jedyną przyczyną flary, ghostingu i podniesionych czerni. Cała Część V tej książki jest rozwinięciem tego jednego zdania.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Obserwacja · widzisz to codziennie</div>
+    <h2>Szkło nie jest przezroczyste</h2>
+
+    <p>Wieczorem, przy zapalonym świetle, spójrz w okno. Widzisz siebie. Nie tak wyraźnie jak w lustrze, ale wyraźnie dość, żeby poprawić włosy. To odbicie nie bierze się z brudu na szybie ani z tego, że za oknem jest ciemno — bierze się stąd, że szkło <em>zawsze</em> odbija część światła, które w nie uderza. W dzień po prostu tego nie zauważasz, bo obraz z zewnątrz jest kilkaset razy jaśniejszy od twojego odbicia.</p>
+
+    <p>To samo dzieje się w każdym obiektywie, jaki kiedykolwiek trzymałeś w ręku. Różnica jest wyłącznie taka, że w oknie masz dwie powierzchnie, a w obiektywie kilkadziesiąt — i że w obiektywie to odbite światło nie ucieka do pokoju, tylko zostaje uwięzione w metalowej tubie.</p>
+
+    <p>Przyczyna jest prostsza, niż się wydaje, i nie ma nic wspólnego z jakością wykonania. Światło zmienia prędkość, kiedy przechodzi z jednego ośrodka do drugiego — z powietrza do szkła zwalnia mniej więcej półtora raza. <span class="term-cyan">Każda taka zmiana jest nieciągłością</span>, a fala, która natrafia na nieciągłość, częściowo przez nią przechodzi, a częściowo zawraca. Dokładnie tak samo zachowuje się fala na sznurze, kiedy dobiega do miejsca, w którym cienki sznur przechodzi w gruby.</p>
+
+    <p>Ile dokładnie zawraca, mówi wzór, który w grafice komputerowej znasz z zupełnie innej strony — to ten sam Fresnel, który w shaderze decyduje o tym, że mokry asfalt jaśnieje pod płaskim kątem. Przy padaniu prostopadłym do powierzchni ma najprostszą możliwą postać:</p>
+
+    <div class="formula">
+      R = ( (<span class="vec" data-tip="Współczynnik załamania ośrodka, z którego światło przychodzi. Dla powietrza n₁ = 1,00">n₁</span> − <span class="vec" data-tip="Współczynnik załamania ośrodka, do którego światło wchodzi. Dla typowego szkła kronowego n₂ = 1,52">n₂</span>) / (<span class="vec" data-tip="Współczynnik załamania ośrodka, z którego światło przychodzi. Dla powietrza n₁ = 1,00">n₁</span> + <span class="vec" data-tip="Współczynnik załamania ośrodka, do którego światło wchodzi. Dla typowego szkła kronowego n₂ = 1,52">n₂</span>) )²
+      <span class="sub">R — ułamek natężenia, który zawraca. n₁, n₂ — współczynniki załamania po obu stronach granicy. Wzór obowiązuje tylko dla padania prostopadłego; kąt zmienia wszystko i wrócimy do tego za dwie sekcje.</span>
+      <div class="formula-action"><button class="reveal-btn" data-modal-target="explain-fresnel-prostopadle">Wyjaśnij ten wzór</button></div>
+    </div>
+
+    <p>Podstaw powietrze i typowe szkło kronowe — n₁ = 1,00, n₂ = 1,52 — i wychodzi 0,0426, czyli <strong>4,3 procent</strong>. Ta liczba jest w tej książce ważniejsza niż jakakolwiek inna. Zapamiętaj ją jako „cztery procent na powierzchnię”; wszystko, co dzieje się dalej, jest tylko mnożeniem tej liczby przez liczbę powierzchni i przez liczbę sposobów, na jakie światło może się między nimi odbić.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Granica powietrze–szkło</span><span>padanie bliskie prostopadłemu</span></div>
+      <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Promień światła pada na powierzchnię szkła; 96 procent przechodzi dalej i załamuje się, 4 procent odbija się z powrotem.">
+        <defs>
+          <marker id="f3a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#e8a33d"/></marker>
+          <marker id="f3b" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#e8a33d" opacity="0.55"/></marker>
+        </defs>
+
+        <rect x="380" y="30" width="350" height="240" fill="#4fc3c0" opacity="0.10"/>
+        <line x1="380" y1="30" x2="380" y2="270" stroke="#4fc3c0" stroke-width="2"/>
+        <text x="392" y="52" font-family="IBM Plex Mono" font-size="11" fill="#4fc3c0">szkło · n = 1,52</text>
+        <text x="140" y="52" font-family="IBM Plex Mono" font-size="11" fill="#8b909b">powietrze · n = 1,00</text>
+
+        <line x1="300" y1="150" x2="460" y2="150" stroke="#8b909b" stroke-width="1" stroke-dasharray="5 5" opacity="0.7"/>
+        <text x="300" y="142" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">normalna</text>
+
+        <line x1="130" y1="72" x2="380" y2="150" stroke="#e8a33d" stroke-width="3" marker-end="url(#f3a)"/>
+        <text x="136" y="66" font-family="IBM Plex Mono" font-size="11.5" fill="#e8a33d">100%</text>
+
+        <line x1="380" y1="150" x2="700" y2="205" stroke="#e8a33d" stroke-width="2.8" marker-end="url(#f3a)"/>
+        <text x="596" y="196" font-family="IBM Plex Mono" font-size="12" fill="#e8a33d">96% przechodzi</text>
+
+        <line x1="380" y1="150" x2="150" y2="232" stroke="#e8a33d" stroke-width="1.2" opacity="0.55" marker-end="url(#f3b)"/>
+        <text x="152" y="252" font-family="IBM Plex Mono" font-size="12" fill="#e8a33d" opacity="0.8">4% zawraca</text>
+
+        <path d="M 340 150 A 40 40 0 0 0 353 124" fill="none" stroke="#8b909b" stroke-width="1"/>
+        <text x="332" y="120" font-family="IBM Plex Mono" font-size="11" fill="#8b909b">θ</text>
+        <path d="M 420 150 A 40 40 0 0 0 417 157" fill="none" stroke="#8b909b" stroke-width="1"/>
+        <text x="428" y="172" font-family="IBM Plex Mono" font-size="11" fill="#8b909b">θ′</text>
+      </svg>
+      <div class="diagram-caption">Jedna powierzchnia, jedno rozstanie. Cztery procent nie jest defektem — jest właściwością granicy.</div>
+    </div>
+
+    <p>Zwróć uwagę, że nie ma tu żadnego założenia o tym, jak dobre jest szkło. Fresnel nie pyta o cenę obiektywu ani o rok produkcji. Pyta wyłącznie o to, o ile zmienia się współczynnik załamania — a ponieważ wszystkie szkła optyczne mieszczą się mniej więcej między 1,45 a 1,95, wszystkie odbijają podobnie dużo. Szkło o wyższym współczynniku, którego konstruktorzy używają do korygowania aberracji, odbija nawet <em>więcej</em>: dla n = 1,80 wychodzi już 8,2 procent na powierzchnię.</p>
+
+    <p class="deeper-inline">Pełne wzory Fresnela dla obu polaryzacji, z wyprowadzeniem i z przybliżeniem Schlicka używanym w shaderach — <a href="../dodatki/dodatek-b-wzory-fresnela.html">Dodatek B</a>.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Rachunek · mnożenie się mści</div>
+    <h2>Trzydzieści powierzchni</h2>
+
+    <p>Cztery procent na jednej granicy brzmi niegroźnie. Problem w tym, że obiektyw nie ma jednej granicy. Ma ich tyle, ile powierzchni szkła stoi na drodze światła — a ponieważ każda soczewka ma przód i tył, <strong>liczba powierzchni to podwojona liczba soczewek</strong>, minus te, które konstruktor skleił ze sobą.</p>
+
+    <p>Prosty portretowy obiektyw z lat pięćdziesiątych ma sześć albo siedem soczewek, czyli kilkanaście powierzchni. Współczesna jasna stałka ma ich dziesięć do trzynastu. Kinowy zoom potrafi mieć dwadzieścia dwie soczewki, a po odjęciu sklejek i tak zostaje ponad trzydzieści granic powietrze–szkło. Sklejanie dwóch soczewek balsamem albo klejem optycznym nie jest wyłącznie zabiegiem korekcyjnym — to także sposób na skasowanie dwóch powierzchni, bo granica szkło–klej–szkło odbija dziesięć razy słabiej niż granica szkło–powietrze.</p>
+
+    <p>Przepuszczalność liczy się przez mnożenie. Każda powierzchnia przepuszcza 95,7 procent tego, co do niej dotarło, więc dla czternastu powierzchni dostajesz 0,957 podniesione do czternastej potęgi:</p>
+
+    <div class="worked">
+      <div class="wlabel">Obiektyw bez powłok, 7 soczewek</div>
+      <p class="step"><span class="k">powierzchni</span> <span class="v">= 7 × 2 = 14</span></p>
+      <p class="step"><span class="k">przepuszczalność jednej</span> <span class="v">= 1 − 0,043 = 0,957</span></p>
+      <p class="step"><span class="k">przepuszczalność całości</span> <span class="v">= 0,957<sup>14</sup> = </span><span class="result">0,54</span></p>
+      <p class="step"><span class="k">strata</span> <span class="v">= </span><span class="result">46% światła</span></p>
+      <p class="check">Sprawdzenie na jasności: obiektyw oznaczony f/1,4 przepuszczający 54% światła zachowuje się jak T/1,9 — prawie cała przysłona różnicy. To nie jest zaokrąglenie, to jest jedna z tych liczb, przez które operator wybiera szkło.</p>
+    </div>
+
+    <p>Dla zoomu z trzydziestoma powierzchniami ten sam rachunek daje 0,957<sup>30</sup> = 0,27. <span class="term-violet">Dwadzieścia siedem procent.</span> Trzy czwarte światła zostaje w tubie. Zoom bez powłok byłby więc nie tyle ciemny, co bezużyteczny — i to jest dokładny powód, dla którego przed drugą wojną światową zoomów praktycznie nie budowano, a obiektywy z ośmioma soczewkami uchodziły za konstrukcje ekstrawaganckie.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Stos soczewek</span><span>bez powłok, straty narastają</span></div>
+      <svg viewBox="0 0 760 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Wiązka światła przechodząca przez siedem soczewek słabnie z każdą powierzchnią, od stu procent na wejściu do pięćdziesięciu czterech na wyjściu.">
+        <line x1="20" y1="120" x2="740" y2="120" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 6"/>
+
+        <g stroke="#4fc3c0" stroke-width="1.6" fill="#4fc3c0" fill-opacity="0.13">
+          <path d="M 110 52 Q 128 120 110 188 Q 92 120 110 52 Z"/>
+          <path d="M 190 58 Q 172 120 190 182 Q 208 120 190 58 Z"/>
+          <path d="M 270 55 Q 288 120 270 185 Q 252 120 270 55 Z"/>
+          <path d="M 360 50 Q 380 120 360 190 Q 340 120 360 50 Z"/>
+          <path d="M 460 58 Q 442 120 460 182 Q 478 120 460 58 Z"/>
+          <path d="M 550 54 Q 568 120 550 186 Q 532 120 550 54 Z"/>
+          <path d="M 640 60 Q 622 120 640 180 Q 658 120 640 60 Z"/>
+        </g>
+
+        <g stroke="#e8a33d" fill="none">
+          <line x1="20" y1="120" x2="110" y2="120" stroke-width="7" opacity="1"/>
+          <line x1="110" y1="120" x2="190" y2="120" stroke-width="6.4" opacity="0.92"/>
+          <line x1="190" y1="120" x2="270" y2="120" stroke-width="5.8" opacity="0.84"/>
+          <line x1="270" y1="120" x2="360" y2="120" stroke-width="5.2" opacity="0.76"/>
+          <line x1="360" y1="120" x2="460" y2="120" stroke-width="4.6" opacity="0.68"/>
+          <line x1="460" y1="120" x2="550" y2="120" stroke-width="4.1" opacity="0.61"/>
+          <line x1="550" y1="120" x2="640" y2="120" stroke-width="3.6" opacity="0.55"/>
+          <line x1="640" y1="120" x2="740" y2="120" stroke-width="3.2" opacity="0.5"/>
+        </g>
+
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b" text-anchor="middle">
+          <text x="62" y="212">100%</text>
+          <text x="150" y="212">92%</text>
+          <text x="230" y="212">84%</text>
+          <text x="315" y="212">77%</text>
+          <text x="410" y="212">71%</text>
+          <text x="505" y="212">65%</text>
+          <text x="595" y="212">59%</text>
+        </g>
+        <text x="690" y="212" font-family="IBM Plex Mono" font-size="12" fill="#e8a33d" text-anchor="middle">54%</text>
+        <text x="20" y="36" font-family="IBM Plex Mono" font-size="11" fill="#8b909b">7 soczewek · 14 powierzchni · zero powłok</text>
+      </svg>
+      <div class="diagram-caption">Każda soczewka zabiera po dwa razy. Wiązka nie tyle się rozprasza, co jest sukcesywnie okradana.</div>
+    </div>
+
+    <p>I teraz najważniejsze zdanie tego rozdziału: <strong>te czterdzieści sześć procent nie znika</strong>. Energia nie ma dokąd zniknąć. Odbite światło leci z powrotem w głąb obiektywu, trafia na kolejną powierzchnię, znowu się częściowo odbija — i tak dalej, dopóki nie zostanie pochłonięte przez czernioną ściankę tubusu albo nie wyjdzie tam, gdzie nie powinno: na matrycę.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Kąt · dlaczego flara przychodzi z boku</div>
+    <h2>Cztery procent to najlepszy przypadek</h2>
+
+    <p>Wzór z pierwszej sekcji miał gwiazdkę: obowiązuje tylko dla światła padającego prostopadle. Im bardziej promień kładzie się na powierzchni, tym więcej się odbija — a przy kącie bliskim dziewięćdziesięciu stopni odbija się praktycznie wszystko. Dlatego widzisz odbicie chmur w kałuży, choć woda pod stopami jest przezroczysta, i dlatego szyba oglądana pod ostrym kątem staje się lustrem.</p>
+
+    <p>Przesuń suwak i zobacz, jak niewinne cztery procent zachowuje się przy większych kątach. Zwróć uwagę na dwie rzeczy: krzywa jest płaska aż do jakichś czterdziestu stopni, a potem rośnie gwałtownie — oraz na to, że światło o dwóch różnych polaryzacjach zachowuje się zupełnie inaczej.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Odbicie w funkcji kąta padania</span><span>granica powietrze–szkło, n = 1,52</span></div>
+      <div class="diagram-controls">
+        <label for="katPadania">Kąt padania</label>
+        <input id="katPadania" type="range" min="0" max="89" step="1" value="15">
+        <span class="value-readout" id="katOdczyt">15°</span>
+      </div>
+      <svg viewBox="0 0 760 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Wykres współczynnika odbicia w funkcji kąta padania: krzywa jest płaska do około czterdziestu stopni, potem gwałtownie rośnie do stu procent.">
+        <g stroke="#2a2f38" stroke-width="1">
+          <line x1="70" y1="290" x2="720" y2="290"/>
+          <line x1="70" y1="30" x2="70" y2="290"/>
+        </g>
+        <g stroke="#2a2f38" stroke-width="0.6" opacity="0.6">
+          <line x1="70" y1="225" x2="720" y2="225"/>
+          <line x1="70" y1="160" x2="720" y2="160"/>
+          <line x1="70" y1="95" x2="720" y2="95"/>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="10" fill="#8b909b">
+          <text x="40" y="294">0%</text>
+          <text x="34" y="229">25%</text>
+          <text x="34" y="164">50%</text>
+          <text x="34" y="99">75%</text>
+          <text x="30" y="34">100%</text>
+          <text x="64" y="308">0°</text>
+          <text x="277" y="308">30°</text>
+          <text x="493" y="308">60°</text>
+          <text x="700" y="308">90°</text>
+          <text x="330" y="330" fill="#8b909b">kąt padania</text>
+        </g>
+
+        <path id="krzywaRs" fill="none" stroke="#9c82d8" stroke-width="2"/>
+        <path id="krzywaRp" fill="none" stroke="#6e93be" stroke-width="2"/>
+        <path id="krzywaR" fill="none" stroke="#e8a33d" stroke-width="2.6"/>
+
+        <line id="brewster" y1="30" y2="290" stroke="#8b909b" stroke-width="1" stroke-dasharray="3 4" opacity="0.8"/>
+        <text id="brewsterEt" y="26" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">Brewster</text>
+
+        <line id="wskaznik" y1="30" y2="290" stroke="#ecebe4" stroke-width="1" opacity="0.5"/>
+        <circle id="punkt" r="5" fill="#e8a33d"/>
+
+        <g font-family="IBM Plex Mono" font-size="11">
+          <rect x="110" y="52" width="14" height="3" fill="#e8a33d"/><text x="132" y="58" fill="#ecebe4">światło niespolaryzowane</text>
+          <rect x="110" y="74" width="14" height="3" fill="#9c82d8"/><text x="132" y="80" fill="#8b909b">polaryzacja s</text>
+          <rect x="110" y="96" width="14" height="3" fill="#6e93be"/><text x="132" y="102" fill="#8b909b">polaryzacja p</text>
+        </g>
+      </svg>
+      <div class="diagram-caption" id="katPodpis">Przy 15° odbija się 4,3% światła — praktycznie tyle samo co przy padaniu prostopadłym.</div>
+    </div>
+
+    <p>Ta krzywa wyjaśnia obserwację, którą znasz z planu, nawet jeśli nigdy nie nazwałeś jej po imieniu: <strong>obiektyw flaruje najmocniej wtedy, gdy słońce jest tuż poza kadrem</strong>, a nie wtedy, gdy świeci prosto w oś. Światło wpadające pod dużym kątem odbija się od pierwszej powierzchni kilka razy silniej niż to z centrum kadru, a przy okazji wchodzi w tubus pod kątem, przy którym z dużym prawdopodobieństwem trafi w ściankę, w oprawę przysłony albo w krawędź soczewki. Osłona przeciwsłoneczna nie jest gadżetem — jest narzędziem, które odcina dokładnie ten zakres kątów.</p>
+
+    <p>Punkt, w którym fioletowa krzywa dotyka zera, to <span class="term-violet">kąt Brewstera</span>: dla szkła 56,7 stopnia. Padające pod tym kątem światło odbija się <em>wyłącznie</em> spolaryzowane w jednej płaszczyźnie — i to jest cała tajemnica filtra polaryzacyjnego, którym ścinasz odblaski z wody i z szyb. Filtr nie usuwa odbicia; ustawia się w poprzek jego polaryzacji.</p>
+
+    <p>Jeśli pracowałeś kiedykolwiek z shaderem PBR, ta krzywa jest twoją starą znajomą pod inną nazwą. To jest to samo, co robi <em>fresnelSchlick</em> w każdym rendererze: podnosi odbicie przy krawędziach obiektu, bo tam patrzysz na powierzchnię pod płaskim kątem. Różnica polega wyłącznie na tym, że tam liczysz ją dla powierzchni obiektu w scenie, a tutaj — dla powierzchni szkła, przez które ta scena jest oglądana.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Konsekwencja · gdzie ląduje reszta</div>
+    <h2>Dokąd leci te cztery procent</h2>
+
+    <p>Światło odbite od którejś z wewnętrznych powierzchni ma dwie drogi. Może odbić się jeszcze raz i wrócić na kurs w stronę matrycy — wtedy dociera tam, ale w złym miejscu i po złej drodze. Albo może rozproszyć się na matowej krawędzi soczewki, na gwincie oprawy, na listku przysłony — i wtedy rozlewa się po całym kadrze bez kształtu.</p>
+
+    <p>Te dwie drogi to dwa zjawiska, którym poświęcona jest cała Część V. Pierwsza daje <span class="term-amber">ghosty</span>: konkretne, policzalne plamy o kształcie przysłony, ułożone w linii przechodzącej przez środek kadru. Druga daje <span class="term-amber">veiling glare</span>: równomierną mgiełkę, która nie ma kształtu, za to podnosi czerń i zjada kontrast.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Tor ghosta</span><span>dwa odbicia, powrót na matrycę</span></div>
+      <svg viewBox="0 0 760 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Promień przechodzi przez dwie soczewki, odbija się od tylnej powierzchni drugiej, wraca do pierwszej, odbija się od niej ponownie i trafia na matrycę w innym miejscu niż obraz główny.">
+        <defs>
+          <marker id="g3a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#e8a33d"/></marker>
+          <marker id="g3b" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#e8a33d" opacity="0.6"/></marker>
+        </defs>
+
+        <g stroke="#4fc3c0" stroke-width="1.6" fill="#4fc3c0" fill-opacity="0.13">
+          <path d="M 200 55 Q 222 140 200 225 Q 178 140 200 55 Z"/>
+          <path d="M 420 65 Q 398 140 420 215 Q 442 140 420 65 Z"/>
+        </g>
+        <text x="176" y="46" font-family="IBM Plex Mono" font-size="10" fill="#4fc3c0">S1</text>
+        <text x="404" y="56" font-family="IBM Plex Mono" font-size="10" fill="#4fc3c0">S2</text>
+
+        <rect x="640" y="55" width="8" height="170" fill="#6e93be" opacity="0.7"/>
+        <text x="600" y="245" font-family="IBM Plex Mono" font-size="10.5" fill="#6e93be">matryca</text>
+
+        <line x1="30" y1="105" x2="200" y2="112" stroke="#e8a33d" stroke-width="3"/>
+        <line x1="200" y1="112" x2="420" y2="128" stroke="#e8a33d" stroke-width="3"/>
+        <line x1="420" y1="128" x2="644" y2="140" stroke="#e8a33d" stroke-width="3" marker-end="url(#g3a)"/>
+        <text x="36" y="98" font-family="IBM Plex Mono" font-size="11" fill="#e8a33d">obraz główny</text>
+
+        <line x1="420" y1="128" x2="200" y2="182" stroke="#e8a33d" stroke-width="1.2" opacity="0.6" marker-end="url(#g3b)"/>
+        <line x1="200" y1="182" x2="644" y2="86" stroke="#e8a33d" stroke-width="1.2" opacity="0.6" marker-end="url(#g3b)"/>
+        <circle cx="420" cy="128" r="4" fill="#e8a33d" opacity="0.85"/>
+        <circle cx="200" cy="182" r="4" fill="#e8a33d" opacity="0.85"/>
+        <text x="246" y="205" font-family="IBM Plex Mono" font-size="11" fill="#e8a33d" opacity="0.85">ghost · 0,043 × 0,043 = 0,18%</text>
+        <text x="556" y="76" font-family="IBM Plex Mono" font-size="10.5" fill="#e8a33d" opacity="0.85">ląduje gdzie indziej</text>
+      </svg>
+      <div class="diagram-caption">Ghost powstaje z parzystej liczby odbić — nieparzysta odesłałaby światło z powrotem przed obiektyw.</div>
+    </div>
+
+    <p>Ghost potrzebuje <strong>parzystej</strong> liczby odbić, żeby wrócić na kurs w stronę matrycy — najczęściej dokładnie dwóch. Ile jest takich możliwości? Tyle, na ile sposobów da się wybrać dwie powierzchnie z wszystkich dostępnych:</p>
+
+    <div class="worked">
+      <div class="wlabel">Ile ghostów potrafi dać jeden obiektyw</div>
+      <p class="step"><span class="k">powierzchni</span> <span class="v">N = 30</span></p>
+      <p class="step"><span class="k">pary powierzchni</span> <span class="v">= N × (N − 1) / 2 = 30 × 29 / 2 = </span><span class="result">435</span></p>
+      <p class="step"><span class="k">jasność jednego</span> <span class="v">= 0,043 × 0,043 = 0,0018, czyli </span><span class="result">0,18%</span></p>
+      <p class="check">Pojedynczy ghost o jasności 0,18% jest niewidoczny na zdjęciu dnia. Staje się widoczny dokładnie wtedy, gdy w kadrze jest źródło tysiąc razy jaśniejsze od reszty sceny — słońce, reflektor, latarnia. Dlatego flara jest zjawiskiem kontrastu, nie jasności.</p>
+    </div>
+
+    <p>Czterysta trzydzieści pięć potencjalnych ghostów w jednym obiektywie. Większość z nich nigdy nie trafia na matrycę, bo geometria im na to nie pozwala — ale kilkanaście trafia, i to właśnie one układają się w charakterystyczny sznur plam, po którym rozpoznaje się konkretny model obiektywu. <span class="term-cyan">Sznur ghostów jest podpisem konstrukcji</span>, tak samo indywidualnym jak układ soczewek, który go wytwarza.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Cyfra · powierzchnia, o której się zapomina</div>
+    <h2>Matryca też jest lustrem</h2>
+
+    <p>Wszystko, co powiedzieliśmy do tej pory, dotyczy granic wewnątrz obiektywu. Ale światło, które przeszło przez ostatnią soczewkę, nie kończy podróży w niebycie — trafia na matrycę. A matryca, wbrew intuicji, nie jest czarną dziurą pochłaniającą fotony. Jest kanapką z pokrywającej szybki, filtra dolnoprzepustowego, warstwy mikrosoczewek i filtrów barwnych, a pod tym wszystkim leży krzem, który sam w sobie odbija kilkadziesiąt procent światła.</p>
+
+    <p>Każda z tych warstw ma granicę, a każda granica robi to, co granice robią. Efekt jest taki, że część światła, które właśnie dotarło na matrycę, <strong>zawraca w stronę obiektywu</strong> — i wraca do środka układu, w którym czeka na nie trzydzieści powierzchni gotowych odbić je jeszcze raz, tym razem z powrotem na matrycę.</p>
+
+    <p>To jest zjawisko, którego taśma filmowa nie miała. Emulsja była matowa i pochłaniała prawie wszystko, co do niej doleciało; jedyne, co potrafiła odbić, to światło od tylnej strony podłoża — i to jest halacja, o której będzie <a href="rozdzial-28-halacja.html">Rozdział 28</a>. Matryca odbija do przodu, w stronę szkła, i daje przez to rodzinę artefaktów nieznanych w epoce analogowej: <span class="term-raster">ghosty, których źródłem jest sam sensor</span>, zwykle wyraźnie czerwonawe i ustawione symetrycznie względem jasnego źródła.</p>
+
+    <p>Czerwonawe, bo krzem jest najbardziej odblaskowy w podczerwieni i przy długich falach, a filtr odcinający podczerwień siedzi <em>przed</em> nim i sam ma dwie powierzchnie. Dlatego kamery cyfrowe potrafią pokazać przy nocnych zdjęciach plamy, których ten sam obiektyw na taśmie nigdy nie rysował — a producenci obiektywów projektowanych pod cyfrę liczą dziś odbicia od matrycy jako element układu optycznego, nie jako przypadek.</p>
+
+    <p>Dla ciebie ma to konsekwencję praktyczną i jedną wcale nieoczywistą: kiedy dopasowujesz render do plate'u nakręconego cyfrowo, część flary, którą widzisz w materiale, <strong>nie pochodzi z obiektywu wcale</strong>. Pochodzi z rozmowy między obiektywem a matrycą — i jest inna dla tego samego szkła na dwóch różnych korpusach. Biblioteka flar zebrana z jednej kamery nie przenosi się na drugą tak dobrze, jak by się chciało.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Rozwiązanie · i dlaczego zmieniło wszystko</div>
+    <h2>Jak zejść z czterech procent do dwóch dziesiątych</h2>
+
+    <p>Skoro odbicie bierze się z nagłej zmiany współczynnika załamania, to sposobem na jego osłabienie jest zrobienie tej zmiany mniej nagłą. Nakłada się na szkło przezroczystą warstewkę o współczynniku pośrednim między powietrzem a szkłem — i zamiast jednego dużego skoku światło napotyka dwa mniejsze.</p>
+
+    <p>Sama warstwa by nie wystarczyła. Sztuczka polega na jej <strong>grubości</strong>. Jeśli warstwa ma dokładnie ćwierć długości fali, to promień odbity od jej wierzchu i promień odbity od jej spodu przebywają drogę różniącą się o pół fali — i spotykają się dokładnie w przeciwfazie. Grzbiet trafia na dolinę i zostaje zero. Odbicie nie tyle zostaje pochłonięte, co <em>wygaszone</em>.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Powłoka ćwierćfalowa</span><span>wygaszenie przez interferencję</span></div>
+      <svg viewBox="0 0 760 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Dwie fale odbite od wierzchu i spodu cienkiej powłoki spotykają się w przeciwfazie i wzajemnie się znoszą.">
+        <rect x="300" y="30" width="34" height="200" fill="#9c82d8" opacity="0.22"/>
+        <rect x="334" y="30" width="396" height="200" fill="#4fc3c0" opacity="0.10"/>
+        <line x1="300" y1="30" x2="300" y2="230" stroke="#9c82d8" stroke-width="1.6"/>
+        <line x1="334" y1="30" x2="334" y2="230" stroke="#4fc3c0" stroke-width="1.6"/>
+        <text x="344" y="50" font-family="IBM Plex Mono" font-size="11" fill="#4fc3c0">szkło · n = 1,52</text>
+        <text x="150" y="50" font-family="IBM Plex Mono" font-size="11" fill="#8b909b">powietrze</text>
+        <text x="238" y="250" font-family="IBM Plex Mono" font-size="10.5" fill="#9c82d8">powłoka · n = 1,38 · ok. 100 nm</text>
+
+        <line x1="40" y1="90" x2="300" y2="90" stroke="#e8a33d" stroke-width="2.6"/>
+        <text x="46" y="82" font-family="IBM Plex Mono" font-size="11" fill="#e8a33d">światło padające</text>
+
+        <path d="M 40 150 q 16 -18 32 0 q 16 18 32 0 q 16 -18 32 0 q 16 18 32 0 q 16 -18 32 0 q 16 18 32 0 q 16 -18 32 0 q 16 18 32 0"
+              fill="none" stroke="#9c82d8" stroke-width="2"/>
+        <text x="46" y="134" font-family="IBM Plex Mono" font-size="10.5" fill="#9c82d8">odbicie od wierzchu powłoki</text>
+
+        <path d="M 40 200 q 16 18 32 0 q 16 -18 32 0 q 16 18 32 0 q 16 -18 32 0 q 16 18 32 0 q 16 -18 32 0 q 16 18 32 0 q 16 -18 32 0"
+              fill="none" stroke="#4fc3c0" stroke-width="2"/>
+        <text x="46" y="228" font-family="IBM Plex Mono" font-size="10.5" fill="#4fc3c0">odbicie od spodu · przesunięte o pół fali</text>
+
+        <line x1="300" y1="150" x2="300" y2="200" stroke="#8b909b" stroke-width="1" stroke-dasharray="3 3"/>
+        <text x="420" y="150" font-family="IBM Plex Mono" font-size="12" fill="#ecebe4">suma = 0</text>
+        <text x="420" y="172" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">grzbiet trafia na dolinę</text>
+      </svg>
+      <div class="diagram-caption">Ćwierć długości fali w warstwie to pół długości fali różnicy dróg — i przeciwfaza.</div>
+    </div>
+
+    <p>Haczyk jest taki, że „ćwierć długości fali” to ćwierć <em>jednej konkretnej</em> fali. Powłoka dobrana pod zieleń przy 550 nanometrach wygasza zieleń niemal całkowicie, ale czerwień i fiolet już nie — i to, co z nich zostaje, nadaje odbiciu barwę. Stąd te charakterystyczne fioletowe, bursztynowe albo szmaragdowe refleksy na przedniej soczewce, po których rozpoznaje się producenta. <span class="term-amber">Kolor flary jest kolorem tego, czego powłoka nie zdążyła wygasić.</span></p>
+
+    <p class="deeper-inline">Dlaczego akurat ćwierć fali, jak dobiera się współczynnik powłoki i skąd biorą się powłoki wielowarstwowe — <a href="../dodatki/dodatek-b-wzory-fresnela.html">Dodatek B</a>, oraz cały <a href="rozdzial-24-powloki.html">Rozdział 24</a>.</p>
+
+    <p>Efekt liczbowo: pojedyncza warstwa fluorku magnezu schodzi z 4,3 procent do około 1,3. Współczesna powłoka wielowarstwowa — do 0,2 procent i mniej. Przesuń suwak, żeby zobaczyć, co to robi z całym obiektywem:</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Przepuszczalność całego układu</span><span>w funkcji liczby soczewek</span></div>
+      <div class="diagram-controls">
+        <label for="liczbaSoczewek">Soczewek</label>
+        <input id="liczbaSoczewek" type="range" min="1" max="22" step="1" value="7">
+        <span class="value-readout" id="soczewkiOdczyt">7 · 14 powierzchni</span>
+      </div>
+      <svg viewBox="0 0 760 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Trzy krzywe przepuszczalności w funkcji liczby soczewek: bez powłok spada gwałtownie, z powłoką jednowarstwową łagodnie, z wielowarstwową prawie wcale.">
+        <g stroke="#2a2f38" stroke-width="1">
+          <line x1="70" y1="270" x2="720" y2="270"/>
+          <line x1="70" y1="30" x2="70" y2="270"/>
+        </g>
+        <g stroke="#2a2f38" stroke-width="0.6" opacity="0.6">
+          <line x1="70" y1="210" x2="720" y2="210"/>
+          <line x1="70" y1="150" x2="720" y2="150"/>
+          <line x1="70" y1="90" x2="720" y2="90"/>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="10" fill="#8b909b">
+          <text x="40" y="274">0%</text>
+          <text x="34" y="214">25%</text>
+          <text x="34" y="154">50%</text>
+          <text x="34" y="94">75%</text>
+          <text x="30" y="34">100%</text>
+          <text x="66" y="288">1</text>
+          <text x="360" y="288">11</text>
+          <text x="706" y="288">22</text>
+          <text x="330" y="308" fill="#8b909b">liczba soczewek</text>
+        </g>
+
+        <path id="krzywaBez" fill="none" stroke="#9c82d8" stroke-width="2.4"/>
+        <path id="krzywaJedno" fill="none" stroke="#6e93be" stroke-width="2.4"/>
+        <path id="krzywaWielo" fill="none" stroke="#e8a33d" stroke-width="2.6"/>
+
+        <line id="wskaznik2" y1="30" y2="270" stroke="#ecebe4" stroke-width="1" opacity="0.45"/>
+        <circle id="punktBez" r="4.5" fill="#9c82d8"/>
+        <circle id="punktJedno" r="4.5" fill="#6e93be"/>
+        <circle id="punktWielo" r="4.5" fill="#e8a33d"/>
+
+        <g font-family="IBM Plex Mono" font-size="11">
+          <rect x="110" y="196" width="14" height="3" fill="#e8a33d"/><text x="132" y="202" fill="#ecebe4">wielowarstwowa · 0,2%</text>
+          <rect x="110" y="218" width="14" height="3" fill="#6e93be"/><text x="132" y="224" fill="#8b909b">jednowarstwowa · 1,3%</text>
+          <rect x="110" y="240" width="14" height="3" fill="#9c82d8"/><text x="132" y="246" fill="#8b909b">bez powłoki · 4,3%</text>
+        </g>
+      </svg>
+      <div class="diagram-caption" id="soczewkiPodpis">7 soczewek: bez powłok 54%, jednowarstwowa 83%, wielowarstwowa 97%.</div>
+    </div>
+
+    <p>Popatrz na fioletową krzywą i na bursztynową w prawej części wykresu. To nie jest różnica ilościowa — to jest różnica między „da się zbudować” a „nie ma sensu próbować”. Dopóki powłok nie było, każda dodatkowa soczewka kosztowała tak dużo światła i kontrastu, że konstruktorzy walczyli o utrzymanie ich liczby poniżej sześciu. Po wojnie, kiedy powłoki weszły do produkcji seryjnej, ten sam koszt spadł do wartości pomijalnej — i dopiero wtedy stały się możliwe zoomy, retrofokusy i wszystkie te kilkunastosoczewkowe konstrukcje, które w Części IV będziemy oglądać w przekroju.</p>
+
+    <p>To jest odpowiedź na pytanie, od którego zwykle zaczyna się rozmowa o obiektywach: <strong>czy więcej szkieł znaczy lepiej.</strong> Więcej szkieł znaczy lepiej skorygowane aberracje — o tym jest Część III — i jednocześnie więcej powierzchni, czyli mniej kontrastu i więcej flary. Powłoki nie unieważniły tego kompromisu, tylko przesunęły go tak daleko, że przestał być pierwszym ograniczeniem konstrukcji. Nadal jednak istnieje, i nadal słychać go w zdaniu, które pada na każdym planie: <em>„te stare szkła mają charakter”</em>. Charakter to w dużej mierze właśnie ten brakujący kontrast.</p>
+  </div>
+
+  <div class="panel practice">
+    <div class="panel-label">Z praktyki</div>
+    <p><strong>Jeśli dokładasz flarę w compie, dokładaj też stratę kontrastu.</strong> Najczęstszy błąd przy podrabianiu flary polega na dodaniu ghostów i pozostawieniu czerni tam, gdzie były. W prawdziwym obiektywie te dwie rzeczy zawsze idą w parze, bo mają jedno źródło: światło, które zeszło z kursu. Ghost bez podniesionego czarnego wygląda jak naklejka — i wygląda tak nawet wtedy, gdy sam ghost narysowany jest bez zarzutu.</p>
+    <p><strong>Rachunek na T-stopę robi się w głowie.</strong> Podziel liczbę f przez pierwiastek z przepuszczalności. Nowoczesna stałka z powłokami wielowarstwowymi traci kilka procent, więc f/1,4 daje mniej więcej T/1,5 — i tak też jest oznaczana. Jeśli w danych obiektywu widzisz f/2,0 i T/2,4, wiesz od razu, że przepuszczalność wynosi około 70 procent, a to z kolei mówi ci, że masz do czynienia z konstrukcją wielosoczewkową, ze starymi powłokami albo z jednym i drugim.</p>
+    <p><strong>Renderer domyślnie nie wie o niczym z tego rozdziału.</strong> Kamera w Arnoldzie, Cyclesie czy Karmie to dziurka bez szkła: zero strat, zero odbić wewnętrznych, zero flary. Renderujesz obraz, który przyszedł z obiektywu doskonałego, jakiego nikt nigdy nie zbudował — i to jest dokładnie ten „zbyt czysty” wygląd, który zdradza CG, zanim widz zdąży się zastanowić dlaczego. Czym to uzupełnić i na którym etapie, rozstrzygamy w <a href="rozdzial-34-render-czy-comp.html">Rozdziale 34</a>.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>współczynnik załamania (n)</dt>
+      <dd>Liczba mówiąca, ile razy wolniej światło porusza się w danym ośrodku niż w próżni. Powietrze ma praktycznie 1,00, szkła optyczne od 1,45 do 1,95. To jedyna właściwość materiału, o którą pyta wzór Fresnela.</dd>
+      <dt>współczynnik odbicia (R)</dt>
+      <dd>Ułamek natężenia światła, który zawraca na granicy dwóch ośrodków. Zależy od obu współczynników załamania i od kąta padania — nigdy od jakości wykonania powierzchni.</dd>
+      <dt>powierzchnia powietrze–szkło</dt>
+      <dd>Każda granica, na której światło wchodzi ze szkła w powietrze albo odwrotnie. Kluczowa jednostka liczenia w tym rozdziale: soczewka pojedyncza daje dwie, sklejka z dwóch soczewek — także dwie, bo granica wewnętrzna prawie nie odbija.</dd>
+      <dt>przepuszczalność</dt>
+      <dd>Ułamek światła, który przechodzi przez cały układ. Liczona przez mnożenie przepuszczalności kolejnych powierzchni, dlatego spada wykładniczo z ich liczbą.</dd>
+      <dt>kąt Brewstera</dt>
+      <dd>Kąt padania, przy którym światło odbite jest w pełni spolaryzowane w jednej płaszczyźnie. Dla granicy powietrze–szkło wynosi 56,7°. Podstawa działania filtra polaryzacyjnego.</dd>
+      <dt>powłoka przeciwodblaskowa</dt>
+      <dd>Cienka warstwa nałożona na szkło, która wygasza odbicie przez interferencję. Grubość rzędu ćwierci długości fali, czyli około stu nanometrów — tysiąc razy cieńsza od włosa.</dd>
+      <dt>ghost</dt>
+      <dd>Plama powstała z parzystej liczby odbić wewnątrz obiektywu, która mimo wszystko trafiła na matrycę. Ma kształt przysłony i leży na linii przechodzącej przez środek kadru.</dd>
+      <dt>veiling glare</dt>
+      <dd>Bezkształtna mgiełka z rozproszonego światła wewnętrznego, podnosząca poziom czerni w całym kadrze. Nie widać jej jako obiektu — widać ją jako brak kontrastu.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Wiesz już, że każda powierzchnia szkła odbija, ile ich jest w obiektywie i co się dzieje ze światłem, które zawróciło. Zostało pytanie, po co w ogóle wpuszczać światło do szkła — czyli co takiego soczewka z nim robi, że warto płacić za to wszystkie opisane wyżej koszty. W <a href="rozdzial-04-soczewka-cienka.html">następnym rozdziale</a> zajmiemy się tym, co się dzieje z promieniem po tej drugiej, przepuszczonej stronie granicy: skąd bierze się ogniskowa i dlaczego liczba wybita na tubusie nie jest ani długością obiektywu, ani odległością do matrycy.</p>
+  </div>
 
   <div class="deeper">
     <div class="deeper-label">Idź głębiej</div>
@@ -56,8 +448,159 @@ window.SKY3D_MESSAGES = {
       <a class="nav-next" href="rozdzial-04-soczewka-cienka.html">Następny →</a>
   </div>
 
+  <template id="explain-fresnel-prostopadle">
+    <h3>Skąd się bierze te cztery procent</h3>
+
+    <p>Wzór opisuje, jaka część <strong>natężenia</strong> światła zawraca na granicy dwóch przezroczystych ośrodków, kiedy promień pada prostopadle do powierzchni.</p>
+
+    <div class="formula">R = ( (n₁ − n₂) / (n₁ + n₂) )²</div>
+
+    <p><strong>Co mówi licznik.</strong> Różnica n₁ − n₂ to miara tego, jak bardzo ośrodki się od siebie różnią. Gdyby były identyczne, różnica wynosiłaby zero i nie byłoby żadnego odbicia — i tak właśnie jest, gdy skleisz dwie soczewki klejem o współczynniku zbliżonym do szkła. Granica nadal fizycznie istnieje, ale dla światła przestaje być granicą.</p>
+
+    <p><strong>Co mówi mianownik.</strong> Suma n₁ + n₂ normalizuje tę różnicę. Dzięki temu wynik nie zależy od tego, w jakich jednostkach mierzymy, tylko od <em>względnej</em> zmiany ośrodka. Skok z 1,00 na 1,52 daje inne odbicie niż skok z 1,50 na 2,02, choć różnica bezwzględna jest w obu przypadkach ta sama.</p>
+
+    <p><strong>Dlaczego kwadrat.</strong> Nawias sam w sobie opisuje odbicie <em>amplitudy</em> fali — dla naszej granicy wychodzi −0,206, czyli około jednej piątej amplitudy, ze zmianą znaku. Ale oko, matryca i światłomierz nie mierzą amplitudy, tylko natężenie, a natężenie jest proporcjonalne do kwadratu amplitudy. Stąd podniesienie do kwadratu — i stąd 0,206² = 0,043 zamiast 0,206.</p>
+
+    <p>Minus w amplitudzie nie jest błędem rachunkowym: mówi, że fala odbita od ośrodka gęstszego wraca odwrócona o pół okresu. Ten szczegół wygląda na kosmetyczny, dopóki nie dojdziemy do powłok przeciwodblaskowych — tam jest całym mechanizmem działania.</p>
+
+    <p><strong>Podstawienia.</strong> Dla granicy powietrze–szkło, kilka typowych materiałów:</p>
+
+    <ul>
+      <li>szkło kronowe, n = 1,52 → R = 4,3%</li>
+      <li>szkło flintowe, n = 1,70 → R = 6,7%</li>
+      <li>szkło wysokozałamujące, n = 1,90 → R = 9,6%</li>
+      <li>fluoryt, n = 1,43 → R = 3,1%</li>
+    </ul>
+
+    <p>Konstruktor sięgający po szkło o wysokim współczynniku, żeby lepiej skorygować aberracje, płaci za to podwójnie: raz na dyspersji, drugi raz właśnie tutaj. To jeden z powodów, dla których powłoki przeciwodblaskowe nakłada się na różne soczewki w różnym stopniu.</p>
+
+    <p><em>Uwaga na zakres stosowalności: ten wzór to szczególny przypadek pełnych równań Fresnela, ważny wyłącznie dla padania prostopadłego. Dla dowolnego kąta trzeba rozdzielić dwie polaryzacje i policzyć je osobno — patrz wykres w tym rozdziale oraz Dodatek B.</em></p>
+  </template>
+
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-panel">
+      <button class="modal-close" data-modal-close aria-label="Zamknij">×</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
 </div>
 
 <script src="../assets/interactive.js"></script>
+<script>
+/* Widgety tego rozdzialu. Wzorzec SVG+suwak: SVG jest w HTML, skrypt tylko
+   dorysowuje krzywe i przesuwa wskaznik. Zadnych zaleznosci. */
+
+/* 1. Odbicie w funkcji kata padania — pelne rownania Fresnela dla obu
+      polaryzacji, granica powietrze-szklo. */
+(function () {
+  var sl = document.getElementById('katPadania');
+  if (!sl) return;
+  var N1 = 1.0, N2 = 1.52;
+  var X0 = 70, X1 = 720, Y0 = 290, Y1 = 30;
+  function px(a) { return X0 + (a / 90) * (X1 - X0); }
+  function py(r) { return Y0 - r * (Y0 - Y1); }
+
+  function odbicie(aDeg) {
+    var th = aDeg * Math.PI / 180;
+    var s = (N1 / N2) * Math.sin(th);
+    if (s >= 1) return { rs: 1, rp: 1, r: 1 };          // calkowite odbicie wewnetrzne
+    var tt = Math.asin(s);
+    var c1 = Math.cos(th), c2 = Math.cos(tt);
+    var rs = Math.pow((N1 * c1 - N2 * c2) / (N1 * c1 + N2 * c2), 2);
+    var rp = Math.pow((N1 * c2 - N2 * c1) / (N1 * c2 + N2 * c1), 2);
+    return { rs: rs, rp: rp, r: (rs + rp) / 2 };
+  }
+
+  function sciezka(pole) {
+    var d = '';
+    for (var a = 0; a <= 90; a += 0.5) {
+      d += (a === 0 ? 'M ' : ' L ') + px(a).toFixed(1) + ' ' + py(odbicie(a)[pole]).toFixed(1);
+    }
+    return d;
+  }
+  document.getElementById('krzywaRs').setAttribute('d', sciezka('rs'));
+  document.getElementById('krzywaRp').setAttribute('d', sciezka('rp'));
+  document.getElementById('krzywaR').setAttribute('d', sciezka('r'));
+
+  var xB = px(Math.atan(N2 / N1) * 180 / Math.PI);
+  var br = document.getElementById('brewster');
+  br.setAttribute('x1', xB); br.setAttribute('x2', xB);
+  document.getElementById('brewsterEt').setAttribute('x', xB);
+
+  function proc(v) { return (v * 100).toFixed(1).replace('.', ','); }
+
+  function odswiez() {
+    var a = parseFloat(sl.value);
+    var o = odbicie(a);
+    document.getElementById('katOdczyt').textContent = a.toFixed(0) + '°';
+    var x = px(a), w = document.getElementById('wskaznik');
+    w.setAttribute('x1', x); w.setAttribute('x2', x);
+    var p = document.getElementById('punkt');
+    p.setAttribute('cx', x); p.setAttribute('cy', py(o.r));
+    var opis;
+    if (a < 25) opis = 'praktycznie tyle samo co przy padaniu prostopadłym';
+    else if (a < 50) opis = 'wciąż niewiele — krzywa dopiero zaczyna się podnosić';
+    else if (a < 70) opis = 'odbicie rośnie już znacznie szybciej niż kąt';
+    else opis = 'szkło zachowuje się jak lustro';
+    document.getElementById('katPodpis').textContent =
+      'Przy ' + a.toFixed(0) + '° odbija się ' + proc(o.r) + '% światła — ' + opis + '.';
+  }
+  sl.addEventListener('input', odswiez);
+  odswiez();
+})();
+
+/* 2. Przepuszczalnosc calego ukladu w funkcji liczby soczewek, dla trzech
+      wariantow powloki. T = (1 - R) ^ (2n), bo kazda soczewka to dwie
+      powierzchnie. */
+(function () {
+  var sl = document.getElementById('liczbaSoczewek');
+  if (!sl) return;
+  var X0 = 70, X1 = 720, Y0 = 270, Y1 = 30, NMAX = 22;
+  function px(n) { return X0 + ((n - 1) / (NMAX - 1)) * (X1 - X0); }
+  function py(t) { return Y0 - t * (Y0 - Y1); }
+  function T(n, r) { return Math.pow(1 - r, 2 * n); }
+
+  var WARIANTY = [
+    { r: 0.043, krzywa: 'krzywaBez',   punkt: 'punktBez' },
+    { r: 0.013, krzywa: 'krzywaJedno', punkt: 'punktJedno' },
+    { r: 0.002, krzywa: 'krzywaWielo', punkt: 'punktWielo' }
+  ];
+
+  WARIANTY.forEach(function (w) {
+    var d = '';
+    for (var n = 1; n <= NMAX; n++) {
+      d += (n === 1 ? 'M ' : ' L ') + px(n).toFixed(1) + ' ' + py(T(n, w.r)).toFixed(1);
+    }
+    document.getElementById(w.krzywa).setAttribute('d', d);
+  });
+
+  /* Polska odmiana przez liczebnik: 1 soczewka, 2-4 soczewki, 5+ soczewek,
+     ale 12-14 soczewek i 22 soczewki. */
+  function odmiana(n) {
+    if (n === 1) return 'soczewka';
+    var d = n % 10, s = n % 100;
+    if (d >= 2 && d <= 4 && !(s >= 12 && s <= 14)) return 'soczewki';
+    return 'soczewek';
+  }
+
+  function odswiez() {
+    var n = parseInt(sl.value, 10);
+    var x = px(n), w = document.getElementById('wskaznik2');
+    w.setAttribute('x1', x); w.setAttribute('x2', x);
+    WARIANTY.forEach(function (v) {
+      var el = document.getElementById(v.punkt);
+      el.setAttribute('cx', x); el.setAttribute('cy', py(T(n, v.r)));
+    });
+    document.getElementById('soczewkiOdczyt').textContent = n + ' · ' + (2 * n) + ' powierzchni';
+    document.getElementById('soczewkiPodpis').textContent =
+      n + ' ' + odmiana(n) + ': bez powłok ' + Math.round(T(n, 0.043) * 100) +
+      '%, jednowarstwowa ' + Math.round(T(n, 0.013) * 100) +
+      '%, wielowarstwowa ' + Math.round(T(n, 0.002) * 100) + '%.';
+  }
+  sl.addEventListener('input', odswiez);
+  odswiez();
+})();
+</script>
 </body>
 </html>
