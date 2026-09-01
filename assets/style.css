@@ -180,6 +180,14 @@ h1{font-family:var(--display);font-weight:600;font-size:clamp(30px,5vw,50px);lin
 .index-row:hover{padding-left:10px;border-color:var(--amber);}
 .index-num{font-family:var(--mono);font-size:10.5px;color:var(--text-dim);letter-spacing:.05em;text-transform:uppercase;display:block;margin-bottom:4px;}
 .index-title{font-size:15.5px;font-weight:500;display:block;}
+/* Znacznik stanu w spisie tresci. Ksiazka jest zywa i wymienia wszystkie
+   strony od pierwszego dnia, wiec czytelnik musi widziec, ktore juz sa
+   napisane, zanim kliknie. Utrzymywany przez dev/stan.py. */
+.stan{display:inline-block;margin-left:10px;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;padding:2px 9px;border-radius:10px;border:1px solid var(--border);color:var(--text-dim);vertical-align:1px;}
+.stan--gotowy{color:var(--amber);border-color:var(--amber);}
+.index-row:has(.stan--gotowy) .index-title{color:var(--text);}
+.index-row:not(:has(.stan--gotowy)) .index-title{color:var(--text-dim);}
+
 .index-hook{font-size:13.5px;color:var(--text-dim);display:block;margin-top:4px;max-width:640px;}
 .footer-note{margin-top:70px;padding-top:28px;border-top:1px solid var(--border);font-size:13.5px;color:var(--text-dim);}
 

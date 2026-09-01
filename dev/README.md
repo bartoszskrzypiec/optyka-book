@@ -7,6 +7,7 @@ pliki HTML i nic ich nie generuje w locie.
 |---|---|
 | `scaffold.py szkielet` | Tworzy brakujące strony z `dev/spis.json`. Istniejących nie rusza, nigdy. |
 | `scaffold.py sprawdz` | Kontrola spójności. Musi przechodzić czysto przed commitem. |
+| `stan.py` | Synchronizuje znaczniki „gotowy / w przygotowaniu” w spisie treści ze stanem stron. |
 | `slowa.py` | Licznik prozy w `.section` i wizualizacji. Cel: 2000–3500 słów, 5–8 wiz. |
 | `wstaw.py` | Wstawia treść w miejsce `<!-- TRESC -->`. Odmawia, jeśli znacznika już nie ma. |
 | `dopisz.py` | Dopisuje sekcje przed blokiem „Z praktyki". Odmawia, jeśli go nie znajdzie. |

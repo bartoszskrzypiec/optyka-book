@@ -150,6 +150,8 @@ dev/spis.json                           — the book's structure, single source
 dev/scaffold.py                         — szkielet | sprawdz
 dev/wstaw.py, dev/dopisz.py             — insert content into a page
 dev/slowa.py                            — word/visualisation counter
+dev/stan.py                             — syncs the "gotowy / w przygotowaniu"
+                                          markers in index.html with reality
 ```
 
 The nine parts, in dependency order — **nothing appears before there is
@@ -220,7 +222,9 @@ sites, so a relative path would not resolve.
 
 Before every commit:
 
-1. `python dev/scaffold.py sprawdz` — must pass clean.
+1. `python dev/scaffold.py sprawdz` — must pass clean. If it reports a
+   STAN W SPISIE problem, run `python dev/stan.py`: a chapter changed
+   state and the table of contents still advertises the old one.
 2. `node --check` on any JS you touched.
 3. Serve the root and open the page: no console errors, no horizontal
    overflow at 360 px, no SVG labels outside their `viewBox`.

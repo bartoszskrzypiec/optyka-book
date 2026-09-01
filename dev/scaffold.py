@@ -364,7 +364,19 @@ def cmd_sprawdz():
                 f'BRAK WARTOWNIKA {os.path.relpath(path, ROOT)}: widget 3D bez '
                 f'sky3d-fallback.js (pusty prostokat przy file://)')
 
-    # 7. wzor musi definiowac swoje symbole
+    # 7. znaczniki stanu w spisie tresci musza zgadzac sie z rzeczywistoscia
+    #    Bez tego czytelnik klika w rozdzial oznaczony jako gotowy i trafia
+    #    na szkielet. Naprawa: python dev/stan.py
+    try:
+        import stan
+        for href in stan.sprawdz():
+            problems.append(
+                f'STAN W SPISIE index.html: wiersz {href} ma zly znacznik '
+                f'(napraw: python dev/stan.py)')
+    except Exception as e:
+        problems.append(f'STAN W SPISIE nie udalo sie sprawdzic: {e}')
+
+    # 8. wzor musi definiowac swoje symbole
     #    Zasada rodziny: kiedy .formula wprowadza zmienna, trzeba powiedziec,
     #    co ona znaczy. Mechanicznie da sie sprawdzic tylko obecnosc .sub —
     #    definicja w prozie obok jest rownie dobra, wiec to ostrzezenie,
