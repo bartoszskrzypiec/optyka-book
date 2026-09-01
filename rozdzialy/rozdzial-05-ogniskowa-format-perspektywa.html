@@ -43,7 +43,353 @@ window.SKY3D_MESSAGES = {
   <h1>Ogniskowa, format i mit kompresji perspektywy</h1>
   <p class="subtitle">Teleobiektyw niczego nie kompresuje. Perspektywę ustawiasz nogami — ogniskowa tylko kadruje to, co już zdecydowałeś, stając w tym, a nie innym miejscu.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li><strong>Teleobiektyw niczego nie kompresuje.</strong> Perspektywę — czyli wzajemne proporcje bliskiego i dalekiego — wyznacza wyłącznie <span class="term-amber">pozycja kamery</span>. Ogniskowa decyduje tylko o tym, jaki wycinek z tej perspektywy zobaczysz.</li>
+      <li>A jednak „look” szerokiego kąta i teleobiektywu jest realny. Bierze się stąd, że pod to samo kadrowanie stajesz gdzie indziej — więc wybierając ogniskową, wybierasz w praktyce odległość.</li>
+      <li>Format matrycy nie zmienia perspektywy ani nie zmienia obiektywu. Zmienia <strong>wycinek</strong>. Cała arytmetyka „ekwiwalentów” jest arytmetyką kadrowania, nie optyki.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Eksperyment · zrób go, zanim uwierzysz</div>
+    <h2>Ta sama twarz, trzy obiektywy</h2>
+
+    <p>Postaw kogoś przed sobą i zrób trzy zdjęcia: szerokim kątem, normalną i teleobiektywem — za każdym razem cofając się albo podchodząc tak, żeby głowa zajmowała <em>dokładnie</em> tyle samo kadru. Trzy zdjęcia będą wyglądać zupełnie inaczej. Na szerokim nos będzie duży, uszy schowane, tło rozległe i odległe. Na tele twarz spłaszczona, tło przybliżone i wielkie.</p>
+
+    <p>Naturalny wniosek: obiektywy inaczej odwzorowują przestrzeń. Wniosek naturalny i <span class="term-violet">fałszywy</span>.</p>
+
+    <p>Zrób ten sam eksperyment inaczej. Stań w jednym miejscu i zrób trzy zdjęcia bez ruszania się z miejsca, zmieniając wyłącznie ogniskową. Potem wykadruj szerokie zdjęcie do tego samego wycinka, co zdjęcie z tele. Dostaniesz <strong>ten sam obraz</strong> — gorszy jakościowo, bo powiększony z mniejszego kawałka matrycy, ale identyczny co do perspektywy. Nos będzie tak samo duży, tło tak samo daleko, wszystko na swoim miejscu.</p>
+
+    <p>Różnica w pierwszym eksperymencie nie brała się z obiektywu. Brała się stąd, że <strong>za każdym razem stałeś gdzie indziej</strong>.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>To samo kadrowanie, różne ogniskowe</span><span>kamera musi się przesunąć</span></div>
+      <div class="diagram-controls">
+        <label for="ogniskowaPersp">Ogniskowa</label>
+        <input id="ogniskowaPersp" type="range" min="18" max="200" step="1" value="50">
+        <span class="value-readout" id="perspOdczyt">50 mm · 0,83 m</span>
+      </div>
+      <svg viewBox="0 0 760 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Po lewej widok z góry: kamera oddala się przy dłuższej ogniskowej. Po prawej podgląd kadru: głowa zawsze tej samej wielkości, tło rośnie wraz z ogniskową.">
+        <text x="20" y="24" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">WIDOK Z GÓRY · oś pozioma to odległość</text>
+        <rect x="24" y="45" width="356" height="250" fill="none" stroke="#2a2f38" stroke-width="1"/>
+        <line x1="24" y1="170" x2="380" y2="170" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 6"/>
+        <g font-family="IBM Plex Mono" font-size="9" fill="#8b909b">
+          <text x="26" y="308">0</text><text x="112" y="308">3 m</text><text x="202" y="308">6 m</text><text x="292" y="308">9 m</text>
+        </g>
+        <circle cx="212" cy="170" r="7" fill="#6e93be"/>
+        <text x="188" y="192" font-family="IBM Plex Mono" font-size="10" fill="#6e93be">postać</text>
+        <rect x="360" y="100" width="9" height="140" fill="#9c82d8" opacity="0.55"/>
+        <text x="292" y="94" font-family="IBM Plex Mono" font-size="10" fill="#9c82d8">tło · 5 m dalej</text>
+
+        <polygon id="stozek" fill="#e8a33d" fill-opacity="0.13" stroke="#e8a33d" stroke-width="1"/>
+        <rect id="kamera" x="40" y="162" width="26" height="16" fill="#e8a33d"/>
+        <text id="kameraEt" x="34" y="150" font-family="IBM Plex Mono" font-size="10" fill="#e8a33d">kamera</text>
+
+        <line x1="400" y1="16" x2="400" y2="324" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 5"/>
+
+        <text x="430" y="24" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">PODGLĄD KADRU</text>
+        <rect x="430" y="44" width="300" height="200" fill="#20242c" stroke="#2a2f38" stroke-width="1.5"/>
+        <rect id="tloWKadrze" fill="#9c82d8" opacity="0.45"/>
+        <circle cx="580" cy="150" r="34" fill="#6e93be"/>
+        <text x="580" y="156" font-family="IBM Plex Mono" font-size="10" fill="#14161a" text-anchor="middle">postać</text>
+        <text x="430" y="264" font-family="IBM Plex Mono" font-size="9.5" fill="#6e93be">Postać: stały rozmiar — o to zadbało kadrowanie.</text>
+        <text x="430" y="280" font-family="IBM Plex Mono" font-size="9.5" fill="#9c82d8">Tło: rośnie, bo kamera się cofnęła.</text>
+        <text x="430" y="296" font-family="IBM Plex Mono" font-size="9.5" fill="#9c82d8">Szkło nie „ścisnęło” niczego.</text>
+      </svg>
+      <div class="diagram-caption" id="perspPodpis">50 mm: kamera 0,83 m od postaci, tło w kadrze 2,4 razy większe niż przy 18 mm.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Dowód · jedna linijka arytmetyki</div>
+    <h2>Dlaczego perspektywa zależy wyłącznie od pozycji</h2>
+
+    <p>Perspektywa, w sensie, w jakim widzi ją kamera, to <strong>stosunek rozmiarów kątowych</strong> obiektów w scenie. Jeśli bliski słup wydaje się dwa razy wyższy od dalekiego, to na obrazie wyjdzie dwa razy wyższy — niezależnie od tego, jakim szkłem to sfotografujesz.</p>
+
+    <p>Rozmiar kątowy obiektu o wysokości <em>h</em> stojącego w odległości <em>d</em> to w przybliżeniu <em>h/d</em>. Stosunek dla dwóch obiektów:</p>
+
+    <div class="formula">
+      stosunek = (<span class="vec" data-tip="Wysokość obiektu bliskiego">h₁</span> / <span class="vec" data-tip="Odległość obiektu bliskiego od kamery">d₁</span>) / (<span class="vec" data-tip="Wysokość obiektu dalekiego">h₂</span> / <span class="vec" data-tip="Odległość obiektu dalekiego od kamery">d₂</span>)
+      <span class="sub">h₁, h₂ — rzeczywiste wysokości obiektów. d₁, d₂ — ich odległości od kamery. Zauważ, czego w tym wzorze nie ma: ogniskowej.</span>
+    </div>
+
+    <p>I to jest cały dowód. <span class="term-cyan">We wzorze na perspektywę nie występuje ogniskowa</span>, bo ogniskowa nie ma tam czego robić. Wchodzi dopiero na następnym etapie — kiedy zamieniamy kąty na milimetry na matrycy — i mnoży wszystkie rozmiary przez tę samą liczbę. Mnożenie wszystkiego przez tę samą liczbę nie zmienia proporcji.</p>
+
+    <p>Stąd wniosek praktyczny, wart zapamiętania w tej postaci: <strong>ogniskowa jest suwakiem powiększenia, a nogi są suwakiem perspektywy</strong>. Kiedy szukasz konkretnego wyglądu przestrzeni, ustawiasz go krokiem do przodu albo do tyłu; ogniskową dobierasz potem, żeby wykadrować.</p>
+
+    <div class="worked">
+      <div class="wlabel">Ile naprawdę robi zmiana pozycji</div>
+      <p class="step"><span class="k">postać</span> <span class="v">wysokość 1,7 m</span></p>
+      <p class="step"><span class="k">budynek za nią</span> <span class="v">wysokość 12 m, 30 m za postacią</span></p>
+      <p class="step"><span class="k">kamera 1 m od postaci</span> <span class="v">postać 1,7/1 = 1,70 · budynek 12/31 = 0,387 → </span><span class="result">postać 4,4× większa</span></p>
+      <p class="step"><span class="k">kamera 6 m od postaci</span> <span class="v">postać 1,7/6 = 0,283 · budynek 12/36 = 0,333 → </span><span class="result">budynek 1,2× większy</span></p>
+      <p class="check">Ten sam budynek i ta sama postać, a proporcja odwróciła się o czynnik pięć. Żadnej ogniskowej w tym rachunku nie było — zmieniło się wyłącznie pięć metrów pozycji kamery.</p>
+    </div>
+  </div>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Ta sama scena, dwie pozycje</span><span>proporcja odwraca się o czynnik pięć</span></div>
+      <svg viewBox="0 0 760 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Dwie pozycje kamery przed postacią i budynkiem: z bliska postać dominuje, z daleka budynek. Ogniskowa nie występuje w tym rachunku.">
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">
+          <text x="20" y="22">KAMERA 1 m OD POSTACI</text>
+          <text x="410" y="22">KAMERA 6 m OD POSTACI</text>
+        </g>
+
+        <g>
+          <rect x="40" y="150" width="24" height="16" fill="#e8a33d"/>
+          <line x1="52" y1="150" x2="52" y2="120" stroke="#6e93be" stroke-width="8"/>
+          <text x="34" y="112" font-family="IBM Plex Mono" font-size="9.5" fill="#6e93be">1,7 m</text>
+          <rect x="150" y="88" width="34" height="78" fill="#9c82d8" opacity="0.4"/>
+          <text x="142" y="80" font-family="IBM Plex Mono" font-size="9.5" fill="#9c82d8">12 m</text>
+          <text x="30" y="188" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">widok z góry, 31 m do budynku</text>
+          <rect x="30" y="210" width="170" height="90" fill="#20242c" stroke="#2a2f38"/>
+          <circle cx="90" cy="255" r="34" fill="#6e93be"/>
+          <rect x="146" y="243" width="16" height="24" fill="#9c82d8" opacity="0.6"/>
+          <text x="36" y="228" font-family="IBM Plex Mono" font-size="9" fill="#8b909b">kadr</text>
+          <text x="30" y="316" font-family="IBM Plex Mono" font-size="10.5" fill="#e8a33d">postać 4,4× większa</text>
+        </g>
+
+        <line x1="380" y1="14" x2="380" y2="306" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 5"/>
+
+        <g>
+          <rect x="410" y="150" width="24" height="16" fill="#e8a33d"/>
+          <line x1="530" y1="150" x2="530" y2="120" stroke="#6e93be" stroke-width="8"/>
+          <text x="512" y="112" font-family="IBM Plex Mono" font-size="9.5" fill="#6e93be">1,7 m</text>
+          <rect x="628" y="88" width="34" height="78" fill="#9c82d8" opacity="0.4"/>
+          <text x="620" y="80" font-family="IBM Plex Mono" font-size="9.5" fill="#9c82d8">12 m</text>
+          <text x="404" y="188" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">widok z góry, 36 m do budynku</text>
+          <rect x="404" y="210" width="170" height="90" fill="#20242c" stroke="#2a2f38"/>
+          <circle cx="446" cy="266" r="14" fill="#6e93be"/>
+          <rect x="486" y="228" width="34" height="60" fill="#9c82d8" opacity="0.6"/>
+          <text x="410" y="228" font-family="IBM Plex Mono" font-size="9" fill="#8b909b">kadr</text>
+          <text x="404" y="316" font-family="IBM Plex Mono" font-size="10.5" fill="#9c82d8">budynek 1,2× większy</text>
+        </g>
+      </svg>
+      <div class="diagram-caption">Kadry po prawej i po lewej mogą mieć tę samą ogniskową albo różne — to bez znaczenia. Decyduje pięć metrów pozycji.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Rehabilitacja · „look” jednak istnieje</div>
+    <h2>Skoro to nieprawda, dlaczego 85 mm wygląda inaczej niż 24 mm</h2>
+
+    <p>Byłoby nieuczciwe zostawić sprawę na „to mit i tyle”, bo różnica, którą widzisz w kadrze, jest jak najbardziej realna. Rzecz w tym, skąd się bierze.</p>
+
+    <p>Ogniskowa i odległość są ze sobą <strong>sprzężone przez kadrowanie</strong>. Kiedy mówisz „kręcę tę scenę osiemdziesiątką piątką”, mówisz w praktyce „stanę tam, skąd osiemdziesiątka piątka daje ten kadr” — a to jest konkretna, wyliczalna odległość. Wybór szkła jest więc w codziennej pracy <em>proxy</em> dla wyboru odległości, i dlatego rozmowa o „charakterze ogniskowej” ma sens praktyczny, mimo że jest fizycznie nieścisła.</p>
+
+    <p>Wynikają z tego dwie rzeczy, które warto rozdzielić w głowie:</p>
+
+    <ul>
+      <li><strong>Jeśli możesz swobodnie chodzić</strong> — o wyglądzie przestrzeni decydujesz nogami, a ogniskowa jest tylko konsekwencją. Wtedy „to zdjęcie ma kompresję tele” znaczy „operator stał daleko”.</li>
+      <li><strong>Jeśli pozycja jest wymuszona</strong> — ciasnym wnętrzem, ulicą, bezpieczeństwem — to ogniskowa staje się jedynym suwakiem, jaki ci został, a perspektywa jest zadana z góry i nie da się jej zmienić żadnym szkłem.</li>
+    </ul>
+
+    <p>Ta druga sytuacja jest w produkcji częstsza, niż się wydaje, i jest głównym powodem, dla którego szerokie kąty mają opinię „zniekształcających”. Nie zniekształcają — po prostu używa się ich tam, gdzie trzeba stanąć blisko.</p>
+
+    <div class="subsection">
+      <h3>Najazd z transfokacją, czyli dowód wykonany na ekranie</h3>
+      <p>Istnieje ujęcie, które jest doświadczeniem z tego rozdziału przeprowadzonym na oczach widza. Kamera jedzie do przodu, a obiektyw jednocześnie odjeżdża — albo odwrotnie — dobrane tak, żeby <strong>postać w kadrze nie zmieniła rozmiaru ani o piksel</strong>. Efekt jest niepokojący: bohater stoi nieruchomo, a świat za nim rośnie albo się zapada.</p>
+      <p>Chwyt jest znany z <em>Zawrotu głowy</em> Hitchcocka i od tamtej pory bywa nazywany po prostu efektem Vertigo. Dla nas jest ważny z innego powodu: to jedyne ujęcie, w którym widać na własne oczy, że <span class="term-cyan">za wygląd przestrzeni odpowiada wyłącznie pozycja</span>. Ogniskowa zmienia się przez cały czas trwania ujęcia i przez cały czas nie robi ze sceną nic — jej jedyną rolą jest utrzymanie kadru, żeby zmiana pozycji stała się widoczna w czystej postaci.</p>
+      <p>Jest to zarazem najprostszy sposób, żeby sprawdzić w rendererze, czy dobrze rozumiesz ten rozdział. Wystarczy animować pozycję kamery po osi Z i jednocześnie ogniskową, trzymając iloczyn odległości i pola widzenia tak, żeby wybrany obiekt zachował rozmiar. Jeśli tło się nie zmienia, coś jest nie tak z konfiguracją kamery — najprawdopodobniej z rozmiarem matrycy.</p>
+      <p>Przy okazji tłumaczy to, dlaczego mit o kompresji jest tak trwały. W normalnej pracy nikt nie zmienia ogniskowej, stojąc w miejscu — bo zmieniłby wtedy kadr, a kadr jest zwykle zadany. Zmienia się ogniskową <em>razem</em> z pozycją, więc obie rzeczy zawsze idą w parze i naturalnie zlewają się w jedną. Rozdzielić je da się tylko wtedy, gdy się je celowo rozjedzie — albo w eksperymencie z początku rozdziału, albo właśnie w najeździe z transfokacją.</p>
+    </div>
+
+    <div class="subsection">
+      <h3>Portret i domniemane zniekształcenie twarzy</h3>
+      <p>Najczęstszy przykład tego nieporozumienia to portret. Twarz sfotografowana z pół metra ma powiększony nos i cofnięte uszy; ta sama twarz z trzech metrów wygląda naturalnie. Przypisuje się to obiektywowi — i stąd przekonanie, że „do portretu potrzeba 85 mm”.</p>
+      <p>Przyczyna jest wyłącznie w odległości. Nos jest bliżej kamery niż uszy o jakieś dziesięć centymetrów. Z pół metra to <strong>dwadzieścia procent</strong> całego dystansu, więc nos rośnie o jedną piątą względem uszu. Z trzech metrów te same dziesięć centymetrów to trzy procent i różnica znika.</p>
+      <div class="diagram-frame">
+        <div class="diagram-hud"><span>Nos kontra uszy</span><span>różnica 10 cm w głębi twarzy</span></div>
+        <svg viewBox="0 0 760 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cztery odległości kamery od twarzy: przy pół metra nos jest o 22 procent większy od uszu, przy trzech metrach różnica spada do 3 procent.">
+          <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">
+            <text x="30" y="24">Nos jest bliżej kamery niż uszy o około 10 cm. Ile to znaczy, zależy wyłącznie od tego, ile wynosi cały dystans.</text>
+          </g>
+          <g>
+            <rect x="60" y="70" width="130" height="120" fill="#20242c" stroke="#2a2f38"/>
+            <ellipse cx="125" cy="130" rx="30" ry="40" fill="#6e93be" opacity="0.35"/>
+            <circle cx="125" cy="134" r="17" fill="#e8a33d"/>
+            <text x="125" y="212" font-family="IBM Plex Mono" font-size="11" fill="#ecebe4" text-anchor="middle">0,5 m</text>
+            <text x="125" y="232" font-family="IBM Plex Mono" font-size="12" fill="#e8a33d" text-anchor="middle">+22%</text>
+          </g>
+          <g>
+            <rect x="230" y="70" width="130" height="120" fill="#20242c" stroke="#2a2f38"/>
+            <ellipse cx="295" cy="130" rx="30" ry="40" fill="#6e93be" opacity="0.35"/>
+            <circle cx="295" cy="134" r="12.5" fill="#e8a33d"/>
+            <text x="295" y="212" font-family="IBM Plex Mono" font-size="11" fill="#ecebe4" text-anchor="middle">1,0 m</text>
+            <text x="295" y="232" font-family="IBM Plex Mono" font-size="12" fill="#e8a33d" text-anchor="middle">+10%</text>
+          </g>
+          <g>
+            <rect x="400" y="70" width="130" height="120" fill="#20242c" stroke="#2a2f38"/>
+            <ellipse cx="465" cy="130" rx="30" ry="40" fill="#6e93be" opacity="0.35"/>
+            <circle cx="465" cy="134" r="11" fill="#e8a33d"/>
+            <text x="465" y="212" font-family="IBM Plex Mono" font-size="11" fill="#ecebe4" text-anchor="middle">2,0 m</text>
+            <text x="465" y="232" font-family="IBM Plex Mono" font-size="12" fill="#8b909b" text-anchor="middle">+5%</text>
+          </g>
+          <g>
+            <rect x="570" y="70" width="130" height="120" fill="#20242c" stroke="#2a2f38"/>
+            <ellipse cx="635" cy="130" rx="30" ry="40" fill="#6e93be" opacity="0.35"/>
+            <circle cx="635" cy="134" r="10.5" fill="#e8a33d"/>
+            <text x="635" y="212" font-family="IBM Plex Mono" font-size="11" fill="#ecebe4" text-anchor="middle">3,0 m</text>
+            <text x="635" y="232" font-family="IBM Plex Mono" font-size="12" fill="#8b909b" text-anchor="middle">+3%</text>
+          </g>
+        </svg>
+        <div class="diagram-caption">Cztery kadry o identycznym kadrowaniu głowy. Zmienia się wyłącznie dystans — i wraz z nim proporcja twarzy.</div>
+      </div>
+
+      <p>Zwróć uwagę, że różnica między dwoma i trzema metrami jest już praktycznie niewidoczna. Krzywa spłaszcza się szybko, i to jest powód, dla którego „obiektyw portretowy” ma dość szeroki zakres akceptowalnych ogniskowych — od 85 do 135 mm na pełnej klatce wszystko wygląda podobnie, bo wszystkie te dystanse leżą już na płaskiej części krzywej. Poniżej metra natomiast każde dziesięć centymetrów robi widoczną różnicę, i to jest jedyny obszar, w którym wybór ogniskowej naprawdę decyduje o rysach twarzy.</p>
+
+      <p>„Obiektyw portretowy” nie ma więc żadnej magii w szkle. Ma po prostu taką ogniskową, że przy typowym kadrze popiersia wypada stanąć w odległości, przy której twarz wygląda tak, jak przywykliśmy ją widzieć w rozmowie — czyli z około dwóch metrów. Na Super 35 tę samą rolę pełni pięćdziesiątka, a na telefonie z maleńką matrycą — obiektyw o ogniskowej sześciu milimetrów.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Drugie zniekształcenie · to, które naprawdę jest w optyce</div>
+    <h2>Rozciągnięte głowy w rogach kadru</h2>
+
+    <p>Jest jednak zniekształcenie szerokiego kąta, którego <em>nie</em> da się zrzucić na odległość — i warto je oddzielić od poprzedniego, bo mylenie ich prowadzi na manowce. Chodzi o twarze i kule, które w rogach szerokiego kadru wyglądają na rozciągnięte, jakby ktoś je pociągnął w stronę narożnika.</p>
+
+    <p>To nie jest wada obiektywu. To <strong>cena odwzorowania płaskiego</strong>, zwanego rektilinearnym — jedynego, w którym proste linie sceny zostają proste na obrazie. Ceną za tę prostoliniowość jest to, że skala rośnie w miarę oddalania się od środka kadru.</p>
+
+    <p>Mechanizm w jednym zdaniu: obraz powstaje na płaskiej matrycy, a promienie biegnące do jej rogów są dłuższe niż te biegnące do środka. Rzut na płaszczyznę rozciąga więc wszystko, co leży poza osią, o czynnik zależny od kąta:</p>
+
+    <div class="formula">
+      rozciągnięcie = 1 / cos<sup>3</sup> <span class="vec" data-tip="Kąt między osią optyczną a kierunkiem na dany punkt kadru">θ</span>
+      <span class="sub">θ — kąt między osią optyczną a kierunkiem na dany punkt kadru. Rozciągnięcie liczone dla obiektu trójwymiarowego, np. głowy; dla płaskiej powierzchni prostopadłej do osi wykładnik wynosi 2. Wartość 1 oznacza brak rozciągnięcia.</span>
+    </div>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Rzut rektilinearny</span><span>skala rośnie ku rogom kadru</span></div>
+      <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Rząd kul rzutowanych na płaską matrycę: w środku okrągłe, przy krawędziach coraz bardziej rozciągnięte w stronę rogu.">
+        <text x="20" y="22" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">SZEROKI KĄT · 100° W POZIOMIE</text>
+        <rect x="60" y="46" width="640" height="180" fill="#20242c" stroke="#2a2f38" stroke-width="1.5"/>
+        <line x1="380" y1="46" x2="380" y2="226" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 5"/>
+        <text x="386" y="60" font-family="IBM Plex Mono" font-size="9" fill="#8b909b">oś</text>
+
+        <g fill="#6e93be" opacity="0.85">
+          <ellipse cx="380" cy="136" rx="26" ry="26"/>
+          <ellipse cx="480" cy="136" rx="29" ry="26"/>
+          <ellipse cx="570" cy="136" rx="36" ry="26"/>
+          <ellipse cx="654" cy="136" rx="47" ry="26"/>
+          <ellipse cx="280" cy="136" rx="29" ry="26"/>
+          <ellipse cx="190" cy="136" rx="36" ry="26"/>
+          <ellipse cx="106" cy="136" rx="47" ry="26"/>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="9.5" fill="#e8a33d" text-anchor="middle">
+          <text x="380" y="180">1,00×</text>
+          <text x="480" y="180">1,05×</text>
+          <text x="570" y="180">1,29×</text>
+          <text x="654" y="180">1,74×</text>
+        </g>
+        <text x="60" y="256" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">Każda z tych kul jest w scenie identyczna. Rozciągnięcie jest właściwością rzutu,</text>
+        <text x="60" y="274" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">nie szkła — ten sam efekt daje idealny obiektyw i renderer bez żadnej wady.</text>
+      </svg>
+      <div class="diagram-caption">Prostoliniowość i stała skala wykluczają się wzajemnie. Odwzorowanie płaskie wybiera prostoliniowość.</div>
+    </div>
+
+    <p>Kluczowa obserwacja dla artysty CG: <strong>renderer robi dokładnie to samo</strong>. Standardowa kamera perspektywiczna w Arnoldzie, Cyclesie czy Karmie jest odwzorowaniem rektilinearnym, więc przy szerokim polu widzenia rozciąga rogi identycznie jak prawdziwy obiektyw. Nie jest to błąd do naprawienia — to jest zgodność.</p>
+
+    <p>Ma to dwie praktyczne konsekwencje. Po pierwsze, <span class="term-cyan">rozciągnięcia rogów nie należy mylić z dystorsją</span>: dystorsja wygina proste linie, a rzut rektilinearny je zachowuje. To rozróżnienie jest na tyle ważne, że dostaje własny rozdział — <a href="rozdzial-13-dystorsja.html">Rozdział 13</a>. Po drugie, ratunkiem nie jest zmiana obiektywu, tylko zmiana odwzorowania: rzut cylindryczny albo sferyczny utrzymuje stałą skalę kosztem wygięcia prostych. Dlatego panoramy o dużym kącie robi się w odwzorowaniu cylindrycznym, a nie rektilinearnym.</p>
+
+    <p>Praktyczny wniosek dla planu jest zaś taki, że twarze aktorów trzyma się z dala od rogów kadru przy szerokich ogniskowych — nie dlatego, że obiektyw jest słaby, tylko dlatego, że geometria rzutu nie zna litości i przy 100° pola widzenia głowa w rogu jest szersza o trzy czwarte.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Format · co zmienia rozmiar matrycy</div>
+    <h2>Ekwiwalencja i czego ona nie obiecuje</h2>
+
+    <p>Skoro perspektywa siedzi w pozycji, a ogniskowa kadruje, to rozmiar matrycy jest po prostu trzecim uczestnikiem tej samej rozmowy. Większa matryca łapie z tego samego obrazu większy wycinek — i to jest cała różnica.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Jeden obiektyw, trzy formaty</span><span>obraz ten sam, wycinek inny</span></div>
+      <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Koło obrazu obiektywu z wpisanymi trzema prostokątami matryc: 65 mm, pełna klatka i Super 35.">
+        <circle cx="300" cy="150" r="128" fill="#e8a33d" fill-opacity="0.07" stroke="#e8a33d" stroke-width="1.2" stroke-dasharray="5 5"/>
+        <text x="300" y="20" font-family="IBM Plex Mono" font-size="10.5" fill="#e8a33d" text-anchor="middle">koło obrazu obiektywu</text>
+        <rect x="192" y="105" width="216" height="90" fill="none" stroke="#9c82d8" stroke-width="2"/>
+        <rect x="228" y="114" width="144" height="72" fill="none" stroke="#e8a33d" stroke-width="2"/>
+        <rect x="250" y="120" width="100" height="60" fill="none" stroke="#4fc3c0" stroke-width="2"/>
+        <g font-family="IBM Plex Mono" font-size="10">
+          <text x="196" y="100" fill="#9c82d8">65 mm</text>
+          <text x="232" y="110" fill="#e8a33d">pełna klatka</text>
+          <text x="254" y="116" fill="#4fc3c0">S35</text>
+        </g>
+
+        <g font-family="IBM Plex Mono" font-size="11" fill="#8b909b">
+          <text x="470" y="70">Ten sam obiektyw rzuca ten sam obraz.</text>
+          <text x="470" y="94">Matryca decyduje tylko o tym,</text>
+          <text x="470" y="118">ile z niego wycina.</text>
+          <text x="470" y="158" fill="#ecebe4">Nie zmienia się:</text>
+          <text x="470" y="180">perspektywa, ogniskowa,</text>
+          <text x="470" y="202">średnica źrenicy, aberracje</text>
+          <text x="470" y="240" fill="#ecebe4">Zmienia się:</text>
+          <text x="470" y="262">kadr, i wszystko, co z kadru</text>
+          <text x="470" y="284">wynika przy stałym kadrowaniu</text>
+        </g>
+      </svg>
+      <div class="diagram-caption">Mniejsza matryca to nie inny obiektyw. To ten sam obiektyw z nożyczkami.</div>
+    </div>
+
+    <p>Z tego rysunku wynika cała arytmetyka ekwiwalencji i wszystkie jej pułapki. Zdanie „ta trzydziestka piątka na S35 to jak pięćdziesiątka na pełnej klatce” jest prawdziwe wyłącznie w odniesieniu do <strong>kadru</strong>. Nie jest prawdziwe w odniesieniu do niczego innego:</p>
+
+    <ul>
+      <li><strong>Głębia ostrości</strong> zależy od rzeczywistej średnicy źrenicy, a ta jest ilorazem rzeczywistej ogniskowej i liczby f. Trzydziestka piątka przy f/2 ma źrenicę 17,5 mm, pięćdziesiątka przy f/2 ma 25 mm — więc mimo tego samego kadru głębia będzie inna. Liczby w <a href="rozdzial-08-glebia-ostrosci.html">Rozdziale 8</a>.</li>
+      <li><strong>Skala wad</strong> jest wpisana w obiektyw, a wycinanie z niego mniejszego kawałka <em>powiększa</em> je w kadrze. Ten sam obiektyw na mniejszej matrycy pokazuje ostrzej narysowane aberracje w środku, ale nie pokazuje rogów, gdzie było najgorzej.</li>
+      <li><strong>Dyfrakcja</strong> ma stały rozmiar w mikrometrach, a piksele mniejszej matrycy są mniejsze — więc granica przymykania przysłony wypada na mniejszym formacie wcześniej.</li>
+      <li><strong>Szum</strong> zależy od liczby fotonów zebranych przez piksel, a nie od liczby f. Przy tym samym kadrze i tej samej głębi ostrości większa matryca zbiera więcej światła w sumie, i to jest jedyna przewaga dużego formatu, która wytrzymuje uczciwe porównanie. Wrócimy do niej w <a href="rozdzial-27-od-fotonow-do-liczb.html">Rozdziale 27</a>.</li>
+    </ul>
+
+    <p class="deeper-inline">Wymiary matryc, przeliczniki i uczciwa odpowiedź na pytanie, co naprawdę daje duży format — <a href="../dodatki/dodatek-aa-formaty-i-ekwiwalencja.html">Dodatek AA</a>.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">W CG · najczęstszy błąd dopasowania</div>
+    <h2>Kamera stoi w złym miejscu, nie ma złej ogniskowej</h2>
+
+    <p>Kiedy render nie siada na plate, pierwszym odruchem jest kręcenie ogniskową, aż kadr zacznie pasować. Bywa, że pasuje — i wtedy jest najgorzej, bo problem został zamaskowany, a nie rozwiązany.</p>
+
+    <p>Powód jest wprost z tego rozdziału. Ogniskowa zmienia powiększenie, więc dopasowując ją, potrafisz trafić w rozmiar dowolnego <em>pojedynczego</em> elementu kadru. Ale jeśli kamera stoi w złym miejscu, <strong>proporcje między elementami są już przesądzone</strong> i żadna ogniskowa ich nie naprawi. Objaw jest charakterystyczny: pierwszy plan siada, tło jest za duże albo za małe, a każda próba poprawienia tła psuje pierwszy plan.</p>
+
+    <p>Kolejność diagnozy jest więc odwrotna do odruchu:</p>
+
+    <ul>
+      <li><strong>Najpierw pozycja.</strong> Znajdź w kadrze dwa elementy o znanej wzajemnej odległości — słupek i budynek, aktora i drzwi — i dopasuj kamerę tak, żeby ich <em>proporcja</em> się zgadzała. Rozmiar bezwzględny na tym etapie zignoruj.</li>
+      <li><strong>Potem ogniskowa.</strong> Kiedy proporcja siedzi, ogniskowa jest już tylko skalowaniem i wpada na miejsce jednym ruchem.</li>
+      <li><strong>Na końcu format.</strong> Jeśli po obu krokach kadr wciąż nie siada, sprawdź rozmiar matrycy w kamerze renderera — to on jest wtedy winny, nie geometria.</li>
+    </ul>
+
+    <p>Ta sama zasada rządzi ustawianiem kamery przy previzie i przy planowaniu ujęcia. Jeśli reżyser mówi „chcę, żeby ten budynek dominował nad postacią”, to jest prośba o <span class="term-cyan">cofnięcie kamery</span>, a nie o dłuższy obiektyw — choć dłuższy obiektyw i tak będzie potrzebny, żeby po cofnięciu wrócić do kadru.</p>
+  </div>
+
+  <div class="panel practice">
+    <div class="panel-label">Z praktyki</div>
+    <p><strong>Rozpoznawanie odległości z kadru.</strong> Patrząc na gotowe ujęcie, nie pytaj „jaka ogniskowa”, tylko „jak daleko stała kamera”. Odpowiedź odczytasz z twarzy: widoczne uszy przy widocznym nosie i płaskie rysy oznaczają dystans powyżej dwóch metrów; wyeksponowany nos i schowane uszy — poniżej metra. To działa niezależnie od formatu i jest znacznie pewniejsze niż zgadywanie milimetrów.</p>
+    <p><strong>Przy zmianie formatu w trakcie produkcji trzymaj odległości, nie ogniskowe.</strong> Jeśli scena była previzowana na pełnej klatce, a kręcona będzie na S35, przeliczenie ogniskowych zachowa kadr, ale to jest efekt uboczny — istotne jest, że pozycje kamery mają zostać nietknięte. Przepisanie samych ogniskowych bez zachowania pozycji da inne ujęcie przy zgodnych liczbach w metryce.</p>
+    <p><strong>Uważaj na „digital zoom” w preview.</strong> Wycinanie i skalowanie kadru w compie jest optycznie tożsame ze zmianą ogniskowej przy nieruchomej kamerze — czyli nie zmienia perspektywy wcale. To dobra wiadomość, bo znaczy, że drobna korekta kadru w postprodukcji jest bezpieczna i niczego nie łamie. Kosztuje wyłącznie rozdzielczość.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>perspektywa</dt>
+      <dd>Wzajemne proporcje rozmiarów kątowych obiektów w scenie. Zależy wyłącznie od położenia punktu obserwacji — nie od optyki, którą się nią patrzy.</dd>
+      <dt>kompresja perspektywy</dt>
+      <dd>Potoczna nazwa wrażenia, że dalekie obiekty są duże względem bliskich. Powstaje przy dużej odległości kamery, nie przy długiej ogniskowej — te dwie rzeczy tylko zwykle chodzą w parze.</dd>
+      <dt>rozmiar kątowy</dt>
+      <dd>Kąt, pod jakim widać obiekt z danego miejsca. W przybliżeniu iloraz wysokości i odległości.</dd>
+      <dt>koło obrazu</dt>
+      <dd>Okrąg, w którym obiektyw daje użyteczny obraz. Matryca musi się w nim zmieścić; obiektyw do mniejszego formatu na większym korpusie da czarne rogi.</dd>
+      <dt>ekwiwalent ogniskowej</dt>
+      <dd>Ogniskowa, która na formacie odniesienia dałaby ten sam kadr. Dotyczy wyłącznie kadru — nie głębi ostrości, nie jasności i nie charakteru rysunku.</dd>
+      <dt>współczynnik kadrowania</dt>
+      <dd>Iloraz przekątnych dwóch formatów, używany do przeliczania ekwiwalentów. Dla S35 względem pełnej klatki wynosi około 1,5.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Wiemy już, ile świata mieści się w kadrze i skąd bierze się wrażenie przestrzeni. Następne pytanie brzmi: ile światła przy tym wpuszczamy. W <a href="rozdzial-06-przyslona-f-i-t.html">następnym rozdziale</a> zajmiemy się przysłoną — i od razu rozdzielimy dwie liczby, które wyglądają na to samo, a znaczą co innego: f i T.</p>
+  </div>
 
   <div class="deeper">
     <div class="deeper-label">Idź głębiej</div>
@@ -60,5 +406,72 @@ window.SKY3D_MESSAGES = {
 </div>
 
 <script src="../assets/interactive.js"></script>
+<script>
+/* Ta sama twarz, rozne ogniskowe. Kamera cofa sie tak, zeby kadrowanie
+   postaci bylo stale: d = f * w / (k * S). Tlo stoi 5 m za postacia, wiec
+   jego wielkosc w kadrze rosnie razem z odlegloscia kamery — i to jest cala
+   "kompresja perspektywy". */
+(function () {
+  var sl = document.getElementById('ogniskowaPersp');
+  if (!sl) return;
+  var W = 0.30;        // szerokosc glowy, m
+  var K = 0.50;        // glowa wypelnia polowe szerokosci kadru
+  var S = 0.036;       // szerokosc matrycy, m (pelna klatka)
+  var ZA = 5.0;        // tlo 5 m za postacia
+  var W_TLA = 4.0;     // szerokosc obiektu tla, m
+
+  /* Widok z gory: os pozioma = odleglosc (30 px na metr), os pionowa =
+     odchylenie boczne wokol osi y=170. Postac stoi na 6 m (x=212), tlo 5 m
+     dalej (x=362). Rysunek jest przycinany do ramki, bo przy 18 mm stozek
+     rozchodzi sie znacznie poza diagram. */
+  var Y_OSI = 170, PX_NA_M = 30, X_ZERO = 32, X_POSTACI = 212, X_TLA = 362;
+  var Y_LIMIT = 122;
+
+  function odleglosc(f) { return (f / 1000) * W / (K * S); }
+
+  function odswiez() {
+    var f = parseFloat(sl.value);
+    var d = odleglosc(f);
+    var D = d + ZA;
+    var xKam = X_POSTACI - d * PX_NA_M;
+    var tanPol = Math.tan(Math.atan(S / (2 * f / 1000)));
+
+    var kam = document.getElementById('kamera');
+    kam.setAttribute('x', (xKam - 13).toFixed(1));
+    document.getElementById('kameraEt').setAttribute('x', Math.max(26, xKam - 26).toFixed(1));
+
+    // koniec stozka: albo plaszczyzna tla, albo miejsce, w ktorym wychodzi z ramki
+    var xKoniec = Math.min(X_TLA, xKam + Y_LIMIT / tanPol);
+    var polSzer = (xKoniec - xKam) * tanPol;
+    document.getElementById('stozek').setAttribute('points',
+      xKam.toFixed(1) + ',' + Y_OSI + ' ' +
+      xKoniec.toFixed(1) + ',' + (Y_OSI - polSzer).toFixed(1) + ' ' +
+      xKoniec.toFixed(1) + ',' + (Y_OSI + polSzer).toFixed(1));
+
+    // podglad kadru: glowa ma staly rozmiar, tlo skaluje sie z szerokoscia kadru
+    var kadrPrzyTle = 2 * tanPol * D;
+    var szerTlaPx = Math.min(298, 300 * (W_TLA / kadrPrzyTle));
+    var wysTlaPx = szerTlaPx * 0.28;
+    var tlo = document.getElementById('tloWKadrze');
+    tlo.setAttribute('x', (580 - szerTlaPx / 2).toFixed(1));
+    tlo.setAttribute('y', (150 - wysTlaPx / 2).toFixed(1));
+    tlo.setAttribute('width', szerTlaPx.toFixed(1));
+    tlo.setAttribute('height', wysTlaPx.toFixed(1));
+
+    var d18 = odleglosc(18);
+    var kadrTla18 = 2 * Math.tan(Math.atan(S / (2 * 18 / 1000))) * (d18 + ZA);
+    var krotnosc = kadrTla18 / kadrPrzyTle;
+
+    document.getElementById('perspOdczyt').textContent =
+      f.toFixed(0) + ' mm · ' + d.toFixed(2).replace('.', ',') + ' m';
+    document.getElementById('perspPodpis').textContent =
+      f.toFixed(0) + ' mm: kamera ' + d.toFixed(2).replace('.', ',') +
+      ' m od postaci, tło w kadrze ' + krotnosc.toFixed(1).replace('.', ',') +
+      ' raza większe niż przy 18 mm.';
+  }
+  sl.addEventListener('input', odswiez);
+  odswiez();
+})();
+</script>
 </body>
 </html>
