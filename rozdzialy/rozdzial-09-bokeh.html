@@ -319,6 +319,13 @@ window.SKY3D_MESSAGES = {
 
     <p>Czego renderer nie zrobi sam: <strong>obcięcia mechanicznego</strong>. Źrenica w kamerze renderera jest jedna dla całego kadru, więc kocie oko w rogach nie pojawi się samo. Trzeba je albo dołożyć w compie z maską radialną, albo — w silnikach, które to umożliwiają — uzależnić teksturę źrenicy od pozycji na matrycy.</p>
 
+    <div class="subsection">
+      <h3>Dlaczego bokeh nie skaluje się z rozdzielczością</h3>
+      <p>Drobiazg, który potrafi zaskoczyć przy porównywaniu wersji tego samego ujęcia. Rozmiar krążka nieostrości jest wielkością <strong>fizyczną na matrycy</strong>, mierzoną w mikrometrach — nie w pikselach. Ten sam materiał wywołany w 2K i w 4K ma krążki tej samej wielkości względem kadru, ale dwa razy większe w pikselach.</p>
+      <p>Znaczy to, że jądro splotu w compie musi być podawane w ułamku szerokości kadru albo przeskalowywane razem z rozdzielczością. Jądro o stałym rozmiarze w pikselach daje w 4K o połowę mniej rozmycia niż w 2K — a ponieważ wersja 2K bywa tą, na której ocenia się ujęcie, błąd wychodzi na jaw dopiero przy dostawie.</p>
+      <p>Ta sama uwaga dotyczy cebulek i wszystkich drobnych struktur wewnątrz krążka: ich <em>liczba</em> jest cechą obiektywu i nie zależy od rozdzielczości. Jeśli generujesz je proceduralnie, licz je względem promienia krążka, a nie w pikselach.</p>
+    </div>
+
     <p>W compie natomiast całą tę fizykę zastępuje jądro splotu. Rozmycie po kanale Z splata obraz z kształtem, który podasz — i tu warto wiedzieć, że <em>jądro splotu jest dokładnie tym samym co obraz źrenicy</em>. Wszystko z tego rozdziału da się więc odtworzyć, podając właściwe jądro. Ograniczenia rozmycia z kanału Z pozostają te z <a href="rozdzial-08-glebia-ostrosci.html">Rozdziału 8</a> i wracamy do nich w <a href="rozdzial-34-render-czy-comp.html">Rozdziale 34</a>.</p>
   </div>
 
