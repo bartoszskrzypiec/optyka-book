@@ -43,7 +43,307 @@ window.SKY3D_MESSAGES = {
   <h1>Dyfrakcja: granica ostrości i gwiazdki</h1>
   <p class="subtitle">Od pewnego momentu przymykanie przysłony psuje ostrość zamiast ją poprawiać. Ta sama przyczyna rysuje promienie wokół latarni — i nie da się jej obejść żadnym szkłem.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li>Punkt nigdy nie jest punktem. Nawet obiektyw doskonały odwzorowuje go jako <span class="term-amber">krążek Airy'ego</span> o średnicy 2,44·λ·N — i to jest granica, której nie przekroczy żadne szkło ani żadna cena.</li>
+      <li>Krążek rośnie liniowo z liczbą przysłony. Od pewnego momentu jest większy od piksela, i wtedy <strong>przymykanie przysłony zaczyna psuć ostrość zamiast ją poprawiać</strong>.</li>
+      <li>Ta sama dyfrakcja rysuje gwiazdki wokół jasnych świateł. Liczba promieni wynika z liczby listków przysłony — z regułą, której z rysunku przysłony nie da się odgadnąć: <span class="term-violet">parzysta liczba listków daje N promieni, nieparzysta 2N</span>.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Granica · nie do obejścia</div>
+    <h2>Punkt, który nie chce być punktem</h2>
+
+    <p>Wróćmy do <a href="rozdzial-01-fala-czy-promien.html">Rozdziału 1</a> i do zasady Huygensa. Fala przechodząca przez otwór rozlewa się, bo punkty na krawędzi nie mają sąsiadów, którzy wygasiliby ich boczne fale cząstkowe. Otworem jest tutaj źrenica obiektywu, a skutkiem — to, że <strong>obraz punktu ma niezerowy rozmiar</strong>, choćby wszystkie promienie trafiły idealnie tam, gdzie miały.</p>
+
+    <p>Rozkład jasności w tym obrazie nie jest jednorodną plamką. To jasne jądro otoczone słabnącymi pierścieniami — wzór nazwany krążkiem Airy'ego od nazwiska astronoma, który go pierwszy policzył. W jądrze siedzi około 84 procent energii, w pierwszym pierścieniu 7, w kolejnych coraz mniej.</p>
+
+    <div class="formula">
+      d = 2,44 · <span class="vec" data-tip="Długość fali światła. W tej książce przyjmujemy 550 nm — środek widma, na który oko jest najczulsze.">λ</span> · <span class="vec" data-tip="Liczba przysłony (geometryczna). Zauważ, czego w tym wzorze nie ma: ogniskowej ani średnicy źrenicy osobno — tylko ich iloraz.">N</span>
+      <span class="sub">d — średnica jądra krążka Airy'ego, czyli pierwszego ciemnego pierścienia. λ — długość fali, N — liczba przysłony. Dla λ = 550 nm wzór upraszcza się do d ≈ 1,34 · N mikrometra.</span>
+      <div class="formula-action"><button class="reveal-btn" data-modal-target="explain-airy">Wyjaśnij ten wzór</button></div>
+    </div>
+
+    <p>Zwróć uwagę na to, czego w tym wzorze nie ma. Nie ma ogniskowej. Nie ma liczby soczewek, klasy szkła, roku produkcji ani ceny. <span class="term-cyan">Są tylko dwie liczby: barwa światła i liczba przysłony</span> — a barwy zwykle nie wybieramy. Dlatego przy f/16 wszystkie obiektywy świata są mniej więcej tak samo miękkie, o czym była już mowa w <a href="rozdzial-06-przyslona-f-i-t.html">Rozdziale 6</a>.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Krążek Airy'ego</span><span>przekrój przez środek</span></div>
+      <svg viewBox="0 0 760 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Profil jasności krążka Airy'ego: jasne jądro z 84 procentami energii i słabnące pierścienie boczne.">
+        <g stroke="#2a2f38" stroke-width="1"><line x1="60" y1="200" x2="700" y2="200"/></g>
+        <path d="M 60 200 L 130 199 L 175 196 L 205 190 L 232 197 L 248 200 L 262 186 L 278 148 L 300 74 L 330 42 L 360 38 L 390 42 L 420 74 L 442 148 L 458 186 L 472 200 L 488 197 L 515 190 L 545 196 L 590 199 L 700 200"
+              fill="#e8a33d" fill-opacity="0.22" stroke="#e8a33d" stroke-width="2"/>
+        <line x1="262" y1="200" x2="262" y2="212" stroke="#8b909b"/><line x1="458" y1="200" x2="458" y2="212" stroke="#8b909b"/>
+        <line x1="262" y1="226" x2="458" y2="226" stroke="#4fc3c0" stroke-width="1.4"/>
+        <line x1="262" y1="220" x2="262" y2="232" stroke="#4fc3c0"/><line x1="458" y1="220" x2="458" y2="232" stroke="#4fc3c0"/>
+        <text x="360" y="248" font-family="IBM Plex Mono" font-size="11" fill="#4fc3c0" text-anchor="middle">d = 2,44 · λ · N</text>
+        <text x="360" y="30" font-family="IBM Plex Mono" font-size="10.5" fill="#e8a33d" text-anchor="middle">84% energii</text>
+        <text x="222" y="180" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">7%</text>
+        <text x="498" y="180" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">7%</text>
+        <circle cx="640" cy="110" r="34" fill="#e8a33d" fill-opacity="0.45"/>
+        <circle cx="640" cy="110" r="48" fill="none" stroke="#e8a33d" stroke-width="3" opacity="0.22"/>
+        <circle cx="640" cy="110" r="60" fill="none" stroke="#e8a33d" stroke-width="2" opacity="0.11"/>
+        <text x="640" y="182" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">tak to wygląda</text>
+      </svg>
+      <div class="diagram-caption">Pierścienie są słabe, ale istnieją — i to one, a nie jądro, odpowiadają za utratę kontrastu drobnych detali.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Kiedy to zaczyna przeszkadzać</div>
+    <h2>Dyfrakcja kontra piksel</h2>
+
+    <p>Sama wielkość krążka nic jeszcze nie mówi. Znaczenie ma dopiero jej stosunek do tego, czym mierzymy obraz — czyli do rozmiaru piksela. Dopóki krążek mieści się w pikselu, matryca i tak nie widzi różnicy. Gdy urośnie ponad piksel, zaczyna zjadać rozdzielczość, za którą zapłaciłeś.</p>
+
+    <p>Przesuń suwak i porównaj obie wielkości dla trzech typowych kombinacji:</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Krążek Airy'ego a piksel</span><span>λ = 550 nm</span></div>
+      <div class="diagram-controls">
+        <label for="dyfrPrzyslona">Przysłona</label>
+        <input id="dyfrPrzyslona" type="range" min="0" max="8" step="1" value="3">
+        <span class="value-readout" id="dyfrOdczyt">f/4</span>
+      </div>
+      <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Porównanie średnicy krążka Airy'ego z rozmiarem piksela dla trzech formatów przy zadanej przysłonie.">
+        <g stroke="#2a2f38" stroke-width="1"><line x1="150" y1="250" x2="710" y2="250"/></g>
+        <g font-family="IBM Plex Mono" font-size="10" fill="#8b909b">
+          <text x="110" y="254">0</text><text x="106" y="200">10</text><text x="106" y="146">20</text><text x="106" y="92">30</text>
+          <text x="86" y="36">µm</text>
+        </g>
+        <g stroke="#2a2f38" stroke-width="0.6" opacity="0.55">
+          <line x1="150" y1="196" x2="710" y2="196"/><line x1="150" y1="142" x2="710" y2="142"/><line x1="150" y1="88" x2="710" y2="88"/>
+        </g>
+
+        <rect id="slupekAiry" x="200" width="70" fill="#e8a33d" fill-opacity="0.45" stroke="#e8a33d" stroke-width="1.4"/>
+        <text x="235" y="272" font-family="IBM Plex Mono" font-size="10.5" fill="#e8a33d" text-anchor="middle">krążek Airy'ego</text>
+        <text id="airyWartosc" x="235" y="288" font-family="IBM Plex Mono" font-size="11" fill="#e8a33d" text-anchor="middle">5,4 µm</text>
+
+        <rect x="360" y="217" width="70" height="33" fill="#6e93be" fill-opacity="0.35" stroke="#6e93be" stroke-width="1.4"/>
+        <text x="395" y="272" font-family="IBM Plex Mono" font-size="10.5" fill="#6e93be" text-anchor="middle">S35 · 4K</text>
+        <text x="395" y="288" font-family="IBM Plex Mono" font-size="11" fill="#6e93be" text-anchor="middle">6,2 µm</text>
+
+        <rect x="480" y="218" width="70" height="32" fill="#6e93be" fill-opacity="0.35" stroke="#6e93be" stroke-width="1.4"/>
+        <text x="515" y="272" font-family="IBM Plex Mono" font-size="10.5" fill="#6e93be" text-anchor="middle">FF · 24 Mpx</text>
+        <text x="515" y="288" font-family="IBM Plex Mono" font-size="11" fill="#6e93be" text-anchor="middle">6,0 µm</text>
+
+        <rect x="600" y="230" width="70" height="20" fill="#9c82d8" fill-opacity="0.35" stroke="#9c82d8" stroke-width="1.4"/>
+        <text x="635" y="272" font-family="IBM Plex Mono" font-size="10.5" fill="#9c82d8" text-anchor="middle">FF · 61 Mpx</text>
+        <text x="635" y="288" font-family="IBM Plex Mono" font-size="11" fill="#9c82d8" text-anchor="middle">3,8 µm</text>
+      </svg>
+      <div class="diagram-caption" id="dyfrPodpis">Przy f/4 krążek ma 5,4 µm — mieści się jeszcze w pikselu 4K i pełnej klatki 24 Mpx, ale już nie w 61 Mpx.</div>
+    </div>
+
+    <p>Z tego wykresu wynika obserwacja, która bywa zaskoczeniem: <strong>granica przymykania zależy nie od obiektywu, tylko od matrycy</strong>. Ta sama pięćdziesiątka przy f/11 jest w porządku na sensorze 4K, a wyraźnie miękka na 61-megapikselowym. Rozdzielczość, za którą się zapłaciło, wymaga szerszej przysłony, żeby dało się z niej skorzystać.</p>
+
+    <p>Drugi wniosek jest łagodniejszy, niż wygląda. Dyfrakcja nie „włącza się” przy jakiejś przysłonie — narasta płynnie od f/1,4 wzwyż. Moment, w którym zaczyna być widoczna, jest więc kwestią tego, jak bardzo powiększysz obraz przy oglądaniu, dokładnie tak samo jak przy krążku rozmycia z <a href="rozdzial-08-glebia-ostrosci.html">Rozdziału 8</a>. Ujęcie do kina wybacza mniej niż to samo ujęcie na telefonie.</p>
+
+    <div class="subsection">
+      <h3>Kiedy dyfrakcja bywa sprzymierzeńcem</h3>
+      <p>Jest sytuacja, w której rozmycie dyfrakcyjne robi coś pożytecznego, i warto ją znać, bo dotyczy bezpośrednio pracy z materiałem cyfrowym. Matryca próbkuje obraz w regularnej siatce, a każde regularne próbkowanie ma swoją granicę: struktura drobniejsza niż dwa piksele nie zostaje zarejestrowana wiernie, tylko <strong>zamienia się w fałszywy wzór</strong> o zupełnie innej gęstości. To jest aliasing, a w obrazie widać go jako morę na tkaninach, siatkach i dachówkach.</p>
+      <p>Jedynym sposobem, żeby temu zapobiec, jest rozmycie obrazu <em>przed</em> próbkowaniem — na tyle, żeby struktury poniżej granicy w ogóle nie doleciały do matrycy. Klasyczna kamera robi to osobnym filtrem dolnoprzepustowym naklejonym na sensor. Ale przymknięta przysłona robi dokładnie to samo za darmo: krążek Airy'ego większy od dwóch pikseli jest filtrem antyaliasingowym.</p>
+      <p>Stąd praktyka znana z fotografii produktowej i reprodukcyjnej: tkaniny i drobne siatki fotografuje się <span class="term-cyan">celowo przymkniętym obiektywem</span>, godząc się na utratę mikrokontrastu w zamian za brak mory. Wybór jest realny, bo morę usuwa się w postprodukcji znacznie trudniej niż odzyskuje kontrast.</p>
+    </div>
+
+    <div class="subsection">
+      <h3>Jak sprawdzić to na własnym sprzęcie</h3>
+      <p>Cała ta sekcja daje się zweryfikować w kwadrans i warto to zrobić raz, żeby mieć liczby dla konkretnej kamery zamiast tabelek z internetu.</p>
+      <p>Ustaw kamerę na statywie przed czymś o drobnej, kontrastowej strukturze — banknot, wydruk drobnego tekstu, gałązka pod światło. Zrób serię przy każdej przysłonie od pełnego otwarcia do najciaśniejszej, nie ruszając ostrości. Potem obejrzyj wyniki w skali stu procent i znajdź moment, w którym drobny detal przestaje przyrastać.</p>
+      <p>Zobaczysz dwie rzeczy naraz. Od pełnego otwarcia detalu przybywa, bo maleją aberracje. Od pewnej przysłony przestaje przybywać, a zaczyna ubywać — i to jest twój słodki punkt z <a href="rozdzial-06-przyslona-f-i-t.html">Rozdziału 6</a>, zmierzony, a nie odgadnięty. Jeśli wypadnie wcześniej, niż mówią tabele, znaczy to, że masz gęstą matrycę; jeśli później — że obiektyw ma sporo do skorygowania.</p>
+      <p>Przy okazji dostajesz drugą liczbę, która przyda się w compie: <strong>promień rozmycia w pikselach</strong> przy każdej przysłonie. Wystarczy zmierzyć szerokość przejścia na kontrastowej krawędzi. To jest dokładnie ta wartość, którą trzeba wpisać, odtwarzając miękkość ujęcia kręconego na mocno przymkniętej przysłonie.</p>
+    </div>
+
+    <div class="worked">
+      <div class="wlabel">Od której przysłony dyfrakcja przekracza piksel</div>
+      <p class="step"><span class="k">warunek</span> <span class="v">1,34 · N &gt; rozmiar piksela [µm]</span></p>
+      <p class="step"><span class="k">S35 4K, piksel 6,2 µm</span> <span class="v">N &gt; 4,6 → </span><span class="result">od f/5,6</span></p>
+      <p class="step"><span class="k">pełna klatka 24 Mpx, 6,0 µm</span> <span class="v">N &gt; 4,5 → </span><span class="result">od f/5,6</span></p>
+      <p class="step"><span class="k">pełna klatka 61 Mpx, 3,8 µm</span> <span class="v">N &gt; 2,8 → </span><span class="result">od f/2,8</span></p>
+      <p class="check">Liczby wyglądają alarmująco, ale trzeba je czytać właściwie: „przekracza piksel” nie znaczy „obraz jest zepsuty”. Znaczy tylko, że od tego momentu dalsze przymykanie nie kupuje już żadnej ostrości — kupuje wyłącznie głębię. To jest realny handel, który czasem opłaca się zrobić.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Kontrast · straszniejsza połowa problemu</div>
+    <h2>Dyfrakcja nie tylko rozmywa, ona blaknie</h2>
+
+    <p>Mówiąc dotąd o krążku Airy'ego, patrzyliśmy na jego średnicę. To jest jednak tylko połowa opowieści i, jak się okaże, mniej dotkliwa. Druga połowa siedzi w pierścieniach.</p>
+
+    <p>W jądrze krążka jest 84 procent energii. Pozostałe 16 rozchodzi się po pierścieniach, i te procenty <strong>nie znikają</strong> — lądują wokół, na sąsiednich fragmentach obrazu. Każdy jasny punkt sceny rozsypuje więc kilkanaście procent swojej energii na otoczenie, a każdy ciemny dostaje tę domieszkę od sąsiadów.</p>
+
+    <p>Skutek nie wygląda jak rozmycie. Wygląda jak <span class="term-violet">spadek kontrastu drobnych detali</span>. Krawędź nadal jest w tym samym miejscu i nadal jest ostra, tylko różnica między jasną a ciemną stroną maleje. Obraz robi się „płaski”, mimo że rozdzielczościowo wszystko jest na miejscu.</p>
+
+    <p>To rozróżnienie jest w praktyce ważniejsze, niż się wydaje, bo wyjaśnia jedno z częstszych nieporozumień. Zdjęcie przy f/16 nie jest miękkie w tym samym sensie co zdjęcie nieostre. Nieostrość przesuwa krawędzie i można ją w pewnym stopniu odwrócić wyostrzaniem. Utrata kontrastu przez dyfrakcję to <strong>utrata informacji</strong> — wyostrzanie podnosi wtedy razem z detalem także szum, bo detalu do podniesienia zostało niewiele.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Ta sama krawędź, trzy przysłony</span><span>rozdzielczość kontra kontrast</span></div>
+      <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Profil krawędzi przy trzech przysłonach: przy f/4 przejście jest strome i pełne, przy f/22 pozostaje w tym samym miejscu, ale ma mniejszą amplitudę.">
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b" text-anchor="middle">
+          <text x="140" y="26">f/4</text><text x="380" y="26">f/11</text><text x="620" y="26">f/22</text>
+        </g>
+        <g stroke="#2a2f38" stroke-width="1">
+          <line x1="50" y1="190" x2="230" y2="190"/><line x1="290" y1="190" x2="470" y2="190"/><line x1="530" y1="190" x2="710" y2="190"/>
+          <line x1="50" y1="60" x2="230" y2="60" stroke-dasharray="3 4" opacity="0.5"/>
+          <line x1="290" y1="60" x2="470" y2="60" stroke-dasharray="3 4" opacity="0.5"/>
+          <line x1="530" y1="60" x2="710" y2="60" stroke-dasharray="3 4" opacity="0.5"/>
+        </g>
+        <path d="M 50 190 L 130 190 L 136 60 L 230 60" fill="none" stroke="#e8a33d" stroke-width="2.4"/>
+        <path d="M 290 190 L 358 188 L 372 76 L 386 68 L 470 66" fill="none" stroke="#e8a33d" stroke-width="2.4"/>
+        <path d="M 530 190 L 580 176 L 610 116 L 640 100 L 710 96" fill="none" stroke="#e8a33d" stroke-width="2.4"/>
+        <g font-family="IBM Plex Mono" font-size="10" fill="#4fc3c0" text-anchor="middle">
+          <text x="140" y="216">pełna amplituda</text>
+          <text x="380" y="216">lekko przygaszona</text>
+          <text x="620" y="216">krawędź na miejscu,</text>
+          <text x="620" y="230">ale kontrast zjedzony</text>
+        </g>
+        <text x="30" y="246" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">Zwróć uwagę: położenie krawędzi nie drgnęło. Zmieniła się wysokość skoku.</text>
+      </svg>
+      <div class="diagram-caption">Dyfrakcja rzadko przesuwa detal. Zwykle go po prostu wygasza — i tego się nie odzyskuje.</div>
+    </div>
+
+    <p>Warto też wiedzieć, że straty na kontraście pojawiają się <em>wcześniej</em> niż widoczne rozmycie. Krążek mieszczący się jeszcze w pikselu już rozsypuje pierścienie na sąsiednie piksele — więc obraz traci mikrokontrast przy przysłonach, przy których pomiar rozdzielczości nie pokazuje jeszcze niczego niepokojącego. To jest jedna z przyczyn rozjazdu między testami liczbowymi a wrażeniem, że „coś jest nie tak”.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">MTF · jak się to mierzy</div>
+    <h2>Co znaczy „ograniczony dyfrakcyjnie”</h2>
+
+    <p>Skoro dyfrakcja zjada kontrast, potrzebna jest miara, która to opisuje. Nazywa się funkcją przenoszenia kontrastu, w skrócie MTF, i odpowiada na jedno pytanie: <strong>ile z kontrastu wzoru o zadanej gęstości przeżywa przejście przez obiektyw</strong>.</p>
+
+    <p>Bierze się wzór z naprzemiennych czarnych i białych pasków, o kontraście stuprocentowym, i sprawdza, jaki kontrast wychodzi po drugiej stronie. Dla pasków rzadkich przeżywa prawie wszystko. Im gęściej, tym mniej — aż do gęstości, przy której na wyjściu jest już jednolita szarość i nie widać nic.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>MTF</span><span>przenoszenie kontrastu w funkcji gęstości detalu</span></div>
+      <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Wykres MTF: krzywa granicy dyfrakcyjnej i dwie krzywe realnych obiektywów leżące pod nią.">
+        <g stroke="#2a2f38" stroke-width="1"><line x1="80" y1="240" x2="700" y2="240"/><line x1="80" y1="30" x2="80" y2="240"/></g>
+        <g stroke="#2a2f38" stroke-width="0.6" opacity="0.5">
+          <line x1="80" y1="187" x2="700" y2="187"/><line x1="80" y1="135" x2="700" y2="135"/><line x1="80" y1="82" x2="700" y2="82"/>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="10" fill="#8b909b">
+          <text x="46" y="244">0%</text><text x="40" y="191">25%</text><text x="40" y="139">50%</text><text x="40" y="86">75%</text><text x="36" y="34">100%</text>
+          <text x="300" y="272">gęstość detalu · par linii na milimetr →</text>
+        </g>
+        <path d="M 80 30 L 180 62 L 290 100 L 400 140 L 510 180 L 610 214 L 690 240" fill="none" stroke="#4fc3c0" stroke-width="2.4" stroke-dasharray="6 4"/>
+        <path d="M 80 30 L 180 74 L 290 122 L 400 168 L 510 206 L 610 230 L 690 240" fill="none" stroke="#e8a33d" stroke-width="2.6"/>
+        <path d="M 80 30 L 180 108 L 290 168 L 400 208 L 510 228 L 610 238 L 690 240" fill="none" stroke="#9c82d8" stroke-width="2.4"/>
+        <g font-family="IBM Plex Mono" font-size="11">
+          <rect x="420" y="46" width="14" height="3" fill="#4fc3c0"/><text x="442" y="52" fill="#4fc3c0">granica dyfrakcyjna</text>
+          <rect x="420" y="68" width="14" height="3" fill="#e8a33d"/><text x="442" y="74" fill="#ecebe4">dobre szkło, przymknięte</text>
+          <rect x="420" y="90" width="14" height="3" fill="#9c82d8"/><text x="442" y="96" fill="#8b909b">to samo, pełny otwór</text>
+        </g>
+      </svg>
+      <div class="diagram-caption">Cyjanowa krzywa jest sufitem. Żaden obiektyw nie może leżeć nad nią — może się do niej najwyżej zbliżyć.</div>
+    </div>
+
+    <p>Cyjanowa krzywa to <strong>granica dyfrakcyjna</strong> dla danej przysłony: najlepsze, co da się osiągnąć, gdy jedynym ograniczeniem jest fala. Obiektyw, którego krzywa niemal się z nią pokrywa, nazywamy <span class="term-cyan">ograniczonym dyfrakcyjnie</span> — i to jest najwyższa pochwała, jaką można wystawić konstrukcji. Znaczy ona: aberracje zostały skorygowane tak dobrze, że przestały być tym, co ogranicza.</p>
+
+    <p>Warto od razu zauważyć konsekwencję, bo jest nieoczywista. Skoro granica dyfrakcyjna opada wraz z przymykaniem przysłony, to <strong>obiektyw łatwiej jest „ograniczyć dyfrakcyjnie” przy f/16 niż przy f/1,4</strong> — sufit jest wtedy nisko i nawet przeciętne szkło o niego zahacza. Zdanie „ograniczony dyfrakcyjnie” bez podania przysłony niewiele więc znaczy, i producenci o tym wiedzą.</p>
+
+    <p>Praktyczna umiejętność czytania takich wykresów przydaje się przy porównywaniu obiektywów, ale jeszcze bardziej przy ocenie, czy w ogóle warto. Jeśli krzywa spada poniżej pięćdziesięciu procent kontrastu przy gęstości odpowiadającej rozdzielczości twojej matrycy, to znaczy, że tej rozdzielczości i tak nie wykorzystasz — a wtedy wyższy sensor kupuje głównie miejsce na dysku.</p>
+
+    <p class="deeper-inline">Definicja MTF, splot z funkcją rozmycia punktu i czytanie wykresów producentów — <a href="../dodatki/dodatek-h-mtf.html">Dodatek H</a>.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Gwiazdki · ta sama przyczyna, inny objaw</div>
+    <h2>Skąd promienie wokół świateł</h2>
+
+    <p>Do tej pory patrzyliśmy na dyfrakcję jako na coś, co psuje. Ma jednak drugą twarz, tę, dla której ludzie celowo przymykają przysłonę: promienie rozchodzące się od jasnych punktowych źródeł.</p>
+
+    <p>Mechanizm jest ten sam co wcześniej, tylko liczy się teraz nie sam otwór, a jego <strong>krawędzie</strong>. Prosta krawędź listka przysłony rozprasza światło w kierunku do siebie prostopadłym — tak samo jak szczelina rozlewa wiązkę w poprzek. Każdy listek daje więc jedną smugę, prostopadłą do swojej krawędzi.</p>
+
+    <p>I tu wchodzi reguła, która przy pierwszym spotkaniu wygląda na kaprys:</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Parzyste kontra nieparzyste</span><span>dlaczego liczba promieni się podwaja</span></div>
+      <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sześciokątna przysłona: przeciwległe krawędzie są równoległe, więc ich smugi się pokrywają, dając sześć promieni. Pięciokątna nie ma równoległych krawędzi, więc daje dziesięć.">
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b" text-anchor="middle">
+          <text x="190" y="26">6 LISTKÓW · krawędzie parami równoległe</text>
+          <text x="570" y="26">5 LISTKÓW · brak par równoległych</text>
+        </g>
+        <g>
+          <polygon points="190,64 232,88 232,136 190,160 148,136 148,88" fill="#4fc3c0" fill-opacity="0.14" stroke="#4fc3c0" stroke-width="2"/>
+          <g stroke="#e8a33d" stroke-width="1.6" opacity="0.85">
+            <line x1="190" y1="30" x2="190" y2="194"/>
+            <line x1="119" y1="71" x2="261" y2="153"/>
+            <line x1="119" y1="153" x2="261" y2="71"/>
+          </g>
+          <text x="190" y="232" font-family="IBM Plex Mono" font-size="13" fill="#e8a33d" text-anchor="middle">6 promieni</text>
+          <text x="190" y="256" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">smugi z przeciwległych krawędzi</text>
+          <text x="190" y="272" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">nakładają się na siebie</text>
+        </g>
+        <line x1="380" y1="16" x2="380" y2="284" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 5"/>
+        <g>
+          <polygon points="570,62 610,91 595,138 545,138 530,91" fill="#4fc3c0" fill-opacity="0.14" stroke="#4fc3c0" stroke-width="2"/>
+          <g stroke="#e8a33d" stroke-width="1.6" opacity="0.85">
+            <line x1="570" y1="26" x2="570" y2="174"/>
+            <line x1="500" y1="79" x2="640" y2="121"/>
+            <line x1="500" y1="121" x2="640" y2="79"/>
+            <line x1="518" y1="150" x2="622" y2="50"/>
+            <line x1="518" y1="50" x2="622" y2="150"/>
+          </g>
+          <text x="570" y="232" font-family="IBM Plex Mono" font-size="13" fill="#e8a33d" text-anchor="middle">10 promieni</text>
+          <text x="570" y="256" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">każda krawędź daje własną smugę,</text>
+          <text x="570" y="272" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">żadna z żadną się nie pokrywa</text>
+        </g>
+      </svg>
+      <div class="diagram-caption">Reguła nie dotyczy listków, tylko kierunków krawędzi. Liczba nieparzysta nie potrafi ustawić żadnej pary równolegle.</div>
+    </div>
+
+    <p>Sześciokąt ma trzy pary krawędzi równoległych. Smuga od górnej krawędzi i smuga od dolnej mają ten sam kierunek, więc <strong>pokrywają się</strong> — zostaje sześć promieni, po jednym na parę, w dwie strony. Pięciokąt nie ma ani jednej pary równoległych krawędzi, więc każda z pięciu daje własną smugę w dwie strony: dziesięć promieni.</p>
+
+    <p>Stąd reguła w pełnej postaci: <span class="term-amber">parzysta liczba listków daje tyle promieni, ile listków; nieparzysta daje ich dwa razy więcej</span>. Siedem listków to czternaście promieni, dziewięć to osiemnaście, jedenaście to dwadzieścia dwa.</p>
+
+    <p>Dwie uwagi praktyczne. Po pierwsze, gwiazdki wymagają <strong>prostych krawędzi</strong> — zaokrąglone listki, stosowane dla ładniejszego bokeh, dają promienie rozmyte i słabe. To jest bezpośredni kompromis: obiektyw o ładnym bokeh ma brzydkie gwiazdki i odwrotnie. Po drugie, siła gwiazdek rośnie z przymknięciem, bo maleje otwór, a rośnie względny udział krawędzi.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">W CG · czego renderer nie zrobi</div>
+    <h2>Dyfrakcja jest zjawiskiem falowym, czyli nieobecnym</h2>
+
+    <p>To jest podręcznikowy przykład reguły z <a href="rozdzial-01-fala-czy-promien.html">Rozdziału 1</a>: geometria idzie do renderu, fala idzie do compu. Path tracer nie ma fazy ani długości fali, więc dyfrakcji nie policzy nigdy — niezależnie od liczby próbek i od modelu kamery.</p>
+
+    <p>W praktyce znaczy to dwie rzeczy:</p>
+
+    <ul>
+      <li><strong>Render przy f/22 jest idealnie ostry.</strong> Prawdziwe zdjęcie przy f/22 nie jest. Jeśli odtwarzasz ujęcie kręcone na mocno przymkniętej przysłonie, tę miękkość trzeba dołożyć — najprościej lekkim rozmyciem o promieniu wyliczonym ze wzoru na krążek Airy'ego, przeliczonym z mikrometrów na piksele przez rozmiar piksela matrycy.</li>
+      <li><strong>Gwiazdek nie da się wyrenderować.</strong> Nawet z poprawnym wielokątnym kształtem źrenicy renderer da ostry punkt zamiast promieni. Gwiazdki są elementem flary i należą do compu — wracamy do nich w <a href="rozdzial-25-starburst.html">Rozdziale 25</a>.</li>
+    </ul>
+
+    <p>Jest jednak wyjątek od reguły „fala idzie do compu”, o którym warto wiedzieć. Renderery pracujące widmowo, o których była mowa w <a href="rozdzial-02-zalamanie-i-dyspersja.html">Rozdziale 2</a>, wciąż nie mają fazy — a bez fazy dyfrakcji nie da się policzyć nawet znając długość fali. Widmo i faza to dwie różne rzeczy i tylko druga z nich jest tu potrzebna. Istnieją silniki badawcze liczące propagację falową, ale koszt jest o rzędy wielkości wyższy i w produkcji nikt tego nie robi. Praktycznie rzecz biorąc: przez najbliższe lata dyfrakcja pozostanie zadaniem dla compu, niezależnie od tego, jak zaawansowany będzie renderer.</p>
+
+    <p>Warto przy okazji uważać na częsty błąd w podrabianych gwiazdkach. Skoro promienie biorą się z krawędzi listków, ich liczba i orientacja są <em>cechą obiektywu</em>, stałą dla całego ujęcia. Generator, który losuje liczbę promieni albo obraca je między klatkami, produkuje coś, czego żadna kamera nie zrobi. <span class="term-violet">Gwiazdki mogą pulsować jasnością, ale nie kierunkiem.</span></p>
+
+    <p>Drugi typowy błąd to promienie o stałej długości. W rzeczywistości długość smugi rośnie z jasnością źródła — słabe światło daje ledwie zaznaczone kolce, bardzo jasne daje promienie sięgające przez pół kadru. Wiązanie długości z jasnością piksela źródłowego jest jedną z tańszych poprawek, jakie można wprowadzić.</p>
+  </div>
+
+  <div class="panel practice">
+    <div class="panel-label">Z praktyki</div>
+    <p><strong>Policz promienie w plate'cie, żeby poznać przysłonę.</strong> Wyraźne, długie gwiazdki oznaczają mocno przymkniętą przysłonę — zwykle f/8 i ciaśniej. Ich brak przy jasnych światłach w kadrze oznacza pełny albo prawie pełny otwór. A sama liczba promieni daje liczbę listków, którą możesz wpisać w kamerę renderera dla zgodnego bokeh.</p>
+    <p><strong>Nie przymykaj w rendererze „dla ostrości”.</strong> Odruch przeniesiony z fotografii: przymknąć do f/8, bo tam obiektyw jest najlepszy. W rendererze nie ma ani aberracji, ani dyfrakcji, więc przymknięcie kupuje wyłącznie głębię, a kosztuje próbki. Jeśli chcesz ostrego obrazu, ustaw przysłonę tam, gdzie była na planie, i nie dodawaj sobie pracy.</p>
+    <p><strong>Rozmycie dyfrakcyjne dodawaj przed ziarnem.</strong> Kolejność w łańcuchu ma znaczenie: dyfrakcja dzieje się w obiektywie, ziarno w emulsji albo w matrycy. Rozmycie nałożone na ziarno wygląda jak zły denoise. Pełny łańcuch omawiamy w <a href="rozdzial-36-kolejnosc-w-compie.html">Rozdziale 36</a>.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>krążek Airy'ego</dt>
+      <dd>Obraz punktu dawany przez idealny układ o kołowej źrenicy: jasne jądro otoczone pierścieniami. Średnica jądra to 2,44·λ·N.</dd>
+      <dt>granica dyfrakcyjna</dt>
+      <dd>Rozdzielczość, powyżej której nie da się wyjść przy danej przysłonie i długości fali. Nie zależy od jakości wykonania obiektywu.</dd>
+      <dt>kryterium Rayleigha</dt>
+      <dd>Umowa mówiąca, że dwa punkty są jeszcze rozdzielone, gdy maksimum jednego wypada w pierwszym minimum drugiego — czyli przy odległości równej promieniowi krążka Airy'ego.</dd>
+      <dt>gwiazdka (starburst)</dt>
+      <dd>Promienie rozchodzące się od jasnego punktowego źródła. Powstają na prostych krawędziach listków przysłony, prostopadle do nich.</dd>
+      <dt>ugięcie na krawędzi</dt>
+      <dd>Rozproszenie fali przez prostą krawędź, w kierunku do niej prostopadłym. Mechanizm powstawania gwiazdek.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Część II zamknięta: wiemy, ile świata mieści się w kadrze, ile z niego jest ostre, jak wygląda reszta i gdzie leży granica nie do przekroczenia. Czas na wady, które <em>da się</em> poprawić — i które właśnie dlatego stanowią o charakterze konkretnego szkła. <a href="rozdzial-11-aberracja-sferyczna.html">Część III</a> zaczyna się od tej, na którą powoływaliśmy się w tej części najczęściej: aberracji sferycznej.</p>
+  </div>
 
   <div class="deeper">
     <div class="deeper-label">Idź głębiej</div>
@@ -56,8 +356,83 @@ window.SKY3D_MESSAGES = {
       <a class="nav-next" href="rozdzial-11-aberracja-sferyczna.html">Następny →</a>
   </div>
 
+  <template id="explain-airy">
+    <h3>Skąd bierze się 2,44</h3>
+
+    <div class="formula">d = 2,44 · λ · N</div>
+
+    <p><strong>Skąd w ogóle rozmiar.</strong> Fala przechodząca przez okrągły otwór rozlewa się pod kątem tym większym, im ciaśniejszy otwór — z <a href="rozdzial-01-fala-czy-promien.html">Rozdziału 1</a> wiemy, że rozbieżność wynosi z grubsza λ podzielone przez średnicę otworu. Ten kąt trzeba teraz przeliczyć na rozmiar na matrycy: mnożymy przez odległość, czyli przez ogniskową.</p>
+
+    <p>Wychodzi z tego λ·f/D — a f/D to przecież liczba przysłony. Stąd cały wzór jest proporcjonalny do λ·N i do niczego więcej. Ogniskowa i średnica źrenicy skróciły się, zostawiając tylko swój iloraz.</p>
+
+    <p><strong>Skąd akurat 2,44.</strong> Dokładny współczynnik zależy od kształtu otworu. Dla otworu <em>kołowego</em> pierwsze zero funkcji opisującej rozkład jasności wypada przy 1,22·λ/D w kącie — a mnożąc przez dwa, żeby dostać średnicę zamiast promienia, otrzymujemy 2,44. Dla szczeliny prostokątnej współczynnik wynosiłby 2,00; kółko rozlewa światło nieco szerzej niż szczelina.</p>
+
+    <p>Liczba 1,22 nie jest okrągła, bo pochodzi z pierwszego miejsca zerowego funkcji Bessela pierwszego rzędu — matematycznego opisu tego, jak fala rozkłada się po przejściu przez koło. To jedyne miejsce w tej książce, w którym stała bierze się z funkcji specjalnej, i nie ma sensu jej wyprowadzać; wystarczy wiedzieć, że dotyczy kształtu kołowego.</p>
+
+    <p><strong>Wersja do liczenia w głowie.</strong> Dla światła zielonego, λ = 550 nm, wzór upraszcza się do:</p>
+
+    <div class="formula">d ≈ 1,34 · N  [µm]</div>
+
+    <p>Czyli: przy f/8 krążek ma około 11 µm, przy f/11 około 15 µm, przy f/16 około 21 µm. Warto zapamiętać jedną z tych par i przeliczać resztę proporcjonalnie — zależność jest liniowa.</p>
+
+    <p><strong>Dlaczego czerwień rozmywa się bardziej.</strong> Skoro d jest proporcjonalne do λ, to czerwień przy 650 nm daje krążek o jedną czwartą większy niż błękit przy 450 nm. Przy mocno przymkniętej przysłonie widać to jako różnicę ostrości między kanałami — czerwony kanał jest miękciejszy od niebieskiego. To jeden z niewielu przypadków, w których dyfrakcja daje efekt barwny, i nie należy go mylić z aberracją chromatyczną z <a href="rozdzial-14-aberracja-chromatyczna.html">Rozdziału 14</a>, która ma zupełnie inną przyczynę.</p>
+
+    <p><em>Uwaga: wzór opisuje układ idealny, czyli taki, w którym jedynym ograniczeniem jest dyfrakcja. Prawdziwy obiektyw przy pełnym otworze jest ograniczony aberracjami i daje plamkę większą, niż wynika z tego rachunku. Dopiero przy mocno przymkniętej przysłonie realna plamka zbliża się do teoretycznej — i wtedy mówimy, że układ jest ograniczony dyfrakcyjnie.</em></p>
+  </template>
+
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-panel">
+      <button class="modal-close" data-modal-close aria-label="Zamknij">×</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
 </div>
 
 <script src="../assets/interactive.js"></script>
+<script>
+/* Krazek Airy'ego kontra piksel. d = 2,44 * lambda * N; dla 550 nm to
+   1,342 * N mikrometra. Slupek skaluje sie razem z osia w mikrometrach. */
+(function () {
+  var sl = document.getElementById('dyfrPrzyslona');
+  if (!sl) return;
+  var N = [1.4, 2, 2.8, 4, 5.6, 8, 11, 16, 22];
+  var Y0 = 250, PX_NA_UM = 5.4;      // 10 um = 54 px na osi
+  var PIKSELE = [
+    { nazwa: 'S35 4K', um: 6.2 },
+    { nazwa: 'pełnej klatki 24 Mpx', um: 6.0 },
+    { nazwa: 'pełnej klatki 61 Mpx', um: 3.8 }
+  ];
+
+  function odswiez() {
+    var i = parseInt(sl.value, 10), n = N[i];
+    var d = 2.44 * 0.55 * n;                     // um
+    var h = Math.min(220, d * PX_NA_UM);
+
+    var s = document.getElementById('slupekAiry');
+    s.setAttribute('y', (Y0 - h).toFixed(1));
+    s.setAttribute('height', h.toFixed(1));
+
+    document.getElementById('dyfrOdczyt').textContent = 'f/' + n.toString().replace('.', ',');
+    document.getElementById('airyWartosc').textContent = d.toFixed(1).replace('.', ',') + ' µm';
+
+    var wieksze = PIKSELE.filter(function (p) { return d > p.um; });
+    var opis;
+    if (wieksze.length === 0) {
+      opis = 'mieści się w pikselu każdego z tych formatów — dyfrakcja niczego jeszcze nie kosztuje';
+    } else if (wieksze.length === PIKSELE.length) {
+      opis = 'przekracza piksel we wszystkich trzech formatach — dalsze przymykanie kupuje wyłącznie głębię';
+    } else {
+      opis = 'przekracza już piksel ' + wieksze.map(function (p) { return p.nazwa; }).join(' i ') +
+             ', ale mieści się jeszcze w pozostałych';
+    }
+    document.getElementById('dyfrPodpis').textContent =
+      'Przy f/' + n.toString().replace('.', ',') + ' krążek ma ' +
+      d.toFixed(1).replace('.', ',') + ' µm — ' + opis + '.';
+  }
+  sl.addEventListener('input', odswiez);
+  odswiez();
+})();
+</script>
 </body>
 </html>
