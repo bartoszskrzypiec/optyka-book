@@ -62,6 +62,31 @@ body{font-family:var(--body);color:var(--text);line-height:1.65;-webkit-font-smo
 h1{font-family:var(--display);font-weight:600;font-size:clamp(30px,5vw,50px);line-height:1.08;margin:0 0 20px;letter-spacing:-0.01em;}
 .subtitle{font-size:17px;color:var(--text-dim);max-width:640px;}
 
+/* LINKI W PROZIE
+   Atmosfera nie miala ani jednego linku wewnatrz akapitu, wiec brak tej reguly
+   nigdy sie tam nie ujawnil. Ta ksiazka odsyla z tekstu bez przerwy — do
+   dodatkow, do innych rozdzialow i do ksiazek siostrzanych — a bez tego linki
+   spadaly na domyslny granat przegladarki, nieczytelny na ciemnym tle.
+   Cyjan, bo w tej ksiazce cyjan znaczy "szklo", a odsylacz jest przezroczysty:
+   patrzysz przez niego dalej. */
+.page p a, .panel li a, .panel p a, .index-hook a, .footer-note a,
+.section li a, .deeper-inline a {
+  color: var(--cyan);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--cyan);
+  transition: color .15s, border-color .15s;
+}
+.page p a:hover, .panel li a:hover, .panel p a:hover, .index-hook a:hover,
+.footer-note a:hover, .section li a:hover, .deeper-inline a:hover {
+  color: var(--amber);
+  border-bottom-color: var(--amber);
+}
+
+/* Odsylacz "idz glebiej" wpleciony w proze, tuz pod akapitem, ktory go
+   uzasadnia. Chip, nie zdanie — ma dac sie pominac wzrokiem. */
+.deeper-inline{font-family:var(--mono);font-size:12.5px;color:var(--text-dim);margin:-6px 0 22px;}
+.deeper-inline::before{content:"↳";color:var(--violet);margin-right:8px;}
+
 /* PANELS */
 .panel{background:var(--bg-panel);border:1px solid var(--border);border-radius:10px;padding:24px 28px;margin:40px 0;}
 .panel-label{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--cyan);text-transform:uppercase;margin-bottom:14px;}
@@ -148,6 +173,7 @@ h1{font-family:var(--display);font-weight:600;font-size:clamp(30px,5vw,50px);lin
 .part-label{font-family:var(--mono);font-size:12px;letter-spacing:.1em;color:var(--cyan);text-transform:uppercase;margin-bottom:18px;padding-bottom:10px;border-bottom:1px solid var(--border);}
 .part-label.violet{color:var(--violet);}
 .part-label.amber{color:var(--amber);}
+.part-label.raster{color:var(--raster);}
 .index-list{display:flex;flex-direction:column;}
 .index-row{display:block;padding:14px 4px;text-decoration:none;color:var(--text);border-bottom:1px solid var(--border);transition:padding-left .15s,border-color .15s;}
 .index-list .index-row:first-child{border-top:1px solid var(--border);}

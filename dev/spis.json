@@ -1,0 +1,385 @@
+{
+  "tytul": "Optyka dla Artystów Technicznych",
+  "marka": ["Optyka", "dla Artystów Technicznych"],
+  "podtytul": "Co obiektyw robi z obrazem — i dlaczego.",
+  "czesci": [
+    { "nr": "I", "tytul": "Światło, zanim dotknie szkła", "kolor": "amber",
+      "wstep": "Cztery rozdziały fundamentu. Bez nich reszta książki jest listą efektów — z nimi każdy efekt ma przyczynę, do której da się wrócić.",
+      "od": 1, "do": 4 },
+    { "nr": "II", "tytul": "Kadr i głębia", "kolor": "",
+      "wstep": "Co obiektyw robi z przestrzenią: ile jej mieści, co z niej jest ostre i jak wygląda to, co ostre nie jest. Najbardziej praktyczna część książki.",
+      "od": 5, "do": 10 },
+    { "nr": "III", "tytul": "Wady, czyli charakter", "kolor": "violet",
+      "wstep": "Żaden obiektyw nie odwzorowuje idealnie. To, co nazywamy „charakterem szkła”, jest sumą jego niedoskonałości — a każda z nich ma nazwę i wzór.",
+      "od": 11, "do": 15 },
+    { "nr": "IV", "tytul": "Konstrukcje: dlaczego ten obiektyw rysuje tak", "kolor": "cyan",
+      "wstep": "Świadomie po wadach: każdy klasyczny układ optyczny jest odpowiedzią na konkretny kompromis, a jego podpis w obrazie to skutek uboczny tej odpowiedzi.",
+      "od": 16, "do": 21 },
+    { "nr": "V", "tytul": "Światło, które zbłądziło", "kolor": "amber",
+      "wstep": "Nie każdy foton trafia tam, gdzie powinien. Ta część jest w całości konsekwencją jednego zdania z Rozdziału 3: każda powierzchnia szkła odbija.",
+      "od": 22, "do": 26 },
+    { "nr": "VI", "tytul": "Matryca, taśma i czas", "kolor": "raster",
+      "wstep": "Obraz opuścił obiektyw i musi zostać zapisany. Tu mieszka halacja, ziarno, winietowanie i wszystko, co pluginy nazywają „emulacją kamery”.",
+      "od": 27, "do": 32 },
+    { "nr": "VII", "tytul": "To wszystko w CG", "kolor": "",
+      "wstep": "Most, dla którego ta książka powstała: co da się policzyć w renderze, co trzeba udać w compie, i dlaczego ten podział wygląda tak, a nie inaczej.",
+      "od": 33, "do": 36 },
+    { "nr": "VIII", "tytul": "Optyka jako język operatorski", "kolor": "amber",
+      "wstep": "Te same zjawiska czytane jako decyzje. Nie krytyka filmowa — analiza tego, co wybór ogniskowej, przysłony i szkła robi z opowiadaną historią.",
+      "od": 37, "do": 41 },
+    { "nr": "IX", "tytul": "Czytanie kadru", "kolor": "",
+      "wstep": "Domknięcie i jedyny rozdział czysto praktyczny: odwrotna inżynieria obrazu, którego nie kręciłeś.",
+      "od": 42, "do": 42 }
+  ],
+
+  "rozdzialy": [
+    { "nr": 1, "slug": "rozdzial-01-fala-czy-promien", "tytul": "Fala czy promień",
+      "eyebrow": "Światło",
+      "hook": "Prawie całą tę książkę da się opowiedzieć promieniem. Prawie — bo gwiazdki wokół latarni, kolor powłoki i granica ostrości wymagają przyznania, że światło jest falą.",
+      "readout": ["Modele · dwa", "Skala · 550 nm", "Kryterium · rozmiar przeszkody", "Stąd · dyfrakcja"] },
+
+    { "nr": 2, "slug": "rozdzial-02-zalamanie-i-dyspersja", "tytul": "Załamanie i dyspersja",
+      "eyebrow": "Światło",
+      "hook": "Soczewka nie ma jednej ogniskowej. Ma tyle ogniskowych, ile kolorów — a cała późniejsza historia konstrukcji obiektywów jest walką z tym jednym faktem.",
+      "readout": ["n · 1,5–1,9", "Prawo · Snell", "Rozrzut · liczba Abbego", "Stąd · aberracja chromatyczna"] },
+
+    { "nr": 3, "slug": "rozdzial-03-fresnel-kazda-powierzchnia-swieci", "tytul": "Fresnel: dlaczego każda powierzchnia szkła świeci",
+      "eyebrow": "Światło",
+      "hook": "Niepowlekana powierzchnia szkła odbija cztery procent światła. Obiektyw ma ich trzydzieści. To jedno zdanie wyjaśnia flarę, ghosting i połowę różnicy między szkłem z 1970 a z 2020 roku.",
+      "readout": ["Odbicie · ~4% / powierzchnię", "Powierzchni · 20–40", "Z powłoką · ~0,2%", "Stąd · flara"] },
+
+    { "nr": 4, "slug": "rozdzial-04-soczewka-cienka", "tytul": "Soczewka cienka i co znaczy „pięćdziesiątka”",
+      "eyebrow": "Światło",
+      "hook": "Ogniskowa to nie długość obiektywu ani odległość do matrycy. To liczba mówiąca, gdzie zbiegną się promienie z nieskończoności — i wszystko inne z niej wynika.",
+      "readout": ["1/f = 1/s + 1/s′", "Ogniskowa · mm", "Płaszczyzny · dwie", "Węzeł · punkt obrotu"] },
+
+    { "nr": 5, "slug": "rozdzial-05-ogniskowa-format-perspektywa", "tytul": "Ogniskowa, format i mit kompresji perspektywy",
+      "eyebrow": "Kadr",
+      "hook": "Teleobiektyw niczego nie kompresuje. Perspektywę ustawiasz nogami — ogniskowa tylko kadruje to, co już zdecydowałeś, stając w tym, a nie innym miejscu.",
+      "readout": ["Perspektywa · pozycja", "Ogniskowa · kadr", "Format · S35 / FF / 65", "Mit · obalony"] },
+
+    { "nr": 6, "slug": "rozdzial-06-przyslona-f-i-t", "tytul": "Przysłona: f, T i dlaczego to nie to samo",
+      "eyebrow": "Kadr",
+      "hook": "f/2,8 to geometria — iloraz ogniskowej i średnicy źrenicy. T/2,8 to pomiar — ile światła naprawdę dolatuje. Różnica między nimi jest podatkiem od liczby szkieł.",
+      "readout": ["f · geometria", "T · pomiar", "Różnica · straty w szkle", "Skok · ×√2"] },
+
+    { "nr": 7, "slug": "rozdzial-07-zrenice", "tytul": "Źrenica wejściowa i wyjściowa",
+      "eyebrow": "Kadr",
+      "hook": "Obiektyw nie patrzy przez swoją przednią soczewkę, tylko przez jej obraz. Kiedy to zaskoczy, kocie oko, winietowanie optyczne i punkt bezparalaksowy przestają być trzema osobnymi tajemnicami.",
+      "readout": ["Źrenica · obraz przysłony", "Wejściowa · od przodu", "Wyjściowa · od tyłu", "Stąd · bokeh i winieta"] },
+
+    { "nr": 8, "slug": "rozdzial-08-glebia-ostrosci", "tytul": "Głębia ostrości i krążek rozmycia",
+      "eyebrow": "Kadr",
+      "hook": "Ostro jest w jednej płaszczyźnie i nigdzie indziej. „Głębia ostrości” to umowa o tym, jak duże rozmycie jeszcze zgodzimy się nazwać ostrym — dlatego zależy od tego, na czym oglądasz.",
+      "readout": ["Ostrość · jedna płaszczyzna", "CoC · umowny", "Zależy od · ekranu", "Hiperfokalna · granica"] },
+
+    { "nr": 9, "slug": "rozdzial-09-bokeh", "tytul": "Bokeh: kształt źrenicy widzianej stąd",
+      "eyebrow": "Kadr",
+      "hook": "Nieostry punkt świetlny nie jest plamką. Jest zdjęciem źrenicy wyjściowej, zrobionym z tego miejsca kadru — dlatego w rogu ma kształt kociego oka, a nie koła.",
+      "readout": ["Plamka · obraz źrenicy", "W rogu · cat eye", "Listki · wielokąt", "Charakter · z aberracji"] },
+
+    { "nr": 10, "slug": "rozdzial-10-dyfrakcja", "tytul": "Dyfrakcja: granica ostrości i gwiazdki",
+      "eyebrow": "Kadr",
+      "hook": "Od pewnego momentu przymykanie przysłony psuje ostrość zamiast ją poprawiać. Ta sama przyczyna rysuje promienie wokół latarni — i nie da się jej obejść żadnym szkłem.",
+      "readout": ["Granica · f/8–f/11", "Airy · 2,44·λ·N", "Listki parzyste · N", "Listki nieparzyste · 2N"] },
+
+    { "nr": 11, "slug": "rozdzial-11-aberracja-sferyczna", "tytul": "Aberracja sferyczna: miękkość, glow i mydlana bańka",
+      "eyebrow": "Wady",
+      "hook": "Kula jest łatwa do wyszlifowania i zła do skupiania światła. Z tego jednego kompromisu bierze się i poświata wokół świateł przy pełnym otworze, i to, czy bokeh jest kremowe, czy obwiedzione obrączką.",
+      "readout": ["Przyczyna · kształt kuli", "Objaw · glow", "Nieskorygowana · kremowe tło", "Przekorygowana · obrączka"] },
+
+    { "nr": 12, "slug": "rozdzial-12-poza-osia", "tytul": "Poza osią: koma, astygmatyzm i krzywizna pola",
+      "eyebrow": "Wady",
+      "hook": "W środku kadru każdy obiektyw jest dobry. Dopiero punkt w rogu pokazuje, ile konstruktor musiał odpuścić — i dlaczego niektóre obiektywy skręcają tło w wir.",
+      "readout": ["Koma · kometa", "Astygmatyzm · dwa ogniska", "Pole · zakrzywione", "Stąd · swirly bokeh"] },
+
+    { "nr": 13, "slug": "rozdzial-13-dystorsja", "tytul": "Dystorsja i projekcja: dwie różne rzeczy",
+      "eyebrow": "Wady",
+      "hook": "Rozciągnięte twarze w rogach szerokiego kadru to nie jest wada obiektywu. To jest cena, którą płaci każde płaskie odwzorowanie — i dopiero po odjęciu jej zostaje prawdziwa dystorsja.",
+      "readout": ["Beczka · szerokie", "Poduszka · tele", "Wąsy · zoomy", "Projekcja ≠ wada"] },
+
+    { "nr": 14, "slug": "rozdzial-14-aberracja-chromatyczna", "tytul": "Aberracja chromatyczna: podłużna i poprzeczna",
+      "eyebrow": "Wady",
+      "hook": "Fioletowa obwódka na nieostrym świetle i kolorowa krawędź w rogu kadru wyglądają jak jedno zjawisko. To dwa różne, mają różne przyczyny i tylko jedno z nich da się naprawić w compie.",
+      "readout": ["LoCA · wzdłuż osi", "TCA · w poprzek", "LoCA · nie do usunięcia", "TCA · skalowanie kanałów"] },
+
+    { "nr": 15, "slug": "rozdzial-15-korekcja-i-jej-cena", "tytul": "Korekcja i jej cena",
+      "eyebrow": "Wady",
+      "hook": "Każda wada z tej części ma lekarstwo, a każde lekarstwo to dodatkowa soczewka. Dodatkowa soczewka to dwie nowe powierzchnie odbijające — i tu koło się zamyka z Rozdziałem 3.",
+      "readout": ["Achromat · dwa kolory", "Apochromat · trzy", "Asfera · jedna zamiast trzech", "Cena · powierzchnie"] },
+
+    { "nr": 16, "slug": "rozdzial-16-anatomia-obiektywu", "tytul": "Anatomia obiektywu",
+      "eyebrow": "Konstrukcje",
+      "hook": "Zanim porównamy układy, warto umieć je czytać: co to jest grupa, dlaczego elementy się skleja, gdzie siedzi przysłona i co właściwie rusza się przy ostrzeniu.",
+      "readout": ["Element · jedna soczewka", "Grupa · sklejona", "Przysłona · w środku", "Ostrzenie · co się rusza"] },
+
+    { "nr": 17, "slug": "rozdzial-17-czterej-przodkowie", "tytul": "Czterej przodkowie: Petzval, Tessar, Sonnar, Double Gauss",
+      "eyebrow": "Konstrukcje",
+      "hook": "Cztery układy z lat 1840–1930 wystarczą, żeby wyjaśnić charakter większości obiektywów, jakie kiedykolwiek trzymałeś. Każdy z nich odpuścił coś innego — i z tego odpuszczenia zrobił podpis.",
+      "readout": ["Petzval · 1840", "Tessar · 1902", "Sonnar · 1929", "Double Gauss · przodek 50 mm"] },
+
+    { "nr": 18, "slug": "rozdzial-18-skrajne-ogniskowe", "tytul": "Skrajne ogniskowe: retrofokus, tele i lustro",
+      "eyebrow": "Konstrukcje",
+      "hook": "Szeroki kąt musi zmieścić lustro albo migawkę za sobą, a teleobiektyw musi być krótszy niż własna ogniskowa. Obie te potrzeby wyginają konstrukcję — i widać to w kadrze.",
+      "readout": ["Retrofokus · odstęp z tyłu", "Tele · krótszy niż f", "Katadioptryk · lustro", "Stąd · pączkowe bokeh"] },
+
+    { "nr": 19, "slug": "rozdzial-19-zoom-kontra-stalka", "tytul": "Zoom kontra stałka",
+      "eyebrow": "Konstrukcje",
+      "hook": "Zoom to trzy obiektywy w jednej tubie, poruszające się względem siebie. Płacisz za to dwudziestoma szkłami, oddechem, zmienną T-stopą i flarą — i czasem warto.",
+      "readout": ["Elementów · 15–22", "Grupy · ruchome", "T · zmienna", "Podatek · flara"] },
+
+    { "nr": 20, "slug": "rozdzial-20-anamorf", "tytul": "Anamorf: cylinder w torze optycznym",
+      "eyebrow": "Konstrukcje",
+      "hook": "Anamorf powstał z oszczędności na taśmie, a przetrwał jako estetyka. Wszystko, co w nim lubimy — owalne bokeh, poziome smugi, dziwny oddech — to skutki uboczne jednej cylindrycznej soczewki.",
+      "readout": ["Squeeze · 1,33–2×", "Bokeh · owalne", "Front vs rear · różnica", "Mumps · przy bliskiej"] },
+
+    { "nr": 21, "slug": "rozdzial-21-rodziny-szkla-kinowego", "tytul": "Rodziny szkła kinowego",
+      "eyebrow": "Konstrukcje",
+      "hook": "Cooke, Master Prime, Signature, Primo, K35 — nazwy, które padają na planie jak nazwy charakterów. Każda z nich jest konkretnym punktem w kompromisach z poprzednich rozdziałów.",
+      "readout": ["Kryteria · cztery", "Kontrast vs charakter", "Skóra · jak rysuje", "Test · siatka i flara"] },
+
+    { "nr": 22, "slug": "rozdzial-22-veiling-glare", "tytul": "Veiling glare: dlaczego czernie się podnoszą",
+      "eyebrow": "Flara",
+      "hook": "Najczęstsza flara nie ma kształtu. Jest równomierną mgiełką, która podnosi czarny i zjada kontrast — i to ona, bardziej niż ghosty, odróżnia szkło stare od nowego.",
+      "readout": ["Rozproszenie · wewnątrz", "Objaw · podniesiony czarny", "Miara · spadek kontrastu", "Filtr dyfuzyjny · celowo"] },
+
+    { "nr": 23, "slug": "rozdzial-23-ghosting", "tytul": "Ghosting: odbicia przez środek kadru",
+      "eyebrow": "Flara",
+      "hook": "Ghosty nie lecą byle gdzie. Układają się w linii przechodzącej przez środek kadru, mają kształt przysłony i kolor powłoki — bo każdy z nich to konkretne odbicie między dwiema konkretnymi powierzchniami.",
+      "readout": ["Tor · przez środek", "Kształt · przysłony", "Kolor · z powłoki", "Liczba · rośnie z N²"] },
+
+    { "nr": 24, "slug": "rozdzial-24-powloki", "tytul": "Powłoki: dlaczego flara ma kolor",
+      "eyebrow": "Flara",
+      "hook": "Warstwa grubości ćwierci długości fali kasuje odbicie przez interferencję — ale tylko dla tej jednej fali. Reszta widma zostaje, i to ona nadaje flarze kolor rozpoznawalny jak logo producenta.",
+      "readout": ["Grubość · λ/4", "Mechanizm · interferencja", "Jedna warstwa · fiolet", "Wielowarstwa · zieleń"] },
+
+    { "nr": 25, "slug": "rozdzial-25-starburst", "tytul": "Starburst: listki i promienie",
+      "eyebrow": "Flara",
+      "hook": "Liczba promieni wokół latarni nie jest przypadkowa i nie zależy od jasności. Zależy od liczby listków przysłony — a reguła ma jeden nieoczywisty haczyk przy liczbie nieparzystej.",
+      "readout": ["Parzyste N · N promieni", "Nieparzyste N · 2N", "Ostrość · z przymknięcia", "Krawędź · prosta vs łuk"] },
+
+    { "nr": 26, "slug": "rozdzial-26-smugi-anamorficzne", "tytul": "Smugi anamorficzne: dlaczego poziome i niebieskie",
+      "eyebrow": "Flara",
+      "hook": "Najbardziej rozpoznawalny efekt optyczny w kinie jest skutkiem ubocznym soczewki, która miała tylko ścisnąć obraz. Kierunek smugi wynika z geometrii, a kolor — z powłoki.",
+      "readout": ["Kierunek · prostopadle", "Źródło · cylinder", "Kolor · z powłoki", "Podrabianie · gdzie się sypie"] },
+
+    { "nr": 27, "slug": "rozdzial-27-od-fotonow-do-liczb", "tytul": "Od fotonów do liczb",
+      "eyebrow": "Matryca",
+      "hook": "Matryca nie mierzy koloru. Liczy fotony pod kolorowymi filterkami i zgaduje resztę — a szum, który przy tym widzisz, jest w większości własnością światła, nie elektroniki.",
+      "readout": ["Bayer · 2×zielony", "Szum · pierwiastek z N", "ISO · wzmocnienie", "Dual native · dwa tory"] },
+
+    { "nr": 28, "slug": "rozdzial-28-halacja", "tytul": "Halacja: dlaczego czerwona i wokół przepaleń",
+      "eyebrow": "Matryca",
+      "hook": "Światło nie zatrzymuje się w emulsji. Przechodzi ją, odbija się od spodu podłoża i naświetla ją drugi raz — od tyłu. Stąd obwódka, i stąd jej kolor.",
+      "readout": ["Odbicie · od podłoża", "Kierunek · od tyłu", "Kolor · czerwony", "Cyfra · stos matrycy"] },
+
+    { "nr": 29, "slug": "rozdzial-29-ziarno-to-nie-szum", "tytul": "Ziarno to nie szum",
+      "eyebrow": "Matryca",
+      "hook": "Ziarno jest strukturą — kryształkami srebra o różnej wielkości, skorelowanymi przestrzennie i zależnymi od ekspozycji. Szum gaussowski nie jest niczym z tych trzech i dlatego nigdy nie wygląda jak taśma.",
+      "readout": ["Ziarno · struktura", "Szum · addytywny", "Zależność · od ekspozycji", "Korelacja · przestrzenna"] },
+
+    { "nr": 30, "slug": "rozdzial-30-winietowanie", "tytul": "Winietowanie: trzy zjawiska, jedna nazwa",
+      "eyebrow": "Matryca",
+      "hook": "Naturalne, optyczne i mechaniczne winietowanie mają inne przyczyny, inny kształt i inną reakcję na przymknięcie przysłony. Mylenie ich to najczęstszy powód, dla którego winieta w CG wygląda naklejona.",
+      "readout": ["Naturalne · cos⁴θ", "Optyczne · obcięta źrenica", "Mechaniczne · osłona", "Test · przymknij"] },
+
+    { "nr": 31, "slug": "rozdzial-31-zakres-dynamiczny", "tytul": "Zakres dynamiczny, rolloff i log",
+      "eyebrow": "Matryca",
+      "hook": "Taśma nie ma punktu, w którym się kończy — ma zakręt. Matryca ma ścianę. Cała praca nad „filmowym” wyglądem przepaleń jest pracą nad tą różnicą.",
+      "readout": ["Taśma · zakręt", "Cyfra · ściana", "Zapas · w log", "Clip · nieodwracalny"] },
+
+    { "nr": 32, "slug": "rozdzial-32-czas", "tytul": "Czas: migawka, oddech i rolling shutter",
+      "eyebrow": "Matryca",
+      "hook": "Klatka nie jest chwilą, tylko odcinkiem czasu — a w matrycy CMOS nie wszystkie linie mają ten sam odcinek. Stąd 180 stopni, stąd pochylone słupy i stąd zmiana kadru przy przejeździe ostrości.",
+      "readout": ["Kąt · 180°", "Oddech · zmiana FOV", "Rolling · linia po linii", "Skos · przy panoramie"] },
+
+    { "nr": 33, "slug": "rozdzial-33-kamera-w-rendererze", "tytul": "Kamera w rendererze",
+      "eyebrow": "W CG",
+      "hook": "Domyślna kamera w każdym rendererze to dziurka bez średnicy: nieskończona głębia, zero aberracji, zero flary. Wszystko z tej książki trzeba do niej dołożyć — i warto wiedzieć, gdzie się co dokłada.",
+      "readout": ["Domyślnie · dziurka", "Krok 1 · cienka soczewka", "Krok 2 · wielosoczewkowy", "Koszt · próbki"] },
+
+    { "nr": 34, "slug": "rozdzial-34-render-czy-comp", "tytul": "Co w renderze, a co w compie",
+      "eyebrow": "W CG",
+      "hook": "Część efektów z tej książki da się udać po renderze i nikt nie zauważy. Część nie da się nigdy, bo wymaga informacji, której na płaskim obrazie już nie ma. Ten rozdział rysuje tę granicę.",
+      "readout": ["W renderze · okluzja", "W compie · flara", "Granica · brakująca informacja", "2.5D · gdzie pęka"] },
+
+    { "nr": 35, "slug": "rozdzial-35-geometria-plateu", "tytul": "Geometria plate'u: Z-depth i dystorsja",
+      "eyebrow": "W CG",
+      "hook": "Dwie rzeczy muszą się zgadzać, zanim cokolwiek dołożysz: gdzie naprawdę jest głębia i jak obiektyw wygiął obraz. Obie potrafią wyglądać dobrze i być kompletnie błędne.",
+      "readout": ["Z · w metrach", "Znormalizowany · bezużyteczny", "Deep · po co", "STMapa · undistort"] },
+
+    { "nr": 36, "slug": "rozdzial-36-kolejnosc-w-compie", "tytul": "Kolejność operacji w compie",
+      "eyebrow": "W CG",
+      "hook": "Te same węzły w innej kolejności dają inny obraz — i tylko jedna kolejność odtwarza to, co naprawdę robi kamera. Halacja przed ziarnem, ziarno przed dystorsją, i tak dalej.",
+      "readout": ["Zasada · kolejność fizyczna", "Halacja · przed ziarnem", "Ziarno · przed dystorsją", "Log · gdzie"] },
+
+    { "nr": 37, "slug": "rozdzial-37-ogniskowa-jako-decyzja", "tytul": "Ogniskowa jako decyzja",
+      "eyebrow": "Język",
+      "hook": "Wybór między 24 a 85 milimetrami nie jest wyborem kadru — kadr można wyrównać krokiem w tył. Jest wyborem tego, jak blisko widz stoi i ile świata widzi za bohaterem.",
+      "readout": ["Kadr · wyrównywalny", "Odległość · nie", "Twarz · zmienia się", "Tło · rośnie lub znika"] },
+
+    { "nr": 38, "slug": "rozdzial-38-ostrosc-jako-rezyseria", "tytul": "Ostrość jako reżyseria uwagi",
+      "eyebrow": "Język",
+      "hook": "Płytka ostrość mówi widzowi, gdzie ma patrzeć. Głęboka zostawia mu wybór. To nie jest decyzja ekspozycyjna, choć zapada przy pokrętle przysłony.",
+      "readout": ["Płytka · wskazuje", "Głęboka · zostawia wybór", "Rack · cięcie bez cięcia", "Stop · decyzja narracyjna"] },
+
+    { "nr": 39, "slug": "rozdzial-39-szkola-powsciagliwosci", "tytul": "Szkoła powściągliwości",
+      "eyebrow": "Język",
+      "hook": "Najbardziej rozpoznawalne kadry ostatnich dekad powstały na czystym szkle, bez filtrów dyfuzyjnych i prawie bez flary. Brak efektu też jest decyzją optyczną — i zwykle trudniejszą.",
+      "readout": ["Szkło · czyste", "Kontrast · ze światła", "Zestaw · jeden na film", "Flara · rzadko"] },
+
+    { "nr": 40, "slug": "rozdzial-40-szkola-faktury", "tytul": "Szkoła faktury",
+      "eyebrow": "Język",
+      "hook": "Drugi biegun: duży format, rehousowane szkło sprzed pół wieku, dyfuzja przed obiektywem i winieta zostawiona tam, gdzie wypadła. Wada jako materiał, nie jako usterka.",
+      "readout": ["Format · duży", "Szkło · vintage", "Dyfuzja · przed", "Ściana LED · nowy problem"] },
+
+    { "nr": 41, "slug": "rozdzial-41-format-jako-autorstwo", "tytul": "Format jako autorstwo",
+      "eyebrow": "Język",
+      "hook": "Proporcje kadru decydują, ile twarzy mieści się obok siebie, jak długo można trzymać ujęcie i czy pion w ogóle istnieje. Wybór formatu zapada przed pierwszym dniem zdjęciowym i rządzi wszystkim potem.",
+      "readout": ["2.39 · anamorf", "1.85 · sferyczny", "1.43 · IMAX", "Skutek · rytm montażu"] },
+
+    { "nr": 42, "slug": "rozdzial-42-czytanie-kadru", "tytul": "Czytanie kadru",
+      "eyebrow": "Kadr",
+      "hook": "Dostajesz jedną klatkę i masz do niej dorobić render. Ta książka kończy się umiejętnością odwrotną do całej reszty: z obrazu odczytać ogniskową, przysłonę, format, wiek szkła i filtrację.",
+      "readout": ["Wejście · jedna klatka", "Ogniskowa · z perspektywy", "Stop · z głębi", "Szkło · z flary"] }
+  ],
+
+  "dodatki": [
+    { "l": "a", "slug": "dodatek-a-snell-i-abbe", "tytul": "Snell, liczba Abbego i szkła w liczbach",
+      "opis": "Prawo załamania z wyprowadzeniem, współczynniki dla typowych szkieł optycznych i to, co naprawdę mierzy liczba Abbego.",
+      "ext": [2], "wzory": true },
+
+    { "l": "b", "slug": "dodatek-b-wzory-fresnela", "tytul": "Wzory Fresnela i powłoka ćwierćfalowa",
+      "opis": "Pełne współczynniki odbicia dla obu polaryzacji, przybliżenie Schlicka i rachunek pokazujący, ile daje jedna warstwa, a ile dwanaście.",
+      "ext": [3, 24], "wzory": true },
+
+    { "l": "c", "slug": "dodatek-c-rownanie-soczewki", "tytul": "Równanie soczewki, płaszczyzny główne i punkty węzłowe",
+      "opis": "Skąd bierze się 1/f = 1/s + 1/s′, czym różni się soczewka gruba od cienkiej i dlaczego panorama bez paralaksy obraca się wokół konkretnego punktu.",
+      "ext": [4], "wzory": true },
+
+    { "l": "d", "slug": "dodatek-d-krazek-airyego", "tytul": "Krążek Airy'ego i granica dyfrakcyjna",
+      "opis": "Skąd się bierze 2,44·λ·N, przy jakiej przysłonie dyfrakcja wygrywa z pikselem na S35 i pełnej klatce, oraz dlaczego nieparzysta liczba listków podwaja promienie.",
+      "ext": [10, 25], "wzory": true },
+
+    { "l": "e", "slug": "dodatek-e-glebia-w-liczbach", "tytul": "Głębia ostrości w liczbach",
+      "opis": "Pełne wzory na granice głębi i hiperfokalną, tabela krążków rozmycia dla formatów i pokaz, jak bardzo wynik zależy od przyjętej umowy.",
+      "ext": [8], "wzory": true },
+
+    { "l": "f", "slug": "dodatek-f-aberracje-seidela", "tytul": "Pięć aberracji Seidela",
+      "opis": "Rozwinięcie funkcji falowej, z którego wypadają sferyczna, koma, astygmatyzm, krzywizna pola i dystorsja — jako pięć wyrazów jednego szeregu.",
+      "ext": [11, 12], "wzory": true },
+
+    { "l": "g", "slug": "dodatek-g-modele-dystorsji", "tytul": "Modele dystorsji: Brown–Conrady i dywizyjny",
+      "opis": "Wielomiany, których używają trackery i Nuke, co znaczą ich współczynniki i dlaczego odwrócenie modelu nie jest tym samym co zmiana znaku.",
+      "ext": [13, 35], "wzory": true },
+
+    { "l": "h", "slug": "dodatek-h-mtf", "tytul": "MTF: co naprawdę mierzy wykres ostrości",
+      "opis": "Funkcja przenoszenia kontrastu, splot z funkcją rozmycia punktu, czytanie wykresów producentów i różnica między rozdzielczością a kontrastem.",
+      "ext": [15, 21], "wzory": true },
+
+    { "l": "i", "slug": "dodatek-i-katalog-ukladow", "tytul": "Katalog układów optycznych",
+      "opis": "Przekroje i liczby dla kilkunastu klasycznych konstrukcji: liczba elementów, grup, powierzchni powietrze-szkło i typowe zastosowanie.",
+      "ext": [17, 18, 19] },
+
+    { "l": "j", "slug": "dodatek-j-anamorf-w-liczbach", "tytul": "Anamorf w liczbach",
+      "opis": "Squeeze i jego wpływ na kadr, dlaczego bokeh jest owalne dokładnie w proporcji ściśnięcia, skąd mumps i czym różni się squeeze przedni od tylnego.",
+      "ext": [20, 26], "wzory": true },
+
+    { "l": "k", "slug": "dodatek-k-rodziny-szkla", "tytul": "Rodziny szkła kinowego — tabela",
+      "opis": "Porównanie rodzin obiektywów po czterech kryteriach z Rozdziału 21: kontrast, sposób przejścia do nieostrości, zachowanie flary, rysunek skóry.",
+      "ext": [21] },
+
+    { "l": "l", "slug": "dodatek-l-ghost-n-tego-rzedu", "tytul": "Ghost jako odbicie N-tego rzędu",
+      "opis": "Ile ghostów daje układ o N powierzchniach, dlaczego liczba rośnie kwadratowo i jak policzyć, gdzie w kadrze wypadnie konkretne odbicie.",
+      "ext": [23], "wzory": true },
+
+    { "l": "m", "slug": "dodatek-m-bayer-i-demozaikowanie", "tytul": "Bayer, demozaikowanie i utracona rozdzielczość",
+      "opis": "Co naprawdę mierzy piksel pod filterkiem, ile rozdzielczości kosztuje interpolacja, skąd mora i po co filtr dolnoprzepustowy.",
+      "ext": [27], "wzory": true },
+
+    { "l": "n", "slug": "dodatek-n-szum-w-liczbach", "tytul": "Szum fotonowy, szum odczytu i ISO",
+      "opis": "Dlaczego szum rośnie jak pierwiastek z sygnału, czym ISO różni się od czułości, skąd bierze się dual native ISO i jak to policzyć w EV.",
+      "ext": [27, 29], "wzory": true },
+
+    { "l": "o", "slug": "dodatek-o-budowa-tasmy", "tytul": "Budowa taśmy warstwa po warstwie",
+      "opis": "Przekrój negatywu koloru: emulsje, filtr żółty, podłoże i warstwa antyhalacyjna — plus to, co się zmienia, gdy tej ostatniej zabraknie.",
+      "ext": [28] },
+
+    { "l": "p", "slug": "dodatek-p-winietowanie-w-liczbach", "tytul": "Winietowanie w liczbach",
+      "opis": "Skąd cos⁴θ, jak policzyć obcięcie źrenicy poza osią i jak odróżnić jedno od drugiego pomiarem, a nie na oko.",
+      "ext": [30], "wzory": true },
+
+    { "l": "q", "slug": "dodatek-q-log-i-rolloff", "tytul": "Log, rolloff i zakres dynamiczny w EV",
+      "opis": "Krzywe log najpopularniejszych kamer, charakterystyka gęstości negatywu i porównanie tego, co dzieje się dwie przysłony nad bielą.",
+      "ext": [31], "wzory": true },
+
+    { "l": "r", "slug": "dodatek-r-rozmycie-ruchu", "tytul": "Rozmycie ruchu: kąt, czas, próbkowanie",
+      "opis": "Przeliczanie kąta migawki na czas, ile próbek potrzeba, żeby smuga nie była schodkowa, i dlaczego rozmycie w CG bywa zbyt czyste.",
+      "ext": [32], "wzory": true },
+
+    { "l": "s", "slug": "dodatek-s-kamery-w-rendererach", "tytul": "Kamery w rendererach — parametry",
+      "opis": "Te same pojęcia pod różnymi nazwami: co odpowiada przysłonie, ogniskowej i formatowi w Arnoldzie, RenderManie, Cyclesie i Karmie.",
+      "ext": [33], "cg": true },
+
+    { "l": "t", "slug": "dodatek-t-modele-wielosoczewkowe", "tytul": "Modele wielosoczewkowe w rendererze",
+      "opis": "Kiedy opłaca się prześledzić promień przez prawdziwy układ zamiast przybliżać go cienką soczewką, i co się wtedy dostaje za darmo.",
+      "ext": [33, 34], "cg": true },
+
+    { "l": "u", "slug": "dodatek-u-z-depth-w-praktyce", "tytul": "Z-depth i deep w praktyce",
+      "opis": "Kalibracja znormalizowanej mapy do metrów, pułapki filtrowania kanału Z, kiedy deep jest jedynym wyjściem i ile kosztuje.",
+      "ext": [35], "cg": true },
+
+    { "l": "v", "slug": "dodatek-v-stmapy", "tytul": "STMapy: budowa, próbkowanie, filtrowanie",
+      "opis": "Czym jest mapa współrzędnych, dlaczego musi być w pełnej precyzji, co się dzieje na krawędziach kadru i jak sprawdzić, że undistort jest odwracalny.",
+      "ext": [35], "cg": true },
+
+    { "l": "w", "slug": "dodatek-w-kolejnosc-w-compie", "tytul": "Kolejność operacji w compie — lista kontrolna",
+      "opis": "Pełny łańcuch od renderu liniowego do gotowej klatki, z uzasadnieniem każdego kroku i z zaznaczeniem miejsc, w których kolejność naprawdę zmienia obraz.",
+      "ext": [36], "cg": true },
+
+    { "l": "x", "slug": "dodatek-x-odtwarzanie-flary", "tytul": "Odtwarzanie flary w compie",
+      "opis": "Warstwy, z których składa się wiarygodna flara, skąd brać maski jasnych źródeł, jak nie zabić wydajności i po czym poznać flarę podrobioną.",
+      "ext": [22, 23, 26], "cg": true },
+
+    { "l": "y", "slug": "dodatek-y-ziarno-w-compie", "tytul": "Ziarno w compie",
+      "opis": "Dlaczego szum gaussowski nie wygląda jak taśma, jak zrobić ziarno zależne od ekspozycji i skorelowane przestrzennie, i gdzie w łańcuchu je wstawić.",
+      "ext": [29], "cg": true },
+
+    { "l": "z", "slug": "dodatek-z-jak-przetestowac-obiektyw", "tytul": "Jak przetestować obiektyw",
+      "opis": "Protokół testu, który da się zrobić w jeden dzień: siatka na dystorsję, tablica na MTF, punktowe światła na bokeh i flarę, twarz na rysunek skóry.",
+      "ext": [21, 42] },
+
+    { "l": "aa", "slug": "dodatek-aa-formaty-i-ekwiwalencja", "tytul": "Formaty i ekwiwalencja",
+      "opis": "Wymiary matryc i okienek od 16 mm do 65 mm, przeliczniki ogniskowych, i uczciwa odpowiedź na pytanie, co naprawdę zmienia duży format.",
+      "ext": [5, 41] },
+
+    { "l": "ab", "slug": "dodatek-ab-filtry", "tytul": "Filtry: dyfuzja, ND, IRND, polaryzator",
+      "opis": "Co każdy z nich robi z obrazem w kategoriach z tej książki, dlaczego cyfra potrzebuje IRND, i jak dyfuzja podnosi czernie dokładnie tam, gdzie robi to stare szkło.",
+      "ext": [22, 40] },
+
+    { "l": "ac", "slug": "dodatek-ac-perspektywa-w-liczbach", "tytul": "Perspektywa w liczbach",
+      "opis": "Rachunek pokazujący, że stosunek wielkości bliskiego i dalekiego obiektu zależy wyłącznie od odległości kamery — i dlaczego mit o kompresji jest tak żywotny.",
+      "ext": [5, 37], "wzory": true },
+
+    { "l": "ae", "slug": "dodatek-ae-geometria-zrenic", "tytul": "Geometria źrenic",
+      "opis": "Gdzie naprawdę leży źrenica wejściowa i wyjściowa, jak policzyć ich położenie dla znanego układu, czym jest powiększenie źrenicowe i skąd bierze się punkt bezparalaksowy.",
+      "ext": [7, 30], "wzory": true },
+
+    { "l": "af", "slug": "dodatek-af-katalog-bokeh", "tytul": "Katalog kształtów bokeh",
+      "opis": "Kocie oko, wielokąt, obrączka, cebulka, pączek, mydlana bańka i wir — każdy kształt z przyczyną, konstrukcją, która go daje, i sposobem odtworzenia w compie.",
+      "ext": [9, 11] },
+
+    { "l": "ag", "slug": "dodatek-ag-chromatyczna-w-liczbach", "tytul": "Aberracja chromatyczna w liczbach",
+      "opis": "Ile wynosi rozjazd ogniskowych między czerwienią a błękitem dla typowego szkła, dlaczego achromat zbiega tylko dwa kolory i jak odróżnić LoCA od TCA pomiarem.",
+      "ext": [14, 15], "wzory": true },
+
+    { "l": "ad", "slug": "dodatek-ad-slownik-pl-en", "tytul": "Słownik pojęć optycznych PL–EN",
+      "opis": "Polskie i angielskie nazwy wszystkiego, co pada w książce — bo dokumentacja renderera, panel pluginu i rozmowa na planie są po angielsku.",
+      "ext": [1] }
+  ],
+
+  "matematyka": [
+    { "slug": "podstawy-matematyczne", "tytul": "Zanim zaczniesz: matematyka, której użyjemy",
+      "opis": "Odwrotności i proporcje (równanie soczewki), potęgi i pierwiastki (skala przysłon, szum), trygonometria kąta (pole widzenia, cos⁴θ) i logarytm (EV, log). Tyle wystarczy na całą książkę — wracaj tu, kiedy wzór w rozdziale zacznie wyglądać groźnie." }
+  ]
+}

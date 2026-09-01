@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Optyka dla Artystów Technicznych</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/widgets.css">
+<link rel="stylesheet" href="assets/viz3d.css">
+<script>
+window.SKY3D_MESSAGES = {
+  file:   { title: 'Widget 3D nie uruchamia sie z pliku na dysku',
+            why:   'Strona jest otwarta spod adresu file://, a przegladarka nie wczytuje stamtad silnika 3D. Otworz ksiazke przez lokalny serwer — na przyklad rozszerzeniem Live Server w VS Code.' },
+  siec:   { title: 'Nie udalo sie wczytac silnika 3D',
+            why:   'Plik assets/sky3d.js albo three.js nie doladowal sie. Reszta rozdzialu jest kompletna bez widgetu.' },
+  webgl:  { title: 'Ten widget potrzebuje WebGL',
+            why:   'Przegladarka nie udostepnia WebGL-a.' },
+  shader: { title: 'Karta graficzna odrzucila ten widget',
+            why:   'Sterownik nie skompilowal shadera sceny. W konsoli jest pelny komunikat.' }
+};
+</script>
+<script src="assets/sky3d-fallback.js"></script>
+</head>
+<body>
+<nav class="topnav">
+  <a class="topnav__brand" href="index.html">Optyka <span>dla Artystów Technicznych</span></a>
+  <div class="topnav__links">
+  <a href="matematyka/podstawy-matematyczne.html">Zanim zaczniesz</a>
+  <a href="#dodatki">Dodatki</a>
+  <a href="https://github.com/bartoszskrzypiec/optyka-book">GitHub</a>
+  </div>
+</nav>
+
+<div class="page">
+
+  <div class="viewport-readout">
+    <span>Rozdziałów · 42</span><span>Dodatków · 33</span><span>Części · 9</span><span>Wzory · w tekście</span>
+  </div>
+
+  <div class="eyebrow">Optyka obiektywu dla grafiki komputerowej</div>
+  <h1>Optyka dla Artystów Technicznych</h1>
+  <p class="subtitle">Plugin do compu daje suwak podpisany „halation”, „bokeh” albo „aberration”. Ta książka mówi, co jest po drugiej stronie tego suwaka — i dlaczego obraz wygląda tak, jak wygląda.</p>
+
+  <div class="panel">
+    <div class="panel-label">Jak to czytać</div>
+    <ul>
+      <li><strong>Po kolei.</strong> Części ułożone są tak, że nic nie pojawia się, zanim nie ma czym tego wytłumaczyć: Fresnel przed ghostingiem, dyfrakcja przed gwiazdkami, źrenica przed bokeh, a wady przed konstrukcjami — bo konstrukcja obiektywu jest odpowiedzią na wadę.</li>
+      <li><strong>Wzory są w tekście, ale nigdy na początku.</strong> Kolejność jest zawsze ta sama: co widzisz → dlaczego tak jest → liczba, która to przypina. Pełne wyprowadzenia siedzą w dodatkach.</li>
+      <li><strong>Nie musisz znać fizyki.</strong> Matematyka, której używamy, mieści się na jednej stronie — <a href="matematyka/podstawy-matematyczne.html">Zanim zaczniesz</a>. Wracaj tam, kiedy wzór zacznie wyglądać groźnie.</li>
+    </ul>
+  </div>
+
+  <div class="part">
+    <div class="part-label amber">Część I · Światło, zanim dotknie szkła</div>
+    <p class="index-hook">Cztery rozdziały fundamentu. Bez nich reszta książki jest listą efektów — z nimi każdy efekt ma przyczynę, do której da się wrócić.</p>
+    <div class="index-list">
+      <a class="index-row" href="rozdzialy/rozdzial-01-fala-czy-promien.html">
+        <span class="index-num">Rozdział 1</span>
+        <span class="index-title">Fala czy promień</span>
+        <span class="index-hook">Prawie całą tę książkę da się opowiedzieć promieniem. Prawie — bo gwiazdki wokół latarni, kolor powłoki i granica ostrości wymagają przyznania, że światło jest falą.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-02-zalamanie-i-dyspersja.html">
+        <span class="index-num">Rozdział 2</span>
+        <span class="index-title">Załamanie i dyspersja</span>
+        <span class="index-hook">Soczewka nie ma jednej ogniskowej. Ma tyle ogniskowych, ile kolorów — a cała późniejsza historia konstrukcji obiektywów jest walką z tym jednym faktem.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-03-fresnel-kazda-powierzchnia-swieci.html">
+        <span class="index-num">Rozdział 3</span>
+        <span class="index-title">Fresnel: dlaczego każda powierzchnia szkła świeci</span>
+        <span class="index-hook">Niepowlekana powierzchnia szkła odbija cztery procent światła. Obiektyw ma ich trzydzieści. To jedno zdanie wyjaśnia flarę, ghosting i połowę różnicy między szkłem z 1970 a z 2020 roku.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-04-soczewka-cienka.html">
+        <span class="index-num">Rozdział 4</span>
+        <span class="index-title">Soczewka cienka i co znaczy „pięćdziesiątka”</span>
+        <span class="index-hook">Ogniskowa to nie długość obiektywu ani odległość do matrycy. To liczba mówiąca, gdzie zbiegną się promienie z nieskończoności — i wszystko inne z niej wynika.</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="part">
+    <div class="part-label">Część II · Kadr i głębia</div>
+    <p class="index-hook">Co obiektyw robi z przestrzenią: ile jej mieści, co z niej jest ostre i jak wygląda to, co ostre nie jest. Najbardziej praktyczna część książki.</p>
+    <div class="index-list">
+      <a class="index-row" href="rozdzialy/rozdzial-05-ogniskowa-format-perspektywa.html">
+        <span class="index-num">Rozdział 5</span>
+        <span class="index-title">Ogniskowa, format i mit kompresji perspektywy</span>
+        <span class="index-hook">Teleobiektyw niczego nie kompresuje. Perspektywę ustawiasz nogami — ogniskowa tylko kadruje to, co już zdecydowałeś, stając w tym, a nie innym miejscu.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-06-przyslona-f-i-t.html">
+        <span class="index-num">Rozdział 6</span>
+        <span class="index-title">Przysłona: f, T i dlaczego to nie to samo</span>
+        <span class="index-hook">f/2,8 to geometria — iloraz ogniskowej i średnicy źrenicy. T/2,8 to pomiar — ile światła naprawdę dolatuje. Różnica między nimi jest podatkiem od liczby szkieł.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-07-zrenice.html">
+        <span class="index-num">Rozdział 7</span>
+        <span class="index-title">Źrenica wejściowa i wyjściowa</span>
+        <span class="index-hook">Obiektyw nie patrzy przez swoją przednią soczewkę, tylko przez jej obraz. Kiedy to zaskoczy, kocie oko, winietowanie optyczne i punkt bezparalaksowy przestają być trzema osobnymi tajemnicami.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-08-glebia-ostrosci.html">
+        <span class="index-num">Rozdział 8</span>
+        <span class="index-title">Głębia ostrości i krążek rozmycia</span>
+        <span class="index-hook">Ostro jest w jednej płaszczyźnie i nigdzie indziej. „Głębia ostrości” to umowa o tym, jak duże rozmycie jeszcze zgodzimy się nazwać ostrym — dlatego zależy od tego, na czym oglądasz.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-09-bokeh.html">
+        <span class="index-num">Rozdział 9</span>
+        <span class="index-title">Bokeh: kształt źrenicy widzianej stąd</span>
+        <span class="index-hook">Nieostry punkt świetlny nie jest plamką. Jest zdjęciem źrenicy wyjściowej, zrobionym z tego miejsca kadru — dlatego w rogu ma kształt kociego oka, a nie koła.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-10-dyfrakcja.html">
+        <span class="index-num">Rozdział 10</span>
+        <span class="index-title">Dyfrakcja: granica ostrości i gwiazdki</span>
+        <span class="index-hook">Od pewnego momentu przymykanie przysłony psuje ostrość zamiast ją poprawiać. Ta sama przyczyna rysuje promienie wokół latarni — i nie da się jej obejść żadnym szkłem.</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="part">
+    <div class="part-label violet">Część III · Wady, czyli charakter</div>
+    <p class="index-hook">Żaden obiektyw nie odwzorowuje idealnie. To, co nazywamy „charakterem szkła”, jest sumą jego niedoskonałości — a każda z nich ma nazwę i wzór.</p>
+    <div class="index-list">
+      <a class="index-row" href="rozdzialy/rozdzial-11-aberracja-sferyczna.html">
+        <span class="index-num">Rozdział 11</span>
+        <span class="index-title">Aberracja sferyczna: miękkość, glow i mydlana bańka</span>
+        <span class="index-hook">Kula jest łatwa do wyszlifowania i zła do skupiania światła. Z tego jednego kompromisu bierze się i poświata wokół świateł przy pełnym otworze, i to, czy bokeh jest kremowe, czy obwiedzione obrączką.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-12-poza-osia.html">
+        <span class="index-num">Rozdział 12</span>
+        <span class="index-title">Poza osią: koma, astygmatyzm i krzywizna pola</span>
+        <span class="index-hook">W środku kadru każdy obiektyw jest dobry. Dopiero punkt w rogu pokazuje, ile konstruktor musiał odpuścić — i dlaczego niektóre obiektywy skręcają tło w wir.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-13-dystorsja.html">
+        <span class="index-num">Rozdział 13</span>
+        <span class="index-title">Dystorsja i projekcja: dwie różne rzeczy</span>
+        <span class="index-hook">Rozciągnięte twarze w rogach szerokiego kadru to nie jest wada obiektywu. To jest cena, którą płaci każde płaskie odwzorowanie — i dopiero po odjęciu jej zostaje prawdziwa dystorsja.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-14-aberracja-chromatyczna.html">
+        <span class="index-num">Rozdział 14</span>
+        <span class="index-title">Aberracja chromatyczna: podłużna i poprzeczna</span>
+        <span class="index-hook">Fioletowa obwódka na nieostrym świetle i kolorowa krawędź w rogu kadru wyglądają jak jedno zjawisko. To dwa różne, mają różne przyczyny i tylko jedno z nich da się naprawić w compie.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-15-korekcja-i-jej-cena.html">
+        <span class="index-num">Rozdział 15</span>
+        <span class="index-title">Korekcja i jej cena</span>
+        <span class="index-hook">Każda wada z tej części ma lekarstwo, a każde lekarstwo to dodatkowa soczewka. Dodatkowa soczewka to dwie nowe powierzchnie odbijające — i tu koło się zamyka z Rozdziałem 3.</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="part">
+    <div class="part-label cyan">Część IV · Konstrukcje: dlaczego ten obiektyw rysuje tak</div>
+    <p class="index-hook">Świadomie po wadach: każdy klasyczny układ optyczny jest odpowiedzią na konkretny kompromis, a jego podpis w obrazie to skutek uboczny tej odpowiedzi.</p>
+    <div class="index-list">
+      <a class="index-row" href="rozdzialy/rozdzial-16-anatomia-obiektywu.html">
+        <span class="index-num">Rozdział 16</span>
+        <span class="index-title">Anatomia obiektywu</span>
+        <span class="index-hook">Zanim porównamy układy, warto umieć je czytać: co to jest grupa, dlaczego elementy się skleja, gdzie siedzi przysłona i co właściwie rusza się przy ostrzeniu.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-17-czterej-przodkowie.html">
+        <span class="index-num">Rozdział 17</span>
+        <span class="index-title">Czterej przodkowie: Petzval, Tessar, Sonnar, Double Gauss</span>
+        <span class="index-hook">Cztery układy z lat 1840–1930 wystarczą, żeby wyjaśnić charakter większości obiektywów, jakie kiedykolwiek trzymałeś. Każdy z nich odpuścił coś innego — i z tego odpuszczenia zrobił podpis.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-18-skrajne-ogniskowe.html">
+        <span class="index-num">Rozdział 18</span>
+        <span class="index-title">Skrajne ogniskowe: retrofokus, tele i lustro</span>
+        <span class="index-hook">Szeroki kąt musi zmieścić lustro albo migawkę za sobą, a teleobiektyw musi być krótszy niż własna ogniskowa. Obie te potrzeby wyginają konstrukcję — i widać to w kadrze.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-19-zoom-kontra-stalka.html">
+        <span class="index-num">Rozdział 19</span>
+        <span class="index-title">Zoom kontra stałka</span>
+        <span class="index-hook">Zoom to trzy obiektywy w jednej tubie, poruszające się względem siebie. Płacisz za to dwudziestoma szkłami, oddechem, zmienną T-stopą i flarą — i czasem warto.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-20-anamorf.html">
+        <span class="index-num">Rozdział 20</span>
+        <span class="index-title">Anamorf: cylinder w torze optycznym</span>
+        <span class="index-hook">Anamorf powstał z oszczędności na taśmie, a przetrwał jako estetyka. Wszystko, co w nim lubimy — owalne bokeh, poziome smugi, dziwny oddech — to skutki uboczne jednej cylindrycznej soczewki.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-21-rodziny-szkla-kinowego.html">
+        <span class="index-num">Rozdział 21</span>
+        <span class="index-title">Rodziny szkła kinowego</span>
+        <span class="index-hook">Cooke, Master Prime, Signature, Primo, K35 — nazwy, które padają na planie jak nazwy charakterów. Każda z nich jest konkretnym punktem w kompromisach z poprzednich rozdziałów.</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="part">
+    <div class="part-label amber">Część V · Światło, które zbłądziło</div>
+    <p class="index-hook">Nie każdy foton trafia tam, gdzie powinien. Ta część jest w całości konsekwencją jednego zdania z Rozdziału 3: każda powierzchnia szkła odbija.</p>
+    <div class="index-list">
+      <a class="index-row" href="rozdzialy/rozdzial-22-veiling-glare.html">
+        <span class="index-num">Rozdział 22</span>
+        <span class="index-title">Veiling glare: dlaczego czernie się podnoszą</span>
+        <span class="index-hook">Najczęstsza flara nie ma kształtu. Jest równomierną mgiełką, która podnosi czarny i zjada kontrast — i to ona, bardziej niż ghosty, odróżnia szkło stare od nowego.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-23-ghosting.html">
+        <span class="index-num">Rozdział 23</span>
+        <span class="index-title">Ghosting: odbicia przez środek kadru</span>
+        <span class="index-hook">Ghosty nie lecą byle gdzie. Układają się w linii przechodzącej przez środek kadru, mają kształt przysłony i kolor powłoki — bo każdy z nich to konkretne odbicie między dwiema konkretnymi powierzchniami.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-24-powloki.html">
+        <span class="index-num">Rozdział 24</span>
+        <span class="index-title">Powłoki: dlaczego flara ma kolor</span>
+        <span class="index-hook">Warstwa grubości ćwierci długości fali kasuje odbicie przez interferencję — ale tylko dla tej jednej fali. Reszta widma zostaje, i to ona nadaje flarze kolor rozpoznawalny jak logo producenta.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-25-starburst.html">
+        <span class="index-num">Rozdział 25</span>
+        <span class="index-title">Starburst: listki i promienie</span>
+        <span class="index-hook">Liczba promieni wokół latarni nie jest przypadkowa i nie zależy od jasności. Zależy od liczby listków przysłony — a reguła ma jeden nieoczywisty haczyk przy liczbie nieparzystej.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-26-smugi-anamorficzne.html">
+        <span class="index-num">Rozdział 26</span>
+        <span class="index-title">Smugi anamorficzne: dlaczego poziome i niebieskie</span>
+        <span class="index-hook">Najbardziej rozpoznawalny efekt optyczny w kinie jest skutkiem ubocznym soczewki, która miała tylko ścisnąć obraz. Kierunek smugi wynika z geometrii, a kolor — z powłoki.</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="part">
+    <div class="part-label raster">Część VI · Matryca, taśma i czas</div>
+    <p class="index-hook">Obraz opuścił obiektyw i musi zostać zapisany. Tu mieszka halacja, ziarno, winietowanie i wszystko, co pluginy nazywają „emulacją kamery”.</p>
+    <div class="index-list">
+      <a class="index-row" href="rozdzialy/rozdzial-27-od-fotonow-do-liczb.html">
+        <span class="index-num">Rozdział 27</span>
+        <span class="index-title">Od fotonów do liczb</span>
+        <span class="index-hook">Matryca nie mierzy koloru. Liczy fotony pod kolorowymi filterkami i zgaduje resztę — a szum, który przy tym widzisz, jest w większości własnością światła, nie elektroniki.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-28-halacja.html">
+        <span class="index-num">Rozdział 28</span>
+        <span class="index-title">Halacja: dlaczego czerwona i wokół przepaleń</span>
+        <span class="index-hook">Światło nie zatrzymuje się w emulsji. Przechodzi ją, odbija się od spodu podłoża i naświetla ją drugi raz — od tyłu. Stąd obwódka, i stąd jej kolor.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-29-ziarno-to-nie-szum.html">
+        <span class="index-num">Rozdział 29</span>
+        <span class="index-title">Ziarno to nie szum</span>
+        <span class="index-hook">Ziarno jest strukturą — kryształkami srebra o różnej wielkości, skorelowanymi przestrzennie i zależnymi od ekspozycji. Szum gaussowski nie jest niczym z tych trzech i dlatego nigdy nie wygląda jak taśma.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-30-winietowanie.html">
+        <span class="index-num">Rozdział 30</span>
+        <span class="index-title">Winietowanie: trzy zjawiska, jedna nazwa</span>
+        <span class="index-hook">Naturalne, optyczne i mechaniczne winietowanie mają inne przyczyny, inny kształt i inną reakcję na przymknięcie przysłony. Mylenie ich to najczęstszy powód, dla którego winieta w CG wygląda naklejona.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-31-zakres-dynamiczny.html">
+        <span class="index-num">Rozdział 31</span>
+        <span class="index-title">Zakres dynamiczny, rolloff i log</span>
+        <span class="index-hook">Taśma nie ma punktu, w którym się kończy — ma zakręt. Matryca ma ścianę. Cała praca nad „filmowym” wyglądem przepaleń jest pracą nad tą różnicą.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-32-czas.html">
+        <span class="index-num">Rozdział 32</span>
+        <span class="index-title">Czas: migawka, oddech i rolling shutter</span>
+        <span class="index-hook">Klatka nie jest chwilą, tylko odcinkiem czasu — a w matrycy CMOS nie wszystkie linie mają ten sam odcinek. Stąd 180 stopni, stąd pochylone słupy i stąd zmiana kadru przy przejeździe ostrości.</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="part">
+    <div class="part-label">Część VII · To wszystko w CG</div>
+    <p class="index-hook">Most, dla którego ta książka powstała: co da się policzyć w renderze, co trzeba udać w compie, i dlaczego ten podział wygląda tak, a nie inaczej.</p>
+    <div class="index-list">
+      <a class="index-row" href="rozdzialy/rozdzial-33-kamera-w-rendererze.html">
+        <span class="index-num">Rozdział 33</span>
+        <span class="index-title">Kamera w rendererze</span>
+        <span class="index-hook">Domyślna kamera w każdym rendererze to dziurka bez średnicy: nieskończona głębia, zero aberracji, zero flary. Wszystko z tej książki trzeba do niej dołożyć — i warto wiedzieć, gdzie się co dokłada.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-34-render-czy-comp.html">
+        <span class="index-num">Rozdział 34</span>
+        <span class="index-title">Co w renderze, a co w compie</span>
+        <span class="index-hook">Część efektów z tej książki da się udać po renderze i nikt nie zauważy. Część nie da się nigdy, bo wymaga informacji, której na płaskim obrazie już nie ma. Ten rozdział rysuje tę granicę.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-35-geometria-plateu.html">
+        <span class="index-num">Rozdział 35</span>
+        <span class="index-title">Geometria plate'u: Z-depth i dystorsja</span>
+        <span class="index-hook">Dwie rzeczy muszą się zgadzać, zanim cokolwiek dołożysz: gdzie naprawdę jest głębia i jak obiektyw wygiął obraz. Obie potrafią wyglądać dobrze i być kompletnie błędne.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-36-kolejnosc-w-compie.html">
+        <span class="index-num">Rozdział 36</span>
+        <span class="index-title">Kolejność operacji w compie</span>
+        <span class="index-hook">Te same węzły w innej kolejności dają inny obraz — i tylko jedna kolejność odtwarza to, co naprawdę robi kamera. Halacja przed ziarnem, ziarno przed dystorsją, i tak dalej.</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="part">
+    <div class="part-label amber">Część VIII · Optyka jako język operatorski</div>
+    <p class="index-hook">Te same zjawiska czytane jako decyzje. Nie krytyka filmowa — analiza tego, co wybór ogniskowej, przysłony i szkła robi z opowiadaną historią.</p>
+    <div class="index-list">
+      <a class="index-row" href="rozdzialy/rozdzial-37-ogniskowa-jako-decyzja.html">
+        <span class="index-num">Rozdział 37</span>
+        <span class="index-title">Ogniskowa jako decyzja</span>
+        <span class="index-hook">Wybór między 24 a 85 milimetrami nie jest wyborem kadru — kadr można wyrównać krokiem w tył. Jest wyborem tego, jak blisko widz stoi i ile świata widzi za bohaterem.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-38-ostrosc-jako-rezyseria.html">
+        <span class="index-num">Rozdział 38</span>
+        <span class="index-title">Ostrość jako reżyseria uwagi</span>
+        <span class="index-hook">Płytka ostrość mówi widzowi, gdzie ma patrzeć. Głęboka zostawia mu wybór. To nie jest decyzja ekspozycyjna, choć zapada przy pokrętle przysłony.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-39-szkola-powsciagliwosci.html">
+        <span class="index-num">Rozdział 39</span>
+        <span class="index-title">Szkoła powściągliwości</span>
+        <span class="index-hook">Najbardziej rozpoznawalne kadry ostatnich dekad powstały na czystym szkle, bez filtrów dyfuzyjnych i prawie bez flary. Brak efektu też jest decyzją optyczną — i zwykle trudniejszą.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-40-szkola-faktury.html">
+        <span class="index-num">Rozdział 40</span>
+        <span class="index-title">Szkoła faktury</span>
+        <span class="index-hook">Drugi biegun: duży format, rehousowane szkło sprzed pół wieku, dyfuzja przed obiektywem i winieta zostawiona tam, gdzie wypadła. Wada jako materiał, nie jako usterka.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-41-format-jako-autorstwo.html">
+        <span class="index-num">Rozdział 41</span>
+        <span class="index-title">Format jako autorstwo</span>
+        <span class="index-hook">Proporcje kadru decydują, ile twarzy mieści się obok siebie, jak długo można trzymać ujęcie i czy pion w ogóle istnieje. Wybór formatu zapada przed pierwszym dniem zdjęciowym i rządzi wszystkim potem.</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="part">
+    <div class="part-label">Część IX · Czytanie kadru</div>
+    <p class="index-hook">Domknięcie i jedyny rozdział czysto praktyczny: odwrotna inżynieria obrazu, którego nie kręciłeś.</p>
+    <div class="index-list">
+      <a class="index-row" href="rozdzialy/rozdzial-42-czytanie-kadru.html">
+        <span class="index-num">Rozdział 42</span>
+        <span class="index-title">Czytanie kadru</span>
+        <span class="index-hook">Dostajesz jedną klatkę i masz do niej dorobić render. Ta książka kończy się umiejętnością odwrotną do całej reszty: z obrazu odczytać ogniskową, przysłonę, format, wiek szkła i filtrację.</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="part" id="dodatki">
+    <div class="part-label violet">Dodatki · dla tych, którzy chcą głębiej</div>
+    <p class="index-hook">Tu mieszkają wyprowadzenia i policzone przykłady. Żaden rozdział nie wymaga dodatku, żeby dało się go zrozumieć — dodatek jest dla tego, kto po przeczytaniu rozdziału chce zobaczyć rachunek. Oznaczenie [WZORY] mówi, że w środku jest matematyka; [CG] — że rzecz dotyczy renderu albo compu.</p>
+    <div class="index-list">
+      <a class="index-row" href="dodatki/dodatek-a-snell-i-abbe.html">
+        <span class="index-num">Dodatek A · rozwija R.2 [WZORY]</span>
+        <span class="index-title">Snell, liczba Abbego i szkła w liczbach</span>
+        <span class="index-hook">Prawo załamania z wyprowadzeniem, współczynniki dla typowych szkieł optycznych i to, co naprawdę mierzy liczba Abbego.</span>
+      </a>
+      <a class="index-row" href="dodatki/dodatek-b-wzory-fresnela.html">
+        <span class="index-num">Dodatek B · rozwija R.3, R.24 [WZORY]</span>
+        <span class="index-title">Wzory Fresnela i powłoka ćwierćfalowa</span>
+        <span class="index-hook">Pełne współczynniki odbicia dla obu polaryzacji, przybliżenie Schlicka i rachunek pokazujący, ile daje jedna warstwa, a ile dwanaście.</span>
+      </a>
+      <a class="index-row" href="dodatki/dodatek-c-rownanie-soczewki.html">
+        <span class="index-num">Dodatek C · rozwija R.4 [WZORY]</span>
+        <span class="index-title">Równanie soczewki, płaszczyzny główne i punkty węzłowe</span>
+        <span class="index-hook">Skąd bierze się 1/f = 1/s + 1/s′, czym różni się soczewka gruba od cienkiej i dlaczego panorama bez paralaksy obraca się wokół konkretnego punktu.</span>
+      </a>
+      <a class="index-row" href="dodatki/dodatek-d-krazek-airyego.html">
+        <span class="index-num">Dodatek D · rozwija R.10, R.25 [WZORY]</span>
+        <span class="index-title">Krążek Airy'ego i granica dyfrakcyjna</span>
+        <span class="index-hook">Skąd się bierze 2,44·λ·N, przy jakiej przysłonie dyfrakcja wygrywa z pikselem na S35 i pełnej klatce, oraz dlaczego nieparzysta liczba listków podwaja promienie.</span>
+      </a>
+      <a class="index-row" href="dodatki/dodatek-e-glebia-w-liczbach.html">
+        <span class="index-num">Dodatek E · rozwija R.8 [WZORY]</span>
+        <span class="index-title">Głębia ostrości w liczbach</span>
+        <span class="index-hook">Pełne wzory na granice głębi i hiperfokalną, tabela krążków rozmycia dla formatów i pokaz, jak bardzo wynik zależy od przyjętej umowy.</span>
+      </a>
+      <a class="index-row" href="dodatki/dodatek-f-aberracje-seidela.html">
+        <span class="index-num">Dodatek F · rozwija R.11, R.12 [WZORY]</span>
+        <span class="index-title">Pięć aberracji Seidela</span>
+        <span class="index-hook">Rozwinięcie funkcji falowej, z którego wypadają sferyczna, koma, astygmatyzm, krzywizna pola i dystorsja — jako pięć wyrazów jednego szeregu.</span>
+      </a>
+      <a class="index-row" href="dodatki/dodatek-g-modele-dystorsji.html">
+        <span class="index-num">Dodatek G · rozwija R.13, R.35 [WZORY]</span>
+        <span class="index-title">Modele dystorsji: Brown–Conrady i dywizyjny</span>
+        <span class="index-hook">Wielomiany, których używają trackery i Nuke, co znaczą ich współczynniki i dlaczego odwrócenie modelu nie jest tym samym co zmiana znaku.</span>
+      </a>
+      <a class="index-row" href="dodatki/dodatek-h-mtf.html">
+        <span class="index-num">Dodatek H · rozwija R.15, R.21 [WZORY]</span>
+        <span class="index-title">MTF: co naprawdę mierzy wykres ostrości</span>
+        <span class="index-hook">Funkcja przenoszenia kontrastu, splot z funkcją rozmycia punktu, czytanie wykresów producentów i różnica między rozdzielczością a kontrastem.</span>
+      </a>
+      <a class="index-row" href="dodatki/dodatek-i-katalog-ukladow.html">
+        <span class="index-num">Dodatek I · rozwija R.17, R.18, R.19</span>
+        <span class="index-title">Katalog układów optycznych</span>
+        <span class="index-hook">Przekroje i liczby dla kilkunastu klasycznych konstrukcji: liczba elementów, grup, powierzchni powietrze-szkło i typowe zastosowanie.</span>
+      </a>
+      <a class="index-row" href="dodatki/dodatek-j-anamorf-w-liczbach.html">
+        <span class="index-num">Dodatek J · rozwija R.20, R.26 [WZORY]</span>
+        <span class="index-title">Anamorf w liczbach</span>
+        <span class="index-hook">Squeeze i jego wpływ na kadr, dlaczego bokeh jest owalne dokładnie w proporcji ściśnięcia, skąd mumps i czym różni się squeeze przedni od tylnego.</span>
+      </a>
+      <a class="index-row" href="dodatki/dodatek-k-rodziny-szkla.html">
+        <span class="index-num">Dodatek K · rozwija R.21</span>
+        <span class="index-title">Rodziny szkła kinowego — tabela</span>
+        <span class="index-hook">Porównanie rodzin obiektywów po czterech kryteriach z Rozdziału 21: kontrast, sposób przejścia do nieostrości, zachowanie flary, rysunek skóry.</span>
+      </a>
+      <a class="index-row" href="dodatki/dodatek-l-ghost-n-tego-rzedu.html">
+        <span class="index-num">Dodatek L · rozwija R.23 [WZORY]</span>
+        <span class="index-title">Ghost jako odbicie N-tego rzędu</span>
+        <span class="index-hook">Ile ghostów daje układ o N powierzchniach, dlaczego liczba rośnie kwadratowo i jak policzyć, gdzie w kadrze wypadnie konkretne odbicie.</span>
+      </a>
+      <a class="index-row" href="dodatki/dodatek-m-bayer-i-demozaikowanie.html">
+        <span class="index-num">Dodatek M · rozwija R.27 [WZORY]</span>
+        <span class="index-title">Bayer, demozaikowanie i utracona rozdzielczość</span>
+        <span class="index-hook">Co naprawdę mierzy piksel pod filterkiem, ile rozdzielczości kosztuje interpolacja, skąd mora i po co filtr dolnoprzepustowy.</span>
+      </a>
+      <a class="index-row" href="dodatki/dodatek-n-szum-w-liczbach.html">
+        <span class="index-num">Dodatek N · rozwija R.27, R.29 [WZORY]</span>
+        <span class="index-title">Szum fotonowy, szum odczytu i ISO</span>
+        <span class="index-hook">Dlaczego szum rośnie jak pierwiastek z sygnału, czym ISO różni się od czułości, skąd bierze się dual native ISO i jak to policzyć w EV.</span>
+      </a>
+      <a class="index-row" href="dodatki/dodatek-o-budowa-tasmy.html">
+        <span class="index-num">Dodatek O · rozwija R.28</span>
+        <span class="index-title">Budowa taśmy warstwa po warstwie</span>
+        <span class="index-hook">Przekrój negatywu koloru: emulsje, filtr żółty, podłoże i warstwa antyhalacyjna — plus to, co się zmienia, gdy tej ostatniej zabraknie.</span>
+      </a>
+      <a class="index-row" href="dodatki/dodatek-p-winietowanie-w-liczbach.html">
+        <span class="index-num">Dodatek P · rozwija R.30 [WZORY]</span>
+        <span class="index-title">Winietowanie w liczbach</span>
+        <span class="index-hook">Skąd cos⁴θ, jak policzyć obcięcie źrenicy poza osią i jak odróżnić jedno od drugiego pomiarem, a nie na oko.</span>
+      </a>
+      <a class="index-row" href="dodatki/dodatek-q-log-i-rolloff.html">
+        <span class="index-num">Dodatek Q · rozwija R.31 [WZORY]</span>
+        <span class="index-title">Log, rolloff i zakres dynamiczny w EV</span>
+        <span class="index-hook">Krzywe log najpopularniejszych kamer, charakterystyka gęstości negatywu i porównanie tego, co dzieje się dwie przysłony nad bielą.</span>
+      </a>
+      <a class="index-row" href="dodatki/dodatek-r-rozmycie-ruchu.html">
+        <span class="index-num">Dodatek R · rozwija R.32 [WZORY]</span>
+        <span class="index-title">Rozmycie ruchu: kąt, czas, próbkowanie</span>
+        <span class="index-hook">Przeliczanie kąta migawki na czas, ile próbek potrzeba, żeby smuga nie była schodkowa, i dlaczego rozmycie w CG bywa zbyt czyste.</span>
+      </a>
+      <a class="index-row" href="dodatki/dodatek-s-kamery-w-rendererach.html">
+        <span class="index-num">Dodatek S · rozwija R.33 [CG]</span>
+        <span class="index-title">Kamery w rendererach — parametry</span>
+        <span class="index-hook">Te same pojęcia pod różnymi nazwami: co odpowiada przysłonie, ogniskowej i formatowi w Arnoldzie, RenderManie, Cyclesie i Karmie.</span>
+      </a>
+      <a class="index-row" href="dodatki/dodatek-t-modele-wielosoczewkowe.html">
+        <span class="index-num">Dodatek T · rozwija R.33, R.34 [CG]</span>
+        <span class="index-title">Modele wielosoczewkowe w rendererze</span>
+        <span class="index-hook">Kiedy opłaca się prześledzić promień przez prawdziwy układ zamiast przybliżać go cienką soczewką, i co się wtedy dostaje za darmo.</span>
+      </a>
+      <a class="index-row" href="dodatki/dodatek-u-z-depth-w-praktyce.html">
+        <span class="index-num">Dodatek U · rozwija R.35 [CG]</span>
+        <span class="index-title">Z-depth i deep w praktyce</span>
+        <span class="index-hook">Kalibracja znormalizowanej mapy do metrów, pułapki filtrowania kanału Z, kiedy deep jest jedynym wyjściem i ile kosztuje.</span>
+      </a>
+      <a class="index-row" href="dodatki/dodatek-v-stmapy.html">
+        <span class="index-num">Dodatek V · rozwija R.35 [CG]</span>
+        <span class="index-title">STMapy: budowa, próbkowanie, filtrowanie</span>
+        <span class="index-hook">Czym jest mapa współrzędnych, dlaczego musi być w pełnej precyzji, co się dzieje na krawędziach kadru i jak sprawdzić, że undistort jest odwracalny.</span>
+      </a>
+      <a class="index-row" href="dodatki/dodatek-w-kolejnosc-w-compie.html">
+        <span class="index-num">Dodatek W · rozwija R.36 [CG]</span>
+        <span class="index-title">Kolejność operacji w compie — lista kontrolna</span>
+        <span class="index-hook">Pełny łańcuch od renderu liniowego do gotowej klatki, z uzasadnieniem każdego kroku i z zaznaczeniem miejsc, w których kolejność naprawdę zmienia obraz.</span>
+      </a>
+      <a class="index-row" href="dodatki/dodatek-x-odtwarzanie-flary.html">
+        <span class="index-num">Dodatek X · rozwija R.22, R.23, R.26 [CG]</span>
+        <span class="index-title">Odtwarzanie flary w compie</span>
+        <span class="index-hook">Warstwy, z których składa się wiarygodna flara, skąd brać maski jasnych źródeł, jak nie zabić wydajności i po czym poznać flarę podrobioną.</span>
+      </a>
+      <a class="index-row" href="dodatki/dodatek-y-ziarno-w-compie.html">
+        <span class="index-num">Dodatek Y · rozwija R.29 [CG]</span>
+        <span class="index-title">Ziarno w compie</span>
+        <span class="index-hook">Dlaczego szum gaussowski nie wygląda jak taśma, jak zrobić ziarno zależne od ekspozycji i skorelowane przestrzennie, i gdzie w łańcuchu je wstawić.</span>
+      </a>
+      <a class="index-row" href="dodatki/dodatek-z-jak-przetestowac-obiektyw.html">
+        <span class="index-num">Dodatek Z · rozwija R.21, R.42</span>
+        <span class="index-title">Jak przetestować obiektyw</span>
+        <span class="index-hook">Protokół testu, który da się zrobić w jeden dzień: siatka na dystorsję, tablica na MTF, punktowe światła na bokeh i flarę, twarz na rysunek skóry.</span>
+      </a>
+      <a class="index-row" href="dodatki/dodatek-aa-formaty-i-ekwiwalencja.html">
+        <span class="index-num">Dodatek AA · rozwija R.5, R.41</span>
+        <span class="index-title">Formaty i ekwiwalencja</span>
+        <span class="index-hook">Wymiary matryc i okienek od 16 mm do 65 mm, przeliczniki ogniskowych, i uczciwa odpowiedź na pytanie, co naprawdę zmienia duży format.</span>
+      </a>
+      <a class="index-row" href="dodatki/dodatek-ab-filtry.html">
+        <span class="index-num">Dodatek AB · rozwija R.22, R.40</span>
+        <span class="index-title">Filtry: dyfuzja, ND, IRND, polaryzator</span>
+        <span class="index-hook">Co każdy z nich robi z obrazem w kategoriach z tej książki, dlaczego cyfra potrzebuje IRND, i jak dyfuzja podnosi czernie dokładnie tam, gdzie robi to stare szkło.</span>
+      </a>
+      <a class="index-row" href="dodatki/dodatek-ac-perspektywa-w-liczbach.html">
+        <span class="index-num">Dodatek AC · rozwija R.5, R.37 [WZORY]</span>
+        <span class="index-title">Perspektywa w liczbach</span>
+        <span class="index-hook">Rachunek pokazujący, że stosunek wielkości bliskiego i dalekiego obiektu zależy wyłącznie od odległości kamery — i dlaczego mit o kompresji jest tak żywotny.</span>
+      </a>
+      <a class="index-row" href="dodatki/dodatek-ae-geometria-zrenic.html">
+        <span class="index-num">Dodatek AE · rozwija R.7, R.30 [WZORY]</span>
+        <span class="index-title">Geometria źrenic</span>
+        <span class="index-hook">Gdzie naprawdę leży źrenica wejściowa i wyjściowa, jak policzyć ich położenie dla znanego układu, czym jest powiększenie źrenicowe i skąd bierze się punkt bezparalaksowy.</span>
+      </a>
+      <a class="index-row" href="dodatki/dodatek-af-katalog-bokeh.html">
+        <span class="index-num">Dodatek AF · rozwija R.9, R.11</span>
+        <span class="index-title">Katalog kształtów bokeh</span>
+        <span class="index-hook">Kocie oko, wielokąt, obrączka, cebulka, pączek, mydlana bańka i wir — każdy kształt z przyczyną, konstrukcją, która go daje, i sposobem odtworzenia w compie.</span>
+      </a>
+      <a class="index-row" href="dodatki/dodatek-ag-chromatyczna-w-liczbach.html">
+        <span class="index-num">Dodatek AG · rozwija R.14, R.15 [WZORY]</span>
+        <span class="index-title">Aberracja chromatyczna w liczbach</span>
+        <span class="index-hook">Ile wynosi rozjazd ogniskowych między czerwienią a błękitem dla typowego szkła, dlaczego achromat zbiega tylko dwa kolory i jak odróżnić LoCA od TCA pomiarem.</span>
+      </a>
+      <a class="index-row" href="dodatki/dodatek-ad-slownik-pl-en.html">
+        <span class="index-num">Dodatek AD · rozwija R.1</span>
+        <span class="index-title">Słownik pojęć optycznych PL–EN</span>
+        <span class="index-hook">Polskie i angielskie nazwy wszystkiego, co pada w książce — bo dokumentacja renderera, panel pluginu i rozmowa na planie są po angielsku.</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="part">
+    <div class="part-label">Zanim zaczniesz</div>
+    <div class="index-list">
+      <a class="index-row" href="matematyka/podstawy-matematyczne.html">
+        <span class="index-num">Primer</span>
+        <span class="index-title">Zanim zaczniesz: matematyka, której użyjemy</span>
+        <span class="index-hook">Odwrotności i proporcje (równanie soczewki), potęgi i pierwiastki (skala przysłon, szum), trygonometria kąta (pole widzenia, cos⁴θ) i logarytm (EV, log). Tyle wystarczy na całą książkę — wracaj tu, kiedy wzór w rozdziale zacznie wyglądać groźnie.</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    <p>Książka jest w budowie — rozdziały powstają po kolei, a każdy jest kompletny w chwili, w której trafia na stronę. Puste strony to szkielety, nie fragmenty.</p>
+    <p>Szósta z rodziny książek o grafice:
+      <a href="https://bartoszskrzypiec.github.io/raytracing-book/">Ray Tracing</a>,
+      <a href="https://bartoszskrzypiec.github.io/lookdev-book/">Lookdev</a>,
+      <a href="https://bartoszskrzypiec.github.io/pipeline-book/">Pipeline</a>,
+      <a href="https://bartoszskrzypiec.github.io/pxrsurface-guide/">PxrSurface Guide</a>,
+      <a href="https://bartoszskrzypiec.github.io/atmosfera_chmury_book/">Atmosfera i chmury</a>.</p>
+  </div>
+
+</div>
+
+<script src="assets/interactive.js"></script>
+</body>
+</html>

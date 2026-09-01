@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dodatek U — Z-depth i deep w praktyce</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/widgets.css">
+<link rel="stylesheet" href="../assets/viz3d.css">
+<script>
+window.SKY3D_MESSAGES = {
+  file:   { title: 'Widget 3D nie uruchamia sie z pliku na dysku',
+            why:   'Strona jest otwarta spod adresu file://, a przegladarka nie wczytuje stamtad silnika 3D. Otworz ksiazke przez lokalny serwer — na przyklad rozszerzeniem Live Server w VS Code.' },
+  siec:   { title: 'Nie udalo sie wczytac silnika 3D',
+            why:   'Plik assets/sky3d.js albo three.js nie doladowal sie. Reszta rozdzialu jest kompletna bez widgetu.' },
+  webgl:  { title: 'Ten widget potrzebuje WebGL',
+            why:   'Przegladarka nie udostepnia WebGL-a.' },
+  shader: { title: 'Karta graficzna odrzucila ten widget',
+            why:   'Sterownik nie skompilowal shadera sceny. W konsoli jest pelny komunikat.' }
+};
+</script>
+<script src="../assets/sky3d-fallback.js"></script>
+</head>
+<body>
+<nav class="topnav">
+  <a class="topnav__brand" href="../index.html">Optyka <span>dla Artystów Technicznych</span></a>
+  <div class="topnav__links">
+  <a href="../index.html">← Spis treści</a>
+  </div>
+</nav>
+
+<div class="page">
+
+  <div class="viewport-readout">
+    <span>Dodatek U</span><span>Warstwa · CG</span><span>Poziom · głębiej</span><span>EXT OF · R.35</span>
+  </div>
+
+  <div class="eyebrow">Dodatek U / Głębiej</div>
+  <h1>Z-depth i deep w praktyce</h1>
+  <p class="subtitle">Kalibracja znormalizowanej mapy do metrów, pułapki filtrowania kanału Z, kiedy deep jest jedynym wyjściem i ile kosztuje.</p>
+
+  <!-- TRESC -->
+
+  <div class="site-nav">
+    <a href="../index.html">← Spis treści</a>
+    <a href="../rozdzialy/rozdzial-35-geometria-plateu.html">↑ Rozdział 35: Geometria plate'u: Z-depth i dystorsja</a>
+  </div>
+
+</div>
+
+<script src="../assets/interactive.js"></script>
+</body>
+</html>

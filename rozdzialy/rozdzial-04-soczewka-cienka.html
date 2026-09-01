@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rozdział 4 — Soczewka cienka i co znaczy „pięćdziesiątka”</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/widgets.css">
+<link rel="stylesheet" href="../assets/viz3d.css">
+<script>
+window.SKY3D_MESSAGES = {
+  file:   { title: 'Widget 3D nie uruchamia sie z pliku na dysku',
+            why:   'Strona jest otwarta spod adresu file://, a przegladarka nie wczytuje stamtad silnika 3D. Otworz ksiazke przez lokalny serwer — na przyklad rozszerzeniem Live Server w VS Code.' },
+  siec:   { title: 'Nie udalo sie wczytac silnika 3D',
+            why:   'Plik assets/sky3d.js albo three.js nie doladowal sie. Reszta rozdzialu jest kompletna bez widgetu.' },
+  webgl:  { title: 'Ten widget potrzebuje WebGL',
+            why:   'Przegladarka nie udostepnia WebGL-a.' },
+  shader: { title: 'Karta graficzna odrzucila ten widget',
+            why:   'Sterownik nie skompilowal shadera sceny. W konsoli jest pelny komunikat.' }
+};
+</script>
+<script src="../assets/sky3d-fallback.js"></script>
+</head>
+<body>
+<nav class="topnav">
+  <a class="topnav__brand" href="../index.html">Optyka <span>dla Artystów Technicznych</span></a>
+  <div class="topnav__links">
+  <a href="../index.html">Spis treści</a>
+  <a href="rozdzial-03-fresnel-kazda-powierzchnia-swieci.html">← Poprzedni</a>
+  <a href="rozdzial-05-ogniskowa-format-perspektywa.html">Następny →</a>
+  </div>
+</nav>
+
+<div class="page">
+
+  <div class="viewport-readout">
+    <span>1/f = 1/s + 1/s′</span><span>Ogniskowa · mm</span><span>Płaszczyzny · dwie</span><span>Węzeł · punkt obrotu</span>
+  </div>
+
+  <div class="eyebrow">Rozdział 4 / Światło</div>
+  <h1>Soczewka cienka i co znaczy „pięćdziesiątka”</h1>
+  <p class="subtitle">Ogniskowa to nie długość obiektywu ani odległość do matrycy. To liczba mówiąca, gdzie zbiegną się promienie z nieskończoności — i wszystko inne z niej wynika.</p>
+
+  <!-- TRESC -->
+
+  <div class="deeper">
+    <div class="deeper-label">Idź głębiej</div>
+    <a href="../dodatki/dodatek-c-rownanie-soczewki.html">Dodatek C — Równanie soczewki, płaszczyzny główne i punkty węzłowe</a>
+  </div>
+
+  <div class="site-nav chapter-nav">
+      <a class="nav-prev" href="rozdzial-03-fresnel-kazda-powierzchnia-swieci.html">← Poprzedni</a>
+      <a class="nav-toc" href="../index.html">Spis treści</a>
+      <a class="nav-next" href="rozdzial-05-ogniskowa-format-perspektywa.html">Następny →</a>
+  </div>
+
+</div>
+
+<script src="../assets/interactive.js"></script>
+</body>
+</html>
