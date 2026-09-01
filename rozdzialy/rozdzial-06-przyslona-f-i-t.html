@@ -43,7 +43,328 @@ window.SKY3D_MESSAGES = {
   <h1>Przysłona: f, T i dlaczego to nie to samo</h1>
   <p class="subtitle">f/2,8 to geometria — iloraz ogniskowej i średnicy źrenicy. T/2,8 to pomiar — ile światła naprawdę dolatuje. Różnica między nimi jest podatkiem od liczby szkieł.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li><strong>Liczba f jest ilorazem, nie średnicą.</strong> f/2 znaczy „źrenica ma połowę ogniskowej”. Dzięki temu ta sama liczba f daje to samo naświetlenie na każdym obiektywie — i tylko dlatego światłomierz może nie wiedzieć, jakim szkłem mierzysz.</li>
+      <li>Liczba f jest wyliczona z geometrii. <span class="term-cyan">Liczba T jest zmierzona</span> — mówi, ile światła naprawdę dolatuje po stratach w szkle. Różnica między nimi to bezpośredni rachunek z Rozdziału 3.</li>
+      <li>Przysłona nie tylko dawkuje światło. Jej <strong>kształt</strong> odciska się na każdym nieostrym punkcie i na każdej gwiazdce wokół świateł — więc jest decyzją wizualną, nie tylko ekspozycyjną.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Definicja · dlaczego iloraz</div>
+    <h2>Skąd się bierze dziwna drabinka liczb</h2>
+
+    <p>Na każdym obiektywie widnieje ciąg, który przy pierwszym spotkaniu wygląda na przypadkowy: 1,4 · 2 · 2,8 · 4 · 5,6 · 8 · 11 · 16 · 22. Nie jest przypadkowy i nie jest nawet szczególnie dziwny — to po prostu kolejne potęgi pierwiastka z dwóch, zaokrąglone.</p>
+
+    <p>Zacznijmy od tego, czym jest sama liczba. Nazywa się liczbą przysłony i jest ilorazem:</p>
+
+    <div class="formula">
+      N = <span class="vec" data-tip="Ogniskowa obiektywu">f</span> / <span class="vec" data-tip="Średnica źrenicy wejściowej — czyli otworu przysłony widzianego od przodu obiektywu, a nie jej rzeczywistej średnicy mechanicznej">D</span>
+      <span class="sub">N — liczba przysłony, zapisywana jako f/N. f — ogniskowa. D — średnica źrenicy wejściowej. Stąd zapis „f/2”: to dosłownie ułamek, ogniskowa podzielona przez dwa.</span>
+      <div class="formula-action"><button class="reveal-btn" data-modal-target="explain-fnumber">Wyjaśnij ten wzór</button></div>
+    </div>
+
+    <p>Zapis f/2 nie jest więc nazwą, tylko działaniem. Na pięćdziesiątce f/2 znaczy źrenicę o średnicy 25 mm; na dwustumilimetrówce ta sama f/2 znaczy źrenicę o średnicy stu milimetrów — czyli szkło wielkości talerzyka i cenę samochodu. To dlatego jasne teleobiektywy są tak absurdalnie duże i drogie, a jasne szerokie kąty nie są.</p>
+
+    <p>Pozostaje pytanie, dlaczego akurat iloraz. Odpowiedź jest ładna i warto ją przejść, bo tłumaczy, czemu ta jedna liczba wystarcza operatorowi do ustawienia ekspozycji bez wiedzy o obiektywie.</p>
+
+    <p>Ilość światła zebranego przez obiektyw rośnie z <strong>polem</strong> źrenicy, czyli z kwadratem jej średnicy. Ale to światło rozkłada się potem na obrazie, który przy dłuższej ogniskowej jest większy — a konkretnie jego rozmiar rośnie liniowo z f, więc pole rośnie z kwadratem f. Naświetlenie, czyli światło na jednostkę powierzchni matrycy, jest ilorazem tych dwóch: D² podzielone przez f², czyli <span class="term-amber">(D/f)² — a to jest po prostu odwrotność kwadratu liczby f</span>. Ogniskowa skróciła się w rachunku i dlatego liczba f wystarcza.</p>
+
+    <p>Teraz drabinka. Skoro naświetlenie idzie jak 1/N², to żeby zmniejszyć je dokładnie o połowę, trzeba pomnożyć N przez pierwiastek z dwóch. Stąd 1,4 · 2 · 2,8 · 4 — każdy krok to mnożenie przez 1,414 i połowa światła mniej. Zaokrąglenia (2,8 zamiast 2,83, 5,6 zamiast 5,66, 11 zamiast 11,3) są kosmetyką z czasów, gdy liczby trzeba było wygrawerować na pierścieniu.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Drabinka przysłon</span><span>każdy krok to połowa światła</span></div>
+      <svg viewBox="0 0 760 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ciąg liczb przysłony od 1,4 do 22 z zaznaczonym mnożnikiem pierwiastka z dwóch i malejącą o połowę ilością światła.">
+        <g font-family="IBM Plex Mono" font-size="13" fill="#ecebe4" text-anchor="middle">
+          <text x="70" y="70">1,4</text><text x="156" y="70">2</text><text x="242" y="70">2,8</text>
+          <text x="328" y="70">4</text><text x="414" y="70">5,6</text><text x="500" y="70">8</text>
+          <text x="586" y="70">11</text><text x="672" y="70">16</text>
+        </g>
+        <g stroke="#4fc3c0" stroke-width="1" fill="none">
+          <path d="M 84 58 q 29 -20 58 0"/><path d="M 170 58 q 29 -20 58 0"/><path d="M 256 58 q 29 -20 58 0"/>
+          <path d="M 342 58 q 29 -20 58 0"/><path d="M 428 58 q 29 -20 58 0"/><path d="M 514 58 q 29 -20 58 0"/>
+          <path d="M 600 58 q 29 -20 58 0"/>
+        </g>
+        <text x="380" y="30" font-family="IBM Plex Mono" font-size="10.5" fill="#4fc3c0" text-anchor="middle">× √2 na każdym kroku</text>
+
+        <g fill="#e8a33d" fill-opacity="0.45" stroke="#e8a33d" stroke-width="1">
+          <rect x="46" y="96" width="48" height="80"/>
+          <rect x="132" y="116" width="48" height="60"/>
+          <rect x="218" y="132" width="48" height="44"/>
+          <rect x="304" y="144" width="48" height="32"/>
+          <rect x="390" y="153" width="48" height="23"/>
+          <rect x="476" y="160" width="48" height="16"/>
+          <rect x="562" y="165" width="48" height="11"/>
+          <rect x="648" y="168" width="48" height="8"/>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">
+          <text x="70" y="196">1</text><text x="156" y="196">1/2</text><text x="242" y="196">1/4</text>
+          <text x="328" y="196">1/8</text><text x="414" y="196">1/16</text><text x="500" y="196">1/32</text>
+          <text x="586" y="196">1/64</text><text x="672" y="196">1/128</text>
+        </g>
+        <text x="380" y="214" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b" text-anchor="middle">światło względem pełnego otwarcia</text>
+      </svg>
+      <div class="diagram-caption">Od f/1,4 do f/16 jest osiem kroków, czyli sto dwadzieścia osiem razy mniej światła. To ten sam zakres, w którym mieści się cały dzień i cały zmierzch.</div>
+    </div>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Liczba przysłony a otwór</span><span>obiektyw 50 mm</span></div>
+      <div class="diagram-controls">
+        <label for="liczbaF">Przysłona</label>
+        <input id="liczbaF" type="range" min="0" max="8" step="1" value="2">
+        <span class="value-readout" id="fOdczyt">f/2,8</span>
+      </div>
+      <svg viewBox="0 0 760 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Okrąg źrenicy zmieniający się wraz z liczbą przysłony, obok słupek pokazujący ilość przepuszczanego światła.">
+        <circle cx="200" cy="140" r="98" fill="none" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 5"/>
+        <circle id="zrenica" cx="200" cy="140" fill="#e8a33d" fill-opacity="0.26" stroke="#e8a33d" stroke-width="2"/>
+        <text x="200" y="258" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b" text-anchor="middle">źrenica wejściowa w skali</text>
+        <text x="200" y="30" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b" text-anchor="middle">okrąg przerywany: f/1,4 (maksimum tego obiektywu)</text>
+
+        <g font-family="IBM Plex Mono" font-size="12">
+          <text x="380" y="80" fill="#8b909b">średnica źrenicy</text>
+          <text x="380" y="104" fill="#e8a33d" id="srednicaOdczyt">17,9 mm</text>
+          <text x="380" y="146" fill="#8b909b">pole źrenicy</text>
+          <text x="380" y="170" fill="#e8a33d" id="poleOdczyt">251 mm²</text>
+          <text x="380" y="212" fill="#8b909b">światła względem f/1,4</text>
+          <text x="380" y="236" fill="#e8a33d" id="swiatloOdczyt">1/4</text>
+        </g>
+        <rect x="600" y="60" width="60" height="180" fill="none" stroke="#2a2f38" stroke-width="1"/>
+        <rect id="slupek" x="600" width="60" fill="#e8a33d" fill-opacity="0.5"/>
+        <text x="630" y="256" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">światło</text>
+      </svg>
+      <div class="diagram-caption" id="fPodpis">f/2,8 na pięćdziesiątce: źrenica 17,9 mm, cztery razy mniej światła niż przy f/1,4.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Pomiar · liczba, która nie kłamie</div>
+    <h2>T-stopa, czyli ile światła naprawdę dolatuje</h2>
+
+    <p>Cały powyższy rachunek zakłada, że światło, które weszło w źrenicę, dociera do matrycy. Z <a href="rozdzial-03-fresnel-kazda-powierzchnia-swieci.html">Rozdziału 3</a> wiemy, że nie dociera. Każda powierzchnia szkła odbija kilka procent, a obiektyw ma ich kilkadziesiąt.</p>
+
+    <p>Liczba f jest więc <strong>obietnicą geometryczną, nie pomiarem</strong>. Dwa obiektywy oznaczone f/2 — jeden o sześciu soczewkach, drugi o dwudziestu — przepuszczą wyraźnie różne ilości światła, choć oba mają identyczny iloraz. Dla fotografa z automatyką pomiarową to bez znaczenia. Dla operatora, który ustawia trzy kamery na jednym planie i musi mieć zgodną ekspozycję na wszystkich, to problem nie do przyjęcia.</p>
+
+    <p>Stąd druga liczba, używana w optyce kinowej: T-stopa. Definiuje się ją tak, żeby oznaczała <em>rzeczywistą</em> jasność — czyli tyle, ile dawałby idealny obiektyw bez żadnych strat:</p>
+
+    <div class="formula">
+      T = N / √<span class="vec" data-tip="Przepuszczalność całego układu, ułamek od 0 do 1. Dla obiektywu bez powłok o siedmiu soczewkach około 0,54; z powłokami wielowarstwowymi 0,95 i więcej.">τ</span>
+      <span class="sub">T — liczba T, N — liczba f (geometryczna), τ — przepuszczalność układu. Pierwiastek, bo światło idzie jak kwadrat liczby przysłony: żeby stracić połowę światła, liczbę trzeba pomnożyć przez pierwiastek z dwóch.</span>
+    </div>
+
+    <div class="worked">
+      <div class="wlabel">Ta sama pięćdziesiątka, dwie epoki</div>
+      <p class="step"><span class="k">obiektyw bez powłok, 7 soczewek</span> <span class="v">τ = 0,54</span></p>
+      <p class="step"><span class="k">T</span> <span class="v">= 1,4 / √0,54 = 1,4 / 0,735 = </span><span class="result">T/1,9</span></p>
+      <p class="step"><span class="k">obiektyw wielowarstwowy, 9 soczewek</span> <span class="v">τ = 0,96</span></p>
+      <p class="step"><span class="k">T</span> <span class="v">= 1,4 / √0,96 = 1,4 / 0,980 = </span><span class="result">T/1,4</span></p>
+      <p class="check">Prawie cała przysłona różnicy między szkłem sprzed wojny a współczesnym, przy identycznym oznaczeniu geometrycznym. Kiedy więc w danych obiektywu widzisz f/2,0 i T/2,4, wiesz od razu, że przepuszczalność wynosi (2,0/2,4)² = 0,69 — a to z kolei mówi, że masz do czynienia z konstrukcją wielosoczewkową, ze starymi powłokami albo z jednym i drugim.</p>
+    </div>
+
+    <p>Rozjazd między jedną liczbą a drugą jest dobrym wskaźnikiem tego, z jaką konstrukcją masz do czynienia. Poniżej cztery typowe przypadki — nie konkretne modele, tylko klasy szkła, wraz z przepuszczalnością, którą z nich wyliczysz:</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>f kontra T</span><span>rozjazd jako podpis konstrukcji</span></div>
+      <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cztery klasy obiektywów z porównaniem liczby f i liczby T oraz wynikającą z nich przepuszczalnością.">
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">
+          <text x="30" y="30">KLASA SZKŁA</text><text x="330" y="30">f</text><text x="400" y="30">T</text>
+          <text x="480" y="30">PRZEPUSZCZALNOŚĆ</text>
+        </g>
+        <line x1="30" y1="42" x2="730" y2="42" stroke="#2a2f38"/>
+
+        <g font-family="IBM Plex Mono" font-size="12">
+          <text x="30" y="76" fill="#ecebe4">stałka wielowarstwowa, 8 szkieł</text>
+          <text x="330" y="76" fill="#8b909b">1,4</text><text x="400" y="76" fill="#e8a33d">1,5</text>
+          <rect x="480" y="66" width="196" height="12" fill="#2a2f38"/><rect x="480" y="66" width="171" height="12" fill="#4fc3c0" opacity="0.7"/>
+          <text x="686" y="76" fill="#4fc3c0">87%</text>
+
+          <text x="30" y="120" fill="#ecebe4">stałka kinowa, 12 szkieł</text>
+          <text x="330" y="120" fill="#8b909b">2,0</text><text x="400" y="120" fill="#e8a33d">2,1</text>
+          <rect x="480" y="110" width="196" height="12" fill="#2a2f38"/><rect x="480" y="110" width="178" height="12" fill="#4fc3c0" opacity="0.7"/>
+          <text x="686" y="120" fill="#4fc3c0">91%</text>
+
+          <text x="30" y="164" fill="#ecebe4">zoom kinowy, 20 szkieł</text>
+          <text x="330" y="164" fill="#8b909b">2,6</text><text x="400" y="164" fill="#e8a33d">2,9</text>
+          <rect x="480" y="154" width="196" height="12" fill="#2a2f38"/><rect x="480" y="154" width="157" height="12" fill="#9c82d8" opacity="0.7"/>
+          <text x="686" y="164" fill="#9c82d8">80%</text>
+
+          <text x="30" y="208" fill="#ecebe4">szkło vintage bez powłok</text>
+          <text x="330" y="208" fill="#8b909b">1,4</text><text x="400" y="208" fill="#e8a33d">1,9</text>
+          <rect x="480" y="198" width="196" height="12" fill="#2a2f38"/><rect x="480" y="198" width="106" height="12" fill="#9c82d8" opacity="0.7"/>
+          <text x="686" y="208" fill="#9c82d8">54%</text>
+        </g>
+        <text x="30" y="238" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">Przepuszczalność wyliczona wprost z pary liczb: τ = (f/T)².</text>
+      </svg>
+      <div class="diagram-caption">Cała informacja o stratach w szkle mieści się w różnicy dwóch liczb wygrawerowanych na tubusie.</div>
+    </div>
+
+    <p>Zwróć uwagę na ostatni wiersz. Vintage tracący prawie połowę światła nie jest wadliwy — jest po prostu sprzed epoki powłok wielowarstwowych. I to jest ta sama utrata, która daje mu podniesione czernie i niższy kontrast, czyli dokładnie te cechy, dla których się go dziś wypożycza.</p>
+
+    <p>Dwie uwagi praktyczne, bo tu łatwo o nadinterpretację. Po pierwsze, <strong>T-stopa nie mówi nic o jakości obrazu</strong> — mierzy wyłącznie transmisję. Obiektyw o świetnej T-stopie może mieć fatalny kontrast, jeśli straty poszły w rozproszenie zamiast w odbicie do tyłu. Po drugie, T-stopa nie zastępuje liczby f wszędzie: <span class="term-violet">głębia ostrości zależy od geometrii, więc od N, a nie od T</span>. Obiektyw oznaczony T/2,4, którego geometryczne f wynosi 2,0, daje głębię jak f/2,0 i jasność jak f/2,4. Obie liczby są potrzebne i opisują co innego.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Mechanizm · kształt ma znaczenie</div>
+    <h2>Przysłona to nie jest okrągła dziura</h2>
+
+    <p>Do tej pory rysowaliśmy źrenicę jako koło. Prawdziwa przysłona składa się z kilku ruchomych listków, które zsuwają się do środka — i tworzą wielokąt, a nie koło. Liczba listków jest cechą konstrukcyjną i widać ją w obrazie na dwa sposoby, oba omawiane szerzej w dalszych rozdziałach.</p>
+
+    <p><strong>W nieostrości</strong> każdy punkt świetlny odwzorowuje się jako obraz źrenicy — więc siedmiolistkowa przysłona daje siedmiokątne krążki bokeh. To jest jedyny powód, dla którego bokeh bywa kanciaste, i to jest też powód, dla którego przy pełnym otworze bywa okrągłe: przy maksymalnie otwartej przysłonie listki chowają się poza oprawę i otwór wyznacza już okrągła tuleja, a nie one.</p>
+
+    <p><strong>W ostrości</strong> krawędzie listków dyfrakcyjnie rozpraszają światło jasnych źródeł, dając gwiazdki. Tutaj czeka reguła, której nie da się odgadnąć z rysunku przysłony: liczba parzysta listków daje tyle promieni, ile listków, a liczba <em>nieparzysta</em> daje ich dwa razy więcej.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Listki przysłony</span><span>kształt bokeh i liczba promieni</span></div>
+      <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Pięć przysłon o różnej liczbie listków z podaną liczbą promieni gwiazdki: pięć listków daje dziesięć promieni, sześć daje sześć.">
+        <g fill="#e8a33d" fill-opacity="0.22" stroke="#e8a33d" stroke-width="1.6">
+          <polygon points="90,60 122,83 110,121 70,121 58,83"/>
+          <polygon points="230,58 262,77 262,115 230,134 198,115 198,77"/>
+          <polygon points="370,58 400,71 407,103 386,128 354,128 333,103 340,71"/>
+          <polygon points="510,58 535,64 553,82 559,107 553,132 535,150 510,156 485,150 467,132 461,107 467,82 485,64" transform="translate(0,-12) scale(1,0.86) translate(0,14)"/>
+          <circle cx="650" cy="96" r="38"/>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="11" fill="#8b909b" text-anchor="middle">
+          <text x="90" y="168">5 listków</text><text x="230" y="168">6 listków</text>
+          <text x="370" y="168">7 listków</text><text x="510" y="168">11 listków</text>
+          <text x="650" y="168">zaokrąglone</text>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="12" fill="#e8a33d" text-anchor="middle">
+          <text x="90" y="192">10 promieni</text><text x="230" y="192">6 promieni</text>
+          <text x="370" y="192">14 promieni</text><text x="510" y="192">22 promienie</text>
+          <text x="650" y="192">brak</text>
+        </g>
+        <text x="30" y="230" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">Nieparzysta liczba listków podwaja liczbę promieni — reguła wynika z fali, nie z rysunku przysłony.</text>
+      </svg>
+      <div class="diagram-caption">Ten sam element mechaniczny decyduje o dwóch zupełnie różnych cechach obrazu — i o żadnej z nich nie decyduje jego rozmiar.</div>
+    </div>
+
+    <p>Producenci obiektywów kinowych zwykle wybierają dużą, nieparzystą liczbę listków o zakrzywionych krawędziach — kompromis między okrągłym bokeh a przewidywalną gwiazdką. Obiektywy fotograficzne z lat siedemdziesiątych miały często pięć albo sześć prostych listków, i to jest jeden z tych elementów, przez które „vintage” jest rozpoznawalne: <span class="term-cyan">kanciaste bokeh jest podpisem epoki</span>, nie wadą egzemplarza.</p>
+
+    <p class="deeper-inline">Skąd bierze się kształt krążka bokeh — <a href="rozdzial-09-bokeh.html">Rozdział 9</a>. Skąd liczba promieni gwiazdki — <a href="rozdzial-10-dyfrakcja.html">Rozdział 10</a> i <a href="../dodatki/dodatek-d-krazek-airyego.html">Dodatek D</a>.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Kompromis · dlaczego istnieje „słodki punkt”</div>
+    <h2>Najlepsza przysłona nie jest ani najszersza, ani najwęższa</h2>
+
+    <p>Jest zdanie powtarzane przez każdego, kto trochę pofotografował: <em>obiektyw jest najostrzejszy dwie przysłony od pełnego otwarcia</em>. Jak większość takich reguł, jest z grubsza prawdziwa i prawie nigdy nie bywa wyjaśniana. A wyjaśnienie jest proste i składa się z dwóch zjawisk, które ciągną w przeciwne strony.</p>
+
+    <p><strong>Przy pełnym otwarciu przeszkadzają aberracje.</strong> Wiązka wypełnia wtedy całą źrenicę, łącznie z jej brzegiem — a to właśnie promienie biegnące daleko od osi są najgorzej skorygowane. Kula szlifowana jest przybliżeniem tylko blisko środka, więc im szersza wiązka, tym większa część promieni chybia. Przymknięcie przysłony odcina brzeg i wraz z nim odcina większość problemu. To jest geometria, i o niej będzie cała <a href="rozdzial-11-aberracja-sferyczna.html">Część III</a>.</p>
+
+    <p><strong>Przy mocnym przymknięciu przeszkadza dyfrakcja.</strong> Im ciaśniejszy otwór, tym silniej fala rozlewa się po przejściu — dokładnie tak, jak w widgecie ze szczeliną z <a href="rozdzial-01-fala-czy-promien.html">Rozdziału 1</a>. Punkt przestaje być punktem i rozmywa się w krążek, którego średnica rośnie proporcjonalnie do liczby przysłony. To jest fala, i o niej będzie <a href="rozdzial-10-dyfrakcja.html">Rozdział 10</a>.</p>
+
+    <p>Jedno maleje z przymykaniem, drugie rośnie. Suma ma minimum — i to minimum jest tym, co nazywa się słodkim punktem obiektywu. Przesuń suwak i zobacz, gdzie wypada:</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Aberracje kontra dyfrakcja</span><span>rozmycie punktu w µm</span></div>
+      <div class="diagram-controls">
+        <label for="przyslonaSweet">Przysłona</label>
+        <input id="przyslonaSweet" type="range" min="0" max="8" step="1" value="0">
+        <span class="value-readout" id="sweetOdczyt">f/1,4</span>
+      </div>
+      <svg viewBox="0 0 760 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Dwie krzywe: rozmycie od aberracji maleje z przymykaniem, rozmycie dyfrakcyjne rośnie. Ich suma ma minimum około f/4 do f/5,6.">
+        <g stroke="#2a2f38" stroke-width="1"><line x1="80" y1="260" x2="710" y2="260"/><line x1="80" y1="30" x2="80" y2="260"/></g>
+        <g stroke="#2a2f38" stroke-width="0.6" opacity="0.55">
+          <line x1="80" y1="203" x2="710" y2="203"/><line x1="80" y1="145" x2="710" y2="145"/><line x1="80" y1="88" x2="710" y2="88"/>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="10" fill="#8b909b">
+          <text x="52" y="264">0</text><text x="48" y="207">10</text><text x="48" y="150">20</text><text x="48" y="92">30</text><text x="48" y="34">40</text>
+          <text x="20" y="22">µm</text>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">
+          <text x="80" y="278">1,4</text><text x="159" y="278">2</text><text x="237" y="278">2,8</text><text x="316" y="278">4</text>
+          <text x="395" y="278">5,6</text><text x="474" y="278">8</text><text x="552" y="278">11</text><text x="631" y="278">16</text><text x="710" y="278">22</text>
+        </g>
+        <path id="krzywaAber" fill="none" stroke="#9c82d8" stroke-width="2.2"/>
+        <path id="krzywaDyfr" fill="none" stroke="#4fc3c0" stroke-width="2.2"/>
+        <path id="krzywaSuma" fill="none" stroke="#e8a33d" stroke-width="2.8"/>
+        <line id="wskaznikSweet" y1="30" y2="260" stroke="#ecebe4" stroke-width="1" opacity="0.45"/>
+        <circle id="punktSuma" r="5" fill="#e8a33d"/>
+        <line id="optimum" y1="30" y2="260" stroke="#e8a33d" stroke-width="1" stroke-dasharray="3 4" opacity="0.7"/>
+        <text id="optimumEt" y="26" font-family="IBM Plex Mono" font-size="9.5" fill="#e8a33d" text-anchor="middle">optimum</text>
+        <g font-family="IBM Plex Mono" font-size="11">
+          <rect x="500" y="52" width="14" height="3" fill="#e8a33d"/><text x="522" y="58" fill="#ecebe4">suma</text>
+          <rect x="500" y="74" width="14" height="3" fill="#9c82d8"/><text x="522" y="80" fill="#8b909b">aberracje</text>
+          <rect x="500" y="96" width="14" height="3" fill="#4fc3c0"/><text x="522" y="102" fill="#8b909b">dyfrakcja</text>
+        </g>
+      </svg>
+      <div class="diagram-caption" id="sweetPodpis">f/1,4: aberracje 30 µm, dyfrakcja 1,9 µm, razem 30,1 µm. Rządzi geometria.</div>
+    </div>
+
+    <p>Dwa wnioski, które warto z tego wykresu wynieść. Po pierwsze, <strong>położenie optimum zależy od obiektywu</strong>: szkło lepiej skorygowane ma niższą fioletową krzywą, więc jego optimum leży bliżej pełnego otwarcia. Obiektyw kinowy klasy Master Prime bywa niemal najostrzejszy już przy T/2,8, podczas gdy tani zoom potrzebuje f/8. Zdanie „dwie przysłony od pełnego otwarcia” opisuje więc szkło przeciętne, nie prawo natury.</p>
+
+    <p>Po drugie, <span class="term-violet">prawa strona wykresu jest nie do naprawienia</span>. Cyjanowa krzywa nie zależy od konstrukcji ani od ceny — zależy wyłącznie od długości fali i liczby przysłony. Producent może obniżyć fiolet dowolnie wysokim kosztem, ale cyjanu nie ruszy nikt. Dlatego wszystkie obiektywy świata, od najtańszego po najdroższy, są przy f/22 mniej więcej tak samo miękkie.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Poprawka · przy bliskiej ostrości liczby kłamią</div>
+    <h2>Dlaczego makro zjada światło</h2>
+
+    <p>Wyprowadzenie liczby f z pierwszej sekcji miało cichy warunek: obraz powstaje w odległości ogniskowej od soczewki. To jest prawda przy ostrości na nieskończoność i przybliżenie przy ostrości na kilka metrów. Przy bliskiej ostrości przestaje być jednym i drugim.</p>
+
+    <p>Z <a href="rozdzial-04-soczewka-cienka.html">Rozdziału 4</a> wiemy, że przy bliskim przedmiocie obraz powstaje dalej niż f. A skoro rozkłada się na większej powierzchni, to naświetlenie spada — mimo że źrenica ma dokładnie tę samą średnicę. Liczba wygrawerowana na pierścieniu przestaje odpowiadać rzeczywistości i trzeba ją skorygować:</p>
+
+    <div class="formula">
+      N<sub>ef</sub> = N · (1 + <span class="vec" data-tip="Powiększenie liniowe: stosunek rozmiaru obrazu do rozmiaru przedmiotu. Przy makro 1:1 wynosi 1.">m</span>)
+      <span class="sub">N<sub>ef</sub> — efektywna liczba przysłony, ta, którą „widzi” matryca. N — liczba nastawiona na obiektywie. m — powiększenie. Dla ostrości na nieskończoność m = 0 i poprawka znika.</span>
+    </div>
+
+    <p>Przy makro 1:1 powiększenie wynosi 1, więc efektywna liczba przysłony jest dwa razy większa od nastawionej — a to znaczy <strong>dwie przysłony mniej światła</strong>. Nastawione f/8 pracuje jak f/16. To nie jest wada obiektywu makro, tylko nieuchronna konsekwencja tego, że obraz powstaje dalej.</p>
+
+    <p>Ta sama poprawka tłumaczy jeszcze jedną rzecz, która na planie bywa zaskoczeniem: <strong>przy bardzo bliskiej ostrości głębia ostrości nie zależy już praktycznie od ogniskowej</strong>. Wszystkie obiektywy nastawione na to samo powiększenie i tę samą liczbę przysłony dają niemal identyczną głębię — bo to powiększenie, a nie ogniskowa, rządzi wtedy rachunkiem. Dlatego przy makro nie ma sensu szukać „płytszego” szkła; jedyne, co realnie zmienia głębię, to przymknięcie przysłony albo cofnięcie się i zrezygnowanie z powiększenia.</p>
+
+    <p>Konsekwencja praktyczna, o którą łatwo się potknąć przy dopasowywaniu renderu do materiału makro: jeśli w metryce widnieje f/8, a wynik wygląda na znacznie ciemniejszy i głębszy, niż powinien — to prawdopodobnie właśnie ten czynnik. Renderer liczy przysłonę geometrycznie i nie dokłada poprawki sam.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">W CG · co znaczy „aperture” w kamerze</div>
+    <h2>Przysłona w rendererze robi tylko połowę roboty</h2>
+
+    <p>W kamerze renderera znajdziesz pole opisane jako „f-stop”, „aperture” albo „aperture size”. Warto wiedzieć, na co ono wpływa, a na co nie — bo w większości silników wpływa dokładnie na jedną rzecz.</p>
+
+    <p><strong>Wpływa na głębię ostrości.</strong> Renderer używa liczby f do wyliczenia średnicy źrenicy, a potem losuje po niej punkty startowe promieni. Im większa źrenica, tym szerszy stożek i tym płytsza głębia. To jest fizycznie poprawne i działa dokładnie tak, jak w rzeczywistym obiektywie.</p>
+
+    <p><strong>Zwykle nie wpływa na ekspozycję.</strong> W przeciwieństwie do prawdziwej kamery, większość rendererów nie przyciemnia obrazu po przymknięciu przysłony — bo obraz i tak wychodzi w liniowej przestrzeni bez ustalonego poziomu bieli, a ekspozycję ustawia się osobno. Silniki z pełnym modelem fizycznym (z ISO, czasem otwarcia migawki i przysłoną naraz) zachowują się inaczej i tam przymknięcie faktycznie przyciemnia.</p>
+
+    <p>Trzecia różnica jest subtelniejsza i dotyczy dyfrakcji: renderer jej nie liczy w ogóle. Przymknięcie do f/22 w rzeczywistej kamerze wyraźnie zmiękcza obraz, a w rendererze daje obraz idealnie ostry w całej głębi. Jeśli odtwarzasz ujęcie kręcone na mocno przymkniętej przysłonie, tę miękkość trzeba dołożyć osobno — i wrócimy do tego w Rozdziale 10.</p>
+
+    <p>Praktyczna konsekwencja jest taka, że <span class="term-violet">w rendererze można bezkarnie ustawić przysłonę, której w rzeczywistości byś nie użył</span> — na przykład f/1,2 przy pełnym świetle dnia — i dostać obraz poprawnie naświetlony przy nierealistycznie płytkiej głębi. Jeśli render ma siedzieć w materiale, warto trzymać się przysłony faktycznie użytej na planie, nawet jeśli silnik na to nie nalega.</p>
+
+    <p>Druga pułapka to <strong>kształt źrenicy</strong>. Domyślnie renderer losuje po kole, więc bokeh wychodzi idealnie okrągłe — czyli takie, jakiego prawdziwy obiektyw z listkami nie daje prawie nigdy. Większość silników pozwala podać liczbę listków albo teksturę źrenicy, i to jest jedna z tańszych rzeczy, jakie można zrobić, żeby render przestał wyglądać na render. Szerzej w <a href="rozdzial-09-bokeh.html">Rozdziale 9</a>.</p>
+  </div>
+
+  <div class="panel practice">
+    <div class="panel-label">Z praktyki</div>
+    <p><strong>Przeliczaj T na f, żeby ocenić szkło.</strong> Podnieś iloraz do kwadratu: (N/T)² daje przepuszczalność. Obiektyw f/2,0 i T/2,1 ma τ = 0,91 — nowoczesne powłoki, umiarkowana liczba szkieł. f/2,0 i T/2,6 daje τ = 0,59 — albo bardzo wiele soczewek, albo stare powłoki. Ten jeden rachunek mówi o konstrukcji więcej niż karta katalogowa.</p>
+    <p><strong>Do dopasowania głębi używaj f, do dopasowania jasności — T.</strong> To najczęstsza pomyłka przy odtwarzaniu ujęcia z metryki zdjęciowej. Metryka podaje T-stopę, bo tym operuje operator. Renderer chce geometrii. Jeśli wpiszesz T-stopę w pole f-stop, dostaniesz głębię odpowiadającą ciemniejszemu obiektywowi, niż użyto — różnica bywa niewielka przy dobrym szkle i wyraźna przy zoomie.</p>
+    <p><strong>Liczba listków jest darmowym detalem realizmu.</strong> Zajmuje w kamerze renderera jedno pole i zmienia każdy nieostry punkt w kadrze. Jeśli masz referencję z planu, policz kąty w bokeh na jakimś świetle w tle — dostaniesz liczbę listków wprost. Jeśli nie masz, dziewięć zakrzywionych listków jest bezpiecznym domyślnym wyborem dla współczesnego szkła kinowego, a sześć prostych dla wyglądu vintage.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>liczba przysłony (N, f/N)</dt>
+      <dd>Iloraz ogniskowej i średnicy źrenicy wejściowej. Wielkość geometryczna, wyliczona z konstrukcji, nie zmierzona.</dd>
+      <dt>liczba T (T-stopa)</dt>
+      <dd>Liczba przysłony skorygowana o rzeczywistą przepuszczalność układu. Zmierzona na gotowym obiektywie. Standard w optyce kinowej.</dd>
+      <dt>przepuszczalność (τ)</dt>
+      <dd>Ułamek światła przechodzącego przez cały układ. Iloczyn przepuszczalności wszystkich powierzchni — patrz Rozdział 3.</dd>
+      <dt>drabinka przysłon</dt>
+      <dd>Ciąg 1,4 · 2 · 2,8 · 4 · 5,6 · 8… Kolejne potęgi pierwiastka z dwóch; każdy krok to połowa światła.</dd>
+      <dt>listki przysłony</dt>
+      <dd>Ruchome blaszki tworzące otwór. Ich liczba decyduje o kształcie bokeh i o liczbie promieni gwiazdki; ich krzywizna — o tym, jak bardzo bokeh jest okrągłe.</dd>
+      <dt>efektywna liczba przysłony</dt>
+      <dd>Liczba przysłony skorygowana o powiększenie, N·(1+m). Istotna przy bliskiej ostrości; przy ostrości na nieskończoność równa nominalnej.</dd>
+      <dt>pełny otwór</dt>
+      <dd>Największa przysłona, jaką dany obiektyw oferuje. Zwykle jego najsłabsza optycznie nastawa — dlaczego, wyjaśnia Rozdział 11.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Przez cały ten rozdział mówiliśmy o „źrenicy wejściowej”, traktując ją jak coś oczywistego. Nie jest — i nie jest też tym samym co otwór przysłony, który widać po rozkręceniu obiektywu. W <a href="rozdzial-07-zrenice.html">następnym rozdziale</a> zajmiemy się tym, czym naprawdę są źrenice, i okaże się, że jedno pojęcie tłumaczy naraz kocie oko w rogu kadru, winietowanie optyczne i punkt, wokół którego trzeba obracać kamerę.</p>
+  </div>
 
 
   <div class="site-nav chapter-nav">
@@ -52,8 +373,130 @@ window.SKY3D_MESSAGES = {
       <a class="nav-next" href="rozdzial-07-zrenice.html">Następny →</a>
   </div>
 
+  <template id="explain-fnumber">
+    <h3>Dlaczego jasność opisuje iloraz, a nie średnica</h3>
+
+    <div class="formula">N = f / D</div>
+
+    <p><strong>Rachunek w trzech krokach.</strong> Chcemy wiedzieć, ile światła przypada na jednostkę powierzchni matrycy — bo to właśnie mierzy światłomierz i na to reaguje matryca.</p>
+
+    <ul>
+      <li><strong>Ile światła wchodzi.</strong> Obiektyw zbiera światło całą powierzchnią źrenicy, a pole koła to π·(D/2)². Zebrane światło jest więc proporcjonalne do <strong>D²</strong>.</li>
+      <li><strong>Na jaką powierzchnię się rozkłada.</strong> Obraz przedmiotu o zadanym rozmiarze kątowym ma na matrycy rozmiar proporcjonalny do f. Jego pole rośnie więc jak <strong>f²</strong>.</li>
+      <li><strong>Iloraz.</strong> Naświetlenie to jedno podzielone przez drugie: D²/f² = (D/f)² = 1/N².</li>
+    </ul>
+
+    <p>Ogniskowa skróciła się z rachunku. To jest cały powód, dla którego liczba f jest uniwersalna — światłomierz nie musi wiedzieć, jakim obiektywem mierzysz, bo dwa obiektywy o tej samej liczbie f dają tę samą jasność obrazu, choć zbierają zupełnie różne ilości światła w sumie.</p>
+
+    <p><strong>Uwaga na słowo „źrenica”.</strong> D nie jest średnicą mechanicznego otworu przysłony, którą zobaczysz, patrząc na rozłożony obiektyw. Jest średnicą jej <em>obrazu</em> widzianego od przodu, przez soczewki stojące przed nią — a te ją powiększają, zwykle o kilkanaście procent. Dlatego przednia soczewka jasnego obiektywu musi być większa, niż wynikałoby z prostego dzielenia f przez N.</p>
+
+    <p><strong>Dlaczego to nie może iść w nieskończoność.</strong> Z definicji wynikałoby, że da się zbudować obiektyw f/0,5 albo jaśniejszy. Nie da się — granica dla układu pracującego w powietrzu leży przy f/0,5 i wynika z geometrii: promień z krawędzi źrenicy musiałby padać na matrycę pod kątem 90 stopni. W praktyce granica opłacalności leży znacznie wyżej, bo korekcja aberracji przy pełnym otworze rośnie w koszcie gwałtowniej niż zysk światła. Stąd f/1,4 jako typowa granica seryjnej stałki i f/0,95 jako konstrukcja demonstracyjna.</p>
+
+    <p><em>Uwaga na zakres stosowalności: cały rachunek zakłada obraz w odległości ogniskowej, czyli ostrość na nieskończoność. Przy bliskiej ostrości trzeba dołożyć poprawkę na powiększenie — patrz sekcja o makro w tym rozdziale.</em></p>
+  </template>
+
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-panel">
+      <button class="modal-close" data-modal-close aria-label="Zamknij">×</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
 </div>
 
 <script src="../assets/interactive.js"></script>
+<script>
+/* Liczba przyslony a otwor zrenicy. Obiektyw 50 mm, drabinka od f/1,4.
+   Promien kola rysowany proporcjonalnie do rzeczywistej srednicy, zeby
+   roznica miedzy f/1,4 a f/16 byla widoczna taka, jaka jest. */
+(function () {
+  var sl = document.getElementById('liczbaF');
+  if (!sl) return;
+  var F = 50;                                    // mm
+  var N = [1.4, 2, 2.8, 4, 5.6, 8, 11, 16, 22];
+  var R_MAX = 98;                                // px dla f/1,4
+  var D_MAX = F / N[0];                          // mm
+
+  function odswiez() {
+    var i = parseInt(sl.value, 10);
+    var n = N[i];
+    var d = F / n;                               // srednica zrenicy, mm
+    var r = R_MAX * (d / D_MAX);
+    var pole = Math.PI * (d / 2) * (d / 2);
+    var wzgl = Math.pow(N[0] / n, 2);            // swiatlo wzgledem f/1,4
+
+    document.getElementById('zrenica').setAttribute('r', r.toFixed(1));
+
+    var tekstN = 'f/' + n.toString().replace('.', ',');
+    document.getElementById('fOdczyt').textContent = tekstN;
+    document.getElementById('srednicaOdczyt').textContent = d.toFixed(1).replace('.', ',') + ' mm';
+    document.getElementById('poleOdczyt').textContent = pole.toFixed(0) + ' mm²';
+
+    var ulamek = Math.round(1 / wzgl);
+    document.getElementById('swiatloOdczyt').textContent = (i === 0 ? '1' : '1/' + ulamek);
+
+    var h = 180 * wzgl;
+    var s = document.getElementById('slupek');
+    s.setAttribute('y', (240 - h).toFixed(1));
+    s.setAttribute('height', h.toFixed(1));
+
+    document.getElementById('fPodpis').textContent =
+      tekstN + ' na pięćdziesiątce: źrenica ' + d.toFixed(1).replace('.', ',') + ' mm, ' +
+      (i === 0 ? 'pełny otwór tego obiektywu.'
+               : ulamek + ' razy mniej światła niż przy f/1,4.');
+  }
+  sl.addEventListener('input', odswiez);
+  odswiez();
+})();
+
+/* Slodki punkt: aberracje maleja z przymykaniem, dyfrakcja rosnie.
+   Aberracje modelowane jako proporcjonalne do kwadratu srednicy zrenicy
+   (dominuje sferyczna), dyfrakcja jako srednica krazka Airy'ego 2,44*lambda*N. */
+(function () {
+  var sl = document.getElementById('przyslonaSweet');
+  if (!sl) return;
+  var N = [1.4, 2, 2.8, 4, 5.6, 8, 11, 16, 22];
+  var X0 = 80, X1 = 710, Y0 = 260, Y1 = 30, MAXU = 40;
+  var LAMBDA = 0.55;
+  function px(i) { return X0 + i / (N.length - 1) * (X1 - X0); }
+  function py(u) { return Y0 - Math.min(u, MAXU) / MAXU * (Y0 - Y1); }
+  function aber(n) { return 30 * Math.pow(1.4 / n, 2); }     // µm
+  function dyfr(n) { return 2.44 * LAMBDA * n; }             // µm
+  function suma(n) { return Math.sqrt(aber(n) * aber(n) + dyfr(n) * dyfr(n)); }
+
+  [['krzywaAber', aber], ['krzywaDyfr', dyfr], ['krzywaSuma', suma]].forEach(function (par) {
+    var d = '';
+    for (var i = 0; i < N.length; i++) {
+      d += (i === 0 ? 'M ' : ' L ') + px(i).toFixed(1) + ' ' + py(par[1](N[i])).toFixed(1);
+    }
+    document.getElementById(par[0]).setAttribute('d', d);
+  });
+
+  // optimum: indeks o najmniejszej sumie
+  var best = 0;
+  for (var i = 1; i < N.length; i++) if (suma(N[i]) < suma(N[best])) best = i;
+  var xo = px(best);
+  var o = document.getElementById('optimum');
+  o.setAttribute('x1', xo); o.setAttribute('x2', xo);
+  document.getElementById('optimumEt').setAttribute('x', xo);
+
+  function odswiez() {
+    var i = parseInt(sl.value, 10), n = N[i], x = px(i);
+    var w = document.getElementById('wskaznikSweet');
+    w.setAttribute('x1', x); w.setAttribute('x2', x);
+    var p = document.getElementById('punktSuma');
+    p.setAttribute('cx', x); p.setAttribute('cy', py(suma(n)));
+    var a = aber(n), dd = dyfr(n);
+    document.getElementById('sweetOdczyt').textContent = 'f/' + n.toString().replace('.', ',');
+    document.getElementById('sweetPodpis').textContent =
+      'f/' + n.toString().replace('.', ',') + ': aberracje ' + a.toFixed(1).replace('.', ',') +
+      ' µm, dyfrakcja ' + dd.toFixed(1).replace('.', ',') + ' µm, razem ' +
+      suma(n).toFixed(1).replace('.', ',') + ' µm. ' +
+      (a > dd * 1.5 ? 'Rządzi geometria.' : (dd > a * 1.5 ? 'Rządzi fala.' : 'Oba wkłady porównywalne — tu leży optimum.'));
+  }
+  sl.addEventListener('input', odswiez);
+  odswiez();
+})();
+</script>
 </body>
 </html>
