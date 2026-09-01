@@ -42,7 +42,358 @@ window.SKY3D_MESSAGES = {
   <h1>Fala czy promień</h1>
   <p class="subtitle">Prawie całą tę książkę da się opowiedzieć promieniem. Prawie — bo gwiazdki wokół latarni, kolor powłoki i granica ostrości wymagają przyznania, że światło jest falą.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li>Światło można opisać jako <span class="term-amber">promień</span> albo jako <span class="term-amber">falę</span>. To nie są dwie konkurencyjne teorie — to dwa przybliżenia tego samego zjawiska, każde tanie i wygodne w swoim zakresie.</li>
+      <li>O tym, które wystarczy, decyduje jedna proporcja: <strong>rozmiar przeszkody do długości fali</strong>. Przy otworze przysłony tysiące razy większym od fali promień opisuje wszystko. Gdy proporcja spada, promień zaczyna kłamać.</li>
+      <li>Trzy zjawiska w tej książce wymagają fali i żadne nie da się z promienia wyprowadzić: <strong>dyfrakcja</strong> (gwiazdki, granica ostrości), <strong>interferencja</strong> (powłoki, kolor flary) i <strong>polaryzacja</strong> (kąt Brewstera, filtr polaryzacyjny).</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Punkt wyjścia · dwa opisy tego samego</div>
+    <h2>Promień jest wygodnym kłamstwem</h2>
+
+    <p>Kiedy rysujesz, jak działa soczewka, rysujesz kreski. Promień wchodzi, załamuje się, wychodzi pod innym kątem, spotyka się z innymi promieniami w punkcie ostrości. Ten obrazek jest podstawą całej optyki geometrycznej, całego trasowania promieni w rendererze i mniej więcej dziewięćdziesięciu procent tej książki.</p>
+
+    <p>Jest też fikcją. Nie istnieje nic takiego jak promień świetlny. Nie da się go wyizolować, nie da się go zmierzyć, nie da się zbudować przesłony tak wąskiej, żeby przepuściła dokładnie jeden. <span class="term-cyan">Promień jest konstrukcją rachunkową</span> — linią prostopadłą do czoła fali, wygodną, bo pozwala zamienić trudny problem falowy na łatwą geometrię linii i kątów.</p>
+
+    <p>Fikcja jest jednak wyjątkowo dobra. Dopóki wszystko, na co światło trafia po drodze, jest znacznie większe od długości jego fali, przewidywania promienia zgadzają się z pomiarem co do ułamka procenta. A ponieważ długość fali światła widzialnego to jakieś pół mikrometra, a soczewki, przysłony i matryce mierzy się w milimetrach, ten warunek jest w obiektywie spełniony niemal wszędzie.</p>
+
+    <p>Niemal — i cała ta książka mieszka w wyjątkach.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Dwa opisy, jedna soczewka</span><span>promienie kontra czoła fali</span></div>
+      <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Po lewej soczewka opisana promieniami zbiegającymi się w ognisku, po prawej ta sama soczewka opisana czołami fali, które soczewka wygina w kulę zbieżną.">
+        <defs>
+          <marker id="w1a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#e8a33d"/></marker>
+        </defs>
+
+        <text x="20" y="26" font-family="IBM Plex Mono" font-size="11" fill="#8b909b">OPIS PROMIENIOWY</text>
+        <path d="M 150 70 Q 168 150 150 230 Q 132 150 150 70 Z" fill="#4fc3c0" fill-opacity="0.13" stroke="#4fc3c0" stroke-width="1.5"/>
+        <g stroke="#e8a33d" stroke-width="1.8" fill="none">
+          <path d="M 30 90 L 150 90 L 300 150" marker-end="url(#w1a)"/>
+          <path d="M 30 120 L 150 120 L 300 150" marker-end="url(#w1a)"/>
+          <path d="M 30 150 L 150 150 L 300 150" marker-end="url(#w1a)"/>
+          <path d="M 30 180 L 150 180 L 300 150" marker-end="url(#w1a)"/>
+          <path d="M 30 210 L 150 210 L 300 150" marker-end="url(#w1a)"/>
+        </g>
+        <circle cx="300" cy="150" r="4" fill="#e8a33d"/>
+        <text x="286" y="176" font-family="IBM Plex Mono" font-size="10.5" fill="#e8a33d">ognisko</text>
+        <text x="24" y="262" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">proste linie, kąty, przecięcia</text>
+
+        <line x1="380" y1="30" x2="380" y2="270" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 5"/>
+
+        <text x="410" y="26" font-family="IBM Plex Mono" font-size="11" fill="#8b909b">OPIS FALOWY</text>
+        <path d="M 540 70 Q 558 150 540 230 Q 522 150 540 70 Z" fill="#4fc3c0" fill-opacity="0.13" stroke="#4fc3c0" stroke-width="1.5"/>
+        <g stroke="#9c82d8" stroke-width="1.6" fill="none">
+          <line x1="420" y1="80" x2="420" y2="220"/>
+          <line x1="450" y1="80" x2="450" y2="220"/>
+          <line x1="480" y1="80" x2="480" y2="220"/>
+          <line x1="510" y1="80" x2="510" y2="220"/>
+        </g>
+        <g stroke="#9c82d8" stroke-width="1.6" fill="none">
+          <path d="M 580 88 Q 612 150 580 212"/>
+          <path d="M 616 104 Q 640 150 616 196"/>
+          <path d="M 652 120 Q 668 150 652 180"/>
+        </g>
+        <circle cx="690" cy="150" r="4" fill="#9c82d8"/>
+        <text x="404" y="262" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">czoła fali, płaskie stają się kuliste</text>
+      </svg>
+      <div class="diagram-caption">Ten sam obiekt, ta sama prognoza. Promień jest prostopadły do czoła fali — dlatego oba opisy dają to samo ognisko.</div>
+    </div>
+
+    <p>Zwróć uwagę, że oba rysunki mówią dokładnie to samo. Soczewka opóźnia środek fali bardziej niż brzegi (bo w środku szkła jest więcej), więc płaskie czoło fali wygina się w kuliste i zbiega do punktu. Promienie, prostopadłe do tych czół, zbiegają się w tym samym punkcie. <strong>Nie ma tu sporu o naturę światła</strong> — jest wybór narzędzia rachunkowego.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Kryterium · jedna proporcja rozstrzyga</div>
+    <h2>Kiedy promień przestaje wystarczać</h2>
+
+    <p>Granica między jednym opisem a drugim nie jest ostra ani umowna. Wyznacza ją stosunek rozmiaru przeszkody do długości fali — i jest to jedyne kryterium, jakiego będziesz potrzebował.</p>
+
+    <p>Światło widzialne mieści się mniej więcej między 380 a 700 nanometrami. Środek widma, zieleń, na którą oko jest najczulsze, to 550 nanometrów — <span class="term-amber">pół tysięcznej milimetra</span>. Warto zbudować sobie do tej liczby jakąś intuicję, bo w tej książce będzie wracać co chwilę.</p>
+
+    <p>Żeby ta liczba przestała być abstrakcją: ludzki włos ma około siedemdziesięciu mikrometrów grubości, czyli mieści się w nim mniej więcej <strong>sto trzydzieści długości fali</strong>. Czerwona krwinka to siedem mikrometrów — trzynaście fal. Pojedyncza bakteria bywa już porównywalna z falą światła i właśnie dlatego jest granicą tego, co mikroskop optyczny potrafi pokazać: obiektu mniejszego od fali, którą go oświetlasz, nie da się nią zobaczyć ostro. To nie kwestia jakości szkła w mikroskopie, tylko dokładnie to samo ograniczenie, które za chwilę spotkamy przy przymykaniu przysłony.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Skale, które będą się spotykać</span><span>skala logarytmiczna</span></div>
+      <svg viewBox="0 0 760 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Oś logarytmiczna porównująca długość fali światła, piksel matrycy, otwór przysłony i średnicę soczewki.">
+        <line x1="50" y1="180" x2="720" y2="180" stroke="#8b909b" stroke-width="1.5"/>
+        <g font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">
+          <line x1="90" y1="174" x2="90" y2="186" stroke="#8b909b"/><text x="90" y="202">0,1 µm</text>
+          <line x1="248" y1="174" x2="248" y2="186" stroke="#8b909b"/><text x="248" y="202">1 µm</text>
+          <line x1="406" y1="174" x2="406" y2="186" stroke="#8b909b"/><text x="406" y="202">10 µm</text>
+          <line x1="564" y1="174" x2="564" y2="186" stroke="#8b909b"/><text x="564" y="202">1 mm</text>
+          <line x1="700" y1="174" x2="700" y2="186" stroke="#8b909b"/><text x="700" y="202">10 mm</text>
+        </g>
+
+        <g font-family="IBM Plex Mono" font-size="11">
+          <circle cx="212" cy="180" r="6" fill="#e8a33d"/>
+          <line x1="212" y1="174" x2="212" y2="120" stroke="#e8a33d" stroke-width="1"/>
+          <text x="212" y="112" fill="#e8a33d" text-anchor="middle">fala światła · 0,55 µm</text>
+
+          <circle cx="380" cy="180" r="6" fill="#6e93be"/>
+          <line x1="380" y1="186" x2="380" y2="238" stroke="#6e93be" stroke-width="1"/>
+          <text x="380" y="252" fill="#6e93be" text-anchor="middle">piksel matrycy 4K · 6 µm</text>
+
+          <circle cx="600" cy="180" r="6" fill="#4fc3c0"/>
+          <line x1="600" y1="174" x2="600" y2="120" stroke="#4fc3c0" stroke-width="1"/>
+          <text x="600" y="112" fill="#4fc3c0" text-anchor="middle">otwór przysłony · 3 mm</text>
+
+          <circle cx="706" cy="180" r="6" fill="#4fc3c0"/>
+          <line x1="706" y1="186" x2="706" y2="238" stroke="#4fc3c0" stroke-width="1"/>
+          <text x="700" y="252" fill="#4fc3c0" text-anchor="middle">soczewka · 50 mm</text>
+        </g>
+        <text x="50" y="36" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">każdy krok w prawo to dziesięciokrotność</text>
+      </svg>
+      <div class="diagram-caption">Między falą a otworem przysłony leżą cztery rzędy wielkości. Między falą a pikselem — już tylko jeden.</div>
+    </div>
+
+    <p>Ta ostatnia obserwacja jest ważniejsza, niż wygląda. Otwór przysłony jest od fali kilka tysięcy razy większy, więc dla niego promień jest opisem znakomitym. Ale piksel matrycy jest większy zaledwie dziesięciokrotnie — i właśnie dlatego dyfrakcja, którą można ignorować przy rozważaniu kształtu wiązki, staje się widoczna, gdy patrzysz na obraz w skali piksela. <a href="rozdzial-10-dyfrakcja.html">Rozdział 10</a> jest w całości o tym momencie.</p>
+
+    <p>Przesuń suwak i zobacz, co się dzieje z wiązką przechodzącą przez szczelinę, gdy zaczynasz ją zwężać. Dopóki szczelina jest szeroka, światło idzie prosto i granica cienia jest ostra — dokładnie tak, jak przewiduje promień. Poniżej pewnej szerokości wiązka zaczyna się rozbiegać, i to tym mocniej, im węższa szczelina.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Szczelina a rozbieżność wiązki</span><span>λ = 550 nm</span></div>
+      <div class="diagram-controls">
+        <label for="szerokoscSzczeliny">Szerokość szczeliny</label>
+        <input id="szerokoscSzczeliny" type="range" min="0" max="100" step="1" value="67">
+        <span class="value-readout" id="szczelinaOdczyt">100 µm</span>
+      </div>
+      <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Wiązka światła przechodząca przez szczelinę: przy szerokiej szczelinie idzie prosto, przy wąskiej rozbiega się stożkiem.">
+        <rect x="150" y="20" width="16" height="260" fill="#2a2f38"/>
+        <rect id="szczelinaGora" x="150" y="20" width="16" height="110" fill="#8b909b"/>
+        <rect id="szczelinaDol" x="150" y="170" width="16" height="110" fill="#8b909b"/>
+
+        <g stroke="#e8a33d" stroke-width="2" fill="none" opacity="0.85">
+          <line x1="20" y1="150" x2="150" y2="150" stroke-width="3"/>
+        </g>
+        <path id="wiazka" fill="#e8a33d" fill-opacity="0.20" stroke="#e8a33d" stroke-width="1.4"/>
+
+        <line x1="700" y1="20" x2="700" y2="280" stroke="#6e93be" stroke-width="2"/>
+        <text x="672" y="292" font-family="IBM Plex Mono" font-size="10" fill="#6e93be">ekran</text>
+        <text x="24" y="140" font-family="IBM Plex Mono" font-size="10.5" fill="#e8a33d">światło</text>
+        <text x="150" y="14" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">przesłona</text>
+      </svg>
+      <div class="diagram-caption" id="szczelinaPodpis">Szczelina 100 µm: rozbieżność 0,3° — wiązka praktycznie idzie prosto.</div>
+    </div>
+
+    <p>Zauważ, w którą stronę to działa, bo intuicja podpowiada odwrotnie: <strong>im mniejszy otwór, tym bardziej światło się rozlewa</strong>. To jest sedno całego kłopotu z przymykaniem przysłony i wrócimy do niego z liczbami w Rozdziale 10.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Barwa · wielkość, nie nazwa</div>
+    <h2>Kolor jest liczbą, i to nie trzema</h2>
+
+    <p>Skoro długość fali okazała się kryterium rozstrzygającym, warto od razu ustalić, czym w tej książce jest barwa. Nie nazwą i nie trójką liczb — <strong>długością fali w nanometrach</strong>. Światło słoneczne zawiera wszystkie długości z zakresu widzialnego naraz, w proporcjach opisanych ciągłą krzywą, a nie trzema wartościami.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Widmo widzialne</span><span>380–700 nm</span></div>
+      <svg viewBox="0 0 760 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Pasmo widma widzialnego od fioletu przy 380 nanometrach do czerwieni przy 700, z zaznaczoną zielenią przy 550 nanometrach.">
+        <defs>
+          <linearGradient id="widmo" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#6b3fa0"/>
+            <stop offset="16%" stop-color="#3f4fd0"/>
+            <stop offset="34%" stop-color="#2fa8c8"/>
+            <stop offset="53%" stop-color="#4fbf5a"/>
+            <stop offset="70%" stop-color="#e8d43d"/>
+            <stop offset="85%" stop-color="#e8853d"/>
+            <stop offset="100%" stop-color="#c23b3b"/>
+          </linearGradient>
+        </defs>
+        <rect x="60" y="50" width="640" height="56" fill="url(#widmo)" rx="4"/>
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b" text-anchor="middle">
+          <line x1="60" y1="106" x2="60" y2="118" stroke="#8b909b"/><text x="60" y="134">380</text>
+          <line x1="166" y1="106" x2="166" y2="118" stroke="#8b909b"/><text x="166" y="134">430</text>
+          <line x1="326" y1="106" x2="326" y2="118" stroke="#8b909b"/><text x="326" y="134">505</text>
+          <line x1="486" y1="106" x2="486" y2="118" stroke="#8b909b"/><text x="486" y="134">580</text>
+          <line x1="700" y1="106" x2="700" y2="118" stroke="#8b909b"/><text x="700" y="134">700 nm</text>
+        </g>
+        <line x1="422" y1="34" x2="422" y2="50" stroke="#e8a33d" stroke-width="1.5"/>
+        <text x="422" y="28" font-family="IBM Plex Mono" font-size="11" fill="#e8a33d" text-anchor="middle">550 nm · odniesienie w tej książce</text>
+        <text x="60" y="176" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">Widmo jest ciągłe. Podział na „barwy” jest nazewnictwem, nie fizyką —</text>
+        <text x="60" y="194" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">żadna granica na tym pasku nie odpowiada niczemu w naturze światła.</text>
+      </svg>
+      <div class="diagram-caption">Wszystko, co dalej w książce zależy od barwy — dyspersja, powłoki, halacja — zależy w istocie od tej osi.</div>
+    </div>
+
+    <p>To ma bezpośredni skutek w pracy. <strong>Renderer zwykle liczy w trzech kanałach</strong>, nie w widmie. Trzy liczby wystarczają, żeby oko zobaczyło właściwy kolor, ale nie wystarczają, żeby policzyć zjawisko, które <em>zależy od długości fali w sposób ciągły</em>. Powłoka wygaszająca odbicie przy 550 nanometrach robi coś innego przy 500, a jeszcze coś innego przy 600 — i sprowadzenie tego do RGB gubi dokładnie tę zależność, dla której warto było ją liczyć.</p>
+
+    <p>Dlatego renderery mające ambicję poprawnego oddania dyspersji albo cienkich warstw pracują widmowo, dzieląc światło na kilkanaście albo kilkadziesiąt pasm. Jest to kilka razy droższe i zwykle nieopłacalne — ale kiedy widzisz w rendererze przełącznik „spectral”, teraz wiesz, czego on dotyczy i dlaczego w ogóle istnieje.</p>
+
+    <p class="deeper-inline">Konsekwencje dla załamania — <a href="rozdzial-02-zalamanie-i-dyspersja.html">Rozdział 2</a>. Dla powłok — <a href="rozdzial-24-powloki.html">Rozdział 24</a>.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Zakres · co promień załatwia</div>
+    <h2>Dziewięćdziesiąt procent książki to geometria</h2>
+
+    <p>Zanim wypiszemy wyjątki, warto docenić, jak dużo obsługuje model promieniowy. Wszystko poniżej wynika z dwóch reguł — światło biegnie prosto, a na granicy ośrodków zmienia kierunek według prawa Snella:</p>
+
+    <ul>
+      <li><strong>Powstawanie obrazu</strong> — ogniskowa, powiększenie, płaszczyzna ostrości. Cała <a href="rozdzial-04-soczewka-cienka.html">Część I</a> i <a href="rozdzial-05-ogniskowa-format-perspektywa.html">Część II</a>.</li>
+      <li><strong>Głębia ostrości i bokeh</strong> — to po prostu geometria stożka promieni, który nie zdążył się zejść w punkt.</li>
+      <li><strong>Wszystkie aberracje z Części III</strong> poza chromatyczną w jej falowym aspekcie — sferyczna, koma, astygmatyzm i dystorsja są czystą geometrią promieni, które nie trafiły tam, gdzie miały.</li>
+      <li><strong>Ghosting</strong> — odbicia wewnątrz obiektywu też są geometrią; falowe jest tylko to, ile procent się odbija.</li>
+      <li><strong>Winietowanie, perspektywa, kadr</strong> — geometria w najczystszej postaci.</li>
+    </ul>
+
+    <div class="subsection">
+      <h3>Jedna zasada, z której wynikają obie reguły</h3>
+      <p>Prostoliniowość i prawo Snella wyglądają na dwa niezależne fakty, których trzeba się nauczyć osobno. Nie są. Obie wynikają z jednej zasady, sformułowanej przez Fermata w siedemnastym wieku: <strong>światło biegnie tą drogą, której przebycie zajmuje mu czas stacjonarny</strong> — w typowym przypadku najkrótszy.</p>
+      <p>W jednorodnym ośrodku najszybsza droga między dwoma punktami to linia prosta, więc prostoliniowość wypada z zasady natychmiast. Ciekawiej robi się na granicy dwóch ośrodków. Skoro w szkle światło porusza się wolniej, to droga najszybsza nie jest już najkrótsza — opłaca się nadłożyć w powietrzu, żeby skrócić odcinek w szkle. Kąt, przy którym ten kompromis wypada optymalnie, to dokładnie kąt z prawa Snella.</p>
+      <p>Jest to ta sama arytmetyka, którą wykonuje ratownik biegnący do tonącego: biegnie szybciej, niż płynie, więc nie wybiera linii prostej do celu, tylko taką, w której więcej drogi przypada na piasek, a mniej na wodę. Nikt tego nie liczy świadomie, a mimo to wychodzi z tego prawo Snella.</p>
+      <p>Zasada Fermata jest też pomostem między dwoma modelami z tego rozdziału. W opisie falowym światło <em>próbuje wszystkich dróg naraz</em>; wkłady od dróg sąsiadujących z tą najszybszą mają zbliżoną fazę i sumują się, a wkłady od dróg odleglejszych mają fazy rozrzucone i wygaszają się nawzajem. <span class="term-cyan">Promień jest więc tym, co zostaje po zsumowaniu wszystkich dróg</span> — nie osobnym bytem, tylko śladem po interferencji. To dlatego oba opisy dają tę samą prognozę wszędzie tam, gdzie przeszkody są duże, i rozjeżdżają się dokładnie tam, gdzie wygaszanie przestaje być pełne.</p>
+    </div>
+
+    <p>To jest też dokładnie ten zakres, który potrafi twój renderer. Path tracing, ray marching, każda technika, jaką zna Arnold czy Cycles, operuje na promieniach — i dlatego wszystko z powyższej listy renderer potrafi policzyć sam, jeśli tylko dasz mu odpowiedni model kamery. Reszta tej książki będzie musiała wejść do obrazu inną drogą.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Wyjątki · gdzie promień milczy</div>
+    <h2>Trzy zjawiska, które wymagają fali</h2>
+
+    <p>Są dokładnie trzy rodziny efektów, których z modelu promieniowego nie da się wyprowadzić — nie dlatego, że rachunek jest trudny, tylko dlatego, że w tym modelu nie ma wielkości, o które one pytają. Promień nie ma fazy, nie ma długości i nie ma kierunku drgania. Każde z tych trzech zjawisk pyta właśnie o jedną z nich.</p>
+
+    <div class="subsection">
+      <h3>Skąd się właściwie bierze dyfrakcja</h3>
+      <p>Najprostszy mechanizm, jaki daje na to odpowiedź, podał Huygens jeszcze w siedemnastym wieku, na długo przed jakąkolwiek teorią elektromagnetyzmu. Brzmi tak: <strong>każdy punkt czoła fali zachowuje się jak nowe, punktowe źródło</strong>, wysyłające falę kulistą we wszystkie strony. Kolejne czoło fali jest obwiednią tych wszystkich kulek.</p>
+      <p>Dopóki fala jest szeroka, ten opis nie zmienia niczego. Kulki wysyłane na boki przez sąsiadujące punkty spotykają się w przeciwfazie i wygaszają nawzajem — zostaje tylko to, co leci prosto, czyli dokładnie płaska fala, od której zaczęliśmy. Tak właśnie powstaje złudzenie, że światło biegnie po prostych.</p>
+      <p>Ale <span class="term-violet">na krawędzi otworu sąsiad się kończy</span>. Skrajny punkt czoła fali nie ma partnera, który wygasiłby jego boczną kulkę — więc ta kulka zostaje. Im węższy otwór, tym większy udział punktów bez pełnego kompletu sąsiadów i tym silniej fala rozlewa się na boki. Rozbieżność wiązki z suwaka wyżej to policzona wprost konsekwencja tego jednego zdania.</p>
+      <p>Zapamiętaj ten obrazek, bo wróci w co najmniej trzech miejscach: przy granicy ostrości, przy gwiazdkach wokół świateł i przy tym, dlaczego listki przysłony rysują promienie prostopadle do swoich krawędzi, a nie wzdłuż nich.</p>
+    </div>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Zasada Huygensa</span><span>dlaczego krawędź rozlewa falę</span></div>
+      <svg viewBox="0 0 760 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Po lewej szeroka fala: boczne fale cząstkowe wygaszają się i zostaje płaskie czoło. Po prawej wąska szczelina: brak sąsiadów na krawędzi sprawia, że fala rozlewa się na boki.">
+        <text x="30" y="26" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">SZEROKI OTWÓR · kulki na bokach wygaszają się</text>
+        <line x1="40" y1="70" x2="40" y2="210" stroke="#9c82d8" stroke-width="2"/>
+        <g stroke="#9c82d8" stroke-width="1" fill="none" opacity="0.45">
+          <circle cx="40" cy="90" r="26"/><circle cx="40" cy="120" r="26"/>
+          <circle cx="40" cy="150" r="26"/><circle cx="40" cy="180" r="26"/>
+        </g>
+        <line x1="66" y1="70" x2="66" y2="210" stroke="#e8a33d" stroke-width="2.4"/>
+        <text x="76" y="240" font-family="IBM Plex Mono" font-size="10.5" fill="#e8a33d">zostaje płaskie czoło</text>
+
+        <line x1="380" y1="20" x2="380" y2="240" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 5"/>
+
+        <text x="410" y="26" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">WĄSKA SZCZELINA · krawędź nie ma sąsiada</text>
+        <rect x="440" y="40" width="12" height="90" fill="#8b909b"/>
+        <rect x="440" y="160" width="12" height="90" fill="#8b909b"/>
+        <g stroke="#9c82d8" stroke-width="1.2" fill="none" opacity="0.7">
+          <circle cx="452" cy="140" r="30"/><circle cx="452" cy="150" r="30"/><circle cx="452" cy="160" r="30"/>
+          <circle cx="452" cy="145" r="62"/><circle cx="452" cy="155" r="62"/>
+          <circle cx="452" cy="150" r="94"/>
+        </g>
+        <path d="M 452 150 L 700 62 M 452 150 L 700 238 M 452 150 L 700 150"
+              stroke="#e8a33d" stroke-width="1.6" fill="none" opacity="0.85"/>
+        <text x="590" y="52" font-family="IBM Plex Mono" font-size="10.5" fill="#e8a33d">fala rozlewa się</text>
+      </svg>
+      <div class="diagram-caption">Prostoliniowość światła nie jest założeniem — jest skutkiem wzajemnego wygaszania się fal cząstkowych. Zabierz sąsiadów, a zniknie.</div>
+    </div>
+
+    <div class="subsection">
+      <h3>Dyfrakcja — bo promień nie ma szerokości</h3>
+      <p>Fala przechodząca przez otwór rozbiega się. Im ciaśniejszy otwór, tym silniej — i nie ma sposobu, żeby to obejść lepszym szkłem, bo to nie jest wada szkła. Konsekwencje: istnieje granica ostrości, której nie da się przekroczyć przymykaniem przysłony, punkt świetlny nigdy nie jest punktem tylko krążkiem, a wokół jasnych źródeł pojawiają się promienie, których liczba zależy od listków przysłony.</p>
+      <p class="deeper-inline">Rozwinięcie z liczbami — <a href="rozdzial-10-dyfrakcja.html">Rozdział 10</a> i <a href="../dodatki/dodatek-d-krazek-airyego.html">Dodatek D</a>.</p>
+    </div>
+
+    <div class="subsection">
+      <h3>Interferencja — bo promień nie ma fazy</h3>
+      <p>Dwie fale spotykające się w przeciwfazie znoszą się do zera. Na tym stoi cała technologia powłok przeciwodblaskowych: warstwa grubości ćwierci fali sprawia, że odbicie od jej wierzchu i od spodu wygaszają się nawzajem. Ponieważ „ćwierć fali" znaczy co innego dla każdej barwy, wygaszenie nigdy nie jest kompletne — i stąd bierze się <em>kolor</em> flary, cecha po której rozpoznaje się producenta obiektywu.</p>
+      <p class="deeper-inline">Rozwinięcie — <a href="rozdzial-03-fresnel-kazda-powierzchnia-swieci.html">Rozdział 3</a> i <a href="rozdzial-24-powloki.html">Rozdział 24</a>.</p>
+    </div>
+
+    <div class="subsection">
+      <h3>Polaryzacja — bo promień nie ma kierunku drgania</h3>
+      <p>Fala świetlna drga w poprzek kierunku swojego biegu, a to drganie ma orientację. Odbicie od powierzchni tę orientację porządkuje — przy kącie Brewstera do tego stopnia, że odbite światło drga wyłącznie w jednej płaszczyźnie. Na tym stoi filtr polaryzacyjny, i to samo tłumaczy, dlaczego dwie polaryzacje odbijają się od szkła zupełnie inaczej.</p>
+      <p class="deeper-inline">Rozwinięcie — <a href="rozdzial-03-fresnel-kazda-powierzchnia-swieci.html">Rozdział 3</a> i <a href="../dodatki/dodatek-ab-filtry.html">Dodatek AB</a>.</p>
+    </div>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Czego promieniowi brakuje</span><span>trzy wielkości, trzy zjawiska</span></div>
+      <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Trzy kolumny: faza prowadzi do interferencji, długość fali do dyfrakcji, kierunek drgania do polaryzacji.">
+        <g font-family="IBM Plex Mono" font-size="11" text-anchor="middle">
+          <g>
+            <path d="M 60 90 q 22 -26 44 0 q 22 26 44 0 q 22 -26 44 0" fill="none" stroke="#9c82d8" stroke-width="2"/>
+            <path d="M 60 118 q 22 26 44 0 q 22 -26 44 0 q 22 26 44 0" fill="none" stroke="#4fc3c0" stroke-width="2"/>
+            <text x="126" y="60" fill="#ecebe4">FAZA</text>
+            <text x="126" y="164" fill="#8b909b">interferencja</text>
+            <text x="126" y="186" fill="#e8a33d">powłoki, kolor flary</text>
+          </g>
+          <g>
+            <path d="M 290 104 q 14 -22 28 0 q 14 22 28 0 q 14 -22 28 0 q 14 22 28 0" fill="none" stroke="#9c82d8" stroke-width="2"/>
+            <line x1="290" y1="132" x2="346" y2="132" stroke="#8b909b" stroke-width="1"/>
+            <text x="318" y="150" fill="#8b909b" font-size="9.5">λ</text>
+            <text x="374" y="60" fill="#ecebe4">DŁUGOŚĆ</text>
+            <text x="374" y="164" fill="#8b909b">dyfrakcja</text>
+            <text x="374" y="186" fill="#e8a33d">gwiazdki, granica ostrości</text>
+          </g>
+          <g>
+            <line x1="580" y1="80" x2="580" y2="128" stroke="#9c82d8" stroke-width="2"/>
+            <line x1="556" y1="104" x2="604" y2="104" stroke="#4fc3c0" stroke-width="2"/>
+            <circle cx="580" cy="104" r="3" fill="#e8a33d"/>
+            <text x="626" y="60" fill="#ecebe4">KIERUNEK DRGANIA</text>
+            <text x="626" y="164" fill="#8b909b">polaryzacja</text>
+            <text x="626" y="186" fill="#e8a33d">Brewster, filtr polaryzacyjny</text>
+          </g>
+        </g>
+        <text x="30" y="228" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">Promień nie ma żadnej z tych trzech wielkości — dlatego nie potrafi przewidzieć żadnego z tych trzech zjawisk.</text>
+      </svg>
+      <div class="diagram-caption">Nie chodzi o to, że rachunek jest trudny. Chodzi o to, że w modelu promieniowym nie ma o co zapytać.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Konsekwencja · dlaczego to nie jest akademickie</div>
+    <h2>Po co ci to rozróżnienie przy pracy</h2>
+
+    <p>Wygląda na dygresję z pierwszego wykładu fizyki. Ma jednak bardzo konkretną konsekwencję praktyczną, i to taką, która wraca za każdym razem, gdy dokładasz do renderu cokolwiek „obiektywowego”.</p>
+
+    <p><strong>Renderer widzi wyłącznie promienie.</strong> Path tracer strzela promieniami, śledzi ich odbicia i załamania, sumuje energię. Nie ma w nim pojęcia fazy ani długości fali — zwykle nie ma nawet widma, tylko trzy kanały RGB. Z tego wynika bezpośrednio, że wszystko z poprzedniej sekcji <em>nigdy nie pojawi się w renderze samo z siebie</em>, choćbyś podniósł liczbę próbek do miliona i włączył najdroższy model kamery.</p>
+
+    <p>Odwrotnie: wszystko z sekcji o geometrii <em>pojawi się samo</em>, jeśli tylko dasz rendererowi odpowiednią kamerę. Głębia ostrości z poprawną okluzją, kształt bokeh wynikający z kształtu źrenicy, dystorsja — to renderer policzy dokładniej, niż zrobisz to potem w compie.</p>
+
+    <p>Ten podział jest fundamentem <a href="rozdzial-34-render-czy-comp.html">Rozdziału 34</a>, w którym rozstrzygniemy, co do renderu, a co do compu. Możesz go już teraz zapisać jako regułę kciuka: <span class="term-cyan">geometria idzie do renderu, fala idzie do compu</span>. Nie dlatego, że tak jest wygodniej — dlatego, że jedna z nich w rendererze fizycznie nie istnieje.</p>
+
+    <p>Jest w tym pewna ironia. Najbardziej rozpoznawalne „filmowe” cechy obrazu — gwiazdki wokół świateł, kolorowa flara, halacja, ziarno — to niemal wyłącznie zjawiska falowe albo materiałowe. Renderer, który jest doskonałym symulatorem promieni, jest jednocześnie ślepy na całą tę warstwę. Dlatego czysty render wygląda jak render.</p>
+  </div>
+
+    <p>Warto też zauważyć, że ta ślepota renderera nie jest usterką do naprawienia w kolejnej wersji. Model promieniowy został wybrany świadomie, bo jest o rzędy wielkości tańszy, a dla dziewięćdziesięciu procent zjawisk daje wynik nieodróżnialny od prawdy. Symulacja falowa całego kadru w rozdzielczości 4K to zadanie z zupełnie innej półki obliczeniowej — i dlatego nawet renderery widmowe liczą widmo, ale nie liczą fazy. Praktyczny wniosek jest prosty: nie czekaj, aż silnik zacznie robić to za ciebie.</p>
+
+  <div class="panel practice">
+    <div class="panel-label">Z praktyki</div>
+    <p><strong>Sprawdź, czy efekt, który dokładasz, ma prawo skalować się z rozdzielczością.</strong> Zjawiska falowe mają rozmiar w mikrometrach na matrycy, a więc stały rozmiar w pikselach dla danej kamery — krążek Airy'ego przy f/11 to zawsze mniej więcej ta sama liczba pikseli, niezależnie od tego, co jest w kadrze. Zjawiska geometryczne skalują się z kadrem. Jeśli twój filtr dyfrakcyjny w compie wygląda tak samo w 2K i w 4K, jest ustawiony źle w jednym z nich.</p>
+    <p><strong>Kiedy ktoś mówi „ten obiektyw ma miękką rozdzielczość”, zapytaj przy jakiej przysłonie.</strong> Miękkość przy pełnym otworze to aberracje, czyli geometria — do naprawienia lepszą konstrukcją. Miękkość przy f/16 to dyfrakcja, czyli fala — nie do naprawienia niczym. Te dwie rzeczy wyglądają podobnie i mają zupełnie inne przyczyny, a rozróżnia je jedno pytanie.</p>
+    <p><strong>Nie próbuj wyprowadzać gwiazdek z geometrii przysłony.</strong> Klasyczny błąd przy budowaniu proceduralnej flary: ktoś rysuje promienie jako przedłużenia krawędzi listków, bo tak wygląda intuicyjnie. Wychodzi z tego liczba promieni zgodna z liczbą listków także dla nieparzystych — a w rzeczywistości nieparzysta liczba listków daje dwa razy więcej promieni. Ta reguła wynika z fali, nie z rysunku przysłony, i bez fali nie da się jej odgadnąć.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>optyka geometryczna</dt>
+      <dd>Opis światła jako promieni biegnących prosto i załamujących się na granicach ośrodków. Ważny, dopóki wszystko na drodze światła jest znacznie większe od długości fali.</dd>
+      <dt>optyka falowa</dt>
+      <dd>Opis światła jako fali, z fazą, długością i kierunkiem drgania. Potrzebny wszędzie tam, gdzie rozmiary schodzą do skali fali — i tylko tam.</dd>
+      <dt>długość fali (λ)</dt>
+      <dd>Fizyczna miara barwy, w nanometrach. Światło widzialne: od około 380 nm (fiolet) do 700 nm (czerwień). Środek, 550 nm, przyjmujemy w całej książce jako wartość odniesienia.</dd>
+      <dt>czoło fali</dt>
+      <dd>Powierzchnia łącząca punkty, do których fala dotarła w tej samej fazie. Promień jest po prostu linią prostopadłą do czoła fali — stąd równoważność obu opisów.</dd>
+      <dt>dyfrakcja</dt>
+      <dd>Rozbieganie się fali po przejściu przez otwór lub obok krawędzi. Tym silniejsze, im mniejszy otwór w stosunku do długości fali.</dd>
+      <dt>interferencja</dt>
+      <dd>Dodawanie się dwóch fal z uwzględnieniem fazy: zgodne wzmacniają się, przeciwne wygaszają. Podstawa działania powłok przeciwodblaskowych.</dd>
+      <dt>polaryzacja</dt>
+      <dd>Uporządkowanie kierunku, w którym drga fala świetlna. Światło słoneczne jest niespolaryzowane; odbicie od powierzchni je porządkuje.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Skoro promień wystarczy nam do opisu większości zjawisk, warto poznać jedyną regułę, jakiej ten promień słucha na granicy ośrodków. W <a href="rozdzial-02-zalamanie-i-dyspersja.html">następnym rozdziale</a> zajmiemy się załamaniem — i od razu odkryjemy w nim rysę, która pociągnie za sobą połowę historii konstrukcji obiektywów: szkło nie zagina wszystkich barw jednakowo.</p>
+  </div>
 
   <div class="deeper">
     <div class="deeper-label">Idź głębiej</div>
@@ -57,5 +408,49 @@ window.SKY3D_MESSAGES = {
 </div>
 
 <script src="../assets/interactive.js"></script>
+<script>
+/* Szczelina a rozbieznosc wiazki. Pierwsze minimum dyfrakcyjne: sin(theta) = lambda / a.
+   Suwak jest logarytmiczny, bo interesujacy zakres obejmuje trzy rzedy wielkosci. */
+(function () {
+  var sl = document.getElementById('szerokoscSzczeliny');
+  if (!sl) return;
+  var LAMBDA = 0.55;          // um
+  var X_SZCZ = 166, X_EKRAN = 700, Y0 = 150;
+
+  function odswiez() {
+    var v = parseFloat(sl.value);
+    var a = Math.pow(10, v * 0.03);                       // 1..1000 um
+    var theta = Math.asin(Math.min(1, LAMBDA / a));       // rad
+    var gap = 2 + (v / 100) * 28;                         // polowa szczeliny w jednostkach SVG
+    var koniec = Math.min(132, gap + (X_EKRAN - X_SZCZ) * Math.tan(theta));
+
+    document.getElementById('szczelinaGora').setAttribute('height', (Y0 - gap - 20).toFixed(1));
+    var dol = document.getElementById('szczelinaDol');
+    dol.setAttribute('y', (Y0 + gap).toFixed(1));
+    dol.setAttribute('height', (280 - Y0 - gap).toFixed(1));
+
+    document.getElementById('wiazka').setAttribute('d',
+      'M ' + X_SZCZ + ' ' + (Y0 - gap).toFixed(1) +
+      ' L ' + X_EKRAN + ' ' + (Y0 - koniec).toFixed(1) +
+      ' L ' + X_EKRAN + ' ' + (Y0 + koniec).toFixed(1) +
+      ' L ' + X_SZCZ + ' ' + (Y0 + gap).toFixed(1) + ' Z');
+
+    var st = theta * 180 / Math.PI;
+    var opisA = a >= 100 ? a.toFixed(0) : a.toFixed(1).replace('.', ',');
+    document.getElementById('szczelinaOdczyt').textContent = opisA + ' µm';
+
+    var komentarz;
+    if (st < 1) komentarz = 'wiązka praktycznie idzie prosto, promień opisuje wszystko';
+    else if (st < 5) komentarz = 'rozbieżność już mierzalna, ale wciąż niewielka';
+    else if (st < 20) komentarz = 'promień zaczyna wyraźnie kłamać';
+    else komentarz = 'światło rozlewa się szeroko — model promieniowy jest bezużyteczny';
+    document.getElementById('szczelinaPodpis').textContent =
+      'Szczelina ' + opisA + ' µm: rozbieżność ' +
+      (st < 10 ? st.toFixed(1).replace('.', ',') : st.toFixed(0)) + '° — ' + komentarz + '.';
+  }
+  sl.addEventListener('input', odswiez);
+  odswiez();
+})();
+</script>
 </body>
 </html>

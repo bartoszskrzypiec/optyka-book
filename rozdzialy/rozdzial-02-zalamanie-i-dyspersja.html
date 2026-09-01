@@ -43,7 +43,329 @@ window.SKY3D_MESSAGES = {
   <h1>Załamanie i dyspersja</h1>
   <p class="subtitle">Soczewka nie ma jednej ogniskowej. Ma tyle ogniskowych, ile kolorów — a cała późniejsza historia konstrukcji obiektywów jest walką z tym jednym faktem.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li>Szkło zagina światło, bo światło porusza się w nim wolniej. Ile dokładnie — mówi <span class="term-cyan">współczynnik załamania n</span>, a kierunek wyznacza prawo Snella. To jedyna reguła, jakiej promień słucha na granicy ośrodków.</li>
+      <li>Rysa: <strong>n nie jest jedną liczbą, tylko funkcją barwy</strong>. Błękit zagina się mocniej niż czerwień, więc soczewka ma tyle ognisk, ile długości fali. To zjawisko nazywa się dyspersją.</li>
+      <li>Dyspersji nie da się usunąć — da się ją tylko skompensować, składając razem szkła o różnym jej nasileniu. Cała późniejsza historia konstrukcji obiektywów wyrasta z tego jednego kompromisu.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Reguła · jedyna, jakiej promień słucha</div>
+    <h2>Załamanie to spowolnienie</h2>
+
+    <p>Wyobraź sobie samochód wjeżdżający ukośnie z asfaltu na piach. Koło, które pierwsze dotknie piachu, zwalnia wcześniej niż drugie — i cały samochód skręca w stronę piachu. Nie dlatego, że coś go pchnęło w bok, tylko dlatego, że jego dwie strony przez chwilę jechały z różną prędkością.</p>
+
+    <p>Ze światłem jest dokładnie tak samo. Czoło fali padające ukośnie na szkło wchodzi w nie jednym brzegiem wcześniej niż drugim. Brzeg, który już jest w szkle, zwalnia; brzeg jeszcze w powietrzu — nie. Czoło fali obraca się, a razem z nim obraca się prostopadły do niego promień. <span class="term-cyan">Załamanie nie jest osobnym zjawiskiem</span>; jest skutkiem tego, że światło ma w szkle inną prędkość.</p>
+
+    <p>Miarą tego spowolnienia jest współczynnik załamania — liczba mówiąca, ile razy wolniej światło biegnie w danym materiale niż w próżni:</p>
+
+    <div class="formula">
+      <span class="vec" data-tip="Współczynnik załamania ośrodka. Bezwymiarowy, zawsze większy od 1 dla materiałów przezroczystych.">n</span> = <span class="vec" data-tip="Prędkość światła w próżni: 299 792 458 m/s">c</span> / <span class="vec" data-tip="Prędkość światła w danym ośrodku — zawsze mniejsza od c">v</span>
+      <span class="sub">n — współczynnik załamania, c — prędkość światła w próżni, v — prędkość w ośrodku. Powietrze: 1,0003. Woda: 1,33. Szkła optyczne: od 1,45 do 1,95. Diament: 2,42.</span>
+    </div>
+
+    <p>Kierunek, w którym promień skręci, opisuje prawo Snella. Jest to ta sama zależność, którą w poprzednim rozdziale wyprowadziliśmy z zasady Fermata jako drogę najszybszą, a nie najkrótszą:</p>
+
+    <div class="formula">
+      <span class="vec" data-tip="Współczynnik załamania ośrodka, z którego światło przychodzi">n₁</span> · sin <span class="vec" data-tip="Kąt między promieniem padającym a normalną do powierzchni">θ₁</span> = <span class="vec" data-tip="Współczynnik załamania ośrodka, do którego światło wchodzi">n₂</span> · sin <span class="vec" data-tip="Kąt między promieniem załamanym a normalną do powierzchni">θ₂</span>
+      <span class="sub">Kąty liczone zawsze od normalnej, czyli od prostopadłej do powierzchni — nie od samej powierzchni. To najczęstsze źródło pomyłki przy pierwszym rachunku.</span>
+      <div class="formula-action"><button class="reveal-btn" data-modal-target="explain-snell">Wyjaśnij ten wzór</button></div>
+    </div>
+
+    <p>Przesuń suwak i sprawdź dwie rzeczy. Po pierwsze: promień wchodzący do ośrodka gęstszego zawsze skręca <em>ku</em> normalnej, a wychodzący — od niej. Po drugie: przy wyjściu ze szkła istnieje kąt, powyżej którego promień w ogóle nie wychodzi. To całkowite odbicie wewnętrzne i wrócimy do niego przy pryzmatach i przy światłowodach w oprawach.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Prawo Snella</span><span>powietrze ↔ szkło, n = 1,52</span></div>
+      <div class="diagram-controls">
+        <label for="katSnell">Kąt padania</label>
+        <input id="katSnell" type="range" min="0" max="85" step="1" value="40">
+        <span class="value-readout" id="snellOdczyt">40°</span>
+      </div>
+      <svg viewBox="0 0 760 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Promień pada na granicę powietrze-szkło pod zadanym kątem i załamuje się ku normalnej; obok pokazany promień wychodzący ze szkła.">
+        <defs>
+          <marker id="s2a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#e8a33d"/></marker>
+        </defs>
+        <rect x="60" y="160" width="640" height="140" fill="#4fc3c0" opacity="0.10"/>
+        <line x1="60" y1="160" x2="700" y2="160" stroke="#4fc3c0" stroke-width="2"/>
+        <text x="70" y="184" font-family="IBM Plex Mono" font-size="11" fill="#4fc3c0">szkło · n = 1,52</text>
+        <text x="70" y="46" font-family="IBM Plex Mono" font-size="11" fill="#8b909b">powietrze · n = 1,00</text>
+
+        <line x1="380" y1="40" x2="380" y2="290" stroke="#8b909b" stroke-width="1" stroke-dasharray="5 5" opacity="0.65"/>
+        <text x="388" y="52" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">normalna</text>
+
+        <line id="promienPad" stroke="#e8a33d" stroke-width="2.8" marker-end="url(#s2a)"/>
+        <line id="promienZal" stroke="#e8a33d" stroke-width="2.8" marker-end="url(#s2a)"/>
+        <line id="promienOdb" stroke="#e8a33d" stroke-width="1" opacity="0.4" stroke-dasharray="4 4"/>
+        <circle cx="380" cy="160" r="4" fill="#e8a33d"/>
+
+        <path id="lukPad" fill="none" stroke="#9c82d8" stroke-width="1.2"/>
+        <path id="lukZal" fill="none" stroke="#6e93be" stroke-width="1.2"/>
+        <text id="etPad" font-family="IBM Plex Mono" font-size="11" fill="#9c82d8">θ₁</text>
+        <text id="etZal" font-family="IBM Plex Mono" font-size="11" fill="#6e93be">θ₂</text>
+      </svg>
+      <div class="diagram-caption" id="snellPodpis">Kąt padania 40° daje kąt załamania 25,0°. Promień skręca ku normalnej.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Zastosowanie · po co nam to zaginanie</div>
+    <h2>Dlaczego zakrzywiona szybka skupia światło</h2>
+
+    <p>Skoro umiemy już zaginać pojedynczy promień, zbudujmy z tego soczewkę. Sztuczka polega na tym, żeby promienie biegnące daleko od osi zaginać mocniej niż te blisko osi — wtedy wszystkie spotkają się w jednym punkcie.</p>
+
+    <p>Kula załatwia to sama z siebie. Na powierzchni kulistej promień przechodzący przez środek trafia prostopadle i nie zagina się wcale; im dalej od osi, tym bardziej powierzchnia jest nachylona względem promienia, tym większy kąt padania i tym silniejsze załamanie. Kształt kuli jest więc <span class="term-cyan">przybliżeniem tego, czego potrzebujemy</span> — i słowo „przybliżenie” jest tu kluczowe, bo dokładnie z jego niedokładności bierze się aberracja sferyczna z <a href="rozdzial-11-aberracja-sferyczna.html">Rozdziału 11</a>.</p>
+
+    <p>Ten sam mechanizm da się opisać drugim, równoważnym językiem, i warto go znać, bo w Części V będzie potrzebny. W środku soczewki szkła jest więcej niż na jej brzegu, więc fala przechodząca przez środek jest opóźniona bardziej. Płaskie czoło fali wychodzi wygięte — wklęsłe do przodu, czyli zbieżne. <strong>Soczewka nie zagina światła; opóźnia jego środek.</strong> To sformułowanie wygląda na dziwactwo, dopóki nie dojdziemy do powłok i cienkich warstw, gdzie jest jedynym użytecznym.</p>
+
+    <p>Ile dokładnie promień się ugnie, zależy od dwóch rzeczy: od krzywizny powierzchni i od tego, o ile n szkła różni się od n otoczenia. To druga z tych zależności odpowiada za nieoczywisty fakt, że <em>okulary pod wodą prawie nie działają</em> — różnica współczynników spada z 0,52 do 0,19, więc ta sama soczewka zagina niemal trzy razy słabiej.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Rysa · n nie jest liczbą</div>
+    <h2>Każda barwa ma własną ogniskową</h2>
+
+    <p>Do tej pory pisaliśmy n tak, jakby było stałą materiału. Nie jest. <strong>Współczynnik załamania zależy od długości fali</strong> — i to jest fakt, wokół którego zorganizowana jest połowa tej książki.</p>
+
+    <p>Mechanizm w jednym zdaniu: światło w szkle nie tyle „przelatuje wolniej”, co jest bez przerwy pochłaniane i natychmiast wypromieniowywane przez elektrony w atomach. Elektrony te mają swoje częstotliwości drgań własnych, leżące w nadfiolecie. Im bliżej tej częstotliwości, tym silniej reagują i tym większe opóźnienie — a błękit jest bliżej nadfioletu niż czerwień. <span class="term-violet">Dlatego błękit zawsze zagina się mocniej.</span></p>
+
+    <p>Warto od razu ustawić skalę zjawiska, bo jest zaskakująco mała. Między skrajną czerwienią a skrajnym błękitem współczynnik zwykłego szkła zmienia się o niecały procent. Gdyby chodziło o cokolwiek innego niż optyka, uznalibyśmy to za wartość stałą i poszli dalej. Tutaj ten niecały procent wystarcza, żeby ognisko błękitu i czerwieni rozjechały się o ułamek milimetra — a ułamek milimetra na matrycy o pikselu sześciu mikrometrów jest różnicą między obrazem ostrym a rozmytym.</p>
+
+    <p>Skutek widziałeś w każdym pryzmacie i w każdej tęczy. Skutek dla obiektywu jest mniej malowniczy: soczewka skupia błękit bliżej siebie niż czerwień, więc <em>nie ma jednej płaszczyzny ostrości</em>. Ustawiając ostrość na zieleni, godzisz się na to, że błękit i czerwień są już lekko rozmyte.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Dyspersja</span><span>jedna soczewka, trzy ogniska</span></div>
+      <svg viewBox="0 0 760 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Biały promień przechodzi przez soczewkę i rozszczepia się: błękit skupia się bliżej soczewki, czerwień dalej.">
+        <path d="M 200 50 Q 226 140 200 230 Q 174 140 200 50 Z" fill="#4fc3c0" fill-opacity="0.13" stroke="#4fc3c0" stroke-width="1.6"/>
+        <line x1="30" y1="140" x2="740" y2="140" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 6"/>
+
+        <g stroke-width="2" fill="none">
+          <path d="M 40 88 L 200 88 L 470 140" stroke="#3f6fd0"/>
+          <path d="M 40 192 L 200 192 L 470 140" stroke="#3f6fd0"/>
+          <path d="M 40 88 L 200 88 L 540 140" stroke="#4fbf5a" opacity="0.9"/>
+          <path d="M 40 192 L 200 192 L 540 140" stroke="#4fbf5a" opacity="0.9"/>
+          <path d="M 40 88 L 200 88 L 620 140" stroke="#c23b3b"/>
+          <path d="M 40 192 L 200 192 L 620 140" stroke="#c23b3b"/>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="10.5">
+          <circle cx="470" cy="140" r="4" fill="#3f6fd0"/><text x="440" y="118" fill="#3f6fd0">błękit</text>
+          <circle cx="540" cy="140" r="4" fill="#4fbf5a"/><text x="518" y="176" fill="#4fbf5a">zieleń</text>
+          <circle cx="620" cy="140" r="4" fill="#c23b3b"/><text x="600" y="118" fill="#c23b3b">czerwień</text>
+        </g>
+        <line x1="470" y1="212" x2="620" y2="212" stroke="#9c82d8" stroke-width="1.4"/>
+        <line x1="470" y1="206" x2="470" y2="218" stroke="#9c82d8"/><line x1="620" y1="206" x2="620" y2="218" stroke="#9c82d8"/>
+        <text x="500" y="234" font-family="IBM Plex Mono" font-size="11" fill="#9c82d8">rozjazd ognisk — aberracja chromatyczna podłużna</text>
+        <text x="40" y="70" font-family="IBM Plex Mono" font-size="11" fill="#8b909b">światło białe</text>
+      </svg>
+      <div class="diagram-caption">Jedna soczewka, jeden kształt, trzy różne ogniska. Nie da się tego naprawić szlifowaniem.</div>
+    </div>
+
+    <p>Przesuń suwak, żeby zobaczyć, jak n zmienia się z barwą dla dwóch typowych szkieł. Zwróć uwagę, że obie krzywe opadają w tę samą stronę — <em>każde</em> szkło zagina błękit mocniej — ale opadają z różną stromością. Ta różnica stromości jest jedynym narzędziem, jakim dysponuje konstruktor.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Współczynnik załamania a barwa</span><span>kron BK7 kontra flint F2</span></div>
+      <div class="diagram-controls">
+        <label for="dlugoscFali">Długość fali</label>
+        <input id="dlugoscFali" type="range" min="400" max="700" step="5" value="550">
+        <span class="value-readout" id="falaOdczyt">550 nm</span>
+      </div>
+      <svg viewBox="0 0 760 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Dwie opadające krzywe współczynnika załamania w funkcji długości fali: flint leży wyżej i opada stromiej niż kron.">
+        <defs>
+          <linearGradient id="widmo2" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#6b3fa0"/><stop offset="18%" stop-color="#3f4fd0"/>
+            <stop offset="40%" stop-color="#2fa8c8"/><stop offset="55%" stop-color="#4fbf5a"/>
+            <stop offset="72%" stop-color="#e8d43d"/><stop offset="88%" stop-color="#e8853d"/>
+            <stop offset="100%" stop-color="#c23b3b"/>
+          </linearGradient>
+        </defs>
+        <rect x="80" y="272" width="620" height="10" fill="url(#widmo2)" rx="2"/>
+        <g stroke="#2a2f38" stroke-width="1"><line x1="80" y1="262" x2="700" y2="262"/><line x1="80" y1="30" x2="80" y2="262"/></g>
+        <g stroke="#2a2f38" stroke-width="0.6" opacity="0.6">
+          <line x1="80" y1="204" x2="700" y2="204"/><line x1="80" y1="146" x2="700" y2="146"/><line x1="80" y1="88" x2="700" y2="88"/>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="10" fill="#8b909b">
+          <text x="42" y="266">1,50</text><text x="42" y="208">1,54</text><text x="42" y="150">1,58</text><text x="42" y="92">1,62</text><text x="42" y="34">1,66</text>
+          <text x="74" y="302">400</text><text x="380" y="302">550</text><text x="682" y="302">700 nm</text>
+        </g>
+        <path id="krzywaKron" fill="none" stroke="#4fc3c0" stroke-width="2.4"/>
+        <path id="krzywaFlint" fill="none" stroke="#9c82d8" stroke-width="2.4"/>
+        <line id="wskaznikFali" y1="30" y2="262" stroke="#ecebe4" stroke-width="1" opacity="0.45"/>
+        <circle id="punktKron" r="4.5" fill="#4fc3c0"/>
+        <circle id="punktFlint" r="4.5" fill="#9c82d8"/>
+        <g font-family="IBM Plex Mono" font-size="11">
+          <rect x="470" y="44" width="14" height="3" fill="#9c82d8"/><text x="492" y="50" fill="#8b909b">flint F2 · V = 36</text>
+          <rect x="470" y="66" width="14" height="3" fill="#4fc3c0"/><text x="492" y="72" fill="#8b909b">kron BK7 · V = 64</text>
+        </g>
+      </svg>
+      <div class="diagram-caption" id="falaPodpis">Przy 550 nm: kron n = 1,519, flint n = 1,623.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Miara · jak się o tym rozmawia</div>
+    <h2>Liczba Abbego, czyli ile szkło rozszczepia</h2>
+
+    <p>Skoro dyspersja jest właściwością równie ważną co samo n, potrzebuje własnej liczby. Nazywa się liczbą Abbego, oznacza V i jest zbudowana wyjątkowo przewrotnie:</p>
+
+    <div class="formula">
+      V = (n<sub>d</sub> − 1) / (n<sub>F</sub> − n<sub>C</sub>)
+      <span class="sub">n<sub>d</sub> — współczynnik dla żółtej linii helu (587,6 nm), n<sub>F</sub> — dla niebieskiej linii wodoru (486,1 nm), n<sub>C</sub> — dla czerwonej linii wodoru (656,3 nm). Trzy konkretne linie widmowe, wybrane historycznie, bo dawały się precyzyjnie odtworzyć w laboratorium.</span>
+    </div>
+
+    <p>Przewrotność polega na tym, że <strong>V jest tym większe, im mniej szkło rozszczepia</strong>. Mianownik to rozjazd między błękitem a czerwienią — im mniejszy, tym większy iloraz. Kron o V = 64 rozszczepia słabo; flint o V = 36 rozszczepia mocno. Intuicja podpowiada odwrotnie i trzeba się na to raz uodpornić.</p>
+
+    <div class="worked">
+      <div class="wlabel">Liczba Abbego dla szkła BK7</div>
+      <p class="step"><span class="k">n przy 587,6 nm</span> <span class="v">= 1,5168</span></p>
+      <p class="step"><span class="k">n przy 486,1 nm</span> <span class="v">= 1,5224</span></p>
+      <p class="step"><span class="k">n przy 656,3 nm</span> <span class="v">= 1,5143</span></p>
+      <p class="step"><span class="k">rozjazd</span> <span class="v">= 1,5224 − 1,5143 = 0,0081</span></p>
+      <p class="step"><span class="k">V</span> <span class="v">= 0,5168 / 0,0081 = </span><span class="result">63,8</span></p>
+      <p class="check">Rozjazd między skrajami widma wynosi osiem tysięcznych — liczba znikoma. A jednak wystarcza, żeby wymusić na konstruktorach dokładanie soczewek, których jedynym zadaniem jest ją skasować. Optyka jest dziedziną, w której czwarte miejsce po przecinku decyduje o wszystkim.</p>
+    </div>
+
+    <p>Nazewnictwo jest historyczne i mylące. „Kron” i „flint” nie oznaczają dziś składu chemicznego, tylko położenie na wykresie: krony mają wysokie V i raczej niskie n, flinty niskie V i wysokie n. Umowna granica biegnie w okolicach V = 50. Szkła flintowe zawdzięczają swoje właściwości ołowiowi, a od czasu wycofywania go ze względów środowiskowych producenci odtwarzają te same parametry innymi domieszkami — stąd oznaczenia w rodzaju N-SF6, gdzie N znaczy po prostu „bezołowiowy odpowiednik”.</p>
+
+    <p>Te dwie liczby — n i V — wystarczają, żeby umieścić szkło na mapie, z której konstruktorzy korzystają od stu lat. Nazywa się diagramem Abbego i jest dosłownie katalogiem tego, co da się kupić. Oś pozioma biegnie odwrotnie, bo taka jest konwencja: im dalej w prawo, tym mniejsza dyspersja.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Diagram Abbego</span><span>co naprawdę da się kupić</span></div>
+      <svg viewBox="0 0 760 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Wykres współczynnika załamania w funkcji liczby Abbego, z zaznaczonymi typowymi szkłami optycznymi: flinty w lewym górnym rogu, krony w prawym dolnym, fluoryt skrajnie po prawej.">
+        <g stroke="#2a2f38" stroke-width="1"><line x1="80" y1="280" x2="710" y2="280"/><line x1="80" y1="30" x2="80" y2="280"/></g>
+        <g stroke="#2a2f38" stroke-width="0.6" opacity="0.5">
+          <line x1="80" y1="220" x2="710" y2="220"/><line x1="80" y1="160" x2="710" y2="160"/><line x1="80" y1="100" x2="710" y2="100"/>
+          <line x1="238" y1="30" x2="238" y2="280"/><line x1="396" y1="30" x2="396" y2="280"/><line x1="554" y1="30" x2="554" y2="280"/>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="10" fill="#8b909b">
+          <text x="42" y="284">1,45</text><text x="42" y="224">1,55</text><text x="42" y="164">1,65</text><text x="42" y="104">1,75</text><text x="42" y="44">1,85</text>
+          <text x="72" y="300">90</text><text x="230" y="300">70</text><text x="388" y="300">50</text><text x="546" y="300">30</text><text x="700" y="300">10</text>
+          <text x="330" y="322">liczba Abbego V  →  mniejsza dyspersja w lewo</text>
+          <text x="20" y="24">n</text>
+        </g>
+
+        <rect x="80" y="30" width="316" height="250" fill="#9c82d8" opacity="0.06"/>
+        <rect x="396" y="30" width="314" height="250" fill="#4fc3c0" opacity="0.05"/>
+        <text x="150" y="52" font-family="IBM Plex Mono" font-size="11" fill="#4fc3c0">KRONY · słabo rozszczepiają</text>
+        <text x="470" y="52" font-family="IBM Plex Mono" font-size="11" fill="#9c82d8">FLINTY · mocno rozszczepiają</text>
+
+        <g font-family="IBM Plex Mono" font-size="10.5">
+          <circle cx="132" cy="272" r="5.5" fill="#4fc3c0"/><text x="144" y="276" fill="#8b909b">fluoryt · 1,434 / V 95</text>
+          <circle cx="285" cy="252" r="5.5" fill="#4fc3c0"/><text x="297" y="256" fill="#8b909b">BK7 · 1,517 / V 64</text>
+          <circle cx="230" cy="214" r="5.5" fill="#4fc3c0"/><text x="242" y="206" fill="#8b909b">szkło ED · 1,593 / V 68</text>
+          <circle cx="507" cy="196" r="5.5" fill="#9c82d8"/><text x="519" y="200" fill="#8b909b">F2 · 1,620 / V 36</text>
+          <circle cx="586" cy="118" r="5.5" fill="#9c82d8"/><text x="440" y="122" fill="#8b909b" text-anchor="end">SF6 · 1,805 / V 25</text>
+        </g>
+        <path d="M 132 272 Q 330 240 586 118" fill="none" stroke="#8b909b" stroke-width="1" stroke-dasharray="4 5" opacity="0.55"/>
+        <text x="330" y="252" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">„linia normalna” — większość szkieł leży blisko niej</text>
+      </svg>
+      <div class="diagram-caption">Konstruktor nie wybiera dowolnych n i V. Wybiera punkt spośród kilkuset istniejących — i za każde odejście od linii normalnej płaci.</div>
+    </div>
+
+    <p>Kluczowa obserwacja: punkty nie wypełniają wykresu równomiernie. Skupiają się wzdłuż przekątnej, <span class="term-violet">wysokie n idzie w parze z niską V</span>. Szkło, które mocno zagina i słabo rozszczepia, byłoby dla konstruktora darem — i właśnie dlatego szkła leżące wyraźnie <em>nad</em> linią normalną są rzadkie, drogie i noszą specjalne oznaczenia. Fluoryt, siedzący skrajnie po prawej, jest w ogóle kryształem, a nie szkłem: hoduje się go, jest miękki, wrażliwy na wilgoć i na wstrząsy termiczne. Płaci się za niego dokładnie tym.</p>
+
+    <div class="subsection">
+      <h3>Kiedy światło nie chce wyjść</h3>
+      <p>Prawo Snella ma jeszcze jedną konsekwencję, którą łatwo przeoczyć, a która wraca w kilku miejscach tej książki. Promień wychodzący ze szkła do powietrza skręca <em>od</em> normalnej, więc jego kąt rośnie. Istnieje więc kąt padania od wewnątrz, przy którym kąt wyjścia osiągnąłby dziewięćdziesiąt stopni — czyli promień biegłby wzdłuż powierzchni. Powyżej niego równanie nie ma rozwiązania i światło nie wychodzi wcale: odbija się w stu procentach z powrotem do szkła.</p>
+      <div class="formula">
+        sin θ<sub>gr</sub> = n₂ / n₁
+        <span class="sub">θ<sub>gr</sub> — kąt graniczny, liczony wewnątrz ośrodka gęstszego. n₁ — ośrodek gęstszy (szkło), n₂ — rzadszy (powietrze). Dla szkła 1,52 i powietrza wychodzi 41,1°.</span>
+      </div>
+      <p>Czterdzieści jeden stopni to niedużo. Dlatego pryzmat potrafi zawrócić wiązkę bez żadnej powłoki lustrzanej — i dlatego lornetki oraz lustrzanki używają pryzmatów zamiast luster, mając przy tym odbicie stuprocentowe zamiast dziewięćdziesięciu paru.</p>
+      <p>Ta sama liczba ma jednak drugą, mniej przyjemną twarz. Światło, które zabłądziło wewnątrz soczewki i trafia na jej powierzchnię pod dużym kątem, <strong>nie ma jak z niej uciec</strong> — odbija się w całości i wędruje dalej wewnątrz szkła, aż trafi na krawędź. Dlatego krawędzie soczewek w dobrych obiektywach są matowane i czernione: bez tego działałyby jak światłowód rozprowadzający flarę po całym układzie.</p>
+    </div>
+
+    <p class="deeper-inline">Tablica szkieł, definicje linii widmowych i pełne rachunki — <a href="../dodatki/dodatek-a-snell-i-abbe.html">Dodatek A</a>.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Rozwiązanie · sklejka z dwóch niedoskonałości</div>
+    <h2>Achromat: jak odjąć dyspersję od dyspersji</h2>
+
+    <p>Skoro każde szkło rozszczepia w tę samą stronę, nie da się znaleźć szkła, które by nie rozszczepiało. Da się natomiast złożyć dwa tak, żeby ich rozszczepienia się zniosły, a moc skupiająca — nie.</p>
+
+    <p>Przepis jest zaskakująco prosty: <strong>soczewka skupiająca z krona plus soczewka rozpraszająca z flintu</strong>. Kron skupia i lekko rozszczepia. Flint rozprasza słabiej, niż kron skupia, ale rozszczepia mocniej — bo ma dwa razy mniejsze V. Dobiera się krzywizny tak, żeby rozszczepienia zniosły się dokładnie, a ze skupiania zostało tyle, ile potrzeba. Wynik to <span class="term-cyan">achromat</span>, wynaleziony w połowie osiemnastego wieku i do dziś najczęściej spotykana sklejka w każdym obiektywie.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Achromat</span><span>kron skupiający + flint rozpraszający</span></div>
+      <svg viewBox="0 0 760 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sklejka dwóch soczewek: kron skupiający i flint rozpraszający, na wyjściu błękit i czerwień spotykają się w jednym punkcie.">
+        <line x1="30" y1="130" x2="740" y2="130" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 6"/>
+        <path d="M 240 50 Q 262 130 240 210 L 240 50 Z" fill="#4fc3c0" fill-opacity="0.16" stroke="#4fc3c0" stroke-width="1.5"/>
+        <path d="M 240 50 Q 218 130 240 210 L 240 50 Z" fill="#4fc3c0" fill-opacity="0.16" stroke="#4fc3c0" stroke-width="1.5"/>
+        <path d="M 262 52 Q 250 130 262 208 L 284 208 L 284 52 Z" fill="#9c82d8" fill-opacity="0.20" stroke="#9c82d8" stroke-width="1.5"/>
+        <text x="196" y="42" font-family="IBM Plex Mono" font-size="10.5" fill="#4fc3c0">kron · V = 64</text>
+        <text x="292" y="42" font-family="IBM Plex Mono" font-size="10.5" fill="#9c82d8">flint · V = 36</text>
+
+        <g stroke-width="2" fill="none">
+          <path d="M 40 80 L 240 80 L 262 92 L 284 96 L 600 130" stroke="#3f6fd0"/>
+          <path d="M 40 180 L 240 180 L 262 168 L 284 164 L 600 130" stroke="#3f6fd0"/>
+          <path d="M 40 80 L 240 80 L 262 90 L 284 95 L 600 130" stroke="#c23b3b" opacity="0.75"/>
+          <path d="M 40 180 L 240 180 L 262 170 L 284 165 L 600 130" stroke="#c23b3b" opacity="0.75"/>
+        </g>
+        <circle cx="600" cy="130" r="5" fill="#e8a33d"/>
+        <text x="556" y="112" font-family="IBM Plex Mono" font-size="11" fill="#e8a33d">jedno ognisko</text>
+        <text x="40" y="62" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">światło białe</text>
+        <text x="30" y="240" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">Rozszczepienia obu szkieł mają przeciwne znaki i znoszą się. Skupianie — nie.</text>
+      </svg>
+      <div class="diagram-caption">Dwie wady dobrane tak, żeby się odjęły. To jest podstawowy chwyt konstrukcyjny całej optyki.</div>
+    </div>
+
+    <p>Achromat ma jednak granicę wpisaną w nazwę. Dwie soczewki dają dwa stopnie swobody, więc da się zejść do jednego ogniska dla <strong>dwóch</strong> wybranych barw — zwykle czerwieni i błękitu. Zieleń, leżąca między nimi, ląduje trochę obok. Ta pozostałość nazywa się widmem wtórnym i jest tym, co widzisz jako delikatną fioletowo-zieloną obwódkę na kontrastowych krawędziach.</p>
+
+    <p>Żeby zejść z trzema barwami do jednego punktu, potrzeba trzeciego szkła o nietypowej charakterystyce — najczęściej fluorytu albo szkła oznaczanego ED. Taki układ nazywa się apochromatem, kosztuje wielokrotnie więcej i jest powodem, dla którego niektóre obiektywy mają w nazwie „APO”, „ED” albo „UD”. Co dokładnie się przy tym dokłada i ile to kosztuje w powierzchniach — <a href="rozdzial-15-korekcja-i-jej-cena.html">Rozdział 15</a>.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">W CG · gdzie to wypływa</div>
+    <h2>Dyspersja w rendererze i w compie</h2>
+
+    <p>Dyspersja jest jednym z niewielu zjawisk z tej książki, które renderer potrafi policzyć poprawnie sam — pod warunkiem, że mu się na to pozwoli. Trasowanie promieni obsługuje ją naturalnie: wystarczy, żeby współczynnik załamania materiału zależał od długości fali, a promień niósł ze sobą informację o barwie.</p>
+
+    <p>Haczyk tkwi w tym drugim warunku. Renderer pracujący w trzech kanałach RGB może co najwyżej wypuścić trzy promienie o trzech różnych n — i to jest właśnie ten „dispersion” albo „abbe number”, który znajdziesz w ustawieniach materiału szkła. Wynik wygląda przekonująco na krawędziach kryształu, ale jest karykaturą: prawdziwa dyspersja daje ciągłą tęczę, a trzykanałowa daje trzy rozjechane kopie. Widać to natychmiast przy silnym rozszczepieniu, na przykład w pryzmacie.</p>
+
+    <p>Stąd bierze się tryb widmowy: renderer losuje długość fali dla każdego promienia z ciągłego rozkładu i dopiero na końcu składa wynik do RGB. Kosztuje to więcej próbek, bo każda niesie mniej informacji, ale jest jedyną drogą do poprawnego pryzmatu, poprawnej tęczy i poprawnej cienkiej warstwy.</p>
+
+    <p>Jest jeszcze trzecia droga, spotykana w rendererach o ambicjach fizycznych: zamiast jednej liczby Abbego podać pełną krzywą n(λ) z pomiaru. Producenci szkieł publikują ją w postaci wzoru Sellmeiera — rozwinięcia dokładniejszego niż użyty w widgecie wyżej wzór Cauchy'ego, bo uwzględniającego rezonanse elektronowe zarówno w nadfiolecie, jak i w podczerwieni. Różnica między jednym a drugim jest w zakresie widzialnym rzędu tysięcznych, więc dla obrazu nie ma znaczenia; ma je dopiero przy projektowaniu szkła, gdzie liczy się każde miejsce po przecinku.</p>
+
+    <p><strong>W compie dyspersja pojawia się w zupełnie innym przebraniu</strong> i to jest rzecz, którą warto zapamiętać na później: aberracja chromatyczna dokładana w compie jako rozjazd skali kanałów R, G i B nie jest symulacją dyspersji w szkle sceny. Jest symulacją dyspersji w <em>obiektywie</em>, przez który scena jest oglądana. Te dwa zjawiska mają to samo źródło fizyczne i zupełnie inne miejsce w łańcuchu — jedno dzieje się przed kamerą, drugie w niej.</p>
+
+    <p class="deeper-inline">Rozjazd skali kanałów, jego dwa różne rodzaje i to, który da się odwrócić — <a href="rozdzial-14-aberracja-chromatyczna.html">Rozdział 14</a>.</p>
+  </div>
+
+  <div class="panel practice">
+    <div class="panel-label">Z praktyki</div>
+    <p><strong>Sprawdzaj, czy „dispersion” w materiale szkła nie jest ustawione na oślep.</strong> Wiele rendererów przyjmuje w tym polu liczbę Abbego, a nie siłę efektu — więc <em>większa</em> wartość znaczy <em>słabsze</em> rozszczepienie. Wpisanie tam 100 „dla mocnego efektu” daje szkło niemal achromatyczne. Realne zakresy: 64 dla zwykłego szkła okiennego, 36 dla ciężkiego flintu, 55 dla wody, 55 dla diamentu przy bardzo wysokim n.</p>
+    <p><strong>Tęcza na krawędzi kryształu to nie ta sama tęcza co na niebie.</strong> W krysztale rozszczepienie zachodzi na dwóch powierzchniach szkła i rośnie z grubością. Na niebie — wewnątrz kropli, z odbiciem wewnętrznym i pod ustalonym kątem 42°. Jeśli dokładasz tęczę do renderu, sprawdź, którą z nich udajesz, bo mają inną geometrię i inne prawa.</p>
+    <p><strong>Silna dyspersja jest sygnałem tanich szkieł, nie drogich.</strong> Kiedy chcesz, żeby render wyglądał na zrobiony starym albo tanim obiektywem, dokładanie chromatycznej obwódki jest ruchem trafnym. Kiedy chcesz, żeby wyglądał na Master Prime — jest ruchem odwrotnym do zamierzonego. To jedna z niewielu wad, których nowoczesne szkło naprawdę prawie nie ma.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>współczynnik załamania (n)</dt>
+      <dd>Ile razy wolniej światło porusza się w ośrodku niż w próżni. Zależy od długości fali — pisanie go jako jednej liczby jest skrótem, ważnym tylko dla jednej barwy.</dd>
+      <dt>prawo Snella</dt>
+      <dd>n₁·sin θ₁ = n₂·sin θ₂. Wiąże kąt padania z kątem załamania. Kąty liczone od normalnej do powierzchni.</dd>
+      <dt>dyspersja</dt>
+      <dd>Zależność współczynnika załamania od długości fali. Zawsze w tę samą stronę: krótkie fale zaginają się mocniej.</dd>
+      <dt>liczba Abbego (V)</dt>
+      <dd>Miara dyspersji. Im większa, tym słabsze rozszczepienie — zależność odwrotna do intuicji. Kron: powyżej 50. Flint: poniżej 50.</dd>
+      <dt>kron / flint</dt>
+      <dd>Dwie umowne rodziny szkieł optycznych. Kron: wysokie V, niskie n. Flint: niskie V, wysokie n. Nazwy historyczne, dziś opisują położenie na wykresie, nie skład.</dd>
+      <dt>achromat</dt>
+      <dd>Sklejka krona z flintem, w której rozszczepienia obu szkieł znoszą się dla dwóch barw. Podstawowy element korekcyjny w niemal każdym obiektywie.</dd>
+      <dt>widmo wtórne</dt>
+      <dd>Pozostałość rozszczepienia w achromacie: barwy pośrednie między dwiema skorygowanymi nie trafiają dokładnie w to samo ognisko. Widoczne jako fioletowo-zielona obwódka.</dd>
+      <dt>całkowite odbicie wewnętrzne</dt>
+      <dd>Sytuacja, w której promień wychodzący z ośrodka gęstszego pod dużym kątem nie wychodzi wcale, tylko odbija się w całości. Podstawa działania pryzmatów i światłowodów.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Umiemy już zaginać światło i wiemy, dlaczego zagina się nierówno. Zanim jednak zbudujemy z tego obiektyw, trzeba policzyć rachunek za samo wpuszczenie światła do szkła — bo część go nigdy do środka nie wchodzi. W <a href="rozdzial-03-fresnel-kazda-powierzchnia-swieci.html">następnym rozdziale</a> zajmiemy się tym, ile odbija każda powierzchnia i co się dzieje z tym, co zawróciło.</p>
+  </div>
 
   <div class="deeper">
     <div class="deeper-label">Idź głębiej</div>
@@ -56,8 +378,127 @@ window.SKY3D_MESSAGES = {
       <a class="nav-next" href="rozdzial-03-fresnel-kazda-powierzchnia-swieci.html">Następny →</a>
   </div>
 
+  <template id="explain-snell">
+    <h3>Prawo Snella, czyli co się zachowuje na granicy</h3>
+
+    <div class="formula">n₁ · sin θ₁ = n₂ · sin θ₂</div>
+
+    <p><strong>Co się właściwie nie zmienia.</strong> Wzór mówi, że iloczyn współczynnika załamania i sinusa kąta jest po obu stronach granicy taki sam. Ta zachowywana wielkość ma sens fizyczny: to składowa fali <em>równoległa</em> do powierzchni. Fala nie może się wzdłuż granicy rozjechać, bo po obu stronach musi pasować do siebie grzbiet do grzbietu — więc jej rytm mierzony wzdłuż powierzchni zostaje nienaruszony. Zmienia się tylko składowa prostopadła, i to ona odpowiada za zmianę kierunku.</p>
+
+    <p><strong>Dlaczego sinus, a nie sam kąt.</strong> Sinus kąta liczonego od normalnej to dokładnie rzut kierunku promienia na powierzchnię. Gdyby we wzorze stał sam kąt, prawo nie byłoby prawdziwe — sprawdza się to jednym podstawieniem przy 60°, gdzie różnica jest już wyraźna.</p>
+
+    <p><strong>Trzy wnioski, które warto umieć bez liczenia:</strong></p>
+    <ul>
+      <li>Promień padający prostopadle (θ₁ = 0) nie załamuje się wcale, bo sinus zera jest zerem. Dlatego środek soczewki niczego nie zagina.</li>
+      <li>Wchodząc do ośrodka gęstszego (n₂ większe od n₁), sinus po prawej musi być mniejszy — więc kąt maleje i promień skręca <strong>ku normalnej</strong>.</li>
+      <li>Wychodząc do rzadszego, kąt rośnie. Gdy potrzebny sinus przekroczyłby jedynkę, rozwiązania nie ma i promień nie wychodzi wcale: to <strong>całkowite odbicie wewnętrzne</strong>. Dla granicy szkło–powietrze zaczyna się przy 41°.</li>
+    </ul>
+
+    <p><strong>Skąd to wynika.</strong> Prawa Snella nie trzeba przyjmować na wiarę — wypada z zasady Fermata z <a href="rozdzial-01-fala-czy-promien.html">Rozdziału 1</a>. Jeśli poszukasz drogi między punktem w powietrzu a punktem w szkle, którą światło pokona w najkrótszym czasie, i przyrównasz pochodną czasu po położeniu punktu przejścia do zera, dostaniesz dokładnie ten wzór. Nie jest to więc osobne prawo natury, tylko konsekwencja tego, że w szkle jest wolniej.</p>
+
+    <p><em>Uwaga: wzór milczy o tym, ile światła w ogóle przechodzi — mówi wyłącznie o kierunku. Za podział energii między promień załamany a odbity odpowiadają wzory Fresnela, i to jest temat Rozdziału 3.</em></p>
+  </template>
+
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-panel">
+      <button class="modal-close" data-modal-close aria-label="Zamknij">×</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
 </div>
 
 <script src="../assets/interactive.js"></script>
+<script>
+/* 1. Prawo Snella — geometria promienia na granicy powietrze/szklo. */
+(function () {
+  var sl = document.getElementById('katSnell');
+  if (!sl) return;
+  var N1 = 1.0, N2 = 1.52, X = 380, Y = 160, L = 150, R = 46;
+  function rad(d) { return d * Math.PI / 180; }
+
+  function odswiez() {
+    var t1 = parseFloat(sl.value), r1 = rad(t1);
+    var t2 = Math.asin(Math.min(1, (N1 / N2) * Math.sin(r1)));
+
+    var pad = document.getElementById('promienPad');
+    pad.setAttribute('x1', X - L * Math.sin(r1)); pad.setAttribute('y1', Y - L * Math.cos(r1));
+    pad.setAttribute('x2', X); pad.setAttribute('y2', Y);
+
+    var zal = document.getElementById('promienZal');
+    zal.setAttribute('x1', X); zal.setAttribute('y1', Y);
+    zal.setAttribute('x2', X + L * Math.sin(t2)); zal.setAttribute('y2', Y + L * Math.cos(t2));
+
+    var odb = document.getElementById('promienOdb');
+    odb.setAttribute('x1', X); odb.setAttribute('y1', Y);
+    odb.setAttribute('x2', X + L * Math.sin(r1)); odb.setAttribute('y2', Y - L * Math.cos(r1));
+
+    document.getElementById('lukPad').setAttribute('d',
+      'M ' + X + ' ' + (Y - R) + ' A ' + R + ' ' + R + ' 0 0 0 ' +
+      (X - R * Math.sin(r1)).toFixed(1) + ' ' + (Y - R * Math.cos(r1)).toFixed(1));
+    document.getElementById('lukZal').setAttribute('d',
+      'M ' + X + ' ' + (Y + R) + ' A ' + R + ' ' + R + ' 0 0 0 ' +
+      (X + R * Math.sin(t2)).toFixed(1) + ' ' + (Y + R * Math.cos(t2)).toFixed(1));
+
+    var ep = document.getElementById('etPad');
+    ep.setAttribute('x', X - (R + 18) * Math.sin(r1 / 2) - 6);
+    ep.setAttribute('y', Y - (R + 18) * Math.cos(r1 / 2));
+    var ez = document.getElementById('etZal');
+    ez.setAttribute('x', X + (R + 18) * Math.sin(t2 / 2) - 4);
+    ez.setAttribute('y', Y + (R + 18) * Math.cos(t2 / 2) + 8);
+
+    var st2 = t2 * 180 / Math.PI;
+    document.getElementById('snellOdczyt').textContent = t1.toFixed(0) + '°';
+    document.getElementById('snellPodpis').textContent =
+      'Kąt padania ' + t1.toFixed(0) + '° daje kąt załamania ' +
+      st2.toFixed(1).replace('.', ',') + '°. ' +
+      (t1 === 0 ? 'Przy padaniu prostopadłym promień nie zagina się wcale.'
+                : 'Promień skręca ku normalnej — w szkle jest wolniej.');
+  }
+  sl.addEventListener('input', odswiez);
+  odswiez();
+})();
+
+/* 2. n(lambda) dla krona i flintu — przyblizenie Cauchy'ego n = A + B/lambda^2,
+      wspolczynniki dopasowane do BK7 i F2 na liniach F, d, C. */
+(function () {
+  var sl = document.getElementById('dlugoscFali');
+  if (!sl) return;
+  var SZKLA = [
+    { A: 1.50452,  B: 0.004240, krzywa: 'krzywaKron',  punkt: 'punktKron',  nazwa: 'kron' },
+    { A: 1.594225, B: 0.008899, krzywa: 'krzywaFlint', punkt: 'punktFlint', nazwa: 'flint' }
+  ];
+  var X0 = 80, X1 = 700, L0 = 400, L1 = 700, N0 = 1.50, N1 = 1.66, Y0 = 262, Y1 = 30;
+  function px(nm) { return X0 + (nm - L0) / (L1 - L0) * (X1 - X0); }
+  function py(n) { return Y0 - (n - N0) / (N1 - N0) * (Y0 - Y1); }
+  function nOf(s, nm) { var um = nm / 1000; return s.A + s.B / (um * um); }
+
+  SZKLA.forEach(function (s) {
+    var d = '';
+    for (var nm = L0; nm <= L1; nm += 5) {
+      d += (nm === L0 ? 'M ' : ' L ') + px(nm).toFixed(1) + ' ' + py(nOf(s, nm)).toFixed(1);
+    }
+    document.getElementById(s.krzywa).setAttribute('d', d);
+  });
+
+  function odswiez() {
+    var nm = parseFloat(sl.value), x = px(nm);
+    var w = document.getElementById('wskaznikFali');
+    w.setAttribute('x1', x); w.setAttribute('x2', x);
+    var opis = [];
+    SZKLA.forEach(function (s) {
+      var n = nOf(s, nm);
+      var el = document.getElementById(s.punkt);
+      el.setAttribute('cx', x); el.setAttribute('cy', py(n));
+      opis.push(s.nazwa + ' n = ' + n.toFixed(3).replace('.', ','));
+    });
+    document.getElementById('falaOdczyt').textContent = nm.toFixed(0) + ' nm';
+    document.getElementById('falaPodpis').textContent =
+      'Przy ' + nm.toFixed(0) + ' nm: ' + opis.join(', ') + '.';
+  }
+  sl.addEventListener('input', odswiez);
+  odswiez();
+})();
+</script>
 </body>
 </html>
