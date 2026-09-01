@@ -43,7 +43,316 @@ window.SKY3D_MESSAGES = {
   <h1>Bokeh: kształt źrenicy widzianej stąd</h1>
   <p class="subtitle">Nieostry punkt świetlny nie jest plamką. Jest zdjęciem źrenicy wyjściowej, zrobionym z tego miejsca kadru — dlatego w rogu ma kształt kociego oka, a nie koła.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li><strong>Nieostry punkt świetlny jest zdjęciem źrenicy</strong> — dosłownie, obrazem otworu, przez który patrzy obiektyw, zrobionym z tego miejsca kadru. Z tego jednego zdania wynika wszystko, co dalej.</li>
+      <li>Kształt krążka daje <span class="term-cyan">geometria</span>: listki przysłony, obcięcie mechaniczne w rogu, lustro w katadioptryku. Rozkład jasności <em>wewnątrz</em> krążka daje <span class="term-violet">aberracja sferyczna</span> — i to ona decyduje, czy tło jest kremowe, czy nerwowe.</li>
+      <li>Bokeh przed płaszczyzną ostrości i za nią to dwa różne wyglądy tej samej wady. Obiektyw miękki z tyłu jest twardy z przodu i odwrotnie — nie da się mieć obu.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Zasada · jedno zdanie na cały rozdział</div>
+    <h2>Krążek nieostrości jest obrazem źrenicy</h2>
+
+    <p>Weź punktowe źródło światła — odbłysk na masce samochodu, latarnię w tle, kroplę wody. Jeśli leży poza płaszczyzną ostrości, stożek promieni od niego przetnie matrycę zanim się zbiegnie albo już po tym, jak się rozszedł. Na matrycy zostanie plamka będąca <strong>przekrojem tego stożka</strong>.</p>
+
+    <p>A stożek ma kształt źrenicy, bo to przez nią przeszedł. Nieostry punkt jest więc rzutem źrenicy na matrycę — jej fotografią, wykonaną przez sam obiektyw. Wszystko, co jest w źrenicy, znajdzie się w krążku: jej kształt, jej obcięcia, nierównomierności jej wypełnienia.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Skąd kształt</span><span>źrenica rzutowana na matrycę</span></div>
+      <svg viewBox="0 0 760 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Punkt świetlny poza płaszczyzną ostrości rzutuje kształt sześciokątnej przysłony na matrycę jako sześciokątny krążek.">
+        <circle cx="60" cy="140" r="7" fill="#e8a33d"/>
+        <text x="34" y="168" font-family="IBM Plex Mono" font-size="10" fill="#e8a33d">punkt</text>
+
+        <g stroke="#8b909b" stroke-width="4">
+          <line x1="300" y1="72" x2="300" y2="106"/><line x1="300" y1="174" x2="300" y2="208"/>
+        </g>
+        <polygon points="300,84 322,98 322,126 300,140 278,126 278,98" fill="#4fc3c0" fill-opacity="0.18" stroke="#4fc3c0" stroke-width="1.4" transform="translate(0,28)"/>
+        <text x="300" y="62" font-family="IBM Plex Mono" font-size="10" fill="#4fc3c0" text-anchor="middle">źrenica · 6 listków</text>
+
+        <g stroke="#e8a33d" stroke-width="1.2" fill="none" opacity="0.6">
+          <path d="M 60 140 L 300 112 L 620 74"/>
+          <path d="M 60 140 L 300 168 L 620 206"/>
+          <path d="M 60 140 L 278 126 L 590 100"/>
+          <path d="M 60 140 L 322 154 L 650 180"/>
+        </g>
+        <line x1="620" y1="40" x2="620" y2="240" stroke="#6e93be" stroke-width="3"/>
+        <text x="592" y="258" font-family="IBM Plex Mono" font-size="10" fill="#6e93be">matryca</text>
+        <polygon points="620,74 660,98 660,146 620,170 580,146 580,98" fill="#e8a33d" fill-opacity="0.45" stroke="#e8a33d" stroke-width="1.6"/>
+        <text x="694" y="126" font-family="IBM Plex Mono" font-size="10.5" fill="#e8a33d" text-anchor="middle">krążek</text>
+        <text x="30" y="270" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">Sześciokąt na matrycy nie jest przypadkiem ani stylizacją. Jest kopią otworu, przez który przeszło światło.</text>
+      </svg>
+      <div class="diagram-caption">Kształt bokeh nie jest cechą „charakteru” obiektywu w sensie mistycznym. Jest kopią jego przysłony.</div>
+    </div>
+
+    <p>Zaczynamy więc od inwentarza: co takiego może być w źrenicy, że odciska się na krążku.</p>
+
+    <div class="subsection">
+      <h3>Ile rozmycia, a jakie rozmycie</h3>
+      <p>Warto od razu rozdzielić dwa pojęcia, które w potocznej rozmowie się zlewają. <strong>Głębia ostrości</strong> z poprzedniego rozdziału mówi, <em>ile</em> jest rozmycia — jak duże są krążki w danej odległości. <strong>Bokeh</strong> mówi, <em>jakie</em> ono jest — jaki mają kształt i jak rozkłada się w nich jasność.</p>
+      <p>Są to wielkości niezależne. Dwa obiektywy o identycznej głębi ostrości mogą dawać zupełnie inne tło, i odwrotnie: ten sam obiektyw przymknięty daje mniej rozmycia, ale niekoniecznie ładniejsze. Zdanie „ten obiektyw ma piękne bokeh, bo jest jasny” miesza więc dwie rzeczy — jasność wpływa na ilość, a nie na jakość.</p>
+      <p>Rozróżnienie ma praktyczną wagę w compie. Ustawiając siłę rozmycia, sterujesz głębią. Ustawiając jądro splotu, sterujesz bokeh. To dwa różne pola i dwa różne błędy, które można popełnić niezależnie.</p>
+    </div>
+
+    <div class="subsection">
+      <h3>Przód i tył to dwa różne obiektywy</h3>
+      <p>Jest jeszcze jedna asymetria, niezależna od aberracji sferycznej, a wynikająca z czystej geometrii. Rozmycie przed płaszczyzną ostrości i za nią narasta w różnym tempie — bo, jak pamiętamy z <a href="rozdzial-08-glebia-ostrosci.html">Rozdziału 8</a>, liczy się różnica odwrotności odległości, a nie różnica odległości.</p>
+      <p>Przedmiot pół metra przed ostrością jest rozmyty znacznie mocniej niż przedmiot pół metra za nią. W praktyce znaczy to, że <span class="term-cyan">pierwszy plan rozpływa się szybciej niż tło</span> — i dlatego rozmyta gałąź przed obiektywem potrafi zniknąć w mgłę, podczas gdy tło w tej samej scenie pozostaje czytelne.</p>
+      <p>Operatorzy wykorzystują to świadomie: rozmyty element na pierwszym planie jest tanim sposobem na dodanie głębi kadrowi, bo znika w miękką plamę barwną, nie odciągając uwagi. Ten sam element ustawiony za bohaterem byłby wciąż rozpoznawalny i zaczynałby konkurować.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Geometria · katalog kształtów</div>
+    <h2>Skąd biorą się wielokąty, koty i pączki</h2>
+
+    <div class="subsection">
+      <h3>Wielokąt — listki przysłony</h3>
+      <p>Najprostszy przypadek, omówiony już w <a href="rozdzial-06-przyslona-f-i-t.html">Rozdziale 6</a>: przymknięta przysłona jest wielokątem o tylu bokach, ile ma listków, więc krążek też. Przy pełnym otwarciu listki chowają się poza oprawę i kształt wyznacza okrągła tuleja — dlatego <strong>bokeh jest najbardziej okrągłe przy najszerszej przysłonie</strong> i kanciej z każdym przymknięciem.</p>
+      <p>Producenci walczą z tym, zakrzywiając krawędzie listków. Nigdy nie wychodzi z tego dokładne koło — przy przymknięciu o dwie–trzy przysłony wielokąt zaczyna być widoczny nawet w konstrukcjach reklamowanych jako „okrągła przysłona”.</p>
+    </div>
+
+    <div class="subsection">
+      <h3>Kocie oko — obcięcie mechaniczne</h3>
+      <p>Omówione w <a href="rozdzial-07-zrenice.html">Rozdziale 7</a>. Poza osią oprawy obiektywu obcinają źrenicę, więc krążek staje się soczewkowaty, a jego oś wskazuje na środek kadru. Znika po przymknięciu przysłony, bo przymknięta przysłona jest mniejsza od otworów opraw.</p>
+    </div>
+
+    <div class="subsection">
+      <h3>Pączek — źrenica pierścieniowa</h3>
+      <p>Obiektyw katadioptryczny, czyli lustrzany, ma na środku wtórne lustro zasłaniające oś. Jego źrenica jest więc <strong>pierścieniem</strong>, a nie kołem — i krążki nieostrości wychodzą pączkowate, z dziurą w środku. Jest to najbardziej rozpoznawalny podpis konstrukcji w całej optyce i zarazem powód, dla którego lustrzanek prawie nikt nie lubi.</p>
+      <p>Wart uwagi jest tu mechanizm, bo wróci w <a href="rozdzial-18-skrajne-ogniskowe.html">Rozdziale 18</a>: to nie jest wada wykonania, tylko nieusuwalna cena tego, że światło musi wejść i wyjść tą samą stroną układu.</p>
+    </div>
+
+    <div class="subsection">
+      <h3>Cebulka — ślad szlifowania</h3>
+      <p>Koncentryczne pierścienie wewnątrz krążka, przypominające słoje. Biorą się z powierzchni asferycznych produkowanych metodą prasowania albo szlifowania z posuwem: pozostają na nich mikroskopijne pierścieniowe nierówności, niewidoczne w obrazie ostrym, ale <em>powiększane</em> przez rzut na krążek nieostrości.</p>
+      <p>Jest w tym pewna ironia: cebulki występują częściej w obiektywach nowoczesnych i drogich niż w starych i tanich, bo to właśnie te pierwsze używają asfer. Wada bierze się z rozwiązania, nie z zaniedbania.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Rozkład jasności · tu mieszka „charakter”</div>
+    <h2>Kremowe, obrączkowe i dlaczego to nie kwestia gustu</h2>
+
+    <p>Kształt to dopiero połowa. Druga połowa, i ta ważniejsza dla wrażenia, to <strong>jak jasność rozkłada się w środku krążka</strong>. Idealny obiektyw dawałby krążek równomierny — jednakowo jasny od brzegu do brzegu. Prawdziwy nie daje, i to za sprawą aberracji sferycznej, której cały rozdział poświęcimy dalej.</p>
+
+    <p>Skrót jest taki: aberracja sferyczna sprawia, że promienie z brzegu źrenicy skupiają się w innym miejscu niż te ze środka. Zależnie od tego, w którą stronę, energia gromadzi się przy brzegu krążka albo w jego środku:</p>
+
+    <ul>
+      <li><strong>Niedokorygowana</strong> (brzeg skupia bliżej) — krążek jaśniejszy w środku, gasnący ku brzegom. Tło rozpływa się miękko, przejścia są łagodne. To jest „kremowe” bokeh.</li>
+      <li><strong>Przekorygowana</strong> (brzeg skupia dalej) — jasna obrączka po obwodzie, ciemniejszy środek. Tło robi się nerwowe: każde źródło zostawia wyraźnie zarysowany pierścień, a gałęzie w tle zamieniają się w plątaninę linii.</li>
+      <li><strong>Skorygowana idealnie</strong> — krążek równomierny. Neutralny, ale nie „ładny” — brak wyróżnionego środka sprawia, że tło jest płaskie.</li>
+    </ul>
+
+    <p>I teraz rzecz kluczowa, o której rzadko się mówi: <span class="term-violet">te trzy stany zamieniają się miejscami po przejściu przez płaszczyznę ostrości</span>. Obiektyw dający kremowe krążki za ostrością daje obrączkowe przed nią. Nie ma konstrukcji miękkiej po obu stronach — korekcja aberracji sferycznej jest jedną liczbą i można ją przesunąć w jedną albo w drugą stronę, ale nie w obie naraz.</p>
+
+    <p>Dlatego producenci wybierają. Obiektywy portretowe koryguje się tak, żeby ładne było <em>tło</em>, bo to tło jest zwykle nieostre. Obiektywy makro — odwrotnie albo neutralnie, bo tam nieostry bywa i przód, i tył. A operator wybierający szkło do sceny z przedmiotem na pierwszym planie i tłem daleko wie, że dostanie kompromis, nie ideał.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Profil jasności w krążku</span><span>przekrój przez środek</span></div>
+      <svg viewBox="0 0 760 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Trzy profile jasności krążka nieostrości: niedokorygowany gaśnie ku brzegom, skorygowany jest płaski, przekorygowany ma jasną obrączkę.">
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b" text-anchor="middle">
+          <text x="140" y="26">NIEDOKORYGOWANA</text><text x="380" y="26">SKORYGOWANA</text><text x="620" y="26">PRZEKORYGOWANA</text>
+        </g>
+        <g stroke="#2a2f38" stroke-width="1">
+          <line x1="50" y1="150" x2="230" y2="150"/><line x1="290" y1="150" x2="470" y2="150"/><line x1="530" y1="150" x2="710" y2="150"/>
+        </g>
+        <path d="M 50 150 Q 70 148 90 120 Q 110 70 140 66 Q 170 70 190 120 Q 210 148 230 150" fill="#e8a33d" fill-opacity="0.22" stroke="#e8a33d" stroke-width="2"/>
+        <path d="M 290 150 L 300 92 L 460 92 L 470 150 Z" fill="#e8a33d" fill-opacity="0.22" stroke="#e8a33d" stroke-width="2"/>
+        <path d="M 530 150 L 542 74 L 566 104 L 600 110 L 640 110 L 674 104 L 698 74 L 710 150 Z" fill="#e8a33d" fill-opacity="0.22" stroke="#e8a33d" stroke-width="2"/>
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b" text-anchor="middle">
+          <text x="140" y="184">miękko, rozpływa się</text>
+          <text x="380" y="184">płasko, neutralnie</text>
+          <text x="620" y="184">obrączka, nerwowo</text>
+        </g>
+        <text x="30" y="222" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">Po przejściu przez płaszczyznę ostrości lewy profil zamienia się miejscami z prawym.</text>
+      </svg>
+      <div class="diagram-caption">To jest różnica, którą ludzie nazywają „charakterem szkła”. Ma jedną przyczynę i jedną liczbę.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Wir · najbardziej rozpoznawalny efekt vintage</div>
+    <h2>Skąd bierze się skręcone tło</h2>
+
+    <p>Jest efekt, który w ostatniej dekadzie zrobił karierę i sprzedał tysiące radzieckich obiektywów z lat sześćdziesiątych: tło zakręcone w wir wokół środka kadru, jakby ktoś obrócił zdjęcie w wodzie. Nazywa się swirly bokeh i — jak większość rzeczy w tej książce — nie jest efektem, tylko sumą dwóch wad, z których żadna sama by go nie dała.</p>
+
+    <p><strong>Pierwsza to obcięcie mechaniczne</strong>, znane już z <a href="rozdzial-07-zrenice.html">Rozdziału 7</a>. Krążki poza środkiem kadru stają się soczewkowate, a ich osie układają się promieniście. Samo to daje efekt „ciągnięcia ku środkowi”, ale jeszcze nie wir.</p>
+
+    <p><strong>Druga to krzywizna pola</strong>, o której szerzej w <a href="rozdzial-12-poza-osia.html">Rozdziale 12</a>. Obiektyw o niekorygowanej krzywiźnie ustawia ostrość nie na płaszczyźnie, tylko na czaszy — więc im dalej od środka kadru, tym płaszczyzna ostrości leży bliżej kamery. Punkt tła, który w środku kadru byłby lekko nieostry, przy krawędzi jest nieostry znacznie bardziej, a do tego <em>po drugiej stronie ostrości</em>.</p>
+
+    <p>Złóż jedno z drugim i dostajesz wir: krążki rosnące ku brzegom, coraz mocniej ścięte i coraz bardziej pochylone. Oko odczytuje ten układ jako ruch obrotowy, choć żaden element obrazu nie jest obrócony.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Dwie wady, jeden efekt</span><span>obcięcie plus krzywizna pola</span></div>
+      <svg viewBox="0 0 760 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Trzy panele: samo obcięcie mechaniczne, sama krzywizna pola i ich suma dająca efekt wiru.">
+        <g font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">
+          <text x="130" y="24">SAMO OBCIĘCIE</text><text x="380" y="24">SAMA KRZYWIZNA</text><text x="630" y="24">RAZEM · WIR</text>
+        </g>
+        <g fill="none" stroke="#2a2f38"><rect x="30" y="36" width="200" height="200"/><rect x="280" y="36" width="200" height="200"/><rect x="530" y="36" width="200" height="200"/></g>
+
+        <g fill="#e8a33d" fill-opacity="0.45" stroke="#e8a33d" stroke-width="1">
+          <ellipse cx="130" cy="136" rx="13" ry="13"/>
+          <ellipse cx="192" cy="136" rx="7" ry="13"/><ellipse cx="68" cy="136" rx="7" ry="13"/>
+          <ellipse cx="130" cy="74" rx="13" ry="7"/><ellipse cx="130" cy="198" rx="13" ry="7"/>
+          <ellipse cx="182" cy="88" rx="7" ry="13" transform="rotate(45 182 88)"/>
+          <ellipse cx="78" cy="88" rx="7" ry="13" transform="rotate(-45 78 88)"/>
+          <ellipse cx="182" cy="184" rx="7" ry="13" transform="rotate(-45 182 184)"/>
+          <ellipse cx="78" cy="184" rx="7" ry="13" transform="rotate(45 78 184)"/>
+        </g>
+
+        <g fill="#9c82d8" fill-opacity="0.45" stroke="#9c82d8" stroke-width="1">
+          <circle cx="380" cy="136" r="8"/>
+          <circle cx="442" cy="136" r="16"/><circle cx="318" cy="136" r="16"/>
+          <circle cx="380" cy="74" r="16"/><circle cx="380" cy="198" r="16"/>
+          <circle cx="432" cy="88" r="20"/><circle cx="328" cy="88" r="20"/>
+          <circle cx="432" cy="184" r="20"/><circle cx="328" cy="184" r="20"/>
+        </g>
+
+        <g fill="#e8a33d" fill-opacity="0.5" stroke="#e8a33d" stroke-width="1">
+          <ellipse cx="630" cy="136" rx="8" ry="8"/>
+          <ellipse cx="692" cy="136" rx="8" ry="16"/><ellipse cx="568" cy="136" rx="8" ry="16"/>
+          <ellipse cx="630" cy="74" rx="16" ry="8"/><ellipse cx="630" cy="198" rx="16" ry="8"/>
+          <ellipse cx="682" cy="86" rx="9" ry="20" transform="rotate(45 682 86)"/>
+          <ellipse cx="578" cy="86" rx="9" ry="20" transform="rotate(-45 578 86)"/>
+          <ellipse cx="682" cy="186" rx="9" ry="20" transform="rotate(-45 682 186)"/>
+          <ellipse cx="578" cy="186" rx="9" ry="20" transform="rotate(45 578 186)"/>
+        </g>
+        <text x="30" y="264" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">Rosnące, ścinane i pochylane krążki. Oko dopowiada obrót, którego w obrazie nie ma.</text>
+      </svg>
+      <div class="diagram-caption">Petzval z 1840 roku miał obie te wady, bo nie umiano ich wtedy usunąć. Dziś kupuje się je z powrotem.</div>
+    </div>
+
+    <p>Warto zauważyć konsekwencję praktyczną: <span class="term-violet">wir znika po przymknięciu przysłony</span>, i to z obu powodów naraz. Przymknięcie usuwa obcięcie mechaniczne i jednocześnie zwiększa głębię na tyle, że krzywizna pola przestaje być widoczna. Obiektyw kupiony dla wiru trzeba więc trzymać otwarty — a to znaczy godzić się na wszystkie jego pozostałe wady przy pełnym otworze.</p>
+
+    <p>To samo tłumaczy, dlaczego wir jest silniejszy na większym formacie. Efekt narasta z odległością od osi, a większa matryca sięga dalej w pole obrazu — dlatego ten sam obiektyw daje na pełnej klatce wyraźny wir, a na Super 35 ledwie zauważalne ciągnięcie.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Tło · bokeh nie działa w próżni</div>
+    <h2>Dlaczego gałęzie są testem, a lampki nie są</h2>
+
+    <p>Wszystkie przykłady w tym rozdziale dotyczyły punktowych źródeł światła, bo na nich widać kształt krążka najczystszej. W praktyce jednak nieostre tło rzadko składa się z punktów. Składa się z gałęzi, liści, siatek, tłumu — czyli ze struktur o krawędziach.</p>
+
+    <p>Dla takiego tła liczy się nie tyle kształt krążka, co to, jak <strong>splot z tym kształtem traktuje krawędź</strong>. I tu wraca podział z sekcji o aberracji sferycznej, tyle że z groźniejszymi skutkami.</p>
+
+    <p>Krążek gasnący ku brzegom rozmywa krawędź w gładki gradient — jedna krawędź zostaje jedną krawędzią, tylko miękką. Krążek z jasną obrączką rozmywa ją w <em>dwie</em> linie: obrączka po jednej stronie i obrączka po drugiej. Cienka gałązka zamienia się w parę równoległych kresek. Japończycy nazwali to zjawisko <span class="term-violet">nisen bokeh</span>, czyli „dwulinijkowym”, i jest to bodaj najbardziej nielubiana cecha, jaką obiektyw może mieć.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Ta sama gałązka, dwa obiektywy</span><span>splot z krążkiem</span></div>
+      <svg viewBox="0 0 760 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cienka linia rozmyta krążkiem gasnącym ku brzegom daje jedną miękką smugę; rozmyta krążkiem z obrączką daje dwie równoległe linie.">
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">
+          <text x="30" y="26">OSTRA GAŁĄZKA</text><text x="300" y="26">KRĄŻEK KREMOWY</text><text x="560" y="26">KRĄŻEK OBRĄCZKOWY</text>
+        </g>
+        <rect x="30" y="44" width="200" height="150" fill="#20242c" stroke="#2a2f38"/>
+        <line x1="130" y1="54" x2="130" y2="184" stroke="#ecebe4" stroke-width="3"/>
+
+        <rect x="290" y="44" width="200" height="150" fill="#20242c" stroke="#2a2f38"/>
+        <g>
+          <rect x="360" y="54" width="60" height="130" fill="#ecebe4" opacity="0.10"/>
+          <rect x="372" y="54" width="36" height="130" fill="#ecebe4" opacity="0.18"/>
+          <rect x="382" y="54" width="16" height="130" fill="#ecebe4" opacity="0.30"/>
+        </g>
+        <text x="390" y="216" font-family="IBM Plex Mono" font-size="10.5" fill="#4fc3c0" text-anchor="middle">jedna miękka smuga</text>
+
+        <rect x="550" y="44" width="200" height="150" fill="#20242c" stroke="#2a2f38"/>
+        <g>
+          <rect x="620" y="54" width="60" height="130" fill="#ecebe4" opacity="0.07"/>
+          <rect x="622" y="54" width="10" height="130" fill="#ecebe4" opacity="0.38"/>
+          <rect x="668" y="54" width="10" height="130" fill="#ecebe4" opacity="0.38"/>
+        </g>
+        <text x="650" y="216" font-family="IBM Plex Mono" font-size="10.5" fill="#9c82d8" text-anchor="middle">dwie linie — nisen bokeh</text>
+      </svg>
+      <div class="diagram-caption">Punktowe światła wyglądają na obu obiektywach podobnie. Gałęzie zdradzają różnicę natychmiast.</div>
+    </div>
+
+    <p>Stąd praktyczna wskazówka przy ocenie obiektywu — także wirtualnego. <strong>Nie testuj bokeh na lampkach</strong>. Punktowe źródła pokazują kształt źrenicy i nic poza tym, a kształt jest najmniej problematyczną z jej właściwości. Testuj na gałęziach pod światło, na siatce, na trawie — czyli na strukturze o wielu cienkich krawędziach. Dopiero tam widać, czy rozkład jasności w krążku pracuje na ciebie, czy przeciwko.</p>
+
+    <p>W compie ma to bezpośrednie przełożenie: jeśli budujesz jądro splotu do rozmycia z kanału Z, sprawdzaj je na tle z drobną strukturą, a nie na sztucznych lampkach. Jądro z jasnym pierścieniem — a takie powstaje mimochodem, gdy ktoś „wzmocni krawędzie” bokeh dla efektu — da nisen bokeh na każdej gałęzi w ujęciu.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Symulator · pobaw się przyczynami</div>
+    <h2>Wszystkie te efekty naraz</h2>
+
+    <p>Poniższy widget rysuje krążek nieostrości z czterech składowych opisanych wyżej. Każdy suwak odpowiada jednej realnej właściwości konstrukcji — nie jest to filtr graficzny, tylko złożenie przyczyn.</p>
+
+    <div class="sim" id="bokehSim">
+      <div class="sim__stage"><canvas width="600" height="300"></canvas></div>
+      <div class="sim__bar">
+        <label for="bkListki">Listki</label>
+        <input id="bkListki" type="range" min="0" max="12" step="1" value="0">
+        <span class="value-readout" id="bkListkiOdczyt">okrągła</span>
+      </div>
+      <div class="sim__bar">
+        <label for="bkSfer">Aberracja sferyczna</label>
+        <input id="bkSfer" type="range" min="-100" max="100" step="1" value="0">
+        <span class="value-readout" id="bkSferOdczyt">skorygowana</span>
+      </div>
+      <div class="sim__bar">
+        <label for="bkKot">Obcięcie (kocie oko)</label>
+        <input id="bkKot" type="range" min="0" max="100" step="1" value="0">
+        <span class="value-readout" id="bkKotOdczyt">środek kadru</span>
+      </div>
+      <div class="sim__bar">
+        <label for="bkCebula">Cebulki</label>
+        <input id="bkCebula" type="range" min="0" max="100" step="1" value="0">
+        <span class="value-readout" id="bkCebulaOdczyt">brak</span>
+      </div>
+      <div class="sim__caption" id="bkPodpis">Źrenica okrągła, korekcja neutralna — krążek równomierny.</div>
+    </div>
+
+    <p>Warto poustawiać kilka realnych kombinacji. <strong>Sześć listków, mocno niedokorygowana, zero cebulek</strong> to typowy portretowy obiektyw z lat siedemdziesiątych. <strong>Jedenaście listków, korekcja bliska zeru, wyraźne cebulki</strong> to współczesna jasna stałka z asferą. <strong>Zero listków, przekorygowana</strong> to charakter, który w materiale czyta się jako „nerwowe tło” — i którego nikt nie zamawia świadomie.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">W CG · gdzie to się rozjeżdża</div>
+    <h2>Bokeh w rendererze i w compie</h2>
+
+    <p>Renderer robi bokeh poprawnie, bo robi je z tej samej przyczyny co obiektyw: losuje punkty startowe promieni po źrenicy. Jeśli źrenicę zdefiniujesz jako sześciokąt, dostaniesz sześciokątne krążki bez żadnej dodatkowej pracy. Większość silników pozwala podać liczbę listków, ich obrót, a często również <strong>teksturę źrenicy</strong> — a to ostatnie otwiera drzwi do wszystkiego z tego rozdziału.</p>
+
+    <p>Tekstura źrenicy jest niedocenianym narzędziem. Jasny pierścień przy brzegu daje bokeh przekorygowane. Gradient gasnący ku brzegom — kremowe. Kilka koncentrycznych prążków — cebulki. Czarne koło na środku — pączek z lustrzanki. <span class="term-cyan">Jedna mapa w kamerze zastępuje cały ten rozdział</span>, o ile wiesz, co na niej narysować.</p>
+
+    <p>Jest jeszcze jedna rzecz, o której warto pamiętać przy teksturze źrenicy: <strong>musi być poprawnie znormalizowana</strong>. Jeśli podniesiesz jasność pierścienia, żeby efekt był wyraźniejszy, podnosisz też sumaryczną energię przechodzącą przez źrenicę — czyli rozjaśniasz całe nieostre tło względem ostrego pierwszego planu. Objaw jest subtelny i mylący: obraz wygląda, jakby dodano mgłę. Poprawka jest prosta, trzeba tylko o niej wiedzieć: po każdej zmianie mapy przeskaluj ją tak, żeby jej średnia została ta sama.</p>
+
+    <p>Czego renderer nie zrobi sam: <strong>obcięcia mechanicznego</strong>. Źrenica w kamerze renderera jest jedna dla całego kadru, więc kocie oko w rogach nie pojawi się samo. Trzeba je albo dołożyć w compie z maską radialną, albo — w silnikach, które to umożliwiają — uzależnić teksturę źrenicy od pozycji na matrycy.</p>
+
+    <p>W compie natomiast całą tę fizykę zastępuje jądro splotu. Rozmycie po kanale Z splata obraz z kształtem, który podasz — i tu warto wiedzieć, że <em>jądro splotu jest dokładnie tym samym co obraz źrenicy</em>. Wszystko z tego rozdziału da się więc odtworzyć, podając właściwe jądro. Ograniczenia rozmycia z kanału Z pozostają te z <a href="rozdzial-08-glebia-ostrosci.html">Rozdziału 8</a> i wracamy do nich w <a href="rozdzial-34-render-czy-comp.html">Rozdziale 34</a>.</p>
+  </div>
+
+  <div class="panel practice">
+    <div class="panel-label">Z praktyki</div>
+    <p><strong>Policz kąty w bokeh z plate'u, zanim ustawisz kamerę.</strong> Znajdź w materiale nieostre światło blisko środka kadru i policz boki wielokąta. Dostajesz liczbę listków wprost, a przy okazji informację o przysłonie: krążek idealnie okrągły oznacza pełny otwór, wyraźny wielokąt — przymknięcie o co najmniej dwie przysłony.</p>
+    <p><strong>Sprawdź obie strony ostrości, nie tylko tło.</strong> Jeśli w ujęciu jest zarówno rozmyty przód, jak i rozmyte tło, porównaj je. Miękkie tło przy nerwowym przodzie (albo odwrotnie) mówi ci, w którą stronę skorygowano aberrację sferyczną — a to jest jedna z niewielu cech, po których da się rozpoznać rodzinę obiektywów bez metryki.</p>
+    <p><strong>Nie dodawaj cebulek do wszystkiego.</strong> Są podpisem konkretnej technologii wytwarzania asfer i występują w ograniczonej grupie obiektywów. Dołożone do renderu udającego szkło sprzed 1970 roku są anachronizmem — tak samo widocznym jak zegarek na ręce w filmie kostiumowym, tyle że dla węższej publiczności.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>bokeh</dt>
+      <dd>Jakość obrazu poza płaszczyzną ostrości — kształt i rozkład jasności krążków nieostrości. Nie to samo co ilość rozmycia, którą opisuje głębia ostrości.</dd>
+      <dt>krążek nieostrości</dt>
+      <dd>Plamka, w jaką odwzorowuje się punkt spoza płaszczyzny ostrości. Jest rzutem źrenicy na matrycę.</dd>
+      <dt>bokeh kremowe</dt>
+      <dd>Krążek jaśniejszy w środku, gasnący ku brzegom. Skutek niedokorygowanej aberracji sferycznej po tej stronie ostrości.</dd>
+      <dt>bokeh obrączkowe</dt>
+      <dd>Krążek z jasnym pierścieniem po obwodzie. Skutek przekorygowanej aberracji sferycznej. Czytane jako „nerwowe tło”.</dd>
+      <dt>cebulka (onion ring)</dt>
+      <dd>Koncentryczne prążki wewnątrz krążka, pochodzące od śladów obróbki powierzchni asferycznej.</dd>
+      <dt>pączek (donut)</dt>
+      <dd>Krążek z ciemnym środkiem, charakterystyczny dla obiektywów lustrzanych o źrenicy pierścieniowej.</dd>
+      <dt>tekstura źrenicy</dt>
+      <dd>Mapa w kamerze renderera opisująca kształt i rozkład jasności źrenicy. Odpowiednik jądra splotu w compie.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Wygląd nieostrości mamy rozłożony na przyczyny, ale jedna z nich — aberracja sferyczna — była tu użyta na kredyt. Zanim ją spłacimy, zostaje jeszcze ostatni element Części II: granica, której nie da się przekroczyć żadnym szkłem. W <a href="rozdzial-10-dyfrakcja.html">następnym rozdziale</a> wracamy do fali i sprawdzamy, dlaczego przymykanie przysłony przestaje w pewnym momencie pomagać, a zaczyna szkodzić.</p>
+  </div>
 
   <div class="deeper">
     <div class="deeper-label">Idź głębiej</div>
@@ -59,5 +368,101 @@ window.SKY3D_MESSAGES = {
 </div>
 
 <script src="../assets/interactive.js"></script>
+<script>
+/* Symulator krazka nieostrosci. Rysuje obraz zrenicy piksel po pikselu:
+   ksztalt (listki + obciecie mechaniczne) razy rozklad jasnosci (aberracja
+   sferyczna + cebulki). Kazdy suwak odpowiada jednej realnej wlasciwosci
+   konstrukcji, a nie filtrowi graficznemu. */
+(function () {
+  var host = document.getElementById('bokehSim');
+  if (!host) return;
+  var cv = host.querySelector('canvas');
+  if (!cv || !cv.getContext) return;
+  var ctx = cv.getContext('2d');
+  var W = cv.width, H = cv.height;
+
+  var slL = document.getElementById('bkListki');
+  var slS = document.getElementById('bkSfer');
+  var slK = document.getElementById('bkKot');
+  var slC = document.getElementById('bkCebula');
+
+  /* Czy punkt (x,y) w jednostkach promienia lezy wewnatrz wielokata o n bokach.
+     n = 0 znaczy kolo. */
+  function wWielokacie(x, y, n) {
+    var r = Math.sqrt(x * x + y * y);
+    if (n < 3) return r <= 1;
+    var a = Math.atan2(y, x);
+    var krok = 2 * Math.PI / n;
+    var faza = ((a % krok) + krok) % krok - krok / 2;
+    return r <= Math.cos(Math.PI / n) / Math.cos(faza);
+  }
+
+  function rysuj() {
+    var listki = parseInt(slL.value, 10);
+    var sfer = parseFloat(slS.value) / 100;      // -1 niedo, +1 przekorygowana
+    var kot = parseFloat(slK.value) / 100;       // obciecie mechaniczne
+    var cebula = parseFloat(slC.value) / 100;
+
+    var n = listki < 3 ? 0 : listki;
+    var R = Math.min(W, H) * 0.34;
+    var cx = W / 2, cy = H / 2;
+
+    var img = ctx.createImageData(W, H);
+    var dane = img.data;
+    var przes = kot * 1.15;                       // rozjechanie opraw
+
+    for (var py = 0; py < H; py++) {
+      for (var px = 0; px < W; px++) {
+        var x = (px - cx) / R, y = (py - cy) / R;
+        var r = Math.sqrt(x * x + y * y);
+        var v = 0;
+
+        if (wWielokacie(x, y, n) &&
+            (x + przes) * (x + przes) + y * y <= 1 &&
+            (x - przes) * (x - przes) + y * y <= 1) {
+          /* Rozklad jasnosci wzdluz promienia. sfer < 0: jasniej w srodku,
+             sfer > 0: jasna obraczka przy brzegu. */
+          v = 1;
+          if (sfer < 0) v = 1 + sfer * 0.85 * r * r;
+          else if (sfer > 0) v = 1 - sfer * 0.55 + sfer * 1.25 * Math.pow(r, 6);
+          /* Cebulki: koncentryczne prazki od sladow obrobki asfery. */
+          if (cebula > 0) v *= 1 + cebula * 0.42 * Math.cos(r * 26);
+          /* Miekka krawedz — inaczej wyglada jak wycinanka. */
+          var brzeg = 1 - Math.max(0, (r - 0.965) / 0.035);
+          v *= Math.max(0, Math.min(1, brzeg));
+        }
+
+        v = Math.max(0, Math.min(1.25, v));
+        var i = (py * W + px) * 4;
+        dane[i]     = Math.min(255, 32 + v * 226);
+        dane[i + 1] = Math.min(255, 36 + v * 168);
+        dane[i + 2] = Math.min(255, 44 + v * 74);
+        dane[i + 3] = 255;
+      }
+    }
+    ctx.putImageData(img, 0, 0);
+
+    document.getElementById('bkListkiOdczyt').textContent = n === 0 ? 'okrągła' : n + ' listków';
+    document.getElementById('bkSferOdczyt').textContent =
+      sfer < -0.15 ? 'niedokorygowana' : (sfer > 0.15 ? 'przekorygowana' : 'skorygowana');
+    document.getElementById('bkKotOdczyt').textContent =
+      kot < 0.08 ? 'środek kadru' : Math.round(kot * 100) + '% ku rogowi';
+    document.getElementById('bkCebulaOdczyt').textContent =
+      cebula < 0.08 ? 'brak' : (cebula < 0.5 ? 'ledwie widoczne' : 'wyraźne');
+
+    var opis = [];
+    opis.push(n === 0 ? 'Źrenica okrągła' : 'Źrenica ' + n + '-kątna');
+    if (kot >= 0.08) opis.push('obcięta mechanicznie');
+    opis.push(sfer < -0.15 ? 'krążek gaśnie ku brzegom — bokeh kremowe'
+            : (sfer > 0.15 ? 'jasna obrączka przy brzegu — bokeh nerwowe'
+                           : 'rozkład równomierny'));
+    if (cebula >= 0.08) opis.push('ślady szlifowania asfery widoczne jako prążki');
+    document.getElementById('bkPodpis').textContent = opis.join(', ') + '.';
+  }
+
+  [slL, slS, slK, slC].forEach(function (s) { s.addEventListener('input', rysuj); });
+  rysuj();
+})();
+</script>
 </body>
 </html>
