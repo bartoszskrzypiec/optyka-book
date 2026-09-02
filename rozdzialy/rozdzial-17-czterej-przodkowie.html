@@ -43,7 +43,309 @@ window.SKY3D_MESSAGES = {
   <h1>Czterej przodkowie: Petzval, Tessar, Sonnar, Double Gauss</h1>
   <p class="subtitle">Cztery układy z lat 1840–1930 wystarczą, żeby wyjaśnić charakter większości obiektywów, jakie kiedykolwiek trzymałeś. Każdy z nich odpuścił coś innego — i z tego odpuszczenia zrobił podpis.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li><strong>Cztery układy z lat 1840–1930 wyjaśniają większość obiektywów.</strong> Petzval kupił jasność ceną płaskiego pola. Tessar kupił ostrość ceną jasności. Sonnar kupił kontrast ceną szerokiego kąta. Double Gauss kupił wszystko naraz ceną liczby granic ze szkłem.</li>
+      <li>Rozstrzygnęła o tym jedna liczba z <a href="rozdzial-16-anatomia-obiektywu.html">Rozdziału 16</a>: <span class="term-amber">granice powietrze–szkło</span>. Sonnar ma siedem elementów i sześć granic; Double Gauss ma sześć elementów i osiem granic.</li>
+      <li>Dlatego przed powłokami wygrywał Sonnar, a po powłokach Double Gauss — i dlatego <strong>prawie każda dzisiejsza pięćdziesiątka jest wnuczką Planara z 1896 roku</strong>.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Przestrzeń projektowa · dlaczego akurat cztery</div>
+    <h2>Układów nie jest nieskończenie wiele</h2>
+
+    <p>Po <a href="rozdzial-15-korekcja-i-jej-cena.html">Rozdziale 15</a> można by sądzić, że konstrukcji optycznych jest tyle, ile projektów. Nie jest — i powód jest ten sam, dla którego wad Seidela jest dokładnie pięć. Liczba niezależnych ruchów, jakie może wykonać konstruktor, jest skończona, więc <strong>sensownych układów jest kilkanaście, nie tysiące</strong>.</p>
+
+    <p>Cztery poniższe wystarczają, bo każdy z nich zajmuje inny róg tej przestrzeni. Nie są to najlepsze konstrukcje w historii — są to cztery <em>różne odpowiedzi na pytanie, z czego zrezygnować</em>, i wszystko, co powstało później, jest ich wariantem albo hybrydą.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Cztery przodkowie</span><span>przesuń, żeby porównać</span></div>
+      <div class="diagram-controls">
+        <label for="ukladWybor">Układ</label>
+        <input id="ukladWybor" type="range" min="0" max="3" step="1" value="0">
+        <span class="value-readout" id="ukladNazwa">Petzval · 1840</span>
+      </div>
+      <svg viewBox="0 0 760 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Przekroje czterech klasycznych układów optycznych z podaną liczbą elementów, grup i granic ze szkłem na powietrze.">
+        <line x1="40" y1="120" x2="560" y2="120" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 6"/>
+        <line x1="560" y1="62" x2="560" y2="178" stroke="#6e93be" stroke-width="3"/>
+
+        <g id="ukladPetzval">
+          <path d="M 130 62 Q 158 120 130 178 Q 102 120 130 62 Z" fill="#4fc3c0" fill-opacity="0.16" stroke="#4fc3c0" stroke-width="1.4"/>
+          <path d="M 130 62 Q 158 120 130 178 Q 172 120 130 62 Z" fill="#9c82d8" fill-opacity="0.14" stroke="#9c82d8" stroke-width="1.4"/>
+          <path d="M 320 74 Q 344 120 320 166 Q 296 120 320 74 Z" fill="#4fc3c0" fill-opacity="0.16" stroke="#4fc3c0" stroke-width="1.4"/>
+          <path d="M 390 78 Q 372 120 390 162 Q 412 120 390 78 Z" fill="#9c82d8" fill-opacity="0.14" stroke="#9c82d8" stroke-width="1.4"/>
+        </g>
+
+        <g id="ukladTessar" opacity="0">
+          <path d="M 140 72 Q 164 120 140 168 Q 116 120 140 72 Z" fill="#4fc3c0" fill-opacity="0.16" stroke="#4fc3c0" stroke-width="1.4"/>
+          <path d="M 212 80 Q 200 120 212 160 Q 230 120 212 80 Z" fill="#9c82d8" fill-opacity="0.14" stroke="#9c82d8" stroke-width="1.4"/>
+          <path d="M 356 82 Q 344 120 356 158 Q 374 120 356 82 Z" fill="#9c82d8" fill-opacity="0.14" stroke="#9c82d8" stroke-width="1.4"/>
+          <path d="M 356 82 Q 344 120 356 158 Q 392 120 356 82 Z" fill="#4fc3c0" fill-opacity="0.16" stroke="#4fc3c0" stroke-width="1.4"/>
+        </g>
+
+        <g id="ukladSonnar" opacity="0">
+          <path d="M 120 66 Q 148 120 120 174 Q 92 120 120 66 Z" fill="#4fc3c0" fill-opacity="0.16" stroke="#4fc3c0" stroke-width="1.4"/>
+          <path d="M 210 70 Q 244 120 210 170 Q 184 120 210 70 Z" fill="#4fc3c0" fill-opacity="0.16" stroke="#4fc3c0" stroke-width="1.4"/>
+          <path d="M 210 70 Q 244 120 210 170 Q 262 120 210 70 Z" fill="#9c82d8" fill-opacity="0.14" stroke="#9c82d8" stroke-width="1.4"/>
+          <path d="M 262 70 Q 244 120 262 170 Q 288 120 262 70 Z" fill="#4fc3c0" fill-opacity="0.16" stroke="#4fc3c0" stroke-width="1.4"/>
+          <path d="M 380 80 Q 366 120 380 160 Q 402 120 380 80 Z" fill="#9c82d8" fill-opacity="0.14" stroke="#9c82d8" stroke-width="1.4"/>
+          <path d="M 380 80 Q 366 120 380 160 Q 414 120 380 80 Z" fill="#4fc3c0" fill-opacity="0.16" stroke="#4fc3c0" stroke-width="1.4"/>
+        </g>
+
+        <g id="ukladGauss" opacity="0">
+          <path d="M 130 68 Q 152 120 130 172 Q 108 120 130 68 Z" fill="#4fc3c0" fill-opacity="0.16" stroke="#4fc3c0" stroke-width="1.4"/>
+          <path d="M 200 74 Q 220 120 200 166 Q 184 120 200 74 Z" fill="#4fc3c0" fill-opacity="0.16" stroke="#4fc3c0" stroke-width="1.4"/>
+          <path d="M 200 74 Q 220 120 200 166 Q 236 120 200 74 Z" fill="#9c82d8" fill-opacity="0.14" stroke="#9c82d8" stroke-width="1.4"/>
+          <path d="M 340 74 Q 320 120 340 166 Q 356 120 340 74 Z" fill="#9c82d8" fill-opacity="0.14" stroke="#9c82d8" stroke-width="1.4"/>
+          <path d="M 340 74 Q 320 120 340 166 Q 376 120 340 74 Z" fill="#4fc3c0" fill-opacity="0.16" stroke="#4fc3c0" stroke-width="1.4"/>
+          <path d="M 440 68 Q 462 120 440 172 Q 418 120 440 68 Z" fill="#4fc3c0" fill-opacity="0.16" stroke="#4fc3c0" stroke-width="1.4"/>
+        </g>
+
+        <g id="ukladPrzyslona" stroke="#8b909b" stroke-width="4">
+          <line x1="270" y1="76" x2="270" y2="106"/>
+          <line x1="270" y1="134" x2="270" y2="164"/>
+        </g>
+
+        <g font-family="IBM Plex Mono" font-size="10.5">
+          <text x="600" y="70" fill="#8b909b">elementy</text><text x="736" y="70" fill="#ecebe4" text-anchor="end" id="ukladElem">4</text>
+          <text x="600" y="96" fill="#8b909b">grupy</text><text x="736" y="96" fill="#ecebe4" text-anchor="end" id="ukladGrupy">3</text>
+          <text x="600" y="122" fill="#8b909b">granice</text><text x="736" y="122" fill="#e8a33d" text-anchor="end" id="ukladGranice">6</text>
+          <text x="600" y="148" fill="#8b909b">jasność</text><text x="736" y="148" fill="#ecebe4" text-anchor="end" id="ukladJasnosc">f/3,6</text>
+        </g>
+        <line x1="590" y1="160" x2="740" y2="160" stroke="#2a2f38" stroke-width="1"/>
+        <text x="590" y="182" font-family="IBM Plex Mono" font-size="9.5" fill="#9c82d8" id="ukladOdpuscil">pole zakrzywione</text>
+        <text x="590" y="198" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">← z czego zrezygnował</text>
+
+        <text x="40" y="236" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">cyjan · szkło skupiające   fiolet · rozpraszające   szara kreska · przysłona</text>
+      </svg>
+      <div class="diagram-caption" id="ukladPodpis">Petzval, 1840. Pierwszy układ policzony matematycznie, a nie dobrany doświadczalnie.</div>
+    </div>
+
+    <p>Zwróć uwagę na wiersz „granice”. To ta sama liczba, którą w <a href="rozdzial-16-anatomia-obiektywu.html">Rozdziale 16</a> nazwaliśmy jedyną decydującą o kontraście — i to ona, a nie liczba elementów, rozstrzygnie spór z ostatniej sekcji tego rozdziału.</p>
+
+    <p>Warto też zauważyć, jak niewiele te układy mają elementów. Cztery, cztery, siedem i sześć — przy dzisiejszym zoomie liczącym dwadzieścia. Nie wynika to z ubóstwa epoki, tylko z tego, że <strong>każdy dodatkowy element bez powłok kosztował wtedy cztery procent światła i podniesioną czerń</strong>. Konstruktor sprzed wojny liczył elementy tak, jak dziś liczy się gramy w obiektywie do drona — jako zasób, którego ma bardzo mało.</p>
+
+    <p>Dlatego te cztery układy są w pewnym sensie <em>uczciwsze</em> od współczesnych: nie mają w sobie nadmiaru, w którym można ukryć błąd projektowy. Każdy element pracuje na konkretną wadę i widać, na którą. To jest zresztą powód, dla którego uczy się na nich optyki — nowoczesny zoom jest lepszy pod każdym względem i nie da się z niego niczego wyczytać.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Dziewiętnasty wiek · jasność albo ostrość</div>
+    <h2>Petzval i Tessar</h2>
+
+    <p><strong>Petzval, 1840.</strong> Joseph Petzval policzył go w Wiedniu jako pierwszy układ zaprojektowany rachunkiem, a nie dobierany po omacku. Cel był jeden: zrobić portret w rozsądnym czasie. Ówczesne obiektywy krajobrazowe miały około f/11; Petzval osiągnął f/3,6, czyli <span class="term-amber">dziewięciokrotnie więcej światła</span>. Czas naświetlania spadł z minut do kilkudziesięciu sekund i dopiero wtedy fotografowanie ludzi stało się wykonalne.</p>
+
+    <p>Zapłacił za to polem. Układ jest ostry w środku i gwałtownie miękknie ku brzegom, bo jego powierzchnia ostrości jest mocno zakrzywiona — dokładnie ta wada, którą opisuje <a href="rozdzial-12-poza-osia.html">Rozdział 12</a>. W połączeniu z obcięciem mechanicznym daje to <strong>wir</strong>, czyli najbardziej rozpoznawalny podpis w całej optyce. Petzval uważał go za wadę; dziś sprzedaje się obiektywy, których jedyną zaletą jest jego posiadanie.</p>
+
+    <p><strong>Tessar, 1902.</strong> Paul Rudolph w Zeissie poszedł w przeciwną stronę: cztery elementy, trzy grupy, umiarkowana jasność i ostrość, jakiej dotąd nie było. Tessar nie próbuje być jasny — pierwsze wersje miały f/6,3 — za to jest ostry na całym polu i tani w produkcji. Do dziś jest przodkiem wszystkiego, co ma być dobre i proste naraz.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Dwie odpowiedzi na to samo pytanie</span><span>powierzchnia ostrości i jej cena</span></div>
+      <svg viewBox="0 0 760 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Po lewej Petzval: powierzchnia ostrości mocno wygięta, matryca trafia w nią tylko w środku. Po prawej Tessar: powierzchnia prawie płaska, ale stożek promieni znacznie węższy.">
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">
+          <text x="180" y="24" text-anchor="middle">PETZVAL · f/3,6</text>
+          <text x="570" y="24" text-anchor="middle">TESSAR · f/6,3</text>
+        </g>
+
+        <line x1="250" y1="46" x2="250" y2="186" stroke="#6e93be" stroke-width="2.5"/>
+        <path d="M 250 46 Q 168 116 250 186" fill="none" stroke="#9c82d8" stroke-width="2.4"/>
+        <circle cx="250" cy="116" r="4" fill="#7fc47f"/>
+        <text x="150" y="112" font-family="IBM Plex Mono" font-size="9.5" fill="#9c82d8">powierzchnia</text>
+        <text x="150" y="126" font-family="IBM Plex Mono" font-size="9.5" fill="#9c82d8">ostrości</text>
+        <text x="266" y="52" font-family="IBM Plex Mono" font-size="9.5" fill="#d8695f">róg miękki</text>
+        <text x="266" y="120" font-family="IBM Plex Mono" font-size="9.5" fill="#7fc47f">środek ostry</text>
+        <text x="266" y="182" font-family="IBM Plex Mono" font-size="9.5" fill="#d8695f">róg miękki</text>
+        <path d="M 60 66 L 250 116 L 60 166 Z" fill="#e8a33d" fill-opacity="0.16" stroke="#e8a33d" stroke-width="1"/>
+        <text x="70" y="212" font-family="IBM Plex Mono" font-size="10" fill="#e8a33d">szeroki stożek · dużo światła</text>
+
+        <line x1="380" y1="16" x2="380" y2="226" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 5"/>
+
+        <line x1="640" y1="46" x2="640" y2="186" stroke="#6e93be" stroke-width="2.5"/>
+        <path d="M 640 46 Q 622 116 640 186" fill="none" stroke="#7fc47f" stroke-width="2.4"/>
+        <text x="656" y="52" font-family="IBM Plex Mono" font-size="9.5" fill="#7fc47f">róg ostry</text>
+        <text x="656" y="120" font-family="IBM Plex Mono" font-size="9.5" fill="#7fc47f">środek ostry</text>
+        <text x="656" y="182" font-family="IBM Plex Mono" font-size="9.5" fill="#7fc47f">róg ostry</text>
+        <path d="M 480 96 L 640 116 L 480 136 Z" fill="#e8a33d" fill-opacity="0.16" stroke="#e8a33d" stroke-width="1"/>
+        <text x="460" y="212" font-family="IBM Plex Mono" font-size="10" fill="#e8a33d">wąski stożek · trzy razy mniej światła</text>
+      </svg>
+      <div class="diagram-caption">Ta sama epoka, dwa przeciwne wybory. Żaden z nich nie jest lepszy — są odpowiedziami na dwa różne pytania.</div>
+    </div>
+
+    <p>Warto zauważyć, że różnica jasności między nimi to nie kaprys, tylko konsekwencja. Petzval ma szeroki stożek promieni, więc jego brzegowe promienie biegną daleko od osi — a tam korekcja pracuje najgorzej, o czym cała <a href="rozdzial-11-aberracja-sferyczna.html">Część III</a>. Tessar, rezygnując z jasności, w ogóle nie wpuszcza tych promieni do układu. <strong>Nie koryguje ich lepiej — koryguje ich mniej</strong>, bo ich nie ma.</p>
+
+    <p>To jest chwyt, który wraca w całej historii optyki i warto go nazwać wprost: <span class="term-cyan">najtańszym sposobem na usunięcie wady jest niewpuszczenie światła, które ją wywołuje</span>. Dlatego każdy obiektyw jest lepszy po przymknięciu, dlatego tanie zoomy mają f/5,6 na długim końcu, i dlatego porównywanie ostrości obiektywów o różnej jasności przy pełnym otworze nie mówi nic o jakości ich projektu.</p>
+
+    <p>Te dwa układy wyznaczają oś, na której leży cała reszta rozdziału: <span class="term-cyan">jasność kosztuje pole, a płaskie pole kosztuje jasność</span>. Dwie kolejne konstrukcje są próbami złamania tego wyboru.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Spór o pięćdziesiątkę · rozstrzygnięty przez powłoki</div>
+    <h2>Sonnar kontra Double Gauss</h2>
+
+    <p><strong>Double Gauss</strong> jest starszy, choć wygrał później. Paul Rudolph opatentował go jako Planar w 1896 roku: sześć elementów ułożonych <em>symetrycznie</em> wokół przysłony. Symetria kasuje za darmo dystorsję, komę i chromatyczną poprzeczną, o czym w <a href="rozdzial-15-korekcja-i-jej-cena.html">Rozdziale 15</a> — więc konstruktor dostaje trzy wady mniej, zanim jeszcze zacznie liczyć.</p>
+
+    <p>Miał jednak wadę, która w 1896 roku przesądzała: <span class="term-violet">osiem granic ze szkła na powietrze</span>. Każda z nich odbijała wtedy pełne cztery procent, bo powłok nie było. Kontrast wychodził niski, czernie podniesione, a przy świetle w kadrze obraz się rozmywał. Planar był doceniany i mało używany.</p>
+
+    <p><strong>Sonnar, 1929.</strong> Ludwig Bertele rozwiązał to inaczej, i rozwiązanie jest zaskakujące: <em>dołożył szkła, żeby zmniejszyć liczbę granic</em>. Sonnar ma siedem elementów, ale tylko trzy grupy — bo są sklejone w grube bloki. Siedem elementów, sześć granic z powietrzem. Dla porównania Planar: sześć elementów, osiem granic.</p>
+
+    <div class="worked">
+      <div class="wlabel">Kontrast przed epoką powłok, R = 4,3% na granicę</div>
+      <p class="step"><span class="k">Sonnar</span> <span class="v">6 granic: 0,957⁶ = </span><span class="result">77% transmisji</span></p>
+      <p class="step"><span class="k">Planar</span> <span class="v">8 granic: 0,957⁸ = </span><span class="result">70% transmisji</span></p>
+      <p class="step"><span class="k">światło zabłąkane</span> <span class="v">Sonnar 23%, Planar </span><span class="result">30%</span></p>
+      <p class="check">Siedem punktów procentowych różnicy w transmisji brzmi skromnie. Ale to nie transmisja rozstrzygała — rozstrzygało <strong>zabłąkane światło</strong>, którego Planar miał o jedną trzecią więcej, rozsianego po całym kadrze jako podniesiona czerń. Przy jednakowej jasności nominalnej Sonnar dawał obraz wyraźnie „czystszy”, i to jest cała przyczyna jego ówczesnej przewagi.</p>
+    </div>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Ten sam spór, dwie epoki</span><span>zabłąkane światło w procentach</span></div>
+      <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Wykres słupkowy: bez powłok Sonnar traci 23 procent, Planar 30; z powłokami wielowarstwowymi obie konstrukcje tracą poniżej dwóch procent i różnica przestaje mieć znaczenie.">
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">
+          <text x="200" y="26" text-anchor="middle">BEZ POWŁOK · do lat 40.</text>
+          <text x="560" y="26" text-anchor="middle">POWŁOKI WIELOWARSTWOWE</text>
+        </g>
+        <line x1="60" y1="200" x2="700" y2="200" stroke="#8b909b" stroke-width="1.2"/>
+
+        <rect x="110" y="61" width="70" height="139" fill="#4fc3c0" fill-opacity="0.45" stroke="#4fc3c0"/>
+        <text x="145" y="52" font-family="IBM Plex Mono" font-size="12" fill="#4fc3c0" text-anchor="middle">23%</text>
+        <text x="145" y="220" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">Sonnar</text>
+        <text x="145" y="236" font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="middle">6 granic</text>
+
+        <rect x="230" y="22" width="70" height="178" fill="#9c82d8" fill-opacity="0.45" stroke="#9c82d8"/>
+        <text x="265" y="16" font-family="IBM Plex Mono" font-size="12" fill="#9c82d8" text-anchor="middle">30%</text>
+        <text x="265" y="220" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">Planar</text>
+        <text x="265" y="236" font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="middle">8 granic</text>
+
+        <line x1="380" y1="16" x2="380" y2="240" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 5"/>
+
+        <rect x="470" y="193" width="70" height="7" fill="#4fc3c0" fill-opacity="0.45" stroke="#4fc3c0"/>
+        <text x="505" y="184" font-family="IBM Plex Mono" font-size="11" fill="#4fc3c0" text-anchor="middle">1,2%</text>
+        <text x="505" y="220" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">Sonnar</text>
+
+        <rect x="590" y="190" width="70" height="10" fill="#9c82d8" fill-opacity="0.45" stroke="#9c82d8"/>
+        <text x="625" y="181" font-family="IBM Plex Mono" font-size="11" fill="#9c82d8" text-anchor="middle">1,6%</text>
+        <text x="625" y="220" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">Planar</text>
+
+        <text x="418" y="112" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">Różnica siedmiu punktów</text>
+        <text x="418" y="128" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">spada do czterech dziesiątych.</text>
+        <text x="418" y="150" font-family="IBM Plex Mono" font-size="10.5" fill="#7fc47f">Przewaga Sonnara znika.</text>
+      </svg>
+      <div class="diagram-caption">Nie zmienił się żaden z układów. Zmieniła się wartość R w tym samym rachunku — i to wystarczyło, żeby odwrócić wynik sporu.</div>
+    </div>
+
+    <p>Potem przyszły powłoki i odwróciły wynik. Przy odbiciu 0,2% zamiast 4,3% osiem granic przestało być obciążeniem — a symetria Double Gaussa, która przez czterdzieści lat była zaletą teoretyczną, stała się przewagą praktyczną. <strong>Dlatego prawie każda dzisiejsza pięćdziesiątka jest wariantem Planara</strong>, a Sonnar przetrwał głównie tam, gdzie liczy się rozmiar i gdzie odcinek tylny może być krótki.</p>
+
+    <p>Warto zatrzymać się na tym, co się tu właściwie stało, bo jest to jeden z niewielu przypadków w tej książce, gdzie <strong>o wyniku sporu konstrukcyjnego zdecydowała technologia leżąca poza optyką</strong>. Ani Bertele, ani Rudolph niczego nie zmienili. Zmieniła się jedna liczba w rachunku Fresnela — i układ przegrany przez czterdzieści lat stał się standardem na następne osiemdziesiąt.</p>
+
+    <p class="deeper-inline">Przekroje i liczby dla kilkunastu układów, nie tylko tych czterech — <a href="../dodatki/dodatek-i-katalog-ukladow.html">Dodatek I</a>.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">W materiale · po czym je poznać</div>
+    <h2>Podpis każdego z czterech</h2>
+
+    <p>Rodowód obiektywu widać w obrazie, o ile wiadomo, czego szukać. Każdy z czterech układów zostawia inny zestaw śladów — i wszystkie są konsekwencjami tego, z czego zrezygnował.</p>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead>
+          <tr><th>Układ</th><th>Podpis w obrazie</th><th>Skąd się bierze</th><th>Gdzie go dziś spotkasz</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Petzval</td><td>wir w tle, miękkie brzegi</td><td>zakrzywione pole</td><td>obiektywy „artystyczne”, vintage</td></tr>
+          <tr><td>Tessar</td><td>ostry środek, płaskie bokeh</td><td>mało elementów, brak nadmiaru</td><td>obiektywy zestawowe, kompakty</td></tr>
+          <tr><td>Sonnar</td><td>wysoki kontrast, ciepły rysunek</td><td>mało granic, dużo szkła</td><td>dalmierze, portretowe tele</td></tr>
+          <tr><td>Double Gauss</td><td>równe pole, podatność na flarę</td><td>symetria, osiem granic</td><td>praktycznie każda pięćdziesiątka</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Kolumna trzecia jest tą, którą warto zapamiętać: podpis nie jest cechą marki, tylko konsekwencją układu.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Cztery podpisy</span><span>ta sama scena, cztery rodowody</span></div>
+      <svg viewBox="0 0 760 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cztery kadry tej samej sceny: Petzval z wirem w tle, Tessar z płaskim bokeh, Sonnar z wysokim kontrastem, Double Gauss z równym polem i flarą.">
+        <g font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">
+          <text x="115" y="22">PETZVAL</text><text x="295" y="22">TESSAR</text>
+          <text x="475" y="22">SONNAR</text><text x="655" y="22">DOUBLE GAUSS</text>
+        </g>
+
+        <rect x="40" y="34" width="150" height="120" fill="#141619" stroke="#2a2f38"/>
+        <g fill="#e8a33d" fill-opacity="0.45" stroke="#e8a33d" stroke-width="0.8">
+          <ellipse cx="72" cy="62" rx="7" ry="13" transform="rotate(-42 72 62)"/>
+          <ellipse cx="158" cy="62" rx="7" ry="13" transform="rotate(42 158 62)"/>
+          <ellipse cx="72" cy="128" rx="7" ry="13" transform="rotate(42 72 128)"/>
+          <ellipse cx="158" cy="128" rx="7" ry="13" transform="rotate(-42 158 128)"/>
+          <circle cx="115" cy="95" r="10"/>
+        </g>
+        <text x="115" y="176" font-family="IBM Plex Mono" font-size="10" fill="#9c82d8" text-anchor="middle">wir</text>
+        <text x="115" y="196" font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="middle">pole zakrzywione</text>
+
+        <rect x="220" y="34" width="150" height="120" fill="#141619" stroke="#2a2f38"/>
+        <g fill="#e8a33d" fill-opacity="0.32" stroke="#e8a33d" stroke-width="0.8">
+          <circle cx="258" cy="66" r="9"/><circle cx="332" cy="66" r="9"/>
+          <circle cx="258" cy="124" r="9"/><circle cx="332" cy="124" r="9"/>
+          <circle cx="295" cy="95" r="9"/>
+        </g>
+        <text x="295" y="176" font-family="IBM Plex Mono" font-size="10" fill="#4fc3c0" text-anchor="middle">równo, płasko</text>
+        <text x="295" y="196" font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="middle">mało elementów</text>
+
+        <rect x="400" y="34" width="150" height="120" fill="#0d0f11" stroke="#2a2f38"/>
+        <g fill="#e8a33d" fill-opacity="0.75" stroke="#e8a33d" stroke-width="1">
+          <circle cx="438" cy="66" r="9"/><circle cx="512" cy="66" r="9"/>
+          <circle cx="438" cy="124" r="9"/><circle cx="512" cy="124" r="9"/>
+          <circle cx="475" cy="95" r="9"/>
+        </g>
+        <text x="475" y="176" font-family="IBM Plex Mono" font-size="10" fill="#7fc47f" text-anchor="middle">czernie głębokie</text>
+        <text x="475" y="196" font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="middle">sześć granic</text>
+
+        <rect x="580" y="34" width="150" height="120" fill="#1e2126" stroke="#2a2f38"/>
+        <g fill="#e8a33d" fill-opacity="0.4" stroke="#e8a33d" stroke-width="0.8">
+          <circle cx="618" cy="66" r="9"/><circle cx="692" cy="66" r="9"/>
+          <circle cx="618" cy="124" r="9"/><circle cx="692" cy="124" r="9"/>
+          <circle cx="655" cy="95" r="9"/>
+        </g>
+        <text x="655" y="176" font-family="IBM Plex Mono" font-size="10" fill="#9c82d8" text-anchor="middle">czernie podniesione</text>
+        <text x="655" y="196" font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="middle">osiem granic</text>
+
+        <text x="40" y="222" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">Dwa prawe kadry różni wyłącznie poziom czerni — i to jest cała różnica między sześcioma a ośmioma granicami.</text>
+      </svg>
+      <div class="diagram-caption">Rysunek pokazuje objawy, nie zdjęcia. Wszystkie cztery da się jednak zobaczyć na jednym kadrze z punktowymi światłami w tle.</div>
+    </div>
+
+    <p>Dla artysty CG wynika stąd jedna rzecz praktyczna i jedna pojęciowa. Praktyczna: <strong>rozpoznanie rodziny zawęża zestaw wad, które trzeba odtworzyć</strong>. Jeśli w plate'cie widać wir, wiesz, że masz do czynienia z zakrzywionym polem i obcięciem mechanicznym naraz, a nie z jednym rozmyciem promienistym — i wiesz, że oba znikną po przymknięciu.</p>
+
+    <p>Pojęciowa jest ważniejsza. Wszystkie cztery układy powstały jako <em>kompromisy techniczne</em>, a funkcjonują dziś jako <em>charaktery</em>. Nikt nie projektował wiru; wir jest tym, co zostało, gdy Petzval kupił jasność. <span class="term-cyan">To, co nazywamy charakterem obiektywu, jest listą jego nieusuniętych wad</span> — i dlatego dokładanie charakteru do renderu polega na dokładaniu wad w spójnym zestawie, a nie pojedynczo.</p>
+
+    <button class="advanced-btn" data-modal-target="adv-rodowod">Zaawansowane: dlaczego rodowód widać do dziś</button>
+  </div>
+
+  <div class="panel practice">
+    <div class="panel-label">Z praktyki</div>
+    <p><strong>Policz granice, zanim ocenisz kontrast.</strong> Dane „7 elementów w 3 grupach” i „6 elementów w 4 grupach” wyglądają podobnie, a dają sześć kontra osiem granic z powietrzem. Przy nowoczesnych powłokach różnica jest niewielka, przy starym szkle — decydująca. To jest najszybszy sposób na przewidzenie, jak obiektyw zachowa się przy świetle w kadrze.</p>
+    <p><strong>Wir jest testem na dwie rzeczy naraz.</strong> Jeśli w tle widać skręcenie, obiektyw był otwarty blisko maksimum (bo wir znika po przymknięciu) i ma zakrzywione pole (bo bez tego byłoby samo kocie oko). Dwie informacje z jednego objawu, obie przydatne przy dopasowywaniu renderu.</p>
+    <p><strong>Nie mieszaj podpisów z różnych rodzin.</strong> Element CG z wirem Petzvala i jednocześnie idealnie płaskim polem to zestaw, który nie istnieje w naturze. Oko nie nazwie problemu, ale zobaczy niespójność — a to jest ten rodzaj błędu, który sprawia, że ujęcie „jakoś nie siedzi”.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>Petzval</dt>
+      <dd>Układ z 1840 roku, cztery elementy. Pierwszy policzony matematycznie. Jasny kosztem płaskiego pola — stąd wir.</dd>
+      <dt>Tessar</dt>
+      <dd>Układ z 1902 roku, cztery elementy w trzech grupach. Ostry i tani kosztem jasności.</dd>
+      <dt>Sonnar</dt>
+      <dd>Układ z 1929 roku, siedem elementów w trzech grupach. Wysoki kontrast dzięki małej liczbie granic z powietrzem.</dd>
+      <dt>Double Gauss (Planar)</dt>
+      <dd>Układ symetryczny z 1896 roku, sześć elementów. Przodek niemal każdej współczesnej pięćdziesiątki.</dd>
+      <dt>symetria wokół przysłony</dt>
+      <dd>Układ, w którym przednia połowa jest lustrzanym odbiciem tylnej. Kasuje dystorsję, komę i chromatyczną poprzeczną bez kosztu materiałowego.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Cztery układy podstawowe zakładają, że obiektyw może mieć dowolny odcinek tylny i dowolną długość. W praktyce nie może: szeroki kąt musi zmieścić za sobą lustro, a teleobiektyw musi być krótszy od własnej ogniskowej. W <a href="rozdzial-18-skrajne-ogniskowe.html">następnym rozdziale</a> zobaczymy, jak te dwa przymusy wyginają konstrukcję — i co z tego wychodzi w kadrze.</p>
+  </div>
 
   <div class="deeper">
     <div class="deeper-label">Idź głębiej</div>
@@ -56,8 +358,74 @@ window.SKY3D_MESSAGES = {
       <a class="nav-next" href="rozdzial-18-skrajne-ogniskowe.html">Następny →</a>
   </div>
 
+  <template id="adv-rodowod">
+    <h3>Dlaczego rodowód widać do dziś</h3>
+
+    <p>Nasuwa się pytanie, dlaczego układ zaprojektowany w 1896 roku miałby cokolwiek znaczyć dla obiektywu policzonego komputerem w 2020. Program optymalizacyjny nie zna przecież nazw i mógłby wyjść od dowolnego układu.</p>
+
+    <p>Odpowiedź jest praktyczna: <strong>optymalizator nie szuka rozwiązania od zera, tylko poprawia to, co dostał</strong>. Przestrzeń możliwych układów ma kilkadziesiąt wymiarów i mnóstwo minimów lokalnych; algorytm zjedzie do najbliższego z nich, a nie do najlepszego w ogóle. Punkt startowy decyduje więc o tym, w której rodzinie wyląduje wynik — i tym punktem jest zwykle jeden z klasycznych układów.</p>
+
+    <p>Drugi powód jest fizyczny. Cztery klasyczne układy nie są arbitralne: każdy z nich <em>jest</em> minimum lokalnym, i to głębokim. Symetria Double Gaussa kasuje trzy wady naraz nie dlatego, że ktoś tak postanowił, tylko dlatego, że tak wychodzi z rachunku. Optymalizator startujący z losowego układu i tak by w okolice tych czterech trafił.</p>
+
+    <p>Trzeci jest wytwórczy. Fabryka ma oprzyrządowanie, doświadczenie i tolerancje dopracowane dla pewnych kształtów. Konstrukcja odbiegająca od znanej rodziny bywa lepsza na papierze i gorsza po wyprodukowaniu — bo rozrzut wykonania zjada przewagę, której komputer nie umiał wycenić.</p>
+
+    <p>Dlatego mapa z tego rozdziału nie jest historyczną ciekawostką. Jest <span class="term-cyan">wciąż aktualną mapą przestrzeni rozwiązań</span>, a nazwy klasyczne opisują na niej realne obszary, nie epoki.</p>
+  </template>
+
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-panel">
+      <button class="modal-close" data-modal-close aria-label="Zamknij">×</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
 </div>
 
 <script src="../assets/interactive.js"></script>
+<script>
+/* Przelacznik czterech ukladow. Suwak zamiast przyciskow, bo taki sam
+   mechanizm dziala w calej ksiazce i nie wymaga nowego CSS. Liczba granic
+   powietrze-szklo to dwa razy liczba grup — regula z Rozdzialu 16, wiec
+   liczymy ja, zamiast wpisywac. */
+(function () {
+  var sl = document.getElementById('ukladWybor');
+  if (!sl) return;
+
+  var UKLADY = [
+    { id: 'ukladPetzval', nazwa: 'Petzval · 1840', elem: 4, grupy: 3, jasnosc: 'f/3,6',
+      odpuscil: 'pole zakrzywione', przyslona: 270,
+      podpis: 'Petzval, 1840. Pierwszy układ policzony matematycznie, a nie dobrany doświadczalnie.' },
+    { id: 'ukladTessar', nazwa: 'Tessar · 1902', elem: 4, grupy: 3, jasnosc: 'f/6,3',
+      odpuscil: 'jasność', przyslona: 285,
+      podpis: 'Tessar, 1902. Cztery elementy, ostrość na całym polu i cena, którą dało się wtedy udźwignąć.' },
+    { id: 'ukladSonnar', nazwa: 'Sonnar · 1929', elem: 7, grupy: 3, jasnosc: 'f/1,5',
+      odpuscil: 'krótki odcinek tylny', przyslona: 330,
+      podpis: 'Sonnar, 1929. Siedem elementów, ale tylko trzy grupy — więcej szkła po to, żeby mieć mniej granic.' },
+    { id: 'ukladGauss', nazwa: 'Double Gauss · 1896', elem: 6, grupy: 4, jasnosc: 'f/2,0',
+      odpuscil: 'osiem granic z powietrzem', przyslona: 270,
+      podpis: 'Double Gauss, opatentowany jako Planar w 1896. Symetria kasuje trzy wady za darmo — i kosztuje dwie granice.' }
+  ];
+
+  function odswiez() {
+    var u = UKLADY[parseInt(sl.value, 10)];
+    UKLADY.forEach(function (x) {
+      document.getElementById(x.id).setAttribute('opacity', x === u ? '1' : '0');
+    });
+
+    var p = document.getElementById('ukladPrzyslona');
+    p.setAttribute('transform', 'translate(' + (u.przyslona - 270) + ',0)');
+
+    document.getElementById('ukladNazwa').textContent = u.nazwa;
+    document.getElementById('ukladElem').textContent = u.elem;
+    document.getElementById('ukladGrupy').textContent = u.grupy;
+    document.getElementById('ukladGranice').textContent = u.grupy * 2;   // regula z R.16
+    document.getElementById('ukladJasnosc').textContent = u.jasnosc;
+    document.getElementById('ukladOdpuscil').textContent = u.odpuscil;
+    document.getElementById('ukladPodpis').textContent = u.podpis;
+  }
+  sl.addEventListener('input', odswiez);
+  odswiez();
+})();
+</script>
 </body>
 </html>
