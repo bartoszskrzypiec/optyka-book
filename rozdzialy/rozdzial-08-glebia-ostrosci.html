@@ -106,7 +106,7 @@ window.SKY3D_MESSAGES = {
 
     <ul>
       <li><strong>Głębia ostrości zależy od tego, na czym oglądasz.</strong> Ten sam materiał ma inną głębię na telefonie i inną na ekranie kinowym. Nie zmienia się nic w optyce — zmienia się to, jak duża plamka staje się widoczna.</li>
-      <li><strong>Skale głębi na obiektywach są zbyt optymistyczne.</strong> Grawerowano je w czasach odbitek 10×15 cm. Oglądane w rozdzielczości 4K na dużym ekranie, obiecują głębię, której tam nie ma. Praktyczna poprawka: czytaj skalę o dwie przysłony ciaśniej, niż wskazuje.</li>
+      <li><strong>Skale głębi na obiektywach są zbyt optymistyczne.</strong> Grawerowano je w czasach odbitek 10×15 cm. Oglądane w rozdzielczości 4K na dużym ekranie, obiecują głębię, której tam nie ma. Praktyczna poprawka: czytaj skalę o jedną do dwóch przysłon ciaśniej, niż wskazuje.</li>
       <li><strong>Przy dopasowywaniu renderu liczy się finalna prezentacja</strong>, a nie rozmiar matrycy. Ujęcie do kina wymaga mniejszego <em>c</em> niż to samo ujęcie do serwisu streamingowego oglądanego na laptopie.</li>
     </ul>
 
@@ -135,72 +135,8 @@ window.SKY3D_MESSAGES = {
       </svg>
       <div class="diagram-caption">Głębia ostrości jest jedyną wielkością w tej książce, której wartość zależy od widza.</div>
     </div>
-  </div>
 
-  <div class="section">
-    <div class="section-eyebrow">Rachunek · gdzie leżą granice</div>
-    <h2>Wzory i to, co z nich widać</h2>
-
-    <p>Mając umowę, można policzyć granice. Wygodnie zacząć od jednej wielkości pomocniczej, zwanej odległością hiperfokalną — to odległość, przy której głębia sięga do nieskończoności:</p>
-
-    <div class="formula">
-      H = <span class="vec" data-tip="Ogniskowa obiektywu">f</span>² / (<span class="vec" data-tip="Liczba przysłony (geometryczna, nie T-stopa)">N</span> · <span class="vec" data-tip="Przyjęty krążek rozmycia — 0,03 mm dla pełnej klatki, 0,02 mm dla Super 35">c</span>) + <span class="vec" data-tip="Ogniskowa obiektywu">f</span>
-      <span class="sub">H — odległość hiperfokalna. f — ogniskowa, N — liczba przysłony, c — krążek rozmycia. Wszystko w tych samych jednostkach, najwygodniej w milimetrach.</span>
-      <div class="formula-action"><button class="reveal-btn" data-modal-target="explain-glebia">Wyjaśnij ten wzór</button></div>
-    </div>
-
-    <p>Ustawiając ostrość dokładnie na H, dostajesz ostrość od połowy H aż po nieskończoność — czyli najwięcej głębi, ile ten obiektyw na tej przysłonie potrafi dać. To jest chwyt znany każdemu fotoreporterowi sprzed epoki autofokusa i nadal użyteczny wszędzie tam, gdzie nie ma czasu ostrzyć.</p>
-
-    <p>Mając H, granice dla dowolnej odległości ostrzenia <em>s</em> liczą się dwoma podobnymi ułamkami:</p>
-
-    <div class="formula">
-      s<sub>bliska</sub> = s · H / (H + s − f)  ·  s<sub>daleka</sub> = s · H / (H − s + f)
-      <span class="sub">s — odległość, na którą ustawiono ostrość. Gdy s zbliża się do H, mianownik drugiego ułamka dąży do zera i granica daleka ucieka do nieskończoności — to właśnie definicja hiperfokalnej.</span>
-    </div>
-
-    <div class="worked">
-      <div class="wlabel">Pięćdziesiątka, f/2,8, ostrość na 3 m, pełna klatka</div>
-      <p class="step"><span class="k">H</span> <span class="v">= 50² / (2,8 · 0,03) + 50 = 2500 / 0,084 + 50 = </span><span class="result">29,8 m</span></p>
-      <p class="step"><span class="k">granica bliska</span> <span class="v">= 3000 · 29812 / (29812 + 3000 − 50) = </span><span class="result">2,73 m</span></p>
-      <p class="step"><span class="k">granica daleka</span> <span class="v">= 3000 · 29812 / (29812 − 3000 + 50) = </span><span class="result">3,33 m</span></p>
-      <p class="check">Sześćdziesiąt centymetrów całej głębi, z czego 27 cm przed płaszczyzną ostrości i 33 cm za nią. Aktor, który zrobi krok w tył, wychodzi z ostrości — i to jest dokładnie ten rachunek, który stoi za pracą asystenta operatora.</p>
-    </div>
-
-    <p>Przesuń suwaki i zobacz, jak te granice reagują na trzy rzeczy, którymi możesz sterować:</p>
-
-    <div class="diagram-frame">
-      <div class="diagram-hud"><span>Głębia ostrości</span><span>pełna klatka, c = 0,03 mm</span></div>
-      <div class="diagram-controls">
-        <label for="dofOgn">Ogniskowa</label>
-        <input id="dofOgn" type="range" min="18" max="200" step="1" value="50">
-        <span class="value-readout" id="dofOgnOdczyt">50 mm</span>
-      </div>
-      <div class="diagram-controls">
-        <label for="dofF">Przysłona</label>
-        <input id="dofF" type="range" min="0" max="8" step="1" value="2">
-        <span class="value-readout" id="dofFOdczyt">f/2,8</span>
-      </div>
-      <div class="diagram-controls">
-        <label for="dofOdl">Ostrość na</label>
-        <input id="dofOdl" type="range" min="0" max="100" step="1" value="50">
-        <span class="value-readout" id="dofOdlOdczyt">3,0 m</span>
-      </div>
-      <svg viewBox="0 0 760 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Oś odległości z zaznaczoną płaszczyzną ostrości i pasmem głębi ostrości między granicą bliską a daleką.">
-        <line x1="60" y1="150" x2="720" y2="150" stroke="#8b909b" stroke-width="1.4"/>
-        <g font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">
-          <text x="60" y="172">0,3 m</text><text x="225" y="172">1 m</text><text x="390" y="172">3 m</text>
-          <text x="555" y="172">10 m</text><text x="710" y="172">30 m</text>
-        </g>
-        <rect id="pasmoDof" y="112" height="34" fill="#e8a33d" fill-opacity="0.28" stroke="#e8a33d" stroke-width="1"/>
-        <line id="plaszczyzna" y1="98" y2="160" stroke="#ecebe4" stroke-width="2"/>
-        <text id="etOstrosc" y="90" font-family="IBM Plex Mono" font-size="10" fill="#ecebe4" text-anchor="middle">ostrość</text>
-        <line id="liniaH" y1="104" y2="160" stroke="#4fc3c0" stroke-width="1.4" stroke-dasharray="4 4"/>
-        <text id="etH" y="96" font-family="IBM Plex Mono" font-size="10" fill="#4fc3c0" text-anchor="middle">H</text>
-        <text x="60" y="42" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">oś logarytmiczna — inaczej bliski koniec byłby nieczytelny</text>
-        <text x="60" y="206" font-family="IBM Plex Mono" font-size="11" fill="#e8a33d" id="dofWynik">głębia: 0,60 m</text>
-      </svg>
-      <div class="diagram-caption" id="dofPodpis">50 mm, f/2,8, ostrość 3,0 m: od 2,73 m do 3,33 m. Hiperfokalna 29,8 m.</div>
-    </div>
+    <p class="deeper-inline">Wzory na hiperfokalną i obie granice, kalkulator z suwakami oraz tabela wartości <em>c</em> dla formatów — <a href="../dodatki/dodatek-e-glebia-w-liczbach.html">Dodatek E</a>.</p>
   </div>
 
   <div class="section">
@@ -238,25 +174,22 @@ window.SKY3D_MESSAGES = {
     <div class="section-eyebrow">Asymetria · dlaczego więcej za niż przed</div>
     <h2>Strefa ostrości nie jest wyśrodkowana</h2>
 
-    <p>W rachunku z poprzedniej sekcji wyszło 27 cm przed płaszczyzną ostrości i 33 cm za nią. Ta asymetria nie jest przypadkiem ani zaokrągleniem — jest regułą, i to regułą, która zmienia się z odległością.</p>
+    <p>Strefa ostrości nie rozkłada się równo wokół płaszczyzny, na którą ostrzysz. <strong>Sięga zawsze dalej w tył niż w przód</strong>, a proporcja tego podziału zmienia się z odległością.</p>
 
-    <p>Przyczyna leży w tym, że rozmycie zależy nie od odległości w metrach, tylko od różnicy <em>odwrotności</em> odległości — czyli od tej samej wielkości, którą w <a href="rozdzial-04-soczewka-cienka.html">Rozdziale 4</a> nazywaliśmy zbieżnością. Jeden metr różnicy przy trzech metrach zmienia odwrotność znacznie mocniej niż jeden metr różnicy przy dwudziestu. Strefa rozciąga się więc zawsze bardziej w tył niż w przód.</p>
+    <p>Przyczyna leży w tym, że rozmycie zależy nie od odległości w metrach, tylko od różnicy <em>odwrotności</em> odległości — czyli od tej samej wielkości, którą w <a href="rozdzial-04-soczewka-cienka.html">Rozdziale 4</a> nazywaliśmy zbieżnością. Jeden metr różnicy przy trzech metrach zmienia odwrotność znacznie mocniej niż jeden metr różnicy przy dwudziestu.</p>
 
-    <p>Popularna reguła „jedna trzecia przed, dwie trzecie za” jest przybliżeniem, które trafia tylko w wąskim zakresie. Prawda wygląda tak:</p>
-
-    <ul>
-      <li><strong>Przy bliskiej ostrości</strong> — z grubsza pół na pół. W makro asymetria praktycznie znika.</li>
-      <li><strong>W okolicach jednej dziesiątej hiperfokalnej</strong> — mniej więcej jedna trzecia do dwóch trzecich. Stąd wzięła się reguła.</li>
-      <li><strong>Przy ostrości bliskiej hiperfokalnej</strong> — strefa za płaszczyzną sięga nieskończoności, więc proporcja przestaje mieć sens.</li>
-    </ul>
+    <p>Popularna reguła „jedna trzecia przed, dwie trzecie za” trafia dokładnie w jednym punkcie: gdy ostrzysz na <strong>jedną trzecią odległości hiperfokalnej</strong>. Bliżej podział wyrównuje się do pół na pół, dalej przechyla się coraz mocniej w tył, aż przy samej hiperfokalnej strefa za płaszczyzną sięga nieskończoności i proporcja przestaje mieć sens.</p>
 
     <div class="diagram-frame">
       <div class="diagram-hud"><span>Podział strefy</span><span>przed płaszczyzną kontra za nią</span></div>
       <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Trzy przypadki podziału głębi ostrości: przy bliskiej ostrości pół na pół, w okolicach jednej dziesiątej hiperfokalnej jedna trzecia do dwóch trzecich, przy hiperfokalnej strefa sięga nieskończoności.">
         <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">
-          <text x="30" y="40">makro · 0,3 m</text>
-          <text x="30" y="110">typowo · 3 m</text>
-          <text x="30" y="180">hiperfokalna · 30 m</text>
+          <text x="30" y="36">blisko · s = H/100</text>
+          <text x="30" y="52" font-size="9.5" fill="#6e7280">0,3 m</text>
+          <text x="30" y="106">reguła 1/3 · s = H/3</text>
+          <text x="30" y="122" font-size="9.5" fill="#6e7280">10 m</text>
+          <text x="30" y="176">hiperfokalna · s = H</text>
+          <text x="30" y="192" font-size="9.5" fill="#6e7280">30 m</text>
         </g>
         <g>
           <rect x="220" y="24" width="230" height="22" fill="#e8a33d" fill-opacity="0.3" stroke="#e8a33d" stroke-width="1"/>
@@ -273,10 +206,10 @@ window.SKY3D_MESSAGES = {
         <g>
           <rect x="220" y="164" width="470" height="22" fill="#e8a33d" fill-opacity="0.3" stroke="#e8a33d" stroke-width="1"/>
           <line x1="248" y1="158" x2="248" y2="192" stroke="#ecebe4" stroke-width="2"/>
-          <text x="232" y="180" font-family="IBM Plex Mono" font-size="10" fill="#ecebe4" text-anchor="middle">6%</text>
+          <text x="234" y="180" font-family="IBM Plex Mono" font-size="10" fill="#ecebe4" text-anchor="middle">≈0%</text>
           <text x="470" y="180" font-family="IBM Plex Mono" font-size="11" fill="#ecebe4" text-anchor="middle">reszta · aż do nieskończoności</text>
         </g>
-        <text x="30" y="228" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">Reguła „jedna trzecia przed, dwie trzecie za” opisuje tylko środkowy przypadek — i tylko z grubsza.</text>
+        <text x="30" y="228" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">Reguła „jedna trzecia przed, dwie trzecie za” jest dokładna tylko w środkowym przypadku: s = H/3.</text>
       </svg>
       <div class="diagram-caption">Proporcja podziału nie jest stała. Zmienia się od równej w makro po całkowicie jednostronną przy hiperfokalnej.</div>
     </div>
@@ -326,13 +259,7 @@ window.SKY3D_MESSAGES = {
       <li><strong>Przymknięcie i dostawienie światła</strong> — najdroższe rozwiązanie i dlatego stosowane, tylko gdy dwa poprzednie odpadają.</li>
     </ul>
 
-    <div class="subsection">
-      <h3>Dlaczego autofokus nie rozwiązał tego problemu</h3>
-      <p>Naturalne pytanie brzmi: skoro aparaty fotograficzne od dekad same trzymają ostrość na oku, dlaczego w kinie nadal robi to człowiek z taśmą mierniczą. Powodów jest kilka i żaden nie dotyczy technologii wykrywania ostrości.</p>
-      <p>Pierwszy jest taki, że autofokus decyduje, <em>na czym</em> ma być ostro — a to jest decyzja reżyserska, nie techniczna. Ujęcie, w którym ostrość przechodzi z rąk na twarz w konkretnym momencie kwestii, jest fragmentem opowiadania. Automat nie ma jak wiedzieć, że ma to zrobić właśnie teraz.</p>
-      <p>Drugi to <strong>tempo</strong>. Przejście ostrości musi mieć określony czas i krzywą — zbyt szybkie wygląda na błąd, zbyt wolne rozmywa moment. Asystent ćwiczy to na próbach jak muzyk frazę. Automat przechodzi tak szybko, jak potrafi.</p>
-      <p>Trzeci jest praktyczny: przy głębi kilkunastu centymetrów każdy błąd automatu jest widoczny natychmiast i nieodwracalny. Ryzyko jest tak duże, że nawet tam, gdzie autofokus w kamerze kinowej istnieje, bywa używany jako pomoc dla asystenta, a nie zamiast niego.</p>
-    </div>
+    <button class="advanced-btn" data-modal-target="adv-autofokus">Zaawansowane: dlaczego autofokus tego nie rozwiązał</button>
 
     <p>Dla artysty CG płynie z tego praktyczna wskazówka przy ocenie plate'u. Jeśli w ujęciu obie osoby są ostre mimo wyraźnej różnicy głębi, to <span class="term-cyan">obiektyw był przymknięty mocniej, niż sugeruje wygląd tła</span> — albo ujęcie złożono z dwóch. Odwrotnie: bardzo płytka strefa mówi ci nie tylko o przysłonie, ale też o tym, że kamera stała blisko i najprawdopodobniej na długiej ogniskowej.</p>
   </div>
@@ -355,7 +282,7 @@ window.SKY3D_MESSAGES = {
   <div class="panel practice">
     <div class="panel-label">Z praktyki</div>
     <p><strong>Do dopasowania głębi używaj średnicy źrenicy, nie liczby f.</strong> Jeśli plate nakręcono 40 mm przy T/2,2, a w rendererze masz kamerę o innej ogniskowej, przelicz na źrenicę: 40/2,2 ≈ 18 mm. Ustaw w rendererze taką liczbę f, żeby iloraz się zgadzał. To jedyny sposób, żeby głębia siadła przy niezgodnych ogniskowych — i działa też wtedy, gdy nie znasz dokładnie formatu.</p>
-    <p><strong>Skala głębi na obiektywie kłamie na korzyść.</strong> Grawerowano ją dla małych odbitek. Przy materiale oglądanym w 4K czytaj ją o dwie przysłony ciaśniej: to, co pierścień pokazuje jako głębię przy f/5,6, w praktyce odpowiada f/11. Asystenci operatora robią tę poprawkę odruchowo.</p>
+    <p><strong>Skala głębi na obiektywie kłamie na korzyść.</strong> Grawerowano ją dla małych odbitek. Przy materiale oglądanym w 4K czytaj ją o jedną do dwóch przysłon ciaśniej — im większy ekran i im ostrzejsze kryterium, tym bliżej dwóch: to, co pierścień pokazuje jako głębię przy f/5,6, w praktyce odpowiada gdzieś między f/8 a f/11. Skąd te dwie skrajności, widać w rachunku w <a href="../dodatki/dodatek-e-glebia-w-liczbach.html">Dodatku E</a>. Asystenci operatora robią tę poprawkę odruchowo.</p>
     <p><strong>Sprawdzaj głębię na finalnej rozdzielczości, nie na podglądzie.</strong> Render oceniany w oknie 800 px wygląda na głębszy, niż jest. To dokładnie ten sam mechanizm, co skala na obiektywie — a kosztuje tyle, że ujęcie wraca z kontroli jakości po tygodniu.</p>
   </div>
 
@@ -393,29 +320,16 @@ window.SKY3D_MESSAGES = {
       <a class="nav-next" href="rozdzial-09-bokeh.html">Następny →</a>
   </div>
 
-  <template id="explain-glebia">
-    <h3>Skąd bierze się odległość hiperfokalna</h3>
+  <template id="adv-autofokus">
+    <h3>Dlaczego autofokus tego nie rozwiązał</h3>
 
-    <div class="formula">H = f² / (N · c) + f</div>
+    <p>Skoro aparaty fotograficzne od dekad same trzymają ostrość na oku, dlaczego w kinie nadal robi to człowiek z taśmą mierniczą? Powodów jest kilka i <strong>żaden nie dotyczy technologii wykrywania ostrości</strong>.</p>
 
-    <p><strong>Skąd f do kwadratu.</strong> Rozmiar plamki na matrycy zależy od dwóch rzeczy: od szerokości stożka, czyli od średnicy źrenicy D = f/N, oraz od tego, jak bardzo obraz nie trafił w matrycę. To drugie jest proporcjonalne do kwadratu ogniskowej, bo obraz przesuwa się tym mocniej, im dłuższa ogniskowa. Mnożąc jedno przez drugie i przyrównując do dopuszczalnego c, dostajesz f² w liczniku.</p>
+    <p>Pierwszy: autofokus decyduje, <em>na czym</em> ma być ostro — a to jest decyzja reżyserska, nie techniczna. Ujęcie, w którym ostrość przechodzi z rąk na twarz w konkretnym momencie kwestii, jest fragmentem opowiadania. Automat nie ma jak wiedzieć, że ma to zrobić właśnie teraz.</p>
 
-    <p><strong>Co znaczy „+ f” na końcu.</strong> To poprawka na to, że odległości mierzy się od płaszczyzny głównej, a nie od matrycy. Przy typowych dystansach jest zaniedbywalna — dla pięćdziesiątki to pięćdziesiąt milimetrów przy hiperfokalnej trzydziestu metrów, czyli niecałe dwie dziesiąte procenta. Staje się istotna dopiero w makro i w obiektywach bardzo długich.</p>
+    <p>Drugi to <strong>tempo</strong>. Przejście ostrości musi mieć określony czas i krzywą — zbyt szybkie wygląda na błąd, zbyt wolne rozmywa moment. Asystent ćwiczy to na próbach jak muzyk frazę. Automat przechodzi tak szybko, jak potrafi.</p>
 
-    <p><strong>Trzy zależności, które warto umieć bez liczenia:</strong></p>
-    <ul>
-      <li><strong>Podwojenie ogniskowej</strong> czterokrotnie zwiększa H — czyli czterokrotnie zmniejsza głębię przy tej samej odległości. Dlatego tele ma płytką głębię.</li>
-      <li><strong>Przymknięcie o dwie przysłony</strong> (czyli podwojenie N) dwukrotnie zmniejsza H, więc mniej więcej podwaja głębię.</li>
-      <li><strong>Przejście z pełnej klatki na Super 35</strong> zmniejsza c o jedną trzecią, co samo z siebie zwiększa H — ale jednocześnie potrzebujesz krótszej ogniskowej do tego samego kadru, i ten drugi efekt jest silniejszy. Netto: mniejszy format daje większą głębię.</li>
-    </ul>
-
-    <p><strong>Uproszczenie warte zapamiętania.</strong> Dla odległości znacznie mniejszych od hiperfokalnej cała głębia da się przybliżyć jednym wyrażeniem:</p>
-
-    <div class="formula">głębia ≈ 2 · N · c · s² / f²</div>
-
-    <p>Widać z niego wszystkie trzy dźwignie naraz: głębia rośnie liniowo z liczbą przysłony, liniowo z krążkiem rozmycia i <em>kwadratowo</em> z odległością. To ostatnie jest powodem, dla którego odległość jest najsilniejszą z dźwigni, choć nie ma dla niej pierścienia na obiektywie.</p>
-
-    <p><em>Uwaga na zakres stosowalności: wszystkie te wzory zakładają powiększenie źrenicowe równe jedności, czyli układ symetryczny. Dla teleobiektywów i retrofokusów wyniki przy bliskiej ostrości odbiegają — pełna postać z poprawką siedzi w Dodatku E.</em></p>
+    <p>Trzeci jest praktyczny: przy głębi kilkunastu centymetrów każdy błąd automatu jest widoczny natychmiast i nieodwracalny. Ryzyko jest na tyle duże, że nawet tam, gdzie autofokus w kamerze kinowej istnieje, bywa używany jako pomoc dla asystenta, a nie zamiast niego.</p>
   </template>
 
   <div class="modal-overlay" id="modal-overlay">
@@ -428,72 +342,5 @@ window.SKY3D_MESSAGES = {
 </div>
 
 <script src="../assets/interactive.js"></script>
-<script>
-/* Glebia ostrosci. Wzory klasyczne, jednostki w milimetrach wewnatrz,
-   metry na zewnatrz. Os odleglosci logarytmiczna od 0,3 m do 30 m. */
-(function () {
-  var slF = document.getElementById('dofOgn');
-  var slN = document.getElementById('dofF');
-  var slS = document.getElementById('dofOdl');
-  if (!slF || !slN || !slS) return;
-
-  var N_LISTA = [1.4, 2, 2.8, 4, 5.6, 8, 11, 16, 22];
-  var C = 0.03;                     // krazek rozmycia, mm (pelna klatka)
-  var X0 = 60, X1 = 720, S0 = 0.3, S1 = 30;
-
-  function px(m) {
-    var v = Math.log(Math.min(Math.max(m, S0), S1 * 3) / S0) / Math.log(S1 / S0);
-    return X0 + Math.min(1.02, v) * (X1 - X0);
-  }
-  function fmt(m) {
-    if (!isFinite(m)) return '∞';
-    return m < 1 ? (m * 100).toFixed(0) + ' cm' : m.toFixed(2).replace('.', ',') + ' m';
-  }
-
-  function odswiez() {
-    var f = parseFloat(slF.value);
-    var n = N_LISTA[parseInt(slN.value, 10)];
-    var s = S0 * Math.pow(S1 / S0, parseFloat(slS.value) / 100);   // m
-    var sMm = s * 1000;
-
-    var H = f * f / (n * C) + f;                 // mm
-    var bl = sMm * H / (H + sMm - f);            // mm
-    var mian = H - sMm + f;
-    var da = mian > 0 ? sMm * H / mian : Infinity;
-
-    var xb = px(bl / 1000), xd = isFinite(da) ? px(da / 1000) : X1 + 6, xs = px(s), xh = px(H / 1000);
-
-    var pas = document.getElementById('pasmoDof');
-    pas.setAttribute('x', xb.toFixed(1));
-    pas.setAttribute('width', Math.max(2, xd - xb).toFixed(1));
-
-    var pl = document.getElementById('plaszczyzna');
-    pl.setAttribute('x1', xs.toFixed(1)); pl.setAttribute('x2', xs.toFixed(1));
-    document.getElementById('etOstrosc').setAttribute('x', xs.toFixed(1));
-
-    var lh = document.getElementById('liniaH');
-    var widocznaH = xh <= X1;
-    lh.setAttribute('x1', xh.toFixed(1)); lh.setAttribute('x2', xh.toFixed(1));
-    lh.setAttribute('opacity', widocznaH ? '1' : '0');
-    var eh = document.getElementById('etH');
-    eh.setAttribute('x', xh.toFixed(1));
-    eh.setAttribute('opacity', widocznaH ? '1' : '0');
-
-    document.getElementById('dofOgnOdczyt').textContent = f.toFixed(0) + ' mm';
-    document.getElementById('dofFOdczyt').textContent = 'f/' + n.toString().replace('.', ',');
-    document.getElementById('dofOdlOdczyt').textContent = fmt(s);
-
-    var glebia = isFinite(da) ? (da - bl) / 1000 : Infinity;
-    document.getElementById('dofWynik').textContent =
-      'głębia: ' + (isFinite(glebia) ? fmt(glebia) : 'do nieskończoności');
-    document.getElementById('dofPodpis').textContent =
-      f.toFixed(0) + ' mm, f/' + n.toString().replace('.', ',') + ', ostrość ' + fmt(s) +
-      ': od ' + fmt(bl / 1000) + ' do ' + fmt(isFinite(da) ? da / 1000 : Infinity) +
-      '. Hiperfokalna ' + fmt(H / 1000) + '.';
-  }
-  [slF, slN, slS].forEach(function (s) { s.addEventListener('input', odswiez); });
-  odswiez();
-})();
-</script>
 </body>
 </html>
