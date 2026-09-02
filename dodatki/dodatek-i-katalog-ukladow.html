@@ -41,7 +41,136 @@ window.SKY3D_MESSAGES = {
   <h1>Katalog układów optycznych</h1>
   <p class="subtitle">Przekroje i liczby dla kilkunastu klasycznych konstrukcji: liczba elementów, grup, powierzchni powietrze-szkło i typowe zastosowanie.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">Co tu jest</div>
+    <ul>
+      <li><strong>Trzynaście układów</strong> w jednej tabeli: elementy, grupy, granice ze szkła na powietrze i rola każdego z nich.</li>
+      <li><strong>Rodowód</strong> — kto z kogo pochodzi, bo konstrukcje nie powstawały niezależnie, tylko trzema liniami.</li>
+      <li><strong>Skąd wziąć dane konstrukcyjne</strong>, jeśli chcesz zbudować model wielosoczewkowy w rendererze.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Tabela · trzynaście układów</div>
+    <h2>Katalog</h2>
+
+    <p>Kolumna „granice” jest w każdym wierszu policzona regułą z <a href="../rozdzialy/rozdzial-16-anatomia-obiektywu.html">Rozdziału 16</a>: dwa razy liczba grup. Warto ją czytać razem z kolumną „elementy”, bo to właśnie rozjazd między nimi opowiada historię każdej konstrukcji.</p>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead>
+          <tr><th>Układ</th><th class="num">Rok</th><th>Konstruktor</th><th class="num">El.</th><th class="num">Gr.</th><th class="num">Granice</th><th>Rola</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Menisk krajobrazowy</td><td class="num">1812</td><td>Wollaston</td><td class="num">1</td><td class="num">1</td><td class="num">2</td><td>najprostszy możliwy</td></tr>
+          <tr><td>Petzval</td><td class="num">1840</td><td>Petzval</td><td class="num">4</td><td class="num">3</td><td class="num">6</td><td>pierwszy portretowy</td></tr>
+          <tr><td>Rapid Rectilinear</td><td class="num">1866</td><td>Dallmeyer</td><td class="num">4</td><td class="num">2</td><td class="num">4</td><td>symetryczny, uniwersalny</td></tr>
+          <tr><td>Protar</td><td class="num">1890</td><td>Rudolph</td><td class="num">4</td><td class="num">2</td><td class="num">4</td><td>pierwszy anastygmat</td></tr>
+          <tr><td>Triplet</td><td class="num">1893</td><td>Taylor</td><td class="num">3</td><td class="num">3</td><td class="num">6</td><td>minimum zdolne do korekcji</td></tr>
+          <tr><td>Planar / Double Gauss</td><td class="num">1896</td><td>Rudolph</td><td class="num">6</td><td class="num">4</td><td class="num">8</td><td>przodek pięćdziesiątki</td></tr>
+          <tr><td>Tessar</td><td class="num">1902</td><td>Rudolph</td><td class="num">4</td><td class="num">3</td><td class="num">6</td><td>ostry i tani</td></tr>
+          <tr><td>Ernostar</td><td class="num">1923</td><td>Bertele</td><td class="num">5</td><td class="num">4</td><td class="num">8</td><td>pierwszy bardzo jasny</td></tr>
+          <tr><td>Sonnar</td><td class="num">1929</td><td>Bertele</td><td class="num">7</td><td class="num">3</td><td class="num">6</td><td>wysoki kontrast</td></tr>
+          <tr><td>Retrofokus</td><td class="num">typ</td><td>—</td><td class="num">6–12</td><td class="num">6–10</td><td class="num">12–20</td><td>szeroki kąt do lustrzanki</td></tr>
+          <tr><td>Teleobiektyw</td><td class="num">typ</td><td>—</td><td class="num">4–8</td><td class="num">3–6</td><td class="num">6–12</td><td>tubus krótszy od ogniskowej</td></tr>
+          <tr><td>Katadioptryk</td><td class="num">typ</td><td>—</td><td class="num">2–4</td><td class="num">2–4</td><td class="num">4–8</td><td>skrajnie długie ogniskowe</td></tr>
+          <tr><td>Zoom</td><td class="num">typ</td><td>—</td><td class="num">15–22</td><td class="num">11–16</td><td class="num">22–32</td><td>zmienna ogniskowa</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Cztery ostatnie wiersze to typy konstrukcyjne, a nie pojedyncze wynalazki — stąd zakresy zamiast liczb i brak dat. Katadioptryk ma dodatkowo dwa lustra, których kolumna „elementy” nie liczy.</p>
+
+    <p>Z tabeli wychodzą trzy obserwacje, których pojedynczy wiersz nie pokazuje.</p>
+
+    <p><strong>Pierwsza: liczba granic rosła wolniej niż liczba elementów.</strong> Od Petzvala do Sonnara elementy podskoczyły z czterech do siedmiu, a granice zostały na sześciu. Konstruktorzy przez cały wiek dziewiętnasty i pierwszą połowę dwudziestego traktowali granice jak zasób deficytowy — bo bez powłok nim były.</p>
+
+    <p><strong>Druga: symetryczne układy mają najmniej granic.</strong> Rapid Rectilinear i Protar mają po cztery, czyli mniej niż cokolwiek innego poza gołym meniskiem. Symetria pozwalała skleić po dwa elementy z każdej strony, bo krzywizny i tak wypadały parami.</p>
+
+    <p><strong>Trzecia: zoom jest odstępstwem od całej reszty.</strong> Dwadzieścia dwie do trzydziestu dwóch granic to trzykrotność najgorszej konstrukcji stałoogniskowej. Nie dało się go zbudować przed powłokami wielowarstwowymi i to nie jest przypadek historyczny, tylko warunek konieczny.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Rodowód · trzy linie, nie trzynaście wynalazków</div>
+    <h2>Kto z kogo pochodzi</h2>
+
+    <p>Układy z tabeli nie powstawały niezależnie. Prawie wszystkie dają się ułożyć w trzy linie, a linia mówi o charakterze więcej niż data.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Trzy linie rodowe</span><span>symetryczna, tripletowa, portretowa</span></div>
+      <svg viewBox="0 0 760 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Drzewo rodowe układów optycznych: linia symetryczna od Rapid Rectilinear przez Protar do Planara, linia tripletowa od Tripletu do Tessara i przez Ernostar do Sonnara, linia portretowa od Petzvala.">
+        <g font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">
+          <text x="70" y="20">1840</text><text x="210" y="20">1866–1896</text>
+          <text x="400" y="20">1902–1923</text><text x="620" y="20">1929–dziś</text>
+        </g>
+
+        <g font-family="IBM Plex Mono" font-size="10.5">
+          <rect x="24" y="46" width="96" height="30" fill="#20242c" stroke="#9c82d8" stroke-width="1.4"/>
+          <text x="72" y="66" fill="#9c82d8" text-anchor="middle">Petzval</text>
+          <text x="72" y="94" fill="#8b909b" text-anchor="middle" font-size="9">linia portretowa</text>
+          <text x="72" y="108" fill="#8b909b" text-anchor="middle" font-size="9">wygasa</text>
+
+          <rect x="150" y="140" width="126" height="30" fill="#20242c" stroke="#4fc3c0" stroke-width="1.4"/>
+          <text x="213" y="160" fill="#4fc3c0" text-anchor="middle">Rapid Rectilinear</text>
+          <rect x="150" y="188" width="126" height="30" fill="#20242c" stroke="#4fc3c0" stroke-width="1.4"/>
+          <text x="213" y="208" fill="#4fc3c0" text-anchor="middle">Protar</text>
+          <rect x="330" y="164" width="120" height="30" fill="#20242c" stroke="#4fc3c0" stroke-width="1.4"/>
+          <text x="390" y="184" fill="#4fc3c0" text-anchor="middle">Planar</text>
+          <rect x="560" y="164" width="150" height="30" fill="#20242c" stroke="#7fc47f" stroke-width="1.8"/>
+          <text x="635" y="184" fill="#7fc47f" text-anchor="middle">każda pięćdziesiątka</text>
+
+          <rect x="150" y="240" width="96" height="30" fill="#20242c" stroke="#e8a33d" stroke-width="1.4"/>
+          <text x="198" y="260" fill="#e8a33d" text-anchor="middle">Triplet</text>
+          <rect x="300" y="240" width="96" height="30" fill="#20242c" stroke="#e8a33d" stroke-width="1.4"/>
+          <text x="348" y="260" fill="#e8a33d" text-anchor="middle">Tessar</text>
+          <rect x="300" y="98" width="100" height="30" fill="#20242c" stroke="#e8a33d" stroke-width="1.4"/>
+          <text x="350" y="118" fill="#e8a33d" text-anchor="middle">Ernostar</text>
+          <rect x="470" y="98" width="96" height="30" fill="#20242c" stroke="#e8a33d" stroke-width="1.4"/>
+          <text x="518" y="118" fill="#e8a33d" text-anchor="middle">Sonnar</text>
+        </g>
+
+        <g stroke="#4fc3c0" stroke-width="1.4" fill="none" opacity="0.8">
+          <path d="M 276 155 L 300 155 L 300 179 L 326 179"/>
+          <path d="M 276 203 L 300 203 L 300 179"/>
+          <path d="M 450 179 L 556 179"/>
+        </g>
+        <g stroke="#e8a33d" stroke-width="1.4" fill="none" opacity="0.8">
+          <path d="M 246 255 L 296 255"/>
+          <path d="M 198 240 L 198 113 L 296 113"/>
+          <path d="M 400 113 L 466 113"/>
+        </g>
+
+        <text x="24" y="130" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">Linia symetryczna dała standard; tripletowa dała jasność.</text>
+      </svg>
+      <div class="diagram-caption">Petzval nie ma potomstwa w linii prostej — jego dziedzictwem jest efekt, nie konstrukcja.</div>
+    </div>
+
+    <p><strong>Linia symetryczna</strong> — Rapid Rectilinear, Protar, Planar — dążyła do równego pola i małej dystorsji przez symetrię wokół przysłony. Wygrała, gdy powłoki zniosły jej jedyną wadę. Wszystko, co dziś nazywamy standardową pięćdziesiątką, siedzi na tej gałęzi.</p>
+
+    <p><strong>Linia tripletowa</strong> zaczyna się od najprostszego układu zdolnego skorygować wszystkie wady Seidela naraz: trzy elementy, trzy grupy. Z niego wyrósł Tessar przez sklejenie tylnej pary, a w drugą stronę Ernostar i Sonnar przez dokładanie i sklejanie. To gałąź, która dała bardzo jasne obiektywy przy małej liczbie granic.</p>
+
+    <p><strong>Linia portretowa</strong> kończy się na Petzvalu. Jego następcy nie ma, bo problem, który rozwiązywał — jasność za wszelką cenę na małym polu — przestał istnieć, gdy inne układy dogoniły go jasnością bez ofiary z pola. Zostało po nim to, czego nikt nie planował: <span class="term-cyan">wir, sprzedawany dziś jako charakter</span>.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Dane konstrukcyjne · skąd je wziąć</div>
+    <h2>Jak zbudować model wielosoczewkowy</h2>
+
+    <p>Renderer potrafiący prześledzić promień przez rzeczywisty układ potrzebuje tabeli: promień krzywizny każdej powierzchni, grubość każdego elementu, odstęp do następnego i rodzaj szkła. Producenci tego nie publikują — ale są dwa źródła, z których da się to wydobyć.</p>
+
+    <p><strong>Literatura patentowa</strong> jest źródłem podstawowym. Patent optyczny musi ujawnić przykład wykonania, a przykład zawiera pełną tabelę konstrukcyjną. Patenty na klasyczne układy dawno wygasły i są dostępne publicznie; wyszukiwarki patentowe indeksują je po nazwisku konstruktora i po klasie optycznej. Trzeba przy tym pamiętać, że <span class="term-violet">patent opisuje jeden przykład, a nie sprzedawany egzemplarz</span> — produkcyjna wersja bywa poprawiona względem tego, co ujawniono.</p>
+
+    <p><strong>Zbiory akademickie</strong> to źródło wtórne i wygodniejsze. Podręczniki projektowania optyki oraz biblioteki dołączane do programów projektowych zawierają dziesiątki gotowych układów w formacie nadającym się do wczytania. Nazwy bywają tam ogólne — „double Gauss f/2” zamiast marki — i to jest uczciwe, bo taki układ jest reprezentantem rodziny, a nie kopią produktu.</p>
+
+    <p>Trzy uwagi praktyczne, zanim zaczniesz:</p>
+
+    <ul>
+      <li><strong>Sprawdź jednostki i konwencję znaku.</strong> Promień krzywizny bywa podawany ze znakiem zależnym od kierunku biegu światła, a pomyłka daje układ, który wygląda sensownie i ogniskuje w złym miejscu.</li>
+      <li><strong>Szkła podawane są nazwą katalogową</strong>, na przykład N-BK7. Renderer potrzebuje z niej dwóch liczb: współczynnika załamania i liczby Abbego — obie są w tabeli w <a href="dodatek-a-snell-i-abbe.html">Dodatku A</a>.</li>
+      <li><strong>Model bez powłok da za dużo flary.</strong> Prawdziwy obiektyw ma odbicie rzędu 0,2% na powierzchnię, model domyślnie liczy 4%. Bez ustawienia powłok ghosty wyjdą kilkanaście razy za jasne — a to jest najczęstszy powód, dla którego wyniki modelu wielosoczewkowego wyglądają na przesadzone.</li>
+    </ul>
+
+    <p>Warto na koniec zestawić koszt z zyskiem. Model wielosoczewkowy daje wszystkie wady naraz, w poprawnych proporcjach i z poprawną zależnością od przysłony — czyli dokładnie tę spójność, o którą upomina się <a href="../rozdzialy/rozdzial-17-czterej-przodkowie.html">Rozdział 17</a>. Kosztuje za to kilkanaście przecięć promienia z powierzchnią na każdy promień kamery. <span class="term-cyan">Dla pojedynczego ujęcia z wyraźnym charakterem szkła bywa to opłacalne; dla całej sekwencji prawie nigdy</span> — i dlatego w praktyce używa się go do wygenerowania tekstur źrenicy i profili wad, a potem stosuje te tablice w tańszym modelu.</p>
+  </div>
 
   <div class="site-nav">
     <a href="../index.html">← Spis treści</a>
