@@ -262,6 +262,8 @@ window.SKY3D_MESSAGES = {
 
     <p>Renderer rzutuje scenę odwzorowaniem rektilinearnym: prosta w scenie jest prosta w obrazie, zawsze. Plate nakręcony obiektywem z dystorsją nie jest rektilinearny. Nałożenie jednego na drugie oznacza więc, że <span class="term-violet">te same współrzędne 3D lądują w dwóch różnych miejscach kadru</span>. Element CG postawiony na podłodze plate'u będzie na niej stał w środku kadru i zapadał się w nią przy krawędzi.</p>
 
+    <p>Warto zobaczyć, jak ten błąd wygląda w praktyce, bo bywa mylnie diagnozowany. Objaw typowy: element CG siedzi idealnie przez większość ujęcia, a przy końcu, gdy kamera odjedzie i element powędruje ku brzegowi kadru, zaczyna „pływać” względem podłoża. Naturalna reakcja to poprawianie trackingu — i to jest ślepa uliczka, bo tracking jest poprawny, tylko został policzony w innej przestrzeni niż ta, w której składasz. Rozpoznasz to po tym, że błąd rośnie z odległością od środka kadru i jest promienisty, a nie przypadkowy.</p>
+
     <p>Nie da się tego naprawić przesunięciem ani skalowaniem, bo błąd jest nieliniowy i rośnie z promieniem. Nie da się też zignorować, bo tracker, który dopasowuje kamerę do materiału, zakłada model rektilinearny — dystorsja rozjeżdża mu rozwiązanie i albo tracking nie zbiega, albo zbiega do kamery, której nigdy nie było.</p>
 
     <p>Stąd standardowy łańcuch, obowiązujący w każdej produkcji z elementami CG:</p>
