@@ -430,7 +430,27 @@ def cmd_sprawdz():
     except Exception as e:
         problems.append(f'STAN W SPISIE nie udalo sie sprawdzic: {e}')
 
-    # 8. wzor musi definiowac swoje symbole
+    # 8. divy musza sie domykac
+    #    Przegladarka wybacza nadmiarowy </div> i strona wyglada poprawnie,
+    #    wiec taki blad potrafi przelezec przez cala sesje niezauwazony —
+    #    w R.5 przelezal. Skutki widac dopiero pozniej: sekcja domknieta za
+    #    wczesnie wyrzuca swoje diagramy poza .section, a wtedy licznik slow
+    #    i kontrola podsekcji mierza co innego, niz widzi czytelnik.
+    for path in all_pages():
+        html = open(path, encoding='utf-8').read()
+        glebokosc, nadmiar = 0, None
+        for m in re.finditer(r'<div\b[^>]*>|</div>', html):
+            glebokosc += 1 if m.group(0).startswith('<div') else -1
+            if glebokosc < 0 and nadmiar is None:
+                nadmiar = html[:m.start()].count('\n') + 1
+                break
+        rel = os.path.relpath(path, ROOT)
+        if nadmiar is not None:
+            problems.append(f'DIVY         {rel}: nadmiarowy </div> w linii {nadmiar}')
+        elif glebokosc != 0:
+            problems.append(f'DIVY         {rel}: {glebokosc} niedomknietych <div>')
+
+    # 9. wzor musi definiowac swoje symbole
     #    Zasada rodziny: kiedy .formula wprowadza zmienna, trzeba powiedziec,
     #    co ona znaczy. Mechanicznie da sie sprawdzic tylko obecnosc .sub —
     #    definicja w prozie obok jest rownie dobra, wiec to ostrzezenie,

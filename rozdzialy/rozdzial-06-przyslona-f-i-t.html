@@ -68,7 +68,7 @@ window.SKY3D_MESSAGES = {
 
     <p>Zapis f/2 nie jest więc nazwą, tylko działaniem. Na pięćdziesiątce f/2 znaczy źrenicę o średnicy 25 mm; na dwustumilimetrówce ta sama f/2 znaczy źrenicę o średnicy stu milimetrów — czyli szkło wielkości talerzyka i cenę samochodu. To dlatego jasne teleobiektywy są tak absurdalnie duże i drogie, a jasne szerokie kąty nie są.</p>
 
-    <p>Pozostaje pytanie, dlaczego akurat iloraz. Odpowiedź jest ładna i warto ją przejść, bo tłumaczy, czemu ta jedna liczba wystarcza operatorowi do ustawienia ekspozycji bez wiedzy o obiektywie.</p>
+    <p>Dlaczego akurat iloraz? Odpowiedź tłumaczy zarazem, czemu ta jedna liczba wystarcza operatorowi bez wiedzy o obiektywie.</p>
 
     <p>Ilość światła zebranego przez obiektyw rośnie z <strong>polem</strong> źrenicy, czyli z kwadratem jej średnicy. Ale to światło rozkłada się potem na obrazie, który przy dłuższej ogniskowej jest większy — a konkretnie jego rozmiar rośnie liniowo z f, więc pole rośnie z kwadratem f. Naświetlenie, czyli światło na jednostkę powierzchni matrycy, jest ilorazem tych dwóch: D² podzielone przez f², czyli <span class="term-amber">(D/f)² — a to jest po prostu odwrotność kwadratu liczby f</span>. Ogniskowa skróciła się w rachunku i dlatego liczba f wystarcza.</p>
 
@@ -144,7 +144,7 @@ window.SKY3D_MESSAGES = {
 
     <p>Cały powyższy rachunek zakłada, że światło, które weszło w źrenicę, dociera do matrycy. Z <a href="rozdzial-03-fresnel-kazda-powierzchnia-swieci.html">Rozdziału 3</a> wiemy, że nie dociera. Każda powierzchnia szkła odbija kilka procent, a obiektyw ma ich kilkadziesiąt.</p>
 
-    <p>Liczba f jest więc <strong>obietnicą geometryczną, nie pomiarem</strong>. Dwa obiektywy oznaczone f/2 — jeden o sześciu soczewkach, drugi o dwudziestu — przepuszczą wyraźnie różne ilości światła, choć oba mają identyczny iloraz. Dla fotografa z automatyką pomiarową to bez znaczenia. Dla operatora, który ustawia trzy kamery na jednym planie i musi mieć zgodną ekspozycję na wszystkich, to problem nie do przyjęcia.</p>
+    <p>Liczba f jest więc <strong>obietnicą geometryczną, nie pomiarem</strong>. Dwa obiektywy oznaczone f/2 — jeden o sześciu soczewkach, drugi o dwudziestu — przepuszczą wyraźnie różne ilości światła przy identycznym ilorazie. Dla operatora ustawiającego trzy kamery na jednym planie jest to problem nie do przyjęcia.</p>
 
     <p>Stąd druga liczba, używana w optyce kinowej: T-stopa. Definiuje się ją tak, żeby oznaczała <em>rzeczywistą</em> jasność — czyli tyle, ile dawałby idealny obiektyw bez żadnych strat:</p>
 
@@ -199,9 +199,9 @@ window.SKY3D_MESSAGES = {
       <div class="diagram-caption">Cała informacja o stratach w szkle mieści się w różnicy dwóch liczb wygrawerowanych na tubusie.</div>
     </div>
 
-    <p>Zwróć uwagę na ostatni wiersz. Vintage tracący prawie połowę światła nie jest wadliwy — jest po prostu sprzed epoki powłok wielowarstwowych. I to jest ta sama utrata, która daje mu podniesione czernie i niższy kontrast, czyli dokładnie te cechy, dla których się go dziś wypożycza.</p>
+    <p>Zwróć uwagę na ostatni wiersz. Vintage tracący prawie połowę światła nie jest wadliwy — jest sprzed epoki powłok wielowarstwowych, a ta sama utrata daje mu podniesione czernie i niższy kontrast, czyli dokładnie te cechy, dla których się go dziś wypożycza.</p>
 
-    <p>Dwie uwagi praktyczne, bo tu łatwo o nadinterpretację. Po pierwsze, <strong>T-stopa nie mówi nic o jakości obrazu</strong> — mierzy wyłącznie transmisję. Obiektyw o świetnej T-stopie może mieć fatalny kontrast, jeśli straty poszły w rozproszenie zamiast w odbicie do tyłu. Po drugie, T-stopa nie zastępuje liczby f wszędzie: <span class="term-violet">głębia ostrości zależy od geometrii, więc od N, a nie od T</span>. Obiektyw oznaczony T/2,4, którego geometryczne f wynosi 2,0, daje głębię jak f/2,0 i jasność jak f/2,4. Obie liczby są potrzebne i opisują co innego.</p>
+    <p>Tu łatwo o nadinterpretację. <strong>T-stopa nie mówi nic o jakości obrazu</strong> — mierzy wyłącznie transmisję. Obiektyw o świetnej T-stopie może mieć fatalny kontrast, jeśli straty poszły w rozproszenie, a nie w odbicie. I nie zastępuje liczby f: <span class="term-violet">głębia ostrości zależy od geometrii, więc od N, a nie od T</span>. Obie są potrzebne i opisują co innego.</p>
   </div>
 
   <div class="section">
@@ -248,7 +248,7 @@ window.SKY3D_MESSAGES = {
     <div class="section-eyebrow">Kompromis · dlaczego istnieje „słodki punkt”</div>
     <h2>Najlepsza przysłona nie jest ani najszersza, ani najwęższa</h2>
 
-    <p>Jest zdanie powtarzane przez każdego, kto trochę pofotografował: <em>obiektyw jest najostrzejszy dwie przysłony od pełnego otwarcia</em>. Jak większość takich reguł, jest z grubsza prawdziwa i prawie nigdy nie bywa wyjaśniana. A wyjaśnienie jest proste i składa się z dwóch zjawisk, które ciągną w przeciwne strony.</p>
+    <p>Jest reguła powtarzana przez każdego, kto trochę pofotografował: <em>obiektyw jest najostrzejszy dwie przysłony od pełnego otwarcia</em>. Z grubsza prawdziwa i prawie nigdy nie wyjaśniana — a wyjaśnienie składa się z dwóch zjawisk ciągnących w przeciwne strony.</p>
 
     <p><strong>Przy pełnym otwarciu przeszkadzają aberracje.</strong> Wiązka wypełnia wtedy całą źrenicę, łącznie z jej brzegiem — a to właśnie promienie biegnące daleko od osi są najgorzej skorygowane. Kula szlifowana jest przybliżeniem tylko blisko środka, więc im szersza wiązka, tym większa część promieni chybia. Przymknięcie przysłony odcina brzeg i wraz z nim odcina większość problemu. To jest geometria, i o niej będzie cała <a href="rozdzial-11-aberracja-sferyczna.html">Część III</a>.</p>
 
@@ -298,26 +298,6 @@ window.SKY3D_MESSAGES = {
   </div>
 
   <div class="section">
-    <div class="section-eyebrow">Poprawka · przy bliskiej ostrości liczby kłamią</div>
-    <h2>Dlaczego makro zjada światło</h2>
-
-    <p>Wyprowadzenie liczby f z pierwszej sekcji miało cichy warunek: obraz powstaje w odległości ogniskowej od soczewki. To jest prawda przy ostrości na nieskończoność i przybliżenie przy ostrości na kilka metrów. Przy bliskiej ostrości przestaje być jednym i drugim.</p>
-
-    <p>Z <a href="rozdzial-04-soczewka-cienka.html">Rozdziału 4</a> wiemy, że przy bliskim przedmiocie obraz powstaje dalej niż f. A skoro rozkłada się na większej powierzchni, to naświetlenie spada — mimo że źrenica ma dokładnie tę samą średnicę. Liczba wygrawerowana na pierścieniu przestaje odpowiadać rzeczywistości i trzeba ją skorygować:</p>
-
-    <div class="formula">
-      N<sub>ef</sub> = N · (1 + <span class="vec" data-tip="Powiększenie liniowe: stosunek rozmiaru obrazu do rozmiaru przedmiotu. Przy makro 1:1 wynosi 1.">m</span>)
-      <span class="sub">N<sub>ef</sub> — efektywna liczba przysłony, ta, którą „widzi” matryca. N — liczba nastawiona na obiektywie. m — powiększenie. Dla ostrości na nieskończoność m = 0 i poprawka znika.</span>
-    </div>
-
-    <p>Przy makro 1:1 powiększenie wynosi 1, więc efektywna liczba przysłony jest dwa razy większa od nastawionej — a to znaczy <strong>dwie przysłony mniej światła</strong>. Nastawione f/8 pracuje jak f/16. To nie jest wada obiektywu makro, tylko nieuchronna konsekwencja tego, że obraz powstaje dalej.</p>
-
-    <p>Ta sama poprawka tłumaczy jeszcze jedną rzecz, która na planie bywa zaskoczeniem: <strong>przy bardzo bliskiej ostrości głębia ostrości nie zależy już praktycznie od ogniskowej</strong>. Wszystkie obiektywy nastawione na to samo powiększenie i tę samą liczbę przysłony dają niemal identyczną głębię — bo to powiększenie, a nie ogniskowa, rządzi wtedy rachunkiem. Dlatego przy makro nie ma sensu szukać „płytszego” szkła; jedyne, co realnie zmienia głębię, to przymknięcie przysłony albo cofnięcie się i zrezygnowanie z powiększenia.</p>
-
-    <p>Konsekwencja praktyczna, o którą łatwo się potknąć przy dopasowywaniu renderu do materiału makro: jeśli w metryce widnieje f/8, a wynik wygląda na znacznie ciemniejszy i głębszy, niż powinien — to prawdopodobnie właśnie ten czynnik. Renderer liczy przysłonę geometrycznie i nie dokłada poprawki sam.</p>
-  </div>
-
-  <div class="section">
     <div class="section-eyebrow">W CG · co znaczy „aperture” w kamerze</div>
     <h2>Przysłona w rendererze robi tylko połowę roboty</h2>
 
@@ -329,9 +309,9 @@ window.SKY3D_MESSAGES = {
 
     <p>Trzecia różnica jest subtelniejsza i dotyczy dyfrakcji: renderer jej nie liczy w ogóle. Przymknięcie do f/22 w rzeczywistej kamerze wyraźnie zmiękcza obraz, a w rendererze daje obraz idealnie ostry w całej głębi. Jeśli odtwarzasz ujęcie kręcone na mocno przymkniętej przysłonie, tę miękkość trzeba dołożyć osobno — i wrócimy do tego w Rozdziale 10.</p>
 
-    <p>Praktyczna konsekwencja jest taka, że <span class="term-violet">w rendererze można bezkarnie ustawić przysłonę, której w rzeczywistości byś nie użył</span> — na przykład f/1,2 przy pełnym świetle dnia — i dostać obraz poprawnie naświetlony przy nierealistycznie płytkiej głębi. Jeśli render ma siedzieć w materiale, warto trzymać się przysłony faktycznie użytej na planie, nawet jeśli silnik na to nie nalega.</p>
+    <p>Wynika stąd, że <span class="term-violet">w rendererze można bezkarnie ustawić przysłonę, której w rzeczywistości byś nie użył</span> — na przykład f/1,2 przy pełnym świetle dnia — i dostać obraz poprawnie naświetlony przy nierealistycznie płytkiej głębi. Jeśli render ma siedzieć w materiale, warto trzymać się przysłony faktycznie użytej na planie, nawet jeśli silnik na to nie nalega.</p>
 
-    <p>Druga pułapka to <strong>kształt źrenicy</strong>. Domyślnie renderer losuje po kole, więc bokeh wychodzi idealnie okrągłe — czyli takie, jakiego prawdziwy obiektyw z listkami nie daje prawie nigdy. Większość silników pozwala podać liczbę listków albo teksturę źrenicy, i to jest jedna z tańszych rzeczy, jakie można zrobić, żeby render przestał wyglądać na render. Szerzej w <a href="rozdzial-09-bokeh.html">Rozdziale 9</a>.</p>
+    <button class="advanced-btn" data-modal-target="adv-makro">Zaawansowane: dlaczego makro zjada światło</button>
   </div>
 
   <div class="panel practice">
@@ -401,6 +381,27 @@ window.SKY3D_MESSAGES = {
       <div id="modal-body"></div>
     </div>
   </div>
+
+  <template id="adv-makro">
+<h3>Dlaczego makro zjada światło</h3>
+
+    <p>Wyprowadzenie liczby f z pierwszej sekcji miało cichy warunek: obraz powstaje w odległości ogniskowej od soczewki. To jest prawda przy ostrości na nieskończoność i przybliżenie przy ostrości na kilka metrów. Przy bliskiej ostrości przestaje być jednym i drugim.</p>
+
+    <p>Z <a href="rozdzial-04-soczewka-cienka.html">Rozdziału 4</a> wiemy, że przy bliskim przedmiocie obraz powstaje dalej niż f. A skoro rozkłada się na większej powierzchni, to naświetlenie spada — mimo że źrenica ma dokładnie tę samą średnicę. Liczba wygrawerowana na pierścieniu przestaje odpowiadać rzeczywistości i trzeba ją skorygować:</p>
+
+    <div class="formula">
+    N<sub>ef</sub> = N · (1 + <span class="vec" data-tip="Powiększenie liniowe: stosunek rozmiaru obrazu do rozmiaru przedmiotu. Przy makro 1:1 wynosi 1.">m</span>)
+    <span class="sub">N<sub>ef</sub> — efektywna liczba przysłony, ta, którą „widzi” matryca. N — liczba nastawiona na obiektywie. m — powiększenie. Dla ostrości na nieskończoność m = 0 i poprawka znika.</span>
+    </div>
+
+    <p>Przy makro 1:1 powiększenie wynosi 1, więc efektywna liczba przysłony jest dwa razy większa od nastawionej — a to znaczy <strong>dwie przysłony mniej światła</strong>. Nastawione f/8 pracuje jak f/16. To nie jest wada obiektywu makro, tylko nieuchronna konsekwencja tego, że obraz powstaje dalej.</p>
+
+    <p>Ta sama poprawka tłumaczy jeszcze jedną rzecz, która na planie bywa zaskoczeniem: <strong>przy bardzo bliskiej ostrości głębia ostrości nie zależy już praktycznie od ogniskowej</strong>. Wszystkie obiektywy nastawione na to samo powiększenie i tę samą liczbę przysłony dają niemal identyczną głębię — bo to powiększenie, a nie ogniskowa, rządzi wtedy rachunkiem. Dlatego przy makro nie ma sensu szukać „płytszego” szkła; jedyne, co realnie zmienia głębię, to przymknięcie przysłony albo cofnięcie się i zrezygnowanie z powiększenia.</p>
+
+    <p>Konsekwencja praktyczna, o którą łatwo się potknąć przy dopasowywaniu renderu do materiału makro: jeśli w metryce widnieje f/8, a wynik wygląda na znacznie ciemniejszy i głębszy, niż powinien — to prawdopodobnie właśnie ten czynnik. Renderer liczy przysłonę geometrycznie i nie dokłada poprawki sam.</p>
+
+    <p>Pełna postać poprawki, uwzględniająca powiększenie źrenicowe dla układów niesymetrycznych — <a href="../dodatki/dodatek-ae-geometria-zrenic.html">Dodatek AE</a>.</p>
+  </template>
 
 </div>
 
