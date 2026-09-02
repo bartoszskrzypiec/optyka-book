@@ -43,7 +43,294 @@ window.SKY3D_MESSAGES = {
   <h1>Aberracja sferyczna: miękkość, glow i mydlana bańka</h1>
   <p class="subtitle">Kula jest łatwa do wyszlifowania i zła do skupiania światła. Z tego jednego kompromisu bierze się i poświata wokół świateł przy pełnym otworze, i to, czy bokeh jest kremowe, czy obwiedzione obrączką.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li>Kula jest łatwa do wyszlifowania i <strong>zła do skupiania światła</strong>. Promienie z brzegu soczewki zbiegają się bliżej niż te ze środka — i to jest aberracja sferyczna, najstarszy problem optyki.</li>
+      <li>Nie ma jednego „ogniska”, tylko rozmytą strefę. Stąd <span class="term-amber">poświata wokół jasnych świateł przy pełnym otworze</span> i stąd cała różnica między bokeh kremowym a obrączkowym.</li>
+      <li>Znika po przymknięciu przysłony, bo przymknięcie odcina właśnie te brzegowe promienie. To jest główny powód, dla którego obiektywy są najsłabsze przy pełnym otwarciu.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Przyczyna · wygodny kształt, zły kształt</div>
+    <h2>Dlaczego kula nie skupia w punkt</h2>
+
+    <p>W <a href="rozdzial-02-zalamanie-i-dyspersja.html">Rozdziale 2</a> zbudowaliśmy soczewkę z obserwacji, że kula zagina promienie tym mocniej, im dalej od osi biegną. Było to przybliżenie i wtedy nam wystarczyło. Teraz przyjrzyjmy się, jak dobre jest naprawdę.</p>
+
+    <p>Okazuje się, że niedobre. Powierzchnia kulista zagina promienie brzegowe <strong>za mocno</strong> — nie o tyle, ile trzeba, żeby trafiły w to samo miejsce co promienie przyosiowe, tylko wyraźnie mocniej. Skutek: promień biegnący przy krawędzi soczewki przecina oś bliżej niż promień biegnący tuż przy niej. Nie ma jednego punktu, w którym wszystko się zbiega. Jest rozciągnięty odcinek, wzdłuż którego promienie przecinają oś jeden po drugim, zależnie od tego, jak daleko od osi weszły.</p>
+
+    <p>Nazwa bierze się właśnie stąd: to jest wada <em>kształtu sferycznego</em>, a nie wada wykonania. Idealnie wyszlifowana, idealnie wypolerowana kulista soczewka ma ją w pełnej okazałości. Powierzchnia, która skupiałaby wszystko w jeden punkt, istnieje i jest znana — dla jednego konkretnego układu przedmiot–obraz da się ją policzyć — ale nie jest kulą, tylko krzywą wyższego rzędu.</p>
+
+    <p>Dlaczego więc wszyscy szlifują kule? Bo kula jest jedyną powierzchnią, którą da się wytworzyć <strong>bez odniesienia do orientacji</strong>. Dwa kawałki szkła pocierane o siebie z ziarnem ściernym i przypadkowym ruchem dążą samoistnie do powierzchni kulistej — to właściwość geometrii, a nie sprytu rzemieślnika. Przez czterysta lat była to jedyna metoda dająca powtarzalną dokładność optyczną, i dlatego cała optyka wyrosła na kompromisie z kulą.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Promienie brzegowe kontra przyosiowe</span><span>jedna soczewka, wiele ognisk</span></div>
+      <svg viewBox="0 0 760 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Promienie wchodzące blisko osi skupiają się dalej, promienie brzegowe bliżej; między nimi rozciąga się strefa zamiast punktu.">
+        <line x1="20" y1="140" x2="740" y2="140" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 6"/>
+        <path d="M 200 40 Q 228 140 200 240 Q 172 140 200 40 Z" fill="#4fc3c0" fill-opacity="0.13" stroke="#4fc3c0" stroke-width="1.6"/>
+
+        <g stroke="#e8a33d" stroke-width="1.5" fill="none">
+          <path d="M 30 56 L 200 56 L 452 140"/><path d="M 30 224 L 200 224 L 452 140"/>
+          <path d="M 30 78 L 200 78 L 504 140"/><path d="M 30 202 L 200 202 L 504 140"/>
+          <path d="M 30 102 L 200 102 L 560 140"/><path d="M 30 178 L 200 178 L 560 140"/>
+          <path d="M 30 124 L 200 124 L 612 140"/><path d="M 30 156 L 200 156 L 612 140"/>
+        </g>
+
+        <line x1="452" y1="96" x2="452" y2="184" stroke="#9c82d8" stroke-width="1.4" stroke-dasharray="3 3"/>
+        <line x1="612" y1="96" x2="612" y2="184" stroke="#9c82d8" stroke-width="1.4" stroke-dasharray="3 3"/>
+        <line x1="452" y1="252" x2="612" y2="252" stroke="#9c82d8" stroke-width="1.6"/>
+        <line x1="452" y1="246" x2="452" y2="258" stroke="#9c82d8"/><line x1="612" y1="246" x2="612" y2="258" stroke="#9c82d8"/>
+        <text x="532" y="272" font-family="IBM Plex Mono" font-size="11" fill="#9c82d8" text-anchor="middle">aberracja podłużna</text>
+        <text x="430" y="88" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">brzeg</text>
+        <text x="626" y="88" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">oś</text>
+        <text x="30" y="40" font-family="IBM Plex Mono" font-size="10.5" fill="#e8a33d">promienie równoległe z nieskończoności</text>
+      </svg>
+      <div class="diagram-caption">Im dalej od osi wszedł promień, tym bliżej przecina oś. Ogniska nie ma — jest przedział.</div>
+    </div>
+
+    <p>Warto zauważyć, jak szybko to narasta. Odchylenie od ideału rośnie z <strong>trzecią potęgą</strong> odległości od osi — promień wchodzący dwa razy dalej od osi chybia osiem razy bardziej. Dlatego zewnętrzny pierścień źrenicy odpowiada za nieproporcjonalnie dużą część problemu, a odcięcie go przymknięciem przysłony daje tak wyraźną poprawę.</p>
+
+    <p>Ta sama trzecia potęga tłumaczy, dlaczego jasne obiektywy są tak trudne i tak drogie. Przejście z f/2 na f/1,4 zwiększa promień źrenicy o czterdzieści procent, ale wielkość, z którą walczy konstruktor, rośnie prawie trzykrotnie. Ostatnia przysłona jasności kosztuje więcej niż wszystkie poprzednie razem.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Przymknięcie odcina problem</span><span>trzecia potęga w akcji</span></div>
+      <svg viewBox="0 0 760 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Trzy przysłony: pełny otwór wpuszcza promienie brzegowe, przymknięcie o dwie przysłony odcina je prawie w całości.">
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b" text-anchor="middle">
+          <text x="130" y="26">f/1,4</text><text x="380" y="26">f/2,8</text><text x="630" y="26">f/5,6</text>
+        </g>
+        <g>
+          <circle cx="130" cy="110" r="66" fill="none" stroke="#2a2f38" stroke-width="1" stroke-dasharray="3 4"/>
+          <circle cx="130" cy="110" r="66" fill="#9c82d8" fill-opacity="0.30"/>
+          <circle cx="130" cy="110" r="33" fill="#4fc3c0" fill-opacity="0.30"/>
+          <text x="130" y="200" font-family="IBM Plex Mono" font-size="11" fill="#9c82d8" text-anchor="middle">aberracja 1,00</text>
+        </g>
+        <g>
+          <circle cx="380" cy="110" r="66" fill="none" stroke="#2a2f38" stroke-width="1" stroke-dasharray="3 4"/>
+          <circle cx="380" cy="110" r="33" fill="#9c82d8" fill-opacity="0.30"/>
+          <circle cx="380" cy="110" r="20" fill="#4fc3c0" fill-opacity="0.30"/>
+          <text x="380" y="200" font-family="IBM Plex Mono" font-size="11" fill="#9c82d8" text-anchor="middle">aberracja 0,12</text>
+        </g>
+        <g>
+          <circle cx="630" cy="110" r="66" fill="none" stroke="#2a2f38" stroke-width="1" stroke-dasharray="3 4"/>
+          <circle cx="630" cy="110" r="16" fill="#9c82d8" fill-opacity="0.30"/>
+          <circle cx="630" cy="110" r="10" fill="#4fc3c0" fill-opacity="0.30"/>
+          <text x="630" y="200" font-family="IBM Plex Mono" font-size="11" fill="#4fc3c0" text-anchor="middle">aberracja 0,016</text>
+        </g>
+        <text x="30" y="228" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">Odchylenie rośnie z trzecią potęgą promienia, więc dwie przysłony zmniejszają je osiemnastokrotnie.</text>
+      </svg>
+      <div class="diagram-caption">To jest lewa gałąź krzywej „słodkiego punktu” z Rozdziału 6 — i powód, dla którego opada tak stromo.</div>
+    </div>
+
+    <p>Warto zobaczyć te liczby, bo tłumaczą rzecz, która na wykresie z <a href="rozdzial-06-przyslona-f-i-t.html">Rozdziału 6</a> wyglądała na przesadę. Przymknięcie o dwie przysłony zmniejsza promień źrenicy o połowę, ale aberrację — osiemnastokrotnie, bo wchodzi trzecia potęga i jeszcze uśrednienie po polu. Stąd ta charakterystyczna, gwałtownie opadająca lewa gałąź: pierwsze dwie przysłony przymknięcia dają niemal całą dostępną poprawę, a każda kolejna już prawie nic.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Objaw · co widać w obrazie</div>
+    <h2>Poświata, mgiełka i miękkość, która nie jest nieostrością</h2>
+
+    <p>Skoro nie ma jednego ogniska, to gdziekolwiek postawisz matrycę, dostaniesz plamkę zamiast punktu. Ale — i to jest ważne — plamkę o bardzo charakterystycznym rozkładzie: <strong>ostre jądro otoczone słabą, rozległą poświatą</strong>. Jądro tworzą promienie przyosiowe, które zbiegły się prawidłowo; poświatę tworzą promienie brzegowe, rozrzucone wokół.</p>
+
+    <p>To odróżnia aberrację sferyczną od zwykłej nieostrości i jest kluczem do rozpoznawania jej w materiale. Nieostrość rozmywa wszystko równomiernie — detal znika. Aberracja sferyczna <span class="term-cyan">zostawia detal na miejscu i dokłada do niego mgłę</span>. Zdjęcie wygląda jednocześnie ostro i miękko, co brzmi jak sprzeczność, dopóki nie zobaczy się tego na własne oczy.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Plamka z aberracją sferyczną</span><span>ostre jądro plus poświata</span></div>
+      <svg viewBox="0 0 760 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Porównanie trzech plamek: punkt idealny, punkt z aberracją sferyczną z ostrym jądrem i poświatą, oraz punkt nieostry rozmyty równomiernie.">
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b" text-anchor="middle">
+          <text x="140" y="26">IDEALNY</text><text x="380" y="26">ABERRACJA SFERYCZNA</text><text x="620" y="26">NIEOSTROŚĆ</text>
+        </g>
+        <circle cx="140" cy="110" r="9" fill="#e8a33d"/>
+        <circle cx="380" cy="110" r="52" fill="#e8a33d" fill-opacity="0.10"/>
+        <circle cx="380" cy="110" r="30" fill="#e8a33d" fill-opacity="0.16"/>
+        <circle cx="380" cy="110" r="9" fill="#e8a33d"/>
+        <circle cx="620" cy="110" r="46" fill="#e8a33d" fill-opacity="0.42"/>
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b" text-anchor="middle">
+          <text x="140" y="196">punkt</text>
+          <text x="380" y="196">jądro zostaje, dochodzi mgła</text>
+          <text x="620" y="196">detal znika równomiernie</text>
+        </g>
+        <text x="30" y="226" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">Środkowy przypadek jest ostry i miękki naraz — i to jest cała różnica.</text>
+      </svg>
+      <div class="diagram-caption">Nieostrość zabiera detal. Aberracja sferyczna zostawia go i dokłada poświatę.</div>
+    </div>
+
+    <p>W praktyce objawia się to na trzy sposoby, w kolejności od najbardziej do najmniej oczywistego:</p>
+
+    <ul>
+      <li><strong>Poświata wokół jasnych punktów.</strong> Latarnia w nocnym ujęciu przy pełnym otworze dostaje wokół siebie aureolę — nie flarę z odbić wewnętrznych, tylko rozmytą obwódkę tuż przy sobie. Nazywa się to czasem glow i jest cechą, dla której wypożycza się stare szkło.</li>
+      <li><strong>Obniżony kontrast lokalny.</strong> Poświata z każdego jasnego punktu obrazu wylewa się na sąsiednie ciemne — więc czernie w pobliżu świateł się podnoszą. Efekt jest podobny do veiling glare z <a href="rozdzial-22-veiling-glare.html">Rozdziału 22</a>, ale przyczyna zupełnie inna i, w przeciwieństwie do tamtej, ta znika po przymknięciu.</li>
+      <li><strong>Przesuwanie się ostrości przy przymykaniu.</strong> Zjawisko znane jako focus shift: skoro strefa zbiegania się jest rozciągnięta, to przymknięcie przysłony odcina jej część i <em>środek ciężkości</em> ostrości się przesuwa. Ustawiasz ostrość przy pełnym otworze, przymykasz do zdjęcia — i ostrość jest gdzie indziej.</li>
+    </ul>
+
+    <p>Ten ostatni punkt bywa w praktyce najbardziej dokuczliwy i warto go znać, bo łatwo o pomyłkę w diagnozie. Jeśli obiektyw jest ostry przy pełnym otworze i przy f/8, ale wyraźnie chybia przy f/2,8, to nie jest wada mechaniki ani rozkalibrowany autofokus. To jest focus shift, i jest właściwością konstrukcji, nie egzemplarza.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Znak · dwie strony tej samej wady</div>
+    <h2>Niedokorygowana, przekorygowana i dlaczego trzeba wybrać</h2>
+
+    <p>Do tej pory zakładaliśmy, że promienie brzegowe skupiają się <em>bliżej</em>. Tak zachowuje się pojedyncza soczewka skupiająca i taki jest przypadek naturalny — nazywa się aberracją niedokorygowaną. Konstruktor może jednak dołożyć element rozpraszający, który działa przeciwnie, i przestrzelić: wtedy promienie brzegowe skupiają się <strong>dalej</strong> niż przyosiowe. To jest przekorygowanie.</p>
+
+    <p>Między jednym a drugim jest stan zerowy, w którym obie tendencje się znoszą. Wygląda na oczywisty wybór i przez większość historii optyki był celem. Okazuje się jednak, że nie zawsze jest optymalny — i tu dochodzimy do rzeczy, którą zapowiadał <a href="rozdzial-09-bokeh.html">Rozdział 9</a>.</p>
+
+    <p>Znak aberracji sferycznej decyduje o tym, gdzie w krążku nieostrości gromadzi się energia:</p>
+
+    <ul>
+      <li><strong>Niedokorygowana</strong> — za płaszczyzną ostrości krążki są jaśniejsze w środku i gasną ku brzegom. Tło rozpływa się miękko. Przed ostrością odwrotnie: obrączka po obwodzie, przód robi się nerwowy.</li>
+      <li><strong>Przekorygowana</strong> — dokładnie na odwrót. Miękki przód, nerwowe tło.</li>
+      <li><strong>Skorygowana do zera</strong> — krążki równomierne po obu stronach. Neutralnie, ale bez wyróżnionego środka tło jest płaskie i, zdaniem wielu, nudne.</li>
+    </ul>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Znak wady kontra bokeh</span><span>przód i tył zamieniają się rolami</span></div>
+      <svg viewBox="0 0 760 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tabela dwa na dwa: niedokorygowana daje miękkie tło i nerwowy przód, przekorygowana odwrotnie.">
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">
+          <text x="250" y="34">PRZED OSTROŚCIĄ</text><text x="520" y="34">ZA OSTROŚCIĄ</text>
+          <text x="30" y="106">NIEDOKORYGOWANA</text><text x="30" y="206">PRZEKORYGOWANA</text>
+        </g>
+        <g>
+          <circle cx="300" cy="100" r="34" fill="none" stroke="#9c82d8" stroke-width="7" opacity="0.75"/>
+          <circle cx="300" cy="100" r="28" fill="#9c82d8" fill-opacity="0.10"/>
+          <text x="300" y="152" font-family="IBM Plex Mono" font-size="10" fill="#9c82d8" text-anchor="middle">obrączka · nerwowo</text>
+        </g>
+        <g>
+          <radialGradient id="mg1"><stop offset="0%" stop-color="#4fc3c0" stop-opacity="0.7"/><stop offset="100%" stop-color="#4fc3c0" stop-opacity="0.05"/></radialGradient>
+          <circle cx="570" cy="100" r="34" fill="url(#mg1)"/>
+          <text x="570" y="152" font-family="IBM Plex Mono" font-size="10" fill="#4fc3c0" text-anchor="middle">miękko · kremowo</text>
+        </g>
+        <g>
+          <radialGradient id="mg2"><stop offset="0%" stop-color="#4fc3c0" stop-opacity="0.7"/><stop offset="100%" stop-color="#4fc3c0" stop-opacity="0.05"/></radialGradient>
+          <circle cx="300" cy="200" r="34" fill="url(#mg2)"/>
+          <text x="300" y="248" font-family="IBM Plex Mono" font-size="10" fill="#4fc3c0" text-anchor="middle">miękko · kremowo</text>
+        </g>
+        <g>
+          <circle cx="570" cy="200" r="34" fill="none" stroke="#9c82d8" stroke-width="7" opacity="0.75"/>
+          <circle cx="570" cy="200" r="28" fill="#9c82d8" fill-opacity="0.10"/>
+          <text x="570" y="248" font-family="IBM Plex Mono" font-size="10" fill="#9c82d8" text-anchor="middle">obrączka · nerwowo</text>
+        </g>
+      </svg>
+      <div class="diagram-caption">Przekątna tej tabeli jest pusta z konieczności: nie da się mieć miękko po obu stronach.</div>
+    </div>
+
+    <p>Konstruktor musi więc <span class="term-violet">wybrać jedną stronę</span> i wybór ten jest wpisany w obiektyw na stałe. Obiektywy portretowe koryguje się lekko niedokorygowanie, bo tło ma być piękne, a przód i tak jest rzadko rozmyty. Obiektywy do zdjęć technicznych i reprodukcji — do zera, bo tam liczy się wierność, a nie wrażenie.</p>
+
+    <p>Istnieje też trzecia droga, wykorzystywana w kilku legendarnych konstrukcjach portretowych: <strong>zostawić aberrację celowo i dać użytkownikowi pokrętło</strong> do jej regulacji. Przesuwając jeden element wzdłuż osi, zmienia się stopień korekcji, a wraz z nim ilość poświaty. Takie obiektywy istnieją do dziś i sprzedają się dokładnie tym, że mają wadę, którą można dawkować.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Korekcja · trzy sposoby i ich ceny</div>
+    <h2>Jak się z tym walczy</h2>
+
+    <p>Aberracja sferyczna jest wadą najstarszą i przez to najlepiej opanowaną. Konstruktor ma trzy narzędzia, wyraźnie różniące się kosztem.</p>
+
+    <div class="subsection">
+      <h3>Podział mocy na więcej powierzchni</h3>
+      <p>Najprostsze i najstarsze. Skoro odchylenie rośnie z trzecią potęgą kąta, to zamiast jednej mocno zakrzywionej soczewki lepiej dać dwie słabsze. Każda zagina mniej, więc każda psuje mniej niż proporcjonalnie — a razem dają tę samą moc. Podwojenie liczby elementów zmniejsza aberrację mniej więcej czterokrotnie.</p>
+      <p>Cena jest ta z <a href="rozdzial-03-fresnel-kazda-powierzchnia-swieci.html">Rozdziału 3</a>: więcej powierzchni to więcej odbić, więcej flary i niższy kontrast. To jest ten sam kompromis, który przewija się przez całą książkę, i tu widać go w najczystszej postaci.</p>
+    </div>
+
+    <div class="subsection">
+      <h3>Dobór kształtu i ustawienia soczewki</h3>
+      <p>Soczewka o tej samej mocy może mieć różne krzywizny obu powierzchni — od dwuwypukłej symetrycznej po płasko-wypukłą. Okazuje się, że aberracja sferyczna zależy od tego wyboru bardzo silnie, mimo że moc pozostaje ta sama.</p>
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Kształt soczewki przy tej samej mocy</span><span>najtańsza możliwa korekcja</span></div>
+      <svg viewBox="0 0 760 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cztery soczewki o tej samej mocy i różnych kształtach z podanym względnym nasileniem aberracji sferycznej.">
+        <g fill="#4fc3c0" fill-opacity="0.15" stroke="#4fc3c0" stroke-width="1.6">
+          <path d="M 110 60 Q 132 115 110 170 Q 88 115 110 60 Z"/>
+          <path d="M 290 60 L 290 170 Q 268 115 290 60 Z"/>
+          <path d="M 470 60 Q 492 115 470 170 L 470 60 Z"/>
+          <path d="M 650 60 Q 678 115 650 170 Q 632 115 650 60 Z"/>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b" text-anchor="middle">
+          <text x="110" y="196">dwuwypukła</text><text x="290" y="196">płaska do przodu</text>
+          <text x="470" y="196">płaska do tyłu</text><text x="650" y="196">optymalna</text>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="12" text-anchor="middle">
+          <text x="110" y="218" fill="#8b909b">1,2×</text><text x="290" y="218" fill="#c23b3b">1,7×</text>
+          <text x="470" y="218" fill="#8b909b">1,1×</text><text x="650" y="218" fill="#4fc3c0">1,0×</text>
+        </g>
+        <g stroke="#e8a33d" stroke-width="1.4" opacity="0.6"><line x1="30" y1="115" x2="720" y2="115" stroke-dasharray="4 6"/></g>
+        <text x="30" y="42" font-family="IBM Plex Mono" font-size="10.5" fill="#e8a33d">wiązka z nieskończoności wchodzi z lewej</text>
+      </svg>
+      <div class="diagram-caption">Ta sama moc, cztery kształty, aberracja w zakresie 1,0 do 1,7. Odwrócenie soczewki nic nie kosztuje.</div>
+    </div>
+
+      <p>Istnieje kształt optymalny, minimalizujący aberrację dla danego układu przedmiot–obraz. Dla równoległej wiązki wpadającej z nieskończoności jest to soczewka mocniej zakrzywiona od strony wiązki — i dlatego <strong>płasko-wypukła soczewka odwrócona płaską stroną do przodu daje wyraźnie gorszy obraz</strong> niż ta sama soczewka odwrócona właściwie. Jest to najtańsza możliwa korekcja: nic nie kosztuje, trzeba tylko wiedzieć.</p>
+    </div>
+
+    <div class="subsection">
+      <h3>Powierzchnia asferyczna</h3>
+      <p>Rozwiązanie radykalne: odejść od kuli. Jedna dobrze policzona powierzchnia asferyczna potrafi zastąpić trzy soczewki sferyczne, dając tę samą korekcję przy sześciu powierzchniach mniej. Zysk jest podwójny — mniejsza aberracja i wyższy kontrast naraz.</p>
+      <p>Cena leży w produkcji. Asfery nie da się wytworzyć przez pocieranie dwóch kawałków szkła; wymaga sterowanego numerycznie szlifu albo prasowania w formie, a jedno i drugie kosztuje wielokrotnie więcej. Zostawia też ślad, który poznaliśmy w <a href="rozdzial-09-bokeh.html">Rozdziale 9</a>: koncentryczne prążki w krążku nieostrości, czyli cebulki.</p>
+      <p>Warto zapamiętać tę zależność, bo jest kontrintuicyjna: <span class="term-cyan">cebulki w bokeh są objawem drogiej technologii</span>, nie taniej. Obiektyw bez asfer ich nie ma — ale za to ma więcej szkła i więcej aberracji.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Historia · cztery wieki kompromisu z kulą</div>
+    <h2>Dlaczego to trwało tak długo</h2>
+
+    <p>Aberrację sferyczną opisano poprawnie już w siedemnastym wieku i od razu wiedziano, że powierzchnia usuwająca ją istnieje. Kepler ją policzył, Kartezjusz podał kształt. A mimo to przez następne trzysta lat wszyscy dalej szlifowali kule. Warto wiedzieć dlaczego, bo to samo ograniczenie rządzi do dziś ceną obiektywów.</p>
+
+    <p>Powód jest wytwórczy, nie teoretyczny. Powierzchnia kulista powstaje <strong>sama z siebie</strong>: dwa kawałki szkła pocierane o siebie z ziarnem ściernym, przy dostatecznie przypadkowym ruchu, dążą do kuli, bo kula jest jedyną powierzchnią, która pasuje sama do siebie w każdym obrocie. Rzemieślnik nie musi wiedzieć, co robi — musi tylko pocierać dostatecznie długo i dostatecznie chaotycznie.</p>
+
+    <p>Każdy inny kształt wymaga <em>odniesienia</em>: wiedzy, gdzie jest oś i jak daleko od niej jesteśmy w danej chwili. Do połowy dwudziestego wieku nie istniała metoda, która dawałaby taką kontrolę z dokładnością ułamka długości fali. Asfery robiono, ale ręcznie, sztukami, do teleskopów i mikroskopów, za pieniądze niedostępne fotografii.</p>
+
+    <p>Zmieniły to dwie technologie, obie z drugiej połowy dwudziestego wieku. <strong>Prasowanie w formie</strong> pozwoliło produkować asfery seryjnie, choć z ograniczoną dokładnością i tylko dla szkieł o niskiej temperaturze mięknięcia. <strong>Szlif sterowany numerycznie</strong> dał dokładność, ale przy koszcie jednostkowym, który do dziś ogranicza asfery do kilku elementów w układzie.</p>
+
+    <p>Z tej historii płynie obserwacja przydatna przy rozpoznawaniu szkła po obrazie. <span class="term-cyan">Obiektyw sprzed lat siedemdziesiątych prawie na pewno nie ma asfer</span> — więc walczył z aberracją sferyczną wyłącznie liczbą soczewek i doborem kształtów. Stąd jego charakterystyczny profil: przyzwoity kontrast przy przymknięciu, wyraźna poświata przy pełnym otworze i bokeh o zdecydowanym znaku. Współczesna konstrukcja z dwiema asferami jest przy pełnym otworze znacznie czystsza — i właśnie ta czystość bywa dziś powodem, dla którego się jej unika.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">W CG · dlaczego renderer tego nie ma</div>
+    <h2>Aberracja sferyczna w renderze i w compie</h2>
+
+    <p>Standardowa kamera w rendererze nie ma aberracji sferycznej z prostego powodu: nie ma soczewek. Model cienkiej soczewki zakłada idealne skupienie w punkcie, a stożek promieni ma tam idealnie równomierne wypełnienie. Każdy krążek nieostrości wychodzi więc płaski jak naleśnik — czyli odpowiada obiektywowi skorygowanemu do zera, jakiego w praktyce prawie nie ma.</p>
+
+    <p>Trzy drogi, żeby to naprawić, w kolejności rosnącego kosztu:</p>
+
+    <ul>
+      <li><strong>Tekstura źrenicy.</strong> Najtańsza i w większości przypadków wystarczająca. Gradient gasnący ku brzegom daje krążki jak przy niedokorygowanej aberracji; jasny pierścień przy brzegu — jak przy przekorygowanej. Jedna mapa, zero kosztu obliczeniowego. Ograniczenie: efekt jest ten sam po obu stronach ostrości, a w rzeczywistości strony są przeciwne.</li>
+      <li><strong>Model wielosoczewkowy.</strong> Niektóre renderery pozwalają prześledzić promień przez rzeczywisty układ optyczny opisany tabelą krzywizn i szkieł. Aberracja sferyczna wychodzi wtedy sama, razem z asymetrią stron i z focus shiftem. Kosztuje realnie — każdy promień przechodzi przez kilkanaście powierzchni.</li>
+      <li><strong>Poświata w compie.</strong> Osobna warstwa: wyciągnij z obrazu najjaśniejsze obszary, rozmyj mocno, dodaj z niewielką wagą. Odtwarza glow, ale nie odtwarza ani asymetrii bokeh, ani focus shiftu. Wystarcza, gdy chodzi wyłącznie o wrażenie starego szkła.</li>
+    </ul>
+
+    <p>Warto też pamiętać o kolejności w łańcuchu. Poświata z aberracji sferycznej powstaje w obiektywie, czyli <strong>przed</strong> matrycą — a więc przed ziarnem, przed halacją i przed wszystkim, co dokłada nośnik. Nałożona na końcu, po ziarnie, rozmywa je razem z obrazem i daje wygląd, który czyta się jako zły odszumiacz, a nie jako stare szkło. Pełny łańcuch omawiamy w Rozdziale 36, ale ta jedna zasada wystarcza na większość przypadków: co powstało w obiektywie, idzie przed tym, co powstało w matrycy.</p>
+
+    <p>Praktyczna uwaga do tej ostatniej metody, bo jest źródłem typowego błędu. Poświata z aberracji sferycznej jest <strong>ciasna</strong> — sięga kilku, może kilkunastu pikseli od źródła. Szeroka, miękka łuna rozlana na ćwierć kadru to już nie aberracja, tylko veiling glare, i ma inną przyczynę oraz inne zachowanie przy przymykaniu. Mieszanie ich daje obraz, który nie odpowiada żadnemu realnemu obiektywowi.</p>
+  </div>
+
+  <div class="panel practice">
+    <div class="panel-label">Z praktyki</div>
+    <p><strong>Rozpoznasz ją po reakcji na przymknięcie.</strong> Jeśli miękkość i poświata znikają po przymknięciu o dwie przysłony — to aberracja sferyczna. Jeśli zostają — to veiling glare albo filtr dyfuzyjny. Ta jedna próba rozdziela trzy zjawiska, które w gotowym kadrze wyglądają podobnie.</p>
+    <p><strong>Przy dopasowywaniu starego szkła zacznij od tekstury źrenicy, nie od glow.</strong> Odruch podpowiada dołożyć poświatę w compie, bo to widać najbardziej. Ale to bokeh niesie więcej informacji o obiektywie i jest trudniejsze do podrobienia później. Gradient w źrenicy załatwia obie rzeczy naraz i jest zgodny z geometrią sceny.</p>
+    <p><strong>Nie kopiuj focus shiftu, jeśli nie musisz.</strong> Jest to wada, którą widz odbiera jako błąd ostrości, a nie jako charakter. W materiale referencyjnym bywa obecna, bo asystent nie zdążył jej skompensować — ale odtwarzanie jej w renderze daje ujęcie wyglądające na źle zrobione, a nie na nakręcone starym szkłem.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>aberracja sferyczna</dt>
+      <dd>Wada polegająca na tym, że promienie wchodzące w różnej odległości od osi skupiają się w różnych punktach. Właściwość kształtu kulistego, nie wykonania.</dd>
+      <dt>aberracja podłużna</dt>
+      <dd>Odległość między ogniskiem promieni brzegowych a przyosiowych. Miara nasilenia aberracji sferycznej.</dd>
+      <dt>niedokorygowana / przekorygowana</dt>
+      <dd>Znak wady: brzeg skupia bliżej (niedo-) albo dalej (prze-) niż oś. Decyduje o tym, po której stronie ostrości bokeh jest miękkie.</dd>
+      <dt>focus shift</dt>
+      <dd>Przesunięcie płaszczyzny ostrości przy przymykaniu przysłony, wynikające z odcinania części rozciągniętej strefy skupienia.</dd>
+      <dt>glow</dt>
+      <dd>Ciasna poświata wokół jasnych punktów, pochodząca od promieni brzegowych. Nie mylić z veiling glare, który jest szerszy i nie znika po przymknięciu.</dd>
+      <dt>powierzchnia asferyczna</dt>
+      <dd>Powierzchnia odbiegająca od kuli, policzona tak, by minimalizować aberrację. Zastępuje kilka soczewek sferycznych kosztem drogiej produkcji.</dd>
+      <dt>kształt optymalny soczewki</dt>
+      <dd>Rozkład krzywizn obu powierzchni minimalizujący aberrację przy zadanej mocy. Dla wiązki z nieskończoności — mocniejsza krzywizna od strony wiązki.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Aberracja sferyczna dotyczy punktu leżącego <em>na osi</em> — czyli dokładnie w środku kadru. Jest więc wadą, której nie da się uniknąć nawet w najlepszym możliwym miejscu obrazu. W <a href="rozdzial-12-poza-osia.html">następnym rozdziale</a> wychodzimy poza oś i okaże się, że tam czekają trzy kolejne wady, z których każda psuje coś innego — a jedna z nich odpowiada za wir w tle, obiecany już dwa razy.</p>
+  </div>
 
   <div class="deeper">
     <div class="deeper-label">Idź głębiej</div>
