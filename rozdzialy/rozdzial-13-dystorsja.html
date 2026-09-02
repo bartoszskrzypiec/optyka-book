@@ -138,6 +138,8 @@ window.SKY3D_MESSAGES = {
       <li><strong>Dystorsja</strong> wygina proste linie w łuki. Skala też się zmienia, ale to jest skutek, a nie cel — i, w przeciwieństwie do projekcji, jest to wada, którą konstruktor stara się usunąć.</li>
     </ul>
 
+    <p>Warto mieć w pamięci jeszcze jedną różnicę między nimi, bo rozstrzyga o kolejności działań w compie. Rozciągnięcie rogów jest właściwością <em>rzutu</em>, więc renderer ma je dokładnie takie samo jak kamera i nic z tym nie trzeba robić. Dystorsja jest właściwością <em>szkła</em>, więc renderer jej nie ma i trzeba ją dołożyć. Pierwsze zgadza się samo, drugie wymaga pracy — i to jest cała praktyczna treść tego rozróżnienia.</p>
+
     <p>Praktyczna konsekwencja: rozciągnięcia rogów <span class="term-violet">nie należy korygować</span>, bo usunięcie go wygięłoby proste linie architektury. Dystorsję natomiast koryguje się rutynowo i bez wahania. Program do obróbki, który proponuje „popraw zniekształcenie obiektywu”, robi to drugie — i słusznie zostawia to pierwsze w spokoju.</p>
 
     <p>Jest jednak sytuacja, w której świadomie miesza się jedno z drugim, i warto o niej wiedzieć. Przy bardzo szerokich kadrach z ludźmi przy krawędzi stosuje się czasem korektę pośrednią, częściowo cylindryczną, która zmniejsza rozciągnięcie twarzy kosztem lekkiego wygięcia prostych. Jest to kompromis między dwiema niemożliwościami i nie ma dobrego rozwiązania — o czym decyduje wtedy nie optyka, a to, czy w kadrze ważniejsza jest twarz, czy architektura.</p>
