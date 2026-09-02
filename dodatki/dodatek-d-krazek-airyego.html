@@ -41,7 +41,127 @@ window.SKY3D_MESSAGES = {
   <h1>Krążek Airy'ego i granica dyfrakcyjna</h1>
   <p class="subtitle">Skąd się bierze 2,44·λ·N, przy jakiej przysłonie dyfrakcja wygrywa z pikselem na S35 i pełnej klatce, oraz dlaczego nieparzysta liczba listków podwaja promienie.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">Co tu jest</div>
+    <ul>
+      <li><strong>Skąd bierze się 2,44</strong> — pełne pochodzenie liczby, która w rozdziale pojawia się bez uzasadnienia.</li>
+      <li><strong>Tabela progów</strong>: przy której przysłonie krążek Airy'ego dogania piksel na sześciu realnych kombinacjach formatu i rozdzielczości.</li>
+      <li><strong>Dlaczego nieparzysta liczba listków podwaja promienie</strong> gwiazdek — z konstrukcją geometryczną.</li>
+      <li><strong>Protokół pomiaru</strong> na własnym sprzęcie, dający liczby zamiast tabelek z internetu.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Pochodzenie · dlaczego akurat 2,44</div>
+    <h2>Skąd bierze się ta liczba</h2>
+
+    <p>Otwór kołowy oświetlony falą płaską nie daje na obrazie punktu, tylko jasne jądro otoczone słabnącymi pierścieniami. Rozkład jasności w tym obrazie opisuje funkcja, której pierwsze miejsce zerowe wypada przy <strong>1,22 długości fali na jednostkę kąta źrenicy</strong> — i cała reszta jest już tylko przeliczaniem jednostek.</p>
+
+    <div class="formula">
+      θ = 1,22 · <span class="vec" data-tip="Długość fali światła">λ</span> / <span class="vec" data-tip="Średnica źrenicy wejściowej">D</span>  →  r = 1,22 · <span class="vec" data-tip="Długość fali">λ</span> · <span class="vec" data-tip="Liczba przysłony, czyli f/D">N</span>  →  d = 2,44 · <span class="vec" data-tip="Długość fali">λ</span> · <span class="vec" data-tip="Liczba przysłony">N</span>
+      <span class="sub">θ — kąt do pierwszego minimum. r — promień jądra na matrycy, po pomnożeniu przez ogniskową: 1,22·λ·f/D = 1,22·λ·N. d — średnica, czyli dwa razy tyle. Stąd 2,44, i stąd fakt, że w całym wzorze nie ma ogniskowej: została skrócona przez D.</span>
+    </div>
+
+    <p>To ostatnie spostrzeżenie jest ważniejsze, niż wygląda. <span class="term-cyan">Rozmiar krążka Airy'ego zależy wyłącznie od liczby przysłony</span>, a nie od ogniskowej ani od formatu. Dwudziestka przy f/11 i dwustumilimetrowy teleobiektyw przy f/11 dają na matrycy dokładnie tę samą plamkę. Różni je tylko to, jak duża część kadru w tej plamce się mieści — i dlatego dyfrakcja jest problemem małych matryc, choć sama o formacie nic nie wie.</p>
+
+    <p>Podstawiając za λ długość fali w środku zakresu widzialnego, 550 nm, dostaje się wersję roboczą, którą warto pamiętać:</p>
+
+    <div class="formula">
+      d ≈ 1,34 · <span class="vec" data-tip="Liczba przysłony">N</span>  [µm]
+      <span class="sub">d — średnica jądra krążka Airy'ego w mikrometrach. Dla światła czerwonego (650 nm) wychodzi 1,59·N, dla niebieskiego (450 nm) — 1,10·N. Stąd fakt, że kanał niebieski jest przy mocno przymkniętej przysłonie ostrzejszy od czerwonego.</span>
+    </div>
+
+    <p>W jądrze siedzi <strong>84% energii</strong>; pierwszy pierścień niesie około 7%, drugi niecałe 3%. Dlatego w praktyce liczy się średnicę jądra i pomija pierścienie — choć to właśnie one odpowiadają za charakterystyczną poświatę wokół bardzo jasnych punktów na mocno przymkniętej przysłonie.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Progi · gdzie to zaczyna kosztować</div>
+    <h2>Kiedy krążek dogania piksel</h2>
+
+    <p>Dyfrakcja nie ma progu — narasta płynnie. Próg pojawia się dopiero wtedy, gdy zestawi się ją z <em>drugą</em> skalą w układzie, czyli z rozmiarem piksela. Poniższa tabela robi dokładnie to, dla sześciu realnych kombinacji. Rozstaw pikseli liczony jest wprost z szerokości formatu przez liczbę pikseli w poziomie, więc każdą liczbę da się sprawdzić dzieleniem.</p>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead>
+          <tr><th>Kamera / format</th><th>Szerokość ÷ piksele</th><th class="num">Rozstaw</th><th class="num">d = 1 px</th><th class="num">d = 2 px</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Pełna klatka 24 Mpx</td><td>36,0 mm ÷ 6000</td><td class="num">6,00 µm</td><td class="num">f/4,5</td><td class="num">f/8,9</td></tr>
+          <tr><td>Pełna klatka 45 Mpx</td><td>36,0 mm ÷ 8256</td><td class="num">4,36 µm</td><td class="num">f/3,2</td><td class="num">f/6,5</td></tr>
+          <tr><td>Pełna klatka 61 Mpx</td><td>36,0 mm ÷ 9504</td><td class="num">3,79 µm</td><td class="num">f/2,8</td><td class="num">f/5,6</td></tr>
+          <tr><td>Super 35, 4K</td><td>24,9 mm ÷ 4096</td><td class="num">6,08 µm</td><td class="num">f/4,5</td><td class="num">f/9,1</td></tr>
+          <tr><td>Super 35, 6K</td><td>24,9 mm ÷ 6144</td><td class="num">4,05 µm</td><td class="num">f/3,0</td><td class="num">f/6,0</td></tr>
+          <tr><td>Duży format, 4,5K</td><td>36,7 mm ÷ 4448</td><td class="num">8,25 µm</td><td class="num">f/6,1</td><td class="num">f/12,3</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Kolumna „d = 1 px” to przysłona, przy której jądro krążka zrównuje się z jednym pikselem: N = rozstaw / 1,34. Kolumna „d = 2 px” to dwukrotność — próg, powyżej którego dyfrakcja jest bezspornie wąskim gardłem układu.</p>
+
+    <p>Z tabeli wychodzi wniosek, który bywa niepopularny wśród kupujących sprzęt: <strong>gęstsza matryca zawęża użyteczny zakres przysłon</strong>. Sześćdziesięciojednomegapikselowa pełna klatka przekracza pierwszy próg już przy f/2,8, podczas gdy duży format o wielkich pikselach dojeżdża spokojnie do f/6. Rozdzielczość, za którą się zapłaciło, jest dostępna tylko przy szeroko otwartej przysłonie — a wtedy walczy o nią z głębią ostrości i z aberracjami.</p>
+
+    <p>Drugi wniosek dotyczy pracy z materiałem. Jeśli wiesz, na czym kręcono ujęcie, tabela mówi ci, <span class="term-cyan">ile miękkości w plate'cie jest dyfrakcją, a nie rozmyciem ruchu ani błędem ostrości</span>. Miękkość dyfrakcyjna jest jednorodna w całym kadrze i niezależna od odległości — to ją odróżnia od wszystkich pozostałych.</p>
+  </div>
+
+<div class="section">
+    <div class="section-eyebrow">Gwiazdki · ta sama przyczyna, inny objaw</div>
+    <h2>Skąd promienie wokół świateł</h2>
+
+    <p>Do tej pory patrzyliśmy na dyfrakcję jako na coś, co psuje. Ma jednak drugą twarz, tę, dla której ludzie celowo przymykają przysłonę: promienie rozchodzące się od jasnych punktowych źródeł.</p>
+
+    <p>Mechanizm jest ten sam co wcześniej, tylko liczy się teraz nie sam otwór, a jego <strong>krawędzie</strong>. Prosta krawędź listka przysłony rozprasza światło w kierunku do siebie prostopadłym — tak samo jak szczelina rozlewa wiązkę w poprzek. Każdy listek daje więc jedną smugę, prostopadłą do swojej krawędzi.</p>
+
+    <p>I tu wchodzi reguła, która przy pierwszym spotkaniu wygląda na kaprys:</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Parzyste kontra nieparzyste</span><span>dlaczego liczba promieni się podwaja</span></div>
+      <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sześciokątna przysłona: przeciwległe krawędzie są równoległe, więc ich smugi się pokrywają, dając sześć promieni. Pięciokątna nie ma równoległych krawędzi, więc daje dziesięć.">
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b" text-anchor="middle">
+          <text x="190" y="26">6 LISTKÓW · krawędzie parami równoległe</text>
+          <text x="570" y="26">5 LISTKÓW · brak par równoległych</text>
+        </g>
+        <g>
+          <polygon points="190,64 232,88 232,136 190,160 148,136 148,88" fill="#4fc3c0" fill-opacity="0.14" stroke="#4fc3c0" stroke-width="2"/>
+          <g stroke="#e8a33d" stroke-width="1.6" opacity="0.85">
+            <line x1="190" y1="30" x2="190" y2="194"/>
+            <line x1="119" y1="71" x2="261" y2="153"/>
+            <line x1="119" y1="153" x2="261" y2="71"/>
+          </g>
+          <text x="190" y="232" font-family="IBM Plex Mono" font-size="13" fill="#e8a33d" text-anchor="middle">6 promieni</text>
+          <text x="190" y="256" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">smugi z przeciwległych krawędzi</text>
+          <text x="190" y="272" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">nakładają się na siebie</text>
+        </g>
+        <line x1="380" y1="16" x2="380" y2="284" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 5"/>
+        <g>
+          <polygon points="570,62 610,91 595,138 545,138 530,91" fill="#4fc3c0" fill-opacity="0.14" stroke="#4fc3c0" stroke-width="2"/>
+          <g stroke="#e8a33d" stroke-width="1.6" opacity="0.85">
+            <line x1="570" y1="26" x2="570" y2="174"/>
+            <line x1="500" y1="79" x2="640" y2="121"/>
+            <line x1="500" y1="121" x2="640" y2="79"/>
+            <line x1="518" y1="150" x2="622" y2="50"/>
+            <line x1="518" y1="50" x2="622" y2="150"/>
+          </g>
+          <text x="570" y="232" font-family="IBM Plex Mono" font-size="13" fill="#e8a33d" text-anchor="middle">10 promieni</text>
+          <text x="570" y="256" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">każda krawędź daje własną smugę,</text>
+          <text x="570" y="272" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">żadna z żadną się nie pokrywa</text>
+        </g>
+      </svg>
+      <div class="diagram-caption">Reguła nie dotyczy listków, tylko kierunków krawędzi. Liczba nieparzysta nie potrafi ustawić żadnej pary równolegle.</div>
+    </div>
+
+    <p>Sześciokąt ma trzy pary krawędzi równoległych. Smuga od górnej krawędzi i smuga od dolnej mają ten sam kierunek, więc <strong>pokrywają się</strong> — zostaje sześć promieni, po jednym na parę, w dwie strony. Pięciokąt nie ma ani jednej pary równoległych krawędzi, więc każda z pięciu daje własną smugę w dwie strony: dziesięć promieni.</p>
+
+    <p>Stąd reguła w pełnej postaci: <span class="term-amber">parzysta liczba listków daje tyle promieni, ile listków; nieparzysta daje ich dwa razy więcej</span>. Siedem listków to czternaście promieni, dziewięć to osiemnaście, jedenaście to dwadzieścia dwa.</p>
+
+    <p>Dwie uwagi praktyczne. Po pierwsze, gwiazdki wymagają <strong>prostych krawędzi</strong> — zaokrąglone listki, stosowane dla ładniejszego bokeh, dają promienie rozmyte i słabe. To jest bezpośredni kompromis: obiektyw o ładnym bokeh ma brzydkie gwiazdki i odwrotnie. Po drugie, siła gwiazdek rośnie z przymknięciem, bo maleje otwór, a rośnie względny udział krawędzi.</p>
+  </div>
+  <div class="section">
+    <div class="section-eyebrow">Pomiar · kwadrans zamiast tabelek</div>
+    <h2>Jak zmierzyć to na własnym sprzęcie</h2>
+    <p>Wszystko powyżej daje się zweryfikować w kwadrans i warto to zrobić raz, żeby mieć liczby dla konkretnej kamery zamiast tabelek z internetu.</p>
+    <p>Ustaw kamerę na statywie przed czymś o drobnej, kontrastowej strukturze — banknot, wydruk drobnego tekstu, gałązka pod światło. Zrób serię przy każdej przysłonie od pełnego otwarcia do najciaśniejszej, nie ruszając ostrości. Potem obejrzyj wyniki w skali stu procent i znajdź moment, w którym drobny detal przestaje przyrastać.</p>
+    <p>Zobaczysz dwie rzeczy naraz. Od pełnego otwarcia detalu przybywa, bo maleją aberracje. Od pewnej przysłony przestaje przybywać, a zaczyna ubywać — i to jest twój słodki punkt z <a href="../rozdzialy/rozdzial-06-przyslona-f-i-t.html">Rozdziału 6</a>, zmierzony, a nie odgadnięty. Jeśli wypadnie wcześniej, niż mówią tabele, znaczy to, że masz gęstą matrycę; jeśli później — że obiektyw ma sporo do skorygowania.</p>
+    <p>Przy okazji dostajesz drugą liczbę, która przyda się w compie: <strong>promień rozmycia w pikselach</strong> przy każdej przysłonie. Wystarczy zmierzyć szerokość przejścia na kontrastowej krawędzi. To jest dokładnie ta wartość, którą trzeba wpisać, odtwarzając miękkość ujęcia kręconego na mocno przymkniętej przysłonie.</p>
+  </div>
 
   <div class="site-nav">
     <a href="../index.html">← Spis treści</a>

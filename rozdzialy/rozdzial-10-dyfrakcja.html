@@ -138,20 +138,7 @@ window.SKY3D_MESSAGES = {
 
     <p>Drugi wniosek jest łagodniejszy, niż wygląda. Dyfrakcja nie „włącza się” przy jakiejś przysłonie — narasta płynnie od f/1,4 wzwyż. Moment, w którym zaczyna być widoczna, jest więc kwestią tego, jak bardzo powiększysz obraz przy oglądaniu, dokładnie tak samo jak przy krążku rozmycia z <a href="rozdzial-08-glebia-ostrosci.html">Rozdziału 8</a>. Ujęcie do kina wybacza mniej niż to samo ujęcie na telefonie.</p>
 
-    <div class="subsection">
-      <h3>Kiedy dyfrakcja bywa sprzymierzeńcem</h3>
-      <p>Jest sytuacja, w której rozmycie dyfrakcyjne robi coś pożytecznego, i warto ją znać, bo dotyczy bezpośrednio pracy z materiałem cyfrowym. Matryca próbkuje obraz w regularnej siatce, a każde regularne próbkowanie ma swoją granicę: struktura drobniejsza niż dwa piksele nie zostaje zarejestrowana wiernie, tylko <strong>zamienia się w fałszywy wzór</strong> o zupełnie innej gęstości. To jest aliasing, a w obrazie widać go jako morę na tkaninach, siatkach i dachówkach.</p>
-      <p>Jedynym sposobem, żeby temu zapobiec, jest rozmycie obrazu <em>przed</em> próbkowaniem — na tyle, żeby struktury poniżej granicy w ogóle nie doleciały do matrycy. Klasyczna kamera robi to osobnym filtrem dolnoprzepustowym naklejonym na sensor. Ale przymknięta przysłona robi dokładnie to samo za darmo: krążek Airy'ego większy od dwóch pikseli jest filtrem antyaliasingowym.</p>
-      <p>Stąd praktyka znana z fotografii produktowej i reprodukcyjnej: tkaniny i drobne siatki fotografuje się <span class="term-cyan">celowo przymkniętym obiektywem</span>, godząc się na utratę mikrokontrastu w zamian za brak mory. Wybór jest realny, bo morę usuwa się w postprodukcji znacznie trudniej niż odzyskuje kontrast.</p>
-    </div>
-
-    <div class="subsection">
-      <h3>Jak sprawdzić to na własnym sprzęcie</h3>
-      <p>Cała ta sekcja daje się zweryfikować w kwadrans i warto to zrobić raz, żeby mieć liczby dla konkretnej kamery zamiast tabelek z internetu.</p>
-      <p>Ustaw kamerę na statywie przed czymś o drobnej, kontrastowej strukturze — banknot, wydruk drobnego tekstu, gałązka pod światło. Zrób serię przy każdej przysłonie od pełnego otwarcia do najciaśniejszej, nie ruszając ostrości. Potem obejrzyj wyniki w skali stu procent i znajdź moment, w którym drobny detal przestaje przyrastać.</p>
-      <p>Zobaczysz dwie rzeczy naraz. Od pełnego otwarcia detalu przybywa, bo maleją aberracje. Od pewnej przysłony przestaje przybywać, a zaczyna ubywać — i to jest twój słodki punkt z <a href="rozdzial-06-przyslona-f-i-t.html">Rozdziału 6</a>, zmierzony, a nie odgadnięty. Jeśli wypadnie wcześniej, niż mówią tabele, znaczy to, że masz gęstą matrycę; jeśli później — że obiektyw ma sporo do skorygowania.</p>
-      <p>Przy okazji dostajesz drugą liczbę, która przyda się w compie: <strong>promień rozmycia w pikselach</strong> przy każdej przysłonie. Wystarczy zmierzyć szerokość przejścia na kontrastowej krawędzi. To jest dokładnie ta wartość, którą trzeba wpisać, odtwarzając miękkość ujęcia kręconego na mocno przymkniętej przysłonie.</p>
-    </div>
+    <button class="advanced-btn" data-modal-target="adv-antyalias">Zaawansowane: kiedy dyfrakcja bywa sprzymierzeńcem</button>
 
     <div class="worked">
       <div class="wlabel">Od której przysłony dyfrakcja przekracza piksel</div>
@@ -245,59 +232,6 @@ window.SKY3D_MESSAGES = {
   </div>
 
   <div class="section">
-    <div class="section-eyebrow">Gwiazdki · ta sama przyczyna, inny objaw</div>
-    <h2>Skąd promienie wokół świateł</h2>
-
-    <p>Do tej pory patrzyliśmy na dyfrakcję jako na coś, co psuje. Ma jednak drugą twarz, tę, dla której ludzie celowo przymykają przysłonę: promienie rozchodzące się od jasnych punktowych źródeł.</p>
-
-    <p>Mechanizm jest ten sam co wcześniej, tylko liczy się teraz nie sam otwór, a jego <strong>krawędzie</strong>. Prosta krawędź listka przysłony rozprasza światło w kierunku do siebie prostopadłym — tak samo jak szczelina rozlewa wiązkę w poprzek. Każdy listek daje więc jedną smugę, prostopadłą do swojej krawędzi.</p>
-
-    <p>I tu wchodzi reguła, która przy pierwszym spotkaniu wygląda na kaprys:</p>
-
-    <div class="diagram-frame">
-      <div class="diagram-hud"><span>Parzyste kontra nieparzyste</span><span>dlaczego liczba promieni się podwaja</span></div>
-      <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sześciokątna przysłona: przeciwległe krawędzie są równoległe, więc ich smugi się pokrywają, dając sześć promieni. Pięciokątna nie ma równoległych krawędzi, więc daje dziesięć.">
-        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b" text-anchor="middle">
-          <text x="190" y="26">6 LISTKÓW · krawędzie parami równoległe</text>
-          <text x="570" y="26">5 LISTKÓW · brak par równoległych</text>
-        </g>
-        <g>
-          <polygon points="190,64 232,88 232,136 190,160 148,136 148,88" fill="#4fc3c0" fill-opacity="0.14" stroke="#4fc3c0" stroke-width="2"/>
-          <g stroke="#e8a33d" stroke-width="1.6" opacity="0.85">
-            <line x1="190" y1="30" x2="190" y2="194"/>
-            <line x1="119" y1="71" x2="261" y2="153"/>
-            <line x1="119" y1="153" x2="261" y2="71"/>
-          </g>
-          <text x="190" y="232" font-family="IBM Plex Mono" font-size="13" fill="#e8a33d" text-anchor="middle">6 promieni</text>
-          <text x="190" y="256" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">smugi z przeciwległych krawędzi</text>
-          <text x="190" y="272" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">nakładają się na siebie</text>
-        </g>
-        <line x1="380" y1="16" x2="380" y2="284" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 5"/>
-        <g>
-          <polygon points="570,62 610,91 595,138 545,138 530,91" fill="#4fc3c0" fill-opacity="0.14" stroke="#4fc3c0" stroke-width="2"/>
-          <g stroke="#e8a33d" stroke-width="1.6" opacity="0.85">
-            <line x1="570" y1="26" x2="570" y2="174"/>
-            <line x1="500" y1="79" x2="640" y2="121"/>
-            <line x1="500" y1="121" x2="640" y2="79"/>
-            <line x1="518" y1="150" x2="622" y2="50"/>
-            <line x1="518" y1="50" x2="622" y2="150"/>
-          </g>
-          <text x="570" y="232" font-family="IBM Plex Mono" font-size="13" fill="#e8a33d" text-anchor="middle">10 promieni</text>
-          <text x="570" y="256" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">każda krawędź daje własną smugę,</text>
-          <text x="570" y="272" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">żadna z żadną się nie pokrywa</text>
-        </g>
-      </svg>
-      <div class="diagram-caption">Reguła nie dotyczy listków, tylko kierunków krawędzi. Liczba nieparzysta nie potrafi ustawić żadnej pary równolegle.</div>
-    </div>
-
-    <p>Sześciokąt ma trzy pary krawędzi równoległych. Smuga od górnej krawędzi i smuga od dolnej mają ten sam kierunek, więc <strong>pokrywają się</strong> — zostaje sześć promieni, po jednym na parę, w dwie strony. Pięciokąt nie ma ani jednej pary równoległych krawędzi, więc każda z pięciu daje własną smugę w dwie strony: dziesięć promieni.</p>
-
-    <p>Stąd reguła w pełnej postaci: <span class="term-amber">parzysta liczba listków daje tyle promieni, ile listków; nieparzysta daje ich dwa razy więcej</span>. Siedem listków to czternaście promieni, dziewięć to osiemnaście, jedenaście to dwadzieścia dwa.</p>
-
-    <p>Dwie uwagi praktyczne. Po pierwsze, gwiazdki wymagają <strong>prostych krawędzi</strong> — zaokrąglone listki, stosowane dla ładniejszego bokeh, dają promienie rozmyte i słabe. To jest bezpośredni kompromis: obiektyw o ładnym bokeh ma brzydkie gwiazdki i odwrotnie. Po drugie, siła gwiazdek rośnie z przymknięciem, bo maleje otwór, a rośnie względny udział krawędzi.</p>
-  </div>
-
-  <div class="section">
     <div class="section-eyebrow">W CG · czego renderer nie zrobi</div>
     <h2>Dyfrakcja jest zjawiskiem falowym, czyli nieobecnym</h2>
 
@@ -357,6 +291,16 @@ window.SKY3D_MESSAGES = {
       <a class="nav-toc" href="../index.html">Spis treści</a>
       <a class="nav-next" href="rozdzial-11-aberracja-sferyczna.html">Następny →</a>
   </div>
+
+  <template id="adv-antyalias">
+    <h3>Kiedy dyfrakcja bywa sprzymierzeńcem</h3>
+
+    <p>Jest sytuacja, w której rozmycie dyfrakcyjne robi coś pożytecznego. Matryca próbkuje obraz w regularnej siatce, a każde regularne próbkowanie ma swoją granicę: struktura drobniejsza niż dwa piksele nie zostaje zarejestrowana wiernie, tylko <strong>zamienia się w fałszywy wzór</strong> o zupełnie innej gęstości. To jest aliasing, a w obrazie widać go jako morę na tkaninach, siatkach i dachówkach.</p>
+
+    <p>Jedynym sposobem, żeby temu zapobiec, jest rozmycie obrazu <em>przed</em> próbkowaniem — na tyle, żeby struktury poniżej granicy w ogóle nie doleciały do matrycy. Klasyczna kamera robi to osobnym filtrem dolnoprzepustowym naklejonym na sensor. Ale przymknięta przysłona robi dokładnie to samo za darmo: <strong>krążek Airy'ego większy od dwóch pikseli jest filtrem antyaliasingowym</strong>.</p>
+
+    <p>Stąd praktyka znana z fotografii produktowej i reprodukcyjnej: tkaniny i drobne siatki fotografuje się celowo przymkniętym obiektywem, godząc się na utratę mikrokontrastu w zamian za brak mory. Wybór jest realny, bo morę usuwa się w postprodukcji znacznie trudniej, niż odzyskuje kontrast.</p>
+  </template>
 
   <template id="explain-airy">
     <h3>Skąd bierze się 2,44</h3>
