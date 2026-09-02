@@ -43,7 +43,254 @@ window.SKY3D_MESSAGES = {
   <h1>Anatomia obiektywu</h1>
   <p class="subtitle">Zanim porównamy układy, warto umieć je czytać: co to jest grupa, dlaczego elementy się skleja, gdzie siedzi przysłona i co właściwie rusza się przy ostrzeniu.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li><strong>Trzy liczby, nie jedna.</strong> <span class="term-amber">Elementy</span> to pojedyncze soczewki, <span class="term-amber">grupy</span> to zestawy poruszające się razem albo sklejone, a <span class="term-amber">powierzchnie powietrze–szkło</span> to jedyna z tych liczb, która decyduje o flarze i przepuszczalności.</li>
+      <li>Położenie przysłony nie jest dowolne. Wyznacza znak dystorsji, rozmiary obu źrenic i to, czy układ może być symetryczny — czyli trzy rzeczy naraz, z trzech różnych rozdziałów.</li>
+      <li>Przy ostrzeniu <strong>rusza się coś konkretnego</strong>, i to co, decyduje o oddechu kadru, o zmianie jasności przy bliskim planie i o tym, czy pivot wirtualnej kamery zostaje na miejscu.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Słownik przekroju · trzy różne liczby</div>
+    <h2>Element, grupa, powierzchnia</h2>
+
+    <p>Dane obiektywu podaje się zwykle w formie „11 elementów w 8 grupach”. Wygląda to na jedną informację zapisaną dwa razy, a jest na dwie informacje o dwóch różnych rzeczach — i żadna z nich nie jest tą, która nas najbardziej obchodzi.</p>
+
+    <p><strong>Element</strong> to jedna soczewka: jeden kawałek szkła o dwóch powierzchniach. <strong>Grupa</strong> to zestaw elementów, które są ze sobą sklejone albo poruszają się razem — z punktu widzenia mechaniki jeden byt. Jedenaście elementów w ośmiu grupach znaczy więc, że gdzieś w środku są trzy sklejenia.</p>
+
+    <p>Liczba, która naprawdę rządzi obrazem, jest trzecia i prawie nigdy nie bywa podawana: <span class="term-cyan">liczba granic między szkłem a powietrzem</span>. To one odbijają cztery procent, o czym cały <a href="rozdzial-03-fresnel-kazda-powierzchnia-swieci.html">Rozdział 3</a>, i to ich pary tworzą ghosty. Sklejenie dwóch elementów zabiera dwie takie granice i zamienia je na jedną granicę szkła ze szkłem, o odbiciu kilkadziesiąt razy słabszym — rachunek jest w <a href="rozdzial-15-korekcja-i-jej-cena.html">Rozdziale 15</a>.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Przekrój i jego trzy liczby</span><span>7 elementów · 5 grup · 10 granic</span></div>
+      <svg viewBox="0 0 760 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Przekrój obiektywu z podpisanymi elementami, sklejoną grupą, przysłoną i zaznaczonymi granicami między szkłem a powietrzem.">
+        <line x1="30" y1="150" x2="730" y2="150" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 6"/>
+
+        <path d="M 90 74 Q 118 150 90 226 Q 62 150 90 74 Z" fill="#4fc3c0" fill-opacity="0.16" stroke="#4fc3c0" stroke-width="1.4"/>
+        <path d="M 170 82 Q 156 150 170 218 Q 196 150 170 82 Z" fill="#4fc3c0" fill-opacity="0.16" stroke="#4fc3c0" stroke-width="1.4"/>
+
+        <path d="M 260 84 Q 288 150 260 216 Q 240 150 260 84 Z" fill="#4fc3c0" fill-opacity="0.16" stroke="#4fc3c0" stroke-width="1.4"/>
+        <path d="M 260 84 Q 288 150 260 216 Q 306 150 260 84 Z" fill="#9c82d8" fill-opacity="0.14" stroke="#9c82d8" stroke-width="1.4"/>
+        <path d="M 260 84 Q 288 150 260 216" fill="none" stroke="#7fc47f" stroke-width="1.8"/>
+
+        <g stroke="#8b909b" stroke-width="4">
+          <line x1="380" y1="98" x2="380" y2="128"/>
+          <line x1="380" y1="172" x2="380" y2="202"/>
+        </g>
+
+        <path d="M 460 88 Q 486 150 460 212 Q 438 150 460 88 Z" fill="#4fc3c0" fill-opacity="0.16" stroke="#4fc3c0" stroke-width="1.4"/>
+        <path d="M 546 80 Q 574 150 546 220 Q 520 150 546 80 Z" fill="#4fc3c0" fill-opacity="0.16" stroke="#4fc3c0" stroke-width="1.4"/>
+        <path d="M 626 86 Q 612 150 626 214 Q 652 150 626 86 Z" fill="#4fc3c0" fill-opacity="0.16" stroke="#4fc3c0" stroke-width="1.4"/>
+
+        <line x1="700" y1="86" x2="700" y2="214" stroke="#6e93be" stroke-width="3"/>
+        <text x="700" y="232" font-family="IBM Plex Mono" font-size="9.5" fill="#6e93be" text-anchor="middle">matryca</text>
+
+        <g font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">
+          <text x="90" y="60">element</text>
+          <text x="380" y="88">przysłona</text>
+        </g>
+        <g stroke="#9c82d8" stroke-width="1.2" fill="none">
+          <path d="M 234 240 L 234 252 L 312 252 L 312 240"/>
+        </g>
+        <text x="273" y="268" font-family="IBM Plex Mono" font-size="9.5" fill="#9c82d8" text-anchor="middle">grupa sklejona · dwa elementy, jedna granica wewnętrzna</text>
+
+        <g stroke="#d8695f" stroke-width="2" opacity="0.85">
+          <line x1="63" y1="146" x2="63" y2="154"/><line x1="117" y1="146" x2="117" y2="154"/>
+          <line x1="157" y1="146" x2="157" y2="154"/><line x1="195" y1="146" x2="195" y2="154"/>
+          <line x1="241" y1="146" x2="241" y2="154"/><line x1="305" y1="146" x2="305" y2="154"/>
+          <line x1="439" y1="146" x2="439" y2="154"/><line x1="485" y1="146" x2="485" y2="154"/>
+          <line x1="521" y1="146" x2="521" y2="154"/><line x1="573" y1="146" x2="573" y2="154"/>
+        </g>
+        <text x="30" y="24" font-family="IBM Plex Mono" font-size="10" fill="#d8695f">czerwone kreski · granice szkło–powietrze, każda odbija</text>
+      </svg>
+      <div class="diagram-caption">Siedem elementów, ale tylko dziesięć granic z powietrzem — bo dwie z nich zniknęły w sklejeniu, a dwie ostatnie leżą poza rysunkiem.</div>
+    </div>
+
+    <p>Praktyczny wniosek jest taki, że <strong>z dwóch obiektywów o tej samej liczbie elementów lepszy kontrast ma ten o mniejszej liczbie grup</strong>. Mniej grup przy tej samej liczbie elementów znaczy więcej sklejeń, a każde sklejenie to dwie granice mniej. Dane producenta pozwalają to policzyć w pamięci: granice z powietrzem to dwa razy liczba grup.</p>
+
+    <p>Warto przy tym wiedzieć, dlaczego nie skleja się wszystkiego. Sklejenie wymaga, żeby stykające się powierzchnie miały <em>identyczną</em> krzywiznę — jedna wypukła, druga wklęsła o tym samym promieniu. Jest to poważne ograniczenie projektowe: konstruktor traci jeden stopień swobody na każde sklejenie, bo dwie krzywizny przestają być niezależne. Do tego dochodzą ograniczenia materiałowe z <a href="rozdzial-15-korekcja-i-jej-cena.html">Rozdziału 15</a>: zbliżona rozszerzalność cieplna i średnica, przy której kit jeszcze wytrzymuje naprężenia.</p>
+
+    <p>Stąd bierze się obserwacja, która na pierwszy rzut oka wygląda na paradoks: <span class="term-cyan">obiektywy jasne i duże mają zwykle mniej sklejeń niż tanie i małe</span>. Nie dlatego, że są gorzej zaprojektowane — dlatego, że przy dużych średnicach sklejanie przestaje być wykonalne, a konstruktor woli mieć swobodę krzywizn niż dwie granice mniej. Cenę tego wyboru widać potem jako podatność na flarę przy świetle w kadrze.</p>
+
+    <p>Jest jeszcze jedna liczba, która bywa podawana i którą warto umieć zignorować: <strong>liczba listków przysłony</strong>. Jest ważna dla kształtu bokeh z <a href="rozdzial-09-bokeh.html">Rozdziału 9</a> i dla gwiazdek, ale nie mówi absolutnie nic o jakości układu optycznego. Bywa jedyną liczbą podawaną w tanich zestawieniach właśnie dlatego, że nic nie kosztuje.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Przysłona · trzy skutki jednego położenia</div>
+    <h2>Dlaczego przysłona stoi akurat tam</h2>
+
+    <p>Na każdym przekroju widać, gdzie leży przysłona, i nie jest to miejsce przypadkowe ani wybrane dla wygody mechanika. Jej położenie rozstrzyga naraz o trzech rzeczach, z których każda była tematem osobnego rozdziału.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Jedno położenie, trzy konsekwencje</span><span>mapa decyzji konstruktora</span></div>
+      <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Trzy warianty położenia przysłony i ich skutki: z przodu daje beczkę i małą źrenicę wejściową, symetrycznie kasuje dystorsję, z tyłu daje poduszkę.">
+        <g font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">
+          <text x="130" y="24">PRZED SZKŁEM</text><text x="380" y="24">W ŚRODKU, SYMETRYCZNIE</text><text x="630" y="24">ZA SZKŁEM</text>
+        </g>
+
+        <g stroke="#8b909b" stroke-width="3.5">
+          <line x1="70" y1="52" x2="70" y2="78"/><line x1="70" y1="108" x2="70" y2="134"/>
+        </g>
+        <path d="M 150 54 Q 172 93 150 132 Q 128 93 150 54 Z" fill="#4fc3c0" fill-opacity="0.14" stroke="#4fc3c0" stroke-width="1.3"/>
+        <path d="M 55 160 Q 130 172 205 160" fill="none" stroke="#9c82d8" stroke-width="1.8"/>
+        <text x="130" y="192" font-family="IBM Plex Mono" font-size="10" fill="#9c82d8" text-anchor="middle">beczka</text>
+        <text x="130" y="212" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">źrenica wejściowa mała</text>
+        <text x="130" y="228" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">bo nic jej nie powiększa</text>
+
+        <path d="M 320 54 Q 342 93 320 132 Q 298 93 320 54 Z" fill="#4fc3c0" fill-opacity="0.14" stroke="#4fc3c0" stroke-width="1.3"/>
+        <g stroke="#8b909b" stroke-width="3.5">
+          <line x1="380" y1="52" x2="380" y2="78"/><line x1="380" y1="108" x2="380" y2="134"/>
+        </g>
+        <path d="M 440 54 Q 462 93 440 132 Q 418 93 440 54 Z" fill="#4fc3c0" fill-opacity="0.14" stroke="#4fc3c0" stroke-width="1.3"/>
+        <line x1="300" y1="160" x2="460" y2="160" stroke="#7fc47f" stroke-width="1.8"/>
+        <text x="380" y="192" font-family="IBM Plex Mono" font-size="10" fill="#7fc47f" text-anchor="middle">zero dystorsji</text>
+        <text x="380" y="212" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">i zero komy, i zero TCA</text>
+        <text x="380" y="228" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">ale odcinek tylny krótki</text>
+
+        <path d="M 570 54 Q 592 93 570 132 Q 548 93 570 54 Z" fill="#4fc3c0" fill-opacity="0.14" stroke="#4fc3c0" stroke-width="1.3"/>
+        <g stroke="#8b909b" stroke-width="3.5">
+          <line x1="646" y1="52" x2="646" y2="78"/><line x1="646" y1="108" x2="646" y2="134"/>
+        </g>
+        <path d="M 555 160 Q 630 148 705 160" fill="none" stroke="#9c82d8" stroke-width="1.8"/>
+        <text x="630" y="192" font-family="IBM Plex Mono" font-size="10" fill="#9c82d8" text-anchor="middle">poduszka</text>
+        <text x="630" y="212" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">źrenica wyjściowa blisko</text>
+        <text x="630" y="228" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">skośne padanie w rogach</text>
+      </svg>
+      <div class="diagram-caption">Środkowa kolumna wygląda na wybór oczywisty — i byłaby nim, gdyby nie to, że wymusza krótki odcinek tylny.</div>
+    </div>
+
+    <p>Pierwsza konsekwencja to <strong>znak dystorsji</strong>, opisany w <a href="rozdzial-13-dystorsja.html">Rozdziale 13</a>: przysłona z przodu daje beczkę, z tyłu poduszkę, a układ symetryczny znosi ją do zera. Druga to <strong>rozmiary obu źrenic</strong> z <a href="rozdzial-07-zrenice.html">Rozdziału 7</a> — im więcej szkła stoi przed przysłoną, tym bardziej powiększona źrenica wejściowa, a więc tym większa przednia soczewka potrzebna do zadanej jasności.</p>
+
+    <p>Trzecia jest mechaniczna i to ona najczęściej wygrywa. Symetria wymaga, żeby za przysłoną zostało tyle samo szkła co przed nią — a to spycha ostatni element blisko matrycy. <span class="term-violet">W lustrzance nie ma tam miejsca</span>, bo musi się zmieścić lustro. Stąd cała rodzina konstrukcji łamiących symetrię celowo, o których w <a href="rozdzial-18-skrajne-ogniskowe.html">Rozdziale 18</a>.</p>
+
+    <p>Ta trzecia konsekwencja tłumaczy jedną z większych zmian ostatniej dekady. Bezlusterkowiec nie ma lustra, więc jego odcinek bagnetowy jest o połowę krótszy — osiemnaście milimetrów zamiast czterdziestu czterech, jak podaje tabela w <a href="../dodatki/dodatek-c-rownanie-soczewki.html">Dodatku C</a>. Konstruktor odzyskał dzięki temu miejsce za przysłoną i <strong>możliwość budowania układów bliskich symetrii tam, gdzie przez pół wieku było to niemożliwe</strong>. Stąd bierze się skok jakości szerokich kątów, który nie ma nic wspólnego ani z nowymi szkłami, ani z lepszymi powłokami — wynika z geometrii mocowania.</p>
+
+    <p>Warto też zauważyć, że przysłona jest jedynym elementem obiektywu, który <em>zmienia się w czasie ujęcia</em>. Wszystkie soczewki stoją tam, gdzie je postawiono; przysłona ma pierścień i bywa nim kręcona. Dlatego wszystkie zjawiska zależne od jej wielkości — głębia, bokeh, winietowanie optyczne, gwiazdki, poświata — są jedynymi, które w gotowym materiale mogą się zmienić <span class="term-cyan">w obrębie jednego ujęcia</span>, i to bez ruchu kamery.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Ostrzenie · co dokładnie się rusza</div>
+    <h2>Trzy sposoby ustawiania ostrości</h2>
+
+    <p>Z <a href="rozdzial-04-soczewka-cienka.html">Rozdziału 4</a> wiemy, że ostrzenie polega na zmianie odległości między obiektywem a matrycą. Zrealizować to można na trzy sposoby, a wybór między nimi zostawia w obrazie ślady, których nie da się potem usunąć.</p>
+
+    <p><strong>Wysuw całego układu</strong> to rozwiązanie najstarsze i optycznie najczystsze: cała optyka odjeżdża od matrycy, wszystkie odległości wewnętrzne zostają nietknięte, więc korekcja nie rusza się ani o włos. Cena jest mechaniczna — trzeba poruszyć całą masę szkła — i kadrowa, bo wysuw zmienia kąt widzenia.</p>
+
+    <p><strong>Ostrzenie wewnętrzne</strong> przesuwa tylko jedną grupę w środku układu. Masa w ruchu jest mała, więc napęd może być szybki i cichy, a długość tubusa nie zmienia się wcale. Płaci się za to tym, że <span class="term-violet">przesuwanie grupy zmienia korekcję</span> — obiektyw ostrzony blisko jest optycznie innym obiektywem niż ten sam ostrzony na nieskończoność.</p>
+
+    <p><strong>Ostrzenie tylną grupą</strong> jest wariantem powyższego, wybieranym tam, gdzie przednia soczewka jest zbyt ciężka, żeby nią ruszać. Zachowuje się podobnie, z tą różnicą, że mocniej rusza źrenicą wyjściową — a więc kątem padania na matrycę z <a href="rozdzial-07-zrenice.html">Rozdziału 7</a>.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Ostrzenie i oddech</span><span>ten sam dystans, dwa mechanizmy</span></div>
+      <div class="diagram-controls">
+        <label for="ostrDystans">Odległość ostrzenia</label>
+        <input id="ostrDystans" type="range" min="0" max="100" step="1" value="100">
+        <span class="value-readout" id="ostrOdczyt">nieskończoność</span>
+      </div>
+      <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Dwa schematy obiektywu: przy wysuwie całego układu cała optyka odjeżdża od matrycy, przy ostrzeniu wewnętrznym rusza się tylko środkowa grupa.">
+        <g font-family="IBM Plex Mono" font-size="10" fill="#8b909b">
+          <text x="30" y="24">WYSUW CAŁEGO UKŁADU</text>
+          <text x="30" y="146">OSTRZENIE WEWNĘTRZNE</text>
+        </g>
+
+        <line x1="640" y1="42" x2="640" y2="112" stroke="#6e93be" stroke-width="3"/>
+        <g id="ostrGrupaA">
+          <path d="M 120 48 Q 142 77 120 106 Q 98 77 120 48 Z" fill="#4fc3c0" fill-opacity="0.16" stroke="#4fc3c0" stroke-width="1.3"/>
+          <path d="M 200 48 Q 222 77 200 106 Q 178 77 200 48 Z" fill="#4fc3c0" fill-opacity="0.16" stroke="#4fc3c0" stroke-width="1.3"/>
+          <path d="M 280 48 Q 302 77 280 106 Q 258 77 280 48 Z" fill="#4fc3c0" fill-opacity="0.16" stroke="#4fc3c0" stroke-width="1.3"/>
+        </g>
+        <line id="ostrStrzalkaA" x1="320" y1="77" x2="360" y2="77" stroke="#e8a33d" stroke-width="2"/>
+        <text x="452" y="60" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">wszystkie odległości wewnętrzne stałe</text>
+        <text x="452" y="76" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">korekcja nietknięta, kadr się zmienia</text>
+
+        <line x1="640" y1="164" x2="640" y2="234" stroke="#6e93be" stroke-width="3"/>
+        <path d="M 120 170 Q 142 199 120 228 Q 98 199 120 170 Z" fill="#4fc3c0" fill-opacity="0.16" stroke="#4fc3c0" stroke-width="1.3"/>
+        <g id="ostrGrupaB">
+          <path d="M 200 170 Q 222 199 200 228 Q 178 199 200 170 Z" fill="#9c82d8" fill-opacity="0.2" stroke="#9c82d8" stroke-width="1.6"/>
+        </g>
+        <path d="M 280 170 Q 302 199 280 228 Q 258 199 280 170 Z" fill="#4fc3c0" fill-opacity="0.16" stroke="#4fc3c0" stroke-width="1.3"/>
+        <text x="452" y="182" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">rusza się jedna grupa, tubus stały</text>
+        <text x="452" y="198" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">korekcja się zmienia razem z ostrością</text>
+
+        <text x="30" y="246" font-family="IBM Plex Mono" font-size="10.5" fill="#e8a33d" id="ostrPomiar">Na nieskończoność wysuw wynosi zero.</text>
+      </svg>
+      <div class="diagram-caption" id="ostrPodpis">Pięćdziesiątka ostrzona na nieskończoność: matryca leży dokładnie w ognisku.</div>
+    </div>
+
+    <p>Dla artysty CG najważniejsza jest jedna konsekwencja tego podziału: <strong>przy ostrzeniu przesuwa się źrenica wejściowa</strong>, czyli punkt, w którym stoi kamera. Dla stałki z wysuwem całego układu przesunięcie jest równe wysuwowi i daje się policzyć; dla konstrukcji z ostrzeniem wewnętrznym bywa nieoczywiste i trzeba je zmierzyć metodą z <a href="../dodatki/dodatek-ae-geometria-zrenic.html">Dodatku AE</a>. W ujęciu, w którym ostrość się zmienia, pivot wirtualnej kamery powinien iść za nią.</p>
+
+    <button class="advanced-btn" data-modal-target="adv-oddech">Zaawansowane: skąd bierze się oddech kadru</button>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Czytanie · co widać na przekroju</div>
+    <h2>Jak czytać rysunek producenta</h2>
+
+    <p>Przekroje publikowane w materiałach producentów wyglądają na ozdobniki, a niosą komplet informacji potrzebny do przewidzenia charakteru obiektywu. Warto wiedzieć, czego w nich szukać.</p>
+
+    <p><strong>Kolory oznaczają szkło specjalne.</strong> Elementy wyróżnione — zwykle na żółto, zielono albo niebiesko — to szkła ED, asfery albo fluoryt. Ich liczba i położenie mówią, na co konstruktor wydał budżet: asfera blisko przysłony pracuje głównie nad sferyczną, asfera z przodu nad dystorsją i winietowaniem.</p>
+
+    <p><strong>Kształt pierwszego elementu zdradza typ.</strong> Duża, silnie wypukła przednia soczewka to konstrukcja jasna albo teleobiektyw. Duża, wklęsła od przodu — retrofokus, czyli szeroki kąt do korpusu z lustrem. Mała i płaska przy długim tubusie — najprawdopodobniej katadioptryk, o którym w <a href="rozdzial-18-skrajne-ogniskowe.html">Rozdziale 18</a>.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Pierwszy element</span><span>trzy kształty, trzy rodziny</span></div>
+      <svg viewBox="0 0 760 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Trzy typy przedniej soczewki: duża wypukła oznacza jasną stałkę albo teleobiektyw, duża wklęsła retrofokus, mała płaska przy długim tubusie katadioptryk.">
+        <g font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">
+          <text x="130" y="24">DUŻA, WYPUKŁA</text><text x="380" y="24">DUŻA, WKLĘSŁA OD PRZODU</text><text x="630" y="24">MAŁA, PŁASKA</text>
+        </g>
+
+        <path d="M 130 48 Q 178 108 130 168 Q 82 108 130 48 Z" fill="#4fc3c0" fill-opacity="0.18" stroke="#4fc3c0" stroke-width="1.6"/>
+        <text x="130" y="192" font-family="IBM Plex Mono" font-size="11" fill="#4fc3c0" text-anchor="middle">jasna stałka lub tele</text>
+        <text x="130" y="212" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">źrenica musi się zmieścić</text>
+
+        <path d="M 380 48 Q 348 108 380 168 Q 428 108 380 48 Z" fill="#9c82d8" fill-opacity="0.16" stroke="#9c82d8" stroke-width="1.6"/>
+        <text x="380" y="192" font-family="IBM Plex Mono" font-size="11" fill="#9c82d8" text-anchor="middle">retrofokus · szeroki kąt</text>
+        <text x="380" y="212" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">rozpycha wiązkę, żeby zmieścić lustro</text>
+
+        <path d="M 618 76 L 642 76 L 642 140 L 618 140 Z" fill="#4fc3c0" fill-opacity="0.18" stroke="#4fc3c0" stroke-width="1.6"/>
+        <rect x="660" y="86" width="8" height="44" fill="#8b909b" opacity="0.7"/>
+        <rect x="700" y="66" width="6" height="84" fill="#8b909b" opacity="0.7"/>
+        <text x="630" y="192" font-family="IBM Plex Mono" font-size="11" fill="#4fc3c0" text-anchor="middle">katadioptryk · lustra</text>
+        <text x="630" y="212" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">stąd pączkowe bokeh</text>
+      </svg>
+      <div class="diagram-caption">Trzy kształty, które da się rozpoznać gołym okiem na obiektywie leżącym na stole — bez żadnego rysunku producenta.</div>
+    </div>
+
+    <p>Rozpoznanie działa też w drugą stronę i bywa użyteczne przy ocenie materiału. Jeśli w ujęciu widać wyraźne pączkowe bokeh, obiektyw był katadioptrykiem, a to natychmiast mówi ci o nim jeszcze trzy rzeczy: był długi, miał <strong>stałą przysłonę bez możliwości przymknięcia</strong> i najprawdopodobniej niski kontrast. Jeden objaw, cztery informacje.</p>
+
+    <p><strong>Asymetria wokół przysłony mówi o dystorsji.</strong> Jeśli po jednej stronie przysłony jest wyraźnie więcej szkła niż po drugiej, spodziewaj się dystorsji o znaku wynikającym z tego, po której stronie. Układ wizualnie symetryczny prawie na pewno ma dystorsję poniżej pół procenta — i to jest jedyna cecha, którą da się odczytać z rysunku niemal na pewno.</p>
+
+    <p>Ostatnia uwaga dotyczy tego, czego na przekroju <em>nie</em> widać, a co decyduje o połowie charakteru: <span class="term-cyan">powłok, czernienia krawędzi i wewnętrznych przesłon</span>. Dwa obiektywy o identycznym rysunku mogą różnić się kontrastem o kilkadziesiąt procent, jeśli jeden ma matowane krawędzie soczewek, a drugi nie. Rysunek opisuje optykę; charakter powstaje w równym stopniu w tym, co między szkłem.</p>
+  </div>
+
+  <div class="panel practice">
+    <div class="panel-label">Z praktyki</div>
+    <p><strong>Granice z powietrzem to dwa razy liczba grup.</strong> Ta jedna zamiana pozwala z danych producenta oszacować podatność na flarę bez żadnego testu. „15 elementów w 11 grupach” to dwadzieścia dwie granice; „11 elementów w 7 grupach” to czternaście. Drugi obiektyw będzie miał wyraźnie głębszą czerń przy świetle w kadrze, nawet jeśli ma gorsze powłoki.</p>
+    <p><strong>Sprawdź, czy obiektyw oddycha, zanim zaczniesz tracking.</strong> Zrób ujęcie z przejściem ostrości na statywie, bez ruchu kamery. Jeśli kadr się zmienia, solver zinterpretuje to jako ruch kamery albo zmianę ogniskowej — i wynik będzie się zgadzał w jednej klatce, a rozjeżdżał w pozostałych. To pięć minut, które ratuje ujęcie.</p>
+    <p><strong>Przy ujęciu z przejściem ostrości animuj pozycję kamery, nie tylko focus distance.</strong> Prawdziwy obiektyw przesuwa przy ostrzeniu źrenicę wejściową, czyli punkt widzenia. Renderer tego nie robi sam. Przy bliskim planie i długim przejściu różnica bywa widoczna na krawędziach obiektów przesłaniających.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>element</dt>
+      <dd>Pojedyncza soczewka, jeden kawałek szkła o dwóch powierzchniach.</dd>
+      <dt>grupa</dt>
+      <dd>Zestaw elementów sklejonych albo poruszających się razem. Liczba grup razy dwa daje liczbę granic ze szkła na powietrze.</dd>
+      <dt>ostrzenie wewnętrzne (IF)</dt>
+      <dd>Ustawianie ostrości przez przesuwanie jednej grupy wewnątrz układu. Tubus nie zmienia długości, ale korekcja zmienia się razem z odległością.</dd>
+      <dt>oddech obiektywu (breathing)</dt>
+      <dd>Zmiana kąta widzenia przy ostrzeniu. Skutek uboczny mechanizmu ostrzenia, nie wada.</dd>
+      <dt>odcinek tylny</dt>
+      <dd>Odległość od ostatniej powierzchni szkła do matrycy. To on decyduje, czy układ zmieści lustro — i czy może być symetryczny.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Umiemy już czytać przekrój. Czas zobaczyć, jakie przekroje w ogóle istnieją — bo nie jest ich nieskończenie wiele. W <a href="rozdzial-17-czterej-przodkowie.html">następnym rozdziale</a> okaże się, że cztery układy z lat 1840–1930 wystarczą, żeby wyjaśnić charakter większości obiektywów, jakie kiedykolwiek trzymałeś w ręku.</p>
+  </div>
 
 
   <div class="site-nav chapter-nav">
@@ -52,8 +299,78 @@ window.SKY3D_MESSAGES = {
       <a class="nav-next" href="rozdzial-17-czterej-przodkowie.html">Następny →</a>
   </div>
 
+  <template id="adv-oddech">
+    <h3>Skąd bierze się oddech kadru</h3>
+
+    <p>Oddech to zmiana kąta widzenia przy ostrzeniu. Bywa opisywany jako wada, a jest <strong>nieuchronną konsekwencją mechanizmu</strong> — pytanie brzmi tylko, w którą stronę i jak mocno.</p>
+
+    <p>Przy wysuwie całego układu sprawa jest prosta i daje się policzyć. Obiektyw odjeżdża od matrycy o wysuw równy <em>f</em>²/(s − f), więc odległość obrazu rośnie z f na f + e. Kąt widzenia jest wyznaczony przez rozmiar matrycy podzielony przez tę odległość, więc <span class="term-cyan">zawsze się zawęża</span>. Dla pięćdziesiątki ostrzonej na pół metra wysuw wynosi 5,6 mm, czyli kąt widzenia kurczy się o jedną dziesiątą — a to jest już wyraźnie widoczne przy przejściu ostrości.</p>
+
+    <p>Przy ostrzeniu wewnętrznym nie ma tak prostej reguły, bo przesuwana grupa <em>zmienia ogniskową całego układu</em>. Konstruktor ma tu swobodę i może zaprojektować oddech w dowolną stronę albo skasować go prawie do zera. Obiektywy reklamowane jako „bez oddechu” — parafokalne przy ostrzeniu — to konstrukcje, w których ten stopień swobody wykorzystano właśnie na to, kosztem czegoś innego.</p>
+
+    <p>Dla pracy z materiałem liczą się dwie konsekwencje. Po pierwsze, <strong>oddech psuje tracking</strong>: solver widzi zmieniający się kadr i interpretuje go jako ruch kamery albo transfokację, więc rozwiązanie zgadza się w jednej klatce, a rozjeżdża w pozostałych. Po drugie, oddech jest podpisem rozpoznawczym — szkło kinowe jest projektowane tak, żeby go nie mieć, a szkło fotograficzne zwykle ma go sporo. Wyraźny oddech w ujęciu jest więc wskazówką, że nakręcono je optyką fotograficzną.</p>
+  </template>
+
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-panel">
+      <button class="modal-close" data-modal-close aria-label="Zamknij">×</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
 </div>
 
 <script src="../assets/interactive.js"></script>
+<script>
+/* Ostrzenie: wysuw calego ukladu kontra ostrzenie wewnetrzne. Wysuw liczony
+   z rownania soczewki, e = f^2 / (s - f), w milimetrach. Skala rysunku:
+   PX_NA_MM pikseli na milimetr wysuwu, zeby ruch byl widoczny. Grupa
+   wewnetrzna przesuwa sie ulamkiem tego, bo przy ostrzeniu wewnetrznym
+   maly ruch grupy zastepuje duzy ruch calosci — i o to w nim chodzi. */
+(function () {
+  var sl = document.getElementById('ostrDystans');
+  if (!sl) return;
+  var F = 50;                        // ogniskowa, mm
+  var S_MIN = 0.45, S_MAX = 30;      // metry
+  var PX_NA_MM = 3.4;
+  var UDZIAL_IF = 0.45;              // grupa wewnetrzna rusza sie mniej
+
+  function odswiez() {
+    var v = parseFloat(sl.value) / 100;
+    var nieskonczonosc = v > 0.985;
+    var s = S_MIN * Math.pow(S_MAX / S_MIN, v);        // metry
+    var sMm = s * 1000;
+    var e = nieskonczonosc ? 0 : F * F / (sMm - F);    // wysuw, mm
+
+    document.getElementById('ostrGrupaA')
+      .setAttribute('transform', 'translate(' + (-e * PX_NA_MM).toFixed(1) + ',0)');
+    document.getElementById('ostrGrupaB')
+      .setAttribute('transform', 'translate(' + (-e * PX_NA_MM * UDZIAL_IF).toFixed(1) + ',0)');
+
+    var strzalka = document.getElementById('ostrStrzalkaA');
+    strzalka.setAttribute('x1', (320 - e * PX_NA_MM).toFixed(1));
+    strzalka.setAttribute('opacity', e > 0.2 ? '1' : '0');
+
+    var zwezenie = e > 0 ? (1 - F / (F + e)) * 100 : 0;
+
+    document.getElementById('ostrOdczyt').textContent =
+      nieskonczonosc ? 'nieskończoność'
+                     : (s < 1 ? (s * 100).toFixed(0) + ' cm'
+                              : s.toFixed(2).replace('.', ',') + ' m');
+    document.getElementById('ostrPomiar').textContent = nieskonczonosc
+      ? 'Na nieskończoność wysuw wynosi zero.'
+      : 'Wysuw ' + e.toFixed(2).replace('.', ',') + ' mm · kąt widzenia węższy o ' +
+        zwezenie.toFixed(1).replace('.', ',') + '%';
+    document.getElementById('ostrPodpis').textContent = nieskonczonosc
+      ? 'Pięćdziesiątka ostrzona na nieskończoność: matryca leży dokładnie w ognisku.'
+      : 'Pięćdziesiątka ostrzona na ' +
+        (s < 1 ? (s * 100).toFixed(0) + ' cm' : s.toFixed(2).replace('.', ',') + ' m') +
+        ': cały układ odjechał o ' + e.toFixed(2).replace('.', ',') +
+        ' mm. Przy ostrzeniu wewnętrznym tę samą pracę wykonuje jedna grupa, ruszając się mniej.';
+  }
+  sl.addEventListener('input', odswiez);
+  odswiez();
+})();
+</script>
 </body>
 </html>
