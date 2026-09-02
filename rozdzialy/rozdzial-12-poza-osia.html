@@ -245,58 +245,6 @@ window.SKY3D_MESSAGES = {
   </div>
 
   <div class="section">
-    <div class="section-eyebrow">Suma · skąd wir w tle</div>
-    <h2>Trzy wady składają się na jeden podpis</h2>
-
-    <p>W <a href="rozdzial-09-bokeh.html">Rozdziale 9</a> obiecaliśmy wyjaśnienie wiru w tle i tu jest jego druga połowa. Pierwszą było obcięcie mechaniczne z <a href="rozdzial-07-zrenice.html">Rozdziału 7</a>; drugą jest krzywizna pola.</p>
-
-    <p>Mechanizm w całości wygląda tak. Punkt tła leżący w rogu kadru jest — z powodu krzywizny pola — nieostry <em>mocniej</em> niż ten sam punkt w środku, a często także po drugiej stronie ostrości. Jego krążek jest więc większy. Jednocześnie obcięcie mechaniczne ścina ten krążek w soczewkowaty kształt zwrócony ku środkowi kadru. Rosnące, ścinane i promieniście ułożone krążki oko odczytuje jako obrót.</p>
-
-    <div class="diagram-frame">
-      <div class="diagram-hud"><span>Wir rozłożony na składowe</span><span>ani jedna, ani druga sama nie wystarcza</span></div>
-      <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Trzy kadry: samo obcięcie daje stałe kocie oko, sama krzywizna pola daje rosnące okrągłe krążki, razem dają wir.">
-        <g font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">
-          <text x="130" y="24">TYLKO OBCIĘCIE</text><text x="380" y="24">TYLKO KRZYWIZNA</text><text x="630" y="24">OBIE NARAZ</text>
-        </g>
-        <g fill="none" stroke="#2a2f38"><rect x="40" y="36" width="180" height="150"/><rect x="290" y="36" width="180" height="150"/><rect x="540" y="36" width="180" height="150"/></g>
-
-        <g fill="#e8a33d" fill-opacity="0.45" stroke="#e8a33d" stroke-width="1">
-          <ellipse cx="130" cy="111" rx="11" ry="11"/>
-          <ellipse cx="196" cy="111" rx="6" ry="11"/><ellipse cx="64" cy="111" rx="6" ry="11"/>
-          <ellipse cx="130" cy="56" rx="11" ry="6"/><ellipse cx="130" cy="166" rx="11" ry="6"/>
-          <ellipse cx="186" cy="66" rx="6" ry="11" transform="rotate(45 186 66)"/>
-          <ellipse cx="74" cy="66" rx="6" ry="11" transform="rotate(-45 74 66)"/>
-        </g>
-        <g fill="#9c82d8" fill-opacity="0.4" stroke="#9c82d8" stroke-width="1">
-          <circle cx="380" cy="111" r="7"/>
-          <circle cx="446" cy="111" r="14"/><circle cx="314" cy="111" r="14"/>
-          <circle cx="380" cy="56" r="14"/><circle cx="380" cy="166" r="14"/>
-          <circle cx="436" cy="66" r="18"/><circle cx="324" cy="66" r="18"/>
-        </g>
-        <g fill="#e8a33d" fill-opacity="0.5" stroke="#e8a33d" stroke-width="1">
-          <ellipse cx="630" cy="111" rx="7" ry="7"/>
-          <ellipse cx="696" cy="111" rx="7" ry="14"/><ellipse cx="564" cy="111" rx="7" ry="14"/>
-          <ellipse cx="630" cy="56" rx="14" ry="7"/><ellipse cx="630" cy="166" rx="14" ry="7"/>
-          <ellipse cx="686" cy="64" rx="8" ry="18" transform="rotate(45 686 64)"/>
-          <ellipse cx="574" cy="64" rx="8" ry="18" transform="rotate(-45 574 64)"/>
-        </g>
-        <g font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">
-          <text x="130" y="208">stały rozmiar,</text><text x="130" y="222">ciągnięcie ku środkowi</text>
-          <text x="380" y="208">rosną, ale okrągłe,</text><text x="380" y="222">czyta się jako nierówna głębia</text>
-          <text x="630" y="208">rosną, ścinane i pochylane —</text><text x="630" y="222">oko dopowiada obrót</text>
-        </g>
-      </svg>
-      <div class="diagram-caption">Efekt, za który płaci się dziś więcej niż za nowy obiektyw, jest sumą dwóch rzeczy, których przez sto lat próbowano się pozbyć.</div>
-    </div>
-
-    <p>Warto zauważyć, że <span class="term-cyan">żadna z tych dwóch wad sama nie daje wiru</span>. Samo obcięcie daje kocie oko o stałym rozmiarze — czytelne jako ciągnięcie ku środkowi, ale nie jako wir. Sama krzywizna pola daje krążki rosnące ku brzegom, ale okrągłe — czytelne jako nierówna głębia. Dopiero razem tworzą wrażenie ruchu obrotowego.</p>
-
-    <p>Dlatego wir jest właściwością konstrukcji sprzed epoki anastygmatów albo konstrukcji świadomie do niej wracających. Petzval z 1840 roku miał obie wady w komplecie, bo nie umiano ich wtedy usunąć. Helios 44, radziecka kopia niemieckiego Biotara, ma je w stopniu umiarkowanym i dlatego stał się w ostatniej dekadzie najczęściej kupowanym obiektywem vintage na świecie.</p>
-
-    <p>Konsekwencja praktyczna dla CG jest taka, że <strong>wiru nie da się zrobić jednym filtrem</strong>. Skręcenie obrazu w postprodukcji daje coś zupełnie innego, bo przesuwa też elementy ostre. Poprawne odtworzenie wymaga zmiany kształtu jądra splotu w funkcji położenia w kadrze — soczewkowatego, obracanego promieniście i rosnącego ku brzegom.</p>
-  </div>
-
-  <div class="section">
     <div class="section-eyebrow">W CG · czysto do przesady</div>
     <h2>Wirtualny obiektyw jest doskonały i to widać</h2>
 
@@ -304,15 +252,9 @@ window.SKY3D_MESSAGES = {
 
     <p>Brzmi to jak zaleta i przez wiele lat tak było traktowane. Problem pojawia się dopiero przy zestawieniu z materiałem: <span class="term-violet">plate ma miękkie rogi, render nie ma</span>. Oko nie potrafi tego nazwać, ale niezgodność wychwytuje natychmiast, bo dotyczy całego obwodu kadru naraz.</p>
 
-    <p>Trzy poziomy zaradzenia temu, od najtańszego:</p>
+    <p>Zaradzić temu można na trzy sposoby, których koszt rośnie mniej więcej tak jak wierność: rozmyciem promienistym, rozmyciem kierunkowym zależnym od położenia w kadrze albo modelem wielosoczewkowym w rendererze.</p>
 
-    <ul>
-      <li><strong>Rozmycie promieniste.</strong> Maska rosnąca od środka ku brzegom, sterująca siłą delikatnego rozmycia. Nie odtwarza ani ogona komy, ani kierunkowości astygmatyzmu, ale usuwa najbardziej rzucającą się w oczy różnicę. W większości ujęć wystarcza, bo rogi rzadko niosą treść.</li>
-      <li><strong>Rozmycie kierunkowe zależne od położenia.</strong> Zamiast rozmycia symetrycznego — rozmycie wzdłuż promienia albo w poprzek niego, zależnie od tego, którą wadę odtwarzasz. Astygmatyzm to rozmycie w jednym kierunku, koma to rozmycie asymetryczne z ogonem na zewnątrz. Wymaga jądra zależnego od pozycji, czyli tego samego mechanizmu, co kocie oko z <a href="rozdzial-07-zrenice.html">Rozdziału 7</a>.</li>
-      <li><strong>Model wielosoczewkowy w rendererze.</strong> Jedyna droga, która daje wszystkie trzy wady naraz, we właściwych proporcjach i z poprawną zależnością od przysłony. Kosztuje realnie i wymaga danych konstrukcyjnych obiektywu, których producenci nie publikują — ale dla klasycznych układów są dostępne w literaturze patentowej.</li>
-    </ul>
-
-    <p>Warto przy tym pamiętać o czymś, co łatwo przeoczyć: krzywizna pola jest jedyną z tych wad, którą da się odtworzyć <strong>bez rozmycia</strong>. Wystarczy w rendererze wygiąć płaszczyznę ostrości — albo, prościej, ustawić ostrość na obiekt leżący nieco dalej niż środek zainteresowania i pozwolić, żeby rogi wypadły z głębi naturalnie. Jest to jedyny przypadek, w którym wadę optyczną odtwarza się poprawnie samą geometrią sceny.</p>
+    <button class="advanced-btn" data-modal-target="adv-odtwarzanie">Zaawansowane: trzy sposoby odtworzenia miękkich rogów</button>
 
     <p>Na koniec ostrzeżenie przed nadgorliwością. Wady poza osią były przez sto pięćdziesiąt lat celem walki konstruktorów i współczesne szkło kinowe ma je opanowane bardzo dobrze. Jeśli twój plate nakręcono zestawem z ostatniej dekady, rogi <em>są</em> niemal tak ostre jak środek — i dokładanie miękkości do renderu oddali go od materiału zamiast zbliżyć. Ta poprawka należy się materiałowi ze starego szkła, nie każdemu.</p>
   </div>
@@ -358,6 +300,25 @@ window.SKY3D_MESSAGES = {
       <a class="nav-prev" href="rozdzial-11-aberracja-sferyczna.html">← Poprzedni</a>
       <a class="nav-toc" href="../index.html">Spis treści</a>
       <a class="nav-next" href="rozdzial-13-dystorsja.html">Następny →</a>
+  </div>
+
+  <template id="adv-odtwarzanie">
+    <h3>Trzy sposoby odtworzenia miękkich rogów</h3>
+
+    <ul>
+      <li><strong>Rozmycie promieniste.</strong> Maska rosnąca od środka ku brzegom, sterująca siłą delikatnego rozmycia. Nie odtwarza ani ogona komy, ani kierunkowości astygmatyzmu, ale usuwa najbardziej rzucającą się w oczy różnicę. W większości ujęć wystarcza, bo rogi rzadko niosą treść.</li>
+      <li><strong>Rozmycie kierunkowe zależne od położenia.</strong> Zamiast rozmycia symetrycznego — rozmycie wzdłuż promienia albo w poprzek niego, zależnie od tego, którą wadę odtwarzasz. Astygmatyzm to rozmycie w jednym kierunku, koma to rozmycie asymetryczne z ogonem na zewnątrz. Wymaga jądra zależnego od pozycji, czyli tego samego mechanizmu, co kocie oko z <a href="rozdzial-07-zrenice.html">Rozdziału 7</a>.</li>
+      <li><strong>Model wielosoczewkowy w rendererze.</strong> Jedyna droga, która daje wszystkie trzy wady naraz, we właściwych proporcjach i z poprawną zależnością od przysłony. Kosztuje realnie i wymaga danych konstrukcyjnych obiektywu, których producenci nie publikują — ale dla klasycznych układów są dostępne w literaturze patentowej.</li>
+    </ul>
+
+    <p>Jest przy tym jeden wyjątek, który warto znać: <strong>krzywizna pola jest jedyną z tych wad, którą da się odtworzyć bez rozmycia</strong>. Wystarczy w rendererze wygiąć płaszczyznę ostrości — albo, prościej, ustawić ostrość na obiekt leżący nieco dalej niż środek zainteresowania i pozwolić, żeby rogi wypadły z głębi naturalnie. Jedyny przypadek, w którym wadę optyczną odtwarza się poprawnie samą geometrią sceny.</p>
+  </template>
+
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-panel">
+      <button class="modal-close" data-modal-close aria-label="Zamknij">×</button>
+      <div id="modal-body"></div>
+    </div>
   </div>
 
 </div>

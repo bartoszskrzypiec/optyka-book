@@ -217,70 +217,10 @@ window.SKY3D_MESSAGES = {
     <p>Konstruktor musi więc <span class="term-violet">wybrać jedną stronę</span> i wybór ten jest wpisany w obiektyw na stałe. Obiektywy portretowe koryguje się lekko niedokorygowanie, bo tło ma być piękne, a przód i tak jest rzadko rozmyty. Obiektywy do zdjęć technicznych i reprodukcji — do zera, bo tam liczy się wierność, a nie wrażenie.</p>
 
     <p>Istnieje też trzecia droga, wykorzystywana w kilku legendarnych konstrukcjach portretowych: <strong>zostawić aberrację celowo i dać użytkownikowi pokrętło</strong> do jej regulacji. Przesuwając jeden element wzdłuż osi, zmienia się stopień korekcji, a wraz z nim ilość poświaty. Takie obiektywy istnieją do dziś i sprzedają się dokładnie tym, że mają wadę, którą można dawkować.</p>
-  </div>
 
-  <div class="section">
-    <div class="section-eyebrow">Korekcja · trzy sposoby i ich ceny</div>
-    <h2>Jak się z tym walczy</h2>
+    <button class="advanced-btn" data-modal-target="adv-historia">Zaawansowane: dlaczego korekcja tej wady trwała trzysta lat</button>
 
-    <p>Aberracja sferyczna jest wadą najstarszą i przez to najlepiej opanowaną. Konstruktor ma trzy narzędzia, wyraźnie różniące się kosztem.</p>
-
-    <div class="subsection">
-      <h3>Podział mocy na więcej powierzchni</h3>
-      <p>Najprostsze i najstarsze. Skoro odchylenie rośnie z trzecią potęgą kąta, to zamiast jednej mocno zakrzywionej soczewki lepiej dać dwie słabsze. Każda zagina mniej, więc każda psuje mniej niż proporcjonalnie — a razem dają tę samą moc. Podwojenie liczby elementów zmniejsza aberrację mniej więcej czterokrotnie.</p>
-      <p>Cena jest ta z <a href="rozdzial-03-fresnel-kazda-powierzchnia-swieci.html">Rozdziału 3</a>: więcej powierzchni to więcej odbić, więcej flary i niższy kontrast. To jest ten sam kompromis, który przewija się przez całą książkę, i tu widać go w najczystszej postaci.</p>
-    </div>
-
-    <div class="subsection">
-      <h3>Dobór kształtu i ustawienia soczewki</h3>
-      <p>Soczewka o tej samej mocy może mieć różne krzywizny obu powierzchni — od dwuwypukłej symetrycznej po płasko-wypukłą. Okazuje się, że aberracja sferyczna zależy od tego wyboru bardzo silnie, mimo że moc pozostaje ta sama.</p>
-    <div class="diagram-frame">
-      <div class="diagram-hud"><span>Kształt soczewki przy tej samej mocy</span><span>najtańsza możliwa korekcja</span></div>
-      <svg viewBox="0 0 760 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cztery soczewki o tej samej mocy i różnych kształtach z podanym względnym nasileniem aberracji sferycznej.">
-        <g fill="#4fc3c0" fill-opacity="0.15" stroke="#4fc3c0" stroke-width="1.6">
-          <path d="M 110 60 Q 132 115 110 170 Q 88 115 110 60 Z"/>
-          <path d="M 290 60 L 290 170 Q 268 115 290 60 Z"/>
-          <path d="M 470 60 Q 492 115 470 170 L 470 60 Z"/>
-          <path d="M 650 60 Q 678 115 650 170 Q 632 115 650 60 Z"/>
-        </g>
-        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b" text-anchor="middle">
-          <text x="110" y="196">dwuwypukła</text><text x="290" y="196">płaska do przodu</text>
-          <text x="470" y="196">płaska do tyłu</text><text x="650" y="196">optymalna</text>
-        </g>
-        <g font-family="IBM Plex Mono" font-size="12" text-anchor="middle">
-          <text x="110" y="218" fill="#8b909b">1,2×</text><text x="290" y="218" fill="#c23b3b">1,7×</text>
-          <text x="470" y="218" fill="#8b909b">1,1×</text><text x="650" y="218" fill="#4fc3c0">1,0×</text>
-        </g>
-        <g stroke="#e8a33d" stroke-width="1.4" opacity="0.6"><line x1="30" y1="115" x2="720" y2="115" stroke-dasharray="4 6"/></g>
-        <text x="30" y="42" font-family="IBM Plex Mono" font-size="10.5" fill="#e8a33d">wiązka z nieskończoności wchodzi z lewej</text>
-      </svg>
-      <div class="diagram-caption">Ta sama moc, cztery kształty, aberracja w zakresie 1,0 do 1,7. Odwrócenie soczewki nic nie kosztuje.</div>
-    </div>
-
-      <p>Istnieje kształt optymalny, minimalizujący aberrację dla danego układu przedmiot–obraz. Dla równoległej wiązki wpadającej z nieskończoności jest to soczewka mocniej zakrzywiona od strony wiązki — i dlatego <strong>płasko-wypukła soczewka odwrócona płaską stroną do przodu daje wyraźnie gorszy obraz</strong> niż ta sama soczewka odwrócona właściwie. Jest to najtańsza możliwa korekcja: nic nie kosztuje, trzeba tylko wiedzieć.</p>
-    </div>
-
-    <div class="subsection">
-      <h3>Powierzchnia asferyczna</h3>
-      <p>Rozwiązanie radykalne: odejść od kuli. Jedna dobrze policzona powierzchnia asferyczna potrafi zastąpić trzy soczewki sferyczne, dając tę samą korekcję przy sześciu powierzchniach mniej. Zysk jest podwójny — mniejsza aberracja i wyższy kontrast naraz.</p>
-      <p>Cena leży w produkcji. Asfery nie da się wytworzyć przez pocieranie dwóch kawałków szkła; wymaga sterowanego numerycznie szlifu albo prasowania w formie, a jedno i drugie kosztuje wielokrotnie więcej. Zostawia też ślad, który poznaliśmy w <a href="rozdzial-09-bokeh.html">Rozdziale 9</a>: koncentryczne prążki w krążku nieostrości, czyli cebulki.</p>
-      <p>Warto zapamiętać tę zależność, bo jest kontrintuicyjna: <span class="term-cyan">cebulki w bokeh są objawem drogiej technologii</span>, nie taniej. Obiektyw bez asfer ich nie ma — ale za to ma więcej szkła i więcej aberracji.</p>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-eyebrow">Historia · cztery wieki kompromisu z kulą</div>
-    <h2>Dlaczego to trwało tak długo</h2>
-
-    <p>Aberrację sferyczną opisano poprawnie już w siedemnastym wieku i od razu wiedziano, że powierzchnia usuwająca ją istnieje. Kepler ją policzył, Kartezjusz podał kształt. A mimo to przez następne trzysta lat wszyscy dalej szlifowali kule. Warto wiedzieć dlaczego, bo to samo ograniczenie rządzi do dziś ceną obiektywów.</p>
-
-    <p>Powód jest wytwórczy, nie teoretyczny. Powierzchnia kulista powstaje <strong>sama z siebie</strong>: dwa kawałki szkła pocierane o siebie z ziarnem ściernym, przy dostatecznie przypadkowym ruchu, dążą do kuli, bo kula jest jedyną powierzchnią, która pasuje sama do siebie w każdym obrocie. Rzemieślnik nie musi wiedzieć, co robi — musi tylko pocierać dostatecznie długo i dostatecznie chaotycznie.</p>
-
-    <p>Każdy inny kształt wymaga <em>odniesienia</em>: wiedzy, gdzie jest oś i jak daleko od niej jesteśmy w danej chwili. Do połowy dwudziestego wieku nie istniała metoda, która dawałaby taką kontrolę z dokładnością ułamka długości fali. Asfery robiono, ale ręcznie, sztukami, do teleskopów i mikroskopów, za pieniądze niedostępne fotografii.</p>
-
-    <p>Zmieniły to dwie technologie, obie z drugiej połowy dwudziestego wieku. <strong>Prasowanie w formie</strong> pozwoliło produkować asfery seryjnie, choć z ograniczoną dokładnością i tylko dla szkieł o niskiej temperaturze mięknięcia. <strong>Szlif sterowany numerycznie</strong> dał dokładność, ale przy koszcie jednostkowym, który do dziś ogranicza asfery do kilku elementów w układzie.</p>
-
-    <p>Z tej historii płynie obserwacja przydatna przy rozpoznawaniu szkła po obrazie. <span class="term-cyan">Obiektyw sprzed lat siedemdziesiątych prawie na pewno nie ma asfer</span> — więc walczył z aberracją sferyczną wyłącznie liczbą soczewek i doborem kształtów. Stąd jego charakterystyczny profil: przyzwoity kontrast przy przymknięciu, wyraźna poświata przy pełnym otworze i bokeh o zdecydowanym znaku. Współczesna konstrukcja z dwiema asferami jest przy pełnym otworze znacznie czystsza — i właśnie ta czystość bywa dziś powodem, dla którego się jej unika.</p>
+    <p class="deeper-inline">Czym konstruktor realnie z tym walczy — podział mocy, kształt soczewki, asfera — w <a href="../dodatki/dodatek-f-aberracje-seidela.html">Dodatku F</a>.</p>
   </div>
 
   <div class="section">
@@ -344,6 +284,25 @@ window.SKY3D_MESSAGES = {
       <a class="nav-prev" href="rozdzial-10-dyfrakcja.html">← Poprzedni</a>
       <a class="nav-toc" href="../index.html">Spis treści</a>
       <a class="nav-next" href="rozdzial-12-poza-osia.html">Następny →</a>
+  </div>
+
+  <template id="adv-historia">
+    <h3>Dlaczego korekcja tej wady trwała trzysta lat</h3>
+
+    <p>Aberrację sferyczną opisano poprawnie już w siedemnastym wieku i od razu wiedziano, że powierzchnia usuwająca ją istnieje — Kepler ją policzył, Kartezjusz podał kształt. A mimo to przez następne trzysta lat wszyscy dalej szlifowali kule. <strong>Powód był wytwórczy, nie teoretyczny.</strong></p>
+
+    <p>Powierzchnia kulista powstaje <em>sama z siebie</em>: dwa kawałki szkła pocierane o siebie z ziarnem ściernym, przy dostatecznie przypadkowym ruchu, dążą do kuli — bo kula jest jedyną powierzchnią, która pasuje sama do siebie w każdym obrocie. Rzemieślnik nie musi wiedzieć, co robi; musi tylko pocierać dostatecznie długo i dostatecznie chaotycznie.</p>
+
+    <p>Każdy inny kształt wymaga <em>odniesienia</em>: wiedzy, gdzie jest oś i jak daleko od niej jesteśmy w danej chwili. Do połowy dwudziestego wieku nie istniała metoda dająca taką kontrolę z dokładnością ułamka długości fali. Asfery robiono, ale ręcznie i sztukami — do teleskopów i mikroskopów, za pieniądze niedostępne fotografii. Zmieniło to dopiero prasowanie w formie (seryjne, ale mniej dokładne) i szlif sterowany numerycznie (dokładny, ale drogi do dziś).</p>
+
+    <p>Płynie stąd obserwacja przydatna przy rozpoznawaniu szkła po obrazie. <strong>Obiektyw sprzed lat siedemdziesiątych prawie na pewno nie ma asfer</strong>, więc walczył z tą wadą wyłącznie liczbą soczewek i doborem kształtów. Stąd jego profil: przyzwoity kontrast po przymknięciu, wyraźna poświata przy pełnym otworze i bokeh o zdecydowanym znaku. Współczesna konstrukcja z dwiema asferami jest przy pełnym otworze znacznie czystsza — i właśnie ta czystość bywa dziś powodem, dla którego się jej unika.</p>
+  </template>
+
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-panel">
+      <button class="modal-close" data-modal-close aria-label="Zamknij">×</button>
+      <div id="modal-body"></div>
+    </div>
   </div>
 
 </div>

@@ -41,7 +41,165 @@ window.SKY3D_MESSAGES = {
   <h1>Pięć aberracji Seidela</h1>
   <p class="subtitle">Rozwinięcie funkcji falowej, z którego wypadają sferyczna, koma, astygmatyzm, krzywizna pola i dystorsja — jako pięć wyrazów jednego szeregu.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">Co tu jest</div>
+    <ul>
+      <li><strong>Dlaczego akurat pięć</strong> — skąd bierze się lista Seidela i dlaczego nie ma na niej szóstej pozycji.</li>
+      <li><strong>Tabela zależności</strong>: jak każda z wad rośnie z otworem źrenicy i z odległością od osi, oraz co z tego wynika dla przymykania przysłony.</li>
+      <li><strong>Czym konstruktor realnie z nimi walczy</strong> — podział mocy, kształt soczewki, asfera, i cena każdego z tych ruchów.</li>
+      <li><strong>Jak trzy z nich składają się na wir</strong>, czyli najbardziej rozpoznawalny podpis starego szkła.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Pochodzenie listy · dlaczego pięć, a nie sześć</div>
+    <h2>Skąd bierze się piątka Seidela</h2>
+
+    <p>Soczewka idealna robiłaby dokładnie to, co opisuje równanie z <a href="../rozdzialy/rozdzial-04-soczewka-cienka.html">Rozdziału 4</a>. Równanie to jest jednak przybliżeniem: opiera się na założeniu, że sinus kąta równa się samemu kątowi. Dla małych kątów to prawda; dla większych sinus zaczyna odstawać.</p>
+
+    <div class="formula">
+      sin α = α − α³/6 + α⁵/120 − …
+      <span class="sub">α — kąt promienia względem osi optycznej, w radianach. Pierwszy wyraz daje optykę idealną (przybliżenie przyosiowe). Drugi wyraz, z α³, jest źródłem wszystkich pięciu wad Seidela — stąd ich druga nazwa: <em>aberracje trzeciego rzędu</em>.</span>
+    </div>
+
+    <p>Cała klasyczna teoria aberracji polega na wzięciu <em>jednego</em> dodatkowego wyrazu tego szeregu i policzeniu, co on psuje. Okazuje się — i to jest wynik Ludwiga von Seidela z połowy lat pięćdziesiątych dziewiętnastego wieku — że psuje na dokładnie pięć sposobów, ani mniej, ani więcej. Pięć, bo tyle jest sposobów rozłożenia czwartej potęgi między <strong>wysokość promienia w źrenicy</strong> a <strong>odległość punktu od osi</strong>.</p>
+
+    <div class="formula">
+      W = W<sub>040</sub>ρ⁴ + W<sub>131</sub><span class="vec" data-tip="Odległość punktu od osi optycznej, czyli miejsce w kadrze">h</span>ρ³ + W<sub>222</sub><span class="vec" data-tip="Odległość od osi">h</span>²ρ² + W<sub>220</sub><span class="vec" data-tip="Odległość od osi">h</span>²ρ² + W<sub>311</sub><span class="vec" data-tip="Odległość od osi">h</span>³ρ
+      <span class="sub">W — odchyłka czoła fali od kuli idealnej. ρ — względna wysokość promienia w źrenicy (0 na osi, 1 na brzegu). h — względna odległość punktu od środka kadru. Współczynniki W to charakterystyka konkretnej konstrukcji. Zauważ, że wykładniki w każdym składniku sumują się do czterech — to nie przypadek, tylko definicja trzeciego rzędu.</span>
+    </div>
+
+    <p>Kolejno, od lewej: <span class="term-violet">aberracja sferyczna</span> (nie zależy od miejsca w kadrze — psuje też sam środek), <span class="term-violet">koma</span>, <span class="term-violet">astygmatyzm</span>, <span class="term-violet">krzywizna pola</span> i <span class="term-violet">dystorsja</span>. Ostatnia wyróżnia się tym, że ma ρ w pierwszej potędze — i to jest cała przyczyna jej odrębności, o czym za chwilę.</p>
+
+    <p>Warto wiedzieć, czego na tej liście nie ma. <strong>Nie ma aberracji chromatycznej</strong>, bo ta nie bierze się z kąta, tylko z długości fali — jest osobnym rodzajem zjawiska i ma własny <a href="dodatek-ag-chromatyczna-w-liczbach.html">Dodatek AG</a>. Nie ma też niczego z wyższych rzędów: rzeczywisty obiektyw ma aberracje piątego i siódmego rzędu, a nowoczesne programy do projektowania liczą je wszystkie. Piątka Seidela pozostaje jednak językiem, w którym się o tym mówi, bo <span class="term-cyan">to jej pojęcia odpowiadają temu, co widać w obrazie</span>.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Tabela · co da się kupić przymknięciem</div>
+    <h2>Zależność od źrenicy i od pola</h2>
+
+    <p>Z wykładników w powyższym wzorze wynika wszystko, co praktyczne. Poniższa tabela przekłada je na dwa pytania, które zadaje się o obiektyw najczęściej: gdzie w kadrze wada się pojawia i czy pomoże przymknięcie przysłony.</p>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead>
+          <tr><th>Wada</th><th class="num">Źrenica</th><th class="num">Pole</th><th>Gdzie widać</th><th>Przymknięcie</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Sferyczna</td><td class="num">ρ⁴</td><td class="num">h⁰</td><td>wszędzie, także w środku</td><td>pomaga bardzo</td></tr>
+          <tr><td>Koma</td><td class="num">ρ³</td><td class="num">h¹</td><td>rośnie ku brzegom</td><td>pomaga mocno</td></tr>
+          <tr><td>Astygmatyzm</td><td class="num">ρ²</td><td class="num">h²</td><td>szybko rośnie ku rogom</td><td>pomaga umiarkowanie</td></tr>
+          <tr><td>Krzywizna pola</td><td class="num">ρ²</td><td class="num">h²</td><td>szybko rośnie ku rogom</td><td>maskuje głębią</td></tr>
+          <tr><td>Dystorsja</td><td class="num">ρ¹</td><td class="num">h³</td><td>tylko przy krawędziach</td><td><strong>nie pomaga wcale</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Wykładniki dotyczą odchyłki czoła fali. Rozmiar plamki na matrycy ma wykładnik przy ρ o jeden mniejszy — dlatego sferyczna maleje z trzecią potęgą przymknięcia, a dystorsja z zerową.</p>
+
+    <p>Ostatni wiersz jest najważniejszy i wart osobnego zdania. <span class="term-violet">Dystorsja jako jedyna nie znika po przymknięciu przysłony</span>, bo nie jest rozmyciem — jest przesunięciem punktu, który pozostaje ostry. Przymknięcie zmniejsza plamkę, ale nie rusza jej położenia. Stąd jej wyjątkowy status w pipelinie: wszystkie pozostałe wady da się w praktyce obejść nastawą, tę jedną trzeba zmierzyć i odwrócić, o czym w <a href="../rozdzialy/rozdzial-13-dystorsja.html">Rozdziale 13</a> i <a href="dodatek-g-modele-dystorsji.html">Dodatku G</a>.</p>
+
+    <p>Drugi wniosek dotyczy krzywizny pola i bywa zaskoczeniem: <strong>przymknięcie jej nie usuwa, tylko ukrywa</strong>. Powierzchnia ostrości pozostaje wygięta dokładnie tak samo, ale rosnąca głębia ostrości obejmuje coraz większą jej część. Dlatego obiektyw o silnej krzywiźnie pola bywa przy f/8 nie do odróżnienia od dobrze skorygowanego — a przy pełnym otworze zdradza się natychmiast.</p>
+  </div>
+
+<div class="section">
+    <div class="section-eyebrow">Korekcja · trzy sposoby i ich ceny</div>
+    <h2>Jak się z tym walczy</h2>
+
+    <p>Aberracja sferyczna jest wadą najstarszą i przez to najlepiej opanowaną. Konstruktor ma trzy narzędzia, wyraźnie różniące się kosztem.</p>
+
+    <div class="subsection">
+      <h3>Podział mocy na więcej powierzchni</h3>
+      <p>Najprostsze i najstarsze. Skoro odchylenie rośnie z trzecią potęgą kąta, to zamiast jednej mocno zakrzywionej soczewki lepiej dać dwie słabsze. Każda zagina mniej, więc każda psuje mniej niż proporcjonalnie — a razem dają tę samą moc. Podwojenie liczby elementów zmniejsza aberrację mniej więcej czterokrotnie.</p>
+      <p>Cena jest ta z <a href="../rozdzialy/rozdzial-03-fresnel-kazda-powierzchnia-swieci.html">Rozdziału 3</a>: więcej powierzchni to więcej odbić, więcej flary i niższy kontrast. To jest ten sam kompromis, który przewija się przez całą książkę, i tu widać go w najczystszej postaci.</p>
+    </div>
+
+    <div class="subsection">
+      <h3>Dobór kształtu i ustawienia soczewki</h3>
+      <p>Soczewka o tej samej mocy może mieć różne krzywizny obu powierzchni — od dwuwypukłej symetrycznej po płasko-wypukłą. Okazuje się, że aberracja sferyczna zależy od tego wyboru bardzo silnie, mimo że moc pozostaje ta sama.</p>
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Kształt soczewki przy tej samej mocy</span><span>najtańsza możliwa korekcja</span></div>
+      <svg viewBox="0 0 760 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cztery soczewki o tej samej mocy i różnych kształtach z podanym względnym nasileniem aberracji sferycznej.">
+        <g fill="#4fc3c0" fill-opacity="0.15" stroke="#4fc3c0" stroke-width="1.6">
+          <path d="M 110 60 Q 132 115 110 170 Q 88 115 110 60 Z"/>
+          <path d="M 290 60 L 290 170 Q 268 115 290 60 Z"/>
+          <path d="M 470 60 Q 492 115 470 170 L 470 60 Z"/>
+          <path d="M 650 60 Q 678 115 650 170 Q 632 115 650 60 Z"/>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b" text-anchor="middle">
+          <text x="110" y="196">dwuwypukła</text><text x="290" y="196">płaska do przodu</text>
+          <text x="470" y="196">płaska do tyłu</text><text x="650" y="196">optymalna</text>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="12" text-anchor="middle">
+          <text x="110" y="218" fill="#8b909b">1,2×</text><text x="290" y="218" fill="#c23b3b">1,7×</text>
+          <text x="470" y="218" fill="#8b909b">1,1×</text><text x="650" y="218" fill="#4fc3c0">1,0×</text>
+        </g>
+        <g stroke="#e8a33d" stroke-width="1.4" opacity="0.6"><line x1="30" y1="115" x2="720" y2="115" stroke-dasharray="4 6"/></g>
+        <text x="30" y="42" font-family="IBM Plex Mono" font-size="10.5" fill="#e8a33d">wiązka z nieskończoności wchodzi z lewej</text>
+      </svg>
+      <div class="diagram-caption">Ta sama moc, cztery kształty, aberracja w zakresie 1,0 do 1,7. Odwrócenie soczewki nic nie kosztuje.</div>
+    </div>
+
+      <p>Istnieje kształt optymalny, minimalizujący aberrację dla danego układu przedmiot–obraz. Dla równoległej wiązki wpadającej z nieskończoności jest to soczewka mocniej zakrzywiona od strony wiązki — i dlatego <strong>płasko-wypukła soczewka odwrócona płaską stroną do przodu daje wyraźnie gorszy obraz</strong> niż ta sama soczewka odwrócona właściwie. Jest to najtańsza możliwa korekcja: nic nie kosztuje, trzeba tylko wiedzieć.</p>
+    </div>
+
+    <div class="subsection">
+      <h3>Powierzchnia asferyczna</h3>
+      <p>Rozwiązanie radykalne: odejść od kuli. Jedna dobrze policzona powierzchnia asferyczna potrafi zastąpić trzy soczewki sferyczne, dając tę samą korekcję przy sześciu powierzchniach mniej. Zysk jest podwójny — mniejsza aberracja i wyższy kontrast naraz.</p>
+      <p>Cena leży w produkcji. Asfery nie da się wytworzyć przez pocieranie dwóch kawałków szkła; wymaga sterowanego numerycznie szlifu albo prasowania w formie, a jedno i drugie kosztuje wielokrotnie więcej. Zostawia też ślad, który poznaliśmy w <a href="../rozdzialy/rozdzial-09-bokeh.html">Rozdziale 9</a>: koncentryczne prążki w krążku nieostrości, czyli cebulki.</p>
+      <p>Warto zapamiętać tę zależność, bo jest kontrintuicyjna: <span class="term-cyan">cebulki w bokeh są objawem drogiej technologii</span>, nie taniej. Obiektyw bez asfer ich nie ma — ale za to ma więcej szkła i więcej aberracji.</p>
+    </div>
+  </div>
+<div class="section">
+    <div class="section-eyebrow">Suma · skąd wir w tle</div>
+    <h2>Trzy wady składają się na jeden podpis</h2>
+
+    <p>W <a href="../rozdzialy/rozdzial-09-bokeh.html">Rozdziale 9</a> obiecaliśmy wyjaśnienie wiru w tle i tu jest jego druga połowa. Pierwszą było obcięcie mechaniczne z <a href="../rozdzialy/rozdzial-07-zrenice.html">Rozdziału 7</a>; drugą jest krzywizna pola.</p>
+
+    <p>Mechanizm w całości wygląda tak. Punkt tła leżący w rogu kadru jest — z powodu krzywizny pola — nieostry <em>mocniej</em> niż ten sam punkt w środku, a często także po drugiej stronie ostrości. Jego krążek jest więc większy. Jednocześnie obcięcie mechaniczne ścina ten krążek w soczewkowaty kształt zwrócony ku środkowi kadru. Rosnące, ścinane i promieniście ułożone krążki oko odczytuje jako obrót.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Wir rozłożony na składowe</span><span>ani jedna, ani druga sama nie wystarcza</span></div>
+      <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Trzy kadry: samo obcięcie daje stałe kocie oko, sama krzywizna pola daje rosnące okrągłe krążki, razem dają wir.">
+        <g font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">
+          <text x="130" y="24">TYLKO OBCIĘCIE</text><text x="380" y="24">TYLKO KRZYWIZNA</text><text x="630" y="24">OBIE NARAZ</text>
+        </g>
+        <g fill="none" stroke="#2a2f38"><rect x="40" y="36" width="180" height="150"/><rect x="290" y="36" width="180" height="150"/><rect x="540" y="36" width="180" height="150"/></g>
+
+        <g fill="#e8a33d" fill-opacity="0.45" stroke="#e8a33d" stroke-width="1">
+          <ellipse cx="130" cy="111" rx="11" ry="11"/>
+          <ellipse cx="196" cy="111" rx="6" ry="11"/><ellipse cx="64" cy="111" rx="6" ry="11"/>
+          <ellipse cx="130" cy="56" rx="11" ry="6"/><ellipse cx="130" cy="166" rx="11" ry="6"/>
+          <ellipse cx="186" cy="66" rx="6" ry="11" transform="rotate(45 186 66)"/>
+          <ellipse cx="74" cy="66" rx="6" ry="11" transform="rotate(-45 74 66)"/>
+        </g>
+        <g fill="#9c82d8" fill-opacity="0.4" stroke="#9c82d8" stroke-width="1">
+          <circle cx="380" cy="111" r="7"/>
+          <circle cx="446" cy="111" r="14"/><circle cx="314" cy="111" r="14"/>
+          <circle cx="380" cy="56" r="14"/><circle cx="380" cy="166" r="14"/>
+          <circle cx="436" cy="66" r="18"/><circle cx="324" cy="66" r="18"/>
+        </g>
+        <g fill="#e8a33d" fill-opacity="0.5" stroke="#e8a33d" stroke-width="1">
+          <ellipse cx="630" cy="111" rx="7" ry="7"/>
+          <ellipse cx="696" cy="111" rx="7" ry="14"/><ellipse cx="564" cy="111" rx="7" ry="14"/>
+          <ellipse cx="630" cy="56" rx="14" ry="7"/><ellipse cx="630" cy="166" rx="14" ry="7"/>
+          <ellipse cx="686" cy="64" rx="8" ry="18" transform="rotate(45 686 64)"/>
+          <ellipse cx="574" cy="64" rx="8" ry="18" transform="rotate(-45 574 64)"/>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">
+          <text x="130" y="208">stały rozmiar,</text><text x="130" y="222">ciągnięcie ku środkowi</text>
+          <text x="380" y="208">rosną, ale okrągłe,</text><text x="380" y="222">czyta się jako nierówna głębia</text>
+          <text x="630" y="208">rosną, ścinane i pochylane —</text><text x="630" y="222">oko dopowiada obrót</text>
+        </g>
+      </svg>
+      <div class="diagram-caption">Efekt, za który płaci się dziś więcej niż za nowy obiektyw, jest sumą dwóch rzeczy, których przez sto lat próbowano się pozbyć.</div>
+    </div>
+
+    <p>Warto zauważyć, że <span class="term-cyan">żadna z tych dwóch wad sama nie daje wiru</span>. Samo obcięcie daje kocie oko o stałym rozmiarze — czytelne jako ciągnięcie ku środkowi, ale nie jako wir. Sama krzywizna pola daje krążki rosnące ku brzegom, ale okrągłe — czytelne jako nierówna głębia. Dopiero razem tworzą wrażenie ruchu obrotowego.</p>
+
+    <p>Dlatego wir jest właściwością konstrukcji sprzed epoki anastygmatów albo konstrukcji świadomie do niej wracających. Petzval z 1840 roku miał obie wady w komplecie, bo nie umiano ich wtedy usunąć. Helios 44, radziecka kopia niemieckiego Biotara, ma je w stopniu umiarkowanym i dlatego stał się w ostatniej dekadzie najczęściej kupowanym obiektywem vintage na świecie.</p>
+
+    <p>Konsekwencja praktyczna dla CG jest taka, że <strong>wiru nie da się zrobić jednym filtrem</strong>. Skręcenie obrazu w postprodukcji daje coś zupełnie innego, bo przesuwa też elementy ostre. Poprawne odtworzenie wymaga zmiany kształtu jądra splotu w funkcji położenia w kadrze — soczewkowatego, obracanego promieniście i rosnącego ku brzegom.</p>
+  </div>
 
   <div class="site-nav">
     <a href="../index.html">← Spis treści</a>
