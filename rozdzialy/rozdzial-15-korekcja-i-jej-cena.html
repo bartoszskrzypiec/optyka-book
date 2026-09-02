@@ -43,7 +43,276 @@ window.SKY3D_MESSAGES = {
   <h1>Korekcja i jej cena</h1>
   <p class="subtitle">Każda wada z tej części ma lekarstwo, a każde lekarstwo to dodatkowa soczewka. Dodatkowa soczewka to dwie nowe powierzchnie odbijające — i tu koło się zamyka z Rozdziałem 3.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li><strong>Konstruktor nie usuwa wad — przesuwa je.</strong> Każda z siedmiu wad z tej części ma lekarstwo, ale każde lekarstwo pogarsza coś innego. Projektowanie obiektywu jest negocjacją, nie porządkowaniem.</li>
+      <li>Narzędzia są cztery: <span class="term-amber">więcej soczewek</span>, <span class="term-amber">lepsze szkło</span>, <span class="term-amber">asfera</span> i <span class="term-amber">symetria</span> wokół przysłony. Każde ma cenę i każda cena jest widoczna w obrazie.</li>
+      <li>Cena najczęściej płacona to <strong>powierzchnie</strong>. Dodatkowa soczewka to dwie nowe granice szkła i powietrza — czyli dokładnie to, od czego zaczął się <a href="rozdzial-03-fresnel-kazda-powierzchnia-swieci.html">Rozdział 3</a>. Tu koło się zamyka.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Zasada · dlaczego nie da się po prostu poprawić</div>
+    <h2>Wady nie znikają, tylko się przesuwają</h2>
+
+    <p>Po sześciu rozdziałach o wadach nasuwa się pytanie, dlaczego producenci ich po prostu nie usuną. Odpowiedź nie brzmi „bo to drogie” ani „bo jeszcze nie umieją”. Brzmi: <strong>bo wielkości, którymi się to robi, są te same dla wszystkich wad naraz</strong>.</p>
+
+    <p>Konstruktor ma do dyspozycji zaskakująco krótką listę: krzywizny powierzchni, grubości soczewek, odległości między nimi, rodzaje szkła i położenie przysłony. To wszystko. Każda z siedmiu wad zależy od <em>całej</em> tej listy, więc ruch wykonany dla jednej natychmiast przestawia pozostałe sześć.</p>
+
+    <p>Najprostszy przykład znasz już z <a href="../dodatki/dodatek-a-snell-i-abbe.html">Dodatku A</a>. Achromat kasuje rozjazd barw, ale wymaga soczewek <span class="term-violet">mocniejszych od zestawu</span> — czterdziestotrzymilimetrowej i minus siedemdziesięciosześciomilimetrowej po to, żeby dostać sto milimetrów. Mocniejsze soczewki to mocniej zakrzywione powierzchnie, a mocno zakrzywione powierzchnie wnoszą aberrację sferyczną i komę. Barwy zeszły się kosztem geometrii.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Bilans korekcji</span><span>jedna dźwignia, siedem wskaźników</span></div>
+      <svg viewBox="0 0 760 270" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Dwa układy tej samej mocy: prosty ma niską aberrację sferyczną i wysoką chromatyczną, achromat odwrotnie. Suma pozostaje podobna, zmienia się jej rozkład.">
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">
+          <text x="120" y="26" text-anchor="middle">POJEDYNCZA SOCZEWKA</text>
+          <text x="470" y="26" text-anchor="middle">ACHROMAT O TEJ SAMEJ MOCY</text>
+        </g>
+
+        <g font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="end">
+          <text x="60" y="72">chromatyczna</text>
+          <text x="60" y="112">sferyczna</text>
+          <text x="60" y="152">koma</text>
+          <text x="60" y="192">powierzchnie</text>
+        </g>
+
+        <g>
+          <rect x="70" y="60" width="150" height="16" fill="#d060b0" fill-opacity="0.6"/>
+          <rect x="70" y="100" width="46" height="16" fill="#9c82d8" fill-opacity="0.6"/>
+          <rect x="70" y="140" width="38" height="16" fill="#9c82d8" fill-opacity="0.6"/>
+          <rect x="70" y="180" width="30" height="16" fill="#e8a33d" fill-opacity="0.6"/>
+          <text x="228" y="73" font-family="IBM Plex Mono" font-size="9.5" fill="#d060b0">bardzo duża</text>
+          <text x="124" y="113" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">średnia</text>
+          <text x="116" y="153" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">mała</text>
+          <text x="108" y="193" font-family="IBM Plex Mono" font-size="9.5" fill="#e8a33d">2</text>
+        </g>
+
+        <line x1="330" y1="40" x2="330" y2="240" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 5"/>
+
+        <g>
+          <rect x="360" y="60" width="16" height="16" fill="#d060b0" fill-opacity="0.6"/>
+          <rect x="360" y="100" width="120" height="16" fill="#9c82d8" fill-opacity="0.6"/>
+          <rect x="360" y="140" width="96" height="16" fill="#9c82d8" fill-opacity="0.6"/>
+          <rect x="360" y="180" width="60" height="16" fill="#e8a33d" fill-opacity="0.6"/>
+          <text x="384" y="73" font-family="IBM Plex Mono" font-size="9.5" fill="#7fc47f">prawie zero</text>
+          <text x="488" y="113" font-family="IBM Plex Mono" font-size="9.5" fill="#9c82d8">wyraźnie większa</text>
+          <text x="464" y="153" font-family="IBM Plex Mono" font-size="9.5" fill="#9c82d8">większa</text>
+          <text x="428" y="193" font-family="IBM Plex Mono" font-size="9.5" fill="#e8a33d">4 — dwa razy więcej</text>
+        </g>
+
+        <text x="24" y="232" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">Chromatyczna spadła prawie do zera. Zapłaciły za to sferyczna, koma i liczba powierzchni.</text>
+        <text x="24" y="252" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">Kolejny krok korekcji będzie wyglądał tak samo — tylko z innym słupkiem po lewej.</text>
+      </svg>
+      <div class="diagram-caption">Nie ma ruchu, który obniża wszystkie słupki naraz. Jest wybór, który z nich ma być niski.</div>
+    </div>
+
+    <p>Ten obrazek powtarza się na każdym poziomie. Skorygujesz sferyczną — urośnie koma. Wyprostujesz pole — pojawi się astygmatyzm. Zbijesz dystorsję symetrią — stracisz swobodę w rozmieszczeniu grup. <span class="term-cyan">Optyka jest dziedziną o stałej sumie</span>, w której projektowanie polega na decydowaniu, gdzie tę sumę ulokować.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Narzędzia · cztery dźwignie i ich rachunki</div>
+    <h2>Czym się to robi i ile kosztuje</h2>
+
+    <p>Dźwigni jest cztery i każda ma inny profil ceny. Warto je znać razem, bo to one tłumaczą, dlaczego dwa obiektywy o tej samej ogniskowej i jasności potrafią wyglądać zupełnie inaczej — i dlaczego kosztują dziesięciokrotnie różnie.</p>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead>
+          <tr><th>Dźwignia</th><th>Co poprawia</th><th>Czym się płaci</th><th>Widać w obrazie jako</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Więcej soczewek</td><td>wszystko po trochu</td><td>powierzchnie, masa, cena</td><td>flara, niższy kontrast</td></tr>
+          <tr><td>Szkło ED / fluoryt</td><td>chromatyczną</td><td>koszt, kruchość, ruch cieplny</td><td>nic — i o to chodzi</td></tr>
+          <tr><td>Asfera</td><td>sferyczną, dystorsję</td><td>koszt szlifu</td><td>cebulki w bokeh</td></tr>
+          <tr><td>Symetria wokół przysłony</td><td>dystorsję, komę, TCA</td><td>zakaz retrofokusa</td><td>nic — ale ogranicza konstrukcję</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Kolumna ostatnia jest tą, która dotyczy artysty najbardziej: dwie z czterech dźwigni zostawiają w obrazie ślad, po którym da się je rozpoznać.</p>
+
+    <p><strong>Symetria</strong> jest wśród nich wyjątkiem, bo nie kosztuje ani grosza, ani grama — i dlatego konstruktorzy sięgają po nią pierwszą. Układ symetryczny względem przysłony kasuje naraz dystorsję, komę i chromatyczną poprzeczną, o czym była mowa w <a href="rozdzial-13-dystorsja.html">Rozdziale 13</a>. Kosztuje za to <em>swobodę</em>: nie da się jej pogodzić z retrofokusem, który jest niezbędny wszędzie tam, gdzie za obiektywem musi zostać miejsce na lustro albo migawkę. Stąd prosta reguła: <span class="term-cyan">im bardziej konstrukcja odchodzi od symetrii, tym więcej pozostałych dźwigni musi użyć</span>.</p>
+
+    <p><strong>Szkło specjalne</strong> jest z kolei dźwignią najczystszą i najdroższą naraz. Nie zostawia w obrazie żadnego śladu poza brakiem wady — i właśnie dlatego trudno je docenić, patrząc na zdjęcia. Cena bywa jednak dotkliwa poza optyką: fluoryt jest miękki, wrażliwy na wilgoć i ma rozszerzalność cieplną kilkukrotnie większą od szkła, więc obiektyw z nim trzeba przeliczyć na cały zakres temperatur planu.</p>
+
+    <p><strong>Asfera</strong> jest dźwignią najskuteczniejszą: jedna powierzchnia o odpowiednio dobranym kształcie potrafi zastąpić dwie albo trzy soczewki sferyczne, a więc odjąć od układu cztery czy sześć powierzchni naraz. Zysk jest podwójny — mniej wad i mniej granic odbijających. Cena leży poza optyką, w wytwarzaniu, i została opisana w bloku „Zaawansowane" w <a href="rozdzial-11-aberracja-sferyczna.html">Rozdziale 11</a>. W obrazie zostawia jeden ślad: koncentryczne prążki w nieostrych światłach, czyli cebulki z <a href="../dodatki/dodatek-af-katalog-bokeh.html">Dodatku AF</a>.</p>
+
+    <p>Warto zauważyć, że żadna z tych czterech dźwigni nie działa na <em>wszystkie</em> wady. Dlatego realna konstrukcja używa wszystkich czterech naraz, w proporcjach zależnych od tego, co ma być dobre — i dlatego porównywanie obiektywów jedną liczbą jest bez sensu. Miarą, która próbuje ująć to uczciwie, jest MTF, opisany w <a href="../dodatki/dodatek-h-mtf.html">Dodatku H</a>; i on jednak mierzy tylko jedną z siedmiu rzeczy, o które tu chodzi.</p>
+
+    <p class="deeper-inline">Ile dokładnie wynoszą rozjazdy, które te dźwignie mają zbić — <a href="../dodatki/dodatek-ag-chromatyczna-w-liczbach.html">Dodatek AG</a>. Mechanika samej korekcji sferycznej — <a href="../dodatki/dodatek-f-aberracje-seidela.html">Dodatek F</a>.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Rachunek · koło zamyka się na Rozdziale 3</div>
+    <h2>Każde lekarstwo to dwie nowe powierzchnie</h2>
+
+    <p>Najczęściej używana dźwignia jest zarazem najprostsza: dołożyć soczewkę. Rozłożenie tej samej mocy na więcej powierzchni zmniejsza kąty na każdej z nich, a mniejsze kąty to mniej wszystkich wad naraz. Działa i dlatego konstrukcje puchną.</p>
+
+    <p>Rachunek za to wystawia <a href="rozdzial-03-fresnel-kazda-powierzchnia-swieci.html">Rozdział 3</a>. Każda soczewka to <strong>dwie nowe granice szkła i powietrza</strong>, a każda taka granica odbija — nawet z najlepszą powłoką. Konsekwencje są trzy i wszystkie rosną szybciej niż liczba soczewek.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Cena rozbudowy</span><span>trzy skutki, trzy różne tempa</span></div>
+      <svg viewBox="0 0 760 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Wykres: wraz z liczbą soczewek przepuszczalność maleje liniowo, masa rośnie liniowo, a liczba możliwych ghostów rośnie kwadratowo.">
+        <line x1="70" y1="230" x2="720" y2="230" stroke="#8b909b" stroke-width="1.2"/>
+        <line x1="70" y1="40" x2="70" y2="230" stroke="#8b909b" stroke-width="1.2"/>
+        <g font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">
+          <text x="70" y="250">4</text><text x="200" y="250">7</text><text x="330" y="250">10</text>
+          <text x="460" y="250">13</text><text x="590" y="250">16</text><text x="720" y="250">19</text>
+          <text x="395" y="270">liczba soczewek</text>
+        </g>
+
+        <path d="M 70 62 L 200 74 L 330 86 L 460 98 L 590 110 L 720 122" fill="none" stroke="#4fc3c0" stroke-width="2.2"/>
+        <text x="600" y="104" font-family="IBM Plex Mono" font-size="10" fill="#4fc3c0">przepuszczalność · liniowo w dół</text>
+
+        <path d="M 70 222 L 200 216 L 330 207 L 460 195 L 590 180 L 720 162" fill="none" stroke="#e8a33d" stroke-width="2.2"/>
+        <text x="470" y="212" font-family="IBM Plex Mono" font-size="10" fill="#e8a33d">masa · liniowo w górę</text>
+
+        <path d="M 70 226 L 200 218 L 330 202 L 460 176 L 590 138 L 720 86" fill="none" stroke="#9c82d8" stroke-width="2.6"/>
+        <text x="540" y="126" font-family="IBM Plex Mono" font-size="10" fill="#9c82d8">możliwe ghosty · kwadratowo</text>
+
+        <g font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">
+          <text x="76" y="34">Skala pionowa umowna — chodzi o tempo, nie o wartości.</text>
+        </g>
+        <circle cx="330" cy="202" r="4" fill="#9c82d8"/>
+        <text x="300" y="188" font-family="IBM Plex Mono" font-size="9.5" fill="#9c82d8" text-anchor="end">190 par</text>
+        <circle cx="720" cy="86" r="4" fill="#9c82d8"/>
+        <text x="700" y="76" font-family="IBM Plex Mono" font-size="9.5" fill="#9c82d8" text-anchor="end">703 pary</text>
+      </svg>
+      <div class="diagram-caption">Dwie pierwsze krzywe rosną liniowo i da się je znieść. Trzecia rośnie kwadratowo — i to ona wyznacza granicę rozbudowy.</div>
+    </div>
+
+    <p>Liczba możliwych ghostów jest liczbą par powierzchni, więc rośnie z <strong>kwadratem</strong> ich liczby. Dziesięć soczewek to dwadzieścia powierzchni i sto dziewięćdziesiąt par; dziewiętnaście soczewek to trzydzieści osiem powierzchni i siedemset trzy pary. Przejście od zoomu przeciętnego do rozbudowanego prawie <em>czterokrotnie</em> zwiększa liczbę dróg, którymi światło może zabłądzić.</p>
+
+    <p>Konstruktorzy mają na to jedną eleganckę odpowiedź: <strong>sklejanie</strong>. Dwie soczewki połączone kitem o współczynniku pośrednim tracą granicę ze szkła na powietrze, a zyskują granicę szkła ze szkłem — na której skok współczynnika jest kilkadziesiąt razy mniejszy. Dla pary kron i flint sklejenie zamienia dwie powierzchnie po kilka procent na jedną, która odbija <span class="term-cyan">koło sześciu setnych procenta</span>.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Sklejka kontra rozdzielone</span><span>ten sam achromat, dwie granice mniej</span></div>
+      <svg viewBox="0 0 760 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Po lewej dwie soczewki rozdzielone szczeliną powietrza: cztery granice ze szkłem. Po prawej te same soczewki sklejone: dwie granice zewnętrzne i jedna wewnętrzna o znikomym odbiciu.">
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">
+          <text x="180" y="26" text-anchor="middle">ROZDZIELONE · 4 granice</text>
+          <text x="570" y="26" text-anchor="middle">SKLEJONE · 2 granice + kit</text>
+        </g>
+
+        <path d="M 120 60 Q 150 130 120 200 Q 90 130 120 60 Z" fill="#4fc3c0" fill-opacity="0.16" stroke="#4fc3c0" stroke-width="1.5"/>
+        <path d="M 216 60 Q 200 130 216 200 Q 246 130 216 60 Z" fill="#9c82d8" fill-opacity="0.14" stroke="#9c82d8" stroke-width="1.5"/>
+        <g stroke="#d8695f" stroke-width="2.6">
+          <line x1="92" y1="120" x2="92" y2="140"/><line x1="148" y1="120" x2="148" y2="140"/>
+          <line x1="199" y1="120" x2="199" y2="140"/><line x1="244" y1="120" x2="244" y2="140"/>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="9" fill="#d8695f" text-anchor="middle">
+          <text x="92" y="114">1,3%</text><text x="148" y="114">1,3%</text>
+          <text x="199" y="114">1,3%</text><text x="244" y="114">1,3%</text>
+        </g>
+        <text x="180" y="222" font-family="IBM Plex Mono" font-size="11" fill="#d8695f" text-anchor="middle">razem 5,2% zawrócone</text>
+
+        <line x1="380" y1="16" x2="380" y2="230" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 5"/>
+
+        <path d="M 510 60 Q 540 130 510 200 Q 480 130 510 60 Z" fill="#4fc3c0" fill-opacity="0.16" stroke="#4fc3c0" stroke-width="1.5"/>
+        <path d="M 510 60 Q 494 130 510 200 Q 570 130 510 60 Z" fill="#9c82d8" fill-opacity="0.14" stroke="#9c82d8" stroke-width="1.5"/>
+        <path d="M 510 60 Q 540 130 510 200" fill="none" stroke="#7fc47f" stroke-width="2"/>
+        <g stroke="#d8695f" stroke-width="2.6">
+          <line x1="482" y1="120" x2="482" y2="140"/><line x1="568" y1="120" x2="568" y2="140"/>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="9" fill="#d8695f" text-anchor="middle">
+          <text x="482" y="114">1,3%</text><text x="568" y="114">1,3%</text>
+        </g>
+        <text x="527" y="176" font-family="IBM Plex Mono" font-size="9" fill="#7fc47f">0,06%</text>
+        <text x="570" y="222" font-family="IBM Plex Mono" font-size="11" fill="#7fc47f" text-anchor="middle">razem 2,7% zawrócone</text>
+      </svg>
+      <div class="diagram-caption">Granica wewnętrzna nie znika — staje się czterdzieści razy słabsza, bo po obu jej stronach współczynniki są niemal równe.</div>
+    </div>
+
+    <div class="worked">
+      <div class="wlabel">Ile daje sklejenie achromatu</div>
+      <p class="step"><span class="k">rozdzielone</span> <span class="v">dwie granice ze szkłem, z powłoką po 1,3% → </span><span class="result">2,6%</span></p>
+      <p class="step"><span class="k">sklejone</span> <span class="v">BK7 z kitem: ((1,517−1,55)/3,067)² = 0,012%</span></p>
+      <p class="step"><span class="k"> </span> <span class="v">kit z F2: ((1,55−1,620)/3,170)² = 0,049%</span></p>
+      <p class="step"><span class="k">razem</span> <span class="v">0,012 + 0,049 = </span><span class="result">0,06%</span></p>
+      <p class="check">Czterdziestokrotnie mniej odbicia, i to bez żadnej powłoki. Dlatego achromaty skleja się, kiedy tylko konstrukcja na to pozwala. Cena jest materiałowa, nie optyczna: oba szkła muszą mieć zbliżoną rozszerzalność cieplną, kit z czasem żółknie, a przy dużych średnicach sklejenie przestaje wytrzymywać naprężenia — i stąd biorą się <strong>rozdzielone</strong> odpowiedniki tych samych układów w obiektywach dużych i jasnych.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">W CG · po co ci wiedza o cenie</div>
+    <h2>Co z tego widzi artysta</h2>
+
+    <p>Wszystko powyżej jest opowieścią o konstruowaniu, a nie o obrazie. Ma jednak trzy przełożenia, które wracają przy każdym ujęciu z materiałem.</p>
+
+    <p>Pierwsze: <strong>poziom korekcji jest datą</strong>. Obiektyw, który przy pełnym otworze ma wyraźną poświatę, magentowo-zieloną obwódkę i miękkie rogi, nie jest zepsuty — jest po prostu sprzed epoki asfer i szkieł ED. Rozpoznanie tego zestawu objawów mówi ci o materiale więcej niż metryczka, bo metryczka bywa niekompletna, a obraz nie kłamie.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Dwa zestawy objawów</span><span>ta sama ogniskowa, pół wieku różnicy</span></div>
+      <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Porównanie objawów: konstrukcja bez asfer daje poświatę, obwódkę i miękkie rogi; konstrukcja z asferą daje czysty obraz, ale cebulki w bokeh i płaskie tło.">
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">
+          <text x="190" y="26" text-anchor="middle">BEZ ASFER I SZKIEŁ ED</text>
+          <text x="570" y="26" text-anchor="middle">Z ASFERĄ I ED</text>
+        </g>
+
+        <g font-family="IBM Plex Mono" font-size="10">
+          <text x="60" y="66" fill="#8b909b">poświata przy pełnym otworze</text>
+          <text x="60" y="104" fill="#8b909b">obwódka magenta / zieleń</text>
+          <text x="60" y="142" fill="#8b909b">miękkie rogi</text>
+          <text x="60" y="180" fill="#8b909b">cebulki w bokeh</text>
+          <text x="60" y="218" fill="#8b909b">bokeh o wyraźnym znaku</text>
+        </g>
+        <line x1="330" y1="40" x2="330" y2="232" stroke="#2a2f38" stroke-width="1"/>
+        <line x1="520" y1="40" x2="520" y2="232" stroke="#2a2f38" stroke-width="1"/>
+
+        <g font-family="IBM Plex Mono" font-size="13" text-anchor="middle">
+          <text x="425" y="70" fill="#d060b0">tak</text>
+          <text x="425" y="108" fill="#d060b0">tak</text>
+          <text x="425" y="146" fill="#d060b0">tak</text>
+          <text x="425" y="184" fill="#5a6068">nie</text>
+          <text x="425" y="222" fill="#d060b0">tak</text>
+
+          <text x="640" y="70" fill="#5a6068">nie</text>
+          <text x="640" y="108" fill="#5a6068">nie</text>
+          <text x="640" y="146" fill="#5a6068">nie</text>
+          <text x="640" y="184" fill="#7fc47f">tak</text>
+          <text x="640" y="222" fill="#5a6068">nie</text>
+        </g>
+
+        <text x="24" y="244" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">Żadna kolumna nie jest pusta. Zmienia się nie liczba śladów, tylko to, które z nich zostają.</text>
+      </svg>
+      <div class="diagram-caption">Cebulki są jedynym objawem, który pojawia się wraz z <em>lepszą</em> korekcją — bo bierze się z narzędzia, a nie z wady.</div>
+    </div>
+
+    <p>Warto przy tym zauważyć, że prawa kolumna nie jest pusta. Nowoczesna konstrukcja też zostawia podpis, tylko innego rodzaju: <span class="term-cyan">cebulki w bokeh są śladem asfery</span>, czyli śladem narzędzia korekcji, a nie wady. To odwrócenie jest charakterystyczne dla ostatnich dekad — coraz częściej rozpoznaje się obiektyw nie po tym, czego nie poprawił, ale po tym, czym poprawiał.</p>
+
+    <p>Drugie: <strong>korekcja i charakter to ta sama oś</strong>. Wszystko, co w tym rozdziale nazywa się ceną, jest zarazem tym, co wypożyczalnie sprzedają dziś jako „look”. Nie ma obiektywu jednocześnie czystego i charakterystycznego — te dwie rzeczy są dwoma końcami tej samej suwaki, i dlatego wybór szkła na plan jest wyborem, ile wady się kupuje.</p>
+
+    <p>Trzecie dotyczy renderu i jest najbardziej praktyczne. Wirtualna kamera jest układem <span class="term-violet">skorygowanym doskonale i za darmo</span> — bez powierzchni, bez masy, bez ghostów. Nie ma w niej żadnej z siedmiu wad, więc nie ma też niczego, co czytamy jako obecność szkła. To jest dokładnie ten powód, dla którego czysty render wygląda na render, i dlatego cała <a href="rozdzial-33-kamera-w-rendererze.html">Część VII</a> polega na świadomym dokładaniu z powrotem tego, za co konstruktorzy przez sto lat płacili, żeby usunąć.</p>
+
+    <button class="advanced-btn" data-modal-target="adv-granica">Zaawansowane: gdzie leży granica rozbudowy</button>
+  </div>
+
+  <div class="panel practice">
+    <div class="panel-label">Z praktyki</div>
+    <p><strong>Licz soczewki po flarze, nie po metryczce.</strong> Sznur ghostów widoczny przy silnym świetle w kadrze mówi o liczbie powierzchni więcej niż dane producenta — bo liczy tylko te powierzchnie, które faktycznie odbijają w stronę matrycy. Długi, gęsty sznur to konstrukcja rozbudowana, czyli najprawdopodobniej zoom.</p>
+    <p><strong>Zestaw objawów zdradza epokę szkła.</strong> Poświata przy pełnym otworze plus magentowo-zielona obwódka plus miękkie rogi to konstrukcja bez asfer i bez szkieł ED. Czysty obraz przy pełnym otworze plus cebulki w bokeh to odwrotnie — nowoczesna, z asferą. Dwa zestawy, dwie epoki, i oba widać na jednym kadrze z jasnym tłem.</p>
+    <p><strong>Nie dokładaj wad pojedynczo.</strong> Realny obiektyw ma je w powiązanym zestawie, bo wszystkie wynikają z jednej konstrukcji. Element CG z dołożoną samą aberracją chromatyczną, ale idealnie ostrymi rogami i płaskim bokeh, wygląda gorzej niż element bez żadnej — bo zestaw jest niespójny i oko to wyłapuje, nie umiejąc nazwać.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>achromat</dt>
+      <dd>Układ sprowadzający do wspólnego ogniska dwie barwy. Standard od dwustu lat, zostawia widmo wtórne.</dd>
+      <dt>apochromat (APO)</dt>
+      <dd>Układ sprowadzający trzy barwy. Wymaga trzeciego szkła o nietypowej charakterystyce — fluorytu albo ED.</dd>
+      <dt>szkło ED / UD / LD</dt>
+      <dd>Szkło o niskiej dyspersji, czyli wysokiej liczbie Abbego przy przyzwoitym współczynniku załamania. Oznaczenia są handlowe, nie normatywne.</dd>
+      <dt>sklejka (dublet klejony)</dt>
+      <dd>Dwie soczewki połączone kitem. Zamienia dwie granice ze szkła na powietrze na jedną granicę szkła ze szkłem, o odbiciu kilkadziesiąt razy mniejszym.</dd>
+      <dt>widmo wtórne</dt>
+      <dd>Resztka rozjazdu barw w achromacie. To ono odpowiada za obwódki z <a href="rozdzial-14-aberracja-chromatyczna.html">Rozdziału 14</a>.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Część III skończona: znamy wszystkie wady i cenę ich usuwania. Czas zobaczyć, jak z tych kompromisów powstają konkretne <a href="rozdzial-16-anatomia-obiektywu.html">konstrukcje</a> — bo układy optyczne nie są dowolne. Jest ich kilkanaście rodzin, każda z własnym zestawem ustępstw, i każda zostawia w obrazie podpis, który da się rozpoznać.</p>
+  </div>
 
   <div class="deeper">
     <div class="deeper-label">Idź głębiej</div>
@@ -55,6 +324,27 @@ window.SKY3D_MESSAGES = {
       <a class="nav-prev" href="rozdzial-14-aberracja-chromatyczna.html">← Poprzedni</a>
       <a class="nav-toc" href="../index.html">Spis treści</a>
       <a class="nav-next" href="rozdzial-16-anatomia-obiektywu.html">Następny →</a>
+  </div>
+
+  <template id="adv-granica">
+    <h3>Gdzie leży granica rozbudowy</h3>
+
+    <p>Skoro dokładanie soczewek poprawia korekcję, nasuwa się pytanie, dlaczego nikt nie buduje obiektywu z pięćdziesięciu. Granic jest kilka i żadna nie jest granicą wiedzy.</p>
+
+    <p><strong>Ghosty rosną kwadratowo.</strong> To ograniczenie najtwardsze. Każda para powierzchni jest potencjalną drogą zbłąkanego światła, a par jest tyle, na ile sposobów da się wybrać dwie z n. Przy trzydziestu ośmiu powierzchniach mamy siedemset trzy pary; większość nie trafia na matrycę, ale liczba tych, które trafiają, rośnie razem z całością. Powłoki obniżają jasność każdego ghosta, nie ich liczbę.</p>
+
+    <p><strong>Tolerancje się sumują.</strong> Każda soczewka ma dopuszczalny błąd krzywizny, grubości i wyosiowania. Błędy są niezależne, więc łączny rozrzut rośnie z pierwiastkiem liczby elementów — ale <em>koszt utrzymania</em> tolerancji rośnie liniowo. W pewnym momencie taniej jest zaprojektować układ o mniejszej liczbie soczewek i ostrzejszych wymaganiach niż odwrotnie.</p>
+
+    <p><strong>Masa rośnie szybciej, niż wynika z liczby.</strong> Dołożona soczewka bywa większa od poprzedniej, bo musi objąć wiązkę już rozszerzoną. Dlatego zoomy o wielu elementach są nieproporcjonalnie ciężkie, a ciężar wraca jako problem ostrzenia: napęd musi poruszyć więcej masy, więc jest wolniejszy albo głośniejszy.</p>
+
+    <p><strong>Absorpcja w szkle.</strong> Powłoki radzą sobie z odbiciem, ale nie z tym, że szkło pochłania — kilka dziesiątych procenta na centymetr grubości, więcej w niebieskim. Konstrukcja o kilkudziesięciu centymetrach szkła na drodze zaczyna mieć zauważalnie cieplejszy balans, i to jest jeden z powodów, dla których długie zoomy bywają lekko żółte względem stałek z tej samej rodziny.</p>
+  </template>
+
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-panel">
+      <button class="modal-close" data-modal-close aria-label="Zamknij">×</button>
+      <div id="modal-body"></div>
+    </div>
   </div>
 
 </div>
