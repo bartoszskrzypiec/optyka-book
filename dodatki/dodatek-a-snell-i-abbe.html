@@ -41,7 +41,151 @@ window.SKY3D_MESSAGES = {
   <h1>Snell, liczba Abbego i szkła w liczbach</h1>
   <p class="subtitle">Prawo załamania z wyprowadzeniem, współczynniki dla typowych szkieł optycznych i to, co naprawdę mierzy liczba Abbego.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">Co tu jest</div>
+    <ul>
+      <li><strong>Definicja liczby Abbego</strong> z trzema liniami widmowymi, rachunkiem na BK7 i diagramem szkieł.</li>
+      <li><strong>Tablica dziewięciu materiałów</strong> rozpinających cały użyteczny zakres — od fluorytu po ciężki flint i dwa tworzywa.</li>
+      <li><strong>Rachunek achromatu</strong>: ile mocy przypada na kron, ile na flint i dlaczego obie soczewki wychodzą mocniejsze od zestawu.</li>
+      <li><strong>Kąt graniczny</strong> i to, dlaczego krawędzie soczewek się czerni.</li>
+    </ul>
+  </div>
+
+<div class="section">
+    <div class="section-eyebrow">Miara · jak się o tym rozmawia</div>
+    <h2>Liczba Abbego, czyli ile szkło rozszczepia</h2>
+
+    <p>Skoro dyspersja jest właściwością równie ważną co samo n, potrzebuje własnej liczby. Nazywa się liczbą Abbego, oznacza V i jest zbudowana wyjątkowo przewrotnie:</p>
+
+    <div class="formula">
+      V = (n<sub>d</sub> − 1) / (n<sub>F</sub> − n<sub>C</sub>)
+      <span class="sub">n<sub>d</sub> — współczynnik dla żółtej linii helu (587,6 nm), n<sub>F</sub> — dla niebieskiej linii wodoru (486,1 nm), n<sub>C</sub> — dla czerwonej linii wodoru (656,3 nm). Trzy konkretne linie widmowe, wybrane historycznie, bo dawały się precyzyjnie odtworzyć w laboratorium.</span>
+    </div>
+
+    <p>Przewrotność polega na tym, że <strong>V jest tym większe, im mniej szkło rozszczepia</strong>. Mianownik to rozjazd między błękitem a czerwienią — im mniejszy, tym większy iloraz. Kron o V = 64 rozszczepia słabo; flint o V = 36 rozszczepia mocno. Intuicja podpowiada odwrotnie i trzeba się na to raz uodpornić.</p>
+
+    <div class="worked">
+      <div class="wlabel">Liczba Abbego dla szkła BK7</div>
+      <p class="step"><span class="k">n przy 587,6 nm</span> <span class="v">= 1,5168</span></p>
+      <p class="step"><span class="k">n przy 486,1 nm</span> <span class="v">= 1,5224</span></p>
+      <p class="step"><span class="k">n przy 656,3 nm</span> <span class="v">= 1,5143</span></p>
+      <p class="step"><span class="k">rozjazd</span> <span class="v">= 1,5224 − 1,5143 = 0,0081</span></p>
+      <p class="step"><span class="k">V</span> <span class="v">= 0,5168 / 0,0081 = </span><span class="result">63,8</span></p>
+      <p class="check">Rozjazd między skrajami widma wynosi osiem tysięcznych — liczba znikoma. A jednak wystarcza, żeby wymusić na konstruktorach dokładanie soczewek, których jedynym zadaniem jest ją skasować. Optyka jest dziedziną, w której czwarte miejsce po przecinku decyduje o wszystkim.</p>
+    </div>
+
+    <p>Nazewnictwo jest historyczne i mylące. „Kron” i „flint” nie oznaczają dziś składu chemicznego, tylko położenie na wykresie: krony mają wysokie V i raczej niskie n, flinty niskie V i wysokie n. Umowna granica biegnie w okolicach V = 50. Szkła flintowe zawdzięczają swoje właściwości ołowiowi, a od czasu wycofywania go ze względów środowiskowych producenci odtwarzają te same parametry innymi domieszkami — stąd oznaczenia w rodzaju N-SF6, gdzie N znaczy po prostu „bezołowiowy odpowiednik”.</p>
+
+    <p>Te dwie liczby — n i V — wystarczają, żeby umieścić szkło na mapie, z której konstruktorzy korzystają od stu lat. Nazywa się diagramem Abbego i jest dosłownie katalogiem tego, co da się kupić. Oś pozioma biegnie odwrotnie, bo taka jest konwencja: im dalej w prawo, tym mniejsza dyspersja.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Diagram Abbego</span><span>co naprawdę da się kupić</span></div>
+      <svg viewBox="0 0 760 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Wykres współczynnika załamania w funkcji liczby Abbego, z zaznaczonymi typowymi szkłami optycznymi: flinty w lewym górnym rogu, krony w prawym dolnym, fluoryt skrajnie po prawej.">
+        <g stroke="#2a2f38" stroke-width="1"><line x1="80" y1="280" x2="710" y2="280"/><line x1="80" y1="30" x2="80" y2="280"/></g>
+        <g stroke="#2a2f38" stroke-width="0.6" opacity="0.5">
+          <line x1="80" y1="220" x2="710" y2="220"/><line x1="80" y1="160" x2="710" y2="160"/><line x1="80" y1="100" x2="710" y2="100"/>
+          <line x1="238" y1="30" x2="238" y2="280"/><line x1="396" y1="30" x2="396" y2="280"/><line x1="554" y1="30" x2="554" y2="280"/>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="10" fill="#8b909b">
+          <text x="42" y="284">1,45</text><text x="42" y="224">1,55</text><text x="42" y="164">1,65</text><text x="42" y="104">1,75</text><text x="42" y="44">1,85</text>
+          <text x="72" y="300">90</text><text x="230" y="300">70</text><text x="388" y="300">50</text><text x="546" y="300">30</text><text x="700" y="300">10</text>
+          <text x="330" y="322">liczba Abbego V  →  mniejsza dyspersja w lewo</text>
+          <text x="20" y="24">n</text>
+        </g>
+
+        <rect x="80" y="30" width="316" height="250" fill="#9c82d8" opacity="0.06"/>
+        <rect x="396" y="30" width="314" height="250" fill="#4fc3c0" opacity="0.05"/>
+        <text x="150" y="52" font-family="IBM Plex Mono" font-size="11" fill="#4fc3c0">KRONY · słabo rozszczepiają</text>
+        <text x="470" y="52" font-family="IBM Plex Mono" font-size="11" fill="#9c82d8">FLINTY · mocno rozszczepiają</text>
+
+        <g font-family="IBM Plex Mono" font-size="10.5">
+          <circle cx="132" cy="272" r="5.5" fill="#4fc3c0"/><text x="144" y="276" fill="#8b909b">fluoryt · 1,434 / V 95</text>
+          <circle cx="285" cy="252" r="5.5" fill="#4fc3c0"/><text x="297" y="256" fill="#8b909b">BK7 · 1,517 / V 64</text>
+          <circle cx="230" cy="214" r="5.5" fill="#4fc3c0"/><text x="242" y="206" fill="#8b909b">szkło ED · 1,593 / V 68</text>
+          <circle cx="507" cy="196" r="5.5" fill="#9c82d8"/><text x="519" y="200" fill="#8b909b">F2 · 1,620 / V 36</text>
+          <circle cx="586" cy="118" r="5.5" fill="#9c82d8"/><text x="440" y="122" fill="#8b909b" text-anchor="end">SF6 · 1,805 / V 25</text>
+        </g>
+        <path d="M 132 272 Q 330 240 586 118" fill="none" stroke="#8b909b" stroke-width="1" stroke-dasharray="4 5" opacity="0.55"/>
+        <text x="330" y="252" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">„linia normalna” — większość szkieł leży blisko niej</text>
+      </svg>
+      <div class="diagram-caption">Konstruktor nie wybiera dowolnych n i V. Wybiera punkt spośród kilkuset istniejących — i za każde odejście od linii normalnej płaci.</div>
+    </div>
+
+    <p>Kluczowa obserwacja: punkty nie wypełniają wykresu równomiernie. Skupiają się wzdłuż przekątnej, <span class="term-violet">wysokie n idzie w parze z niską V</span>. Szkło, które mocno zagina i słabo rozszczepia, byłoby dla konstruktora darem — i właśnie dlatego szkła leżące wyraźnie <em>nad</em> linią normalną są rzadkie, drogie i noszą specjalne oznaczenia. Fluoryt, siedzący skrajnie po prawej, jest w ogóle kryształem, a nie szkłem: hoduje się go, jest miękki, wrażliwy na wilgoć i na wstrząsy termiczne. Płaci się za niego dokładnie tym.</p>
+
+    <div class="subsection">
+      <h3>Kiedy światło nie chce wyjść</h3>
+      <p>Prawo Snella ma jeszcze jedną konsekwencję, którą łatwo przeoczyć, a która wraca w kilku miejscach tej książki. Promień wychodzący ze szkła do powietrza skręca <em>od</em> normalnej, więc jego kąt rośnie. Istnieje więc kąt padania od wewnątrz, przy którym kąt wyjścia osiągnąłby dziewięćdziesiąt stopni — czyli promień biegłby wzdłuż powierzchni. Powyżej niego równanie nie ma rozwiązania i światło nie wychodzi wcale: odbija się w stu procentach z powrotem do szkła.</p>
+      <div class="formula">
+        sin θ<sub>gr</sub> = n₂ / n₁
+        <span class="sub">θ<sub>gr</sub> — kąt graniczny, liczony wewnątrz ośrodka gęstszego. n₁ — ośrodek gęstszy (szkło), n₂ — rzadszy (powietrze). Dla szkła 1,52 i powietrza wychodzi 41,1°.</span>
+      </div>
+      <p>Czterdzieści jeden stopni to niedużo. Dlatego pryzmat potrafi zawrócić wiązkę bez żadnej powłoki lustrzanej — i dlatego lornetki oraz lustrzanki używają pryzmatów zamiast luster, mając przy tym odbicie stuprocentowe zamiast dziewięćdziesięciu paru.</p>
+      <p>Ta sama liczba ma jednak drugą, mniej przyjemną twarz. Światło, które zabłądziło wewnątrz soczewki i trafia na jej powierzchnię pod dużym kątem, <strong>nie ma jak z niej uciec</strong> — odbija się w całości i wędruje dalej wewnątrz szkła, aż trafi na krawędź. Dlatego krawędzie soczewek w dobrych obiektywach są matowane i czernione: bez tego działałyby jak światłowód rozprowadzający flarę po całym układzie.</p>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-eyebrow">Tablica · dziewięć materiałów, które warto znać</div>
+    <h2>Szkła w liczbach</h2>
+
+    <p>Katalogi producentów zawierają po kilkaset pozycji. Poniższa dziewiątka wystarczy jednak, żeby rozumieć każdą rozmowę o szkle — bo rozpina cały użyteczny zakres i pokazuje, gdzie leżą granice.</p>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead>
+          <tr><th>Materiał</th><th class="num">n<sub>d</sub></th><th class="num">V<sub>d</sub></th><th>Rola</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Fluoryt (CaF₂)</td><td class="num">1,434</td><td class="num">95,1</td><td>kryształ hodowany, skrajnie niska dyspersja</td></tr>
+          <tr><td>N-FK51A</td><td class="num">1,487</td><td class="num">84,5</td><td>fluorokron — to jest szkło „ED”</td></tr>
+          <tr><td>Kwarc topiony</td><td class="num">1,458</td><td class="num">67,8</td><td>stabilny termicznie, przezroczysty w UV</td></tr>
+          <tr><td>N-BK7</td><td class="num">1,517</td><td class="num">64,2</td><td>wzorzec i najtańsza opcja</td></tr>
+          <tr><td>N-LAK8</td><td class="num">1,713</td><td class="num">53,8</td><td>kron lantanowy — wysokie n przy przyzwoitym V</td></tr>
+          <tr><td>F2</td><td class="num">1,620</td><td class="num">36,4</td><td>klasyczny flint ołowiowy</td></tr>
+          <tr><td>N-SF6</td><td class="num">1,805</td><td class="num">25,4</td><td>ciężki flint bezołowiowy</td></tr>
+          <tr><td>PMMA (akryl)</td><td class="num">1,492</td><td class="num">57,4</td><td>tworzywo — tanie asfery formowane</td></tr>
+          <tr><td>Polistyren</td><td class="num">1,591</td><td class="num">30,9</td><td>tworzywo — „flint” układów plastikowych</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Wartości katalogowe dla linii d (587,6 nm). Dwie ostatnie pozycje to tworzywa: para PMMA + polistyren pełni w obiektywach telefonów dokładnie tę samą rolę, co para kron + flint w szkle.</p>
+
+    <p>Warto zobaczyć na tej tabeli dwie rzeczy naraz. Pierwsza to potwierdzenie reguły z diagramu: <strong>im wyższe n, tym niższe V</strong> — N-SF6 zagina najmocniej i rozszczepia najmocniej, fluoryt odwrotnie. Wyjątkiem jest N-LAK8, i właśnie dlatego szkła lantanowe są drogie.</p>
+
+    <p>Druga to <span class="term-cyan">para tworzyw na dwóch ostatnich wierszach</span>. PMMA ma V = 57, polistyren V = 31 — czyli rozstaw prawie taki sam jak między N-BK7 a F2. Achromat da się więc zbudować z samych tworzyw, i tak właśnie zbudowane są obiektywy telefonów: sześć albo siedem formowanych elementów, żaden ze szkła. Cena jest w innym miejscu: tworzywa mają kilkakrotnie większą rozszerzalność cieplną i miękną w słońcu, dlatego takiej konstrukcji nikt nie postawi w kamerze kinowej.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Rachunek · jak policzyć achromat</div>
+    <h2>Podział mocy między dwa szkła</h2>
+
+    <p>Rozdział 2 mówi, że achromat kasuje dyspersję, składając soczewkę skupiającą z kronu z rozpraszającą z flintu. Ile dokładnie mocy przypada na każdą z nich, wynika z dwóch warunków, które trzeba spełnić naraz.</p>
+
+    <div class="formula">
+      φ = φ₁ + φ₂  ·  φ₁/<span class="vec" data-tip="Liczba Abbego pierwszego szkła">V₁</span> + φ₂/<span class="vec" data-tip="Liczba Abbego drugiego szkła">V₂</span> = 0
+      <span class="sub">φ — moc optyczna całego zestawu, czyli odwrotność ogniskowej. φ₁, φ₂ — moce obu elementów. Pierwszy warunek mówi, że zestaw ma mieć zadaną ogniskową; drugi, że rozjazd barw wnoszony przez oba elementy ma się znosić.</span>
+    </div>
+
+    <p>Dwa równania, dwie niewiadome — rozwiązuje się je w jednej linii:</p>
+
+    <div class="formula">
+      φ₁ = φ · <span class="vec" data-tip="Liczba Abbego szkła skupiającego">V₁</span> / (<span class="vec" data-tip="Liczba Abbego szkła skupiającego">V₁</span> − <span class="vec" data-tip="Liczba Abbego szkła rozpraszającego">V₂</span>)  ·  φ₂ = −φ · <span class="vec" data-tip="Liczba Abbego szkła rozpraszającego">V₂</span> / (<span class="vec" data-tip="Liczba Abbego szkła skupiającego">V₁</span> − <span class="vec" data-tip="Liczba Abbego szkła rozpraszającego">V₂</span>)
+      <span class="sub">Znak minus przy φ₂ mówi, że drugi element musi być rozpraszający. Im bliżej siebie leżą V₁ i V₂, tym mniejszy mianownik i tym większe obie moce — czyli tym mocniej zakrzywione soczewki.</span>
+    </div>
+
+    <div class="worked">
+      <div class="wlabel">Achromat 100 mm z pary N-BK7 (V = 64,2) i F2 (V = 36,4)</div>
+      <p class="step"><span class="k">różnica V</span> <span class="v">64,2 − 36,4 = </span><span class="result">27,8</span></p>
+      <p class="step"><span class="k">element skupiający</span> <span class="v">φ₁ = φ · 64,2/27,8 = 2,31·φ → f₁ = 100/2,31 = </span><span class="result">+43,3 mm</span></p>
+      <p class="step"><span class="k">element rozpraszający</span> <span class="v">φ₂ = −φ · 36,4/27,8 = −1,31·φ → f₂ = −100/1,31 = </span><span class="result">−76,4 mm</span></p>
+      <p class="step"><span class="k">sprawdzenie</span> <span class="v">1/43,3 − 1/76,4 = 0,02309 − 0,01309 = 0,01000 → </span><span class="result">f = 100 mm</span></p>
+      <p class="check">Zwróć uwagę, że obie soczewki są <strong>znacznie mocniejsze od zestawu</strong>: skupiająca ma 43 mm zamiast 100, rozpraszająca 76 mm ze znakiem minus. Achromat kupuje brak barw ceną mocno zakrzywionych powierzchni — a mocno zakrzywione powierzchnie wnoszą aberrację sferyczną i komę. To jest ta sama transakcja, która wraca w całej książce: <span class="term-cyan">każda korekcja jest zamianą jednej wady na inną</span>.</p>
+    </div>
+
+    <p>Ze wzoru widać też, dlaczego konstruktorzy tak polują na szkła o skrajnych V. Mianownik V₁ − V₂ stoi pod kreską, więc <strong>im większy rozstaw liczb Abbego, tym łagodniejsze mogą być krzywizny</strong>. Zastąpienie kronu fluorytem podnosi różnicę z 27,8 do prawie 59, czyli mniej więcej połowi wymagane moce — i stąd bierze się realna przewaga obiektywów z elementami fluorytowymi albo ED. Nie chodzi o to, że lepiej kasują barwy; chodzi o to, że kasując je, mniej psują wszystko inne.</p>
+
+    <p>Ostatnia uwaga o zakresie: powyższy rachunek kasuje rozjazd między <em>dwiema</em> barwami — linią F i C. Pozostałe barwy nadal nie trafiają dokładnie tam, gdzie trzeba, i ta resztka nazywa się <span class="term-violet">widmem wtórnym</span>. Usunięcie jej wymaga trzeciego szkła i daje układ apochromatyczny, w którym zgadzają się trzy barwy. Stąd oznaczenie APO — i stąd jego cena.</p>
+  </div>
 
   <div class="site-nav">
     <a href="../index.html">← Spis treści</a>

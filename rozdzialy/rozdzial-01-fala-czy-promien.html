@@ -240,15 +240,9 @@ window.SKY3D_MESSAGES = {
       <li><strong>Winietowanie, perspektywa, kadr</strong> — geometria w najczystszej postaci.</li>
     </ul>
 
-    <div class="subsection">
-      <h3>Jedna zasada, z której wynikają obie reguły</h3>
-      <p>Prostoliniowość i prawo Snella wyglądają na dwa niezależne fakty, których trzeba się nauczyć osobno. Nie są. Obie wynikają z jednej zasady, sformułowanej przez Fermata w siedemnastym wieku: <strong>światło biegnie tą drogą, której przebycie zajmuje mu czas stacjonarny</strong> — w typowym przypadku najkrótszy.</p>
-      <p>W jednorodnym ośrodku najszybsza droga między dwoma punktami to linia prosta, więc prostoliniowość wypada z zasady natychmiast. Ciekawiej robi się na granicy dwóch ośrodków. Skoro w szkle światło porusza się wolniej, to droga najszybsza nie jest już najkrótsza — opłaca się nadłożyć w powietrzu, żeby skrócić odcinek w szkle. Kąt, przy którym ten kompromis wypada optymalnie, to dokładnie kąt z prawa Snella.</p>
-      <p>Jest to ta sama arytmetyka, którą wykonuje ratownik biegnący do tonącego: biegnie szybciej, niż płynie, więc nie wybiera linii prostej do celu, tylko taką, w której więcej drogi przypada na piasek, a mniej na wodę. Nikt tego nie liczy świadomie, a mimo to wychodzi z tego prawo Snella.</p>
-      <p>Zasada Fermata jest też pomostem między dwoma modelami z tego rozdziału. W opisie falowym światło <em>próbuje wszystkich dróg naraz</em>; wkłady od dróg sąsiadujących z tą najszybszą mają zbliżoną fazę i sumują się, a wkłady od dróg odleglejszych mają fazy rozrzucone i wygaszają się nawzajem. <span class="term-cyan">Promień jest więc tym, co zostaje po zsumowaniu wszystkich dróg</span> — nie osobnym bytem, tylko śladem po interferencji. To dlatego oba opisy dają tę samą prognozę wszędzie tam, gdzie przeszkody są duże, i rozjeżdżają się dokładnie tam, gdzie wygaszanie przestaje być pełne.</p>
-    </div>
-
     <p>To jest też dokładnie ten zakres, który potrafi twój renderer. Path tracing, ray marching, każda technika, jaką zna Arnold czy Cycles, operuje na promieniach — i dlatego wszystko z powyższej listy renderer potrafi policzyć sam, jeśli tylko dasz mu odpowiedni model kamery. Reszta tej książki będzie musiała wejść do obrazu inną drogą.</p>
+
+    <button class="advanced-btn" data-modal-target="adv-fermat">Zaawansowane: jedna zasada, z której wynikają obie reguły</button>
   </div>
 
   <div class="section">
@@ -256,14 +250,6 @@ window.SKY3D_MESSAGES = {
     <h2>Trzy zjawiska, które wymagają fali</h2>
 
     <p>Są dokładnie trzy rodziny efektów, których z modelu promieniowego nie da się wyprowadzić — nie dlatego, że rachunek jest trudny, tylko dlatego, że w tym modelu nie ma wielkości, o które one pytają. Promień nie ma fazy, nie ma długości i nie ma kierunku drgania. Każde z tych trzech zjawisk pyta właśnie o jedną z nich.</p>
-
-    <div class="subsection">
-      <h3>Skąd się właściwie bierze dyfrakcja</h3>
-      <p>Najprostszy mechanizm, jaki daje na to odpowiedź, podał Huygens jeszcze w siedemnastym wieku, na długo przed jakąkolwiek teorią elektromagnetyzmu. Brzmi tak: <strong>każdy punkt czoła fali zachowuje się jak nowe, punktowe źródło</strong>, wysyłające falę kulistą we wszystkie strony. Kolejne czoło fali jest obwiednią tych wszystkich kulek.</p>
-      <p>Dopóki fala jest szeroka, ten opis nie zmienia niczego. Kulki wysyłane na boki przez sąsiadujące punkty spotykają się w przeciwfazie i wygaszają nawzajem — zostaje tylko to, co leci prosto, czyli dokładnie płaska fala, od której zaczęliśmy. Tak właśnie powstaje złudzenie, że światło biegnie po prostych.</p>
-      <p>Ale <span class="term-violet">na krawędzi otworu sąsiad się kończy</span>. Skrajny punkt czoła fali nie ma partnera, który wygasiłby jego boczną kulkę — więc ta kulka zostaje. Im węższy otwór, tym większy udział punktów bez pełnego kompletu sąsiadów i tym silniej fala rozlewa się na boki. Rozbieżność wiązki z suwaka wyżej to policzona wprost konsekwencja tego jednego zdania.</p>
-      <p>Zapamiętaj ten obrazek, bo wróci w co najmniej trzech miejscach: przy granicy ostrości, przy gwiazdkach wokół świateł i przy tym, dlaczego listki przysłony rysują promienie prostopadle do swoich krawędzi, a nie wzdłuż nich.</p>
-    </div>
 
     <div class="diagram-frame">
       <div class="diagram-hud"><span>Zasada Huygensa</span><span>dlaczego krawędź rozlewa falę</span></div>
@@ -293,6 +279,8 @@ window.SKY3D_MESSAGES = {
       </svg>
       <div class="diagram-caption">Prostoliniowość światła nie jest założeniem — jest skutkiem wzajemnego wygaszania się fal cząstkowych. Zabierz sąsiadów, a zniknie.</div>
     </div>
+
+    <button class="advanced-btn" data-modal-target="adv-huygens">Zaawansowane: skąd się właściwie bierze dyfrakcja</button>
 
     <div class="subsection">
       <h3>Dyfrakcja — bo promień nie ma szerokości</h3>
@@ -361,7 +349,7 @@ window.SKY3D_MESSAGES = {
     <p>Jest w tym pewna ironia. Najbardziej rozpoznawalne „filmowe” cechy obrazu — gwiazdki wokół świateł, kolorowa flara, halacja, ziarno — to niemal wyłącznie zjawiska falowe albo materiałowe. Renderer, który jest doskonałym symulatorem promieni, jest jednocześnie ślepy na całą tę warstwę. Dlatego czysty render wygląda jak render.</p>
   </div>
 
-    <p>Warto też zauważyć, że ta ślepota renderera nie jest usterką do naprawienia w kolejnej wersji. Model promieniowy został wybrany świadomie, bo jest o rzędy wielkości tańszy, a dla dziewięćdziesięciu procent zjawisk daje wynik nieodróżnialny od prawdy. Symulacja falowa całego kadru w rozdzielczości 4K to zadanie z zupełnie innej półki obliczeniowej — i dlatego nawet renderery widmowe liczą widmo, ale nie liczą fazy. Praktyczny wniosek jest prosty: nie czekaj, aż silnik zacznie robić to za ciebie.</p>
+    <p>Ta ślepota nie jest przy tym usterką do naprawienia w kolejnej wersji silnika. Model promieniowy wybrano świadomie, bo jest o rzędy wielkości tańszy — dlatego nawet renderery widmowe liczą widmo, ale nie liczą fazy. <strong>Nie czekaj, aż silnik zacznie robić to za ciebie.</strong></p>
 
   <div class="panel practice">
     <div class="panel-label">Z praktyki</div>
@@ -404,6 +392,29 @@ window.SKY3D_MESSAGES = {
       <a class="nav-toc" href="../index.html">Spis treści</a>
       <a class="nav-next" href="rozdzial-02-zalamanie-i-dyspersja.html">Następny →</a>
   </div>
+
+  <template id="adv-fermat">
+    <h3>Jedna zasada, z której wynikają obie reguły</h3>
+    <p>Prostoliniowość i prawo Snella wyglądają na dwa niezależne fakty, których trzeba się nauczyć osobno. Nie są. Obie wynikają z jednej zasady, sformułowanej przez Fermata w siedemnastym wieku: <strong>światło biegnie tą drogą, której przebycie zajmuje mu czas stacjonarny</strong> — w typowym przypadku najkrótszy.</p>
+    <p>W jednorodnym ośrodku najszybsza droga między dwoma punktami to linia prosta, więc prostoliniowość wypada z zasady natychmiast. Ciekawiej robi się na granicy dwóch ośrodków. Skoro w szkle światło porusza się wolniej, to droga najszybsza nie jest już najkrótsza — opłaca się nadłożyć w powietrzu, żeby skrócić odcinek w szkle. Kąt, przy którym ten kompromis wypada optymalnie, to dokładnie kąt z prawa Snella.</p>
+    <p>Jest to ta sama arytmetyka, którą wykonuje ratownik biegnący do tonącego: biegnie szybciej, niż płynie, więc nie wybiera linii prostej do celu, tylko taką, w której więcej drogi przypada na piasek, a mniej na wodę. Nikt tego nie liczy świadomie, a mimo to wychodzi z tego prawo Snella.</p>
+    <p>Zasada Fermata jest też pomostem między dwoma modelami z tego rozdziału. W opisie falowym światło <em>próbuje wszystkich dróg naraz</em>; wkłady od dróg sąsiadujących z tą najszybszą mają zbliżoną fazę i sumują się, a wkłady od dróg odleglejszych mają fazy rozrzucone i wygaszają się nawzajem. <span class="term-cyan">Promień jest więc tym, co zostaje po zsumowaniu wszystkich dróg</span> — nie osobnym bytem, tylko śladem po interferencji. To dlatego oba opisy dają tę samą prognozę wszędzie tam, gdzie przeszkody są duże, i rozjeżdżają się dokładnie tam, gdzie wygaszanie przestaje być pełne.</p>
+  </template>
+
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-panel">
+      <button class="modal-close" data-modal-close aria-label="Zamknij">×</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <template id="adv-huygens">
+    <h3>Skąd się właściwie bierze dyfrakcja</h3>
+    <p>Najprostszy mechanizm, jaki daje na to odpowiedź, podał Huygens jeszcze w siedemnastym wieku, na długo przed jakąkolwiek teorią elektromagnetyzmu. Brzmi tak: <strong>każdy punkt czoła fali zachowuje się jak nowe, punktowe źródło</strong>, wysyłające falę kulistą we wszystkie strony. Kolejne czoło fali jest obwiednią tych wszystkich kulek.</p>
+    <p>Dopóki fala jest szeroka, ten opis nie zmienia niczego. Kulki wysyłane na boki przez sąsiadujące punkty spotykają się w przeciwfazie i wygaszają nawzajem — zostaje tylko to, co leci prosto, czyli dokładnie płaska fala, od której zaczęliśmy. Tak właśnie powstaje złudzenie, że światło biegnie po prostych.</p>
+    <p>Ale <span class="term-violet">na krawędzi otworu sąsiad się kończy</span>. Skrajny punkt czoła fali nie ma partnera, który wygasiłby jego boczną kulkę — więc ta kulka zostaje. Im węższy otwór, tym większy udział punktów bez pełnego kompletu sąsiadów i tym silniej fala rozlewa się na boki. Rozbieżność wiązki z suwaka wyżej to policzona wprost konsekwencja tego jednego zdania.</p>
+    <p>Zapamiętaj ten obrazek, bo wróci w co najmniej trzech miejscach: przy granicy ostrości, przy gwiazdkach wokół świateł i przy tym, dlaczego listki przysłony rysują promienie prostopadle do swoich krawędzi, a nie wzdłuż nich.</p>
+  </template>
 
 </div>
 
