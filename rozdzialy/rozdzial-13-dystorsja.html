@@ -198,67 +198,6 @@ window.SKY3D_MESSAGES = {
   </div>
 
   <div class="section">
-    <div class="section-eyebrow">Skala · ile to właściwie jest</div>
-    <h2>Liczby, które warto mieć w głowie</h2>
-
-    <p>Dystorsję podaje się zwykle w procentach: o ile punkt w rogu kadru jest przesunięty względem miejsca, w którym powinien być. Warto znać rzędy wielkości, bo intuicja podpowiada wartości znacznie większe niż rzeczywiste.</p>
-
-    <p>Dobrze skorygowana stałka ma poniżej pół procenta — to jest poziom, przy którym trzeba szukać prostej linii tuż przy krawędzi kadru, żeby cokolwiek zauważyć. Typowy szeroki kąt na lustrzance ma dwa do trzech procent beczki. Ekstremalnie szeroki, poniżej piętnastu milimetrów, potrafi mieć pięć. Zoom na krótkim końcu — trzy do pięciu, na długim jeden do dwóch poduszki.</p>
-
-    <p>Trzy procent brzmi niegroźnie, dopóki nie przeliczy się tego na piksele. W kadrze 4K o szerokości 4096 pikseli półprzekątna to około 2560 pikseli, więc trzy procent oznacza <strong>przesunięcie o siedemdziesiąt siedem pikseli</strong> w rogu. Element CG postawiony tam bez korekcji siedzi siedemdziesiąt siedem pikseli obok miejsca, w którym powinien być. Nie ma mowy o niezauważeniu.</p>
-
-    <div class="diagram-frame">
-      <div class="diagram-hud"><span>Dystorsja w pikselach</span><span>kadr 4K, przesunięcie w rogu</span></div>
-      <svg viewBox="0 0 760 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Słupki pokazujące przesunięcie w rogu kadru 4K dla typowych wartości dystorsji od 0,5 do 5 procent.">
-        <line x1="200" y1="200" x2="200" y2="40" stroke="#2a2f38" stroke-width="1"/>
-        <g font-family="IBM Plex Mono" font-size="11" fill="#8b909b">
-          <text x="30" y="66">stałka · 0,5%</text>
-          <text x="30" y="100">standard · 1%</text>
-          <text x="30" y="134">szeroki · 3%</text>
-          <text x="30" y="168">bardzo szeroki · 5%</text>
-        </g>
-        <g fill="#9c82d8" fill-opacity="0.5" stroke="#9c82d8" stroke-width="1">
-          <rect x="200" y="54" width="21" height="18"/>
-          <rect x="200" y="88" width="42" height="18"/>
-          <rect x="200" y="122" width="128" height="18"/>
-          <rect x="200" y="156" width="213" height="18"/>
-        </g>
-        <g font-family="IBM Plex Mono" font-size="11" fill="#e8a33d">
-          <text x="231" y="67">13 px</text><text x="252" y="101">26 px</text>
-          <text x="338" y="135">77 px</text><text x="423" y="169">128 px</text>
-        </g>
-        <text x="30" y="226" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">Półprzekątna kadru 4K to około 2560 px. Procenty przeliczają się na piksele wprost.</text>
-      </svg>
-      <div class="diagram-caption">Nawet pół procenta to trzynaście pikseli — więcej, niż wynosi tolerancja przy dopasowywaniu elementu do plate'u.</div>
-    </div>
-
-    <p>Warto też wiedzieć, że przesunięcie nie rozkłada się równomiernie. Rośnie z trzecią potęgą promienia, więc <span class="term-cyan">w połowie drogi do rogu wynosi zaledwie jedną ósmą wartości brzegowej</span>. Element umieszczony blisko środka kadru może więc wyglądać poprawnie bez żadnej korekcji, a ten sam element przesunięty ku krawędzi rozjeżdża się gwałtownie. To jest częsta pułapka: ujęcie „siedzi”, dopóki kamera nie zjedzie tak, że element nie wędruje ku brzegowi.</p>
-
-    <div class="subsection">
-      <h3>Dlaczego dystorsji nie widać na krajobrazie</h3>
-      <p>Warto wiedzieć, kiedy dystorsja jest problemem, a kiedy można ją zignorować — bo różnica bywa duża i nie zależy od obiektywu, tylko od treści kadru.</p>
-      <p>Oko rozpoznaje wygięcie wyłącznie przez porównanie z <strong>linią, o której wie, że jest prosta</strong>. Krawędź budynku, framuga, horyzont morza, kratka podłogi. W kadrze bez takich odniesień — las, tłum, chmury, twarz — dystorsja pięcioprocentowa jest praktycznie niewidoczna, bo nie ma z czym porównać.</p>
-      <p>Stąd praktyka, która czasem dziwi początkujących: fotografowie architektury płacą duże pieniądze za obiektywy o dystorsji poniżej pół procenta, a fotografowie przyrody używają tych samych ogniskowych w wersjach kilkukrotnie tańszych i gorzej skorygowanych. Obaj mają rację, bo <span class="term-cyan">ta sama wada kosztuje ich zupełnie różne pieniądze w postprodukcji</span>.</p>
-      <p>Dla artysty CG wniosek jest odwrotny i mniej wygodny. Nawet w kadrze bez prostych linii dystorsja przesuwa punkty — a tracking i dopasowanie elementów opierają się właśnie na położeniu punktów, nie na wrażeniu wzrokowym. Ujęcie, w którym oko niczego nie widzi, potrafi więc rozjechać rekonstrukcję kamery zupełnie tak samo jak ujęcie architektoniczne. <strong>Niewidoczna dystorsja jest wciąż dystorsją mierzalną</strong>, i pipeline reaguje na pomiar, nie na wrażenie.</p>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-eyebrow">Anamorf · dystorsja, której się nie usuwa</div>
-    <h2>Kiedy zniekształcenie jest celem</h2>
-
-    <p>Jest jeden przypadek, w którym silna, jawna dystorsja jest wpisana w konstrukcję i nikt nie zamierza jej korygować: obiektyw anamorficzny. Ściska on obraz w poziomie — zwykle dwukrotnie — żeby szeroki kadr zmieścił się na wąskiej klatce filmu.</p>
-
-    <p>Formalnie jest to dystorsja, bo powiększenie zależy od kierunku. Nie jest to jednak wada w sensie tego rozdziału, z dwóch powodów. Po pierwsze, jest <strong>zamierzona i odwracalna</strong> — projektor albo postprodukcja rozciągają obraz z powrotem. Po drugie, jest jednorodna: nie zależy od odległości od osi, tylko od kierunku, więc proste linie zostają proste.</p>
-
-    <p>Ale anamorf ma <em>także</em> zwykłą dystorsję, i to zwykle silniejszą niż odpowiednik sferyczny — bo cylindryczne elementy dokładają własne wady, a układ jest z natury asymetryczny. W praktyce trzeba więc rozdzielić dwie rzeczy: rozciągnięcie o znany współczynnik, które się cofa, i dystorsję promieniową, którą się mierzy i koryguje jak w każdym innym obiektywie.</p>
-
-    <p>Dla pipeline'u CG oznacza to jeden dodatkowy krok i jedną dodatkową pułapkę. Krok: rozciągnięcie cofa się <strong>przed</strong> undistortem, bo model dystorsji promieniowej zakłada okrągłą symetrię, której ściśnięty obraz nie ma. Pułapka: renderować trzeba w proporcjach docelowych, a nie ściśniętych — inaczej rozmycie ruchu i głębia ostrości wyjdą anizotropowe w złą stronę.</p>
-
-    <p class="deeper-inline">Konstrukcja anamorfu i wszystko, co z niej wynika — <a href="rozdzial-20-anamorf.html">Rozdział 20</a> i <a href="../dodatki/dodatek-j-anamorf-w-liczbach.html">Dodatek J</a>.</p>
-  </div>
-
-  <div class="section">
     <div class="section-eyebrow">W CG · jedyna wada łamiąca geometrię</div>
     <h2>Dlaczego undistort jest osobnym etapem pipeline'u</h2>
 
@@ -317,6 +256,10 @@ window.SKY3D_MESSAGES = {
 
     <p>Ostatni punkt jest tym, który najczęściej robi się źle, więc warto go podkreślić: <strong>do finalnego złożenia wraca się do oryginału, a nie do odprostowanego plate'u</strong>. Odprostowanie i ponowne zniekształcenie to dwie interpolacje, z których każda zmiękcza obraz i zjada ziarno. Materiał aktorski musi przejść przez zero takich operacji; przez dwie przechodzi wyłącznie CG, i to jest cena, którą się akceptuje.</p>
 
+    <button class="advanced-btn" data-modal-target="adv-anamorf">Zaawansowane: dystorsja, której się nie usuwa</button>
+
+    <p class="deeper-inline">Ile jej realnie mają typowe obiektywy, jak zmierzyć własny i czym różni się model dywizyjny od Browna–Conrady'ego — <a href="../dodatki/dodatek-g-modele-dystorsji.html">Dodatek G</a>.</p>
+
     <p class="deeper-inline">Modele dystorsji używane przez trackery i Nuke'a, STMapy i sprawdzenie odwracalności — <a href="../dodatki/dodatek-g-modele-dystorsji.html">Dodatek G</a> oraz <a href="rozdzial-35-geometria-plateu.html">Rozdział 35</a>.</p>
   </div>
 
@@ -360,6 +303,20 @@ window.SKY3D_MESSAGES = {
       <a class="nav-toc" href="../index.html">Spis treści</a>
       <a class="nav-next" href="rozdzial-14-aberracja-chromatyczna.html">Następny →</a>
   </div>
+
+  <template id="adv-anamorf">
+    <h3>Dystorsja, której się nie usuwa</h3>
+
+    <p>Jest jeden przypadek, w którym silna, jawna dystorsja jest wpisana w konstrukcję i nikt nie zamierza jej korygować: <strong>obiektyw anamorficzny</strong>. Ściska on obraz w poziomie — zwykle dwukrotnie — żeby szeroki kadr zmieścił się na wąskiej klatce filmu.</p>
+
+    <p>Formalnie jest to dystorsja, bo powiększenie zależy od kierunku. Nie jest to jednak wada w sensie tego rozdziału, z dwóch powodów. Po pierwsze, jest <em>zamierzona i odwracalna</em> — projektor albo postprodukcja rozciągają obraz z powrotem. Po drugie, jest jednorodna: nie zależy od odległości od osi, tylko od kierunku, więc proste linie zostają proste.</p>
+
+    <p>Ale anamorf ma <em>także</em> zwykłą dystorsję promieniową, i to zwykle silniejszą niż odpowiednik sferyczny — bo cylindryczne elementy dokładają własne wady, a układ jest z natury asymetryczny. W praktyce trzeba więc rozdzielić dwie rzeczy: rozciągnięcie o znany współczynnik, które się cofa, i dystorsję promieniową, którą się mierzy i koryguje jak w każdym innym obiektywie.</p>
+
+    <p>Dla pipeline'u CG oznacza to jeden dodatkowy krok i jedną dodatkową pułapkę. <strong>Krok</strong>: rozciągnięcie cofa się <em>przed</em> undistortem, bo model dystorsji promieniowej zakłada okrągłą symetrię, której ściśnięty obraz nie ma. <strong>Pułapka</strong>: renderować trzeba w proporcjach docelowych, a nie ściśniętych — inaczej rozmycie ruchu i głębia ostrości wyjdą anizotropowe w złą stronę.</p>
+
+    <p>Konstrukcja anamorfu i wszystko, co z niej wynika — <a href="rozdzial-20-anamorf.html">Rozdział 20</a> i <a href="../dodatki/dodatek-j-anamorf-w-liczbach.html">Dodatek J</a>.</p>
+  </template>
 
   <template id="explain-dystorsja">
     <h3>Model wielomianowy dystorsji</h3>

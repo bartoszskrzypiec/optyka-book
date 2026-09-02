@@ -41,7 +41,117 @@ window.SKY3D_MESSAGES = {
   <h1>Modele dystorsji: Brown–Conrady i dywizyjny</h1>
   <p class="subtitle">Wielomiany, których używają trackery i Nuke, co znaczą ich współczynniki i dlaczego odwrócenie modelu nie jest tym samym co zmiana znaku.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">Co tu jest</div>
+    <ul>
+      <li><strong>Pełny model Browna–Conrady'ego</strong> — ze składową styczną, której rozdział nie podaje, i z uwagą o kolejności współczynników.</li>
+      <li><strong>Model dywizyjny</strong> i powód, dla którego wygrał w compositingu: da się go odwrócić wzorem, a nie iteracją.</li>
+      <li><strong>Jak wyznaczyć współczynniki</strong> z ujęcia siatki albo z samego materiału.</li>
+      <li><strong>Rzędy wielkości</strong>: ile procent mają realne obiektywy i ile to jest w pikselach.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Brown–Conrady · model pełny</div>
+    <h2>Składowa promieniowa i styczna</h2>
+
+    <p>Wzór z <a href="../rozdzialy/rozdzial-13-dystorsja.html">Rozdziału 13</a> opisuje tylko część zjawiska — tę symetryczną względem osi. Pełny model, używany w fotogrametrii i w kalibracji kamer, dokłada drugą składową, biorącą się z tego, że elementy obiektywu nigdy nie są idealnie wyosiowane.</p>
+
+    <div class="formula">
+      x<sub>d</sub> = <span class="vec" data-tip="Współrzędna punktu w obrazie bez dystorsji, znormalizowana">x</span>(1 + k₁r² + k₂r⁴ + k₃r⁶) + 2p₁<span class="vec" data-tip="Współrzędna pozioma">x</span><span class="vec" data-tip="Współrzędna pionowa">y</span> + p₂(r² + 2<span class="vec" data-tip="Współrzędna pozioma">x</span>²)
+      <span class="sub">x<sub>d</sub> — współrzędna w obrazie ze zniekształceniem. x, y — współrzędne bez zniekształcenia, r² = x² + y². k₁, k₂, k₃ — współczynniki promieniowe. p₁, p₂ — styczne. Wzór dla y powstaje przez zamianę ról: y(1 + …) + p₁(r² + 2y²) + 2p₂xy.</span>
+    </div>
+
+    <p>Pierwsza część nawiasu to dokładnie to, co było w rozdziale. Nowe są dwa wyrazy z <strong>p</strong>: opisują przesunięcie, które <em>nie</em> jest symetryczne obrotowo — punkt wędruje trochę w bok, a nie tylko do środka albo od środka. Fizycznie odpowiada to lekkiemu przechyleniu lub przesunięciu elementów względem osi, czyli tolerancjom montażu.</p>
+
+    <p>W praktyce składowa styczna jest o rząd wielkości słabsza od promieniowej. <span class="term-cyan">Fotogrametria uwzględnia ją zawsze</span>, bo tam liczy się dokładność pomiaru; przy pracy z materiałem filmowym zwykle się ją pomija, bo mieści się poniżej progu widoczności. Warto jednak wiedzieć, że istnieje — bo jeśli dopasowanie modelu promieniowego zostawia resztę systematycznie przesuniętą w jedną stronę, to właśnie ona jest podejrzanym.</p>
+
+    <p>Uwaga, która kosztuje ludzi całe popołudnia: <strong>kolejność i znaczenie p₁ oraz p₂ nie są ustalone jednoznacznie</strong> w literaturze. Powyższa postać jest tą, którą stosuje OpenCV i większość narzędzi wywodzących się z widzenia komputerowego. Inne źródła zamieniają je miejscami. Przepisując współczynniki między narzędziami, sprawdź nie tylko normalizację promienia, ale i to, który wyraz stoi przy którym p.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Model dywizyjny · dlaczego wygrał w compie</div>
+    <h2>Dzielenie zamiast mnożenia</h2>
+
+    <p>Drugi popularny model zapisuje to samo zjawisko przez dzielenie zamiast mnożenia. Zapis wygląda na kosmetyczną zmianę, a ma jedną konsekwencję, która zdecydowała o jego karierze w postprodukcji.</p>
+
+    <div class="formula">
+      r<sub>u</sub> = <span class="vec" data-tip="Odległość od środka w obrazie ze zniekształceniem">r<sub>d</sub></span> / (1 + <span class="vec" data-tip="Współczynnik dywizyjny. Dodatni odpowiada beczce.">λ</span>·r<sub>d</sub>²)
+      <span class="sub">r<sub>u</sub> — odległość od środka po odprostowaniu, r<sub>d</sub> — przed. λ — jedyny współczynnik w wersji jednoparametrowej. Dodatnie λ odpowiada beczce, ujemne poduszce — czyli odwrotnie niż znak k₁ w modelu wielomianowym.</span>
+    </div>
+
+    <p>Zaleta jest taka: <strong>ten model odwraca się wzorem zamkniętym</strong>. Przekształcenie w drugą stronę to zwykłe równanie kwadratowe, więc rozwiązuje się je jednym pierwiastkiem, bez iteracji i bez dopasowywania osobnego wielomianu odwrotnego.</p>
+
+    <div class="formula">
+      r<sub>d</sub> = (1 − √(1 − 4λ·r<sub>u</sub>²)) / (2λ·r<sub>u</sub>)
+      <span class="sub">Odwrotność wzoru wyżej, gałąź przechodząca przez zero. Dla λ dążącego do zera wyrażenie dąży do r<sub>u</sub>, jak być powinno. Gdy pod pierwiastkiem robi się ujemnie, model przestaje być odwracalny — to sygnał, że dopasowane λ jest za duże dla tego zakresu promienia.</span>
+    </div>
+
+    <p>Druga zaleta jest praktyczna: <span class="term-cyan">jeden parametr często wystarcza tam, gdzie model wielomianowy potrzebuje dwóch albo trzech</span>. Dla obiektywów o silnej beczce dywizyjne λ opisuje kształt krzywej lepiej niż k₁ samo, bo mianownik rośnie szybciej niż liniowo. Mniej parametrów to stabilniejsze dopasowanie na materiale ubogim w proste linie — a takiego materiału jest w praktyce większość.</p>
+
+    <p>Cena: model nie ma bezpośredniego odpowiednika w konwencjach fotogrametrycznych, więc przy wymianie danych z trackerem albo z narzędziem do rekonstrukcji trzeba przeliczać, nie przepisywać. <strong>Sprawdź w dokumentacji, którego modelu używa twoje narzędzie</strong>, zanim wpiszesz w nie liczbę wziętą skądinąd. Dwa narzędzia potrafią nazywać współczynnik tak samo i rozumieć przez niego co innego.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Wyznaczanie · skąd wziąć liczby</div>
+    <h2>Jak zmierzyć dystorsję obiektywu</h2>
+
+    <p>Są trzy drogi, w kolejności malejącej dokładności i malejącego wysiłku.</p>
+
+    <p><strong>Ujęcie siatki.</strong> Najdokładniejsza i jedyna, która daje wynik niezależny od treści. Sfotografuj płaską planszę z regularną siatką albo szachownicą, prostopadle, wypełniając kadr, przy ostrości i ogniskowej używanych na planie. Narzędzie do kalibracji wykrywa węzły i dopasowuje współczynniki. Powtórz dla każdej ogniskowej i — w zoomie — dla kilku punktów zakresu, bo dystorsja wędruje przez cały zakres.</p>
+
+    <p><strong>Proste linie w materiale.</strong> Gdy siatki nie ma, a plate zawiera krawędzie, o których wiadomo, że są proste, wystarczy wskazać kilka z nich i dopasować współczynnik tak, żeby się wyprostowały. Metoda działa dobrze przy dwóch–trzech liniach rozłożonych po kadrze, a fatalnie przy liniach skupionych przy środku, gdzie dystorsja jest zbyt słaba, by cokolwiek rozstrzygnąć.</p>
+
+    <p><strong>Ze śladów trackingu.</strong> Solver rekonstruujący kamerę może rozwiązywać dystorsję razem z ogniskową i ruchem. Jest to najwygodniejsze i najmniej pewne: dystorsja i ogniskowa <span class="term-violet">częściowo się podszywają jedna pod drugą</span>, więc solver potrafi zamienić jedno za drugie i dać ujęcie, które ładnie się składa, a ma bezsensowne parametry fizyczne. Jeśli wynik ma służyć czemuś więcej niż jednym ujęciem, zmierz osobno.</p>
+
+    <p>Niezależnie od drogi warto zapisać razem ze współczynnikiem trzy rzeczy, bez których jest on bezużyteczny: <strong>model, normalizację promienia i rozdzielczość, w której go wyznaczono</strong>. To jest dokładnie ten komplet, którego brak sprawia, że liczba przepisana z notatek sprzed roku „prawie pasuje”.</p>
+  </div>
+
+<div class="section">
+    <div class="section-eyebrow">Skala · ile to właściwie jest</div>
+    <h2>Liczby, które warto mieć w głowie</h2>
+
+    <p>Dystorsję podaje się zwykle w procentach: o ile punkt w rogu kadru jest przesunięty względem miejsca, w którym powinien być. Warto znać rzędy wielkości, bo intuicja podpowiada wartości znacznie większe niż rzeczywiste.</p>
+
+    <p>Dobrze skorygowana stałka ma poniżej pół procenta — to jest poziom, przy którym trzeba szukać prostej linii tuż przy krawędzi kadru, żeby cokolwiek zauważyć. Typowy szeroki kąt na lustrzance ma dwa do trzech procent beczki. Ekstremalnie szeroki, poniżej piętnastu milimetrów, potrafi mieć pięć. Zoom na krótkim końcu — trzy do pięciu, na długim jeden do dwóch poduszki.</p>
+
+    <p>Trzy procent brzmi niegroźnie, dopóki nie przeliczy się tego na piksele. W kadrze 4K pełnej klatki filmowej, 4096 na 3112 pikseli, półprzekątna to 2572 piksele, więc trzy procent oznacza <strong>przesunięcie o siedemdziesiąt siedem pikseli</strong> w rogu. Element CG postawiony tam bez korekcji siedzi siedemdziesiąt siedem pikseli obok miejsca, w którym powinien być. Nie ma mowy o niezauważeniu.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Dystorsja w pikselach</span><span>kadr 4K, przesunięcie w rogu</span></div>
+      <svg viewBox="0 0 760 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Słupki pokazujące przesunięcie w rogu kadru 4K dla typowych wartości dystorsji od 0,5 do 5 procent.">
+        <line x1="200" y1="200" x2="200" y2="40" stroke="#2a2f38" stroke-width="1"/>
+        <g font-family="IBM Plex Mono" font-size="11" fill="#8b909b">
+          <text x="30" y="66">stałka · 0,5%</text>
+          <text x="30" y="100">standard · 1%</text>
+          <text x="30" y="134">szeroki · 3%</text>
+          <text x="30" y="168">bardzo szeroki · 5%</text>
+        </g>
+        <g fill="#9c82d8" fill-opacity="0.5" stroke="#9c82d8" stroke-width="1">
+          <rect x="200" y="54" width="21" height="18"/>
+          <rect x="200" y="88" width="42" height="18"/>
+          <rect x="200" y="122" width="128" height="18"/>
+          <rect x="200" y="156" width="213" height="18"/>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="11" fill="#e8a33d">
+          <text x="231" y="67">13 px</text><text x="252" y="101">26 px</text>
+          <text x="338" y="135">77 px</text><text x="423" y="169">128 px</text>
+        </g>
+        <text x="30" y="226" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">Półprzekątna kadru 4K to około 2560 px. Procenty przeliczają się na piksele wprost.</text>
+      </svg>
+      <div class="diagram-caption">Nawet pół procenta to trzynaście pikseli — więcej, niż wynosi tolerancja przy dopasowywaniu elementu do plate'u.</div>
+    </div>
+
+    <p>Warto też wiedzieć, że przesunięcie nie rozkłada się równomiernie. Rośnie z trzecią potęgą promienia, więc <span class="term-cyan">w połowie drogi do rogu wynosi zaledwie jedną ósmą wartości brzegowej</span>. Element umieszczony blisko środka kadru może więc wyglądać poprawnie bez żadnej korekcji, a ten sam element przesunięty ku krawędzi rozjeżdża się gwałtownie. To jest częsta pułapka: ujęcie „siedzi”, dopóki kamera nie zjedzie tak, że element nie wędruje ku brzegowi.</p>
+
+    <div class="subsection">
+      <h3>Dlaczego dystorsji nie widać na krajobrazie</h3>
+      <p>Warto wiedzieć, kiedy dystorsja jest problemem, a kiedy można ją zignorować — bo różnica bywa duża i nie zależy od obiektywu, tylko od treści kadru.</p>
+      <p>Oko rozpoznaje wygięcie wyłącznie przez porównanie z <strong>linią, o której wie, że jest prosta</strong>. Krawędź budynku, framuga, horyzont morza, kratka podłogi. W kadrze bez takich odniesień — las, tłum, chmury, twarz — dystorsja pięcioprocentowa jest praktycznie niewidoczna, bo nie ma z czym porównać.</p>
+      <p>Stąd praktyka, która czasem dziwi początkujących: fotografowie architektury płacą duże pieniądze za obiektywy o dystorsji poniżej pół procenta, a fotografowie przyrody używają tych samych ogniskowych w wersjach kilkukrotnie tańszych i gorzej skorygowanych. Obaj mają rację, bo <span class="term-cyan">ta sama wada kosztuje ich zupełnie różne pieniądze w postprodukcji</span>.</p>
+      <p>Dla artysty CG wniosek jest odwrotny i mniej wygodny. Nawet w kadrze bez prostych linii dystorsja przesuwa punkty — a tracking i dopasowanie elementów opierają się właśnie na położeniu punktów, nie na wrażeniu wzrokowym. Ujęcie, w którym oko niczego nie widzi, potrafi więc rozjechać rekonstrukcję kamery zupełnie tak samo jak ujęcie architektoniczne. <strong>Niewidoczna dystorsja jest wciąż dystorsją mierzalną</strong>, i pipeline reaguje na pomiar, nie na wrażenie.</p>
+    </div>
+  </div>
 
   <div class="site-nav">
     <a href="../index.html">← Spis treści</a>
