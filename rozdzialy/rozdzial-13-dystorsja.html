@@ -43,7 +43,306 @@ window.SKY3D_MESSAGES = {
   <h1>Dystorsja i projekcja: dwie różne rzeczy</h1>
   <p class="subtitle">Rozciągnięte twarze w rogach szerokiego kadru to nie jest wada obiektywu. To jest cena, którą płaci każde płaskie odwzorowanie — i dopiero po odjęciu jej zostaje prawdziwa dystorsja.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li>Dystorsja jest jedyną wadą Seidela, która <strong>nie rusza ostrości</strong>. Punkt zostaje punktem — tylko ląduje w kadrze nie tam, gdzie powinien. Dlatego jako jedyna nie znika po przymknięciu przysłony i jako jedyna daje się odwrócić w postprodukcji.</li>
+      <li>Nie mylić z rozciągnięciem rogów. Tamto jest ceną <span class="term-cyan">płaskiego odwzorowania</span> i ma je nawet renderer bez żadnej wady. Test rozstrzygający: dystorsja wygina proste linie, projekcja rektilinearna je zachowuje.</li>
+      <li>W pipelinie CG jest to wada najważniejsza ze wszystkich — bo jako jedyna łamie zgodność geometrii między plate'em a renderem. Stąd cały łańcuch undistort → render → redistort.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Definicja · wada, która nie rozmywa</div>
+    <h2>Powiększenie zależne od odległości od osi</h2>
+
+    <p>Cztery poprzednie wady Seidela psuły w ten czy inny sposób ostrość: rozmywały punkt, rozdzielały go na dwa albo przesuwały płaszczyznę, na której jest ostry. Dystorsja nie robi nic z tych rzeczy. Punkt jest odwzorowany jako punkt, idealnie ostry — <strong>tylko w złym miejscu</strong>.</p>
+
+    <p>Mechanizm sprowadza się do jednego zdania: powiększenie układu nie jest stałe, tylko zależy od odległości od osi. Jeśli rośnie ku brzegom, kadr jest rozciągany na zewnątrz i proste linie wyginają się do środka — to dystorsja <em>poduszkowa</em>. Jeśli maleje, kadr jest ściągany i linie wybrzuszają się na zewnątrz — dystorsja <em>beczkowa</em>.</p>
+
+    <p>Zależność jest nieliniowa i najczęściej opisuje się ją wielomianem po nieparzystych potęgach odległości od środka:</p>
+
+    <div class="formula">
+      r′ = <span class="vec" data-tip="Odległość punktu od środka kadru w obrazie bez dystorsji">r</span> · (1 + <span class="vec" data-tip="Pierwszy współczynnik dystorsji. Ujemny daje beczkę, dodatni poduszkę.">k₁</span>·r² + <span class="vec" data-tip="Drugi współczynnik. Odpowiada za dystorsję wąsatą, w której znak zmienia się z odległością.">k₂</span>·r⁴ + …)
+      <span class="sub">r — odległość od środka kadru bez dystorsji, r′ — z dystorsją. k₁, k₂ — współczynniki. Znak k₁ decyduje o typie: ujemny to beczka, dodatni poduszka. Tylko potęgi parzyste w nawiasie, bo dystorsja musi być symetryczna względem środka.</span>
+      <div class="formula-action"><button class="reveal-btn" data-modal-target="explain-dystorsja">Wyjaśnij ten wzór</button></div>
+    </div>
+
+    <p>Trzeci przypadek pojawia się, gdy k₁ i k₂ mają przeciwne znaki. Wtedy dystorsja zmienia charakter w połowie drogi do rogu: bliżej środka jest beczkowa, przy brzegach poduszkowa. Linia prosta wygina się wtedy w kształt wąsa i stąd nazwa — <span class="term-violet">dystorsja wąsata</span>. Jest typowa dla zoomów, w których jeden układ musi obsłużyć bardzo różne ogniskowe, i jest zdecydowanie najtrudniejsza do skorygowania, bo prosty model z jednym współczynnikiem jej nie opisuje.</p>
+
+    <p>Przesuń suwaki i zobacz, jak dwa współczynniki składają się na kształt siatki. Zwróć uwagę, że przy przeciwnych znakach powstaje wąs — i że nie da się go opisać samym k₁, choćbyś dobierał go dowolnie.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Model dwuwspółczynnikowy</span><span>siatka 8 × 6</span></div>
+      <div class="diagram-controls">
+        <label for="dysK1">k₁</label>
+        <input id="dysK1" type="range" min="-30" max="30" step="1" value="-15">
+        <span class="value-readout" id="k1Odczyt">−0,15</span>
+      </div>
+      <div class="diagram-controls">
+        <label for="dysK2">k₂</label>
+        <input id="dysK2" type="range" min="-30" max="30" step="1" value="0">
+        <span class="value-readout" id="k2Odczyt">0,00</span>
+      </div>
+      <svg viewBox="0 0 760 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Siatka kwadratowa przekształcona zadanymi współczynnikami dystorsji.">
+        <rect x="80" y="30" width="600" height="260" fill="#20242c" stroke="#2a2f38"/>
+        <g id="siatkaDys" fill="none" stroke="#9c82d8" stroke-width="1.4"></g>
+        <rect x="80" y="30" width="600" height="260" fill="none" stroke="#2a2f38" stroke-width="1.5"/>
+      </svg>
+      <div class="diagram-caption" id="dysPodpis">k₁ = −0,15: dystorsja beczkowa, linie wybrzuszone na zewnątrz.</div>
+    </div>
+
+    <p>Widać z tego zarazem, dlaczego korekcja dystorsji zoomu bywa trudniejsza niż stałki. Stałkę opisuje jedna para współczynników i tyle. Zoom wymaga pary dla <em>każdej</em> ogniskowej, a między nimi trzeba interpolować — przy czym charakter zmienia się po drodze, więc interpolacja liniowa między beczką a poduszką przechodzi przez stan, którego obiektyw nigdy nie miał.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Trzy typy dystorsji</span><span>siatka kwadratowa w obrazie</span></div>
+      <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Siatka kwadratowa odwzorowana z dystorsją beczkową, poduszkową i wąsatą.">
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b" text-anchor="middle">
+          <text x="130" y="24">BECZKOWA · k₁ &lt; 0</text><text x="380" y="24">PODUSZKOWA · k₁ &gt; 0</text><text x="630" y="24">WĄSATA · znaki przeciwne</text>
+        </g>
+        <g fill="none" stroke="#9c82d8" stroke-width="1.5">
+          <path d="M 55 45 Q 130 62 205 45 M 55 195 Q 130 178 205 195 M 55 45 Q 38 120 55 195 M 205 45 Q 222 120 205 195"/>
+          <path d="M 130 45 Q 130 120 130 195 M 55 120 Q 130 120 205 120" opacity="0.5"/>
+          <path d="M 92 47 Q 96 120 92 193 M 168 47 Q 164 120 168 193" opacity="0.35"/>
+          <path d="M 57 82 Q 130 90 203 82 M 57 158 Q 130 150 203 158" opacity="0.35"/>
+        </g>
+        <g fill="none" stroke="#9c82d8" stroke-width="1.5">
+          <path d="M 305 45 Q 380 30 455 45 M 305 195 Q 380 210 455 195 M 305 45 Q 320 120 305 195 M 455 45 Q 440 120 455 195"/>
+          <path d="M 380 45 Q 380 120 380 195 M 305 120 Q 380 120 455 120" opacity="0.5"/>
+          <path d="M 342 43 Q 338 120 342 197 M 418 43 Q 422 120 418 197" opacity="0.35"/>
+          <path d="M 303 82 Q 380 74 457 82 M 303 158 Q 380 166 457 158" opacity="0.35"/>
+        </g>
+        <g fill="none" stroke="#9c82d8" stroke-width="1.5">
+          <path d="M 555 45 Q 592 58 630 52 Q 668 58 705 45 M 555 195 Q 592 182 630 188 Q 668 182 705 195"/>
+          <path d="M 555 45 Q 542 92 548 120 Q 542 148 555 195 M 705 45 Q 718 92 712 120 Q 718 148 705 195"/>
+          <path d="M 630 45 Q 630 120 630 195 M 555 120 Q 630 120 705 120" opacity="0.5"/>
+        </g>
+        <text x="30" y="234" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">Wszystkie trzy siatki są w scenie idealnie kwadratowe. Wszystkie trzy są w obrazie idealnie ostre.</text>
+      </svg>
+      <div class="diagram-caption">Dystorsja nie zabiera ani jednego piksela ostrości. Przesuwa je tylko wzdłuż promienia.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Rozróżnienie · dwie rzeczy, jedna nazwa</div>
+    <h2>To nie jest to samo co rozciągnięte rogi</h2>
+
+    <p>W <a href="rozdzial-05-ogniskowa-format-perspektywa.html">Rozdziale 5</a> pokazaliśmy, że twarze w rogach szerokiego kadru wychodzą rozciągnięte — i że nie jest to wada obiektywu, tylko cena płaskiego odwzorowania. Oba zjawiska nazywa się potocznie „zniekształceniem szerokiego kąta” i to mieszanie jest źródłem realnych błędów w pracy.</p>
+
+    <p>Test rozstrzygający jest jeden i bardzo prosty: <strong>co dzieje się z prostą linią</strong>.</p>
+
+    <ul>
+      <li><strong>Projekcja rektilinearna</strong> zachowuje proste linie jako proste. Każda prosta w scenie jest prosta w obrazie, niezależnie od tego, jak blisko brzegu leży. Ceną jest rosnąca ku brzegom skala — kule stają się elipsami, twarze się poszerzają.</li>
+      <li><strong>Dystorsja</strong> wygina proste linie w łuki. Skala też się zmienia, ale to jest skutek, a nie cel — i, w przeciwieństwie do projekcji, jest to wada, którą konstruktor stara się usunąć.</li>
+    </ul>
+
+    <p>Praktyczna konsekwencja: rozciągnięcia rogów <span class="term-violet">nie należy korygować</span>, bo usunięcie go wygięłoby proste linie architektury. Dystorsję natomiast koryguje się rutynowo i bez wahania. Program do obróbki, który proponuje „popraw zniekształcenie obiektywu”, robi to drugie — i słusznie zostawia to pierwsze w spokoju.</p>
+
+    <p>Jest jednak sytuacja, w której świadomie miesza się jedno z drugim, i warto o niej wiedzieć. Przy bardzo szerokich kadrach z ludźmi przy krawędzi stosuje się czasem korektę pośrednią, częściowo cylindryczną, która zmniejsza rozciągnięcie twarzy kosztem lekkiego wygięcia prostych. Jest to kompromis między dwiema niemożliwościami i nie ma dobrego rozwiązania — o czym decyduje wtedy nie optyka, a to, czy w kadrze ważniejsza jest twarz, czy architektura.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Skąd się bierze · asymetria układu</div>
+    <h2>Dlaczego szerokie beczkują, a tele poduszkują</h2>
+
+    <p>Dystorsja ma jedną cechę odróżniającą ją od pozostałych wad Seidela: zależy nie tyle od kształtu soczewek, co od <strong>położenia przysłony</strong> względem nich.</p>
+
+    <p>Rozważmy trzy przypadki. Jeśli przysłona stoi <em>przed</em> całym układem, promień główny wchodzi w soczewkę bliżej osi, niż powinien, i wychodzi zbyt mało odchylony — powstaje dystorsja beczkowa. Jeśli stoi <em>za</em> układem, jest odwrotnie: poduszkowa. A jeśli układ jest <strong>symetryczny względem przysłony</strong>, oba wkłady się znoszą i dystorsja znika całkowicie.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Położenie przysłony decyduje</span><span>trzy układy, trzy znaki dystorsji</span></div>
+      <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Trzy układy: przysłona przed soczewką daje beczkę, za soczewką poduszkę, w środku symetrycznego układu zero dystorsji.">
+        <g font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">
+          <text x="130" y="24">PRZYSŁONA Z PRZODU</text><text x="380" y="24">UKŁAD SYMETRYCZNY</text><text x="630" y="24">PRZYSŁONA Z TYŁU</text>
+        </g>
+        <g>
+          <g stroke="#8b909b" stroke-width="3.5"><line x1="70" y1="60" x2="70" y2="98"/><line x1="70" y1="138" x2="70" y2="176"/></g>
+          <path d="M 150 66 Q 172 118 150 170 Q 128 118 150 66 Z" fill="#4fc3c0" fill-opacity="0.14" stroke="#4fc3c0" stroke-width="1.4"/>
+          <line x1="215" y1="60" x2="215" y2="176" stroke="#6e93be" stroke-width="2.5"/>
+          <path d="M 45 196 Q 130 206 215 196" fill="none" stroke="#9c82d8" stroke-width="1.8"/>
+          <text x="130" y="230" font-family="IBM Plex Mono" font-size="11" fill="#9c82d8" text-anchor="middle">beczka</text>
+        </g>
+        <g>
+          <path d="M 320 66 Q 342 118 320 170 Q 298 118 320 66 Z" fill="#4fc3c0" fill-opacity="0.14" stroke="#4fc3c0" stroke-width="1.4"/>
+          <g stroke="#8b909b" stroke-width="3.5"><line x1="380" y1="60" x2="380" y2="98"/><line x1="380" y1="138" x2="380" y2="176"/></g>
+          <path d="M 440 66 Q 462 118 440 170 Q 418 118 440 66 Z" fill="#4fc3c0" fill-opacity="0.14" stroke="#4fc3c0" stroke-width="1.4"/>
+          <line x1="500" y1="60" x2="500" y2="176" stroke="#6e93be" stroke-width="2.5"/>
+          <line x1="295" y1="196" x2="465" y2="196" stroke="#4fc3c0" stroke-width="1.8"/>
+          <text x="380" y="230" font-family="IBM Plex Mono" font-size="11" fill="#4fc3c0" text-anchor="middle">zero — wkłady się znoszą</text>
+        </g>
+        <g>
+          <path d="M 570 66 Q 592 118 570 170 Q 548 118 570 66 Z" fill="#4fc3c0" fill-opacity="0.14" stroke="#4fc3c0" stroke-width="1.4"/>
+          <g stroke="#8b909b" stroke-width="3.5"><line x1="646" y1="60" x2="646" y2="98"/><line x1="646" y1="138" x2="646" y2="176"/></g>
+          <line x1="712" y1="60" x2="712" y2="176" stroke="#6e93be" stroke-width="2.5"/>
+          <path d="M 545 196 Q 630 186 715 196" fill="none" stroke="#9c82d8" stroke-width="1.8"/>
+          <text x="630" y="230" font-family="IBM Plex Mono" font-size="11" fill="#9c82d8" text-anchor="middle">poduszka</text>
+        </g>
+      </svg>
+      <div class="diagram-caption">Symetria względem przysłony kasuje dystorsję razem z komą i chromatyczną poprzeczną. To najmocniejsze narzędzie, jakie ma konstruktor.</div>
+    </div>
+
+    <p>To ostatnie stwierdzenie jest jedną z najużyteczniejszych reguł w konstrukcji optycznej i tłumaczy kilka rzeczy naraz:</p>
+
+    <ul>
+      <li><strong>Obiektywy symetryczne mają znakomicie skorygowaną dystorsję</strong> — i nie tylko ją, bo symetria kasuje też komę i aberrację chromatyczną poprzeczną. Stąd wzięła się cała rodzina konstrukcji symetrycznych używanych w fotografii wielkoformatowej i reprodukcyjnej.</li>
+      <li><strong>Szeroki kąt na lustrzance nie może być symetryczny</strong>, bo musi mieć miejsce na lustro — czyli musi być retrofokusem, a retrofokus jest z definicji asymetryczny. Stąd jego dystorsja beczkowa, i stąd jej nasilenie tym większe, im szerszy kąt.</li>
+      <li><strong>Teleobiektyw też jest asymetryczny</strong>, tylko w drugą stronę — stąd jego skłonność do poduszki. Zwykle słabsza, bo asymetria jest mniej drastyczna.</li>
+      <li><strong>Zoom zmienia asymetrię wraz z ogniskową</strong>, przechodząc od beczki na krótkim końcu do poduszki na długim. Gdzieś pośrodku jest ogniskowa, przy której dystorsja jest bliska zeru — i to jest liczba, którą warto znać dla obiektywu, którym się często kręci.</li>
+    </ul>
+
+    <p>Ta ostatnia obserwacja tłumaczy zarazem, dlaczego dystorsja wąsata jest domeną zoomów. Konstruktor optymalizuje układ dla całego zakresu naraz, więc na żadnej ogniskowej nie może pozwolić sobie na czystą korekcję — kompromis rozkłada się między beczkę i poduszkę tak, że oba typy pojawiają się w jednym kadrze na różnych promieniach.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Skala · ile to właściwie jest</div>
+    <h2>Liczby, które warto mieć w głowie</h2>
+
+    <p>Dystorsję podaje się zwykle w procentach: o ile punkt w rogu kadru jest przesunięty względem miejsca, w którym powinien być. Warto znać rzędy wielkości, bo intuicja podpowiada wartości znacznie większe niż rzeczywiste.</p>
+
+    <p>Dobrze skorygowana stałka ma poniżej pół procenta — to jest poziom, przy którym trzeba szukać prostej linii tuż przy krawędzi kadru, żeby cokolwiek zauważyć. Typowy szeroki kąt na lustrzance ma dwa do trzech procent beczki. Ekstremalnie szeroki, poniżej piętnastu milimetrów, potrafi mieć pięć. Zoom na krótkim końcu — trzy do pięciu, na długim jeden do dwóch poduszki.</p>
+
+    <p>Trzy procent brzmi niegroźnie, dopóki nie przeliczy się tego na piksele. W kadrze 4K o szerokości 4096 pikseli półprzekątna to około 2560 pikseli, więc trzy procent oznacza <strong>przesunięcie o siedemdziesiąt siedem pikseli</strong> w rogu. Element CG postawiony tam bez korekcji siedzi siedemdziesiąt siedem pikseli obok miejsca, w którym powinien być. Nie ma mowy o niezauważeniu.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Dystorsja w pikselach</span><span>kadr 4K, przesunięcie w rogu</span></div>
+      <svg viewBox="0 0 760 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Słupki pokazujące przesunięcie w rogu kadru 4K dla typowych wartości dystorsji od 0,5 do 5 procent.">
+        <line x1="200" y1="200" x2="200" y2="40" stroke="#2a2f38" stroke-width="1"/>
+        <g font-family="IBM Plex Mono" font-size="11" fill="#8b909b">
+          <text x="30" y="66">stałka · 0,5%</text>
+          <text x="30" y="100">standard · 1%</text>
+          <text x="30" y="134">szeroki · 3%</text>
+          <text x="30" y="168">bardzo szeroki · 5%</text>
+        </g>
+        <g fill="#9c82d8" fill-opacity="0.5" stroke="#9c82d8" stroke-width="1">
+          <rect x="200" y="54" width="21" height="18"/>
+          <rect x="200" y="88" width="42" height="18"/>
+          <rect x="200" y="122" width="128" height="18"/>
+          <rect x="200" y="156" width="213" height="18"/>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="11" fill="#e8a33d">
+          <text x="231" y="67">13 px</text><text x="252" y="101">26 px</text>
+          <text x="338" y="135">77 px</text><text x="423" y="169">128 px</text>
+        </g>
+        <text x="30" y="226" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">Półprzekątna kadru 4K to około 2560 px. Procenty przeliczają się na piksele wprost.</text>
+      </svg>
+      <div class="diagram-caption">Nawet pół procenta to trzynaście pikseli — więcej, niż wynosi tolerancja przy dopasowywaniu elementu do plate'u.</div>
+    </div>
+
+    <p>Warto też wiedzieć, że przesunięcie nie rozkłada się równomiernie. Rośnie z trzecią potęgą promienia, więc <span class="term-cyan">w połowie drogi do rogu wynosi zaledwie jedną ósmą wartości brzegowej</span>. Element umieszczony blisko środka kadru może więc wyglądać poprawnie bez żadnej korekcji, a ten sam element przesunięty ku krawędzi rozjeżdża się gwałtownie. To jest częsta pułapka: ujęcie „siedzi”, dopóki kamera nie zjedzie tak, że element nie wędruje ku brzegowi.</p>
+
+    <div class="subsection">
+      <h3>Dlaczego dystorsji nie widać na krajobrazie</h3>
+      <p>Warto wiedzieć, kiedy dystorsja jest problemem, a kiedy można ją zignorować — bo różnica bywa duża i nie zależy od obiektywu, tylko od treści kadru.</p>
+      <p>Oko rozpoznaje wygięcie wyłącznie przez porównanie z <strong>linią, o której wie, że jest prosta</strong>. Krawędź budynku, framuga, horyzont morza, kratka podłogi. W kadrze bez takich odniesień — las, tłum, chmury, twarz — dystorsja pięcioprocentowa jest praktycznie niewidoczna, bo nie ma z czym porównać.</p>
+      <p>Stąd praktyka, która czasem dziwi początkujących: fotografowie architektury płacą duże pieniądze za obiektywy o dystorsji poniżej pół procenta, a fotografowie przyrody używają tych samych ogniskowych w wersjach kilkukrotnie tańszych i gorzej skorygowanych. Obaj mają rację, bo <span class="term-cyan">ta sama wada kosztuje ich zupełnie różne pieniądze w postprodukcji</span>.</p>
+      <p>Dla artysty CG wniosek jest odwrotny i mniej wygodny. Nawet w kadrze bez prostych linii dystorsja przesuwa punkty — a tracking i dopasowanie elementów opierają się właśnie na położeniu punktów, nie na wrażeniu wzrokowym. Ujęcie, w którym oko niczego nie widzi, potrafi więc rozjechać rekonstrukcję kamery zupełnie tak samo jak ujęcie architektoniczne. <strong>Niewidoczna dystorsja jest wciąż dystorsją mierzalną</strong>, i pipeline reaguje na pomiar, nie na wrażenie.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Anamorf · dystorsja, której się nie usuwa</div>
+    <h2>Kiedy zniekształcenie jest celem</h2>
+
+    <p>Jest jeden przypadek, w którym silna, jawna dystorsja jest wpisana w konstrukcję i nikt nie zamierza jej korygować: obiektyw anamorficzny. Ściska on obraz w poziomie — zwykle dwukrotnie — żeby szeroki kadr zmieścił się na wąskiej klatce filmu.</p>
+
+    <p>Formalnie jest to dystorsja, bo powiększenie zależy od kierunku. Nie jest to jednak wada w sensie tego rozdziału, z dwóch powodów. Po pierwsze, jest <strong>zamierzona i odwracalna</strong> — projektor albo postprodukcja rozciągają obraz z powrotem. Po drugie, jest jednorodna: nie zależy od odległości od osi, tylko od kierunku, więc proste linie zostają proste.</p>
+
+    <p>Ale anamorf ma <em>także</em> zwykłą dystorsję, i to zwykle silniejszą niż odpowiednik sferyczny — bo cylindryczne elementy dokładają własne wady, a układ jest z natury asymetryczny. W praktyce trzeba więc rozdzielić dwie rzeczy: rozciągnięcie o znany współczynnik, które się cofa, i dystorsję promieniową, którą się mierzy i koryguje jak w każdym innym obiektywie.</p>
+
+    <p>Dla pipeline'u CG oznacza to jeden dodatkowy krok i jedną dodatkową pułapkę. Krok: rozciągnięcie cofa się <strong>przed</strong> undistortem, bo model dystorsji promieniowej zakłada okrągłą symetrię, której ściśnięty obraz nie ma. Pułapka: renderować trzeba w proporcjach docelowych, a nie ściśniętych — inaczej rozmycie ruchu i głębia ostrości wyjdą anizotropowe w złą stronę.</p>
+
+    <p class="deeper-inline">Konstrukcja anamorfu i wszystko, co z niej wynika — <a href="rozdzial-20-anamorf.html">Rozdział 20</a> i <a href="../dodatki/dodatek-j-anamorf-w-liczbach.html">Dodatek J</a>.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">W CG · jedyna wada łamiąca geometrię</div>
+    <h2>Dlaczego undistort jest osobnym etapem pipeline'u</h2>
+
+    <p>Wszystkie wady omówione do tej pory psują wygląd. Dystorsja psuje <strong>geometrię</strong> — i to jest różnica jakościowa, nie ilościowa.</p>
+
+    <p>Renderer rzutuje scenę odwzorowaniem rektilinearnym: prosta w scenie jest prosta w obrazie, zawsze. Plate nakręcony obiektywem z dystorsją nie jest rektilinearny. Nałożenie jednego na drugie oznacza więc, że <span class="term-violet">te same współrzędne 3D lądują w dwóch różnych miejscach kadru</span>. Element CG postawiony na podłodze plate'u będzie na niej stał w środku kadru i zapadał się w nią przy krawędzi.</p>
+
+    <p>Nie da się tego naprawić przesunięciem ani skalowaniem, bo błąd jest nieliniowy i rośnie z promieniem. Nie da się też zignorować, bo tracker, który dopasowuje kamerę do materiału, zakłada model rektilinearny — dystorsja rozjeżdża mu rozwiązanie i albo tracking nie zbiega, albo zbiega do kamery, której nigdy nie było.</p>
+
+    <p>Stąd standardowy łańcuch, obowiązujący w każdej produkcji z elementami CG:</p>
+
+    <ul>
+      <li><strong>Undistort.</strong> Plate przekształca się do postaci rektilinearnej, odwracając zmierzoną dystorsję. Dopiero na tym materiale robi się tracking i rekonstrukcję.</li>
+      <li><strong>Render.</strong> Elementy CG renderuje się kamerą rektilinearną, zgodną z wytrackowaną — czyli w tej samej przestrzeni, co odprostowany plate.</li>
+      <li><strong>Redistort.</strong> Wyrenderowane elementy przekształca się z powrotem, nakładając tę samą dystorsję, i składa z <em>oryginalnym</em>, nietkniętym plate'em.</li>
+    </ul>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Łańcuch undistort → render → redistort</span><span>plate aktorski przechodzi przez zero przekształceń</span></div>
+      <svg viewBox="0 0 760 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Schemat pipeline'u: plate rozgałęzia się na ścieżkę odprostowaną do trackingu i renderu oraz na oryginał, do którego wraca się przy składaniu.">
+        <defs><marker id="d13a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8b909b"/></marker></defs>
+        <g font-family="IBM Plex Mono" font-size="10.5">
+          <rect x="30" y="106" width="96" height="40" fill="#20242c" stroke="#6e93be" stroke-width="1.5"/>
+          <text x="78" y="131" fill="#6e93be" text-anchor="middle">plate</text>
+
+          <rect x="180" y="34" width="110" height="40" fill="#20242c" stroke="#9c82d8" stroke-width="1.5"/>
+          <text x="235" y="59" fill="#9c82d8" text-anchor="middle">undistort</text>
+
+          <rect x="330" y="34" width="110" height="40" fill="#20242c" stroke="#9c82d8" stroke-width="1.5"/>
+          <text x="385" y="59" fill="#9c82d8" text-anchor="middle">tracking</text>
+
+          <rect x="480" y="34" width="110" height="40" fill="#20242c" stroke="#e8a33d" stroke-width="1.5"/>
+          <text x="535" y="59" fill="#e8a33d" text-anchor="middle">render CG</text>
+
+          <rect x="480" y="106" width="110" height="40" fill="#20242c" stroke="#9c82d8" stroke-width="1.5"/>
+          <text x="535" y="131" fill="#9c82d8" text-anchor="middle">redistort</text>
+
+          <rect x="630" y="106" width="100" height="40" fill="#20242c" stroke="#4fc3c0" stroke-width="1.5"/>
+          <text x="680" y="131" fill="#4fc3c0" text-anchor="middle">złożenie</text>
+        </g>
+        <g stroke="#8b909b" stroke-width="1.4" fill="none" marker-end="url(#d13a)">
+          <path d="M 126 118 L 152 118 L 152 54 L 176 54"/>
+          <path d="M 290 54 L 326 54"/>
+          <path d="M 440 54 L 476 54"/>
+          <path d="M 535 74 L 535 102"/>
+          <path d="M 590 126 L 626 126"/>
+        </g>
+        <path d="M 126 134 L 400 134 L 400 190 L 660 190 L 660 150" fill="none" stroke="#4fc3c0" stroke-width="2" marker-end="url(#d13a)" stroke-dasharray="6 4"/>
+        <text x="400" y="212" font-family="IBM Plex Mono" font-size="10.5" fill="#4fc3c0" text-anchor="middle">oryginał, nietknięty — zero interpolacji</text>
+        <text x="30" y="244" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">Przez dwa przekształcenia przechodzi wyłącznie CG. Materiał aktorski nie przechodzi przez żadne.</text>
+      </svg>
+      <div class="diagram-caption">Najczęstszy błąd to składanie na odprostowanym plate'cie. Kosztuje ostrość i ziarno w każdym ujęciu sekwencji.</div>
+    </div>
+
+    <p>Ostatni punkt jest tym, który najczęściej robi się źle, więc warto go podkreślić: <strong>do finalnego złożenia wraca się do oryginału, a nie do odprostowanego plate'u</strong>. Odprostowanie i ponowne zniekształcenie to dwie interpolacje, z których każda zmiękcza obraz i zjada ziarno. Materiał aktorski musi przejść przez zero takich operacji; przez dwie przechodzi wyłącznie CG, i to jest cena, którą się akceptuje.</p>
+
+    <p class="deeper-inline">Modele dystorsji używane przez trackery i Nuke'a, STMapy i sprawdzenie odwracalności — <a href="../dodatki/dodatek-g-modele-dystorsji.html">Dodatek G</a> oraz <a href="rozdzial-35-geometria-plateu.html">Rozdział 35</a>.</p>
+  </div>
+
+  <div class="panel practice">
+    <div class="panel-label">Z praktyki</div>
+    <p><strong>Zmierz dystorsję siatką, nie na oko.</strong> Wystarczy jedno ujęcie kratownicy albo ceglanej ściany, nakręcone tym samym obiektywem na tej samej ogniskowej i tej samej odległości ostrzenia. Bez tego współczynniki wyznacza się z samego materiału, co bywa niemożliwe w ujęciach bez prostych linii — a wtedy zostaje zgadywanie.</p>
+    <p><strong>Dystorsja zależy od odległości ostrzenia.</strong> To jest szczegół, o którym łatwo zapomnieć: przy ostrzeniu z bliska współczynniki potrafią zmienić się zauważalnie, zwłaszcza w obiektywach z ostrzeniem wewnętrznym. Siatka nakręcona na nieskończoność nie opisuje więc ujęcia kręconego z półtora metra.</p>
+    <p><strong>Sprawdzaj odwracalność.</strong> Zrób undistort i zaraz potem redistort na tym samym obrazie, a wynik odejmij od oryginału. Powinno zostać niemal zero. Jeśli zostaje wyraźna struktura, model dystorsji albo jego odwrotność są niedokładne — i ten błąd przeniesie się na każde ujęcie w sekwencji.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>dystorsja</dt>
+      <dd>Zależność powiększenia od odległości od osi. Jedyna wada Seidela nierozmywająca obrazu i jedyna nieznikająca po przymknięciu przysłony.</dd>
+      <dt>beczkowa / poduszkowa</dt>
+      <dd>Dwa znaki dystorsji: powiększenie malejące ku brzegom (linie wybrzuszone na zewnątrz) albo rosnące (linie wygięte do środka).</dd>
+      <dt>wąsata (moustache)</dt>
+      <dd>Dystorsja zmieniająca znak wraz z promieniem — beczkowa bliżej środka, poduszkowa przy brzegu. Typowa dla zoomów.</dd>
+      <dt>projekcja rektilinearna</dt>
+      <dd>Odwzorowanie zachowujące proste linie kosztem rosnącej ku brzegom skali. To, co robi standardowa kamera w rendererze. Nie jest wadą.</dd>
+      <dt>undistort / redistort</dt>
+      <dd>Przekształcenie plate'u do postaci rektilinearnej i z powrotem. Pierwsze przed trackingiem, drugie na wyrenderowanym CG przed złożeniem.</dd>
+      <dt>współczynniki k₁, k₂</dt>
+      <dd>Parametry wielomianowego modelu dystorsji. Znak k₁ wyznacza typ; drugi wyraz jest potrzebny dopiero przy dystorsji wąsatej.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Piątka Seidela zamknięta. Zostaje jednak wada, której w niej nie ma, bo Seidel liczył dla jednej długości fali — a my wiemy z <a href="rozdzial-02-zalamanie-i-dyspersja.html">Rozdziału 2</a>, że szkło zagina każdą barwę inaczej. W <a href="rozdzial-14-aberracja-chromatyczna.html">następnym rozdziale</a> wracamy do dyspersji i rozdzielamy dwa zjawiska, które wyglądają podobnie, mają różne przyczyny i tylko jedno z nich da się naprawić w compie.</p>
+  </div>
 
   <div class="deeper">
     <div class="deeper-label">Idź głębiej</div>
@@ -56,8 +355,96 @@ window.SKY3D_MESSAGES = {
       <a class="nav-next" href="rozdzial-14-aberracja-chromatyczna.html">Następny →</a>
   </div>
 
+  <template id="explain-dystorsja">
+    <h3>Model wielomianowy dystorsji</h3>
+
+    <div class="formula">r′ = r · (1 + k₁·r² + k₂·r⁴ + …)</div>
+
+    <p><strong>Dlaczego tylko potęgi parzyste w nawiasie.</strong> Dystorsja musi być symetryczna względem środka kadru — punkt leżący dziesięć milimetrów w lewo i punkt dziesięć milimetrów w prawo muszą być przesunięte tak samo. Gdyby w nawiasie stała potęga nieparzysta, zmieniałaby znak razem z r i symetria by się złamała. Zostają więc r², r⁴ i tak dalej.</p>
+
+    <p><strong>Dlaczego mnożymy przez r.</strong> Przesunięcie musi być zerowe w środku kadru, bo tam nie ma od czego odbiegać. Czynnik r przed nawiasem to zapewnia i sprawia zarazem, że efekt narasta wraz z oddalaniem się od osi — najsilniej w rogach, gdzie r jest największe.</p>
+
+    <p><strong>Jak czytać znak.</strong> Dla k₁ ujemnego nawias jest mniejszy od jedynki, więc r′ wychodzi mniejsze od r: punkty przesuwają się ku środkowi, kadr się ściąga, proste wybrzuszają na zewnątrz. To beczka. Dla k₁ dodatniego odwrotnie — poduszka.</p>
+
+    <p><strong>Normalizacja, czyli najczęstsze źródło pomyłek.</strong> Wartość k₁ nie ma sensu bez informacji, w jakich jednostkach mierzy się r. Jedne narzędzia normalizują do połowy szerokości kadru, inne do połowy przekątnej, jeszcze inne używają milimetrów na matrycy. Ten sam obiektyw dostaje w każdej z tych konwencji inną liczbę, różniącą się nawet kilkukrotnie. Przepisując współczynniki z jednego programu do drugiego, <strong>zawsze sprawdź konwencję</strong> — to jest najczęstsza przyczyna dystorsji, która „prawie pasuje”.</p>
+
+    <p><strong>Dlaczego odwrócenie nie jest zmianą znaku.</strong> Naturalny odruch: skoro k₁ = −0,1 daje beczkę, to k₁ = +0,1 ją odwróci. Nie odwróci. Odwrotność funkcji wielomianowej nie jest wielomianem o przeciwnych współczynnikach — jest inną funkcją, którą trzeba albo wyznaczyć numerycznie, albo przybliżyć własnym wielomianem o osobno dopasowanych współczynnikach. Narzędzia robią to za ciebie, ale warto wiedzieć, że robią coś nietrywialnego, bo stąd biorą się drobne niedokładności przy podwójnym przekształceniu.</p>
+
+    <p><strong>Czego ten model nie obejmuje.</strong> Powyższy wzór opisuje wyłącznie dystorsję <em>promieniową</em>, czyli symetryczną względem osi. Realny obiektyw ma jeszcze składową styczną, wynikającą z niedokładnego wyosiowania elementów — zwykle o rząd wielkości słabszą, ale mierzalną. W fotogrametrii uwzględnia się ją zawsze; w pracy z materiałem filmowym zwykle pomija.</p>
+  </template>
+
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-panel">
+      <button class="modal-close" data-modal-close aria-label="Zamknij">×</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
 </div>
 
 <script src="../assets/interactive.js"></script>
+<script>
+/* Siatka z dystorsja wielomianowa r' = r (1 + k1 r^2 + k2 r^4).
+   r normalizowane do polowy przekatnej kadru. */
+(function () {
+  var s1 = document.getElementById('dysK1'), s2 = document.getElementById('dysK2');
+  if (!s1 || !s2) return;
+  var X0 = 80, Y0 = 30, W = 600, H = 260;
+  var CX = X0 + W / 2, CY = Y0 + H / 2;
+  var NORM = Math.sqrt(W * W + H * H) / 2;
+
+  function znieksztalc(x, y, k1, k2) {
+    var dx = x - CX, dy = y - CY;
+    var r = Math.sqrt(dx * dx + dy * dy) / NORM;
+    var f = 1 + k1 * r * r + k2 * r * r * r * r;
+    return [CX + dx * f, CY + dy * f];
+  }
+
+  function fmt(v) {
+    return (v < 0 ? '−' : '') + Math.abs(v).toFixed(2).replace('.', ',');
+  }
+
+  function odswiez() {
+    var k1 = parseFloat(s1.value) / 100, k2 = parseFloat(s2.value) / 100;
+    var d = '';
+    var KOL = 8, WIE = 6, KROK = 12, i, j, p;
+
+    for (i = 0; i <= KOL; i++) {
+      var x = X0 + i * W / KOL;
+      for (j = 0; j <= WIE * KROK; j++) {
+        p = znieksztalc(x, Y0 + j * H / (WIE * KROK), k1, k2);
+        d += (j === 0 ? ' M ' : ' L ') + p[0].toFixed(1) + ' ' + p[1].toFixed(1);
+      }
+    }
+    for (j = 0; j <= WIE; j++) {
+      var y = Y0 + j * H / WIE;
+      for (i = 0; i <= KOL * KROK; i++) {
+        p = znieksztalc(X0 + i * W / (KOL * KROK), y, k1, k2);
+        d += (i === 0 ? ' M ' : ' L ') + p[0].toFixed(1) + ' ' + p[1].toFixed(1);
+      }
+    }
+    document.getElementById('siatkaDys').innerHTML = '<path d="' + d + '"/>';
+
+    document.getElementById('k1Odczyt').textContent = fmt(k1);
+    document.getElementById('k2Odczyt').textContent = fmt(k2);
+
+    var opis;
+    if (Math.abs(k1) < 0.02 && Math.abs(k2) < 0.02) {
+      opis = 'brak dystorsji — siatka pozostaje prostokątna';
+    } else if (k1 * k2 < -0.001) {
+      opis = 'znaki przeciwne, więc dystorsja zmienia charakter z promieniem — to jest wąs';
+    } else if (k1 < 0) {
+      opis = 'dystorsja beczkowa, linie wybrzuszone na zewnątrz';
+    } else {
+      opis = 'dystorsja poduszkowa, linie wygięte do środka';
+    }
+    document.getElementById('dysPodpis').textContent =
+      'k₁ = ' + fmt(k1) + ', k₂ = ' + fmt(k2) + ': ' + opis + '.';
+  }
+  s1.addEventListener('input', odswiez);
+  s2.addEventListener('input', odswiez);
+  odswiez();
+})();
+</script>
 </body>
 </html>
