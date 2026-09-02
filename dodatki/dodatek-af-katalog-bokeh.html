@@ -41,7 +41,161 @@ window.SKY3D_MESSAGES = {
   <h1>Katalog kształtów bokeh</h1>
   <p class="subtitle">Kocie oko, wielokąt, obrączka, cebulka, pączek, mydlana bańka i wir — każdy kształt z przyczyną, konstrukcją, która go daje, i sposobem odtworzenia w compie.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">Co tu jest</div>
+    <ul>
+      <li><strong>Osiem kształtów</strong> krążka nieostrości, każdy z przyczyną w konstrukcji obiektywu.</li>
+      <li><strong>Tabela rozstrzygająca</strong>: co znika po przymknięciu przysłony, a co zostaje — czyli jak z jednego ujęcia odczytać, na czym je nakręcono.</li>
+      <li><strong>Przepis na odtworzenie</strong> każdego kształtu teksturą źrenicy w rendererze albo jądrem splotu w compie.</li>
+    </ul>
+  </div>
+
+  <p class="deeper-inline">Skąd w ogóle bierze się kształt krążka i dlaczego rozkład jasności w nim jest ważniejszy od obrysu — <a href="../rozdzialy/rozdzial-09-bokeh.html">Rozdział 9</a>.</p>
+
+<div class="section">
+    <div class="section-eyebrow">Geometria · katalog kształtów</div>
+    <h2>Skąd biorą się wielokąty, koty i pączki</h2>
+
+    <div class="subsection">
+      <h3>Wielokąt — listki przysłony</h3>
+      <p>Najprostszy przypadek, omówiony już w <a href="../rozdzialy/rozdzial-06-przyslona-f-i-t.html">Rozdziale 6</a>: przymknięta przysłona jest wielokątem o tylu bokach, ile ma listków, więc krążek też. Przy pełnym otwarciu listki chowają się poza oprawę i kształt wyznacza okrągła tuleja — dlatego <strong>bokeh jest najbardziej okrągłe przy najszerszej przysłonie</strong> i kanciej z każdym przymknięciem.</p>
+      <p>Producenci walczą z tym, zakrzywiając krawędzie listków. Nigdy nie wychodzi z tego dokładne koło — przy przymknięciu o dwie–trzy przysłony wielokąt zaczyna być widoczny nawet w konstrukcjach reklamowanych jako „okrągła przysłona”.</p>
+    </div>
+
+    <div class="subsection">
+      <h3>Kocie oko — obcięcie mechaniczne</h3>
+      <p>Omówione w <a href="../rozdzialy/rozdzial-07-zrenice.html">Rozdziale 7</a>. Poza osią oprawy obiektywu obcinają źrenicę, więc krążek staje się soczewkowaty, a jego oś wskazuje na środek kadru. Znika po przymknięciu przysłony, bo przymknięta przysłona jest mniejsza od otworów opraw.</p>
+    </div>
+
+    <div class="subsection">
+      <h3>Pączek — źrenica pierścieniowa</h3>
+      <p>Obiektyw katadioptryczny, czyli lustrzany, ma na środku wtórne lustro zasłaniające oś. Jego źrenica jest więc <strong>pierścieniem</strong>, a nie kołem — i krążki nieostrości wychodzą pączkowate, z dziurą w środku. Jest to najbardziej rozpoznawalny podpis konstrukcji w całej optyce i zarazem powód, dla którego lustrzanek prawie nikt nie lubi.</p>
+      <p>Wart uwagi jest tu mechanizm, bo wróci w <a href="../rozdzialy/rozdzial-18-skrajne-ogniskowe.html">Rozdziale 18</a>: to nie jest wada wykonania, tylko nieusuwalna cena tego, że światło musi wejść i wyjść tą samą stroną układu.</p>
+    </div>
+
+    <div class="subsection">
+      <h3>Cebulka — ślad szlifowania</h3>
+      <p>Koncentryczne pierścienie wewnątrz krążka, przypominające słoje. Biorą się z powierzchni asferycznych produkowanych metodą prasowania albo szlifowania z posuwem: pozostają na nich mikroskopijne pierścieniowe nierówności, niewidoczne w obrazie ostrym, ale <em>powiększane</em> przez rzut na krążek nieostrości.</p>
+      <p>Jest w tym pewna ironia: cebulki występują częściej w obiektywach nowoczesnych i drogich niż w starych i tanich, bo to właśnie te pierwsze używają asfer. Wada bierze się z rozwiązania, nie z zaniedbania.</p>
+    </div>
+  </div><div class="section">
+    <div class="section-eyebrow">Wir · najbardziej rozpoznawalny efekt vintage</div>
+    <h2>Skąd bierze się skręcone tło</h2>
+
+    <p>Jest efekt, który w ostatniej dekadzie zrobił karierę i sprzedał tysiące radzieckich obiektywów z lat sześćdziesiątych: tło zakręcone w wir wokół środka kadru, jakby ktoś obrócił zdjęcie w wodzie. Nazywa się swirly bokeh i — jak większość rzeczy w tej książce — nie jest efektem, tylko sumą dwóch wad, z których żadna sama by go nie dała.</p>
+
+    <p><strong>Pierwsza to obcięcie mechaniczne</strong>, znane już z <a href="../rozdzialy/rozdzial-07-zrenice.html">Rozdziału 7</a>. Krążki poza środkiem kadru stają się soczewkowate, a ich osie układają się promieniście. Samo to daje efekt „ciągnięcia ku środkowi”, ale jeszcze nie wir.</p>
+
+    <p><strong>Druga to krzywizna pola</strong>, o której szerzej w <a href="../rozdzialy/rozdzial-12-poza-osia.html">Rozdziale 12</a>. Obiektyw o niekorygowanej krzywiźnie ustawia ostrość nie na płaszczyźnie, tylko na czaszy — więc im dalej od środka kadru, tym płaszczyzna ostrości leży bliżej kamery. Punkt tła, który w środku kadru byłby lekko nieostry, przy krawędzi jest nieostry znacznie bardziej, a do tego <em>po drugiej stronie ostrości</em>.</p>
+
+    <p>Złóż jedno z drugim i dostajesz wir: krążki rosnące ku brzegom, coraz mocniej ścięte i coraz bardziej pochylone. Oko odczytuje ten układ jako ruch obrotowy, choć żaden element obrazu nie jest obrócony.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Dwie wady, jeden efekt</span><span>obcięcie plus krzywizna pola</span></div>
+      <svg viewBox="0 0 760 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Trzy panele: samo obcięcie mechaniczne, sama krzywizna pola i ich suma dająca efekt wiru.">
+        <g font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">
+          <text x="130" y="24">SAMO OBCIĘCIE</text><text x="380" y="24">SAMA KRZYWIZNA</text><text x="630" y="24">RAZEM · WIR</text>
+        </g>
+        <g fill="none" stroke="#2a2f38"><rect x="30" y="36" width="200" height="200"/><rect x="280" y="36" width="200" height="200"/><rect x="530" y="36" width="200" height="200"/></g>
+
+        <g fill="#e8a33d" fill-opacity="0.45" stroke="#e8a33d" stroke-width="1">
+          <ellipse cx="130" cy="136" rx="13" ry="13"/>
+          <ellipse cx="192" cy="136" rx="7" ry="13"/><ellipse cx="68" cy="136" rx="7" ry="13"/>
+          <ellipse cx="130" cy="74" rx="13" ry="7"/><ellipse cx="130" cy="198" rx="13" ry="7"/>
+          <ellipse cx="182" cy="88" rx="7" ry="13" transform="rotate(45 182 88)"/>
+          <ellipse cx="78" cy="88" rx="7" ry="13" transform="rotate(-45 78 88)"/>
+          <ellipse cx="182" cy="184" rx="7" ry="13" transform="rotate(-45 182 184)"/>
+          <ellipse cx="78" cy="184" rx="7" ry="13" transform="rotate(45 78 184)"/>
+        </g>
+
+        <g fill="#9c82d8" fill-opacity="0.45" stroke="#9c82d8" stroke-width="1">
+          <circle cx="380" cy="136" r="8"/>
+          <circle cx="442" cy="136" r="16"/><circle cx="318" cy="136" r="16"/>
+          <circle cx="380" cy="74" r="16"/><circle cx="380" cy="198" r="16"/>
+          <circle cx="432" cy="88" r="20"/><circle cx="328" cy="88" r="20"/>
+          <circle cx="432" cy="184" r="20"/><circle cx="328" cy="184" r="20"/>
+        </g>
+
+        <g fill="#e8a33d" fill-opacity="0.5" stroke="#e8a33d" stroke-width="1">
+          <ellipse cx="630" cy="136" rx="8" ry="8"/>
+          <ellipse cx="692" cy="136" rx="8" ry="16"/><ellipse cx="568" cy="136" rx="8" ry="16"/>
+          <ellipse cx="630" cy="74" rx="16" ry="8"/><ellipse cx="630" cy="198" rx="16" ry="8"/>
+          <ellipse cx="682" cy="86" rx="9" ry="20" transform="rotate(45 682 86)"/>
+          <ellipse cx="578" cy="86" rx="9" ry="20" transform="rotate(-45 578 86)"/>
+          <ellipse cx="682" cy="186" rx="9" ry="20" transform="rotate(-45 682 186)"/>
+          <ellipse cx="578" cy="186" rx="9" ry="20" transform="rotate(45 578 186)"/>
+        </g>
+        <text x="30" y="264" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">Rosnące, ścinane i pochylane krążki. Oko dopowiada obrót, którego w obrazie nie ma.</text>
+      </svg>
+      <div class="diagram-caption">Petzval z 1840 roku miał obie te wady, bo nie umiano ich wtedy usunąć. Dziś kupuje się je z powrotem.</div>
+    </div>
+
+    <p>Warto zauważyć konsekwencję praktyczną: <span class="term-violet">wir znika po przymknięciu przysłony</span>, i to z obu powodów naraz. Przymknięcie usuwa obcięcie mechaniczne i jednocześnie zwiększa głębię na tyle, że krzywizna pola przestaje być widoczna. Obiektyw kupiony dla wiru trzeba więc trzymać otwarty — a to znaczy godzić się na wszystkie jego pozostałe wady przy pełnym otworze.</p>
+
+    <p>To samo tłumaczy, dlaczego wir jest silniejszy na większym formacie. Efekt narasta z odległością od osi, a większa matryca sięga dalej w pole obrazu — dlatego ten sam obiektyw daje na pełnej klatce wyraźny wir, a na Super 35 ledwie zauważalne ciągnięcie.</p>
+  </div>
+  <div class="section">
+    <div class="section-eyebrow">Obrączka · to samo, co aberracja sferyczna</div>
+    <h2>Obrączka i mydlana bańka</h2>
+
+    <p>Dwa ostatnie kształty nie biorą się z żadnej przesłony ani oprawy. Biorą się ze stanu korekcji sferycznej — czyli z tego samego zjawiska, które opisuje <a href="../rozdzialy/rozdzial-11-aberracja-sferyczna.html">Rozdział 11</a>, tylko oglądanego od strony tła zamiast od strony ostrości.</p>
+
+    <p>Kiedy zewnętrzne strefy źrenicy ogniskują <em>bliżej</em> niż strefy środkowe, światło z brzegu źrenicy zbiera się na obwodzie krążka. Powstaje <span class="term-violet">obrączka</span>: jasny pierścień przy krawędzi, ciemniejszy środek. Gdy zjawisko jest silne, pierścień robi się wąski i ostro odcięty, a krążek zaczyna wyglądać jak <strong>mydlana bańka</strong> — kontur jasny, wnętrze prawie puste.</p>
+
+    <p>Jest to podpis konstrukcji prostych: trójek i innych układów o niewielu soczewkach, w których nie ma czym skorygować sferycznej. Efekt czyta się jako „vintage” i bywa dziś zamawiany celowo — ale nie jest ozdobą doklejoną do obiektywu, tylko <span class="term-cyan">bezpośrednim obrazem tego, jak źle ten obiektyw skupia światło</span>.</p>
+
+    <p>Najważniejsza konsekwencja praktyczna jest taka, że <strong>kształt odwraca się między przodem a tyłem</strong>. Obiektyw dający bańki w tle daje w przedplanie krążki gasnące ku brzegom, i odwrotnie. Wynika to wprost z geometrii: krążek przed płaszczyzną ostrości jest przekrojem tego samego stożka po drugiej stronie zbiegu, więc strefy źrenicy zamieniają się w nim miejscami. Dlatego <em>nie istnieje obiektyw z ładnym bokeh</em> — istnieje obiektyw z ładnym bokeh w tle albo w przedplanie.</p>
+
+    <p>Stąd też bierze się reguła, którą warto mieć w głowie przy ocenie plate'u: jeśli w ujęciu tło ma wyraźne obrączki, a przedplan jest miękki, to nie jest przypadek ani zasługa dwóch różnych narzędzi. To jedna właściwość jednego szkła, oglądana z dwóch stron.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Rozstrzyganie · co znika po przymknięciu</div>
+    <h2>Tabela: kształt, przyczyna, test</h2>
+
+    <p>Wszystkie kształty razem, z jedną kolumną, która jest w praktyce najważniejsza. <span class="term-cyan">Reakcja na przymknięcie przysłony rozstrzyga o przyczynie</span> — bo przymknięcie zmniejsza źrenicę, więc kasuje wszystko, co bierze się z jej brzegu albo z obcinania przez oprawy, a nie rusza tego, co siedzi w środku układu.</p>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead>
+          <tr><th>Kształt</th><th>Przyczyna</th><th>Po przymknięciu</th><th>Odtworzenie</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Wielokąt</td><td>listki przysłony</td><td>nasila się</td><td>wielokątna maska źrenicy</td></tr>
+          <tr><td>Koło</td><td>pełny otwór, listki schowane</td><td>znika</td><td>domyślny dysk</td></tr>
+          <tr><td>Kocie oko</td><td>obcięcie przez oprawy</td><td>znika</td><td>maska zależna od pozycji w kadrze</td></tr>
+          <tr><td>Obrączka</td><td>przekorygowana sferyczna</td><td>słabnie</td><td>gradient jasny przy brzegu</td></tr>
+          <tr><td>Mydlana bańka</td><td>silnie przekorygowana sferyczna</td><td>słabnie</td><td>wąski jasny pierścień</td></tr>
+          <tr><td>Kremowy</td><td>niedokorygowana sferyczna</td><td>słabnie</td><td>gradient gasnący ku brzegom</td></tr>
+          <tr><td>Pączek</td><td>lustro wtórne na osi</td><td>bez zmian</td><td>czarne koło na środku</td></tr>
+          <tr><td>Cebulka</td><td>prążki po szlifowaniu asfery</td><td>bez zmian</td><td>koncentryczne prążki</td></tr>
+          <tr><td>Wir</td><td>obcięcie plus krzywizna pola</td><td>znika</td><td>maska obracana promieniowo</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Kolumna „po przymknięciu” dotyczy przymknięcia o dwie–trzy działki od pełnego otworu. Kolumna „odtworzenie” opisuje teksturę źrenicy w rendererze; w compie ta sama mapa działa jako jądro splotu.</p>
+
+    <p>Z tabeli wychodzi wniosek, który upraszcza pracę przy dopasowywaniu renderu do plate'u. <strong>Trzy kształty przeżywają przymknięcie</strong>: wielokąt, pączek i cebulka. Jeśli widzisz je w ujęciu, wiesz coś o samym obiektywie. Cała reszta mówi ci głównie o tym, jak szeroko był otwarty — czyli jest informacją o nastawie, nie o szkle.</p>
+
+    <p>Odwrotnie też: <span class="term-violet">jeśli w ujęciu nie ma kociego oka przy krawędziach, obiektyw był przymknięty</span>, i próba odtworzenia tego ujęcia renderem z bardzo płytką głębią rozjedzie się nie tylko w bokeh, ale i w strefie ostrości.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">W praktyce · jedna mapa zamiast dziewięciu efektów</div>
+    <h2>Jak to zrobić w rendererze i w compie</h2>
+
+    <p>Wszystkie dziewięć wierszy tabeli da się odtworzyć jednym mechanizmem, bo wszystkie są tym samym: <strong>obrazem źrenicy</strong>. Renderer, który przyjmuje teksturę źrenicy, dostaje w tej teksturze komplet informacji o kształcie i rozkładzie jasności. W compie ta sama mapa jest jądrem splotu.</p>
+
+    <p>Trzy rzeczy warto przy tym wiedzieć, bo każda z nich potrafi zepsuć wynik przy poprawnie narysowanej mapie:</p>
+
+    <ul>
+      <li><strong>Mapa musi być w liniowej przestrzeni barw.</strong> Jądro splotu z krzywą gamma daje jasne światła rozmyte za słabo i brudne półcienie — najczęstszy powód, dla którego rozmycie w compie wygląda „płasko” w porównaniu z materiałem.</li>
+      <li><strong>Suma mapy musi być znormalizowana.</strong> Inaczej rozmycie zmienia jasność tła, a nie tylko jego strukturę. Przy jądrze z jasnym pierścieniem jest to szczególnie łatwe do przeoczenia, bo pierścień niesie sporo energii.</li>
+      <li><strong>Kocie oko i wir wymagają mapy zależnej od pozycji.</strong> Jedna mapa na cały kadr odtworzy wszystko poza tymi dwoma — bo obcięcie mechaniczne jest z definicji funkcją kąta, czyli miejsca w kadrze. To jest jedyne miejsce, w którym trzeba wyjść poza pojedynczy splot.</li>
+    </ul>
+
+    <p>Ostatnia uwaga dotyczy rozdzielczości mapy. Cebulki to prążki o skali rzędu jednej setnej średnicy krążka; mapa 64×64 piksele ich nie utrzyma, a mapa 512×512 utrzyma z zapasem. Ponieważ mapa i tak jest liczona raz, <span class="term-cyan">nie ma powodu jej oszczędzać</span> — koszt splotu zależy od średnicy rozmycia w pikselach obrazu, a nie od rozdzielczości jądra.</p>
+  </div>
 
   <div class="site-nav">
     <a href="../index.html">← Spis treści</a>

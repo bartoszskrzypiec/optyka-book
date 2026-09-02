@@ -105,34 +105,6 @@ window.SKY3D_MESSAGES = {
   </div>
 
   <div class="section">
-    <div class="section-eyebrow">Geometria · katalog kształtów</div>
-    <h2>Skąd biorą się wielokąty, koty i pączki</h2>
-
-    <div class="subsection">
-      <h3>Wielokąt — listki przysłony</h3>
-      <p>Najprostszy przypadek, omówiony już w <a href="rozdzial-06-przyslona-f-i-t.html">Rozdziale 6</a>: przymknięta przysłona jest wielokątem o tylu bokach, ile ma listków, więc krążek też. Przy pełnym otwarciu listki chowają się poza oprawę i kształt wyznacza okrągła tuleja — dlatego <strong>bokeh jest najbardziej okrągłe przy najszerszej przysłonie</strong> i kanciej z każdym przymknięciem.</p>
-      <p>Producenci walczą z tym, zakrzywiając krawędzie listków. Nigdy nie wychodzi z tego dokładne koło — przy przymknięciu o dwie–trzy przysłony wielokąt zaczyna być widoczny nawet w konstrukcjach reklamowanych jako „okrągła przysłona”.</p>
-    </div>
-
-    <div class="subsection">
-      <h3>Kocie oko — obcięcie mechaniczne</h3>
-      <p>Omówione w <a href="rozdzial-07-zrenice.html">Rozdziale 7</a>. Poza osią oprawy obiektywu obcinają źrenicę, więc krążek staje się soczewkowaty, a jego oś wskazuje na środek kadru. Znika po przymknięciu przysłony, bo przymknięta przysłona jest mniejsza od otworów opraw.</p>
-    </div>
-
-    <div class="subsection">
-      <h3>Pączek — źrenica pierścieniowa</h3>
-      <p>Obiektyw katadioptryczny, czyli lustrzany, ma na środku wtórne lustro zasłaniające oś. Jego źrenica jest więc <strong>pierścieniem</strong>, a nie kołem — i krążki nieostrości wychodzą pączkowate, z dziurą w środku. Jest to najbardziej rozpoznawalny podpis konstrukcji w całej optyce i zarazem powód, dla którego lustrzanek prawie nikt nie lubi.</p>
-      <p>Wart uwagi jest tu mechanizm, bo wróci w <a href="rozdzial-18-skrajne-ogniskowe.html">Rozdziale 18</a>: to nie jest wada wykonania, tylko nieusuwalna cena tego, że światło musi wejść i wyjść tą samą stroną układu.</p>
-    </div>
-
-    <div class="subsection">
-      <h3>Cebulka — ślad szlifowania</h3>
-      <p>Koncentryczne pierścienie wewnątrz krążka, przypominające słoje. Biorą się z powierzchni asferycznych produkowanych metodą prasowania albo szlifowania z posuwem: pozostają na nich mikroskopijne pierścieniowe nierówności, niewidoczne w obrazie ostrym, ale <em>powiększane</em> przez rzut na krążek nieostrości.</p>
-      <p>Jest w tym pewna ironia: cebulki występują częściej w obiektywach nowoczesnych i drogich niż w starych i tanich, bo to właśnie te pierwsze używają asfer. Wada bierze się z rozwiązania, nie z zaniedbania.</p>
-    </div>
-  </div>
-
-  <div class="section">
     <div class="section-eyebrow">Rozkład jasności · tu mieszka „charakter”</div>
     <h2>Kremowe, obrączkowe i dlaczego to nie kwestia gustu</h2>
 
@@ -171,63 +143,6 @@ window.SKY3D_MESSAGES = {
       </svg>
       <div class="diagram-caption">To jest różnica, którą ludzie nazywają „charakterem szkła”. Ma jedną przyczynę i jedną liczbę.</div>
     </div>
-  </div>
-
-  <div class="section">
-    <div class="section-eyebrow">Wir · najbardziej rozpoznawalny efekt vintage</div>
-    <h2>Skąd bierze się skręcone tło</h2>
-
-    <p>Jest efekt, który w ostatniej dekadzie zrobił karierę i sprzedał tysiące radzieckich obiektywów z lat sześćdziesiątych: tło zakręcone w wir wokół środka kadru, jakby ktoś obrócił zdjęcie w wodzie. Nazywa się swirly bokeh i — jak większość rzeczy w tej książce — nie jest efektem, tylko sumą dwóch wad, z których żadna sama by go nie dała.</p>
-
-    <p><strong>Pierwsza to obcięcie mechaniczne</strong>, znane już z <a href="rozdzial-07-zrenice.html">Rozdziału 7</a>. Krążki poza środkiem kadru stają się soczewkowate, a ich osie układają się promieniście. Samo to daje efekt „ciągnięcia ku środkowi”, ale jeszcze nie wir.</p>
-
-    <p><strong>Druga to krzywizna pola</strong>, o której szerzej w <a href="rozdzial-12-poza-osia.html">Rozdziale 12</a>. Obiektyw o niekorygowanej krzywiźnie ustawia ostrość nie na płaszczyźnie, tylko na czaszy — więc im dalej od środka kadru, tym płaszczyzna ostrości leży bliżej kamery. Punkt tła, który w środku kadru byłby lekko nieostry, przy krawędzi jest nieostry znacznie bardziej, a do tego <em>po drugiej stronie ostrości</em>.</p>
-
-    <p>Złóż jedno z drugim i dostajesz wir: krążki rosnące ku brzegom, coraz mocniej ścięte i coraz bardziej pochylone. Oko odczytuje ten układ jako ruch obrotowy, choć żaden element obrazu nie jest obrócony.</p>
-
-    <div class="diagram-frame">
-      <div class="diagram-hud"><span>Dwie wady, jeden efekt</span><span>obcięcie plus krzywizna pola</span></div>
-      <svg viewBox="0 0 760 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Trzy panele: samo obcięcie mechaniczne, sama krzywizna pola i ich suma dająca efekt wiru.">
-        <g font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">
-          <text x="130" y="24">SAMO OBCIĘCIE</text><text x="380" y="24">SAMA KRZYWIZNA</text><text x="630" y="24">RAZEM · WIR</text>
-        </g>
-        <g fill="none" stroke="#2a2f38"><rect x="30" y="36" width="200" height="200"/><rect x="280" y="36" width="200" height="200"/><rect x="530" y="36" width="200" height="200"/></g>
-
-        <g fill="#e8a33d" fill-opacity="0.45" stroke="#e8a33d" stroke-width="1">
-          <ellipse cx="130" cy="136" rx="13" ry="13"/>
-          <ellipse cx="192" cy="136" rx="7" ry="13"/><ellipse cx="68" cy="136" rx="7" ry="13"/>
-          <ellipse cx="130" cy="74" rx="13" ry="7"/><ellipse cx="130" cy="198" rx="13" ry="7"/>
-          <ellipse cx="182" cy="88" rx="7" ry="13" transform="rotate(45 182 88)"/>
-          <ellipse cx="78" cy="88" rx="7" ry="13" transform="rotate(-45 78 88)"/>
-          <ellipse cx="182" cy="184" rx="7" ry="13" transform="rotate(-45 182 184)"/>
-          <ellipse cx="78" cy="184" rx="7" ry="13" transform="rotate(45 78 184)"/>
-        </g>
-
-        <g fill="#9c82d8" fill-opacity="0.45" stroke="#9c82d8" stroke-width="1">
-          <circle cx="380" cy="136" r="8"/>
-          <circle cx="442" cy="136" r="16"/><circle cx="318" cy="136" r="16"/>
-          <circle cx="380" cy="74" r="16"/><circle cx="380" cy="198" r="16"/>
-          <circle cx="432" cy="88" r="20"/><circle cx="328" cy="88" r="20"/>
-          <circle cx="432" cy="184" r="20"/><circle cx="328" cy="184" r="20"/>
-        </g>
-
-        <g fill="#e8a33d" fill-opacity="0.5" stroke="#e8a33d" stroke-width="1">
-          <ellipse cx="630" cy="136" rx="8" ry="8"/>
-          <ellipse cx="692" cy="136" rx="8" ry="16"/><ellipse cx="568" cy="136" rx="8" ry="16"/>
-          <ellipse cx="630" cy="74" rx="16" ry="8"/><ellipse cx="630" cy="198" rx="16" ry="8"/>
-          <ellipse cx="682" cy="86" rx="9" ry="20" transform="rotate(45 682 86)"/>
-          <ellipse cx="578" cy="86" rx="9" ry="20" transform="rotate(-45 578 86)"/>
-          <ellipse cx="682" cy="186" rx="9" ry="20" transform="rotate(-45 682 186)"/>
-          <ellipse cx="578" cy="186" rx="9" ry="20" transform="rotate(45 578 186)"/>
-        </g>
-        <text x="30" y="264" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">Rosnące, ścinane i pochylane krążki. Oko dopowiada obrót, którego w obrazie nie ma.</text>
-      </svg>
-      <div class="diagram-caption">Petzval z 1840 roku miał obie te wady, bo nie umiano ich wtedy usunąć. Dziś kupuje się je z powrotem.</div>
-    </div>
-
-    <p>Warto zauważyć konsekwencję praktyczną: <span class="term-violet">wir znika po przymknięciu przysłony</span>, i to z obu powodów naraz. Przymknięcie usuwa obcięcie mechaniczne i jednocześnie zwiększa głębię na tyle, że krzywizna pola przestaje być widoczna. Obiektyw kupiony dla wiru trzeba więc trzymać otwarty — a to znaczy godzić się na wszystkie jego pozostałe wady przy pełnym otworze.</p>
-
-    <p>To samo tłumaczy, dlaczego wir jest silniejszy na większym formacie. Efekt narasta z odległością od osi, a większa matryca sięga dalej w pole obrazu — dlatego ten sam obiektyw daje na pełnej klatce wyraźny wir, a na Super 35 ledwie zauważalne ciągnięcie.</p>
   </div>
 
   <div class="section">
@@ -277,7 +192,9 @@ window.SKY3D_MESSAGES = {
     <div class="section-eyebrow">Symulator · pobaw się przyczynami</div>
     <h2>Wszystkie te efekty naraz</h2>
 
-    <p>Poniższy widget rysuje krążek nieostrości z czterech składowych opisanych wyżej. Każdy suwak odpowiada jednej realnej właściwości konstrukcji — nie jest to filtr graficzny, tylko złożenie przyczyn.</p>
+    <p>Poniższy widget rysuje krążek nieostrości z czterech składowych. Dwie znasz już z tego rozdziału — liczbę listków przysłony i stan korekcji sferycznej. Dwie pozostałe to prążki po szlifowaniu asfery, zwane cebulkami, oraz obcięcie mechaniczne z <a href="rozdzial-07-zrenice.html">Rozdziału 7</a>. Każdy suwak odpowiada jednej realnej właściwości konstrukcji — nie jest to filtr graficzny, tylko złożenie przyczyn.</p>
+
+    <p class="deeper-inline">Katalog kształtów z przyczynami — wielokąt, kocie oko, pączek, cebulka i wir — w <a href="../dodatki/dodatek-af-katalog-bokeh.html">Dodatku AF</a>.</p>
 
     <div class="sim" id="bokehSim">
       <div class="sim__stage"><canvas width="600" height="300"></canvas></div>
