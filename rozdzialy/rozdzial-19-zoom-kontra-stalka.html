@@ -43,7 +43,240 @@ window.SKY3D_MESSAGES = {
   <h1>Zoom kontra stałka</h1>
   <p class="subtitle">Zoom to trzy obiektywy w jednej tubie, poruszające się względem siebie. Płacisz za to dwudziestoma szkłami, oddechem, zmienną T-stopą i flarą — i czasem warto.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li><strong>Zoom to trzy zespoły soczewek poruszające się względem siebie.</strong> Zmiana odległości między nimi zmienia moc całego układu — a ostrość utrzymuje się tylko wtedy, gdy ruchy są sprzężone krzywką policzoną na cały zakres.</li>
+      <li>Płaci się <span class="term-amber">liczbą granic</span> (dwadzieścia zamiast ośmiu), zmienną jasnością, oddechem i podatnością na flarę. Wszystkie cztery wynikają z tej samej przyczyny: układ musi działać dobrze w wielu konfiguracjach naraz, więc w żadnej nie jest optymalny.</li>
+      <li>Dla pipeline'u najważniejsza konsekwencja jest inna: <strong>dystorsja zmienia się przez cały zakres</strong>, od beczki na krótkim końcu do poduszki na długim. Ujęcie z transfokacją wymaga dystorsji animowanej, nie jednej liczby.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Mechanizm · trzy zespoły, jedna krzywka</div>
+    <h2>Jak zmienia się ogniskowa</h2>
+
+    <p>Zoom nie ma jednej soczewki, którą się przesuwa. Ma trzy zespoły o różnych rolach: <strong>ogniskujący</strong> z przodu, <strong>wariator</strong>, który zmienia powiększenie, i <strong>kompensator</strong>, który nadrabia to, co wariator psuje. Za nimi stoi zespół nieruchomy, tworzący obraz.</p>
+
+    <p>Sedno tkwi w kompensatorze. Sam wariator, przesuwając się, zmieniłby ogniskową — ale i przesunął płaszczyznę obrazu, więc kadr rósłby razem z utratą ostrości. Kompensator porusza się jednocześnie po torze policzonym tak, żeby obraz <span class="term-cyan">zostawał w tym samym miejscu przez cały zakres</span>. Oba ruchy są sprzężone mechanicznie krzywką w tubusie i to ona jest sercem konstrukcji.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Trzy zespoły w ruchu</span><span>przesuń przez zakres</span></div>
+      <div class="diagram-controls">
+        <label for="zoomOgn">Ogniskowa</label>
+        <input id="zoomOgn" type="range" min="24" max="70" step="1" value="24">
+        <span class="value-readout" id="zoomOdczyt">24 mm</span>
+      </div>
+      <svg viewBox="0 0 760 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Schemat zoomu: zespół przedni nieruchomy, wariator i kompensator przesuwają się po różnych torach, zespół tylny nieruchomy, płaszczyzna obrazu stała.">
+        <line x1="40" y1="118" x2="660" y2="118" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 6"/>
+        <line x1="660" y1="64" x2="660" y2="172" stroke="#6e93be" stroke-width="3"/>
+        <text x="660" y="190" font-family="IBM Plex Mono" font-size="9.5" fill="#6e93be" text-anchor="middle">obraz — stały</text>
+
+        <path d="M 90 76 Q 114 118 90 160 Q 66 118 90 76 Z" fill="#4fc3c0" fill-opacity="0.18" stroke="#4fc3c0" stroke-width="1.5"/>
+        <text x="90" y="66" font-family="IBM Plex Mono" font-size="9" fill="#4fc3c0" text-anchor="middle">ogniskujący</text>
+
+        <g id="zoomWariator">
+          <path d="M 230 84 Q 216 118 230 152 Q 246 118 230 84 Z" fill="#9c82d8" fill-opacity="0.2" stroke="#9c82d8" stroke-width="1.6"/>
+        </g>
+        <text id="zoomEtWariator" x="230" y="72" font-family="IBM Plex Mono" font-size="9" fill="#9c82d8" text-anchor="middle">wariator</text>
+
+        <g id="zoomKompensator">
+          <path d="M 370 88 Q 392 118 370 148 Q 350 118 370 88 Z" fill="#e8a33d" fill-opacity="0.2" stroke="#e8a33d" stroke-width="1.6"/>
+        </g>
+        <text id="zoomEtKompensator" x="370" y="76" font-family="IBM Plex Mono" font-size="9" fill="#e8a33d" text-anchor="middle">kompensator</text>
+
+        <path d="M 540 80 Q 564 118 540 156 Q 516 118 540 80 Z" fill="#4fc3c0" fill-opacity="0.18" stroke="#4fc3c0" stroke-width="1.5"/>
+        <text x="540" y="70" font-family="IBM Plex Mono" font-size="9" fill="#4fc3c0" text-anchor="middle">tylny — stały</text>
+
+        <path id="zoomTorW" d="M 230 196 L 230 196" stroke="#9c82d8" stroke-width="2" fill="none"/>
+        <path id="zoomTorK" d="M 370 208 L 370 208" stroke="#e8a33d" stroke-width="2" fill="none"/>
+        <text x="40" y="200" font-family="IBM Plex Mono" font-size="9" fill="#9c82d8">tor wariatora</text>
+        <text x="40" y="212" font-family="IBM Plex Mono" font-size="9" fill="#e8a33d">tor kompensatora</text>
+        <text x="40" y="226" font-family="IBM Plex Mono" font-size="9" fill="#8b909b">tory nie są równoległe — stąd krzywka, a nie prosta prowadnica</text>
+      </svg>
+      <div class="diagram-caption" id="zoomPodpis">24 mm: wariator z przodu, kompensator blisko niego. Obraz stoi w tym samym miejscu.</div>
+    </div>
+
+    <p>Warto zauważyć, że tory obu zespołów <strong>nie są liniowe ani równoległe</strong>. Kompensator zawraca w połowie zakresu, bo funkcja, którą musi zrealizować, ma minimum. Stąd krzywka o złożonym kształcie, a stąd z kolei cena mechaniczna: luz, zużycie i to, że zoom przestrojony po latach potrafi tracić ostrość w środku zakresu, zachowując ją na obu końcach.</p>
+
+    <p>Konstrukcja, w której ostrość trzyma się przez cały zakres, nazywa się <span class="term-cyan">parafokalną</span> i jest wymogiem szkła kinowego. Zoomy fotograficzne bywają <em>warifokalne</em>: zmieniają ogniskową, ale ostrość trzeba poprawić po transfokacji. Autofokus to ukrywa i dlatego wielu użytkowników nie wie, że ich zoom taki jest — aż do pierwszego ujęcia z ręcznym ostrzeniem.</p>
+
+    <p>Różnica między jednym a drugim jest w całości kwestią <strong>dokładności krzywki</strong>, a nie układu optycznego. Parafokalność wymaga, żeby tor kompensatora zgadzał się z policzonym na ułamki setnych milimetra w każdym punkcie zakresu — i żeby zgadzał się nadal po dziesięciu tysiącach transfokacji. To jest wymaganie mechaniczne, nie optyczne, i dlatego zoom kinowy waży kilka kilogramów przy tej samej optyce, co dwukrotnie lżejszy zoom fotograficzny.</p>
+
+    <p>Warto też zauważyć, czego w tym schemacie <em>nie ma</em>. Nie ma zespołu odpowiedzialnego za korekcję dla konkretnej ogniskowej — bo taki musiałby się zmieniać razem z nią, a nie ma jak. Korekcja jest kompromisem policzonym na cały zakres naraz, i to jest źródło większości wad zoomu: <span class="term-violet">nie ma w nim ani jednego ustawienia, w którym byłby optymalny</span>. Stałka jest optymalna w jedynym ustawieniu, jakie ma.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Cena · cztery pozycje rachunku</div>
+    <h2>Za co się płaci</h2>
+
+    <p>Wszystkie koszty zoomu mają wspólne źródło: <strong>ten sam układ musi być poprawny w wielu konfiguracjach naraz</strong>. Konstruktor nie optymalizuje jednego rozwiązania, tylko rodzinę rozwiązań — a rodzina zawsze wypada gorzej od najlepszego pojedynczego przypadku.</p>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead>
+          <tr><th>Pozycja</th><th class="num">Stałka 50 mm</th><th class="num">Zoom 24–70</th><th>Skutek w obrazie</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Elementy</td><td class="num">6–8</td><td class="num">15–20</td><td>—</td></tr>
+          <tr><td>Grupy</td><td class="num">4–6</td><td class="num">11–15</td><td>—</td></tr>
+          <tr><td>Granice z powietrzem</td><td class="num">8–12</td><td class="num">22–30</td><td>flara, podniesione czernie</td></tr>
+          <tr><td>Możliwe ghosty</td><td class="num">28–66</td><td class="num">231–435</td><td>sznur plam przy świetle</td></tr>
+          <tr><td>Masa</td><td class="num">~200 g</td><td class="num">~800 g</td><td>trudniejsze prowadzenie</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Wiersz „możliwe ghosty” to liczba par powierzchni, czyli n(n−1)/2 — rośnie kwadratowo, dokładnie jak na wykresie z <a href="rozdzial-15-korekcja-i-jej-cena.html">Rozdziału 15</a>.</p>
+
+    <p>Wiersz czwarty jest tym, który w praktyce boli najbardziej. Przy dwudziestu ośmiu powierzchniach istnieje <strong>trzysta siedemdziesiąt osiem par</strong>, z których każda może dać ghosta — wobec kilkudziesięciu w stałce. Dlatego zoom skierowany w stronę światła daje charakterystyczny gęsty sznur plam, a stałka jedną albo dwie. To jest najpewniejszy sposób rozpoznania zoomu w gotowym materiale.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Światło w kadrze</span><span>ta sama lampa, dwa obiektywy</span></div>
+      <svg viewBox="0 0 760 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ten sam jasny punkt w kadrze: stałka daje dwa ghosty, zoom daje gęsty sznur kilkunastu plam wzdłuż linii przez środek kadru.">
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b" text-anchor="middle">
+          <text x="190" y="22">STAŁKA · 10 granic</text><text x="570" y="22">ZOOM · 26 granic</text>
+        </g>
+        <rect x="40" y="34" width="300" height="150" fill="#141619" stroke="#2a2f38"/>
+        <circle cx="90" cy="70" r="13" fill="#e8e6de" fill-opacity="0.95"/>
+        <circle cx="190" cy="109" r="9" fill="#9c82d8" fill-opacity="0.35"/>
+        <circle cx="258" cy="136" r="12" fill="#4fc3c0" fill-opacity="0.25"/>
+        <text x="190" y="204" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">dwa ghosty, łatwe do zamaskowania</text>
+
+        <rect x="420" y="34" width="300" height="150" fill="#1c1f24" stroke="#2a2f38"/>
+        <circle cx="470" cy="70" r="13" fill="#e8e6de" fill-opacity="0.95"/>
+        <g>
+          <circle cx="506" cy="84" r="6" fill="#9c82d8" fill-opacity="0.3"/>
+          <circle cx="536" cy="95" r="8" fill="#4fc3c0" fill-opacity="0.25"/>
+          <circle cx="562" cy="105" r="5" fill="#e8a33d" fill-opacity="0.3"/>
+          <circle cx="590" cy="116" r="11" fill="#9c82d8" fill-opacity="0.28"/>
+          <circle cx="618" cy="126" r="7" fill="#4fc3c0" fill-opacity="0.3"/>
+          <circle cx="646" cy="137" r="9" fill="#e8a33d" fill-opacity="0.22"/>
+          <circle cx="672" cy="147" r="14" fill="#9c82d8" fill-opacity="0.2"/>
+          <circle cx="698" cy="158" r="6" fill="#4fc3c0" fill-opacity="0.28"/>
+        </g>
+        <text x="570" y="204" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">sznur plam wzdłuż linii przez środek kadru</text>
+      </svg>
+      <div class="diagram-caption">Prawe tło jest jaśniejsze i to nie jest ozdobnik rysunku — dwadzieścia sześć granic podnosi czerń w całym kadrze, nie tylko wokół światła.</div>
+    </div>
+
+    <p>Podniesienie czerni jest przy tym skutkiem gorszym od samych plam, choć mniej widocznym. Plamę da się zamaskować albo wykorzystać; <strong>równomiernie rozsiane światło odbiera kontrast całemu kadrowi</strong> i nie da się go odjąć, bo nie wiadomo, ile go jest w którym miejscu. To jest ta sama <em>veiling glare</em>, której poświęcony jest <a href="rozdzial-22-veiling-glare.html">Rozdział 22</a>, i to ona odpowiada za wrażenie, że zoom „rysuje płasko”.</p>
+
+    <p>Warto przy tym być uczciwym co do skali problemu. Wszystkie te liczby dotyczą sytuacji z jasnym światłem w kadrze albo tuż poza nim. W ujęciu równomiernie oświetlonym, bez świateł w polu widzenia, <span class="term-cyan">różnica między dobrym zoomem a stałką bywa nieuchwytna</span> — i dlatego zoomy są w produkcji tak powszechne. Podatek płaci się dopiero wtedy, gdy w kadrze pojawia się słońce, okno albo lampa.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Jasność · dlaczego f zmienia się z ogniskową</div>
+    <h2>Zmienna T-stopa i oddech</h2>
+
+    <p>Zoom fotograficzny opisany jako f/3,5–5,6 traci światło przy wydłużaniu ogniskowej. Powód wynika wprost z definicji z <a href="rozdzial-06-przyslona-f-i-t.html">Rozdziału 6</a>: liczba przysłony to ogniskowa podzielona przez średnicę źrenicy wejściowej. Jeśli przy transfokacji ogniskowa rośnie, a źrenica nie nadąża — <strong>iloraz rośnie i jasność spada</strong>.</p>
+
+    <p>Żeby jasność została stała, źrenica musiałaby rosnąć dokładnie proporcjonalnie do ogniskowej. Da się to zrobić i tak działają zoomy stałojasne — ale wymaga to, żeby na długim końcu źrenica miała pełny rozmiar, co wymusza dużą przednią soczewkę. Stąd fakt, który widać na półce: <span class="term-cyan">zoom 70–200 f/2,8 ma przednie szkło wielkości spodka</span>, bo na dwustu milimetrach potrzebuje siedemdziesięciu jeden milimetrów źrenicy.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Średnica źrenicy przez zakres</span><span>stałojasny kontra zmienny</span></div>
+      <svg viewBox="0 0 760 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Wykres średnicy źrenicy w funkcji ogniskowej: przy stałej jasności rośnie liniowo, przy zmiennej jasności rośnie wolniej i liczba f rośnie z 3,5 do 5,6.">
+        <line x1="70" y1="180" x2="700" y2="180" stroke="#8b909b" stroke-width="1.2"/>
+        <line x1="70" y1="30" x2="70" y2="180" stroke="#8b909b" stroke-width="1.2"/>
+        <g font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">
+          <text x="70" y="198">24</text><text x="228" y="198">40</text><text x="385" y="198">55</text>
+          <text x="542" y="198">70</text><text x="700" y="198">85 mm</text>
+        </g>
+        <text x="385" y="218" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">ogniskowa</text>
+        <text x="30" y="34" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">źrenica</text>
+
+        <path d="M 70 156 L 700 42" fill="none" stroke="#4fc3c0" stroke-width="2.4"/>
+        <text x="606" y="56" font-family="IBM Plex Mono" font-size="10" fill="#4fc3c0">f/2,8 stałe — źrenica rośnie liniowo</text>
+
+        <path d="M 70 168 L 228 158 L 385 150 L 542 145 L 700 141" fill="none" stroke="#9c82d8" stroke-width="2.4"/>
+        <text x="480" y="164" font-family="IBM Plex Mono" font-size="10" fill="#9c82d8">f/3,5 → f/5,6 — źrenica ledwie rośnie</text>
+
+        <g font-family="IBM Plex Mono" font-size="9" fill="#8b909b">
+          <text x="76" y="150">8,6 mm</text>
+          <text x="640" y="36">30,4 mm</text>
+          <text x="76" y="180">6,9 mm</text>
+          <text x="640" y="136">15,2 mm</text>
+        </g>
+      </svg>
+      <div class="diagram-caption">Obie krzywe zaczynają się w podobnym miejscu i rozjeżdżają w miarę wydłużania. Cała różnica ceny i masy siedzi w tym rozjeździe.</div>
+    </div>
+
+    <p>Szkło kinowe rozwiązuje to inaczej i warto wiedzieć jak: zoomy kinowe są <strong>stało-T</strong>, a nie tylko stałojasne geometrycznie. Producent gwarantuje, że transmisja nie zmienia się przez cały zakres, więc operator może transfokować w trakcie ujęcia bez zmiany ekspozycji. Jest to jedno z tych wymagań, które podnoszą cenę o rząd wielkości, a w danych wyglądają na jedną literę różnicy.</p>
+
+    <p>Drugim podatkiem jest oddech, opisany mechanizmem w <a href="rozdzial-16-anatomia-obiektywu.html">Rozdziale 16</a>. W zoomie jest zwykle silniejszy niż w stałce, bo grupy i tak się poruszają, a każdy ruch przy ostrzeniu nakłada się na geometrię już rozstrojoną transfokacją.</p>
+
+    <p>Warto znać jeszcze jedną pułapkę zmiennej jasności, bo bywa źródłem nieporozumień na planie. <strong>Zoom f/3,5–5,6 przymknięty do f/8 jest stałojasny</strong> — bo f/8 jest osiągalne na obu końcach zakresu i przysłona po prostu stoi w miejscu. Zmienność dotyczy wyłącznie pełnego otwarcia, czyli tego ustawienia, przy którym źrenica jest już maksymalna i nie ma z czego dobierać. Kto raz to zauważy, przestaje traktować „zmienną jasność” jako wadę obiektywu, a zaczyna jako opis jego granicy.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">W CG · dystorsja przestaje być liczbą</div>
+    <h2>Co zoom robi z pipeline'em</h2>
+
+    <p>Wszystko powyżej dotyczy wyglądu. Dla pracy z materiałem ważniejsza jest jedna konsekwencja, która wygląda niewinnie, a potrafi zablokować ujęcie: <strong>dystorsja zoomu zmienia się przez cały zakres</strong>.</p>
+
+    <p>Na krótkim końcu wychodzi beczka, na długim poduszka, a gdzieś pośrodku przechodzi przez zero. Wynika to z <a href="rozdzial-18-skrajne-ogniskowe.html">Rozdziału 18</a>: krótki koniec jest z natury retrofokusem, długi teleobiektywem, więc znak asymetrii zmienia się razem z ogniskową.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Dystorsja przez zakres</span><span>zmienia znak, nie tylko wartość</span></div>
+      <svg viewBox="0 0 760 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Wykres dystorsji w funkcji ogniskowej dla zoomu: minus trzy procent beczki na krótkim końcu, przejście przez zero w środku zakresu, plus jeden procent poduszki na długim.">
+        <line x1="70" y1="110" x2="700" y2="110" stroke="#8b909b" stroke-width="1.4"/>
+        <g font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">
+          <text x="70" y="190">24</text><text x="228" y="190">35</text><text x="385" y="190">50</text>
+          <text x="542" y="190">70</text><text x="700" y="190">85 mm</text>
+        </g>
+        <line x1="70" y1="40" x2="70" y2="176" stroke="#8b909b" stroke-width="1.2"/>
+        <g font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="end">
+          <text x="62" y="52">+2%</text><text x="62" y="114">0</text><text x="62" y="172">−3%</text>
+        </g>
+
+        <path d="M 70 168 Q 180 150 300 122 Q 400 100 480 92 Q 590 84 700 82" fill="none" stroke="#9c82d8" stroke-width="2.6"/>
+        <circle cx="70" cy="168" r="4" fill="#9c82d8"/>
+        <circle cx="700" cy="82" r="4" fill="#9c82d8"/>
+        <circle cx="352" cy="110" r="5" fill="#7fc47f"/>
+        <text x="352" y="132" font-family="IBM Plex Mono" font-size="9.5" fill="#7fc47f" text-anchor="middle">przejście przez zero</text>
+        <text x="96" y="164" font-family="IBM Plex Mono" font-size="10" fill="#9c82d8">beczka</text>
+        <text x="640" y="70" font-family="IBM Plex Mono" font-size="10" fill="#9c82d8">poduszka</text>
+
+        <text x="70" y="212" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">Jedna liczba k₁ opisuje ten obiektyw tylko w jednym punkcie zakresu.</text>
+      </svg>
+      <div class="diagram-caption">Krzywa przechodzi przez zero, więc istnieje ogniskowa, przy której zoom jest lepszy od niejednej stałki. Poza nią nie jest.</div>
+    </div>
+
+    <p>Konsekwencje są trzy. Po pierwsze, <strong>dystorsję trzeba zmierzyć dla każdej używanej ogniskowej</strong>, a nie raz na obiektyw. Po drugie, w ujęciu z transfokacją współczynnik trzeba <em>animować</em> — jedna wartość rozjedzie kadr na jednym z końców. Po trzecie, i najbardziej podstępne: solver rekonstruujący kamerę może zamienić zmianę dystorsji na pozorny ruch kamery, bo obie rzeczy przesuwają punkty w podobny sposób.</p>
+
+    <p>Jest jeszcze czwarta, o której łatwo zapomnieć przy dopasowywaniu elementu. <strong>Zmiana ogniskowej zmienia też winietowanie i miękkość rogów</strong>, i to zwykle w sposób niemonotoniczny — zoom bywa najgorszy na krótkim końcu, przyzwoity w środku i znów słabszy na długim. Element CG dołożony ze stałym profilem winiety będzie więc pasował dokładnie w jednym punkcie transfokacji.</p>
+
+    <p>Stąd zasada, którą warto traktować dosłownie: <span class="term-violet">ujęcie z transfokacją jest trudniejsze od ujęcia z jazdą</span>. Jazda zmienia perspektywę w sposób, który solver rozumie; transfokacja zmienia naraz ogniskową, dystorsję i oddech — trzy rzeczy, które w danych wyglądają podobnie i rozplątuje się je tylko wtedy, gdy dwie z nich zna się z pomiaru.</p>
+
+    <button class="advanced-btn" data-modal-target="adv-zoom">Zaawansowane: kiedy zoom naprawdę wygrywa</button>
+  </div>
+
+  <div class="panel practice">
+    <div class="panel-label">Z praktyki</div>
+    <p><strong>Sznur ghostów odróżnia zoom od stałki w jednej klatce.</strong> Jasne światło w kadrze i kilkanaście plam ułożonych w linię przez środek to zoom; dwie–trzy plamy to stałka. Rozpoznanie od razu mówi ci, czego się spodziewać dalej: podniesionych czerni, zmiennej dystorsji i prawdopodobnie oddechu.</p>
+    <p><strong>Przy ujęciu z transfokacją zmierz dystorsję na obu końcach.</strong> Dwa pomiary i interpolacja między nimi wystarczają w większości przypadków, a różnią się od jednego pomiaru tym, że ujęcie w ogóle siada. Jeśli masz siatkę tylko z jednego ustawienia, zapisz przynajmniej, z którego.</p>
+    <p><strong>Nie odtwarzaj zoomu animowaniem ogniskowej wirtualnej kamery.</strong> To odtwarza jedną z trzech zmian. Bez animowanej dystorsji i bez oddechu render będzie zgadzał się w środku kadru i rozjeżdżał przy brzegach — czyli dokładnie tam, gdzie widz patrzy przy transfokacji.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>wariator</dt>
+      <dd>Zespół, którego przesunięcie zmienia ogniskową układu.</dd>
+      <dt>kompensator</dt>
+      <dd>Zespół poruszający się razem z wariatorem po torze utrzymującym obraz w stałym miejscu.</dd>
+      <dt>parafokalny</dt>
+      <dd>Zoom trzymający ostrość przez cały zakres. Wymóg szkła kinowego.</dd>
+      <dt>warifokalny</dt>
+      <dd>Zoom, w którym po transfokacji trzeba poprawić ostrość. Częsty w optyce fotograficznej, ukrywany przez autofokus.</dd>
+      <dt>stało-T</dt>
+      <dd>Zoom o niezmiennej transmisji przez cały zakres — nie tylko o niezmiennej liczbie f.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Została jeszcze jedna konstrukcja, która łamie wszystkie reguły tej części: obiektyw, w którym powiększenie zależy od kierunku. W <a href="rozdzial-20-anamorf.html">następnym rozdziale</a> zobaczymy, że wszystko, co lubimy w anamorfie — owalne bokeh, poziome smugi, dziwny oddech — to skutki uboczne jednej cylindrycznej soczewki, dołożonej kiedyś wyłącznie po to, żeby zaoszczędzić na taśmie.</p>
+  </div>
 
   <div class="deeper">
     <div class="deeper-label">Idź głębiej</div>
@@ -56,8 +289,84 @@ window.SKY3D_MESSAGES = {
       <a class="nav-next" href="rozdzial-20-anamorf.html">Następny →</a>
   </div>
 
+  <template id="adv-zoom">
+    <h3>Kiedy zoom naprawdę wygrywa</h3>
+
+    <p>Cały rozdział jest listą kosztów, więc uczciwie jest wymienić przypadki, w których zoom nie tylko wystarcza, ale jest <strong>lepszym wyborem niż stałka</strong> — i to nie z wygody.</p>
+
+    <p><strong>Gdy pozycja kamery jest wymuszona.</strong> To wynika wprost z <a href="rozdzial-05-ogniskowa-format-perspektywa.html">Rozdziału 5</a>: perspektywę ustawia się nogami, a ogniskowa kadruje. Jeśli nogami ruszyć się nie da — ciasne wnętrze, ulica, bezpieczeństwo — to ogniskowa jest jedynym suwakiem, jaki został. Zoom daje wtedy dostęp do kadrów, których stałka po prostu nie obejmuje.</p>
+
+    <p><strong>Gdy zmiana obiektywu kosztuje ujęcie.</strong> Dokumentalnie, przy pracy z ręki, przy zdarzeniach, które dzieją się raz. Kilkanaście sekund na zmianę szkła bywa droższe niż cały podatek optyczny zoomu.</p>
+
+    <p><strong>Gdy pył jest większym problemem niż flara.</strong> Każde odkręcenie obiektywu wpuszcza kurz na matrycę. W pustyni, na wietrze albo przy pracy w kurzu zoom bywa jedyną konstrukcją, która pozwala nie otwierać korpusu przez cały dzień.</p>
+
+    <p><strong>Gdy potrzebna jest transfokacja w ujęciu.</strong> Oczywiste, ale warto nazwać: żadna stałka tego nie zrobi, a najazd z transfokacją z <a href="rozdzial-05-ogniskowa-format-perspektywa.html">Rozdziału 5</a> wymaga jej z definicji.</p>
+
+    <p>Warto natomiast odrzucić uzasadnienie, które pada najczęściej i jest najsłabsze: <em>„zoom zastępuje kilka stałek”</em>. Zastępuje je w kadrowaniu i nie zastępuje w niczym innym — ani w jasności, ani w kontraście, ani w przewidywalności dystorsji. <span class="term-cyan">Zoom kupuje elastyczność, a nie zestaw obiektywów</span>, i to jest właściwy sposób liczenia jego wartości.</p>
+  </template>
+
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-panel">
+      <button class="modal-close" data-modal-close aria-label="Zamknij">×</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
 </div>
 
 <script src="../assets/interactive.js"></script>
+<script>
+/* Ruch zespolow zoomu. Wariator idzie liniowo przez zakres, kompensator po
+   torze z zawrotem w srodku — dokladnie dlatego krzywka nie jest prosta
+   prowadnica. Ksztalty torow sa schematyczne, ale ich charakter (liniowy
+   kontra z minimum) odpowiada rzeczywistym konstrukcjom. */
+(function () {
+  var sl = document.getElementById('zoomOgn');
+  if (!sl) return;
+  var F_MIN = 24, F_MAX = 70;
+  var W0 = 230, W_ZAKRES = 190;      // wariator: przesuniecie liniowe
+  var K0 = 370, K_ZAKRES = 70;       // kompensator: zawraca
+
+  function pozycje(t) {
+    return {
+      w: W0 + t * W_ZAKRES,
+      k: K0 + K_ZAKRES * (1 - Math.pow(2 * t - 1, 2))   // minimum na koncach, max w srodku
+    };
+  }
+
+  function odswiez() {
+    var f = parseFloat(sl.value);
+    var t = (f - F_MIN) / (F_MAX - F_MIN);
+    var p = pozycje(t);
+
+    document.getElementById('zoomWariator')
+      .setAttribute('transform', 'translate(' + (p.w - W0).toFixed(1) + ',0)');
+    document.getElementById('zoomKompensator')
+      .setAttribute('transform', 'translate(' + (p.k - K0).toFixed(1) + ',0)');
+    document.getElementById('zoomEtWariator').setAttribute('x', p.w.toFixed(1));
+    document.getElementById('zoomEtKompensator').setAttribute('x', p.k.toFixed(1));
+
+    // Tory rysowane od poczatku zakresu do biezacej pozycji.
+    var dW = 'M ' + W0 + ' 196', dK = 'M ' + K0 + ' 208';
+    for (var i = 1; i <= 40; i++) {
+      var q = pozycje(t * i / 40);
+      dW += ' L ' + q.w.toFixed(1) + ' 196';
+      dK += ' L ' + q.k.toFixed(1) + ' 208';
+    }
+    document.getElementById('zoomTorW').setAttribute('d', dW);
+    document.getElementById('zoomTorK').setAttribute('d', dK);
+
+    document.getElementById('zoomOdczyt').textContent = f.toFixed(0) + ' mm';
+    var gdzie = t < 0.15 ? 'krótki koniec' : (t > 0.85 ? 'długi koniec' : 'środek zakresu');
+    document.getElementById('zoomPodpis').textContent =
+      f.toFixed(0) + ' mm · ' + gdzie + '. Wariator przesunął się liniowo, kompensator ' +
+      (t > 0.4 && t < 0.6 ? 'jest w najdalszym punkcie swojego toru'
+                          : 'wraca w stronę położenia wyjściowego') +
+      ' — a obraz przez cały czas stoi w tym samym miejscu.';
+  }
+  sl.addEventListener('input', odswiez);
+  odswiez();
+})();
+</script>
 </body>
 </html>
