@@ -190,7 +190,13 @@ Inherited from `raytracing-book`, where these conventions come from:
 
 Equipment claims about specific films (which camera, which lenses, which
 format) **must be checked against sources while writing**, never recalled from
-the model's memory. Everywhere else in the book an error is a physics error
+the model's memory. WebSearch and WebFetch both work from this repo — verified
+2026-09-02 against Blade Runner 2049 (Alexa XT/Mini, Zeiss Master Primes T1.3,
+2.39:1 spherical), confirmed by two independent sources. Note that theasc.com
+returns 403 to WebFetch; shotonwhat.com and britishcinematographer.co.uk are
+fetchable. Cite at least two independent sources for any equipment claim, and
+if a claim cannot be sourced in the session, write the chapter without it —
+the optical argument never depends on a particular title. Everywhere else in the book an error is a physics error
 that takes effort to spot; here it is a fact anyone can look up. If a claim
 can't be sourced in the session, write the chapter without it — the optical
 argument never depends on a particular title.
@@ -225,6 +231,13 @@ Before every commit:
 1. `python dev/scaffold.py sprawdz` — must pass clean. If it reports a
    STAN W SPISIE problem, run `python dev/stan.py`: a chapter changed
    state and the table of contents still advertises the old one.
+   It also gates **length**: a written chapter outside 2000–3500 words or
+   5–8 visualisations is reported as a problem. This exists because three
+   separate commits in this book claimed a chapter had reached the word
+   target when it had not — the number had been written from memory of an
+   earlier measurement. Discipline failed three times, so the check became
+   a gate. **Never write a word count into a commit message; state that
+   `sprawdz` passes.**
 2. `node --check` on any JS you touched.
 3. Serve the root and open the page: no console errors, no horizontal
    overflow at 360 px, no SVG labels outside their `viewBox`.

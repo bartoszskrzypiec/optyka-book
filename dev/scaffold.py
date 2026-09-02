@@ -29,6 +29,12 @@ import os
 import re
 import sys
 
+# Narzedzia dev importuja sie nawzajem, a Python cache'uje bytecode. Po edycji
+# slowa.py (np. zmianie progu) scaffold.py potrafil wczytac STARY .pyc i
+# raportowac nieaktualny wynik - co przy kontroli, ktora ma byc brama przed
+# commitem, jest gorsze niz brak kontroli. Zadnych .pyc dla tych skryptow.
+sys.dont_write_bytecode = True
+
 # Konsola Windows startuje w cp1250 i wywraca sie na pierwszym lepszym n₁,
 # − albo →, a tresc ksiazki jest ich pelna. Bez tego "sprawdz" potrafi
 # przerwac raport w polowie wyjatkiem zamiast pokazac problemy.
@@ -385,6 +391,32 @@ def cmd_sprawdz():
                     f'PODSEKCJA    {os.path.relpath(path, ROOT)}: .subsection poza .section '
                     f'(znak {m.start()})')
             stos.append('section' if 'section' in klasy else '-')
+
+    # 6c. napisany rozdzial musi miescic sie w zalozonym przedziale
+    #     To NIE jest kosmetyka. Trzy razy w tej ksiazce zdarzylo sie, ze
+    #     commit deklarowal osiagniety prog, bo liczbe wpisano z pamieci
+    #     sprzed ostatniej edycji. Kontrola dyscypliny zawiodla trzy razy,
+    #     wiec zastepujemy ja brama: rozdzial ponizej progu nie przechodzi
+    #     "sprawdz", a "sprawdz" jest warunkiem commita.
+    try:
+        import slowa
+        for ch in rozdz:
+            path = os.path.join(ROOT, 'rozdzialy', ch['slug'] + '.html')
+            if not os.path.exists(path):
+                continue
+            if '<!-- TRESC -->' in open(path, encoding='utf-8').read():
+                continue                      # szkielet, liczy go kontrola 4
+            sl, wiz = slowa.zlicz(path)
+            if not (slowa.CEL_SLOW[0] <= sl <= slowa.CEL_SLOW[1]):
+                problems.append(
+                    f'DLUGOSC      R.{ch["nr"]}: {sl} slow, cel '
+                    f'{slowa.CEL_SLOW[0]}-{slowa.CEL_SLOW[1]}')
+            if not (slowa.CEL_WIZ[0] <= wiz <= slowa.CEL_WIZ[1]):
+                problems.append(
+                    f'WIZUALIZACJE R.{ch["nr"]}: {wiz}, cel '
+                    f'{slowa.CEL_WIZ[0]}-{slowa.CEL_WIZ[1]}')
+    except Exception as e:
+        problems.append(f'DLUGOSC      nie udalo sie sprawdzic: {e}')
 
     # 7. znaczniki stanu w spisie tresci musza zgadzac sie z rzeczywistoscia
     #    Bez tego czytelnik klika w rozdzial oznaczony jako gotowy i trafia

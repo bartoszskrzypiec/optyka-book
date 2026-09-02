@@ -19,6 +19,12 @@ import os
 import re
 import sys
 
+# Narzedzia dev importuja sie nawzajem, a Python cache'uje bytecode. Po edycji
+# slowa.py (np. zmianie progu) scaffold.py potrafil wczytac STARY .pyc i
+# raportowac nieaktualny wynik - co przy kontroli, ktora ma byc brama przed
+# commitem, jest gorsze niz brak kontroli. Zadnych .pyc dla tych skryptow.
+sys.dont_write_bytecode = True
+
 if hasattr(sys.stdout, 'reconfigure'):
     sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 
