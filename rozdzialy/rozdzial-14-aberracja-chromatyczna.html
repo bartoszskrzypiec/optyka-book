@@ -43,7 +43,256 @@ window.SKY3D_MESSAGES = {
   <h1>Aberracja chromatyczna: podłużna i poprzeczna</h1>
   <p class="subtitle">Fioletowa obwódka na nieostrym świetle i kolorowa krawędź w rogu kadru wyglądają jak jedno zjawisko. To dwa różne, mają różne przyczyny i tylko jedno z nich da się naprawić w compie.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li><strong>To są dwie różne wady o wspólnej przyczynie.</strong> <span class="term-amber">Podłużna</span> (LoCA) to różne <em>ogniskowe</em> dla różnych barw. <span class="term-amber">Poprzeczna</span> (TCA) to różne <em>powiększenia</em>. Jedna psuje wzdłuż osi, druga w poprzek kadru.</li>
+      <li>Rozróżnia się je dwoma testami, które nigdy nie mylą: LoCA jest w środku kadru i znika po przymknięciu przysłony; TCA w środku nie istnieje, rośnie ku rogom i przymknięcie jej nie rusza.</li>
+      <li><strong>Tylko TCA da się naprawić w compie</strong>, bo jest przeskalowaniem kanałów. LoCA jest różnicą rozmycia — a rozmycia nie da się cofnąć skalowaniem.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Podział · dwie wady, nie jedna</div>
+    <h2>Barwa zmienia dwie rzeczy naraz</h2>
+
+    <p>Z <a href="rozdzial-02-zalamanie-i-dyspersja.html">Rozdziału 2</a> wiemy, że szkło zagina błękit mocniej niż czerwień. Z tego jednego faktu wynikają <strong>dwie osobne konsekwencje</strong>, a nierozróżnianie ich jest źródłem większości nieporozumień wokół „kolorowych obwódek”.</p>
+
+    <p>Pierwsza jest oczywista: skoro błękit zagina się mocniej, to <span class="term-cyan">ma krótszą ogniskową</span>. Każda barwa skupia się więc w innej odległości od obiektywu. To jest aberracja chromatyczna <strong>podłużna</strong>, w skrócie LoCA — od <em>longitudinal</em>.</p>
+
+    <p>Druga jest mniej oczywista i dotyczy punktów leżących poza osią. Skoro każda barwa ma inną ogniskową, to każda daje obraz o <span class="term-cyan">innym powiększeniu</span> — trzy kanały rejestrują tę samą scenę w trzech nieco różnych skalach. To jest aberracja <strong>poprzeczna</strong>, TCA, od <em>transverse</em>.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Dwa mechanizmy</span><span>wzdłuż osi kontra w poprzek kadru</span></div>
+      <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Po lewej promienie na osi skupiają się w trzech różnych odległościach — to aberracja podłużna. Po prawej promień idący do rogu kadru trafia w trzy różne wysokości — to aberracja poprzeczna.">
+        <text x="20" y="24" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">PODŁUŻNA · trzy ogniska w różnych odległościach</text>
+
+        <line x1="20" y1="150" x2="360" y2="150" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 6"/>
+        <path d="M 130 76 Q 152 150 130 224 Q 108 150 130 76 Z" fill="#4fc3c0" fill-opacity="0.13" stroke="#4fc3c0" stroke-width="1.4"/>
+
+        <g stroke-width="1.6" fill="none">
+          <path d="M 40 100 L 130 100 L 250 150" stroke="#6ea8e8"/>
+          <path d="M 40 200 L 130 200 L 250 150" stroke="#6ea8e8"/>
+          <path d="M 40 100 L 130 100 L 278 150" stroke="#7fc47f"/>
+          <path d="M 40 200 L 130 200 L 278 150" stroke="#7fc47f"/>
+          <path d="M 40 100 L 130 100 L 310 150" stroke="#d8695f"/>
+          <path d="M 40 200 L 130 200 L 310 150" stroke="#d8695f"/>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="9.5" text-anchor="middle">
+          <text x="250" y="172" fill="#6ea8e8">B</text>
+          <text x="278" y="186" fill="#7fc47f">G</text>
+          <text x="310" y="200" fill="#d8695f">R</text>
+        </g>
+        <text x="24" y="252" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">Punkt na osi. Matryca może trafić tylko w jedno z trzech ognisk.</text>
+        <text x="24" y="270" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">Zależy od otworu źrenicy, nie od miejsca w kadrze.</text>
+
+        <line x1="390" y1="16" x2="390" y2="290" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 5"/>
+
+        <text x="410" y="24" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">POPRZECZNA · trzy skale obrazu</text>
+        <line x1="410" y1="150" x2="740" y2="150" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 6"/>
+        <path d="M 500 84 Q 522 150 500 216 Q 478 150 500 84 Z" fill="#4fc3c0" fill-opacity="0.13" stroke="#4fc3c0" stroke-width="1.4"/>
+
+        <g stroke-width="1.6" fill="none">
+          <path d="M 415 106 L 500 128 L 700 202" stroke="#6ea8e8"/>
+          <path d="M 415 106 L 500 128 L 700 214" stroke="#7fc47f"/>
+          <path d="M 415 106 L 500 128 L 700 228" stroke="#d8695f"/>
+        </g>
+        <line x1="700" y1="60" x2="700" y2="250" stroke="#6e93be" stroke-width="3"/>
+        <text x="716" y="206" font-family="IBM Plex Mono" font-size="9.5" fill="#6ea8e8">B</text>
+        <text x="716" y="218" font-family="IBM Plex Mono" font-size="9.5" fill="#7fc47f">G</text>
+        <text x="716" y="232" font-family="IBM Plex Mono" font-size="9.5" fill="#d8695f">R</text>
+        <text x="414" y="270" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">Punkt poza osią. Trzy kanały trafiają w trzy różne wysokości.</text>
+        <text x="414" y="288" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">Zależy od miejsca w kadrze, nie od otworu.</text>
+      </svg>
+      <div class="diagram-caption">Ta sama dyspersja, dwa zupełnie różne skutki. Ostatnie linijki pod każdym rysunkiem są całym testem rozstrzygającym.</div>
+    </div>
+
+    <p>Zwróć uwagę na symetrię tego podziału, bo jest dokładnie taka sama jak w tabeli z <a href="../dodatki/dodatek-f-aberracje-seidela.html">Dodatku F</a>: jedna wada <strong>zależy od źrenicy i nie zależy od pola</strong>, druga odwrotnie. Stąd wynikają oba testy praktyczne, i stąd wynika, że są niezawodne — nie da się pomylić wady, która jest w środku kadru, z wadą, której w środku kadru z definicji nie ma.</p>
+
+    <p>Warto od razu zaznaczyć, że żadna z nich nie jest na liście Seidela. Piątka z Dodatku F opisuje wady wynikające z <em>kąta</em> i obowiązuje dla światła jednobarwnego; te dwie wynikają z <em>długości fali</em> i istniałyby nawet w układzie idealnie skorygowanym geometrycznie. Są osobnym rodzajem problemu i mają osobne lekarstwa — o czym w <a href="rozdzial-15-korekcja-i-jej-cena.html">Rozdziale 15</a>.</p>
+
+    <p>Jest też różnica w tym, jak łatwo je zauważyć. Podłużna daje efekt <span class="term-cyan">barwny, ale miękki</span> — obwódkę rozmytą razem z całym krążkiem. Poprzeczna daje efekt <span class="term-cyan">ostry i cienki</span> — kolorową kreskę o szerokości jednego czy dwóch pikseli, przyklejoną do kontrastowej krawędzi. Pierwszą widać na podglądzie, drugą zwykle dopiero po powiększeniu do stu procent, i dlatego bywa przeoczona aż do kontroli jakości.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">LoCA · magenta z przodu, zieleń z tyłu</div>
+    <h2>Dlaczego obwódka ma akurat te dwa kolory</h2>
+
+    <p>Aberracja podłużna pokazuje się na nieostrych światłach jako barwna obwódka wokół krążka. Wygląda przypadkowo, a jest ściśle uporządkowana: <strong>przed płaszczyzną ostrości magenta, za nią zieleń</strong>. Zawsze w tej kolejności i zawsze tymi dwoma kolorami.</p>
+
+    <p>Dlaczego akurat tymi? Bo obiektyw jest achromatem. Z <a href="../dodatki/dodatek-a-snell-i-abbe.html">Dodatku A</a> wiemy, że achromat sprowadza do wspólnego ogniska <em>dwie</em> barwy — czerwoną i niebieską — a zielona zostaje osobno, nieco bliżej obiektywu. Ta resztka nazywa się <span class="term-violet">widmem wtórnym</span> i to ona rysuje obwódki.</p>
+
+    <p>Reszta jest już geometrią. Skoro zieleń skupia się bliżej, to dla obiektu za płaszczyzną ostrości zdążyła się rozejść najbardziej — więc jej krążek jest największy i widać go jako zielony brzeg. Dla obiektu przed płaszczyzną jest odwrotnie: zieleń jeszcze się nie zeszła tak szeroko jak pozostałe, więc na zewnątrz wychodzą czerwień i błękit razem, a <strong>czerwień plus błękit to magenta</strong>.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Obwódka a położenie względem ostrości</span><span>widmo wtórne achromatu</span></div>
+      <div class="diagram-controls">
+        <label for="locaPoz">Punkt względem płaszczyzny ostrości</label>
+        <input id="locaPoz" type="range" min="-100" max="100" step="1" value="60">
+        <span class="value-readout" id="locaOdczyt">za ostrością</span>
+      </div>
+      <div class="diagram-controls">
+        <label for="locaPrzyslona">Przysłona</label>
+        <input id="locaPrzyslona" type="range" min="0" max="4" step="1" value="0">
+        <span class="value-readout" id="locaPrzyslonaOdczyt">f/1,4</span>
+      </div>
+      <svg viewBox="0 0 760 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Krążek nieostrego światła z barwną obwódką: przed płaszczyzną ostrości magentową, za nią zieloną. Przymknięcie przysłony zmniejsza krążek i obwódkę.">
+        <rect x="30" y="26" width="360" height="210" fill="#141619" stroke="#2a2f38"/>
+        <text x="36" y="20" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">NIEOSTRE ŚWIATŁO</text>
+        <circle id="locaZew" cx="210" cy="131" r="60" fill="#d060b0" fill-opacity="0.55"/>
+        <circle id="locaWew" cx="210" cy="131" r="44" fill="#e8e6de" fill-opacity="0.9"/>
+
+        <text x="420" y="20" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">PROFIL PRZEZ ŚRODEK</text>
+        <rect x="420" y="26" width="310" height="210" fill="#141619" stroke="#2a2f38"/>
+        <line x1="430" y1="200" x2="720" y2="200" stroke="#2a2f38" stroke-width="1"/>
+        <path id="locaKrzywaG" fill="none" stroke="#7fc47f" stroke-width="2"/>
+        <path id="locaKrzywaM" fill="none" stroke="#d060b0" stroke-width="2"/>
+        <g font-family="IBM Plex Mono" font-size="9.5">
+          <rect x="440" y="42" width="12" height="3" fill="#7fc47f"/><text x="458" y="47" fill="#8b909b">zielony</text>
+          <rect x="440" y="60" width="12" height="3" fill="#d060b0"/><text x="458" y="65" fill="#8b909b">czerwony + niebieski</text>
+        </g>
+        <text x="430" y="222" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">Szerszy kanał wystaje poza węższy — i to jest obwódka.</text>
+      </svg>
+      <div class="diagram-caption" id="locaPodpis">Za płaszczyzną ostrości zielony kanał jest szerszy — obwódka wychodzi zielona.</div>
+    </div>
+
+    <p>Z tego samego rachunku wynika reakcja na przysłonę. Rozjazd ognisk jest stały, ale <strong>szerokość krążka maleje z przymykaniem</strong> — więc różnica między kanałami robi się coraz mniejszym ułamkiem całości i obwódka blednie. Dwie działki zwykle wystarczają, żeby zniknęła z materiału.</p>
+
+    <p>Stąd bierze się obserwacja, którą łatwo pomylić z wadą wykonania: <span class="term-violet">im jaśniejszy obiektyw, tym gorsza obwódka</span>. Nie dlatego, że jest gorzej zrobiony — dlatego, że w ogóle da się go otworzyć tak szeroko. Ta sama konstrukcja przymknięta do f/4 nie pokazuje nic. Obiektyw o maksymalnej jasności f/4 nie ma więc przewagi konstrukcyjnej, tylko po prostu nie ma nastawy, przy której problem by się ujawnił.</p>
+
+    <p>W materiale LoCA szuka się w trzech miejscach, i prawie zawsze się ją tam znajduje przy pełnym otworze: na <strong>odblaskach</strong> — chromie, szkle, mokrym asfalcie; na <strong>włosach pod światło</strong>, gdzie każdy pojedynczy włos jest cienkim jasnym obiektem na ciemnym tle; oraz na <strong>gałęziach na tle nieba</strong>. Wszystkie trzy mają wspólną cechę: bardzo duży kontrast na małym obiekcie tuż poza płaszczyzną ostrości.</p>
+
+    <p class="deeper-inline">Ile dokładnie wynosi rozjazd ognisk dla typowego szkła i dlaczego achromat zbiega tylko dwa kolory — <a href="../dodatki/dodatek-ag-chromatyczna-w-liczbach.html">Dodatek AG</a>.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">TCA · trzy kanały, trzy skale</div>
+    <h2>Kolorowa krawędź w rogu kadru</h2>
+
+    <p>Poprzeczna zachowuje się zupełnie inaczej i widać ją w innym miejscu. <span class="term-cyan">W środku kadru nie ma jej wcale</span> — trzy kanały o różnej skali pokrywają się dokładnie w punkcie, wokół którego są skalowane. Im dalej od środka, tym bardziej się rozjeżdżają.</p>
+
+    <p>Na obrazie objawia się to barwną krawędzią wzdłuż kontrastowych granic, i to krawędzią <strong>ustawioną promieniście</strong>: po jednej stronie ciemnego obiektu widać obwódkę cyjanową, po drugiej czerwoną, a linia łącząca je celuje w środek kadru. To jest jej podpis rozpoznawczy — obwódka LoCA otacza punkt ze wszystkich stron, obwódka TCA leży tylko na dwóch przeciwnych brzegach.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Rozjazd kanałów</span><span>zero w środku, maksimum w rogu</span></div>
+      <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Kadr z siatką: w środku trzy kanały pokrywają się idealnie, ku brzegom rozjeżdżają się coraz bardziej, dając czerwono-cyjanowe obwódki wzdłuż krawędzi.">
+        <rect x="120" y="24" width="520" height="200" fill="#141619" stroke="#2a2f38" stroke-width="1.5"/>
+        <circle cx="380" cy="124" r="3" fill="#8b909b"/>
+        <text x="380" y="146" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">środek kadru</text>
+
+        <g stroke-width="2.4" fill="none" opacity="0.95">
+          <line x1="380" y1="44" x2="380" y2="70" stroke="#e8e6de"/>
+          <line x1="290" y1="44" x2="290" y2="70" stroke="#d8695f"/>
+          <line x1="292" y1="44" x2="292" y2="70" stroke="#6ea8e8"/>
+          <line x1="196" y1="44" x2="196" y2="70" stroke="#d8695f"/>
+          <line x1="201" y1="44" x2="201" y2="70" stroke="#6ea8e8"/>
+          <line x1="470" y1="44" x2="470" y2="70" stroke="#d8695f"/>
+          <line x1="468" y1="44" x2="468" y2="70" stroke="#6ea8e8"/>
+          <line x1="564" y1="44" x2="564" y2="70" stroke="#d8695f"/>
+          <line x1="559" y1="44" x2="559" y2="70" stroke="#6ea8e8"/>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="middle">
+          <text x="380" y="88">0</text><text x="291" y="88">1 px</text><text x="198" y="88">2,5 px</text>
+          <text x="469" y="88">1 px</text><text x="561" y="88">2,5 px</text>
+        </g>
+
+        <path d="M 150 190 L 610 190" stroke="#8b909b" stroke-width="1"/>
+        <path id="tcaKrzywa" d="M 150 190 Q 380 190 380 190 Q 380 190 610 190" fill="none"/>
+        <path d="M 150 148 Q 265 178 380 190 Q 495 178 610 148" fill="none" stroke="#9c82d8" stroke-width="2"/>
+        <text x="380" y="212" font-family="IBM Plex Mono" font-size="10" fill="#9c82d8" text-anchor="middle">rozjazd kanałów rośnie z odległością od środka</text>
+
+        <text x="24" y="242" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">Przymknięcie przysłony nie zmienia tu nic — to nie jest wada zależna od źrenicy.</text>
+      </svg>
+      <div class="diagram-caption">Rozjazd ma stały znak i rośnie promieniście. Właśnie dlatego da się go odwrócić jednym przeskalowaniem kanałów.</div>
+    </div>
+
+    <p>Ta regularność jest dobrą wiadomością. Rozjazd zależy wyłącznie od odległości od środka kadru, więc daje się opisać tą samą matematyką co dystorsja z <a href="rozdzial-13-dystorsja.html">Rozdziału 13</a> — tylko osobno dla każdego kanału. A skoro daje się opisać, to daje się <strong>odwrócić</strong>.</p>
+
+    <p>Skala zjawiska bywa zaskoczeniem w drugą stronę niż przy dystorsji. Rozjazd w rogu kadru dobrego szkła stałoogniskowego to ułamek piksela; przeciętny zoom na szerokim końcu daje w rogu <strong>dwa do trzech pikseli</strong> przy 4K. Brzmi to niegroźnie, dopóki nie zestawi się tego z tym, że kontrastowa krawędź ma szerokość jednego–dwóch pikseli — a wtedy okazuje się, że obwódka jest <em>szersza od samej krawędzi</em> i czyta się jako kolorowa kreska, a nie jako subtelna nieostrość.</p>
+
+    <p>Najgorzej wypadają zoomy na krótkim końcu i tanie szerokie kąty, czyli dokładnie te same konstrukcje, które mają najwięcej dystorsji. Nie jest to zbieg okoliczności: obie wady rosną z kątem, pod jakim światło przechodzi przez układ, więc konstrukcja walcząca z jedną zwykle walczy i z drugą. <span class="term-cyan">Obiektyw o dobrze skorygowanej dystorsji ma zwykle też małą TCA</span>, i odwrotnie — co bywa użyteczną wskazówką przy ocenie nieznanego szkła.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">W CG · jedna da się naprawić, druga nie</div>
+    <h2>Co z tym zrobić w compie i w rendererze</h2>
+
+    <p>Podział na dwie wady ma bezpośrednie przełożenie na to, co da się z nimi zrobić po fakcie — i przełożenie to jest ostre, bez półśrodków.</p>
+
+    <p><strong>TCA naprawia się w pełni.</strong> Wystarczy przeskalować kanał czerwony i niebieski względem zielonego wokół środka kadru, o ułamek procenta. Każdy pakiet do wywoływania i każdy comp ma na to narzędzie, a wynik jest praktycznie doskonały, bo operacja jest odwrotnością tego, co zrobił obiektyw. Kosztuje jedną interpolację na dwóch kanałach.</p>
+
+    <p><strong>LoCA nie naprawia się wcale.</strong> Nie jest przesunięciem ani przeskalowaniem — jest <span class="term-violet">różnicą rozmycia między kanałami</span>. Kanał, który był szerszy, stracił detal bezpowrotnie; nie ma czego przesunąć z powrotem. Narzędzia opisane jako „usuwanie fioletowej obwódki” nie odwracają jej, tylko <em>odbarwiają</em> — wykrywają obwódkę i ściągają jej nasycenie do zera. Detal nie wraca, znika tylko kolor.</p>
+
+    <p>W rendererze obie wady <strong>nie występują</strong>, i to z tej samej przyczyny, co brak dyfrakcji w <a href="rozdzial-10-dyfrakcja.html">Rozdziale 10</a>: promień nie ma długości fali. Kamera RGB traktuje trzy kanały identycznie, więc skupia je w tym samym miejscu i w tej samej skali.</p>
+
+    <p>Dokładanie ich jest natomiast tanie i warto znać właściwą kolejność. TCA robi się przeskalowaniem kanałów — o ułamek procenta, bo prawdziwe wartości są małe. LoCA robi się <strong>osobnym rozmyciem kanału zielonego, sterowanym mapą głębi</strong>, tak żeby przed płaszczyzną ostrości był węższy, a za nią szerszy. Jeśli dokładasz oba, TCA idzie na końcu — bo w prawdziwym obiektywie skala kanałów jest własnością obrazu, a nie rozmycia.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Test rozstrzygający</span><span>dwa pytania, cztery odpowiedzi</span></div>
+      <svg viewBox="0 0 760 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tabela dwa na dwa: obwódka w środku kadru i znikająca po przymknięciu to aberracja podłużna; obwódka tylko przy brzegach i odporna na przymknięcie to poprzeczna.">
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">
+          <text x="286" y="42" text-anchor="middle">JEST W ŚRODKU KADRU</text>
+          <text x="576" y="42" text-anchor="middle">TYLKO PRZY BRZEGACH</text>
+          <text x="24" y="112">ZNIKA PO</text>
+          <text x="24" y="126">PRZYMKNIĘCIU</text>
+          <text x="24" y="196">PRZYMKNIĘCIE</text>
+          <text x="24" y="210">NIC NIE ZMIENIA</text>
+        </g>
+        <line x1="150" y1="52" x2="712" y2="52" stroke="#2a2f38" stroke-width="1"/>
+        <line x1="150" y1="52" x2="150" y2="242" stroke="#2a2f38" stroke-width="1"/>
+        <line x1="431" y1="52" x2="431" y2="242" stroke="#2a2f38" stroke-width="1"/>
+        <line x1="150" y1="150" x2="712" y2="150" stroke="#2a2f38" stroke-width="1"/>
+
+        <rect x="162" y="64" width="257" height="74" fill="#d060b0" fill-opacity="0.14" stroke="#d060b0" stroke-width="1.4"/>
+        <text x="290" y="96" font-family="IBM Plex Mono" font-size="13" fill="#d060b0" text-anchor="middle">LoCA · podłużna</text>
+        <text x="290" y="118" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">nie do naprawienia, tylko do odbarwienia</text>
+
+        <rect x="443" y="64" width="257" height="74" fill="#20242c" stroke="#2a2f38" stroke-width="1"/>
+        <text x="572" y="104" font-family="IBM Plex Mono" font-size="11" fill="#5a6068" text-anchor="middle">nie zdarza się</text>
+
+        <rect x="162" y="162" width="257" height="74" fill="#20242c" stroke="#2a2f38" stroke-width="1"/>
+        <text x="290" y="194" font-family="IBM Plex Mono" font-size="11" fill="#5a6068" text-anchor="middle">to nie aberracja —</text>
+        <text x="290" y="212" font-family="IBM Plex Mono" font-size="11" fill="#5a6068" text-anchor="middle">szukaj przyczyny w matrycy</text>
+
+        <rect x="443" y="162" width="257" height="74" fill="#7fc47f" fill-opacity="0.14" stroke="#7fc47f" stroke-width="1.4"/>
+        <text x="572" y="194" font-family="IBM Plex Mono" font-size="13" fill="#7fc47f" text-anchor="middle">TCA · poprzeczna</text>
+        <text x="572" y="216" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">do naprawienia w pełni, przeskalowaniem</text>
+      </svg>
+      <div class="diagram-caption">Przekątna jest pusta, i to jest cała siła tego testu: dwie wady zajmują przeciwległe pola, a nie sąsiednie.</div>
+    </div>
+
+    <p>Ostatnie pole tej tabeli warto przeczytać uważnie, bo bywa mylące. Obwódka, która siedzi w środku kadru i <em>nie</em> reaguje na przysłonę, nie jest żadną z tych dwóch wad — najprawdopodobniej pochodzi z matrycy albo z demozaikowania, a nie ze szkła. To rozróżnienie decyduje o tym, gdzie szukać rozwiązania, i dlatego warto zrobić oba testy, zanim sięgnie się po jakiekolwiek narzędzie.</p>
+
+    <button class="advanced-btn" data-modal-target="adv-fiolet">Zaawansowane: nie każda fioletowa obwódka jest aberracją</button>
+  </div>
+
+  <div class="panel practice">
+    <div class="panel-label">Z praktyki</div>
+    <p><strong>Dwa testy, które rozstrzygają w pięć sekund.</strong> Popatrz na środek kadru: jeśli obwódka tam jest, to LoCA. Przymknij o dwie działki: jeśli zniknęła, to LoCA. TCA nie zdaje żadnego z tych testów — nie ma jej w środku i nie rusza jej przysłona. Rozpoznanie jest ważne, bo decyduje o tym, czy w ogóle warto próbować naprawy.</p>
+    <p><strong>Obwódka w plate'cie mówi ci o przysłonie.</strong> Wyraźna magentowo-zielona obwódka na nieostrych światłach oznacza obiektyw otwarty blisko maksimum — razem z kocim okiem z <a href="rozdzial-07-zrenice.html">Rozdziału 7</a> daje to dwa niezależne potwierdzenia tej samej nastawy. Jeśli oba wskazują to samo, masz nastawę odtworzoną bez zgadywania.</p>
+    <p><strong>Nie odbarwiaj obwódki w plate'cie, do którego dokładasz CG.</strong> Jeśli usuniesz LoCA z materiału, a nie dodasz jej do renderu, element CG będzie jedynym czystym obiektem w kadrze — i to widać. Uczciwiej jest zostawić plate w spokoju i dołożyć tę samą obwódkę do elementu.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>aberracja chromatyczna podłużna (LoCA)</dt>
+      <dd>Różnica ogniskowej między barwami. Występuje w całym kadrze, także na osi, i słabnie po przymknięciu przysłony.</dd>
+      <dt>aberracja chromatyczna poprzeczna (TCA)</dt>
+      <dd>Różnica powiększenia między barwami. Zerowa w środku kadru, rośnie ku brzegom, niezależna od przysłony.</dd>
+      <dt>widmo wtórne</dt>
+      <dd>Resztka rozjazdu barw pozostająca w achromacie po zbiegnięciu czerwieni z błękitem. Źródło magentowo-zielonych obwódek.</dd>
+      <dt>obwódka bokeh (bokeh fringing)</dt>
+      <dd>Potoczna nazwa LoCA widocznej na nieostrych światłach. Magenta przed płaszczyzną ostrości, zieleń za nią.</dd>
+      <dt>odbarwianie obwódki (defringe)</dt>
+      <dd>Narzędzie ściągające nasycenie z barwnych krawędzi. Ukrywa LoCA, ale jej nie odwraca — utracony detal nie wraca.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Mamy komplet wad tej części: sferyczną, komę, astygmatyzm, krzywiznę pola, dystorsję i obie chromatyczne. Każda z nich ma lekarstwo i o lekarstwach jest <a href="rozdzial-15-korekcja-i-jej-cena.html">następny rozdział</a> — a ponieważ każde lekarstwo to dodatkowa soczewka, czyli dwie nowe powierzchnie odbijające, koło zamknie się dokładnie tam, gdzie zaczęliśmy: w <a href="rozdzial-03-fresnel-kazda-powierzchnia-swieci.html">Rozdziale 3</a>.</p>
+  </div>
 
   <div class="deeper">
     <div class="deeper-label">Idź głębiej</div>
@@ -56,8 +305,100 @@ window.SKY3D_MESSAGES = {
       <a class="nav-next" href="rozdzial-15-korekcja-i-jej-cena.html">Następny →</a>
   </div>
 
+  <template id="adv-fiolet">
+    <h3>Nie każda fioletowa obwódka jest aberracją</h3>
+
+    <p>Nazwa <em>purple fringing</em> przykleiła się do wszystkiego, co fioletowe i przyklejone do jasnej krawędzi. Tymczasem przyczyn jest co najmniej trzy i tylko jedna z nich siedzi w szkle — a każda wymaga czego innego.</p>
+
+    <p><strong>Aberracja podłużna</strong> to ta ze szkła. Rozpoznasz ją po tym, że zmienia kolor przy przejściu przez płaszczyznę ostrości i słabnie po przymknięciu przysłony.</p>
+
+    <p><strong>Rozlanie ładunku w matrycy.</strong> Piksel, który zebrał więcej fotonów, niż mieści jego studnia, oddaje nadmiar sąsiadom. Ponieważ w mozaice Bayera piksele nie są rozłożone symetrycznie, przelew nie rozkłada się równo na kanały — i wokół prześwietlonego światła pojawia się barwna obwódka. Ta nie reaguje ani na przysłonę, ani na ostrość; reaguje na <em>ekspozycję</em>. Jedna działka mniej i znika.</p>
+
+    <p><strong>Demozaikowanie.</strong> Matryca mierzy w każdym pikselu tylko jedną barwę, a pozostałe dwie zgaduje z sąsiadów. Przy bardzo ostrej, kontrastowej krawędzi zgadywanie zawodzi i algorytm wstawia kolor, którego tam nie było. Objaw wygląda jak TCA, ale nie jest promienisty — pojawia się na krawędziach o dowolnej orientacji, także w środku kadru. Zmiana algorytmu wywoływania zmienia go albo usuwa; żadne narzędzie optyczne go nie ruszy.</p>
+
+    <p>Praktyczny wniosek jest taki, że <strong>zanim sięgniesz po narzędzie, sprawdź, na co obwódka reaguje</strong>: na przysłonę, na ostrość, na ekspozycję czy na wywoływanie. Cztery różne odpowiedzi wskazują cztery różne miejsca, a narzędzie „defringe” zastosowane do przelewu ładunku odbarwi po prostu okolice każdego jasnego światła w kadrze.</p>
+  </template>
+
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-panel">
+      <button class="modal-close" data-modal-close aria-label="Zamknij">×</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
 </div>
 
 <script src="../assets/interactive.js"></script>
+<script>
+/* Obwodka LoCA. Model: zielen skupia sie blizej obiektywu niz czerwien
+   z blekitem (widmo wtorne achromatu), wiec promien krazka zielonego to
+   |u|, a czerwono-niebieskiego |u - delta|, gdzie u to polozenie punktu
+   wzgledem plaszczyzny ostrosci (dodatnie = za nia). Stad magenta z przodu
+   i zielen z tylu, bez zadnego recznego przypisywania kolorow. */
+(function () {
+  var slP = document.getElementById('locaPoz');
+  var slN = document.getElementById('locaPrzyslona');
+  if (!slP || !slN) return;
+
+  var DELTA = 0.20;                       // widmo wtorne, w jednostkach u
+  var PRZYSLONY = [1.4, 2, 2.8, 4, 5.6];
+  var CX = 210, CY = 131, RMAX = 62;
+
+  function odswiez() {
+    var u = parseFloat(slP.value) / 100;             // -1 .. 1
+    var i = parseInt(slN.value, 10);
+    var skala = PRZYSLONY[0] / PRZYSLONY[i];         // krazek malenie z przymknieciem
+
+    var rG = Math.abs(u) * RMAX * skala;
+    var rM = Math.abs(u - DELTA) * RMAX * skala;
+
+    var zew = document.getElementById('locaZew');
+    var wew = document.getElementById('locaWew');
+    var zielenSzersza = rG > rM;
+
+    zew.setAttribute('r', Math.max(1, Math.max(rG, rM)).toFixed(1));
+    wew.setAttribute('r', Math.max(0.5, Math.min(rG, rM)).toFixed(1));
+    zew.setAttribute('fill', zielenSzersza ? '#7fc47f' : '#d060b0');
+    wew.setAttribute('fill', '#e8e6de');
+
+    // Profil: dwie krzywe dzwonowe o szerokosciach rG i rM.
+    function sciezka(r) {
+      var d = '', X0 = 430, X1 = 720, Y0 = 200, H = 150;
+      var sr = (X0 + X1) / 2, szer = Math.max(4, r * 2.2);
+      for (var x = X0; x <= X1; x += 4) {
+        var t = (x - sr) / szer;
+        var y = Y0 - H * Math.exp(-t * t * 2.2);
+        d += (x === X0 ? 'M ' : ' L ') + x + ' ' + y.toFixed(1);
+      }
+      return d;
+    }
+    document.getElementById('locaKrzywaG').setAttribute('d', sciezka(rG));
+    document.getElementById('locaKrzywaM').setAttribute('d', sciezka(rM));
+
+    var gdzie = u < -0.06 ? 'przed ostrością' : (u > 0.06 ? 'za ostrością' : 'w płaszczyźnie ostrości');
+    document.getElementById('locaOdczyt').textContent = gdzie;
+    document.getElementById('locaPrzyslonaOdczyt').textContent =
+      'f/' + PRZYSLONY[i].toString().replace('.', ',');
+
+    var roznica = Math.abs(rG - rM);
+    var opis;
+    if (Math.abs(u) < 0.06) {
+      opis = 'W samej płaszczyźnie ostrości zieleń jest ostra, a czerwień z błękitem nie — zostaje wąska magentowa poświata. To jest widmo wtórne widziane wprost.';
+    } else if (zielenSzersza) {
+      opis = 'Za płaszczyzną ostrości zielony kanał jest szerszy o ' + roznica.toFixed(1).replace('.', ',') +
+             ' jednostki — obwódka wychodzi zielona.';
+    } else {
+      opis = 'Przed płaszczyzną ostrości szersze są czerwień i błękit, o ' + roznica.toFixed(1).replace('.', ',') +
+             ' jednostki — razem dają magentę.';
+    }
+    if (i >= 3) opis += ' Przy f/' + PRZYSLONY[i].toString().replace('.', ',') +
+                        ' cały krążek jest już tak mały, że obwódki praktycznie nie widać.';
+    document.getElementById('locaPodpis').textContent = opis;
+  }
+  slP.addEventListener('input', odswiez);
+  slN.addEventListener('input', odswiez);
+  odswiez();
+})();
+</script>
 </body>
 </html>
