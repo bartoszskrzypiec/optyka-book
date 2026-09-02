@@ -41,7 +41,156 @@ window.SKY3D_MESSAGES = {
   <h1>Równanie soczewki, płaszczyzny główne i punkty węzłowe</h1>
   <p class="subtitle">Skąd bierze się 1/f = 1/s + 1/s′, czym różni się soczewka gruba od cienkiej i dlaczego panorama bez paralaksy obraca się wokół konkretnego punktu.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">Co tu jest</div>
+    <ul>
+      <li><strong>Płaszczyzny główne</strong> — dlaczego dwie wystarczą na dowolnie złożony układ i jak z nich wychodzi teleobiektyw oraz retrofokus.</li>
+      <li><strong>Cztery odległości</strong>, które producent podaje albo przemilcza: EFL, BFD, FFD i odcinek bagnetowy. Mylenie ich jest najczęstszą przyczyną kadru, który nie siada.</li>
+      <li><strong>Punkty węzłowe kontra punkt bezparalaksowy</strong> — skąd wzięła się pomyłka utrwalona w literaturze fotograficznej i kiedy przypadkiem nie szkodzi.</li>
+      <li><strong>Postać Newtona</strong> równania soczewki, wygodniejsza wszędzie tam, gdzie liczy się powiększenie.</li>
+    </ul>
+  </div>
+
+<div class="section">
+    <div class="section-eyebrow">Poprawka · prawdziwy obiektyw nie jest cienki</div>
+    <h2>Dwie płaszczyzny zamiast jednej soczewki</h2>
+
+    <p>Wszystko powyżej zakładało soczewkę nieskończenie cienką — taką, w której promień wchodzi i wychodzi w tym samym miejscu. Prawdziwy obiektyw ma kilkanaście centymetrów długości i kilkanaście soczewek. Wydawałoby się, że cała powyższa arytmetyka bierze w łeb.</p>
+
+    <p>Nie bierze, i to jest jedno z ładniejszych uproszczeń w optyce. Okazuje się, że <strong>dowolnie skomplikowany układ soczewek zachowuje się z zewnątrz dokładnie jak jedna cienka soczewka</strong> — trzeba tylko wiedzieć, gdzie ją postawić. A ściślej: gdzie postawić dwie, bo wejście i wyjście mają własne odniesienia. Nazywają się płaszczyznami głównymi.</p>
+
+    <p>Reguła jest taka: promień wchodzący mierzy się do pierwszej płaszczyzny głównej, wychodzący — od drugiej, a między nimi promień „przeskakuje” bez zmiany wysokości. Ogniskową mierzy się od drugiej płaszczyzny głównej do ogniska. <span class="term-cyan">Nie od przedniej soczewki i nie od bagnetu</span> — i tu zaczynają się niespodzianki.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Płaszczyzny główne</span><span>trzy konstrukcje, ta sama ogniskowa</span></div>
+      <svg viewBox="0 0 760 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Trzy układy: soczewka cienka, teleobiektyw z płaszczyzną główną przed obiektywem i retrofokus z płaszczyzną główną za nim. Wszystkie mają tę samą ogniskową.">
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">
+          <text x="20" y="26">SOCZEWKA CIENKA</text>
+          <text x="20" y="136">TELEOBIEKTYW — tubus krótszy niż f</text>
+          <text x="20" y="246">RETROFOKUS — tubus dłuższy niż f</text>
+        </g>
+
+        <g>
+          <path d="M 200 44 Q 214 70 200 96 Q 186 70 200 44 Z" fill="#4fc3c0" fill-opacity="0.15" stroke="#4fc3c0" stroke-width="1.4"/>
+          <line x1="200" y1="38" x2="200" y2="102" stroke="#9c82d8" stroke-width="1.6" stroke-dasharray="3 3"/>
+          <line x1="200" y1="70" x2="520" y2="70" stroke="#e8a33d" stroke-width="1.6"/>
+          <line x1="520" y1="56" x2="520" y2="84" stroke="#6e93be" stroke-width="2.4"/>
+          <text x="330" y="62" font-family="IBM Plex Mono" font-size="10.5" fill="#e8a33d" text-anchor="middle">f</text>
+          <text x="528" y="74" font-family="IBM Plex Mono" font-size="10" fill="#6e93be">matryca</text>
+        </g>
+
+        <g>
+          <path d="M 250 154 Q 264 180 250 206 Q 236 180 250 154 Z" fill="#4fc3c0" fill-opacity="0.15" stroke="#4fc3c0" stroke-width="1.4"/>
+          <path d="M 320 158 Q 310 180 320 202 L 336 202 L 336 158 Z" fill="#9c82d8" fill-opacity="0.16" stroke="#9c82d8" stroke-width="1.4"/>
+          <line x1="200" y1="148" x2="200" y2="212" stroke="#9c82d8" stroke-width="1.6" stroke-dasharray="3 3"/>
+          <text x="176" y="144" font-family="IBM Plex Mono" font-size="9.5" fill="#9c82d8">H′</text>
+          <line x1="200" y1="180" x2="520" y2="180" stroke="#e8a33d" stroke-width="1.6"/>
+          <line x1="520" y1="166" x2="520" y2="194" stroke="#6e93be" stroke-width="2.4"/>
+          <line x1="250" y1="214" x2="520" y2="214" stroke="#4fc3c0" stroke-width="1.2"/>
+          <text x="380" y="228" font-family="IBM Plex Mono" font-size="10" fill="#4fc3c0" text-anchor="middle">długość tubusu &lt; f</text>
+          <text x="330" y="172" font-family="IBM Plex Mono" font-size="10.5" fill="#e8a33d" text-anchor="middle">f</text>
+        </g>
+
+        <g>
+          <path d="M 180 264 Q 170 290 180 316 L 196 316 L 196 264 Z" fill="#9c82d8" fill-opacity="0.16" stroke="#9c82d8" stroke-width="1.4"/>
+          <path d="M 300 268 Q 314 290 300 312 Q 286 290 300 268 Z" fill="#4fc3c0" fill-opacity="0.15" stroke="#4fc3c0" stroke-width="1.4"/>
+          <line x1="360" y1="258" x2="360" y2="322" stroke="#9c82d8" stroke-width="1.6" stroke-dasharray="3 3"/>
+          <text x="366" y="254" font-family="IBM Plex Mono" font-size="9.5" fill="#9c82d8">H′</text>
+          <line x1="360" y1="290" x2="520" y2="290" stroke="#e8a33d" stroke-width="1.6"/>
+          <line x1="520" y1="276" x2="520" y2="304" stroke="#6e93be" stroke-width="2.4"/>
+          <line x1="180" y1="324" x2="520" y2="324" stroke="#4fc3c0" stroke-width="1.2"/>
+          <text x="350" y="338" font-family="IBM Plex Mono" font-size="10" fill="#4fc3c0" text-anchor="middle">długość tubusu &gt; f</text>
+          <text x="440" y="282" font-family="IBM Plex Mono" font-size="10.5" fill="#e8a33d" text-anchor="middle">f</text>
+        </g>
+      </svg>
+      <div class="diagram-caption">Płaszczyzna główna może leżeć poza fizycznym obiektywem — nawet metr przed nim. To nie jest sztuczka rachunkowa, tylko realny opis zachowania układu.</div>
+    </div>
+
+    <p>Konsekwencja pierwsza: <strong>obiektyw 300 mm nie musi mieć 300 mm długości</strong>. Jeśli konstruktor umieści z tyłu grupę rozpraszającą, druga płaszczyzna główna przesunie się do przodu — nawet przed przednią soczewkę — i tubus może być o jedną trzecią krótszy. Tak działa układ teleobiektywowy i to jedyny powód, dla którego da się nosić dwustumilimetrówkę w jednej ręce.</p>
+
+    <p>Konsekwencja druga, odwrotna: <strong>szeroki kąt na lustrzance musi być dłuższy niż jego ogniskowa</strong>. Między tylną soczewką a matrycą musi się zmieścić lustro, a to bywa czterdzieści milimetrów. Obiektyw 20 mm nie może więc siedzieć dwadzieścia milimetrów od matrycy — trzeba przesunąć płaszczyznę główną do tyłu grupą rozpraszającą z przodu. To układ retrofokusowy, źródło większości kłopotów szerokich kątów, i wracamy do niego w <a href="../rozdzialy/rozdzial-18-skrajne-ogniskowe.html">Rozdziale 18</a>.</p>
+    <div class="subsection">
+      <h3>Jak zmierzyć ogniskową obiektywu, którego danych nie masz</h3>
+      <p>Równanie soczewki jest symetryczne względem zamiany s i s′ — zamień je miejscami, a wzór pozostanie prawdziwy. Wynika z tego fakt na pierwszy rzut oka zaskakujący: przy <strong>ustalonej</strong> odległości między przedmiotem a matrycą istnieją zwykle <em>dwa</em> położenia obiektywu, w których obraz jest ostry. W jednym dostajesz obraz pomniejszony, w drugim powiększony, i oba są równie ostre.</p>
+      <p>Ta symetria jest podstawą metody pomiarowej, którą da się wykonać na planie z linijką. Ustawiasz przedmiot i matrycę w stałej odległości <em>D</em>, znajdujesz oba położenia ostrości i mierzysz odległość <em>e</em> między nimi. Ogniskowa wypada z jednego działania:</p>
+      <div class="formula">
+        f = (D² − e²) / (4 · D)
+        <span class="sub">D — całkowita odległość przedmiot–matryca, e — odległość między dwoma położeniami obiektywu dającymi ostry obraz. Metoda Bessela; działa dla dowolnego układu, także wielosoczewkowego, bo nie wymaga wiedzy o tym, gdzie leżą płaszczyzny główne.</span>
+      </div>
+      <p>Ostatnie zdanie jest tu najważniejsze. Wszystkie prostsze sposoby pomiaru wymagają wiedzy, od którego punktu obiektywu mierzyć — a tego, jak widzieliśmy, nie da się odczytać z zewnątrz. Metoda Bessela ten problem omija, bo mierzy <span class="term-cyan">różnicę</span> dwóch położeń, a nie odległość bezwzględną. Płaszczyzny główne skracają się w rachunku.</p>
+      <p>Praktyczne zastosowanie w pracy z plate'em: gdy masz metrykę zdjęciową z nazwą obiektywu, ale podejrzewasz, że nominał odbiega od rzeczywistości — a przy zoomach odbiega zawsze — to jest najprostszy sposób, żeby sprawdzić to na sprzęcie zamiast zgadywać z trackera.</p>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-eyebrow">Cztery odległości · i jak je pomylić</div>
+    <h2>Co dokładnie znaczy każda liczba w milimetrach</h2>
+
+    <p>Wokół obiektywu krąży kilka odległości podawanych w milimetrach i tylko jedna z nich to ogniskowa. Reszta bywa z nią mylona — a każda pomyłka daje inny rodzaj rozjazdu przy dopasowywaniu wirtualnej kamery.</p>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead>
+          <tr><th>Nazwa</th><th>Mierzona od</th><th>Do</th><th>Do czego służy</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Ogniskowa (EFL)</td><td>tylna płaszczyzna główna</td><td>ognisko obrazowe</td><td>kadr, perspektywa, wszystkie wzory</td></tr>
+          <tr><td>Odcinek tylny (BFD)</td><td>ostatnia powierzchnia szkła</td><td>matryca</td><td>czy obiektyw zmieści się w korpusie</td></tr>
+          <tr><td>Odcinek przedni (FFD)</td><td>pierwsza powierzchnia szkła</td><td>ognisko przedmiotowe</td><td>ustawienia w układach specjalnych</td></tr>
+          <tr><td>Odcinek bagnetowy</td><td>kołnierz bagnetu</td><td>matryca</td><td>zgodność mocowań i adaptery</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Tylko pierwsza z tych liczb jest właściwością optyczną. Pozostałe trzy są mechaniczne — mówią, gdzie co siedzi w metalu.</p>
+
+    <p>Ostatni wiersz jest tym, który w praktyce widuje się najczęściej, bo decyduje o adapterach. Odcinek bagnetowy to <strong>stała mocowania, nie obiektywu</strong>: PL ma 52,00 mm, Canon EF 44,00 mm, Canon RF i Leica L po 20,00 mm, Sony E 18,00 mm, Nikon Z 16,00 mm. Adapter da się zbudować tylko z mocowania o większym odcinku na mniejszy, bo trzeba mieć gdzie wstawić pierścień — dlatego PL i EF adaptuje się na bezlusterkowce, a nie odwrotnie.</p>
+
+    <p>Dla pracy z materiałem liczy się natomiast pierwszy wiersz i jedno ostrzeżenie do niego. <span class="term-violet">Liczba wygrawerowana na tubusie jest zaokrągleniem</span>, i to czasem hojnym: obiektyw opisany jako 50 mm bywa w rzeczywistości 51,6 albo 48,3. Przy dopasowywaniu kamery do plate'u różnica kilku procent w ogniskowej przekłada się na widoczny rozjazd perspektywy w ujęciu z ruchem — dlatego solvery traktują ogniskową jako <em>wielkość do wyznaczenia</em>, a nie do przepisania z metryczki.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Nazewnictwo · pomyłka utrwalona na sto lat</div>
+    <h2>Punkty węzłowe i punkt bezparalaksowy</h2>
+
+    <p>Rozdział 4 wspomina, że nazywanie punktu obrotu panoramy „punktem nodalnym” jest pomyłką. Warto zobaczyć, na czym dokładnie ona polega, bo tłumaczy zarazem, dlaczego przetrwała tak długo.</p>
+
+    <p><strong>Punkty węzłowe</strong> to para punktów na osi o własności kątowej: promień celujący w przedni punkt węzłowy wychodzi z tylnego <em>pod tym samym kątem</em> do osi. Są to punkty zdefiniowane przez kierunki, nie przez położenia obrazu — i nie mają nic wspólnego z paralaksą.</p>
+
+    <p><strong>Punkt bezparalaksowy</strong> to środek źrenicy wejściowej: miejsce, przez które przechodzą wszystkie promienie wpadające do układu. Obrót wokół niego nie zmienia wzajemnego położenia bliskiego i dalekiego planu, bo dziurka, przez którą patrzy obiektyw, zostaje na miejscu. To on jest odpowiedzią na pytanie o głowicę panoramiczną i o pivot wirtualnej kamery — cała rzecz rozwinięta jest w <a href="../rozdzialy/rozdzial-07-zrenice.html">Rozdziale 7</a> i <a href="dodatek-ae-geometria-zrenic.html">Dodatku AE</a>.</p>
+
+    <p>Skąd zatem pomyłka? Stąd, że <span class="term-cyan">w układzie otoczonym z obu stron tym samym ośrodkiem punkty węzłowe pokrywają się z płaszczyznami głównymi</span> — a te w wielu prostych konstrukcjach leżą blisko źrenicy wejściowej. Dla obiektywu symetrycznego różnica bywa milimetrowa i w praktyce niezauważalna. Nazwa przyjęła się w epoce, gdy fotografowano głównie takimi układami, i przetrwała w podręcznikach mimo tego, że dla teleobiektywu albo retrofokusa rozbieżność sięga już centymetrów.</p>
+
+    <p>Praktyczny wniosek jest prosty: <strong>nie szukaj punktu obrotu w danych optycznych, tylko go zmierz</strong> metodą z paralaksy opisaną w Dodatku AE. Zajmuje kwadrans i daje liczbę dla konkretnego egzemplarza przy konkretnej ogniskowej — a tego żaden katalog nie poda.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Postać Newtona · wygodniejsza w makro</div>
+    <h2>To samo równanie od strony ognisk</h2>
+
+    <p>Równanie 1/f = 1/s + 1/s′ mierzy odległości od płaszczyzn głównych. Istnieje jego druga postać, w której mierzy się je <em>od ognisk</em> — i dla wszystkiego, co dotyczy powiększenia, jest ona wygodniejsza.</p>
+
+    <div class="formula">
+      <span class="vec" data-tip="Odległość przedmiotu od ogniska przedmiotowego F">x</span> · <span class="vec" data-tip="Odległość obrazu od ogniska obrazowego F′">x′</span> = <span class="vec" data-tip="Ogniskowa">f</span>²
+      <span class="sub">x — odległość przedmiotu od ogniska przedmiotowego F (nie od soczewki). x′ — odległość obrazu od ogniska obrazowego F′. Postać obowiązuje, gdy po obu stronach układu jest ten sam ośrodek, czyli praktycznie zawsze w fotografii.</span>
+    </div>
+
+    <p>Symetria tego zapisu jest tym, co czyni go użytecznym: powiększenie wychodzi z niego dwoma równoważnymi ilorazami, z których każdy wymaga tylko jednej znanej odległości.</p>
+
+    <div class="formula">
+      m = − <span class="vec" data-tip="Odległość obrazu od ogniska obrazowego">x′</span> / <span class="vec" data-tip="Ogniskowa">f</span> = − <span class="vec" data-tip="Ogniskowa">f</span> / <span class="vec" data-tip="Odległość przedmiotu od ogniska przedmiotowego">x</span>
+      <span class="sub">m — powiększenie liniowe, ujemne dla obrazu odwróconego. Wystarczy znać jedną z odległości ogniskowych, żeby dostać drugą i powiększenie naraz.</span>
+    </div>
+
+    <div class="worked">
+      <div class="wlabel">Ile trzeba wysunąć pięćdziesiątkę do skali 1:1</div>
+      <p class="step"><span class="k">warunek</span> <span class="v">m = −1, f = 50 mm</span></p>
+      <p class="step"><span class="k">z m = −x′/f</span> <span class="v">x′ = f = </span><span class="result">50 mm</span></p>
+      <p class="step"><span class="k">odległość obrazu</span> <span class="v">s′ = f + x′ = 50 + 50 = </span><span class="result">100 mm</span></p>
+      <p class="step"><span class="k">wysuw</span> <span class="v">100 − 50 = </span><span class="result">50 mm</span></p>
+      <p class="check">Żeby fotografować w skali 1:1, pięćdziesiątkę trzeba odsunąć od matrycy o całe pięćdziesiąt milimetrów ponad położenie dla nieskończoności — czyli podwoić odcinek. To jest wprost powód, dla którego pierścienie pośrednie mają takie długości, jakie mają, i dlaczego przy skali 1:1 traci się dwie działki światła: źrenica została ta sama, a odległość do matrycy się podwoiła. Rachunek na tę stratę jest w <a href="dodatek-ae-geometria-zrenic.html">Dodatku AE</a>.</p>
+    </div>
+
+    <p>Postać Newtona przydaje się też przy czytaniu danych obiektywów makro. Producent podaje zwykle <em>maksymalne powiększenie</em> zamiast minimalnej odległości ostrzenia — i z powyższych wzorów wynika, że te dwie liczby niosą tę samą informację, o ile zna się ogniskową. Obiektyw 100 mm o powiększeniu 0,5× ma x′ = 50 mm, więc jego obraz powstaje 150 mm za tylną płaszczyzną główną, niezależnie od tego, co pisze na pudełku.</p>
+  </div>
 
   <div class="site-nav">
     <a href="../index.html">← Spis treści</a>
