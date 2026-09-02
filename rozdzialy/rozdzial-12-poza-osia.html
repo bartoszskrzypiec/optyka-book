@@ -43,7 +43,311 @@ window.SKY3D_MESSAGES = {
   <h1>Poza osią: koma, astygmatyzm i krzywizna pola</h1>
   <p class="subtitle">W środku kadru każdy obiektyw jest dobry. Dopiero punkt w rogu pokazuje, ile konstruktor musiał odpuścić — i dlaczego niektóre obiektywy skręcają tło w wir.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li>W środku kadru działa tylko aberracja sferyczna. <strong>Poza osią dochodzą trzy kolejne wady</strong> i każda psuje coś innego: koma rozmazuje punkt w kometę, astygmatyzm rozdziela go na dwa ogniska, krzywizna pola przesuwa całą płaszczyznę ostrości.</li>
+      <li>Wszystkie trzy rosną z odległością od środka kadru — koma z kwadratem, pozostałe podobnie. Dlatego <span class="term-violet">rogi są zawsze najgorszym miejscem obrazu</span> i dlatego testy obiektywów podaje się osobno dla środka i dla brzegu.</li>
+      <li>Krzywizna pola plus obcięcie mechaniczne daje wir w tle, obiecany już w Rozdziale 9. To jedyna z tych wad, którą kupuje się dziś celowo.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Punkt wyjścia · dlaczego poza osią jest trudniej</div>
+    <h2>Skośna wiązka widzi inną soczewkę</h2>
+
+    <p>Punkt leżący na osi optycznej ma pewien komfort: wiązka od niego biegnąca jest symetryczna względem osi soczewki. Wszystko, co soczewka z nią robi, robi jednakowo dookoła — i dlatego jedyną wadą, jaka może się pojawić, jest zależność od <em>odległości od osi</em>, czyli aberracja sferyczna z poprzedniego rozdziału.</p>
+
+    <p>Punkt leżący z boku tej symetrii nie ma. Jego wiązka pada na soczewkę <strong>skośnie</strong>, więc górna część źrenicy widzi inną geometrię niż dolna. Przekrój soczewki wzdłuż kierunku odchylenia i w poprzek niego to dwa różne przekroje — i skoro są różne, to i skupiają inaczej.</p>
+
+    <p>Z tej jednej asymetrii wypadają trzy nowe wady. Nie są od siebie niezależne w tym sensie, że wszystkie mają wspólne źródło, ale objawiają się na tyle różnie, że warto trzymać je osobno — również dlatego, że konstruktor koryguje je osobnymi środkami i zwykle nie może skorygować wszystkich naraz.</p>
+
+    <p>Zanim przejdziemy do szczegółów, warto ustawić sobie w głowie mapę. Aberracja sferyczna psuje <em>ostrość na osi</em>. Koma psuje <em>kształt punktu poza osią</em>. Astygmatyzm psuje <em>ostrość poza osią, i to niejednakowo w dwóch kierunkach</em>. Krzywizna pola nie psuje ostrości wcale — przesuwa tylko miejsce, w którym ona jest. A dystorsja, którą zajmiemy się w następnym rozdziale, nie psuje ostrości ani trochę, za to przesuwa punkty w kadrze.</p>
+
+    <p>To jest komplet pięciu klasycznych wad monochromatycznych, opisanych w dziewiętnastym wieku przez Seidela i do dziś nazywanych jego nazwiskiem. Wyprowadza się je z jednego rozwinięcia matematycznego, w którym każda jest kolejnym wyrazem szeregu — i to jest jedyny powód, dla którego jest ich akurat pięć, a nie cztery czy sześć.</p>
+
+    <p class="deeper-inline">Rozwinięcie funkcji falowej, z którego wypada cała piątka — <a href="../dodatki/dodatek-f-aberracje-seidela.html">Dodatek F</a>.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Mapa · pięć wad i co każda psuje</div>
+    <h2>Podział obowiązków między aberracjami</h2>
+
+    <p>Zanim przejdziemy dalej, warto mieć całą piątkę Seidela w jednym miejscu, bo jest to mapa, do której wraca się przez resztę tej części. Każda wada psuje coś innego i każda reaguje inaczej na dwie rzeczy, którymi da się sterować: przymknięcie przysłony i odległość od środka kadru.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Pięć wad Seidela</span><span>co psują i jak reagują</span></div>
+      <svg viewBox="0 0 760 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tabela pięciu wad Seidela z informacją, co każda psuje, jak zależy od odległości od osi i czy znika po przymknięciu przysłony.">
+        <g font-family="IBM Plex Mono" font-size="10" fill="#8b909b">
+          <text x="30" y="30">WADA</text><text x="230" y="30">PSUJE</text>
+          <text x="450" y="30">ROŚNIE Z ODLEGŁOŚCIĄ</text><text x="646" y="30">PRZYMKNIĘCIE</text>
+        </g>
+        <line x1="30" y1="40" x2="730" y2="40" stroke="#2a2f38"/>
+        <g font-family="IBM Plex Mono" font-size="11">
+          <text x="30" y="72" fill="#ecebe4">sferyczna</text>
+          <text x="230" y="72" fill="#8b909b">ostrość na osi</text>
+          <text x="450" y="72" fill="#8b909b">wcale</text>
+          <text x="646" y="72" fill="#4fc3c0">bardzo pomaga</text>
+
+          <text x="30" y="112" fill="#ecebe4">koma</text>
+          <text x="230" y="112" fill="#8b909b">kształt punktu</text>
+          <text x="450" y="112" fill="#9c82d8">z kwadratem</text>
+          <text x="646" y="112" fill="#4fc3c0">pomaga</text>
+
+          <text x="30" y="152" fill="#ecebe4">astygmatyzm</text>
+          <text x="230" y="152" fill="#8b909b">ostrość poza osią</text>
+          <text x="450" y="152" fill="#9c82d8">z kwadratem</text>
+          <text x="646" y="152" fill="#8b909b">pomaga słabo</text>
+
+          <text x="30" y="192" fill="#ecebe4">krzywizna pola</text>
+          <text x="230" y="192" fill="#8b909b">gdzie jest ostrość</text>
+          <text x="450" y="192" fill="#9c82d8">z kwadratem</text>
+          <text x="646" y="192" fill="#8b909b">maskuje głębią</text>
+
+          <text x="30" y="232" fill="#ecebe4">dystorsja</text>
+          <text x="230" y="232" fill="#8b909b">położenie punktu</text>
+          <text x="450" y="232" fill="#9c82d8">z sześcianem</text>
+          <text x="646" y="232" fill="#c23b3b">nie pomaga wcale</text>
+        </g>
+        <text x="30" y="266" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">Ostatni wiersz jest osobny: dystorsja jako jedyna nie rusza ostrości i jako jedyna nie znika po przymknięciu.</text>
+      </svg>
+      <div class="diagram-caption">Ta tabela jest w praktyce narzędziem diagnostycznym: po reakcji na przymknięcie rozpoznasz, z którą wadą masz do czynienia.</div>
+    </div>
+
+    <p>Ostatnia kolumna jest w codziennej pracy najużyteczniejsza. Przymknięcie przysłony odcina brzeg źrenicy, więc pomaga wszędzie tam, gdzie wada zależy od promienia źrenicy — czyli przy sferycznej i komie. Astygmatyzmowi pomaga słabiej, bo ten zależy głównie od kąta padania, a nie od szerokości wiązki. Krzywizny pola nie usuwa wcale, ale ją <em>maskuje</em>, bo rosnąca głębia ostrości mieści wygiętą czaszę w tolerancji. Dystorsji nie rusza w żaden sposób.</p>
+
+    <p>Stąd praktyczny test na trzy pytania, który pozwala rozpoznać wadę bez żadnego sprzętu pomiarowego. Czy problem jest w środku kadru? Jeśli tak, to sferyczna. Czy znika po przymknięciu? Jeśli nie, a dotyczy geometrii — to dystorsja. Czy punkt ma ogon, czy kreskę? Ogon to koma, kreska to astygmatyzm.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Koma · punkt z ogonem</div>
+    <h2>Kometa w rogu kadru</h2>
+
+    <p>Weź skośną wiązkę i podziel źrenicę na współśrodkowe pierścienie. Okazuje się, że każdy pierścień odwzorowuje punkt jako <strong>kółko</strong> — ale kółka od kolejnych pierścieni mają różne średnice i, co gorsza, różne środki. Im dalszy pierścień źrenicy, tym większe kółko i tym bardziej przesunięte na zewnątrz.</p>
+
+    <p>Suma tych kółek daje kształt klina rozszerzającego się w jedną stronę, z ostrym wierzchołkiem od strony osi i rozmytym ogonem skierowanym na zewnątrz kadru. Wygląda to jak kometa i stąd nazwa: koma.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Powstawanie komy</span><span>pierścienie źrenicy dają przesunięte kółka</span></div>
+      <svg viewBox="0 0 760 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Kolejne pierścienie źrenicy odwzorowują punkt jako coraz większe i coraz bardziej przesunięte okręgi; ich suma tworzy kształt komety.">
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">
+          <text x="30" y="26">PIERŚCIENIE ŹRENICY</text><text x="400" y="26">ICH OBRAZY NA MATRYCY</text>
+        </g>
+        <g fill="none" stroke="#4fc3c0" stroke-width="1.6">
+          <circle cx="150" cy="140" r="20" opacity="0.9"/><circle cx="150" cy="140" r="42" opacity="0.7"/>
+          <circle cx="150" cy="140" r="64" opacity="0.5"/><circle cx="150" cy="140" r="86" opacity="0.35"/>
+        </g>
+        <text x="150" y="248" font-family="IBM Plex Mono" font-size="10" fill="#4fc3c0" text-anchor="middle">źrenica, widok z przodu</text>
+
+        <g fill="none" stroke="#9c82d8" stroke-width="1.6">
+          <circle cx="470" cy="140" r="7" opacity="0.9"/>
+          <circle cx="492" cy="140" r="17" opacity="0.7"/>
+          <circle cx="524" cy="140" r="30" opacity="0.5"/>
+          <circle cx="566" cy="140" r="46" opacity="0.35"/>
+        </g>
+        <path d="M 466 140 L 566 94 L 612 140 L 566 186 Z" fill="#9c82d8" fill-opacity="0.12"/>
+        <circle cx="466" cy="140" r="3" fill="#e8a33d"/>
+        <text x="440" y="118" font-family="IBM Plex Mono" font-size="10" fill="#e8a33d">gdzie punkt</text>
+        <text x="440" y="132" font-family="IBM Plex Mono" font-size="10" fill="#e8a33d">powinien być</text>
+        <text x="600" y="212" font-family="IBM Plex Mono" font-size="10.5" fill="#9c82d8" text-anchor="middle">ogon ku brzegowi kadru</text>
+      </svg>
+      <div class="diagram-caption">Kółka rosną i uciekają na zewnątrz. Suma ma ostry wierzchołek i rozmyty ogon — stąd nazwa.</div>
+    </div>
+
+    <p>Koma jest wadą wyjątkowo dokuczliwą z dwóch powodów. Po pierwsze, jest <strong>niesymetryczna</strong> — a oko jest znacznie czulsze na asymetrię niż na symetryczne rozmycie. Punkt rozmyty równomiernie czytamy jako nieostry; punkt z ogonem czytamy jako uszkodzony.</p>
+
+    <p>Po drugie, rośnie z <em>kwadratem</em> odległości od osi i liniowo z promieniem źrenicy. Znaczy to, że przy pełnym otworze narasta bardzo szybko ku brzegom kadru: punkt w połowie drogi do rogu ma komę czterokrotnie mniejszą niż punkt w samym rogu. Przejście od „w porządku” do „nie do przyjęcia” bywa więc gwałtowne i wypada w ostatniej ćwiartce kadru.</p>
+
+    <p>Warto też wiedzieć, że koma ma kierunek zależny od położenia w kadrze — ogon zawsze wskazuje na zewnątrz, od środka obrazu. Układa się więc promieniście, dokładnie tak jak kocie oko z Rozdziału 7, i z tego samego powodu: obie wady są funkcją kąta, pod jakim dany punkt kadru patrzy w obiektyw. Odróżnia je to, że kocie oko jest obcięciem symetrycznym, a koma ma jeden koniec ostry i drugi rozmyty.</p>
+
+    <p>Najłatwiej ją zobaczyć na nocnym niebie, i to jest zarazem klasyczny test obiektywu. Gwiazdy są idealnymi punktami, a ich obraz w rogu kadru pokazuje komę bez żadnych domieszek. Obiektyw dobry w środku i dający w rogach skrzydlate ptaszki zamiast gwiazd ma komę — i dlatego astrofotografowie płacą za konstrukcje, które fotografom krajobrazu wydają się nieuzasadnienie drogie.</p>
+
+    <p>Dobra wiadomość: koma znika po przymknięciu przysłony szybciej niż większość wad, bo zależy liniowo od promienia źrenicy. Dwie przysłony przymknięcia zmniejszają ją czterokrotnie. Zła wiadomość: przy pełnym otworze, czyli tam, gdzie fotografuje się nocne niebo, nie da się jej uniknąć inaczej niż konstrukcją.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Astygmatyzm · dwa ogniska zamiast jednego</div>
+    <h2>Kiedy poziome i pionowe nie są ostre naraz</h2>
+
+    <p>Wróćmy do skośnej wiązki i spójrzmy na nią z innej strony. Przekrój soczewki wzdłuż kierunku odchylenia — nazywany <strong>przekrojem południkowym</strong> — jest przy padaniu skośnym efektywnie krótszy i mocniej zakrzywiony niż przekrój prostopadły do niego, czyli <strong>równoleżnikowy</strong>. Dwa przekroje o różnej mocy skupiają w dwóch różnych odległościach.</p>
+
+    <p>Skutek jest osobliwy i nie ma odpowiednika w niczym, co widzieliśmy dotąd. Nie istnieje odległość, w której punkt jest ostry. Istnieją natomiast <em>dwie</em> odległości, w których jest ostry <strong>w jednym kierunku</strong>: w pierwszej odwzorowuje się jako krótka pozioma kreska, w drugiej jako pionowa. Między nimi jest miejsce, w którym jest okrągłą plamką — najmniej złe, ale wciąż nieostre.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Astygmatyzm</span><span>dwa ogniska, dwie kreski</span></div>
+      <svg viewBox="0 0 760 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Wzdłuż osi optycznej punkt odwzorowuje się kolejno jako kreska pozioma, plamka okrągła i kreska pionowa.">
+        <line x1="60" y1="120" x2="700" y2="120" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 6"/>
+        <g stroke="#9c82d8" stroke-width="1.4" fill="none" opacity="0.8">
+          <path d="M 60 74 L 250 116 L 440 120 L 630 108 L 700 96"/>
+          <path d="M 60 166 L 250 124 L 440 120 L 630 132 L 700 144"/>
+        </g>
+        <g>
+          <line x1="250" y1="120" x2="250" y2="120" stroke="#e8a33d" stroke-width="4"/>
+          <rect x="230" y="117" width="40" height="6" fill="#e8a33d"/>
+          <text x="250" y="164" font-family="IBM Plex Mono" font-size="10.5" fill="#e8a33d" text-anchor="middle">ognisko południkowe</text>
+          <text x="250" y="180" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">kreska pozioma</text>
+        </g>
+        <g>
+          <circle cx="440" cy="120" r="11" fill="#e8a33d" fill-opacity="0.5"/>
+          <text x="440" y="164" font-family="IBM Plex Mono" font-size="10.5" fill="#e8a33d" text-anchor="middle">krążek najmniejszego rozmycia</text>
+          <text x="440" y="180" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">okrągła plamka, nigdzie ostro</text>
+        </g>
+        <g>
+          <rect x="627" y="100" width="6" height="40" fill="#e8a33d"/>
+          <text x="630" y="164" font-family="IBM Plex Mono" font-size="10.5" fill="#e8a33d" text-anchor="middle">ognisko równoleżnikowe</text>
+          <text x="630" y="180" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">kreska pionowa</text>
+        </g>
+        <text x="30" y="220" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">Nie ma płaszczyzny, w której punkt jest punktem. Są dwie, w których jest kreską.</text>
+      </svg>
+      <div class="diagram-caption">Astygmatyzm to jedyna wada, przy której ostrzenie nie ma dobrego rozwiązania — tylko mniej złe.</div>
+    </div>
+
+    <p>W obrazie widać to jako charakterystyczną niezgodność: <span class="term-violet">w rogu kadru cegły w murze są ostre w poziomie i miękkie w pionie</span>, a po lekkim przekręceniu pierścienia ostrości zamieniają się rolami. Jeśli kiedykolwiek próbowałeś wyostrzyć róg kadru i miałeś wrażenie, że ostrość ucieka, to najprawdopodobniej właśnie to.</p>
+
+    <p>Nazwa bywa myląca, bo tym samym słowem określa się wadę oka. Mechanizm jest podobny — rogówka o różnej krzywiźnie w dwóch kierunkach — ale w oku dotyczy całego pola widzenia, a w obiektywie tylko obszarów poza osią. Środek kadru jest wolny od astygmatyzmu zawsze, z samej symetrii.</p>
+
+    <p>Astygmatyzm był historycznie wadą najtrudniejszą do usunięcia i to od niej wzięła się cała klasa obiektywów zwanych <strong>anastygmatami</strong> — nazwa oznaczająca dosłownie „bez astygmatyzmu”. Pojawiła się pod koniec dziewiętnastego wieku, gdy nowe rodzaje szkła pozwoliły wreszcie skorygować tę wadę razem z krzywizną pola, i przez dekady była argumentem sprzedażowym wybijanym na oprawie.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Krzywizna pola · ostrość na czaszy</div>
+    <h2>Matryca jest płaska, obraz nie</h2>
+
+    <p>Trzecia wada poza osią jest najbardziej podstępna, bo nie psuje niczego — po prostu kładzie ostry obraz w złym miejscu.</p>
+
+    <p>Naturalną powierzchnią, na której soczewka tworzy ostry obraz, nie jest płaszczyzna, tylko <strong>czasza wygięta ku obiektywowi</strong>. Powód jest geometryczny i dość intuicyjny: punkty leżące skośnie są od soczewki dalej niż punkty na osi, więc ich obrazy powstają bliżej. Wygięcie to nazywa się powierzchnią Petzvala, od nazwiska konstruktora, który pierwszy je policzył.</p>
+
+    <p>Problem polega na tym, że matryca jest płaska. Ustawiając ostrość na środek kadru, godzisz się na to, że rogi są nieostre — bo ich obraz powstał kilkadziesiąt mikrometrów przed matrycą. Ustawiając na rogi, tracisz środek. Nie ma nastawy, w której cały kadr jest ostry naraz.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Powierzchnia Petzvala</span><span>obraz na czaszy, matryca płaska</span></div>
+      <svg viewBox="0 0 760 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ostry obraz powstaje na czaszy wygiętej ku obiektywowi; płaska matryca przecina ją tylko w jednym miejscu.">
+        <path d="M 250 40 Q 288 120 250 200 Q 212 120 250 40 Z" fill="#4fc3c0" fill-opacity="0.13" stroke="#4fc3c0" stroke-width="1.5"/>
+        <line x1="20" y1="120" x2="740" y2="120" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 6"/>
+        <path d="M 520 30 Q 578 120 520 210" fill="none" stroke="#9c82d8" stroke-width="2.4"/>
+        <text x="600" y="52" font-family="IBM Plex Mono" font-size="10.5" fill="#9c82d8">powierzchnia ostrości</text>
+        <line x1="560" y1="30" x2="560" y2="210" stroke="#6e93be" stroke-width="3"/>
+        <text x="596" y="200" font-family="IBM Plex Mono" font-size="10.5" fill="#6e93be">matryca</text>
+        <circle cx="560" cy="120" r="5" fill="#4fc3c0"/>
+        <text x="486" y="140" font-family="IBM Plex Mono" font-size="10" fill="#4fc3c0" text-anchor="end">tu ostro</text>
+        <g stroke="#c23b3b" stroke-width="1.6">
+          <line x1="527" y1="42" x2="560" y2="42"/><line x1="527" y1="198" x2="560" y2="198"/>
+        </g>
+        <text x="620" y="34" font-family="IBM Plex Mono" font-size="10" fill="#c23b3b">tu obraz powstał wcześniej</text>
+        <text x="30" y="228" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">Czerwone odcinki to odległość, o którą rogi chybiają matrycę. Ostrzenie przesuwa całą czaszę, nie prostuje jej.</text>
+      </svg>
+      <div class="diagram-caption">Jedyna wada w tej książce, którą dałoby się usunąć, wyginając matrycę — i takie próby naprawdę podejmowano.</div>
+    </div>
+
+    <p>Konstruktorzy walczą z tym od zawsze, a warunek matematyczny na płaskie pole nosi nazwę warunku Petzvala i sprowadza się do doboru mocy i współczynników załamania poszczególnych soczewek tak, żeby ich wkłady się zniosły. Spełnienie go wymaga zwykle dołożenia elementu rozpraszającego z odpowiedniego szkła — czyli, jak zawsze, dodatkowych powierzchni.</p>
+
+    <p>Istnieje też droga radykalna, o której warto wiedzieć, bo bywa zaskoczeniem: <strong>wygiąć nośnik</strong>. Aparaty na film potrafiły dociskać kliszę do wygiętej prowadnicy, a niektóre kamery jednorazowe robią to do dziś. Konstruowano także matryce o wygiętej powierzchni. Rozwiązanie działa idealnie, ale wiąże obiektyw z korpusem na stałe — i dlatego nie przyjęło się w systemach z wymiennymi obiektywami.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Suma · skąd wir w tle</div>
+    <h2>Trzy wady składają się na jeden podpis</h2>
+
+    <p>W <a href="rozdzial-09-bokeh.html">Rozdziale 9</a> obiecaliśmy wyjaśnienie wiru w tle i tu jest jego druga połowa. Pierwszą było obcięcie mechaniczne z <a href="rozdzial-07-zrenice.html">Rozdziału 7</a>; drugą jest krzywizna pola.</p>
+
+    <p>Mechanizm w całości wygląda tak. Punkt tła leżący w rogu kadru jest — z powodu krzywizny pola — nieostry <em>mocniej</em> niż ten sam punkt w środku, a często także po drugiej stronie ostrości. Jego krążek jest więc większy. Jednocześnie obcięcie mechaniczne ścina ten krążek w soczewkowaty kształt zwrócony ku środkowi kadru. Rosnące, ścinane i promieniście ułożone krążki oko odczytuje jako obrót.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Wir rozłożony na składowe</span><span>ani jedna, ani druga sama nie wystarcza</span></div>
+      <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Trzy kadry: samo obcięcie daje stałe kocie oko, sama krzywizna pola daje rosnące okrągłe krążki, razem dają wir.">
+        <g font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">
+          <text x="130" y="24">TYLKO OBCIĘCIE</text><text x="380" y="24">TYLKO KRZYWIZNA</text><text x="630" y="24">OBIE NARAZ</text>
+        </g>
+        <g fill="none" stroke="#2a2f38"><rect x="40" y="36" width="180" height="150"/><rect x="290" y="36" width="180" height="150"/><rect x="540" y="36" width="180" height="150"/></g>
+
+        <g fill="#e8a33d" fill-opacity="0.45" stroke="#e8a33d" stroke-width="1">
+          <ellipse cx="130" cy="111" rx="11" ry="11"/>
+          <ellipse cx="196" cy="111" rx="6" ry="11"/><ellipse cx="64" cy="111" rx="6" ry="11"/>
+          <ellipse cx="130" cy="56" rx="11" ry="6"/><ellipse cx="130" cy="166" rx="11" ry="6"/>
+          <ellipse cx="186" cy="66" rx="6" ry="11" transform="rotate(45 186 66)"/>
+          <ellipse cx="74" cy="66" rx="6" ry="11" transform="rotate(-45 74 66)"/>
+        </g>
+        <g fill="#9c82d8" fill-opacity="0.4" stroke="#9c82d8" stroke-width="1">
+          <circle cx="380" cy="111" r="7"/>
+          <circle cx="446" cy="111" r="14"/><circle cx="314" cy="111" r="14"/>
+          <circle cx="380" cy="56" r="14"/><circle cx="380" cy="166" r="14"/>
+          <circle cx="436" cy="66" r="18"/><circle cx="324" cy="66" r="18"/>
+        </g>
+        <g fill="#e8a33d" fill-opacity="0.5" stroke="#e8a33d" stroke-width="1">
+          <ellipse cx="630" cy="111" rx="7" ry="7"/>
+          <ellipse cx="696" cy="111" rx="7" ry="14"/><ellipse cx="564" cy="111" rx="7" ry="14"/>
+          <ellipse cx="630" cy="56" rx="14" ry="7"/><ellipse cx="630" cy="166" rx="14" ry="7"/>
+          <ellipse cx="686" cy="64" rx="8" ry="18" transform="rotate(45 686 64)"/>
+          <ellipse cx="574" cy="64" rx="8" ry="18" transform="rotate(-45 574 64)"/>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">
+          <text x="130" y="208">stały rozmiar,</text><text x="130" y="222">ciągnięcie ku środkowi</text>
+          <text x="380" y="208">rosną, ale okrągłe,</text><text x="380" y="222">czyta się jako nierówna głębia</text>
+          <text x="630" y="208">rosną, ścinane i pochylane —</text><text x="630" y="222">oko dopowiada obrót</text>
+        </g>
+      </svg>
+      <div class="diagram-caption">Efekt, za który płaci się dziś więcej niż za nowy obiektyw, jest sumą dwóch rzeczy, których przez sto lat próbowano się pozbyć.</div>
+    </div>
+
+    <p>Warto zauważyć, że <span class="term-cyan">żadna z tych dwóch wad sama nie daje wiru</span>. Samo obcięcie daje kocie oko o stałym rozmiarze — czytelne jako ciągnięcie ku środkowi, ale nie jako wir. Sama krzywizna pola daje krążki rosnące ku brzegom, ale okrągłe — czytelne jako nierówna głębia. Dopiero razem tworzą wrażenie ruchu obrotowego.</p>
+
+    <p>Dlatego wir jest właściwością konstrukcji sprzed epoki anastygmatów albo konstrukcji świadomie do niej wracających. Petzval z 1840 roku miał obie wady w komplecie, bo nie umiano ich wtedy usunąć. Helios 44, radziecka kopia niemieckiego Biotara, ma je w stopniu umiarkowanym i dlatego stał się w ostatniej dekadzie najczęściej kupowanym obiektywem vintage na świecie.</p>
+
+    <p>Konsekwencja praktyczna dla CG jest taka, że <strong>wiru nie da się zrobić jednym filtrem</strong>. Skręcenie obrazu w postprodukcji daje coś zupełnie innego, bo przesuwa też elementy ostre. Poprawne odtworzenie wymaga zmiany kształtu jądra splotu w funkcji położenia w kadrze — soczewkowatego, obracanego promieniście i rosnącego ku brzegom.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">W CG · czysto do przesady</div>
+    <h2>Wirtualny obiektyw jest doskonały i to widać</h2>
+
+    <p>Wszystkie trzy wady z tego rozdziału mają w rendererze jedną wspólną cechę: nie istnieją. Model cienkiej soczewki nie zna pojęcia „poza osią” w sensie optycznym — promień startujący z krawędzi źrenicy do rogu kadru jest traktowany dokładnie tak samo jak promień idący do środka. Rogi wychodzą tak samo ostre jak centrum, punkty są punktami wszędzie, płaszczyzna ostrości jest płaszczyzną.</p>
+
+    <p>Brzmi to jak zaleta i przez wiele lat tak było traktowane. Problem pojawia się dopiero przy zestawieniu z materiałem: <span class="term-violet">plate ma miękkie rogi, render nie ma</span>. Oko nie potrafi tego nazwać, ale niezgodność wychwytuje natychmiast, bo dotyczy całego obwodu kadru naraz.</p>
+
+    <p>Trzy poziomy zaradzenia temu, od najtańszego:</p>
+
+    <ul>
+      <li><strong>Rozmycie promieniste.</strong> Maska rosnąca od środka ku brzegom, sterująca siłą delikatnego rozmycia. Nie odtwarza ani ogona komy, ani kierunkowości astygmatyzmu, ale usuwa najbardziej rzucającą się w oczy różnicę. W większości ujęć wystarcza, bo rogi rzadko niosą treść.</li>
+      <li><strong>Rozmycie kierunkowe zależne od położenia.</strong> Zamiast rozmycia symetrycznego — rozmycie wzdłuż promienia albo w poprzek niego, zależnie od tego, którą wadę odtwarzasz. Astygmatyzm to rozmycie w jednym kierunku, koma to rozmycie asymetryczne z ogonem na zewnątrz. Wymaga jądra zależnego od pozycji, czyli tego samego mechanizmu, co kocie oko z <a href="rozdzial-07-zrenice.html">Rozdziału 7</a>.</li>
+      <li><strong>Model wielosoczewkowy w rendererze.</strong> Jedyna droga, która daje wszystkie trzy wady naraz, we właściwych proporcjach i z poprawną zależnością od przysłony. Kosztuje realnie i wymaga danych konstrukcyjnych obiektywu, których producenci nie publikują — ale dla klasycznych układów są dostępne w literaturze patentowej.</li>
+    </ul>
+
+    <p>Warto przy tym pamiętać o czymś, co łatwo przeoczyć: krzywizna pola jest jedyną z tych wad, którą da się odtworzyć <strong>bez rozmycia</strong>. Wystarczy w rendererze wygiąć płaszczyznę ostrości — albo, prościej, ustawić ostrość na obiekt leżący nieco dalej niż środek zainteresowania i pozwolić, żeby rogi wypadły z głębi naturalnie. Jest to jedyny przypadek, w którym wadę optyczną odtwarza się poprawnie samą geometrią sceny.</p>
+
+    <p>Na koniec ostrzeżenie przed nadgorliwością. Wady poza osią były przez sto pięćdziesiąt lat celem walki konstruktorów i współczesne szkło kinowe ma je opanowane bardzo dobrze. Jeśli twój plate nakręcono zestawem z ostatniej dekady, rogi <em>są</em> niemal tak ostre jak środek — i dokładanie miękkości do renderu oddali go od materiału zamiast zbliżyć. Ta poprawka należy się materiałowi ze starego szkła, nie każdemu.</p>
+  </div>
+
+  <div class="panel practice">
+    <div class="panel-label">Z praktyki</div>
+    <p><strong>Rozpoznasz je po tym, co robią z punktem.</strong> Ogon skierowany na zewnątrz to koma. Kreska zmieniająca kierunek przy przekręceniu ostrości to astygmatyzm. Równomierne rozmycie rosnące ku brzegom przy ostrym środku to krzywizna pola. Trzy różne objawy, trzy różne przyczyny, i wszystkie widoczne na jednym zdjęciu nocnego nieba.</p>
+    <p><strong>Testuj rogi na płaskiej ścianie, nie na krajobrazie.</strong> Krajobraz ma głębię, więc miękkie rogi mogą pochodzić z krzywizny pola albo z tego, że rogi są po prostu dalej. Ceglana ściana fotografowana prostopadle usuwa tę niejednoznaczność — jeśli rogi są miękkie, to wina obiektywu.</p>
+    <p><strong>W rendererze tych wad nie ma i to bywa problemem odwrotnym.</strong> Wirtualna kamera daje rogi tak samo ostre jak środek, co przy szerokim kadrze wygląda nienaturalnie czysto. Najtańsza poprawka to delikatne rozmycie rosnące promieniście od środka — nie zastąpi komy ani astygmatyzmu, ale usuwa najbardziej rzucającą się w oczy niezgodność z materiałem.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>koma</dt>
+      <dd>Wada odwzorowująca punkt poza osią jako kształt komety z ogonem skierowanym ku brzegowi kadru. Rośnie z kwadratem odległości od osi.</dd>
+      <dt>astygmatyzm</dt>
+      <dd>Rozdzielenie ogniska na dwa, dla dwóch prostopadłych kierunków. Punkt odwzorowuje się jako kreska, której kierunek zależy od nastawy ostrości.</dd>
+      <dt>przekrój południkowy / równoleżnikowy</dt>
+      <dd>Dwa prostopadłe przekroje wiązki: wzdłuż kierunku odchylenia od osi i w poprzek niego. Przy padaniu skośnym mają różną moc skupiającą.</dd>
+      <dt>krzywizna pola</dt>
+      <dd>Wygięcie powierzchni ostrego obrazu w czaszę zamiast płaszczyzny. Nie psuje ostrości — przesuwa miejsce, w którym ona jest.</dd>
+      <dt>powierzchnia Petzvala</dt>
+      <dd>Naturalna, wygięta powierzchnia ostrego obrazu danego układu. Warunek Petzvala opisuje, jak dobrać soczewki, żeby ją wypłaszczyć.</dd>
+      <dt>anastygmat</dt>
+      <dd>Historyczna nazwa obiektywu ze skorygowanym astygmatyzmem i płaskim polem. Przełom końca XIX wieku, przez dekady argument sprzedażowy.</dd>
+      <dt>wir (swirly bokeh)</dt>
+      <dd>Wrażenie obrotu w nieostrym tle. Suma krzywizny pola i obcięcia mechanicznego — żadna z tych wad sama go nie daje.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Zostaje piąta i ostatnia z wad Seidela — jedyna, która nie rusza ostrości ani trochę, za to przesuwa punkty po kadrze. W <a href="rozdzial-13-dystorsja.html">następnym rozdziale</a> zajmiemy się dystorsją, a przy okazji rozdzielimy ją od czegoś, z czym jest notorycznie mylona: od rozciągnięcia rogów, które nie jest wadą, tylko ceną płaskiego odwzorowania.</p>
+  </div>
 
   <div class="deeper">
     <div class="deeper-label">Idź głębiej</div>
