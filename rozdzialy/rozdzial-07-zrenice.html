@@ -137,12 +137,9 @@ window.SKY3D_MESSAGES = {
 
     <p>To są dwa objawy jednej przyczyny, i dlatego zachowują się identycznie: <span class="term-cyan">jedno i drugie znika po przymknięciu przysłony</span>. Przymknięta przysłona jest mniejsza od otworów opraw, więc przestaje być przez nie obcinana — bokeh w rogu wraca do wielokąta, a rogi kadru się rozjaśniają. Ta wspólna reakcja na przymknięcie jest najprostszym testem odróżniającym winietowanie optyczne od naturalnego, o którym w <a href="rozdzial-30-winietowanie.html">Rozdziale 30</a>.</p>
 
-    <div class="subsection">
-      <h3>Dlaczego szerokie kąty tracą rogi mocniej</h3>
-      <p>Obcięcie mechaniczne rośnie z kątem, pod jakim patrzymy w obiektyw — a szeroki kąt z definicji obejmuje kąty duże. Punkt w rogu kadru obiektywu 20 mm widzi tubus pod czterdziestoma kilkoma stopniami; ten sam róg przy 85 mm to zaledwie kilkanaście. Stąd prosta obserwacja, którą potwierdzi każdy test: <strong>im szerszy obiektyw, tym silniejsze winietowanie i tym wyraźniejsze kocie oko</strong>, przy tej samej klasie konstrukcji.</p>
-      <p>Konstruktor może z tym walczyć tylko jednym sposobem: poszerzając wszystko, co stoi na drodze wiązki. Większa przednia soczewka, szersza oprawa, grubszy tubus. Dlatego dobrze skorygowane szerokie kąty są nieproporcjonalnie duże i ciężkie względem swojej jasności — masa idzie nie w światło, tylko w to, żeby rogi kadru dostały pełną źrenicę.</p>
-      <p>Jest to zarazem powód, dla którego <span class="term-violet">obiektywy zaprojektowane pod mniejszy format zachowują się źle na większym</span>, nawet jeśli koło obrazu formalnie starcza. Oprawy zaprojektowano pod węższy zakres kątów, więc przy szerszym kadrze rogi zaczynają być obcinane znacznie wcześniej — obraz jest, ale jest ciemny i rysowany obciętą źrenicą.</p>
-    </div>
+    <p>Obcięcie rośnie z kątem, pod jakim patrzy się w obiektyw — a szeroki kąt z definicji obejmuje kąty duże. Stąd obserwacja, którą potwierdzi każdy test: <strong>im szerszy obiektyw, tym silniejsze winietowanie i tym wyraźniejsze kocie oko</strong>, przy tej samej klasie konstrukcji.</p>
+
+    <button class="advanced-btn" data-modal-target="adv-szerokie">Zaawansowane: dlaczego dobre szerokie kąty są takie ciężkie</button>
 
     <div class="subsection">
       <h3>Kocie oko jest kierunkowe</h3>
@@ -233,75 +230,6 @@ window.SKY3D_MESSAGES = {
   </div>
 
   <div class="section">
-    <div class="section-eyebrow">Konsekwencja · to źrenica rządzi głębią</div>
-    <h2>Dlaczego ekwiwalencja nie obejmuje głębi ostrości</h2>
-
-    <p>W <a href="rozdzial-05-ogniskowa-format-perspektywa.html">Rozdziale 5</a> padło stwierdzenie, że przeliczanie ogniskowych między formatami działa na kadr, a nie na głębię ostrości. Mając definicję źrenicy, można powiedzieć dlaczego — i jest to jedno z tych wyjaśnień, po których cała sprawa przestaje wymagać zapamiętywania.</p>
-
-    <p>Nieostrość powstaje wtedy, gdy stożek promieni zbiegających się do punktu nie zdąży się zejść przed matrycą albo zejdzie się przed nią i zdąży się rozejść. Szerokość tego stożka na matrycy — czyli rozmiar plamki rozmycia — zależy od <strong>kąta rozwarcia stożka</strong>, a ten jest wyznaczony przez średnicę źrenicy podzieloną przez odległość obrazu. Ogniskowa i liczba f wchodzą do rachunku wyłącznie przez tę jedną wielkość.</p>
-
-    <p>Weźmy dwa zestawy dające ten sam kadr na dwóch formatach:</p>
-
-    <div class="worked">
-      <div class="wlabel">Ten sam kadr, dwie różne źrenice</div>
-      <p class="step"><span class="k">Super 35</span> <span class="v">35 mm przy f/2 → źrenica 35/2 = </span><span class="result">17,5 mm</span></p>
-      <p class="step"><span class="k">pełna klatka</span> <span class="v">50 mm przy f/2 → źrenica 50/2 = </span><span class="result">25,0 mm</span></p>
-      <p class="step"><span class="k">stosunek</span> <span class="v">25,0 / 17,5 = </span><span class="result">1,43×</span></p>
-      <p class="check">Kadr identyczny, liczba przysłony identyczna, a źrenica na pełnej klatce o 43% większa — czyli stożek szerszy i głębia płytsza o mniej więcej jedną przysłonę. To jest cała „przewaga dużego formatu” w jednym rachunku, i widać z niego zarazem, że nie jest to żadna magia formatu, tylko konsekwencja większej dziury.</p>
-    </div>
-
-    <p>Stąd bierze się też uczciwa wersja przelicznika, której zwykle się nie podaje: żeby dostać na Super 35 tę samą głębię co na pełnej klatce, trzeba przeliczyć <strong>i ogniskową, i liczbę przysłony</strong>, obie przez ten sam współczynnik. 50 mm przy f/2,8 na pełnej klatce odpowiada 35 mm przy f/2,0 na S35 — dopiero wtedy źrenice są równe i głębia się zgadza.</p>
-
-    <p>Warto to sobie ułożyć w jednym zdaniu, bo wraca w każdej rozmowie o formatach: <span class="term-cyan">kadr wyznacza ogniskowa podzielona przez format, a głębię wyznacza ogniskowa podzielona przez liczbę f</span>. To są dwa niezależne ilorazy i tylko przypadkiem mają wspólny licznik.</p>
-
-    <div class="diagram-frame">
-      <div class="diagram-hud"><span>Ta sama liczba f, dwie źrenice</span><span>stąd różnica głębi między formatami</span></div>
-      <svg viewBox="0 0 760 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Porównanie dwóch układów dających ten sam kadr: pełna klatka ma źrenicę 25 mm i szerszy stożek, Super 35 ma 17,5 mm i węższy.">
-        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">
-          <text x="20" y="24">PEŁNA KLATKA · 50 mm f/2</text>
-          <text x="410" y="24">SUPER 35 · 35 mm f/2</text>
-        </g>
-        <g>
-          <line x1="90" y1="72" x2="90" y2="188" stroke="#e8a33d" stroke-width="3"/>
-          <text x="46" y="66" font-family="IBM Plex Mono" font-size="10" fill="#e8a33d">25,0 mm</text>
-          <path d="M 90 72 L 290 130 L 90 188 Z" fill="#e8a33d" fill-opacity="0.15" stroke="#e8a33d" stroke-width="1"/>
-          <line x1="290" y1="60" x2="290" y2="200" stroke="#6e93be" stroke-width="2.5"/>
-          <text x="262" y="218" font-family="IBM Plex Mono" font-size="9.5" fill="#6e93be">matryca</text>
-          <line x1="290" y1="130" x2="340" y2="130" stroke="#2a2f38" stroke-width="1" stroke-dasharray="3 3"/>
-          <path d="M 290 118 L 340 130 L 290 142 Z" fill="#9c82d8" fill-opacity="0.4"/>
-          <text x="30" y="240" font-family="IBM Plex Mono" font-size="10.5" fill="#9c82d8">szerszy stożek → płytsza głębia</text>
-        </g>
-        <line x1="380" y1="14" x2="380" y2="248" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 5"/>
-        <g>
-          <line x1="470" y1="89" x2="470" y2="171" stroke="#4fc3c0" stroke-width="3"/>
-          <text x="424" y="83" font-family="IBM Plex Mono" font-size="10" fill="#4fc3c0">17,5 mm</text>
-          <path d="M 470 89 L 670 130 L 470 171 Z" fill="#4fc3c0" fill-opacity="0.15" stroke="#4fc3c0" stroke-width="1"/>
-          <line x1="670" y1="76" x2="670" y2="184" stroke="#6e93be" stroke-width="2.5"/>
-          <line x1="670" y1="130" x2="720" y2="130" stroke="#2a2f38" stroke-width="1" stroke-dasharray="3 3"/>
-          <path d="M 670 122 L 720 130 L 670 138 Z" fill="#4fc3c0" fill-opacity="0.4"/>
-          <text x="410" y="240" font-family="IBM Plex Mono" font-size="10.5" fill="#4fc3c0">węższy stożek → większa głębia</text>
-        </g>
-      </svg>
-      <div class="diagram-caption">Kadr obu układów jest identyczny. Różni je wyłącznie średnica dziury, przez którą patrzą.</div>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-eyebrow">Pomiar · da się to zrobić linijką</div>
-    <h2>Jak znaleźć źrenicę w obiektywie, którego danych nie masz</h2>
-
-    <p>Skoro źrenica wejściowa jest tym, co decyduje o perspektywie i o głębi, warto umieć ją znaleźć na konkretnym egzemplarzu — zwłaszcza że producenci tej liczby prawie nigdy nie podają.</p>
-
-    <p><strong>Średnicę</strong> mierzy się najprościej: ustaw obiektyw na wybraną przysłonę, oświetl go od przodu rozproszonym światłem i zmierz suwmiarką widoczny otwór — pamiętając, że mierzysz obraz, a nie sam otwór, i o to właśnie chodzi. Porównanie wyniku z ilorazem f/N powie ci od razu, o ile przednie szkło powiększa przysłonę.</p>
-
-    <p><strong>Położenie</strong> wymaga sprytu, bo mierzysz coś, czego nie ma. Metoda z paralaksy działa bez żadnego sprzętu poza statywem: ustaw dwa cienkie przedmioty — na przykład dwa pionowe pręty — jeden blisko, drugi daleko, dokładnie w jednej linii z osią obiektywu, tak żeby bliższy zasłaniał dalszy. Potem obracaj kamerę w poziomie wokół osi statywu i patrz, czy pręty się rozjeżdżają. Przesuwaj kamerę wzdłuż osi na głowicy tak długo, aż przy obrocie przestaną. Oś obrotu leży wtedy dokładnie w źrenicy wejściowej.</p>
-
-    <p>Ta sama metoda działa oczywiście w drugą stronę i jest dokładnie tym, co robi się przy ustawianiu głowicy panoramicznej. Warto ją znać także dlatego, że przy dopasowywaniu wirtualnej kamery do ujęcia z ruchem daje twardą liczbę zamiast domysłu — a różnica kilku centymetrów w położeniu pivota potrafi rozjechać tracking na bliskim planie zupełnie widocznie.</p>
-
-    <p>Trzecia rzecz warta zmierzenia to <strong>zmiana położenia źrenicy przy ostrzeniu</strong>. Wystarczy powtórzyć pomiar dla ostrości na nieskończoność i dla ostrości minimalnej. Dla stałki wyjdzie zwykle kilka milimetrów, dla zoomu — czasem kilka centymetrów. To ta sama wielkość, która stoi za oddechem obiektywu z <a href="rozdzial-32-czas.html">Rozdziału 32</a>, tylko oglądana od strony geometrii, a nie kadru.</p>
-  </div>
-
-  <div class="section">
     <div class="section-eyebrow">Gdzie stoi kamera · powrót do punktu obrotu</div>
     <h2>Źrenica wejściowa jest kamerą</h2>
 
@@ -320,6 +248,8 @@ window.SKY3D_MESSAGES = {
     </ul>
 
     <p>Warto przy tym pamiętać, że źrenica wejściowa <strong>przesuwa się przy ostrzeniu i przy zmianie ogniskowej</strong>. W zoomie potrafi wędrować o kilka centymetrów przez cały zakres — i to jest jeden z powodów, dla których panoram nie robi się zoomem, a tracking ujęcia z transfokacją jest trudniejszy niż ze stałki.</p>
+
+    <p class="deeper-inline">Jak zmierzyć położenie źrenicy linijką i dlaczego to ona, a nie format, decyduje o głębi ostrości — <a href="../dodatki/dodatek-ae-geometria-zrenic.html">Dodatek AE</a>.</p>
   </div>
 
   <div class="panel practice">
@@ -361,6 +291,23 @@ window.SKY3D_MESSAGES = {
       <a class="nav-prev" href="rozdzial-06-przyslona-f-i-t.html">← Poprzedni</a>
       <a class="nav-toc" href="../index.html">Spis treści</a>
       <a class="nav-next" href="rozdzial-08-glebia-ostrosci.html">Następny →</a>
+  </div>
+
+  <template id="adv-szerokie">
+    <h3>Dlaczego dobre szerokie kąty są takie ciężkie</h3>
+
+    <p>Punkt w rogu kadru obiektywu 20 mm widzi wnętrze tubusa pod czterdziestoma kilkoma stopniami; ten sam róg przy 85 mm — pod kilkunastoma. Im większy ten kąt, tym mocniej oprawy rozjeżdżają się względem siebie i tym więcej źrenicy obcinają.</p>
+
+    <p>Konstruktor ma na to tylko jedną odpowiedź: <strong>poszerzyć wszystko, co stoi na drodze wiązki</strong>. Większa przednia soczewka, szersza oprawa, grubszy tubus. Dlatego dobrze skorygowane szerokie kąty są nieproporcjonalnie duże i ciężkie względem swojej jasności — masa idzie nie w światło, tylko w to, żeby rogi kadru dostały pełną źrenicę.</p>
+
+    <p>Stąd też bierze się kłopot, który widać przy zmianie formatu: <em>obiektyw zaprojektowany pod mniejszą matrycę zachowuje się źle na większej</em>, nawet jeśli koło obrazu formalnie starcza. Oprawy policzono pod węższy zakres kątów, więc przy szerszym kadrze rogi zaczynają być obcinane znacznie wcześniej. Obraz jest — ale jest ciemny i rysowany obciętą źrenicą.</p>
+  </template>
+
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-panel">
+      <button class="modal-close" data-modal-close aria-label="Zamknij">×</button>
+      <div id="modal-body"></div>
+    </div>
   </div>
 
 </div>

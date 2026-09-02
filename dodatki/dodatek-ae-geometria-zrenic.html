@@ -41,7 +41,201 @@ window.SKY3D_MESSAGES = {
   <h1>Geometria źrenic</h1>
   <p class="subtitle">Gdzie naprawdę leży źrenica wejściowa i wyjściowa, jak policzyć ich położenie dla znanego układu, czym jest powiększenie źrenicowe i skąd bierze się punkt bezparalaksowy.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">Co tu jest</div>
+    <ul>
+      <li>Jak <strong>policzyć położenie i rozmiar obu źrenic</strong> dla układu o znanych danych — równaniem soczewki, na liczbach z diagramu w Rozdziale 7.</li>
+      <li>Czym jest <strong>powiększenie źrenicowe</strong> i dlaczego bez niego wzory na głębię ostrości rozjeżdżają się w makro.</li>
+      <li>Dlaczego <strong>ekwiwalencja formatów nie obejmuje głębi ostrości</strong> — w jednym rachunku.</li>
+      <li>Jak <strong>zmierzyć źrenicę linijką</strong> na egzemplarzu, którego danych producent nie podaje.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Konstrukcja · źrenica jako obraz przysłony</div>
+    <h2>Policzenie obu źrenic</h2>
+
+    <p>Definicja jest przepisem na rachunek. <span class="term-cyan">Źrenica wejściowa</span> to obraz przysłony utworzony przez wszystkie soczewki stojące <em>przed</em> nią, patrząc od strony przedmiotu. <span class="term-cyan">Źrenica wyjściowa</span> to obraz tej samej przysłony utworzony przez wszystko, co stoi <em>za</em> nią. Obie liczy się zwykłym równaniem soczewki cienkiej z <a href="../rozdzialy/rozdzial-04-soczewka-cienka.html">Rozdziału 4</a>, tyle że przedmiotem jest otwór przysłony.</p>
+
+    <div class="formula">
+      1/<span class="vec" data-tip="Odległość przedmiotu od soczewki — tutaj odległość przysłony">s</span> + 1/<span class="vec" data-tip="Odległość obrazu; ujemna oznacza obraz pozorny, po tej samej stronie co przedmiot">s′</span> = 1/<span class="vec" data-tip="Ogniskowa grupy, przez którą obrazujemy przysłonę">f</span>  ·  <span class="vec" data-tip="Powiększenie — stosunek średnicy źrenicy do średnicy fizycznego otworu">m</span> = −<span class="vec" data-tip="Odległość obrazu">s′</span>/<span class="vec" data-tip="Odległość przedmiotu">s</span>
+      <span class="sub">s — odległość przysłony od grupy, przez którą ją obrazujemy. s′ — odległość powstałego obrazu; ujemna oznacza obraz pozorny, leżący po tej samej stronie co przysłona. m — powiększenie, czyli o ile źrenica jest większa od otworu. f — ogniskowa tej grupy.</span>
+    </div>
+
+    <p>Weźmy dokładnie ten układ, który jest narysowany na pierwszym diagramie w Rozdziale 7: przysłona o otworze 20 mm, przed nią grupa o ogniskowej 80 mm w odległości 11 mm, za nią grupa o ogniskowej 40 mm w odległości 87 mm.</p>
+
+    <div class="worked">
+      <div class="wlabel">Źrenica wejściowa — obrazujemy przysłonę przez grupę przednią</div>
+      <p class="step"><span class="k">dane</span> <span class="v">s = 11 mm, f = 80 mm</span></p>
+      <p class="step"><span class="k">obraz</span> <span class="v">1/s′ = 1/80 − 1/11 = −0,0784 → s′ = </span><span class="result">−12,8 mm</span></p>
+      <p class="step"><span class="k">powiększenie</span> <span class="v">m = 12,8 / 11 = </span><span class="result">1,16×</span></p>
+      <p class="step"><span class="k">średnica</span> <span class="v">20 mm × 1,16 = </span><span class="result">23,2 mm</span></p>
+      <p class="check">Znak minus przy s′ mówi, że obraz jest <em>pozorny</em> — leży po tej samej stronie co przysłona, 12,8 mm za grupą przednią, czyli niecałe dwa milimetry dalej niż sama przysłona. Nie ma tam nic fizycznego, a mimo to <strong>to właśnie ta średnica 23,2 mm wchodzi do wzoru N = f/D</strong>. Diagram w rozdziale zaokrągla ją do 23 mm.</p>
+    </div>
+
+    <div class="worked">
+      <div class="wlabel">Źrenica wyjściowa — obrazujemy tę samą przysłonę przez grupę tylną</div>
+      <p class="step"><span class="k">dane</span> <span class="v">s = 87 mm, f = 40 mm</span></p>
+      <p class="step"><span class="k">obraz</span> <span class="v">1/s′ = 1/40 − 1/87 = 0,0135 → s′ = </span><span class="result">+74 mm</span></p>
+      <p class="step"><span class="k">powiększenie</span> <span class="v">m = 74 / 87 = </span><span class="result">0,85×</span></p>
+      <p class="step"><span class="k">średnica</span> <span class="v">20 mm × 0,85 = </span><span class="result">17,0 mm</span></p>
+      <p class="check">Tym razem s′ wyszło dodatnie, czyli obraz jest rzeczywisty i leży 74 mm za grupą tylną. Ten sam otwór 20 mm daje więc dwa obrazy o zupełnie różnych rozmiarach i w zupełnie różnych miejscach — i to jest cała treść zdania „istnieją trzy różne rzeczy, a dotknąć da się jednej”.</p>
+    </div>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Ten sam otwór, dwa obrazy</span><span>konstrukcja promieniami</span></div>
+      <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Konstrukcja obu źrenic: promienie od krawędzi przysłony przechodzą przez grupę przednią i przedłużone wstecz wyznaczają źrenicę wejściową, a przez grupę tylną tworzą rzeczywistą źrenicę wyjściową.">
+        <line x1="20" y1="150" x2="740" y2="150" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 6"/>
+
+        <path d="M 250 92 Q 268 150 250 208 Q 232 150 250 92 Z" fill="#4fc3c0" fill-opacity="0.13" stroke="#4fc3c0" stroke-width="1.4"/>
+        <text x="250" y="228" font-family="IBM Plex Mono" font-size="9.5" fill="#4fc3c0" text-anchor="middle">grupa przednia f=80</text>
+
+        <g stroke="#8b909b" stroke-width="4">
+          <line x1="300" y1="106" x2="300" y2="134"/>
+          <line x1="300" y1="166" x2="300" y2="194"/>
+        </g>
+        <text x="300" y="98" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">przysłona 20</text>
+
+        <path d="M 520 96 Q 538 150 520 204 Q 502 150 520 96 Z" fill="#4fc3c0" fill-opacity="0.13" stroke="#4fc3c0" stroke-width="1.4"/>
+        <text x="520" y="224" font-family="IBM Plex Mono" font-size="9.5" fill="#4fc3c0" text-anchor="middle">grupa tylna f=40</text>
+
+        <g stroke="#e8a33d" stroke-width="1.3" fill="none" opacity="0.85">
+          <path d="M 300 134 L 250 138 L 120 148"/>
+          <path d="M 300 166 L 250 162 L 120 152"/>
+        </g>
+        <g stroke="#e8a33d" stroke-width="1.6" stroke-dasharray="5 4">
+          <line x1="318" y1="116" x2="318" y2="184"/>
+        </g>
+        <text x="318" y="108" font-family="IBM Plex Mono" font-size="10" fill="#e8a33d" text-anchor="middle">wejściowa 23,2</text>
+        <text x="150" y="140" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">promienie brzegowe</text>
+
+        <g stroke="#9c82d8" stroke-width="1.3" fill="none" opacity="0.85">
+          <path d="M 300 134 L 520 120 L 660 137"/>
+          <path d="M 300 166 L 520 180 L 660 163"/>
+        </g>
+        <g stroke="#9c82d8" stroke-width="1.6" stroke-dasharray="5 4">
+          <line x1="660" y1="125" x2="660" y2="175"/>
+        </g>
+        <text x="660" y="117" font-family="IBM Plex Mono" font-size="10" fill="#9c82d8" text-anchor="middle">wyjściowa 17,0</text>
+
+        <text x="30" y="272" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">Wejściowa jest obrazem pozornym — promienie trzeba przedłużyć wstecz. Wyjściowa jest rzeczywista.</text>
+      </svg>
+      <div class="diagram-caption">Powiększenie źrenicowe tego układu wynosi 17,0 / 23,2 = 0,73 — wartość typowa dla teleobiektywu.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Powiększenie źrenicowe · gdzie proste wzory pękają</div>
+    <h2>Liczba, która ratuje rachunki w makro</h2>
+
+    <p>Stosunek średnic obu źrenic nazywa się <span class="term-cyan">powiększeniem źrenicowym</span> i jest stałą konstrukcji, nie nastawą.</p>
+
+    <div class="formula">
+      <span class="vec" data-tip="Powiększenie źrenicowe — stosunek średnic źrenic">p</span> = <span class="vec" data-tip="Średnica źrenicy wyjściowej">D′</span> / <span class="vec" data-tip="Średnica źrenicy wejściowej">D</span>
+      <span class="sub">p — powiększenie źrenicowe. D′ — średnica źrenicy wyjściowej, D — wejściowej. p = 1 w układzie symetrycznym, p &lt; 1 w teleobiektywie, p &gt; 1 w retrofokusie.</span>
+    </div>
+
+    <p>Dopóki ostrzysz daleko, ta liczba nic nie zmienia i można o niej zapomnieć — dlatego nie ma jej w Rozdziale 8. Zaczyna się liczyć wtedy, gdy przedmiot jest blisko, bo wtedy obraz odsuwa się od obiektywu i <strong>stożek promieni robi się węższy, niż wynikałoby z liczby przysłony wygrawerowanej na pierścieniu</strong>. Poprawka nazywa się efektywną liczbą przysłony:</p>
+
+    <div class="formula">
+      <span class="vec" data-tip="Efektywna liczba przysłony — ta, która naprawdę rządzi jasnością i głębią">N<sub>ef</sub></span> = <span class="vec" data-tip="Liczba przysłony nastawiona na obiektywie">N</span> · (1 + <span class="vec" data-tip="Powiększenie obrazu: wysokość obrazu przez wysokość przedmiotu">m</span>/<span class="vec" data-tip="Powiększenie źrenicowe">p</span>)
+      <span class="sub">N<sub>ef</sub> — efektywna liczba przysłony. N — nastawiona. m — powiększenie obrazu (1,0 przy skali 1:1). p — powiększenie źrenicowe. Przy ostrzeniu na daleko m dąży do zera i cała poprawka znika.</span>
+    </div>
+
+    <div class="worked">
+      <div class="wlabel">Makro 100 mm, układ symetryczny (p = 1), skala 1:1</div>
+      <p class="step"><span class="k">nastawa</span> <span class="v">f/2,8, m = 1,0, p = 1,0</span></p>
+      <p class="step"><span class="k">poprawka</span> <span class="v">1 + 1,0/1,0 = </span><span class="result">2,0×</span></p>
+      <p class="step"><span class="k">efektywnie</span> <span class="v">2,8 × 2,0 = </span><span class="result">f/5,6</span></p>
+      <p class="check">Dwie działki straty — to jest znany każdemu makrofotografowi „bellows factor”. Naświetlenie spada dwukrotnie na każdej z dwóch działek, a głębia ostrości jest dwa razy większa, niż podpowiada pierścień. <strong>Ten sam mechanizm działa w rendererze</strong>: jeśli kamera fizyczna liczy ekspozycję z samej liczby f, w ujęciu makro dostaniesz obraz jaśniejszy, niż dałaby prawdziwa optyka.</p>
+    </div>
+
+    <p>Dla układu niesymetrycznego poprawka się rozjeżdża w jedną albo w drugą stronę. Nasz przykładowy teleobiektyw o p = 0,73 przy skali 1:2 daje 1 + 0,5/0,73 = 1,68×, podczas gdy układ symetryczny w tych samych warunkach dałby 1,5×. Różnica to około jednej trzeciej działki — niewiele, ale wystarczy, żeby rozjechać dopasowanie ekspozycji między materiałem a renderem, jeśli ktoś liczy na ślepo ze wzoru dla p = 1.</p>
+
+    <p>Głębia ostrości przy bliskim planie idzie za tą samą poprawką:</p>
+
+    <div class="formula">
+      głębia ≈ 2 · <span class="vec" data-tip="Liczba przysłony nastawiona na obiektywie">N</span> · <span class="vec" data-tip="Przyjęty krążek rozmycia">c</span> · (1 + <span class="vec" data-tip="Powiększenie obrazu">m</span>/<span class="vec" data-tip="Powiększenie źrenicowe">p</span>) / <span class="vec" data-tip="Powiększenie obrazu">m</span>²
+      <span class="sub">Wzór dla bliskiego planu, gdzie m nie jest zaniedbywalne. c — krążek rozmycia, jak w Dodatku E. Widać z niego, że głębia w makro spada z <em>kwadratem</em> powiększenia — dlatego przy skali 1:1 liczy się ją w milimetrach, a nie w centymetrach.</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Formaty · dlaczego przelicznik kłamie o głębi</div>
+    <h2>Ekwiwalencja nie obejmuje głębi ostrości</h2>
+
+    <p>W <a href="../rozdzialy/rozdzial-05-ogniskowa-format-perspektywa.html">Rozdziale 5</a> padło stwierdzenie, że przeliczanie ogniskowych między formatami działa na kadr, a nie na głębię ostrości. Mając definicję źrenicy, można powiedzieć dlaczego — i jest to jedno z tych wyjaśnień, po których cała sprawa przestaje wymagać zapamiętywania.</p>
+
+    <p>Nieostrość powstaje wtedy, gdy stożek promieni zbiegających się do punktu nie zdąży się zejść przed matrycą albo zejdzie się przed nią i zdąży się rozejść. Szerokość tego stożka na matrycy — czyli rozmiar plamki rozmycia — zależy od <strong>kąta rozwarcia stożka</strong>, a ten jest wyznaczony przez średnicę źrenicy podzieloną przez odległość obrazu. Ogniskowa i liczba f wchodzą do rachunku wyłącznie przez tę jedną wielkość.</p>
+
+    <p>Weźmy dwa zestawy dające ten sam kadr na dwóch formatach:</p>
+
+    <div class="worked">
+      <div class="wlabel">Ten sam kadr, dwie różne źrenice</div>
+      <p class="step"><span class="k">Super 35</span> <span class="v">35 mm przy f/2 → źrenica 35/2 = </span><span class="result">17,5 mm</span></p>
+      <p class="step"><span class="k">pełna klatka</span> <span class="v">50 mm przy f/2 → źrenica 50/2 = </span><span class="result">25,0 mm</span></p>
+      <p class="step"><span class="k">stosunek</span> <span class="v">25,0 / 17,5 = </span><span class="result">1,43×</span></p>
+      <p class="check">Kadr identyczny, liczba przysłony identyczna, a źrenica na pełnej klatce o 43% większa — czyli stożek szerszy i głębia płytsza o mniej więcej jedną przysłonę. To jest cała „przewaga dużego formatu” w jednym rachunku, i widać z niego zarazem, że nie jest to żadna magia formatu, tylko konsekwencja większej dziury.</p>
+    </div>
+
+    <p>Stąd bierze się też uczciwa wersja przelicznika, której zwykle się nie podaje: żeby dostać na Super 35 tę samą głębię co na pełnej klatce, trzeba przeliczyć <strong>i ogniskową, i liczbę przysłony</strong>, obie przez ten sam współczynnik. 50 mm przy f/2,8 na pełnej klatce odpowiada 35 mm przy f/2,0 na S35 — dopiero wtedy źrenice są równe i głębia się zgadza.</p>
+
+    <p>Warto to sobie ułożyć w jednym zdaniu, bo wraca w każdej rozmowie o formatach: <span class="term-cyan">kadr wyznacza ogniskowa podzielona przez format, a głębię wyznacza ogniskowa podzielona przez liczbę f</span>. To są dwa niezależne ilorazy i tylko przypadkiem mają wspólny licznik.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Ta sama liczba f, dwie źrenice</span><span>stąd różnica głębi między formatami</span></div>
+      <svg viewBox="0 0 760 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Porównanie dwóch układów dających ten sam kadr: pełna klatka ma źrenicę 25 mm i szerszy stożek, Super 35 ma 17,5 mm i węższy.">
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">
+          <text x="20" y="24">PEŁNA KLATKA · 50 mm f/2</text>
+          <text x="410" y="24">SUPER 35 · 35 mm f/2</text>
+        </g>
+        <g>
+          <line x1="90" y1="72" x2="90" y2="188" stroke="#e8a33d" stroke-width="3"/>
+          <text x="46" y="66" font-family="IBM Plex Mono" font-size="10" fill="#e8a33d">25,0 mm</text>
+          <path d="M 90 72 L 290 130 L 90 188 Z" fill="#e8a33d" fill-opacity="0.15" stroke="#e8a33d" stroke-width="1"/>
+          <line x1="290" y1="60" x2="290" y2="200" stroke="#6e93be" stroke-width="2.5"/>
+          <text x="262" y="218" font-family="IBM Plex Mono" font-size="9.5" fill="#6e93be">matryca</text>
+          <line x1="290" y1="130" x2="340" y2="130" stroke="#2a2f38" stroke-width="1" stroke-dasharray="3 3"/>
+          <path d="M 290 118 L 340 130 L 290 142 Z" fill="#9c82d8" fill-opacity="0.4"/>
+          <text x="30" y="240" font-family="IBM Plex Mono" font-size="10.5" fill="#9c82d8">szerszy stożek → płytsza głębia</text>
+        </g>
+        <line x1="380" y1="14" x2="380" y2="248" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 5"/>
+        <g>
+          <line x1="470" y1="89" x2="470" y2="171" stroke="#4fc3c0" stroke-width="3"/>
+          <text x="424" y="83" font-family="IBM Plex Mono" font-size="10" fill="#4fc3c0">17,5 mm</text>
+          <path d="M 470 89 L 670 130 L 470 171 Z" fill="#4fc3c0" fill-opacity="0.15" stroke="#4fc3c0" stroke-width="1"/>
+          <line x1="670" y1="76" x2="670" y2="184" stroke="#6e93be" stroke-width="2.5"/>
+          <line x1="670" y1="130" x2="720" y2="130" stroke="#2a2f38" stroke-width="1" stroke-dasharray="3 3"/>
+          <path d="M 670 122 L 720 130 L 670 138 Z" fill="#4fc3c0" fill-opacity="0.4"/>
+          <text x="410" y="240" font-family="IBM Plex Mono" font-size="10.5" fill="#4fc3c0">węższy stożek → większa głębia</text>
+        </g>
+      </svg>
+      <div class="diagram-caption">Kadr obu układów jest identyczny. Różni je wyłącznie średnica dziury, przez którą patrzą.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Pomiar · da się to zrobić linijką</div>
+    <h2>Znalezienie źrenicy w obiektywie, którego danych nie masz</h2>
+
+    <p>Skoro źrenica wejściowa jest tym, co decyduje o perspektywie i o głębi, warto umieć ją znaleźć na konkretnym egzemplarzu — zwłaszcza że producenci tej liczby prawie nigdy nie podają.</p>
+
+    <p><strong>Średnicę</strong> mierzy się najprościej: ustaw obiektyw na wybraną przysłonę, oświetl go od przodu rozproszonym światłem i zmierz suwmiarką widoczny otwór — pamiętając, że mierzysz obraz, a nie sam otwór, i o to właśnie chodzi. Porównanie wyniku z ilorazem f/N powie ci od razu, o ile przednie szkło powiększa przysłonę, czyli daje ci m z pierwszej sekcji bez znajomości konstrukcji.</p>
+
+    <p><strong>Położenie</strong> wymaga sprytu, bo mierzysz coś, czego nie ma. Metoda z paralaksy działa bez żadnego sprzętu poza statywem: ustaw dwa cienkie przedmioty — na przykład dwa pionowe pręty — jeden blisko, drugi daleko, dokładnie w jednej linii z osią obiektywu, tak żeby bliższy zasłaniał dalszy. Potem obracaj kamerę w poziomie wokół osi statywu i patrz, czy pręty się rozjeżdżają. Przesuwaj kamerę wzdłuż osi na głowicy tak długo, aż przy obrocie przestaną. <strong>Oś obrotu leży wtedy dokładnie w źrenicy wejściowej.</strong></p>
+
+    <p>Ta sama metoda działa oczywiście w drugą stronę i jest dokładnie tym, co robi się przy ustawianiu głowicy panoramicznej. Warto ją znać także dlatego, że przy dopasowywaniu wirtualnej kamery do ujęcia z ruchem daje twardą liczbę zamiast domysłu — a różnica kilku centymetrów w położeniu pivota potrafi rozjechać tracking na bliskim planie zupełnie widocznie.</p>
+
+    <p>Trzecia rzecz warta zmierzenia to <strong>zmiana położenia źrenicy przy ostrzeniu</strong>. Wystarczy powtórzyć pomiar dla ostrości na nieskończoność i dla ostrości minimalnej. Dla stałki wyjdzie zwykle kilka milimetrów, dla zoomu — czasem kilka centymetrów. To ta sama wielkość, która stoi za oddechem obiektywu z <a href="../rozdzialy/rozdzial-32-czas.html">Rozdziału 32</a>, tylko oglądana od strony geometrii, a nie kadru.</p>
+
+    <div class="panel practice">
+      <div class="panel-label">Protokół pomiaru — kolejność, która oszczędza powtórek</div>
+      <p><strong>1. Ostrość na nieskończoność, przysłona pełna.</strong> Zmierz średnicę widocznego otworu. Podziel ogniskową przez wynik — dostaniesz rzeczywistą jasność, która bywa o kilka procent gorsza od deklarowanej.</p>
+      <p><strong>2. Ta sama nastawa, pomiar położenia z paralaksy.</strong> Zanotuj odległość znalezionej osi obrotu od bagnetu, nie od przedniej soczewki — bagnet jest jedyną powierzchnią, która nie rusza się przy ostrzeniu.</p>
+      <p><strong>3. Powtórz punkt 2 dla ostrości minimalnej.</strong> Różnica jest wielkością, o którą trzeba przesunąć pivot wirtualnej kamery, jeśli w ujęciu zmienia się ostrość.</p>
+      <p><strong>4. Dla zoomu — punkty 2 i 3 na obu krańcach zakresu.</strong> Cztery liczby zamiast jednej, i to jest właśnie powód, dla którego panoram nie robi się zoomem.</p>
+    </div>
+  </div>
 
   <div class="site-nav">
     <a href="../index.html">← Spis treści</a>

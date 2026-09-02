@@ -8,13 +8,19 @@ licznika nie zapisala.
 
 Liczy WYLACZNIE proze w <div class="section">: pomija TL;DR, "Z praktyki",
 Slowniczek, "Co dalej", nawigacje i podpisy pod diagramami. Cel na rozdzial:
-2000-3500 slow i 5-8 wizualizacji.
+1200-1600 slow i 4-6 wizualizacji.
+
+Prog obnizony 2026-09-02 z 2000-3500. Powod: rozdzialy w starym formacie
+wychodzily za geste dla artysty — R.7 upychal osiem nowych pojec naraz.
+Nadmiar nie ginie: krotkie rozwiniecia ida do blokow "Zaawansowane" na tej
+samej stronie, duze tematy z wlasnym rachunkiem do dodatkow z mapy "ext"
+w spis.json.
 """
 import io, os, re, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CEL_SLOW = (2000, 3500)
-CEL_WIZ = (5, 8)
+CEL_SLOW = (1200, 1600)
+CEL_WIZ = (4, 6)
 
 
 def zlicz(path):
