@@ -43,7 +43,242 @@ window.SKY3D_MESSAGES = {
   <h1>Skrajne ogniskowe: retrofokus, tele i lustro</h1>
   <p class="subtitle">Szeroki kąt musi zmieścić lustro albo migawkę za sobą, a teleobiektyw musi być krótszy niż własna ogniskowa. Obie te potrzeby wyginają konstrukcję — i widać to w kadrze.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li><strong>Dwa przymusy mechaniczne, dwa wygięcia konstrukcji.</strong> Szeroki kąt musi zostawić z tyłu miejsce na lustro, choć jego ogniskowa jest krótsza niż to miejsce. Teleobiektyw musi być krótszy niż własna ogniskowa, bo inaczej nie da się go unieść.</li>
+      <li>Oba rozwiązuje się <span class="term-amber">łamaniem symetrii</span> — a symetria była, jak wiemy z <a href="rozdzial-15-korekcja-i-jej-cena.html">Rozdziału 15</a>, jedyną darmową dźwignią. Stąd retrofokus beczkuje, a tele poduszkuje.</li>
+      <li>Trzecia droga to zastąpienie szkła <strong>lustrem</strong>. Znosi aberrację chromatyczną do zera, ale zasłania środek źrenicy — i stąd pączkowe bokeh, którego nie da się z niej usunąć.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Przymus · geometria mocowania</div>
+    <h2>Ile miejsca musi zostać z tyłu</h2>
+
+    <p>Cztery układy z <a href="rozdzial-17-czterej-przodkowie.html">Rozdziału 17</a> milcząco zakładają, że ostatnia soczewka może być dowolnie blisko matrycy. W lustrzance nie może: między nią a matrycą siedzi lustro, które musi się podnieść. Odcinek bagnetowy z <a href="../dodatki/dodatek-c-rownanie-soczewki.html">Dodatku C</a> mówi, ile to konkretnie jest — dla mocowania PL pięćdziesiąt dwa milimetry, dla Canona EF czterdzieści cztery.</p>
+
+    <p>Dla pięćdziesiątki to żaden problem: jej ogniskowa i tak jest większa. Kłopot zaczyna się poniżej, i to gwałtownie. <strong>Obiektyw 24 mm w układzie symetrycznym miałby odcinek tylny około 24 mm</strong> — a potrzebuje trzydziestu ośmiu. Fizycznie nie da się go zbudować w klasycznym układzie, bo ostatnia soczewka musiałaby stać w miejscu zajętym przez lustro.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Czy potrzebny retrofokus</span><span>ogniskowa kontra odcinek mocowania</span></div>
+      <div class="diagram-controls">
+        <label for="retroOgn">Ogniskowa</label>
+        <input id="retroOgn" type="range" min="12" max="85" step="1" value="24">
+        <span class="value-readout" id="retroOgnOdczyt">24 mm</span>
+      </div>
+      <div class="diagram-controls">
+        <label for="retroMocowanie">Mocowanie</label>
+        <input id="retroMocowanie" type="range" min="0" max="2" step="1" value="1">
+        <span class="value-readout" id="retroMocOdczyt">Canon EF · 44,0 mm</span>
+      </div>
+      <svg viewBox="0 0 760 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Porównanie potrzebnego odcinka tylnego z ogniskową: jeśli ogniskowa jest krótsza od odcinka mocowania, układ symetryczny jest niemożliwy i potrzebny jest retrofokus.">
+        <line x1="640" y1="40" x2="640" y2="170" stroke="#6e93be" stroke-width="3"/>
+        <text x="640" y="188" font-family="IBM Plex Mono" font-size="9.5" fill="#6e93be" text-anchor="middle">matryca</text>
+
+        <rect id="retroPasBagnet" x="500" y="52" width="140" height="106" fill="#8b909b" fill-opacity="0.12" stroke="#8b909b" stroke-width="1" stroke-dasharray="4 4"/>
+        <text id="retroEtBagnet" x="570" y="46" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">odcinek mocowania</text>
+
+        <line id="retroKreskaF" x1="480" y1="60" x2="480" y2="150" stroke="#e8a33d" stroke-width="2.4"/>
+        <text id="retroEtF" x="480" y="168" font-family="IBM Plex Mono" font-size="10" fill="#e8a33d" text-anchor="middle">f</text>
+
+        <text x="40" y="30" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">Gdzie stanęłaby ostatnia soczewka w układzie symetrycznym:</text>
+        <text id="retroWynik" x="40" y="212" font-family="IBM Plex Mono" font-size="12" fill="#7fc47f">Mieści się — układ symetryczny wykonalny.</text>
+        <text id="retroLiczby" x="40" y="232" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">f = 24 mm, wymagane 38,0 mm</text>
+      </svg>
+      <div class="diagram-caption" id="retroPodpis">Przy 24 mm na mocowaniu EF ostatnia soczewka musiałaby stanąć wewnątrz komory lustra.</div>
+    </div>
+
+    <div class="worked">
+      <div class="wlabel">Gdzie leży granica dla trzech mocowań</div>
+      <p class="step"><span class="k">PL · 52,0 mm</span> <span class="v">wymaga odcinka tylnego ok. 46 mm → retrofokus poniżej </span><span class="result">46 mm</span></p>
+      <p class="step"><span class="k">Canon EF · 44,0 mm</span> <span class="v">wymaga ok. 38 mm → retrofokus poniżej </span><span class="result">38 mm</span></p>
+      <p class="step"><span class="k">Sony E · 18,0 mm</span> <span class="v">wymaga ok. 16 mm → retrofokus poniżej </span><span class="result">16 mm</span></p>
+      <p class="check">Liczby są przybliżone, bo ostatnia soczewka może wejść nieco w tubus mocowania — ale rząd wielkości jest twardy. Na mocowaniu kinowym PL <strong>nawet czterdziestka jest już retrofokusem</strong>, co tłumaczy, dlaczego szkło kinowe w tym zakresie jest tak duże. Na bezlusterkowcu retrofokus zaczyna być potrzebny dopiero przy skrajnie szerokich ogniskowych — i dlatego dwudziestka na taki korpus bywa mniejsza od pięćdziesiątki.</p>
+    </div>
+
+    <p>Ten sam suwak pokazuje, dlaczego bezlusterkowce zmieniły tak wiele. Przy odcinku osiemnastu milimetrów granica przesuwa się w dół tak bardzo, że <span class="term-cyan">dwudziestka czwórka mieści się bez żadnych sztuczek</span>. Konstruktor odzyskuje symetrię, a z nią trzy wady mniej za darmo — i stąd bierze się skok jakości szerokich kątów ostatniej dekady, o którym była mowa w <a href="rozdzial-16-anatomia-obiektywu.html">Rozdziale 16</a>.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Retrofokus · rozepchnąć obraz do tyłu</div>
+    <h2>Szeroki kąt, który udaje dłuższy</h2>
+
+    <p>Rozwiązanie jest odwrotnością lunety. Z przodu stawia się grupę <strong>rozpraszającą</strong>, za nią skupiającą. Grupa przednia rozbiega wiązkę, więc tylna musi ją zbierać z większej odległości — a to przesuwa tylną płaszczyznę główną do tyłu, poza obiektyw. Odcinek tylny robi się dłuższy od ogniskowej i lustro się mieści.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Retrofokus i tele</span><span>gdzie leży płaszczyzna główna</span></div>
+      <svg viewBox="0 0 760 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Retrofokus: grupa rozpraszająca z przodu przesuwa płaszczyznę główną za obiektyw. Teleobiektyw: grupa rozpraszająca z tyłu przesuwa ją przed obiektyw.">
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">
+          <text x="30" y="24">RETROFOKUS · odcinek tylny dłuższy niż f</text>
+        </g>
+        <line x1="30" y1="72" x2="700" y2="72" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 6"/>
+        <path d="M 110 44 Q 96 72 110 100 Q 128 72 110 44 Z" fill="#9c82d8" fill-opacity="0.18" stroke="#9c82d8" stroke-width="1.5"/>
+        <path d="M 220 44 Q 240 72 220 100 Q 200 72 220 44 Z" fill="#4fc3c0" fill-opacity="0.18" stroke="#4fc3c0" stroke-width="1.5"/>
+        <line x1="360" y1="40" x2="360" y2="104" stroke="#e8a33d" stroke-width="2" stroke-dasharray="5 4"/>
+        <text x="360" y="34" font-family="IBM Plex Mono" font-size="9.5" fill="#e8a33d" text-anchor="middle">płaszczyzna główna</text>
+        <line x1="500" y1="40" x2="500" y2="104" stroke="#6e93be" stroke-width="2.5"/>
+        <text x="500" y="118" font-family="IBM Plex Mono" font-size="9.5" fill="#6e93be" text-anchor="middle">matryca</text>
+        <g stroke="#8b909b" stroke-width="1" fill="none">
+          <path d="M 220 112 L 220 122 L 500 122 L 500 112"/>
+        </g>
+        <text x="360" y="136" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">odcinek tylny — dłuższy niż ogniskowa</text>
+
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">
+          <text x="30" y="168">TELEOBIEKTYW · tubus krótszy niż f</text>
+        </g>
+        <line x1="30" y1="212" x2="700" y2="212" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 6"/>
+        <path d="M 150 184 Q 172 212 150 240 Q 128 212 150 184 Z" fill="#4fc3c0" fill-opacity="0.18" stroke="#4fc3c0" stroke-width="1.5"/>
+        <path d="M 290 184 Q 276 212 290 240 Q 306 212 290 184 Z" fill="#9c82d8" fill-opacity="0.18" stroke="#9c82d8" stroke-width="1.5"/>
+        <line x1="70" y1="182" x2="70" y2="242" stroke="#e8a33d" stroke-width="2" stroke-dasharray="5 4"/>
+        <text x="70" y="176" font-family="IBM Plex Mono" font-size="9.5" fill="#e8a33d" text-anchor="middle">płaszczyzna główna</text>
+        <line x1="420" y1="182" x2="420" y2="242" stroke="#6e93be" stroke-width="2.5"/>
+        <g stroke="#8b909b" stroke-width="1" fill="none">
+          <path d="M 70 252 L 70 258 L 420 258 L 420 252"/>
+          <path d="M 150 170 L 150 162 L 290 162 L 290 170"/>
+        </g>
+        <text x="245" y="156" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">tubus</text>
+        <text x="245" y="252" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">ogniskowa — dłuższa niż tubus</text>
+      </svg>
+      <div class="diagram-caption">Ta sama sztuczka w dwie strony: grupa rozpraszająca z przodu odsuwa płaszczyznę główną do tyłu, z tyłu — przesuwa ją do przodu.</div>
+    </div>
+
+    <p>Cena jest trojaka i całą widać w obrazie. Po pierwsze, układ jest <span class="term-violet">skrajnie niesymetryczny</span>, więc traci darmową korekcję dystorsji, komy i chromatycznej poprzecznej — stąd beczka rzędu kilku procent, typowa dla szerokich kątów do lustrzanek. Po drugie, przednia grupa musi objąć bardzo szeroką wiązkę, więc jest duża, ciężka i wystaje. Po trzecie, korekcja wymaga wielu elementów, a każdy z nich to dwie granice więcej.</p>
+
+    <p>Stąd bierze się obserwacja, którą łatwo pomylić z prawem natury: <strong>szerokie kąty do lustrzanek są duże, ciężkie i mają wyraźną beczkę</strong>. Nie dlatego, że szeroki kąt taki musi być — dlatego, że lustro wymusiło retrofokus. Te same ogniskowe na dalmierzach i na bezlusterkowcach bywają wielkości kciuka i mają dystorsję poniżej procenta.</p>
+
+    <p>Retrofokus ma jeszcze jedną konsekwencję, która wraca w <a href="rozdzial-07-zrenice.html">Rozdziale 7</a>: <strong>przesuwa źrenicę wyjściową daleko od matrycy</strong>. Grupa skupiająca stoi z tyłu i to ona tworzy obraz przysłony widziany od strony matrycy — a ponieważ leży blisko niej, obraz wypada daleko. Efekt jest korzystny: promienie padają na rogi matrycy niemal prostopadle, więc znika przebarwienie rogów, na które cierpią konstrukcje symetryczne.</p>
+
+    <p>To jest jedyna rzecz, którą retrofokus dostaje w prezencie, i warto ją znać, bo wyjaśnia pozorną sprzeczność. Szerokie kąty do dalmierzy mają znakomitą dystorsję i fatalne rogi na matrycy cyfrowej; szerokie kąty do lustrzanek odwrotnie. <span class="term-cyan">Ten sam wybór konstrukcyjny poprawia jedno i psuje drugie</span> — a który z tych problemów bardziej boli, zależy od tego, czy kręcisz na taśmę, czy na sensor.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Teleobiektyw · ta sama sztuczka odwrócona</div>
+    <h2>Dłuższy niż tubus, w którym siedzi</h2>
+
+    <p>Drugi przymus jest odwrotny. Obiektyw o ogniskowej 400 mm w układzie prostym musiałby mieć czterdzieści centymetrów długości plus oprawę — coś, czego nie da się utrzymać w rękach ani wyważyć na statywie. Rozwiązanie jest lustrzanym odbiciem retrofokusa: grupa skupiająca z przodu, rozpraszająca z tyłu, a płaszczyzna główna wysunięta <em>przed</em> obiektyw.</p>
+
+    <p>Stosunek długości tubusa do ogniskowej nazywa się współczynnikiem teleobiektywowym. Konstrukcja zasługuje na miano teleobiektywu dopiero wtedy, gdy jest on <strong>mniejszy od jedności</strong>; typowe wartości to 0,7–0,8. Czterystumilimetrówka o współczynniku 0,75 ma trzydzieści centymetrów, co już da się unieść.</p>
+
+    <p>Cena jest tym razem inna. Dystorsja wychodzi <span class="term-violet">poduszkowa</span>, bo asymetria jest odwrotna niż w retrofokusie — i dlatego długie ogniskowe poduszkują, a szerokie beczkują, o czym w <a href="rozdzial-13-dystorsja.html">Rozdziale 13</a>. Poza tym rosną wymagania na tolerancje: przy wysuniętej płaszczyźnie głównej każdy błąd wyosiowania jest powiększany dźwignią całej długości układu, więc teleobiektyw wybacza mniej niż jakakolwiek inna konstrukcja.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Czterysta milimetrów, dwie długości</span><span>współczynnik teleobiektywowy</span></div>
+      <svg viewBox="0 0 760 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Układ prosty o ogniskowej 400 mm ma 400 mm długości; układ teleobiektywowy o tej samej ogniskowej ma 300 mm, czyli współczynnik 0,75.">
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">
+          <text x="30" y="26">UKŁAD PROSTY · współczynnik 1,0</text>
+        </g>
+        <path d="M 90 46 Q 110 72 90 98 Q 70 72 90 46 Z" fill="#4fc3c0" fill-opacity="0.18" stroke="#4fc3c0" stroke-width="1.5"/>
+        <line x1="650" y1="44" x2="650" y2="100" stroke="#6e93be" stroke-width="2.5"/>
+        <path d="M 90 60 L 650 72 M 90 84 L 650 72" fill="none" stroke="#e8a33d" stroke-width="1.2" opacity="0.7"/>
+        <g stroke="#8b909b" stroke-width="1" fill="none">
+          <path d="M 90 112 L 90 120 L 650 120 L 650 112"/>
+        </g>
+        <text x="370" y="136" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">tubus 400 mm — tyle, ile ogniskowa</text>
+
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">
+          <text x="30" y="166">TELEOBIEKTYW · współczynnik 0,75</text>
+        </g>
+        <path d="M 230 182 Q 250 208 230 234 Q 210 208 230 182 Z" fill="#4fc3c0" fill-opacity="0.18" stroke="#4fc3c0" stroke-width="1.5"/>
+        <path d="M 430 188 Q 416 208 430 228 Q 446 208 430 188 Z" fill="#9c82d8" fill-opacity="0.18" stroke="#9c82d8" stroke-width="1.5"/>
+        <line x1="650" y1="182" x2="650" y2="234" stroke="#6e93be" stroke-width="2.5"/>
+        <line x1="90" y1="180" x2="90" y2="236" stroke="#e8a33d" stroke-width="2" stroke-dasharray="5 4"/>
+        <text x="90" y="174" font-family="IBM Plex Mono" font-size="9" fill="#e8a33d" text-anchor="middle">H′</text>
+        <g stroke="#8b909b" stroke-width="1" fill="none">
+          <path d="M 230 246 L 230 252 L 650 252 L 650 246"/>
+        </g>
+        <text x="440" y="212" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">tubus 300 mm</text>
+      </svg>
+      <div class="diagram-caption">Płaszczyzna główna wysunięta o sto milimetrów przed przednią soczewkę. Ogniskową mierzy się od niej, więc obiektyw jest krótszy od własnej ogniskowej.</div>
+    </div>
+
+    <p>Warto zauważyć, że to <em>ta sama sztuczka</em>, co w retrofokusie, tylko odwrócona — i że obie są możliwe wyłącznie dlatego, że ogniskową mierzy się od płaszczyzny głównej, a nie od kawałka szkła. Bez pojęcia płaszczyzn głównych z <a href="../dodatki/dodatek-c-rownanie-soczewki.html">Dodatku C</a> obie konstrukcje wyglądałyby na łamanie równania soczewki. Nie łamią go — przesuwają punkt, od którego się liczy.</p>
+
+    <p>Jest jeszcze skutek, którego nie widać w danych, a widać w pracy: <strong>teleobiektyw ma bardzo mały wysuw ostrzenia w stosunku do ogniskowej</strong>. Wynika to wprost ze wzoru z <a href="rozdzial-16-anatomia-obiektywu.html">Rozdziału 16</a>, w którym wysuw idzie z kwadratem ogniskowej podzielonym przez odległość — dla dużych ogniskowych i dużych dystansów wychodzi ułamek milimetra. Dlatego ostrzenie teleobiektywu jest tak czułe i dlatego pierścień ma na nim tak duży kąt obrotu.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Lustro · trzecia droga i jej podpis</div>
+    <h2>Katadioptryk, czyli szkło zastąpione lustrem</h2>
+
+    <p>Istnieje sposób na skrócenie obiektywu radykalniejszy niż teleobiektyw: <strong>zawrócić światło</strong>. Lustro wklęsłe skupia tak samo jak soczewka, a jeśli światło przebiega tubus trzykrotnie — do przodu, do tyłu i znowu do przodu — to ogniskowa 500 mm mieści się w dziesięciu centymetrach.</p>
+
+    <p>Lustro ma przy tym zaletę, której żadne szkło mieć nie może: <span class="term-cyan">odbicie nie zależy od długości fali</span>. Katadioptryk nie ma więc aberracji chromatycznej ani podłużnej, ani poprzecznej — obu z <a href="rozdzial-14-aberracja-chromatyczna.html">Rozdziału 14</a>. To jest powód, dla którego wszystkie duże teleskopy są lustrzane.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Źrenica pierścieniowa</span><span>skąd pączek w bokeh</span></div>
+      <svg viewBox="0 0 760 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Przekrój katadioptryka: lustro wtórne na osi zasłania środek źrenicy, więc źrenica jest pierścieniem, a nieostre punkty wychodzą pączkowate.">
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">
+          <text x="180" y="22" text-anchor="middle">BIEG ŚWIATŁA</text>
+          <text x="490" y="22" text-anchor="middle">ŹRENICA</text>
+          <text x="655" y="22" text-anchor="middle">NIEOSTRY PUNKT</text>
+        </g>
+
+        <path d="M 300 46 Q 322 118 300 190" fill="none" stroke="#8b909b" stroke-width="4"/>
+        <rect x="112" y="96" width="8" height="44" fill="#8b909b"/>
+        <line x1="60" y1="60" x2="60" y2="176" stroke="#6e93be" stroke-width="2.5"/>
+        <g stroke="#e8a33d" stroke-width="1.5" fill="none">
+          <path d="M 340 62 L 306 62"/><path d="M 306 62 L 118 100"/>
+          <path d="M 340 174 L 306 174"/><path d="M 306 174 L 118 136"/>
+          <path d="M 118 100 L 60 112"/><path d="M 118 136 L 60 124"/>
+        </g>
+        <text x="120" y="88" font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="middle">lustro wtórne</text>
+        <text x="322" y="210" font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="middle">lustro główne</text>
+
+        <circle cx="490" cy="118" r="56" fill="#e8a33d" fill-opacity="0.4" stroke="#e8a33d" stroke-width="1.4"/>
+        <circle cx="490" cy="118" r="24" fill="#141619" stroke="#8b909b" stroke-width="1.2"/>
+        <text x="490" y="196" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">pierścień, nie koło</text>
+
+        <rect x="596" y="52" width="130" height="130" fill="#141619" stroke="#2a2f38"/>
+        <g fill="#e8a33d" fill-opacity="0.5" stroke="#e8a33d" stroke-width="0.9">
+          <circle cx="632" cy="86" r="14"/><circle cx="690" cy="86" r="14"/>
+          <circle cx="632" cy="148" r="14"/><circle cx="690" cy="148" r="14"/>
+        </g>
+        <g fill="#141619">
+          <circle cx="632" cy="86" r="6"/><circle cx="690" cy="86" r="6"/>
+          <circle cx="632" cy="148" r="6"/><circle cx="690" cy="148" r="6"/>
+        </g>
+        <text x="661" y="196" font-family="IBM Plex Mono" font-size="9.5" fill="#9c82d8" text-anchor="middle">pączki</text>
+      </svg>
+      <div class="diagram-caption">Nieostry punkt jest obrazem źrenicy — a źrenica ma dziurę. Nie da się tego naprawić niczym poza zmianą konstrukcji.</div>
+    </div>
+
+    <p>Cena jest jednak wysoka i nieusuwalna. Lustro wtórne siedzi na osi, więc <strong>zasłania środek źrenicy</strong>. Źrenica jest pierścieniem, a skoro nieostry punkt jest jej obrazem — jak ustalono w <a href="rozdzial-09-bokeh.html">Rozdziale 9</a> — to każde nieostre światło wychodzi pączkowate. Do tego dochodzi brak przysłony: zasłanianie pierścienia od wewnątrz nie ma sensu, więc katadioptryk ma jedną, stałą jasność.</p>
+
+    <p>Zasłonięcie środka odbiera zwykle dziesięć do piętnastu procent powierzchni źrenicy, co samo w sobie jest znośne. Gorszy jest wpływ na kontrast: obcięta środkowa część wiązki to dokładnie ta, która niesie najniższe częstotliwości przestrzenne, więc <span class="term-violet">obraz traci mikrokontrast, zachowując rozdzielczość</span>. Stąd charakterystyczna „płaskość” zdjęć z lustrzanek, którą trudno nazwać, a łatwo rozpoznać.</p>
+
+    <p>Warto przy tym rozdzielić dwie rzeczy, które w potocznym języku się zlewają. Lustro <strong>nie</strong> jest źródłem pączka — źródłem jest <em>zasłonięcie osi</em>, konieczne dlatego, że światło wraca tą samą drogą, którą przyszło. Teleskopy o konstrukcji odchylonej od osi, w których lustro wtórne stoi z boku, nie mają pączkowego bokeh mimo luster. Jest to więc cena za składanie drogi światła, a nie za samo użycie lustra — i to samo rozróżnienie decyduje, czy da się efekt odtworzyć teksturą źrenicy, czy trzeba zmienić model kamery.</p>
+
+    <button class="advanced-btn" data-modal-target="adv-skrajne">Zaawansowane: dlaczego ekstremalnie szerokie przestają być prostoliniowe</button>
+  </div>
+
+  <div class="panel practice">
+    <div class="panel-label">Z praktyki</div>
+    <p><strong>Znak dystorsji zdradza rodzaj konstrukcji.</strong> Beczka na szerokim kącie oznacza retrofokus, czyli konstrukcję pod lustrzankę albo pod krótką stronę zoomu. Poduszka na długim końcu oznacza układ teleobiektywowy. Jeśli szeroki kąt ma dystorsję poniżej procenta, najprawdopodobniej pochodzi z bezlusterkowca albo z dalmierza — i to jest użyteczna wskazówka przy nieopisanym materiale.</p>
+    <p><strong>Pączkowe bokeh to cztery informacje naraz.</strong> Obiektyw był katadioptrykiem, więc: był długi, miał stałą przysłonę, nie ma aberracji chromatycznej i ma obniżony mikrokontrast. Odtwarzając takie ujęcie w rendererze, pamiętaj o wszystkich czterech — sama tekstura źrenicy z dziurą da kształt, ale nie da charakteru.</p>
+    <p><strong>Przy szerokich kątach sprawdzaj rogi, zanim ustawisz kamerę wirtualną.</strong> Retrofokus ma zwykle wyraźne winietowanie optyczne i miękkie rogi przy pełnym otworze. Jeśli render ma rogi czyste, a plate nie, niezgodność obejmie cały obwód kadru — czyli największą powierzchnię, jaką da się rozminąć.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>retrofokus</dt>
+      <dd>Układ z grupą rozpraszającą z przodu, dający odcinek tylny dłuższy od ogniskowej. Niezbędny dla szerokich kątów do korpusów z lustrem.</dd>
+      <dt>współczynnik teleobiektywowy</dt>
+      <dd>Stosunek długości tubusa do ogniskowej. Poniżej jedności oznacza prawdziwy teleobiektyw; typowo 0,7–0,8.</dd>
+      <dt>katadioptryk</dt>
+      <dd>Układ łączący lustra ze szkłem. Skrajnie krótki i bez aberracji chromatycznej, ale o źrenicy pierścieniowej i stałej przysłonie.</dd>
+      <dt>obcięcie centralne</dt>
+      <dd>Zasłonięcie środka źrenicy przez lustro wtórne. Odbiera 10–15% światła i wyraźnie więcej mikrokontrastu.</dd>
+      <dt>odcinek tylny</dt>
+      <dd>Odległość od ostatniej powierzchni szkła do matrycy. To on, a nie ogniskowa, decyduje o wykonalności konstrukcji przy danym mocowaniu.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Wszystkie konstrukcje z tej i poprzedniej części mają jedną wspólną cechę: stała ogniskowa. Co się dzieje, gdy trzeba ją zmieniać w trakcie ujęcia, i ile to kosztuje — w <a href="rozdzial-19-zoom-kontra-stalka.html">następnym rozdziale</a>. Odpowiedź brzmi: dwadzieścia szkieł, zmienna T-stopa i podatek płacony flarą.</p>
+  </div>
 
   <div class="deeper">
     <div class="deeper-label">Idź głębiej</div>
@@ -56,8 +291,89 @@ window.SKY3D_MESSAGES = {
       <a class="nav-next" href="rozdzial-19-zoom-kontra-stalka.html">Następny →</a>
   </div>
 
+  <template id="adv-skrajne">
+    <h3>Dlaczego ekstremalnie szerokie przestają być prostoliniowe</h3>
+
+    <p>Wszystkie obiektywy w tej książce zakładają odwzorowanie <strong>prostoliniowe</strong>: proste w scenie zostają proste na obrazie. Jest to wybór, nie konieczność — i przy bardzo szerokich kątach staje się wyborem nie do utrzymania.</p>
+
+    <p>Powód jest geometryczny. W odwzorowaniu prostoliniowym odległość punktu od środka kadru rośnie jak <em>f·tg θ</em>, gdzie θ jest kątem od osi. Tangens dąży do nieskończoności przy 90°, więc kadr o polu widzenia 120° musiałby mieć rogi rozciągnięte kilkukrotnie, a przy 180° — nieskończenie. To jest to samo rozciągnięcie, o którym mowa w <a href="rozdzial-05-ogniskowa-format-perspektywa.html">Rozdziale 5</a>, tylko doprowadzone do granicy.</p>
+
+    <p>Dlatego obiektywy o polu powyżej mniej więcej stu stopni przechodzą na inne odwzorowanie. Najczęstsze jest <em>równoodległościowe</em>, w którym odległość od środka rośnie po prostu jak <em>f·θ</em> — czyli liniowo z kątem, bez ucieczki do nieskończoności. Nazywa się to rybim okiem i <span class="term-violet">nie jest odmianą dystorsji</span>, tylko innym prawem odwzorowania.</p>
+
+    <p>Rozróżnienie ma praktyczne znaczenie w pipelinie. Dystorsję odwraca się modelem wielomianowym z <a href="../dodatki/dodatek-g-modele-dystorsji.html">Dodatku G</a>, bo jest odchyłką od prostoliniowości. Rybiego oka tak odwrócić <strong>nie można</strong> — trzeba przeliczyć całe odwzorowanie, a przy polu bliskim 180° część kadru i tak nie ma odpowiednika w obrazie prostoliniowym, bo leżałaby poza nieskończonością. Renderer musi wtedy dostać kamerę o właściwym odwzorowaniu, a nie kamerę prostoliniową z dołożoną dystorsją.</p>
+  </template>
+
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-panel">
+      <button class="modal-close" data-modal-close aria-label="Zamknij">×</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
 </div>
 
 <script src="../assets/interactive.js"></script>
+<script>
+/* Czy potrzebny retrofokus. Warunek: odcinek tylny potrzebny na mechanizm
+   (bagnet minus zapas) musi byc mniejszy od ogniskowej, bo w ukladzie
+   symetrycznym odcinek tylny jest mniej wiecej rowny ogniskowej. Odcinki
+   bagnetowe wprost z tabeli w Dodatku C. */
+(function () {
+  var slF = document.getElementById('retroOgn');
+  var slM = document.getElementById('retroMocowanie');
+  if (!slF || !slM) return;
+
+  var MOCOWANIA = [
+    { nazwa: 'ARRI PL',  bagnet: 52.0, zapas: 6 },
+    { nazwa: 'Canon EF', bagnet: 44.0, zapas: 6 },
+    { nazwa: 'Sony E',   bagnet: 18.0, zapas: 2 }
+  ];
+  var X_MATRYCA = 640, PX_NA_MM = 3.0;
+
+  function odswiez() {
+    var f = parseFloat(slF.value);
+    var m = MOCOWANIA[parseInt(slM.value, 10)];
+    var wymagane = m.bagnet - m.zapas;
+
+    var pas = document.getElementById('retroPasBagnet');
+    var szer = wymagane * PX_NA_MM;
+    pas.setAttribute('x', (X_MATRYCA - szer).toFixed(1));
+    pas.setAttribute('width', szer.toFixed(1));
+    document.getElementById('retroEtBagnet').setAttribute('x', (X_MATRYCA - szer / 2).toFixed(1));
+
+    var xF = X_MATRYCA - f * PX_NA_MM;
+    var kreska = document.getElementById('retroKreskaF');
+    kreska.setAttribute('x1', xF.toFixed(1));
+    kreska.setAttribute('x2', xF.toFixed(1));
+    var etF = document.getElementById('retroEtF');
+    etF.setAttribute('x', xF.toFixed(1));
+    etF.textContent = 'ostatnia soczewka';
+
+    var starcza = f >= wymagane;
+    kreska.setAttribute('stroke', starcza ? '#7fc47f' : '#d8695f');
+    etF.setAttribute('fill', starcza ? '#7fc47f' : '#d8695f');
+
+    document.getElementById('retroOgnOdczyt').textContent = f.toFixed(0) + ' mm';
+    document.getElementById('retroMocOdczyt').textContent =
+      m.nazwa + ' · ' + m.bagnet.toFixed(1).replace('.', ',') + ' mm';
+    var w = document.getElementById('retroWynik');
+    w.setAttribute('fill', starcza ? '#7fc47f' : '#d8695f');
+    w.textContent = starcza
+      ? 'Mieści się — układ symetryczny wykonalny.'
+      : 'Nie mieści się — konieczny retrofokus.';
+    document.getElementById('retroLiczby').textContent =
+      'f = ' + f.toFixed(0) + ' mm, wymagane ' + wymagane.toFixed(1).replace('.', ',') + ' mm' +
+      (starcza ? '' : ' — brakuje ' + (wymagane - f).toFixed(1).replace('.', ',') + ' mm');
+    document.getElementById('retroPodpis').textContent = starcza
+      ? 'Przy ' + f.toFixed(0) + ' mm na mocowaniu ' + m.nazwa +
+        ' ostatnia soczewka mieści się przed komorą — symetria jest dostępna.'
+      : 'Przy ' + f.toFixed(0) + ' mm na mocowaniu ' + m.nazwa +
+        ' ostatnia soczewka musiałaby stanąć wewnątrz komory lustra.';
+  }
+  slF.addEventListener('input', odswiez);
+  slM.addEventListener('input', odswiez);
+  odswiez();
+})();
+</script>
 </body>
 </html>
