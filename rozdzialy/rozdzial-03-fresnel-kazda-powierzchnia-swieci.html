@@ -291,116 +291,10 @@ window.SKY3D_MESSAGES = {
     </div>
 
     <p>Czterysta trzydzieści pięć potencjalnych ghostów w jednym obiektywie. Większość z nich nigdy nie trafia na matrycę, bo geometria im na to nie pozwala — ale kilkanaście trafia, i to właśnie one układają się w charakterystyczny sznur plam, po którym rozpoznaje się konkretny model obiektywu. <span class="term-cyan">Sznur ghostów jest podpisem konstrukcji</span>, tak samo indywidualnym jak układ soczewek, który go wytwarza.</p>
-  </div>
 
-  <div class="section">
-    <div class="section-eyebrow">Cyfra · powierzchnia, o której się zapomina</div>
-    <h2>Matryca też jest lustrem</h2>
+    <button class="advanced-btn" data-modal-target="adv-matryca">Zaawansowane: matryca też jest lustrem</button>
 
-    <p>Wszystko, co powiedzieliśmy do tej pory, dotyczy granic wewnątrz obiektywu. Ale światło, które przeszło przez ostatnią soczewkę, nie kończy podróży w niebycie — trafia na matrycę. A matryca, wbrew intuicji, nie jest czarną dziurą pochłaniającą fotony. Jest kanapką z pokrywającej szybki, filtra dolnoprzepustowego, warstwy mikrosoczewek i filtrów barwnych, a pod tym wszystkim leży krzem, który sam w sobie odbija kilkadziesiąt procent światła.</p>
-
-    <p>Każda z tych warstw ma granicę, a każda granica robi to, co granice robią. Efekt jest taki, że część światła, które właśnie dotarło na matrycę, <strong>zawraca w stronę obiektywu</strong> — i wraca do środka układu, w którym czeka na nie trzydzieści powierzchni gotowych odbić je jeszcze raz, tym razem z powrotem na matrycę.</p>
-
-    <p>To jest zjawisko, którego taśma filmowa nie miała. Emulsja była matowa i pochłaniała prawie wszystko, co do niej doleciało; jedyne, co potrafiła odbić, to światło od tylnej strony podłoża — i to jest halacja, o której będzie <a href="rozdzial-28-halacja.html">Rozdział 28</a>. Matryca odbija do przodu, w stronę szkła, i daje przez to rodzinę artefaktów nieznanych w epoce analogowej: <span class="term-raster">ghosty, których źródłem jest sam sensor</span>, zwykle wyraźnie czerwonawe i ustawione symetrycznie względem jasnego źródła.</p>
-
-    <p>Czerwonawe, bo krzem jest najbardziej odblaskowy w podczerwieni i przy długich falach, a filtr odcinający podczerwień siedzi <em>przed</em> nim i sam ma dwie powierzchnie. Dlatego kamery cyfrowe potrafią pokazać przy nocnych zdjęciach plamy, których ten sam obiektyw na taśmie nigdy nie rysował — a producenci obiektywów projektowanych pod cyfrę liczą dziś odbicia od matrycy jako element układu optycznego, nie jako przypadek.</p>
-
-    <p>Dla ciebie ma to konsekwencję praktyczną i jedną wcale nieoczywistą: kiedy dopasowujesz render do plate'u nakręconego cyfrowo, część flary, którą widzisz w materiale, <strong>nie pochodzi z obiektywu wcale</strong>. Pochodzi z rozmowy między obiektywem a matrycą — i jest inna dla tego samego szkła na dwóch różnych korpusach. Biblioteka flar zebrana z jednej kamery nie przenosi się na drugą tak dobrze, jak by się chciało.</p>
-  </div>
-
-  <div class="section">
-    <div class="section-eyebrow">Rozwiązanie · i dlaczego zmieniło wszystko</div>
-    <h2>Jak zejść z czterech procent do dwóch dziesiątych</h2>
-
-    <p>Skoro odbicie bierze się z nagłej zmiany współczynnika załamania, to sposobem na jego osłabienie jest zrobienie tej zmiany mniej nagłą. Nakłada się na szkło przezroczystą warstewkę o współczynniku pośrednim między powietrzem a szkłem — i zamiast jednego dużego skoku światło napotyka dwa mniejsze.</p>
-
-    <p>Sama warstwa by nie wystarczyła. Sztuczka polega na jej <strong>grubości</strong>. Jeśli warstwa ma dokładnie ćwierć długości fali, to promień odbity od jej wierzchu i promień odbity od jej spodu przebywają drogę różniącą się o pół fali — i spotykają się dokładnie w przeciwfazie. Grzbiet trafia na dolinę i zostaje zero. Odbicie nie tyle zostaje pochłonięte, co <em>wygaszone</em>.</p>
-
-    <div class="diagram-frame">
-      <div class="diagram-hud"><span>Powłoka ćwierćfalowa</span><span>wygaszenie przez interferencję</span></div>
-      <svg viewBox="0 0 760 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Dwie fale odbite od wierzchu i spodu cienkiej powłoki spotykają się w przeciwfazie i wzajemnie się znoszą.">
-        <rect x="300" y="30" width="34" height="200" fill="#9c82d8" opacity="0.22"/>
-        <rect x="334" y="30" width="396" height="200" fill="#4fc3c0" opacity="0.10"/>
-        <line x1="300" y1="30" x2="300" y2="230" stroke="#9c82d8" stroke-width="1.6"/>
-        <line x1="334" y1="30" x2="334" y2="230" stroke="#4fc3c0" stroke-width="1.6"/>
-        <text x="344" y="50" font-family="IBM Plex Mono" font-size="11" fill="#4fc3c0">szkło · n = 1,52</text>
-        <text x="150" y="50" font-family="IBM Plex Mono" font-size="11" fill="#8b909b">powietrze</text>
-        <text x="238" y="250" font-family="IBM Plex Mono" font-size="10.5" fill="#9c82d8">powłoka · n = 1,38 · ok. 100 nm</text>
-
-        <line x1="40" y1="90" x2="300" y2="90" stroke="#e8a33d" stroke-width="2.6"/>
-        <text x="46" y="82" font-family="IBM Plex Mono" font-size="11" fill="#e8a33d">światło padające</text>
-
-        <path d="M 40 150 q 16 -18 32 0 q 16 18 32 0 q 16 -18 32 0 q 16 18 32 0 q 16 -18 32 0 q 16 18 32 0 q 16 -18 32 0 q 16 18 32 0"
-              fill="none" stroke="#9c82d8" stroke-width="2"/>
-        <text x="46" y="134" font-family="IBM Plex Mono" font-size="10.5" fill="#9c82d8">odbicie od wierzchu powłoki</text>
-
-        <path d="M 40 200 q 16 18 32 0 q 16 -18 32 0 q 16 18 32 0 q 16 -18 32 0 q 16 18 32 0 q 16 -18 32 0 q 16 18 32 0 q 16 -18 32 0"
-              fill="none" stroke="#4fc3c0" stroke-width="2"/>
-        <text x="46" y="228" font-family="IBM Plex Mono" font-size="10.5" fill="#4fc3c0">odbicie od spodu · przesunięte o pół fali</text>
-
-        <line x1="300" y1="150" x2="300" y2="200" stroke="#8b909b" stroke-width="1" stroke-dasharray="3 3"/>
-        <text x="420" y="150" font-family="IBM Plex Mono" font-size="12" fill="#ecebe4">suma = 0</text>
-        <text x="420" y="172" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">grzbiet trafia na dolinę</text>
-      </svg>
-      <div class="diagram-caption">Ćwierć długości fali w warstwie to pół długości fali różnicy dróg — i przeciwfaza.</div>
-    </div>
-
-    <p>Haczyk jest taki, że „ćwierć długości fali” to ćwierć <em>jednej konkretnej</em> fali. Powłoka dobrana pod zieleń przy 550 nanometrach wygasza zieleń niemal całkowicie, ale czerwień i fiolet już nie — i to, co z nich zostaje, nadaje odbiciu barwę. Stąd te charakterystyczne fioletowe, bursztynowe albo szmaragdowe refleksy na przedniej soczewce, po których rozpoznaje się producenta. <span class="term-amber">Kolor flary jest kolorem tego, czego powłoka nie zdążyła wygasić.</span></p>
-
-    <p class="deeper-inline">Dlaczego akurat ćwierć fali, jak dobiera się współczynnik powłoki i skąd biorą się powłoki wielowarstwowe — <a href="../dodatki/dodatek-b-wzory-fresnela.html">Dodatek B</a>, oraz cały <a href="rozdzial-24-powloki.html">Rozdział 24</a>.</p>
-
-    <p>Efekt liczbowo: pojedyncza warstwa fluorku magnezu schodzi z 4,3 procent do około 1,3. Współczesna powłoka wielowarstwowa — do 0,2 procent i mniej. Przesuń suwak, żeby zobaczyć, co to robi z całym obiektywem:</p>
-
-    <div class="diagram-frame">
-      <div class="diagram-hud"><span>Przepuszczalność całego układu</span><span>w funkcji liczby soczewek</span></div>
-      <div class="diagram-controls">
-        <label for="liczbaSoczewek">Soczewek</label>
-        <input id="liczbaSoczewek" type="range" min="1" max="22" step="1" value="7">
-        <span class="value-readout" id="soczewkiOdczyt">7 · 14 powierzchni</span>
-      </div>
-      <svg viewBox="0 0 760 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Trzy krzywe przepuszczalności w funkcji liczby soczewek: bez powłok spada gwałtownie, z powłoką jednowarstwową łagodnie, z wielowarstwową prawie wcale.">
-        <g stroke="#2a2f38" stroke-width="1">
-          <line x1="70" y1="270" x2="720" y2="270"/>
-          <line x1="70" y1="30" x2="70" y2="270"/>
-        </g>
-        <g stroke="#2a2f38" stroke-width="0.6" opacity="0.6">
-          <line x1="70" y1="210" x2="720" y2="210"/>
-          <line x1="70" y1="150" x2="720" y2="150"/>
-          <line x1="70" y1="90" x2="720" y2="90"/>
-        </g>
-        <g font-family="IBM Plex Mono" font-size="10" fill="#8b909b">
-          <text x="40" y="274">0%</text>
-          <text x="34" y="214">25%</text>
-          <text x="34" y="154">50%</text>
-          <text x="34" y="94">75%</text>
-          <text x="30" y="34">100%</text>
-          <text x="66" y="288">1</text>
-          <text x="360" y="288">11</text>
-          <text x="706" y="288">22</text>
-          <text x="330" y="308" fill="#8b909b">liczba soczewek</text>
-        </g>
-
-        <path id="krzywaBez" fill="none" stroke="#9c82d8" stroke-width="2.4"/>
-        <path id="krzywaJedno" fill="none" stroke="#6e93be" stroke-width="2.4"/>
-        <path id="krzywaWielo" fill="none" stroke="#e8a33d" stroke-width="2.6"/>
-
-        <line id="wskaznik2" y1="30" y2="270" stroke="#ecebe4" stroke-width="1" opacity="0.45"/>
-        <circle id="punktBez" r="4.5" fill="#9c82d8"/>
-        <circle id="punktJedno" r="4.5" fill="#6e93be"/>
-        <circle id="punktWielo" r="4.5" fill="#e8a33d"/>
-
-        <g font-family="IBM Plex Mono" font-size="11">
-          <rect x="110" y="196" width="14" height="3" fill="#e8a33d"/><text x="132" y="202" fill="#ecebe4">wielowarstwowa · 0,2%</text>
-          <rect x="110" y="218" width="14" height="3" fill="#6e93be"/><text x="132" y="224" fill="#8b909b">jednowarstwowa · 1,3%</text>
-          <rect x="110" y="240" width="14" height="3" fill="#9c82d8"/><text x="132" y="246" fill="#8b909b">bez powłoki · 4,3%</text>
-        </g>
-      </svg>
-      <div class="diagram-caption" id="soczewkiPodpis">7 soczewek: bez powłok 54%, jednowarstwowa 83%, wielowarstwowa 97%.</div>
-    </div>
-
-    <p>Popatrz na fioletową krzywą i na bursztynową w prawej części wykresu. To nie jest różnica ilościowa — to jest różnica między „da się zbudować” a „nie ma sensu próbować”. Dopóki powłok nie było, każda dodatkowa soczewka kosztowała tak dużo światła i kontrastu, że konstruktorzy walczyli o utrzymanie ich liczby poniżej sześciu. Po wojnie, kiedy powłoki weszły do produkcji seryjnej, ten sam koszt spadł do wartości pomijalnej — i dopiero wtedy stały się możliwe zoomy, retrofokusy i wszystkie te kilkunastosoczewkowe konstrukcje, które w Części IV będziemy oglądać w przekroju.</p>
-
-    <p>To jest odpowiedź na pytanie, od którego zwykle zaczyna się rozmowa o obiektywach: <strong>czy więcej szkieł znaczy lepiej.</strong> Więcej szkieł znaczy lepiej skorygowane aberracje — o tym jest Część III — i jednocześnie więcej powierzchni, czyli mniej kontrastu i więcej flary. Powłoki nie unieważniły tego kompromisu, tylko przesunęły go tak daleko, że przestał być pierwszym ograniczeniem konstrukcji. Nadal jednak istnieje, i nadal słychać go w zdaniu, które pada na każdym planie: <em>„te stare szkła mają charakter”</em>. Charakter to w dużej mierze właśnie ten brakujący kontrast.</p>
+    <p class="deeper-inline">Czym się z tym walczy — powłoka ćwierćfalowa, stosy wielowarstwowe i ich cena — w <a href="../dodatki/dodatek-b-wzory-fresnela.html">Dodatku B</a>.</p>
   </div>
 
   <div class="panel practice">
@@ -484,6 +378,20 @@ window.SKY3D_MESSAGES = {
     </div>
   </div>
 
+  <template id="adv-matryca">
+<h3>Matryca też jest lustrem</h3>
+
+    <p>Wszystko, co powiedzieliśmy do tej pory, dotyczy granic wewnątrz obiektywu. Ale światło, które przeszło przez ostatnią soczewkę, nie kończy podróży w niebycie — trafia na matrycę. A matryca, wbrew intuicji, nie jest czarną dziurą pochłaniającą fotony. Jest kanapką z pokrywającej szybki, filtra dolnoprzepustowego, warstwy mikrosoczewek i filtrów barwnych, a pod tym wszystkim leży krzem, który sam w sobie odbija kilkadziesiąt procent światła.</p>
+
+    <p>Każda z tych warstw ma granicę, a każda granica robi to, co granice robią. Efekt jest taki, że część światła, które właśnie dotarło na matrycę, <strong>zawraca w stronę obiektywu</strong> — i wraca do środka układu, w którym czeka na nie trzydzieści powierzchni gotowych odbić je jeszcze raz, tym razem z powrotem na matrycę.</p>
+
+    <p>To jest zjawisko, którego taśma filmowa nie miała. Emulsja była matowa i pochłaniała prawie wszystko, co do niej doleciało; jedyne, co potrafiła odbić, to światło od tylnej strony podłoża — i to jest halacja, o której będzie <a href="rozdzial-28-halacja.html">Rozdział 28</a>. Matryca odbija do przodu, w stronę szkła, i daje przez to rodzinę artefaktów nieznanych w epoce analogowej: <span class="term-raster">ghosty, których źródłem jest sam sensor</span>, zwykle wyraźnie czerwonawe i ustawione symetrycznie względem jasnego źródła.</p>
+
+    <p>Czerwonawe, bo krzem jest najbardziej odblaskowy w podczerwieni i przy długich falach, a filtr odcinający podczerwień siedzi <em>przed</em> nim i sam ma dwie powierzchnie. Dlatego kamery cyfrowe potrafią pokazać przy nocnych zdjęciach plamy, których ten sam obiektyw na taśmie nigdy nie rysował — a producenci obiektywów projektowanych pod cyfrę liczą dziś odbicia od matrycy jako element układu optycznego, nie jako przypadek.</p>
+
+    <p>Dla ciebie ma to konsekwencję praktyczną i jedną wcale nieoczywistą: kiedy dopasowujesz render do plate'u nakręconego cyfrowo, część flary, którą widzisz w materiale, <strong>nie pochodzi z obiektywu wcale</strong>. Pochodzi z rozmowy między obiektywem a matrycą — i jest inna dla tego samego szkła na dwóch różnych korpusach. Biblioteka flar zebrana z jednej kamery nie przenosi się na drugą tak dobrze, jak by się chciało.</p>
+  </template>
+
 </div>
 
 <script src="../assets/interactive.js"></script>
@@ -545,58 +453,6 @@ window.SKY3D_MESSAGES = {
     else opis = 'szkło zachowuje się jak lustro';
     document.getElementById('katPodpis').textContent =
       'Przy ' + a.toFixed(0) + '° odbija się ' + proc(o.r) + '% światła — ' + opis + '.';
-  }
-  sl.addEventListener('input', odswiez);
-  odswiez();
-})();
-
-/* 2. Przepuszczalnosc calego ukladu w funkcji liczby soczewek, dla trzech
-      wariantow powloki. T = (1 - R) ^ (2n), bo kazda soczewka to dwie
-      powierzchnie. */
-(function () {
-  var sl = document.getElementById('liczbaSoczewek');
-  if (!sl) return;
-  var X0 = 70, X1 = 720, Y0 = 270, Y1 = 30, NMAX = 22;
-  function px(n) { return X0 + ((n - 1) / (NMAX - 1)) * (X1 - X0); }
-  function py(t) { return Y0 - t * (Y0 - Y1); }
-  function T(n, r) { return Math.pow(1 - r, 2 * n); }
-
-  var WARIANTY = [
-    { r: 0.043, krzywa: 'krzywaBez',   punkt: 'punktBez' },
-    { r: 0.013, krzywa: 'krzywaJedno', punkt: 'punktJedno' },
-    { r: 0.002, krzywa: 'krzywaWielo', punkt: 'punktWielo' }
-  ];
-
-  WARIANTY.forEach(function (w) {
-    var d = '';
-    for (var n = 1; n <= NMAX; n++) {
-      d += (n === 1 ? 'M ' : ' L ') + px(n).toFixed(1) + ' ' + py(T(n, w.r)).toFixed(1);
-    }
-    document.getElementById(w.krzywa).setAttribute('d', d);
-  });
-
-  /* Polska odmiana przez liczebnik: 1 soczewka, 2-4 soczewki, 5+ soczewek,
-     ale 12-14 soczewek i 22 soczewki. */
-  function odmiana(n) {
-    if (n === 1) return 'soczewka';
-    var d = n % 10, s = n % 100;
-    if (d >= 2 && d <= 4 && !(s >= 12 && s <= 14)) return 'soczewki';
-    return 'soczewek';
-  }
-
-  function odswiez() {
-    var n = parseInt(sl.value, 10);
-    var x = px(n), w = document.getElementById('wskaznik2');
-    w.setAttribute('x1', x); w.setAttribute('x2', x);
-    WARIANTY.forEach(function (v) {
-      var el = document.getElementById(v.punkt);
-      el.setAttribute('cx', x); el.setAttribute('cy', py(T(n, v.r)));
-    });
-    document.getElementById('soczewkiOdczyt').textContent = n + ' · ' + (2 * n) + ' powierzchni';
-    document.getElementById('soczewkiPodpis').textContent =
-      n + ' ' + odmiana(n) + ': bez powłok ' + Math.round(T(n, 0.043) * 100) +
-      '%, jednowarstwowa ' + Math.round(T(n, 0.013) * 100) +
-      '%, wielowarstwowa ' + Math.round(T(n, 0.002) * 100) + '%.';
   }
   sl.addEventListener('input', odswiez);
   odswiez();

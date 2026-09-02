@@ -41,7 +41,215 @@ window.SKY3D_MESSAGES = {
   <h1>Wzory Fresnela i powłoka ćwierćfalowa</h1>
   <p class="subtitle">Pełne współczynniki odbicia dla obu polaryzacji, przybliżenie Schlicka i rachunek pokazujący, ile daje jedna warstwa, a ile dwanaście.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">Co tu jest</div>
+    <ul>
+      <li><strong>Pełne wzory Fresnela</strong> dla obu polaryzacji, z kątem Brewstera i z tym, co z niego wynika dla filtra polaryzacyjnego.</li>
+      <li><strong>Przybliżenie Schlicka</strong> — to, którego naprawdę używa twój shader, i jego rzeczywisty błąd.</li>
+      <li><strong>Rachunek powłoki ćwierćfalowej</strong>: dlaczego idealny materiał nie istnieje i skąd bierze się fiolet na starym szkle.</li>
+      <li><strong>Ile daje stos wielowarstwowy</strong> i gdzie leży granica opłacalności.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Pełna postać · dwie polaryzacje</div>
+    <h2>Wzory Fresnela bez uproszczeń</h2>
+
+    <p>Wzór z <a href="../rozdzialy/rozdzial-03-fresnel-kazda-powierzchnia-swieci.html">Rozdziału 3</a> obowiązuje tylko przy padaniu prostopadłym. W pełnej postaci odbicie zależy od kąta, i to <strong>inaczej dla każdej z dwóch polaryzacji</strong> — czyli osobno dla fali drgającej w płaszczyźnie padania i osobno dla drgającej prostopadle do niej.</p>
+
+    <div class="formula">
+      r<sub>s</sub> = (<span class="vec" data-tip="Współczynnik załamania ośrodka wejściowego">n₁</span>cos θ<sub>i</sub> − <span class="vec" data-tip="Współczynnik załamania ośrodka wyjściowego">n₂</span>cos θ<sub>t</sub>) / (<span class="vec" data-tip="Współczynnik ośrodka wejściowego">n₁</span>cos θ<sub>i</sub> + <span class="vec" data-tip="Współczynnik ośrodka wyjściowego">n₂</span>cos θ<sub>t</sub>)
+      <span class="sub">r<sub>s</sub> — amplituda odbicia dla polaryzacji prostopadłej do płaszczyzny padania (od niem. <em>senkrecht</em>). θ<sub>i</sub> — kąt padania, θ<sub>t</sub> — kąt załamania z prawa Snella. Natężenie to kwadrat: R<sub>s</sub> = r<sub>s</sub>².</span>
+    </div>
+
+    <div class="formula">
+      r<sub>p</sub> = (<span class="vec" data-tip="Współczynnik ośrodka wyjściowego">n₂</span>cos θ<sub>i</sub> − <span class="vec" data-tip="Współczynnik ośrodka wejściowego">n₁</span>cos θ<sub>t</sub>) / (<span class="vec" data-tip="Współczynnik ośrodka wyjściowego">n₂</span>cos θ<sub>i</sub> + <span class="vec" data-tip="Współczynnik ośrodka wejściowego">n₁</span>cos θ<sub>t</sub>)
+      <span class="sub">r<sub>p</sub> — amplituda dla polaryzacji równoległej do płaszczyzny padania. Różnica względem r<sub>s</sub> polega wyłącznie na zamianie miejscami n₁ i n₂ przy kosinusach — i z tej drobnej zamiany bierze się całe zjawisko Brewstera.</span>
+    </div>
+
+    <p>Światło niespolaryzowane, czyli to, z którym pracujesz na co dzień, ma obie składowe po połowie, więc jego odbicie to <strong>średnia obu wzorów</strong>: R = (R<sub>s</sub> + R<sub>p</sub>)/2. To właśnie ta średnia jest krzywą z widgetu w rozdziale.</p>
+
+    <p>Ciekawe dzieje się z licznikiem r<sub>p</sub>. Istnieje kąt, przy którym zeruje się on dokładnie — a wtedy składowa równoległa <span class="term-cyan">nie odbija się wcale</span>. Nazywa się kątem Brewstera i wypada zdumiewająco prosto:</p>
+
+    <div class="formula">
+      tg θ<sub>B</sub> = <span class="vec" data-tip="Współczynnik ośrodka wyjściowego">n₂</span> / <span class="vec" data-tip="Współczynnik ośrodka wejściowego">n₁</span>
+      <span class="sub">θ<sub>B</sub> — kąt Brewstera, mierzony od normalnej. Dla granicy powietrze–szkło o n = 1,52 wychodzi 56,7°; dla powietrza i wody (n = 1,33) — 53,1°.</span>
+    </div>
+
+    <p>Praktyczna konsekwencja jest tym, po co w ogóle nosi się filtr polaryzacyjny. Odbicie od szyby, wody czy mokrego asfaltu przy kątach bliskich Brewstera jest <strong>prawie całkowicie spolaryzowane w jednym kierunku</strong> — więc filtr przepuszczający tylko drugi kierunek usuwa je niemal w całości, nie ruszając reszty obrazu. Stąd też jego bezużyteczność przy padaniu prostopadłym: tam obie składowe odbijają się tak samo i nie ma czego odsiać.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Schlick · to, co naprawdę liczy shader</div>
+    <h2>Przybliżenie używane w grafice</h2>
+
+    <p>Powyższe wzory wymagają policzenia kąta załamania, czyli pierwiastka, dla każdego promienia i każdej powierzchni. W rendererze jest to koszt, którego zwykle się unika — a od 1994 roku unika się go jednym przybliżeniem, które podał Christophe Schlick.</p>
+
+    <div class="formula">
+      R(θ) ≈ <span class="vec" data-tip="Odbicie przy padaniu prostopadłym — ta sama liczba, co w Rozdziale 3">R₀</span> + (1 − <span class="vec" data-tip="Odbicie przy padaniu prostopadłym">R₀</span>)(1 − cos θ)⁵
+      <span class="sub">R₀ = ((n₁ − n₂)/(n₁ + n₂))², czyli odbicie prostopadłe. θ — kąt padania. Cała zależność od kąta siedzi w piątej potędze, którą liczy się trzema mnożeniami, bez pierwiastka i bez funkcji trygonometrycznych poza samym kosinusem, który i tak jest iloczynem skalarnym.</span>
+    </div>
+
+    <p>Zgodność z prawdą jest lepsza, niż sugeruje prostota wzoru: dla granicy powietrze–szkło błąd nie przekracza kilku dziesiątych procenta w całym zakresie kątów. <span class="term-cyan">Dla obrazu jest to różnica niewidoczna</span>, a koszt spada o rząd wielkości — dlatego Schlick siedzi dziś w każdym silniku czasu rzeczywistego i w większości offline'owych.</p>
+
+    <p>Warto natomiast wiedzieć, czego to przybliżenie nie robi. <strong>Nie zna polaryzacji</strong> — daje od razu średnią obu składowych, więc nie da się z niego wyprowadzić kąta Brewstera ani zasymulować filtra polaryzacyjnego. Nie obsługuje też poprawnie sytuacji, w której światło wychodzi z ośrodka gęstszego do rzadszego, bo nie ma w nim miejsca na całkowite odbicie wewnętrzne. Renderer, który ma symulować szkło od środka, musi w tych miejscach wrócić do pełnych wzorów.</p>
+  </div>
+
+<div class="section">
+    <div class="section-eyebrow">Rozwiązanie · i dlaczego zmieniło wszystko</div>
+    <h2>Jak zejść z czterech procent do dwóch dziesiątych</h2>
+
+    <p>Skoro odbicie bierze się z nagłej zmiany współczynnika załamania, to sposobem na jego osłabienie jest zrobienie tej zmiany mniej nagłą. Nakłada się na szkło przezroczystą warstewkę o współczynniku pośrednim między powietrzem a szkłem — i zamiast jednego dużego skoku światło napotyka dwa mniejsze.</p>
+
+    <p>Sama warstwa by nie wystarczyła. Sztuczka polega na jej <strong>grubości</strong>. Jeśli warstwa ma dokładnie ćwierć długości fali, to promień odbity od jej wierzchu i promień odbity od jej spodu przebywają drogę różniącą się o pół fali — i spotykają się dokładnie w przeciwfazie. Grzbiet trafia na dolinę i zostaje zero. Odbicie nie tyle zostaje pochłonięte, co <em>wygaszone</em>.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Powłoka ćwierćfalowa</span><span>wygaszenie przez interferencję</span></div>
+      <svg viewBox="0 0 760 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Dwie fale odbite od wierzchu i spodu cienkiej powłoki spotykają się w przeciwfazie i wzajemnie się znoszą.">
+        <rect x="300" y="30" width="34" height="200" fill="#9c82d8" opacity="0.22"/>
+        <rect x="334" y="30" width="396" height="200" fill="#4fc3c0" opacity="0.10"/>
+        <line x1="300" y1="30" x2="300" y2="230" stroke="#9c82d8" stroke-width="1.6"/>
+        <line x1="334" y1="30" x2="334" y2="230" stroke="#4fc3c0" stroke-width="1.6"/>
+        <text x="344" y="50" font-family="IBM Plex Mono" font-size="11" fill="#4fc3c0">szkło · n = 1,52</text>
+        <text x="150" y="50" font-family="IBM Plex Mono" font-size="11" fill="#8b909b">powietrze</text>
+        <text x="238" y="250" font-family="IBM Plex Mono" font-size="10.5" fill="#9c82d8">powłoka · n = 1,38 · ok. 100 nm</text>
+
+        <line x1="40" y1="90" x2="300" y2="90" stroke="#e8a33d" stroke-width="2.6"/>
+        <text x="46" y="82" font-family="IBM Plex Mono" font-size="11" fill="#e8a33d">światło padające</text>
+
+        <path d="M 40 150 q 16 -18 32 0 q 16 18 32 0 q 16 -18 32 0 q 16 18 32 0 q 16 -18 32 0 q 16 18 32 0 q 16 -18 32 0 q 16 18 32 0"
+              fill="none" stroke="#9c82d8" stroke-width="2"/>
+        <text x="46" y="134" font-family="IBM Plex Mono" font-size="10.5" fill="#9c82d8">odbicie od wierzchu powłoki</text>
+
+        <path d="M 40 200 q 16 18 32 0 q 16 -18 32 0 q 16 18 32 0 q 16 -18 32 0 q 16 18 32 0 q 16 -18 32 0 q 16 18 32 0 q 16 -18 32 0"
+              fill="none" stroke="#4fc3c0" stroke-width="2"/>
+        <text x="46" y="228" font-family="IBM Plex Mono" font-size="10.5" fill="#4fc3c0">odbicie od spodu · przesunięte o pół fali</text>
+
+        <line x1="300" y1="150" x2="300" y2="200" stroke="#8b909b" stroke-width="1" stroke-dasharray="3 3"/>
+        <text x="420" y="150" font-family="IBM Plex Mono" font-size="12" fill="#ecebe4">suma = 0</text>
+        <text x="420" y="172" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">grzbiet trafia na dolinę</text>
+      </svg>
+      <div class="diagram-caption">Ćwierć długości fali w warstwie to pół długości fali różnicy dróg — i przeciwfaza.</div>
+    </div>
+
+    <p>Haczyk jest taki, że „ćwierć długości fali” to ćwierć <em>jednej konkretnej</em> fali. Powłoka dobrana pod zieleń przy 550 nanometrach wygasza zieleń niemal całkowicie, ale czerwień i fiolet już nie — i to, co z nich zostaje, nadaje odbiciu barwę. Stąd te charakterystyczne fioletowe, bursztynowe albo szmaragdowe refleksy na przedniej soczewce, po których rozpoznaje się producenta. <span class="term-amber">Kolor flary jest kolorem tego, czego powłoka nie zdążyła wygasić.</span></p>
+
+    <p class="deeper-inline">Dlaczego akurat ćwierć fali, jak dobiera się współczynnik powłoki i skąd biorą się powłoki wielowarstwowe — <a href="../dodatki/dodatek-b-wzory-fresnela.html">Dodatek B</a>, oraz cały <a href="../rozdzialy/rozdzial-24-powloki.html">Rozdział 24</a>.</p>
+
+    <p>Efekt liczbowo: pojedyncza warstwa fluorku magnezu schodzi z 4,3 procent do około 1,3. Współczesna powłoka wielowarstwowa — do 0,2 procent i mniej. Przesuń suwak, żeby zobaczyć, co to robi z całym obiektywem:</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Przepuszczalność całego układu</span><span>w funkcji liczby soczewek</span></div>
+      <div class="diagram-controls">
+        <label for="liczbaSoczewek">Soczewek</label>
+        <input id="liczbaSoczewek" type="range" min="1" max="22" step="1" value="7">
+        <span class="value-readout" id="soczewkiOdczyt">7 · 14 powierzchni</span>
+      </div>
+      <svg viewBox="0 0 760 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Trzy krzywe przepuszczalności w funkcji liczby soczewek: bez powłok spada gwałtownie, z powłoką jednowarstwową łagodnie, z wielowarstwową prawie wcale.">
+        <g stroke="#2a2f38" stroke-width="1">
+          <line x1="70" y1="270" x2="720" y2="270"/>
+          <line x1="70" y1="30" x2="70" y2="270"/>
+        </g>
+        <g stroke="#2a2f38" stroke-width="0.6" opacity="0.6">
+          <line x1="70" y1="210" x2="720" y2="210"/>
+          <line x1="70" y1="150" x2="720" y2="150"/>
+          <line x1="70" y1="90" x2="720" y2="90"/>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="10" fill="#8b909b">
+          <text x="40" y="274">0%</text>
+          <text x="34" y="214">25%</text>
+          <text x="34" y="154">50%</text>
+          <text x="34" y="94">75%</text>
+          <text x="30" y="34">100%</text>
+          <text x="66" y="288">1</text>
+          <text x="360" y="288">11</text>
+          <text x="706" y="288">22</text>
+          <text x="330" y="308" fill="#8b909b">liczba soczewek</text>
+        </g>
+
+        <path id="krzywaBez" fill="none" stroke="#9c82d8" stroke-width="2.4"/>
+        <path id="krzywaJedno" fill="none" stroke="#6e93be" stroke-width="2.4"/>
+        <path id="krzywaWielo" fill="none" stroke="#e8a33d" stroke-width="2.6"/>
+
+        <line id="wskaznik2" y1="30" y2="270" stroke="#ecebe4" stroke-width="1" opacity="0.45"/>
+        <circle id="punktBez" r="4.5" fill="#9c82d8"/>
+        <circle id="punktJedno" r="4.5" fill="#6e93be"/>
+        <circle id="punktWielo" r="4.5" fill="#e8a33d"/>
+
+        <g font-family="IBM Plex Mono" font-size="11">
+          <rect x="110" y="196" width="14" height="3" fill="#e8a33d"/><text x="132" y="202" fill="#ecebe4">wielowarstwowa · 0,2%</text>
+          <rect x="110" y="218" width="14" height="3" fill="#6e93be"/><text x="132" y="224" fill="#8b909b">jednowarstwowa · 1,3%</text>
+          <rect x="110" y="240" width="14" height="3" fill="#9c82d8"/><text x="132" y="246" fill="#8b909b">bez powłoki · 4,3%</text>
+        </g>
+      </svg>
+      <div class="diagram-caption" id="soczewkiPodpis">7 soczewek: bez powłok 54%, jednowarstwowa 83%, wielowarstwowa 97%.</div>
+    </div>
+
+    <p>Popatrz na fioletową krzywą i na bursztynową w prawej części wykresu. To nie jest różnica ilościowa — to jest różnica między „da się zbudować” a „nie ma sensu próbować”. Dopóki powłok nie było, każda dodatkowa soczewka kosztowała tak dużo światła i kontrastu, że konstruktorzy walczyli o utrzymanie ich liczby poniżej sześciu. Po wojnie, kiedy powłoki weszły do produkcji seryjnej, ten sam koszt spadł do wartości pomijalnej — i dopiero wtedy stały się możliwe zoomy, retrofokusy i wszystkie te kilkunastosoczewkowe konstrukcje, które w Części IV będziemy oglądać w przekroju.</p>
+
+    <p>To jest odpowiedź na pytanie, od którego zwykle zaczyna się rozmowa o obiektywach: <strong>czy więcej szkieł znaczy lepiej.</strong> Więcej szkieł znaczy lepiej skorygowane aberracje — o tym jest Część III — i jednocześnie więcej powierzchni, czyli mniej kontrastu i więcej flary. Powłoki nie unieważniły tego kompromisu, tylko przesunęły go tak daleko, że przestał być pierwszym ograniczeniem konstrukcji. Nadal jednak istnieje, i nadal słychać go w zdaniu, które pada na każdym planie: <em>„te stare szkła mają charakter”</em>. Charakter to w dużej mierze właśnie ten brakujący kontrast.</p>
+  </div>
+  <div class="section">
+    <div class="section-eyebrow">Ćwierć fali · rachunek, który daje 1,3%</div>
+    <h2>Dlaczego idealna powłoka nie istnieje</h2>
+
+    <p>Powłoka jednowarstwowa działa przez interferencję: odbicie od jej wierzchu i odbicie od jej spodu spotykają się w przeciwfazie i wygaszają. Żeby wygaszenie było zupełne, muszą być spełnione <strong>dwa</strong> warunki naraz, i tylko jeden z nich da się spełnić dokładnie.</p>
+
+    <p>Pierwszy dotyczy grubości. Fala odbita od spodu przebywa warstwę dwa razy, więc żeby wrócić w przeciwfazie, warstwa musi mieć ćwierć długości fali — mierzonej <em>w niej</em>, a nie w powietrzu:</p>
+
+    <div class="formula">
+      d = <span class="vec" data-tip="Długość fali w próżni, dla której powłoka jest optymalizowana">λ</span> / (4 · <span class="vec" data-tip="Współczynnik załamania materiału powłoki">n₁</span>)
+      <span class="sub">d — grubość warstwy. λ — długość fali, dla której powłoka ma działać najlepiej. n₁ — współczynnik załamania powłoki. Dla λ = 550 nm i MgF₂ o n = 1,38 wychodzi 99,6 nm — czyli setna część grubości ludzkiego włosa.</span>
+    </div>
+
+    <p>Drugi warunek dotyczy <em>siły</em> obu odbić: muszą być równe co do wielkości, inaczej nie skasują się do zera. Prowadzi to do warunku na współczynnik załamania powłoki:</p>
+
+    <div class="formula">
+      R = ((<span class="vec" data-tip="Współczynnik powietrza, czyli 1,00">n₀</span><span class="vec" data-tip="Współczynnik szkła pod powłoką">n₂</span> − <span class="vec" data-tip="Współczynnik powłoki">n₁</span>²) / (<span class="vec" data-tip="Współczynnik powietrza">n₀</span><span class="vec" data-tip="Współczynnik szkła">n₂</span> + <span class="vec" data-tip="Współczynnik powłoki">n₁</span>²))²  →  zero, gdy <span class="vec" data-tip="Współczynnik powłoki">n₁</span> = √(<span class="vec" data-tip="Współczynnik powietrza">n₀</span><span class="vec" data-tip="Współczynnik szkła">n₂</span>)
+      <span class="sub">R — odbicie powierzchni z powłoką ćwierćfalową przy padaniu prostopadłym. n₀ — powietrze, n₁ — powłoka, n₂ — szkło. Licznik zeruje się dokładnie wtedy, gdy współczynnik powłoki jest średnią geometryczną sąsiadów.</span>
+    </div>
+
+    <div class="worked">
+      <div class="wlabel">Ile brakuje do zera na typowym szkle</div>
+      <p class="step"><span class="k">warunek idealny</span> <span class="v">n₁ = √(1,00 · 1,52) = </span><span class="result">1,233</span></p>
+      <p class="step"><span class="k">najlepszy trwały materiał</span> <span class="v">MgF₂, fluorek magnezu: </span><span class="result">n = 1,38</span></p>
+      <p class="step"><span class="k">licznik</span> <span class="v">1,52 − 1,38² = 1,52 − 1,904 = </span><span class="result">−0,384</span></p>
+      <p class="step"><span class="k">odbicie</span> <span class="v">(−0,384 / 3,424)² = </span><span class="result">1,26%</span></p>
+      <p class="check">Zamiast 4,3% zostaje 1,3% — poprawa ponad trzykrotna z jednej warstwy grubości stu nanometrów. Do zera brakuje jednak sporo, i brakuje z powodu <strong>materiałowego, nie konstrukcyjnego</strong>: nie istnieje trwały materiał o n = 1,233, który dałoby się osadzić na szkle i który przetrwałby czyszczenie. MgF₂ jest kompromisem między optyką a twardością — i dlatego pojedyncza powłoka utknęła na tej liczbie na kilkadziesiąt lat.</p>
+    </div>
+
+    <p>Jest jeszcze trzeci powód, dla którego zera nie ma nigdy. Warunek na grubość zawiera <em>λ</em>, więc powłokę można zestroić dokładnie na jedną długość fali. Zwykle wybiera się środek widma, około 550 nm, bo tam oko jest najczulsze. Dla czerwieni i błękitu warstwa nie ma już ćwierci fali, wygaszenie jest niepełne — i <span class="term-violet">to, co zostaje odbite, jest mieszaniną skrajów widma</span>, czyli fioletem albo bursztynem.</p>
+
+    <p>Stąd bierze się rzecz, którą widać na każdym starszym obiektywie postawionym pod światło: <strong>fioletowy albo bursztynowy połysk na przedniej soczewce</strong>. Nie jest to zabarwienie szkła ani powłoki — to widmo tego, czego powłoka nie zdążyła wygasić. Ten sam mechanizm nadaje kolor flarze, i dlatego kolor flary jest rozpoznawalnym podpisem producenta, o czym w <a href="../rozdzialy/rozdzial-24-powloki.html">Rozdziale 24</a>.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Stosy · gdzie kończy się opłacalność</div>
+    <h2>Ile daje wielowarstwa</h2>
+
+    <p>Skoro jedna warstwa ma dwa ograniczenia — dostępny materiał i jedna długość fali — nasuwa się rozwiązanie: <strong>ułożyć kilka warstw o różnych współczynnikach i grubościach</strong>. Każda para wygasza inny fragment widma, a odpowiednio dobrany stos potrafi zejść poniżej jednej dziesiątej procenta w całym zakresie widzialnym.</p>
+
+    <p>Rzędy wielkości warto znać, bo tłumaczą całą różnicę między szkłem z różnych epok:</p>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead>
+          <tr><th>Powierzchnia</th><th class="num">Odbicie</th><th class="num">Przepuszczalność 20 powierzchni</th><th>Epoka</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Bez powłoki</td><td class="num">4,3%</td><td class="num">42%</td><td>do lat 30. XX w.</td></tr>
+          <tr><td>Jednowarstwowa MgF₂</td><td class="num">1,3%</td><td class="num">77%</td><td>od lat 40.</td></tr>
+          <tr><td>Wielowarstwowa</td><td class="num">0,2%</td><td class="num">96%</td><td>od lat 70.</td></tr>
+          <tr><td>Wielowarstwowa nowoczesna</td><td class="num">0,1%</td><td class="num">98%</td><td>współcześnie</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Przepuszczalność policzona jako (1 − R)²⁰ dla dwudziestu powierzchni, czyli dziesięciu soczewek. Pominięto pochłanianie w samym szkle, które przy typowych grubościach odbiera dodatkowo kilka procent.</p>
+
+    <p>Z tabeli widać dwie rzeczy. Pierwsza: <span class="term-cyan">przejście od braku powłoki do jednej warstwy zmienia więcej niż wszystko, co zdarzyło się później</span> — 42% na 77% to skok, przy którym późniejsza droga z 96% na 98% jest kosmetyką. Druga: właśnie ten pierwszy skok umożliwił budowanie obiektywów o wielu soczewkach. Zoom o siedemnastu elementach bez powłok przepuszczałby kilka procent światła i byłby bezużyteczny — <strong>powłoka nie tyle poprawiła obiektywy, ile pozwoliła im urosnąć</strong>.</p>
+
+    <p>Granica opłacalności leży dziś nie w przepuszczalności, tylko w kontraście. Przy 0,1% na powierzchnię zbłąkane światło przestaje być problemem jasności, a zostaje problemem <em>czerni</em>: te ostatnie dziesiąte procenta rozkładają się po całym kadrze i podnoszą poziom najciemniejszych tonów. Dlatego producenci szkła kinowego walczą dziś o wartości, które w bilansie energii nic nie znaczą — liczy się to, o ile głębsza jest przez nie czerń.</p>
+  </div>
 
   <div class="site-nav">
     <a href="../index.html">← Spis treści</a>
@@ -51,5 +259,58 @@ window.SKY3D_MESSAGES = {
 </div>
 
 <script src="../assets/interactive.js"></script>
+<script>
+/* 2. Przepuszczalnosc calego ukladu w funkcji liczby soczewek, dla trzech
+      wariantow powloki. T = (1 - R) ^ (2n), bo kazda soczewka to dwie
+      powierzchnie. */
+(function () {
+  var sl = document.getElementById('liczbaSoczewek');
+  if (!sl) return;
+  var X0 = 70, X1 = 720, Y0 = 270, Y1 = 30, NMAX = 22;
+  function px(n) { return X0 + ((n - 1) / (NMAX - 1)) * (X1 - X0); }
+  function py(t) { return Y0 - t * (Y0 - Y1); }
+  function T(n, r) { return Math.pow(1 - r, 2 * n); }
+
+  var WARIANTY = [
+    { r: 0.043, krzywa: 'krzywaBez',   punkt: 'punktBez' },
+    { r: 0.013, krzywa: 'krzywaJedno', punkt: 'punktJedno' },
+    { r: 0.002, krzywa: 'krzywaWielo', punkt: 'punktWielo' }
+  ];
+
+  WARIANTY.forEach(function (w) {
+    var d = '';
+    for (var n = 1; n <= NMAX; n++) {
+      d += (n === 1 ? 'M ' : ' L ') + px(n).toFixed(1) + ' ' + py(T(n, w.r)).toFixed(1);
+    }
+    document.getElementById(w.krzywa).setAttribute('d', d);
+  });
+
+  /* Polska odmiana przez liczebnik: 1 soczewka, 2-4 soczewki, 5+ soczewek,
+     ale 12-14 soczewek i 22 soczewki. */
+  function odmiana(n) {
+    if (n === 1) return 'soczewka';
+    var d = n % 10, s = n % 100;
+    if (d >= 2 && d <= 4 && !(s >= 12 && s <= 14)) return 'soczewki';
+    return 'soczewek';
+  }
+
+  function odswiez() {
+    var n = parseInt(sl.value, 10);
+    var x = px(n), w = document.getElementById('wskaznik2');
+    w.setAttribute('x1', x); w.setAttribute('x2', x);
+    WARIANTY.forEach(function (v) {
+      var el = document.getElementById(v.punkt);
+      el.setAttribute('cx', x); el.setAttribute('cy', py(T(n, v.r)));
+    });
+    document.getElementById('soczewkiOdczyt').textContent = n + ' · ' + (2 * n) + ' powierzchni';
+    document.getElementById('soczewkiPodpis').textContent =
+      n + ' ' + odmiana(n) + ': bez powłok ' + Math.round(T(n, 0.043) * 100) +
+      '%, jednowarstwowa ' + Math.round(T(n, 0.013) * 100) +
+      '%, wielowarstwowa ' + Math.round(T(n, 0.002) * 100) + '%.';
+  }
+  sl.addEventListener('input', odswiez);
+  odswiez();
+})();
+</script>
 </body>
 </html>
