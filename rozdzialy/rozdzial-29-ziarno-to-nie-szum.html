@@ -43,7 +43,236 @@ window.SKY3D_MESSAGES = {
   <h1>Ziarno to nie szum</h1>
   <p class="subtitle">Ziarno jest strukturą — kryształkami srebra o różnej wielkości, skorelowanymi przestrzennie i zależnymi od ekspozycji. Szum gaussowski nie jest niczym z tych trzech i dlatego nigdy nie wygląda jak taśma.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li><strong>Ziarno nie jest szumem dodanym do obrazu — ziarno <em>jest</em> obrazem.</strong> Nie ma warstwy gładkiej, na którą coś nałożono; są kryształki srebra i nic poza nimi.</li>
+      <li>Trzy cechy, których szum gaussowski nie ma: <span class="term-amber">struktura</span> o skończonym rozmiarze, <span class="term-amber">korelacja przestrzenna</span> i <span class="term-amber">zależność od ekspozycji</span> — przy czym ta ostatnia jest odwrotna niż w cyfrze.</li>
+      <li>Stąd najważniejsza różnica praktyczna: <strong>ziarno taśmy jest najsilniejsze w półtonach, szum matrycy w cieniach</strong>. Dodanie jednego zamiast drugiego rozjeżdża się dokładnie tam, gdzie oko patrzy.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Natura · ziarno jest obrazem, nie warstwą</div>
+    <h2>Dlaczego to nie jest szum</h2>
+
+    <p>Emulsja składa się z kryształków halogenku srebra zawieszonych w żelatynie. Kryształek naświetlony wystarczająco silnie wywołuje się w całości i staje się nieprzezroczystym ziarnem srebra; kryształek naświetlony za słabo nie wywołuje się wcale. <strong>Nie ma stanu pośredniego</strong> — pojedyncze ziarno jest albo czarne, albo go nie ma.</p>
+
+    <p>Obraz na negatywie jest więc zbiorem czarnych kropek o różnej wielkości, rozłożonych losowo. Wrażenie półtonu bierze się z ich <em>gęstości</em>, tak jak w druku rastrowym. To, co nazywamy ziarnem, jest widocznością tej struktury — a nie zakłóceniem nałożonym na coś gładszego.</p>
+
+    <p>Różnica nie jest filozoficzna. Ma trzy konsekwencje, z których każda odróżnia ziarno od szumu gaussowskiego i każda jest do odtworzenia.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Struktura kontra szum</span><span>ten sam poziom, inny charakter</span></div>
+      <svg viewBox="0 0 760 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Po lewej ziarno jako skupiska kropek o różnej wielkości, po prawej szum gaussowski jako niezależne piksele o losowej jasności.">
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b" text-anchor="middle">
+          <text x="190" y="22">ZIARNO</text><text x="570" y="22">SZUM GAUSSOWSKI</text>
+        </g>
+        <rect x="60" y="32" width="260" height="150" fill="#3a3d43" stroke="#2a2f38"/>
+        <g id="r29Ziarno" fill="#0d0f11"></g>
+        <rect x="440" y="32" width="260" height="150" fill="#3a3d43" stroke="#2a2f38"/>
+        <g id="r29Szum"></g>
+
+        <text x="190" y="204" font-family="IBM Plex Mono" font-size="9.5" fill="#7fc47f" text-anchor="middle">kropki o różnej wielkości, skupione</text>
+        <text x="190" y="220" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">sąsiedzi zależni od siebie</text>
+        <text x="570" y="204" font-family="IBM Plex Mono" font-size="9.5" fill="#d8695f" text-anchor="middle">każdy piksel niezależnie</text>
+        <text x="570" y="220" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">brak struktury i brak skali</text>
+      </svg>
+      <div class="diagram-caption">Oba obrazy mają ten sam rozrzut jasności. Różni je to, czy sąsiadujące punkty coś o sobie wiedzą.</div>
+    </div>
+
+    <p><strong>Ziarno ma skalę.</strong> Kryształki mają rozmiar — rzędu dziesiątych mikrometra do kilku mikrometrów — więc struktura ma charakterystyczną wielkość. Szum gaussowski jest z definicji bez skali: zmienia się z piksela na piksel, i to niezależnie od rozdzielczości, w jakiej pracujesz.</p>
+
+    <p><strong>Ziarno jest skorelowane przestrzennie.</strong> Skoro kryształek pokrywa kilka pikseli skanu, to te piksele mają wspólną wartość. Sąsiedzi nie są niezależni — a w szumie gaussowskim są, z definicji.</p>
+
+    <p><strong>Ziarno jest w kanałach różne i niezależne.</strong> Trzy emulsje mają różną wielkość kryształków i wywołują się osobno, więc ziarno w kanale niebieskim jest grubsze niż w zielonym, jak wynika z <a href="../dodatki/dodatek-o-budowa-tasmy.html">Dodatku O</a>. Szum dodany jednakowo do trzech kanałów daje strukturę szarą, a nie barwną — i to jest widoczne od razu.</p>
+
+    <p>Warto przy tym zauważyć, że matryca cyfrowa ma <em>częściowo</em> pierwszą i trzecią z tych cech, choć z zupełnie innych powodów. Skalę nadaje jej rozstaw pikseli, a różnicę między kanałami — mozaika Bayera z <a href="../dodatki/dodatek-m-bayer-i-demozaikowanie.html">Dodatku M</a>, w której czerwony i niebieski są próbkowane rzadziej, więc ich szum po interpolacji jest grubszy. <span class="term-raster">Cyfrowy szum też nie jest gaussowski</span> — tylko jest nim bliżej niż ziarno.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Ekspozycja · zależność odwrotna niż w cyfrze</div>
+    <h2>Gdzie ziarno jest najsilniejsze</h2>
+
+    <p>To jest różnica najważniejsza praktycznie i najczęściej pomijana. <span class="term-raster">Ziarno taśmy i szum matrycy zachowują się w funkcji jasności przeciwnie</span>.</p>
+
+    <p>Szum matrycy, jak liczy <a href="rozdzial-27-od-fotonow-do-liczb.html">Rozdział 27</a>, jest względnie największy tam, gdzie fotonów jest najmniej — czyli w cieniach. W światłach ginie, bo pierwiastek z dużej liczby jest wobec niej mały.</p>
+
+    <p>Ziarno zachowuje się inaczej, bo jego źródłem nie jest liczba fotonów, tylko <strong>losowość wywołania kryształków</strong>. W bardzo ciemnych partiach prawie żaden się nie wywołał — jest ich mało, więc i struktury mało. W bardzo jasnych wywołały się prawie wszystkie — powierzchnia jest niemal jednolicie czarna, więc struktury też mało. Maksimum wypada <em>pośrodku</em>, gdzie mniej więcej połowa kryształków się wywołała i rozrzut jest największy.</p>
+
+    <p>Jest to dokładnie ta sama zależność, którą zna każdy, kto rzucał monetą. Jeśli każdy kryształek wywołuje się z prawdopodobieństwem <em>p</em>, to rozrzut liczby wywołanych jest największy przy <em>p</em> równym połowie, a znika przy zerze i przy jedynce. <span class="term-cyan">Ziarno jest widocznością tej niepewności</span>, więc dziedziczy po niej kształt: krzywa z jednym maksimum pośrodku, opadająca symetrycznie na oba końce.</p>
+
+    <p>Warto zauważyć, że jest to argument czysto statystyczny i nie odwołuje się do chemii ani do fizyki srebra. Wystarczy, że coś przełącza się losowo między dwoma stanami — a to znaczy, że <strong>ta sama krzywa opisze każdy nośnik o strukturze ziarnistej</strong>, niezależnie od tego, z czego jest zrobiony. Cyfra nie ma takiej krzywej nie dlatego, że jest lepsza, tylko dlatego, że jej piksel nie jest przełącznikiem, tylko licznikiem.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Widoczność w funkcji jasności</span><span>taśma kontra matryca</span></div>
+      <div class="diagram-controls">
+        <label for="ziarnoTon">Jasność</label>
+        <input id="ziarnoTon" type="range" min="0" max="100" step="1" value="50">
+        <span class="value-readout" id="ziarnoOdczyt">półtony</span>
+      </div>
+      <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Wykres widoczności ziarna i szumu w funkcji jasności: ziarno ma maksimum w półtonach, szum maleje monotonicznie od cieni ku światłom.">
+        <rect x="40" y="34" width="180" height="130" fill="#3a3d43" stroke="#2a2f38"/>
+        <rect id="ziarnoPole" x="40" y="34" width="180" height="130" fill="#3a3d43"/>
+        <g id="ziarnoProbka"></g>
+        <text x="130" y="26" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">PODGLĄD ZIARNA</text>
+
+        <line x1="280" y1="190" x2="710" y2="190" stroke="#8b909b" stroke-width="1.2"/>
+        <line x1="280" y1="34" x2="280" y2="190" stroke="#8b909b" stroke-width="1.2"/>
+        <g font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">
+          <text x="300" y="208">cienie</text><text x="495" y="208">półtony</text><text x="690" y="208">światła</text>
+        </g>
+
+        <path d="M 280 186 Q 350 96 400 70 Q 460 50 495 50 Q 560 54 620 106 Q 670 156 710 182" fill="none" stroke="#e8a33d" stroke-width="2.6"/>
+        <text x="440" y="40" font-family="IBM Plex Mono" font-size="10" fill="#e8a33d">ziarno taśmy · maksimum w środku</text>
+
+        <path d="M 282 44 Q 360 108 460 144 Q 570 170 710 182" fill="none" stroke="#6e93be" stroke-width="2.6"/>
+        <text x="300" y="150" font-family="IBM Plex Mono" font-size="10" fill="#6e93be">szum matrycy</text>
+        <text x="300" y="166" font-family="IBM Plex Mono" font-size="10" fill="#6e93be">maleje ku światłom</text>
+
+        <line id="ziarnoZnacznik" x1="495" y1="34" x2="495" y2="190" stroke="#7fc47f" stroke-width="1.4" stroke-dasharray="4 4"/>
+        <text x="280" y="232" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" id="ziarnoPodpis2">W półtonach ziarno jest najsilniejsze, a szum matrycy już umiarkowany.</text>
+      </svg>
+      <div class="diagram-caption" id="ziarnoPodpis">Dwie krzywe przecinają się raz i rozchodzą na obu końcach. Dopasowanie w jednym punkcie nie daje zgodności w żadnym innym.</div>
+    </div>
+
+    <p>Konsekwencja dla pracy jest bezpośrednia. Element CG z dodanym szumem cyfrowym, wstawiony w plate z taśmy, będzie miał <strong>za dużo struktury w cieniach i za mało w półtonach</strong> — czyli dokładnie odwrotnie niż otoczenie. Ponieważ półtony to zwykle twarze i główne obiekty, błąd trafia w miejsce, na które widz patrzy.</p>
+
+    <p class="deeper-inline">Rachunek na szum fotonowy, szum odczytu i ISO w działkach — <a href="../dodatki/dodatek-n-szum-w-liczbach.html">Dodatek N</a>.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Korelacja · dlaczego skala ma znaczenie</div>
+    <h2>Ziarno nie skaluje się z rozdzielczością</h2>
+
+    <p>Kryształek ma rozmiar fizyczny, mierzony w mikrometrach na negatywie. Nie ma pojęcia o tym, w jakiej rozdzielczości ktoś ten negatyw zeskanuje.</p>
+
+    <p>Wynika stąd rzecz, która przy pierwszym spotkaniu bywa zaskoczeniem: <strong>ten sam materiał zeskanowany w 2K i w 6K ma ziarno o tym samym rozmiarze fizycznym i trzykrotnie różnym rozmiarze w pikselach</strong>. Skan w wyższej rozdzielczości nie ma „drobniejszego ziarna” — ma to samo ziarno, tylko pokazane dokładniej.</p>
+
+    <p>Szum gaussowski zachowuje się odwrotnie: generowany per piksel, zawsze ma rozmiar jednego piksela, niezależnie od rozdzielczości. Dodany do renderu w 4K, a potem oglądany po przeskalowaniu do 2K, po prostu znika w uśrednieniu — podczas gdy prawdziwe ziarno przetrwałoby, bo jego skala jest większa od piksela.</p>
+
+    <p>Stąd zasada, którą warto traktować dosłownie: <span class="term-cyan">ziarno dodaje się w rozdzielczości dostawy i o rozmiarze wynikającym z materiału</span>, a nie w rozdzielczości roboczej i o rozmiarze jednego piksela. Jeśli sekwencja jest skanowana z negatywu, rozmiar ziarna trzeba zmierzyć na plate'cie, a nie założyć.</p>
+
+    <p>Pomiar jest prosty i warto go zrobić raz na sekwencję. Powiększ fragment gładkiej powierzchni w półtonie — ścianę, niebo, skórę — do skali, w której widać pojedyncze punkty, i policz, ile pikseli zajmuje typowa struktura. <strong>Ta jedna liczba jest promieniem rozmycia</strong>, którego potrzebujesz przy generowaniu ziarna, i zwykle wypada między jednym a trzema pikselami.</p>
+
+    <p>Ten sam pomiar wyłapuje przy okazji dwie rzeczy, które inaczej ujawniłyby się później. Jeśli struktura ma rozmiar dokładnie jednego piksela, materiał <em>nie</em> pochodzi z taśmy, tylko z matrycy — albo został odziarniony i zaszumiony ponownie. A jeśli w różnych ujęciach sekwencji rozmiar jest różny, część z nich przeszła inną drogę: inny skan, inne skalowanie albo inne źródło.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Ten sam negatyw, dwa skany</span><span>ziarno nie wie o rozdzielczości</span></div>
+      <svg viewBox="0 0 760 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ten sam fragment negatywu zeskanowany w niskiej i wysokiej rozdzielczości: ziarno ma ten sam rozmiar fizyczny, ale inną liczbę pikseli.">
+        <g font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">
+          <text x="180" y="22">SKAN 2K</text><text x="560" y="22">SKAN 6K</text>
+        </g>
+        <rect x="60" y="32" width="240" height="120" fill="#3a3d43" stroke="#2a2f38"/>
+        <g fill="#0d0f11" fill-opacity="0.8">
+          <rect x="84" y="52" width="18" height="18"/><rect x="132" y="44" width="18" height="18"/>
+          <rect x="192" y="66" width="18" height="18"/><rect x="108" y="98" width="18" height="18"/>
+          <rect x="228" y="110" width="18" height="18"/><rect x="252" y="56" width="18" height="18"/>
+          <rect x="156" y="118" width="18" height="18"/>
+        </g>
+        <g stroke="#6e93be" stroke-width="0.4" opacity="0.5">
+          <path d="M 84 32 L 84 152 M 108 32 L 108 152 M 132 32 L 132 152 M 156 32 L 156 152 M 180 32 L 180 152 M 204 32 L 204 152 M 228 32 L 228 152 M 252 32 L 252 152 M 276 32 L 276 152"/>
+          <path d="M 60 56 L 300 56 M 60 80 L 300 80 M 60 104 L 300 104 M 60 128 L 300 128"/>
+        </g>
+        <text x="180" y="176" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">ziarno ≈ 1 piksel</text>
+
+        <rect x="440" y="32" width="240" height="120" fill="#3a3d43" stroke="#2a2f38"/>
+        <g fill="#0d0f11" fill-opacity="0.8">
+          <rect x="464" y="52" width="18" height="18"/><rect x="512" y="44" width="18" height="18"/>
+          <rect x="572" y="66" width="18" height="18"/><rect x="488" y="98" width="18" height="18"/>
+          <rect x="608" y="110" width="18" height="18"/><rect x="632" y="56" width="18" height="18"/>
+          <rect x="536" y="118" width="18" height="18"/>
+        </g>
+        <g stroke="#6e93be" stroke-width="0.3" opacity="0.45">
+          <path d="M 448 32 L 448 152 M 456 32 L 456 152 M 464 32 L 464 152 M 472 32 L 472 152 M 480 32 L 480 152 M 488 32 L 488 152 M 496 32 L 496 152 M 504 32 L 504 152 M 512 32 L 512 152 M 520 32 L 520 152 M 528 32 L 528 152 M 536 32 L 536 152 M 544 32 L 544 152 M 552 32 L 552 152 M 560 32 L 560 152 M 568 32 L 568 152 M 576 32 L 576 152 M 584 32 L 584 152 M 592 32 L 592 152 M 600 32 L 600 152 M 608 32 L 608 152 M 616 32 L 616 152 M 624 32 L 624 152 M 632 32 L 632 152 M 640 32 L 640 152 M 648 32 L 648 152 M 656 32 L 656 152 M 664 32 L 664 152 M 672 32 L 672 152"/>
+          <path d="M 440 40 L 680 40 M 440 48 L 680 48 M 440 56 L 680 56 M 440 64 L 680 64 M 440 72 L 680 72 M 440 80 L 680 80 M 440 88 L 680 88 M 440 96 L 680 96 M 440 104 L 680 104 M 440 112 L 680 112 M 440 120 L 680 120 M 440 128 L 680 128 M 440 136 L 680 136 M 440 144 L 680 144"/>
+        </g>
+        <text x="560" y="176" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">to samo ziarno ≈ 3 piksele</text>
+
+        <text x="60" y="204" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">Kryształki są w obu kadrach w tych samych miejscach i tej samej wielkości. Zmieniła się tylko gęstość siatki.</text>
+      </svg>
+      <div class="diagram-caption">Skan w wyższej rozdzielczości nie ma drobniejszego ziarna. Ma to samo ziarno pokazane dokładniej — i to jest różnica, którą trzeba znać przed dodaniem czegokolwiek.</div>
+    </div>
+
+    <button class="advanced-btn" data-modal-target="adv-ziarno-widmo">Zaawansowane: ziarno ma widmo, i to widmo się liczy</button>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">W CG · trzy poprawki, w kolejności ważności</div>
+    <h2>Jak zrobić ziarno, które wygląda</h2>
+
+    <p>Szum gaussowski nie wygląda jak taśma z trzech powodów wypisanych wyżej. Naprawia się je trzema poprawkami, a ich kolejność odpowiada temu, ile każda wnosi.</p>
+
+    <p><strong>Pierwsza i najważniejsza: modulacja jasnością.</strong> Ziarno musi być najsilniejsze w półtonach, słabsze w cieniach i w światłach. Jedna krzywa mnożąca amplitudę szumu przez wartość zależną od jasności piksela załatwia większość różnicy — i jest to poprawka, którą da się zrobić w każdym narzędziu.</p>
+
+    <p><strong>Druga: rozmycie i wyostrzenie.</strong> Korelację przestrzenną najprościej uzyskać, rozmywając biały szum, a potem przywracając mu amplitudę. Otrzymana struktura ma skalę, którą nadaje promień rozmycia — i to jest parametr, który dopasowuje się do plate'u.</p>
+
+    <p><strong>Trzecia: osobne kanały.</strong> Wygeneruj trzy niezależne warstwy o różnej skali i różnej amplitudzie, zamiast jednej wspólnej. Kanał niebieski najgrubszy, zielony najdrobniejszy. Kosztuje trzykrotnie więcej pracy i wnosi mniej niż dwie poprzednie — ale to ona odpowiada za wrażenie, że ziarno jest „kolorowe”, a nie szare.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Trzy poprawki</span><span>ile każda wnosi</span></div>
+      <svg viewBox="0 0 760 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cztery etapy: biały szum, ten sam po modulacji jasnością, po rozmyciu i wyostrzeniu, oraz po rozdzieleniu na kanały — z paskiem pokazującym wkład każdej poprawki.">
+        <g font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">
+          <text x="105" y="20">BIAŁY SZUM</text><text x="290" y="20">+ MODULACJA</text>
+          <text x="475" y="20">+ SKALA</text><text x="660" y="20">+ KANAŁY</text>
+        </g>
+
+        <rect x="30" y="30" width="150" height="90" fill="#3a3d43" stroke="#2a2f38"/>
+        <g id="r29A"></g>
+        <rect x="215" y="30" width="150" height="90" fill="#3a3d43" stroke="#2a2f38"/>
+        <g id="r29B"></g>
+        <rect x="400" y="30" width="150" height="90" fill="#3a3d43" stroke="#2a2f38"/>
+        <g id="r29C"></g>
+        <rect x="585" y="30" width="150" height="90" fill="#3a3d43" stroke="#7fc47f"/>
+        <g id="r29D"></g>
+
+        <line x1="30" y1="146" x2="735" y2="146" stroke="#8b909b" stroke-width="1"/>
+        <g font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">
+          <text x="105" y="164">0%</text><text x="290" y="164">+55%</text>
+          <text x="475" y="164">+30%</text><text x="660" y="164">+15%</text>
+        </g>
+        <g fill="#e8a33d" fill-opacity="0.45" stroke="#e8a33d">
+          <rect x="230" y="176" width="120" height="14"/>
+          <rect x="415" y="176" width="66" height="14"/>
+          <rect x="600" y="176" width="34" height="14"/>
+        </g>
+        <text x="30" y="212" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">Udziały szacunkowe, ale kolejność nie budzi wątpliwości: modulacja jasnością wnosi więcej niż dwie pozostałe razem.</text>
+      </svg>
+      <div class="diagram-caption">Jeśli masz czas tylko na jedną poprawkę, zrób pierwszą. Jeśli na dwie — pierwszą i drugą.</div>
+    </div>
+
+    <p>Warto zauważyć, dlaczego akurat modulacja wnosi najwięcej. Pozostałe dwie poprawki zmieniają <em>charakter</em> struktury, który widz ocenia dopiero po powiększeniu. Modulacja zmienia <strong>rozkład struktury po kadrze</strong> — a to widać w normalnej skali, bo decyduje o tym, czy twarz jest ziarnista, czy gładka. Oko porównuje element z otoczeniem w tym samym tonie, nie w powiększeniu.</p>
+
+    <p>Czwartej poprawki nie ma i warto to powiedzieć wprost. <span class="term-violet">Nie próbuj symulować pojedynczych kryształków.</span> Modele oparte na rozkładzie ziaren istnieją i są poprawne fizycznie, ale przy rozdzielczościach, w jakich się pracuje, dają wynik nieodróżnialny od trzech poprawek wyżej — za wielokrotnie wyższą cenę obliczeniową.</p>
+
+    <p class="deeper-inline">Gdzie w łańcuchu wstawić ziarno i pełny przepis na jego wykonanie — <a href="../dodatki/dodatek-y-ziarno-w-compie.html">Dodatek Y</a>.</p>
+  </div>
+
+  <div class="panel practice">
+    <div class="panel-label">Z praktyki</div>
+    <p><strong>Zmierz ziarno w trzech miejscach, nie w jednym.</strong> W cieniu, w półtonie i w świetle. Trzy liczby powiedzą ci od razu, czy plate pochodzi z taśmy (maksimum w środku), czy z matrycy (maleje monotonicznie) — i dadzą krzywą modulacji do wpisania.</p>
+    <p><strong>Ziarno idzie na samym końcu łańcucha optycznego, ale przed korekcją barwną.</strong> Powstaje w warstwie czułej, więc po flarze, po halacji i po całej optyce. Wstawione po gradingu nie zmienia się razem z nim i zdradza się przy każdej korekcji kontrastu.</p>
+    <p><strong>Nie odziarniaj plate'u.</strong> Ten sam argument, co przy szumie w Rozdziale 27: odziarnianie zabiera razem z ziarnem drobny detal, a element CG nadal jest gładszy. Dodawanie do renderu jest tańsze, odwracalne i nie rusza materiału.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>ziarno</dt>
+      <dd>Struktura obrazu na taśmie, wynikająca z losowego rozmieszczenia i wywołania kryształków srebra. Nie jest zakłóceniem nałożonym na obraz — jest obrazem.</dd>
+      <dt>korelacja przestrzenna</dt>
+      <dd>Zależność wartości sąsiadujących punktów. Ziarno ją ma, bo kryształek pokrywa kilka pikseli; szum gaussowski nie ma jej z definicji.</dd>
+      <dt>granulacja</dt>
+      <dd>Miara ziarnistości materiału, podawana jako rozrzut gęstości mierzony przez otwór o ustalonej wielkości.</dd>
+      <dt>modulacja jasnością</dt>
+      <dd>Zmiana amplitudy ziarna w zależności od tonu. Dla taśmy krzywa z maksimum w półtonach, dla matrycy opadająca ku światłom.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Zostały trzy zjawiska, które nośnik dokłada do obrazu, a które mają przyczyny rozłożone między optykę a matrycę. Pierwsze z nich nosi jedną nazwę i ma trzy różne przyczyny naraz — a mylenie ich jest, jak zobaczymy w <a href="rozdzial-30-winietowanie.html">następnym rozdziale</a>, najczęstszym powodem, dla którego winieta w CG wygląda naklejona.</p>
+  </div>
 
   <div class="deeper">
     <div class="deeper-label">Idź głębiej</div>
@@ -57,8 +286,142 @@ window.SKY3D_MESSAGES = {
       <a class="nav-next" href="rozdzial-30-winietowanie.html">Następny →</a>
   </div>
 
+  <template id="adv-ziarno-widmo">
+    <h3>Ziarno ma widmo, i to widmo się liczy</h3>
+
+    <p>Korelację przestrzenną da się opisać precyzyjniej niż słowem „skupione”. Ziarno, jak każdy sygnał, ma <strong>widmo mocy</strong> — rozkład energii między częstotliwości przestrzenne — i to ono, a nie sama amplituda, decyduje o charakterze.</p>
+
+    <p>Biały szum ma widmo płaskie: tyle samo energii w każdej częstotliwości, od najgrubszych struktur po pojedyncze piksele. Ziarno ma widmo <em>opadające</em>: dużo energii w skali kryształka i coraz mniej powyżej. Rozmycie białego szumu, o którym mowa w rozdziale, jest po prostu najprostszym sposobem nadania mu takiego opadania.</p>
+
+    <p>Widmo ziarna nie jest jednak zwykłą krzywą opadającą. Ma <span class="term-raster">maksimum przy pewnej częstotliwości</span>, odpowiadającej typowemu rozstawowi kryształków, i opada po obu stronach. Dlatego samo rozmycie daje wynik przybliżony — struktura wychodzi bardziej „miękka”, a mniej „ziarnista”, niż w oryginale.</p>
+
+    <p>Dokładniejsze przybliżenie kosztuje jedną dodatkową operację: <strong>odejmij od rozmytego szumu jego mocniej rozmytą wersję</strong>. Różnica dwóch rozmyć o różnych promieniach ma widmo z maksimum, a nie monotoniczne — i to wystarcza, żeby struktura przestała wyglądać na rozmyty szum, a zaczęła na ziarno.</p>
+
+    <p>Jest to ta sama sztuczka, którą comp zna pod nazwą różnicy gaussów, używana zwykle do wyostrzania. Tutaj służy do czegoś przeciwnego: nie do podbicia jednego pasma częstotliwości w obrazie, tylko do <em>wygenerowania</em> szumu, który ma energię tylko w tym paśmie. Dwa parametry — dwa promienie — wystarczają, żeby dopasować charakter ziarna do materiału, i dopasowuje się je na oko, porównując powiększone wycinki.</p>
+  </template>
+
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-panel">
+      <button class="modal-close" data-modal-close aria-label="Zamknij">×</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
 </div>
 
 <script src="../assets/interactive.js"></script>
+<script>
+/* Cztery male podglady do diagramu o poprawkach. Rysowane raz, bo pokazuja
+   charakter, a nie wartosci. Kazdy kolejny dokłada jedna z trzech poprawek. */
+(function () {
+  var NS = 'http://www.w3.org/2000/svg';
+  function wypelnij(id, x0, opcje) {
+    var g = document.getElementById(id);
+    if (!g) return;
+    for (var i = 0; i < opcje.ile; i++) {
+      var x = x0 + Math.random() * 148, y = 31 + Math.random() * 88;
+      // modulacja: wiecej ziarna w srodkowym pasie pionowym (polton)
+      if (opcje.modulacja) {
+        var t = (y - 31) / 88;
+        if (Math.random() > 4 * t * (1 - t)) continue;
+      }
+      var e = document.createElementNS(NS, opcje.skala ? 'circle' : 'rect');
+      if (opcje.skala) {
+        e.setAttribute('cx', x.toFixed(1)); e.setAttribute('cy', y.toFixed(1));
+        e.setAttribute('r', (1 + Math.random() * 2.4).toFixed(1));
+      } else {
+        e.setAttribute('x', x.toFixed(1)); e.setAttribute('y', y.toFixed(1));
+        e.setAttribute('width', '2'); e.setAttribute('height', '2');
+      }
+      e.setAttribute('fill', opcje.kanaly
+        ? ['#d8695f', '#7fc47f', '#6ea8e8'][Math.floor(Math.random() * 3)]
+        : (Math.random() < 0.5 ? '#0d0f11' : '#f2f0e8'));
+      e.setAttribute('fill-opacity', '0.4');
+      g.appendChild(e);
+    }
+  }
+  wypelnij('r29A', 31, { ile: 620 });
+  wypelnij('r29B', 216, { ile: 620, modulacja: true });
+  wypelnij('r29C', 401, { ile: 320, modulacja: true, skala: true });
+  wypelnij('r29D', 586, { ile: 320, modulacja: true, skala: true, kanaly: true });
+})();
+
+/* Dwa podglady struktury: ziarno jako skupiska kropek o roznej wielkosci
+   i szum gaussowski jako niezalezne piksele. Rysowane raz, bo sluza tylko
+   porownaniu charakteru — nie sa sterowane suwakiem. */
+(function () {
+  var zi = document.getElementById('r29Ziarno'), sz = document.getElementById('r29Szum');
+  if (!zi || !sz) return;
+  var NS = 'http://www.w3.org/2000/svg';
+
+  for (var i = 0; i < 260; i++) {
+    var r = 1 + Math.random() * 3.2;
+    var c = document.createElementNS(NS, 'circle');
+    c.setAttribute('cx', (62 + Math.random() * 256).toFixed(1));
+    c.setAttribute('cy', (34 + Math.random() * 146).toFixed(1));
+    c.setAttribute('r', r.toFixed(1));
+    c.setAttribute('fill-opacity', (0.35 + Math.random() * 0.5).toFixed(2));
+    zi.appendChild(c);
+  }
+  for (var j = 0; j < 1400; j++) {
+    var p = document.createElementNS(NS, 'rect');
+    p.setAttribute('x', (441 + Math.random() * 258).toFixed(1));
+    p.setAttribute('y', (33 + Math.random() * 148).toFixed(1));
+    p.setAttribute('width', '2'); p.setAttribute('height', '2');
+    p.setAttribute('fill', Math.random() < 0.5 ? '#0d0f11' : '#8b909b');
+    p.setAttribute('fill-opacity', (0.2 + Math.random() * 0.5).toFixed(2));
+    sz.appendChild(p);
+  }
+})();
+
+/* Widocznosc ziarna w funkcji tonu. Tasma: maksimum w poltonach, bo tam
+   rozrzut wywolanych krysztalkow jest najwiekszy — to jest po prostu
+   wariancja rozkladu dwumianowego, najwieksza przy p = 0,5. Matryca:
+   wzglednie najwiekszy szum w cieniach, bo pierwiastek z malej liczby jest
+   wobec niej duzy. Dwie przeciwne zaleznosci i o to w tym rozdziale chodzi. */
+(function () {
+  var sl = document.getElementById('ziarnoTon');
+  if (!sl) return;
+  var NS = 'http://www.w3.org/2000/svg';
+
+  function odswiez() {
+    var t = parseFloat(sl.value) / 100;            // 0 = cienie, 1 = swiatla
+    var ziarno = 4 * t * (1 - t);                  // wariancja dwumianowa, max w 0,5
+    var szum = 1 / Math.sqrt(Math.max(t, 0.02) * 40);
+
+    var v = Math.round(20 + 205 * Math.pow(t, 0.85));
+    document.getElementById('ziarnoPole').setAttribute('fill', 'rgb(' + v + ',' + v + ',' + v + ')');
+
+    var g = document.getElementById('ziarnoProbka');
+    while (g.firstChild) g.removeChild(g.firstChild);
+    var ile = Math.round(ziarno * 300);
+    for (var i = 0; i < ile; i++) {
+      var c = document.createElementNS(NS, 'circle');
+      c.setAttribute('cx', (42 + Math.random() * 176).toFixed(1));
+      c.setAttribute('cy', (36 + Math.random() * 126).toFixed(1));
+      c.setAttribute('r', (1 + Math.random() * 2.6).toFixed(1));
+      c.setAttribute('fill', Math.random() < 0.5 ? '#0d0f11' : '#f2f0e8');
+      c.setAttribute('fill-opacity', (0.15 + ziarno * 0.4).toFixed(2));
+      g.appendChild(c);
+    }
+
+    var x = 280 + t * 430;
+    var zn = document.getElementById('ziarnoZnacznik');
+    zn.setAttribute('x1', x.toFixed(1)); zn.setAttribute('x2', x.toFixed(1));
+
+    var gdzie = t < 0.22 ? 'cienie' : (t > 0.78 ? 'światła' : 'półtony');
+    document.getElementById('ziarnoOdczyt').textContent = gdzie;
+    document.getElementById('ziarnoPodpis2').textContent =
+      'Ziarno ' + (ziarno * 100).toFixed(0) + '% maksimum · szum matrycy ' +
+      (Math.min(szum, 1) * 100).toFixed(0) + '% maksimum.';
+    document.getElementById('ziarnoPodpis').textContent =
+      t < 0.22 ? 'W cieniach ziarna jest mało — wywołało się niewiele kryształków. Szum matrycy jest tu największy.'
+      : t > 0.78 ? 'W światłach ziarna też mało — wywołały się prawie wszystkie, więc powierzchnia jest jednolita. Szum matrycy niemal znika.'
+      : 'W półtonach ziarno jest najsilniejsze, bo mniej więcej połowa kryształków się wywołała i rozrzut jest największy.';
+  }
+  sl.addEventListener('input', odswiez);
+  odswiez();
+})();
+</script>
 </body>
 </html>

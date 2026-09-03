@@ -41,7 +41,92 @@ window.SKY3D_MESSAGES = {
   <h1>Ziarno w compie</h1>
   <p class="subtitle">Dlaczego szum gaussowski nie wygląda jak taśma, jak zrobić ziarno zależne od ekspozycji i skorelowane przestrzennie, i gdzie w łańcuchu je wstawić.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">Co tu jest</div>
+    <ul>
+      <li><strong>Przepis krok po kroku</strong> na ziarno, które nie wygląda jak szum — z trzema parametrami do zmierzenia na plate'cie.</li>
+      <li><strong>Gdzie w łańcuchu je wstawić</strong> i dlaczego akurat tam.</li>
+      <li><strong>Trzy pomiary</strong>, które trzeba zrobić przed generowaniem, i po co każdy.</li>
+      <li><strong>Czego nie robić</strong> — cztery skróty, które psują wynik w przewidywalny sposób.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Pomiar · trzy liczby z plate'u</div>
+    <h2>Co zmierzyć, zanim zaczniesz</h2>
+
+    <p>Generowanie ziarna bez pomiaru jest zgadywaniem, a pomiar zajmuje kilka minut. Potrzebne są trzy liczby i wszystkie trzy odczytuje się z gładkich fragmentów materiału.</p>
+
+    <p><strong>Rozmiar struktury.</strong> Powiększ gładką powierzchnię w półtonie — ścianę, niebo, policzek — do skali, w której widać pojedyncze punkty, i oceń, ile pikseli zajmuje typowa struktura. Zwykle wypada jeden do trzech. Ta liczba jest promieniem rozmycia w kroku drugim.</p>
+
+    <p><strong>Amplituda w trzech tonach.</strong> Zmierz odchylenie standardowe w małym prostokącie w cieniu, w półtonie i w świetle — na obszarach, które powinny być jednolite. Trzy liczby dają krzywą modulacji i od razu mówią, czy materiał pochodzi z taśmy (maksimum w środku), czy z matrycy (spadek ku światłom), jak opisuje <a href="../rozdzialy/rozdzial-29-ziarno-to-nie-szum.html">Rozdział 29</a>.</p>
+
+    <p><strong>Proporcja między kanałami.</strong> Ten sam pomiar w kanałach osobno. Dla taśmy niebieski jest zwykle najsilniejszy i najgrubszy, dla matrycy po demozaikowaniu czerwony i niebieski są grubsze od zielonego. Proporcja bywa rzędu dwóch do jednego i jest widoczna, mimo że nikt jej świadomie nie sprawdza.</p>
+
+    <p>Wszystkie trzy pomiary trzeba zrobić na <strong>materiale przed korekcją barwną</strong>, jeśli tylko jest dostępny. Grading zmienia kontrast, a razem z nim amplitudę ziarna — więc pomiar na gotowym obrazie opisuje ziarno po przekształceniu, a nie takie, jakie było zarejestrowane.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Przepis · pięć kroków</div>
+    <h2>Jak wygenerować</h2>
+
+    <p><strong>Krok 1 — biały szum.</strong> Wygeneruj trzy niezależne warstwy szumu, po jednej na kanał. Niezależne, nie jedną powieloną — bo ziarno w trzech emulsjach powstaje osobno i nie jest skorelowane między kanałami.</p>
+
+    <p><strong>Krok 2 — nadaj skalę.</strong> Rozmyj każdą warstwę promieniem zmierzonym w pierwszym pomiarze, a potem przywróć amplitudę, dzieląc przez jej odchylenie standardowe. Struktura ma teraz właściwą wielkość. Dla wyniku bliższego prawdzie odejmij dodatkowo wersję rozmytą mocniej — różnica dwóch rozmyć daje widmo z maksimum zamiast monotonicznie opadającego, o czym w bloku „Zaawansowane" w Rozdziale 29.</p>
+
+    <p><strong>Krok 3 — moduluj jasnością.</strong> Pomnóż amplitudę przez krzywą wyznaczoną w drugim pomiarze. Dla taśmy jest to krzywa z maksimum w półtonach; wystarczy funkcja proporcjonalna do iloczynu jasności i jej dopełnienia, czyli <em>t</em>·(1−<em>t</em>), znormalizowana. Dla matrycy — krzywa opadająca jak odwrotność pierwiastka.</p>
+
+    <p><strong>Krok 4 — wyrównaj kanały.</strong> Przeskaluj amplitudę każdego kanału zgodnie z trzecim pomiarem. Jeśli robisz tylko jedną poprawkę z tych trzech, niech to będzie krok trzeci; jeśli dwie — trzeci i drugi.</p>
+
+    <p><strong>Krok 5 — dodaj.</strong> Ziarno dodaje się do obrazu, a nie miesza trybem zastępującym. Jest strukturą <em>obrazu</em>, nie warstwą nad nim.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Kolejność · gdzie w łańcuchu</div>
+    <h2>Miejsce ziarna w compie</h2>
+
+    <p>Ziarno powstaje w warstwie czułej, czyli na samym końcu drogi optycznej. Wynika stąd jego miejsce w łańcuchu i warto je zapamiętać, bo różni się od intuicji.</p>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead>
+          <tr><th class="num">#</th><th>Operacja</th><th>Gdzie zachodzi naprawdę</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="num">1</td><td>Render</td><td>—</td></tr>
+          <tr><td class="num">2</td><td>Głębia ostrości, rozmycie ruchu</td><td>w obiektywie</td></tr>
+          <tr><td class="num">3</td><td>Aberracje, winietowanie</td><td>w obiektywie</td></tr>
+          <tr><td class="num">4</td><td>Flara, ghosty, glare</td><td>w obiektywie</td></tr>
+          <tr><td class="num">5</td><td>Dystorsja</td><td>w obiektywie</td></tr>
+          <tr><td class="num">6</td><td>Halacja</td><td>za warstwą czułą</td></tr>
+          <tr><td class="num">7</td><td><strong>Ziarno</strong></td><td><strong>w warstwie czułej</strong></td></tr>
+          <tr><td class="num">8</td><td>Korekcja barwna</td><td>w postprodukcji</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Kolejność wynika z fizyki, nie z wygody. Każdy krok odpowiada realnemu miejscu w torze — i dlatego przestawienie dwóch sąsiednich zwykle widać.</p>
+
+    <p>Dwa miejsca w tej tabeli bywają mylone i oba warto sprawdzić.</p>
+
+    <p><strong>Ziarno po korekcji barwnej</strong> to najczęstszy błąd. Grading zmienia kontrast, więc zmienia też amplitudę ziarna — a ziarno wstawione po nim tej zmiany nie dostaje i zachowuje się jak przyklejone. Objaw: przy podbiciu kontrastu w cieniach ziarno plate'u rośnie, a ziarno elementu nie.</p>
+
+    <p><strong>Ziarno przed halacją</strong> to błąd rzadszy i subtelniejszy. Halacja powstaje za warstwą czułą, więc jej poświata jest gładka — ziarno nakłada się na nią, a nie odwrotnie. Poświata z nałożonym ziarnem wygląda poprawnie; poświata rozmywająca ziarno wygląda jak mgła nad obrazem.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Czego nie robić · cztery skróty</div>
+    <h2>Typowe błędy i ich objawy</h2>
+
+    <p><strong>Jedna warstwa na trzy kanały.</strong> Daje ziarno szare zamiast barwnego. Objaw jest subtelny w skali jeden do jednego i oczywisty po powiększeniu — a ponieważ kontrola jakości ogląda powiększenia, wychodzi zawsze.</p>
+
+    <p><strong>Stała amplituda.</strong> Ziarno jednakowe w całym zakresie tonalnym. Objaw: element pasuje w jednym tonie i odstaje w pozostałych, a w plate'ach z taśmy najbardziej odstaje na twarzach — bo one leżą w półtonach, gdzie prawdziwe ziarno jest najsilniejsze.</p>
+
+    <p><strong>Ziarno o rozmiarze jednego piksela.</strong> Znika po każdym przeskalowaniu i nie ma charakteru. Objaw: element wygląda poprawnie w rozdzielczości roboczej i gładko w dostawie, albo odwrotnie — zależnie od tego, w którą stronę szło skalowanie.</p>
+
+    <p><strong>Ziarno animowane co drugą klatkę albo statyczne.</strong> Prawdziwe ziarno jest w każdej klatce inne, bo kryształki są w każdym kadrze taśmy inne. Ziarno statyczne czyta się jako brud na obiektywie; ziarno powtarzające się cyklicznie daje widoczne pulsowanie. <span class="term-violet">Losowe ziarno na każdą klatkę jest jedyną poprawną opcją</span> i nie kosztuje nic więcej.</p>
+
+    <p>Ostatnia uwaga dotyczy ilości. Kusi, żeby dać ziarna trochę mniej, niż jest w plate'cie — bo element wygląda wtedy „czyściej”. Jest to pomyłka co do celu: <strong>element ma nie wyglądać czysto, tylko tak samo</strong>. Jeśli jest jakikolwiek margines błędu, lepiej dać odrobinę za dużo niż za mało — nadmiar ziarna czyta się jako materiał, a niedomiar jako CG.</p>
+  </div>
 
   <div class="site-nav">
     <a href="../index.html">← Spis treści</a>

@@ -41,7 +41,79 @@ window.SKY3D_MESSAGES = {
   <h1>Szum fotonowy, szum odczytu i ISO</h1>
   <p class="subtitle">Dlaczego szum rośnie jak pierwiastek z sygnału, czym ISO różni się od czułości, skąd bierze się dual native ISO i jak to policzyć w EV.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">Co tu jest</div>
+    <ul>
+      <li><strong>Dlaczego szum rośnie jak pierwiastek</strong> i co z tego wynika w działkach — bo w działkach się o tym myśli.</li>
+      <li><strong>Tabela stosunku sygnału do szumu</strong> dla kolejnych ekspozycji, z zaznaczeniem, gdzie przejmuje szum odczytu.</li>
+      <li><strong>Czym ISO różni się od czułości</strong> i skąd bierze się drugie natywne.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Pierwiastek · skąd się bierze</div>
+    <h2>Szum fotonowy w działkach</h2>
+
+    <p>Fotony docierają do piksela niezależnie od siebie i w losowych momentach. Liczba, która zbierze się w ustalonym czasie, jest więc zmienną losową o rozkładzie Poissona — a ten ma tę szczególną własność, że jego <strong>rozrzut równa się pierwiastkowi ze średniej</strong>.</p>
+
+    <div class="formula">
+      σ = √<span class="vec" data-tip="Średnia liczba zebranych elektronów">N</span>  ·  SNR = <span class="vec" data-tip="Średnia liczba elektronów">N</span> / √<span class="vec" data-tip="Średnia liczba elektronów">N</span> = √<span class="vec" data-tip="Średnia liczba elektronów">N</span>
+      <span class="sub">σ — odchylenie standardowe liczby elektronów. N — ich średnia liczba. SNR — stosunek sygnału do szumu, czyli po prostu pierwiastek z N. Wzór dotyczy wyłącznie szumu fotonowego; szum odczytu dochodzi osobno.</span>
+    </div>
+
+    <p>Stąd reguła, którą warto mieć w pamięci: <span class="term-cyan">stosunek sygnału do szumu wyrażony w działkach to połowa liczby działek ekspozycji</span>. Zmniejszenie naświetlenia o dwie działki połowi liczbę fotonów dwa razy, czyli dzieli SNR przez dwa — a to jest jedna działka SNR, nie dwie.</p>
+
+    <p>Szum odczytu dokłada się do tego jako stała, niezależna od sygnału. Ponieważ oba źródła są nieskorelowane, sumują się kwadratowo:</p>
+
+    <div class="formula">
+      σ<sub>całk</sub> = √(<span class="vec" data-tip="Średnia liczba elektronów">N</span> + <span class="vec" data-tip="Szum odczytu w elektronach, typowo 2-5">σ<sub>odcz</sub></span>²)
+      <span class="sub">Suma kwadratowa, bo źródła są niezależne. Dla dużych N człon odczytu ginie; dla N porównywalnego z σ<sub>odcz</sub>² zaczyna dominować.</span>
+    </div>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead>
+          <tr><th>Ekspozycja</th><th class="num">Elektrony</th><th class="num">Szum fotonowy</th><th class="num">SNR</th><th class="num">SNR w działkach</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>pełna studnia</td><td class="num">50 000</td><td class="num">224</td><td class="num">224</td><td class="num">7,8</td></tr>
+          <tr><td>−2 działki</td><td class="num">12 500</td><td class="num">112</td><td class="num">112</td><td class="num">6,8</td></tr>
+          <tr><td>−4 działki</td><td class="num">3 125</td><td class="num">56</td><td class="num">56</td><td class="num">5,8</td></tr>
+          <tr><td>−6 działek</td><td class="num">780</td><td class="num">28</td><td class="num">28</td><td class="num">4,8</td></tr>
+          <tr><td>−8 działek</td><td class="num">195</td><td class="num">14</td><td class="num">14</td><td class="num">3,8</td></tr>
+          <tr><td>−10 działek</td><td class="num">49</td><td class="num">7,0</td><td class="num">6,4</td><td class="num">2,7</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Liczone dla studni 50 000 elektronów i szumu odczytu 3 elektronów. Kolumna SNR odbiega od kolumny szumu fotonowego dopiero w ostatnim wierszu — i to jest miejsce, w którym odczyt zaczyna się liczyć.</p>
+
+    <p>Ostatni wiersz jest jedynym, w którym elektronika w ogóle się ujawnia. Do minus ośmiu działek <strong>szum jest w całości własnością światła</strong> i żadna kamera nie zrobi tu nic lepiej. Poniżej zaczyna mieć znaczenie, jak dobry jest układ odczytowy — i to jest cały obszar, w którym producenci mogą się różnić.</p>
+
+    <p>Warto też zauważyć regularność w ostatniej kolumnie: każde dwie działki ekspozycji to dokładnie jedna działka SNR, aż do momentu, w którym odczyt psuje proporcję. Reguła połowy działa więc nie w przybliżeniu, tylko dokładnie — bo jest konsekwencją pierwiastka, a nie dopasowaniem do danych.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">ISO · mnożnik, nie czułość</div>
+    <h2>Co ISO robi, a czego nie</h2>
+
+    <p>ISO jest wzmocnieniem sygnału, nie zmianą czułości materiału. Matryca zbiera dokładnie tyle fotonów, ile wpuści przysłona i czas — ISO tylko mnoży wynik, żeby dało się go zobaczyć.</p>
+
+    <p>Wynika stąd, że <strong>ISO nie poprawia stosunku sygnału do szumu fotonowego</strong>. Mnożenie podnosi sygnał i szum w tej samej proporcji. Zdjęcie przy ISO 3200 i zdjęcie przy ISO 400 rozjaśnione o trzy działki mają ten sam szum fotonowy, bo oba zebrały tyle samo fotonów.</p>
+
+    <p>Różnica dotyczy wyłącznie szumu odczytu i wynika z <em>kolejności</em>. Wzmocnienie w kamerze stoi przed układem odczytowym, więc podnosi sygnał ponad jego szum; mnożenie w postprodukcji stoi za nim i podnosi jedno i drugie razem.</p>
+
+    <div class="worked">
+      <div class="wlabel">Cień o 195 elektronach, dwie drogi do tej samej jasności</div>
+      <p class="step"><span class="k">ISO w kamerze</span> <span class="v">wzmocnienie ×8 przed odczytem: sygnał 1560, odczyt wciąż 3 → </span><span class="result">SNR 14,0</span></p>
+      <p class="step"><span class="k">rozjaśnienie w compie</span> <span class="v">odczyt dodany przy 195, potem ×8: SNR liczony przy 195 → </span><span class="result">SNR 13,7</span></p>
+      <p class="step"><span class="k">różnica</span> <span class="v">niecałe dwa procent, czyli </span><span class="result">0,03 działki</span></p>
+      <p class="check">Przy tym poziomie sygnału różnica jest praktycznie niemierzalna — bo szum fotonowy (14 elektronów) i tak dominuje nad odczytem (3). <strong>Przewaga ISO ujawnia się dopiero tam, gdzie te dwie liczby są porównywalne</strong>, czyli przy kilkunastu elektronach. To jest kilkanaście działek pod bielą i w praktyce dotyczy najgłębszych cieni w bardzo ciemnych ujęciach.</p>
+    </div>
+
+    <p>Stąd też bierze się sens <strong>podwójnego natywnego ISO</strong>. Wzmocnienie przed odczytem można zbudować na dwa sposoby: mocne, dające czyste cienie kosztem zapasu w światłach, albo słabe, odwrotnie. Producent nie musi wybierać raz na zawsze — może zbudować oba tory i przełączać między nimi.</p>
+
+    <p>Konsekwencja praktyczna jest nieoczywista: <span class="term-violet">krzywa szumu w funkcji ISO nie rośnie monotonicznie</span>. Rośnie, w punkcie przełączenia spada, potem znów rośnie. Ujęcie zrobione tuż poniżej drugiego natywnego bywa bardziej zaszumione niż to samo ujęcie tuż powyżej — i przy dopasowywaniu renderu do materiału z takiej kamery warto o tym wiedzieć, bo dwie sąsiednie nastawy mogą dać zauważalnie różny charakter cieni.</p>
+  </div>
 
   <div class="site-nav">
     <a href="../index.html">← Spis treści</a>
