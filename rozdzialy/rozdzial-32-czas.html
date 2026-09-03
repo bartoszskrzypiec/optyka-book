@@ -43,7 +43,243 @@ window.SKY3D_MESSAGES = {
   <h1>Czas: migawka, oddech i rolling shutter</h1>
   <p class="subtitle">Klatka nie jest chwilą, tylko odcinkiem czasu — a w matrycy CMOS nie wszystkie linie mają ten sam odcinek. Stąd 180 stopni, stąd pochylone słupy i stąd zmiana kadru przy przejeździe ostrości.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li><strong>Klatka nie jest chwilą, tylko odcinkiem.</strong> Wszystko, co porusza się w trakcie tego odcinka, zapisuje się jako smuga — a długość smugi jest iloczynem prędkości i czasu otwarcia, nie właściwością „silnika rozmycia”.</li>
+      <li>Sto osiemdziesiąt stopni to <span class="term-amber">połowa odstępu między klatkami</span>, czyli 1/48 s przy 24 kl./s. Nie jest to prawo natury — jest to wybór, który przy 24 klatkach daje smugę mniej więcej taką, jakiej oko się spodziewa.</li>
+      <li><strong>Matryca CMOS nie odsłania całej klatki naraz.</strong> Linie startują kolejno, więc dół kadru widzi inną chwilę niż góra. Stąd pochylone słupy i galareta przy panoramie.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Odcinek · klatka ma czas trwania</div>
+    <h2>Skąd bierze się smuga</h2>
+
+    <p>Cała ta książka mówiła dotąd o świetle w przestrzeni: gdzie biegnie, gdzie się zbiera, gdzie się rozprasza. Zostało jedno zjawisko, którego nie da się narysować na przekroju, bo dzieje się w czasie.</p>
+
+    <p>Migawka otwiera się i zamyka. Między jednym a drugim nośnik <strong>sumuje wszystko, co do niego dotarło</strong> — a jeśli obraz przedmiotu w tym czasie przesunął się po matrycy, to każdy punkt na drodze tego przesunięcia dostał część światła. Powstaje smuga o jasności odwrotnie proporcjonalnej do swojej długości, bo ta sama energia rozłożyła się na większą powierzchnię.</p>
+
+    <p>Warto to nazwać wprost, bo w programach rozmycie ruchu bywa suwakiem oderwanym od reszty: <span class="term-raster">rozmycie ruchu jest całką, a nie efektem</span>. Nie dokłada się go do obrazu — obraz jest nim od początku, bo nie istnieje sposób zarejestrowania czegokolwiek w zerowym czasie.</p>
+
+    <p>Długość smugi w pikselach liczy się bez żadnej optyki, z samej kinematyki:</p>
+
+    <div class="formula">
+      s = <span class="vec" data-tip="Prędkość obrazu na matrycy, w pikselach na sekundę">v</span> · <span class="vec" data-tip="Czas otwarcia migawki">t</span>
+      <span class="sub">s — długość smugi w pikselach. v — prędkość obrazu przedmiotu na matrycy w px/s. t — czas otwarcia. Jeśli przedmiot przebiega kadr w pół sekundy przy szerokości 4096 px, to v = 8192 px/s, a przy 1/48 s smuga ma 171 px.</span>
+    </div>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Kąt migawki</span><span>ile klatki trwa otwarcie</span></div>
+      <div class="diagram-controls">
+        <label for="czKat">Kąt migawki</label>
+        <input id="czKat" type="range" min="11" max="360" step="1" value="180">
+        <span class="value-readout" id="czOdczyt">180°</span>
+      </div>
+      <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tarcza migawki z wycinkiem otwarcia oraz pasek smugi, której długość rośnie z kątem migawki.">
+        <circle cx="120" cy="115" r="76" fill="#151a1f" stroke="#3a424d" stroke-width="1.4"/>
+        <path id="czWycinek" fill="#e8a33d" fill-opacity="0.32" stroke="#e8a33d" stroke-width="1.4"/>
+        <circle cx="120" cy="115" r="5" fill="#0d0f11" stroke="#8b909b"/>
+        <text x="120" y="212" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">tarcza migawki</text>
+
+        <line x1="240" y1="72" x2="720" y2="72" stroke="#2a2f38" stroke-width="1"/>
+        <text x="240" y="60" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">obraz przedmiotu przebiegającego kadr</text>
+        <rect id="czSmuga" x="300" y="82" width="160" height="26" fill="#6e93be" fill-opacity="0.4"/>
+        <rect x="296" y="82" width="8" height="26" fill="#6e93be"/>
+        <text x="240" y="132" font-family="IBM Plex Mono" font-size="9.5" fill="#6e93be" id="czDlugosc">smuga: 171 px</text>
+
+        <line x1="240" y1="156" x2="720" y2="156" stroke="#2a2f38" stroke-width="1"/>
+        <text x="240" y="176" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" id="czCzas">czas otwarcia: 1/48 s</text>
+        <text x="240" y="194" font-family="IBM Plex Mono" font-size="9.5" fill="#e8a33d" id="czStrata">światło: nominalne</text>
+        <text x="240" y="212" font-family="IBM Plex Mono" font-size="9.5" fill="#7fc47f" id="czWniosek">standard kinowy</text>
+      </svg>
+      <div class="diagram-caption">Przy 24 kl./s. Kąt migawki podaje, jaki wycinek obrotu tarczy przypada na otwarcie — 180° to połowa odstępu między klatkami.</div>
+    </div>
+
+    <p>Suwak pokazuje dwie rzeczy naraz i to jest cała zależność, którą trzeba znać: <strong>skracanie migawki skraca smugę i zabiera światło w tej samej proporcji</strong>. Migawka 90° daje smugę o połowę krótszą i o działkę ciemniejszy obraz — nie da się mieć jednego bez drugiego, bo obie rzeczy wynikają z tej samej liczby.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Sto osiemdziesiąt · skąd ta liczba</div>
+    <h2>Reguła, która nie jest prawem</h2>
+
+    <p>Migawka 180° stała się domyślną, bo przy dwudziestu czterech klatkach na sekundę daje wynik, którego oko nie kwestionuje. Nie ma w tym nic fundamentalnego — jest to zgodność między długością smugi a odstępem między klatkami.</p>
+
+    <p>Rozumowanie idzie tak. Ruch pokazywany na ekranie jest ciągiem próbek, a między jedną a drugą przedmiot przeskakuje o pewien odcinek. <span class="term-cyan">Jeśli smuga jest równa połowie tego odcinka, kolejne klatki niemal się stykają</span> — nie nakładają się i nie zostawiają dziury. Oko dostaje sygnał spójny z tym, jak sumuje ruch samo z siebie.</p>
+
+    <p>Odstępstwa w obie strony działają dokładnie tak, jak wynika z tego rozumowania.</p>
+
+    <p><strong>Migawka krótsza</strong> — 45°, 22,5° — zostawia między klatkami przerwy. Ruch przestaje być ciągły i staje się serią zamrożonych póz; przy szybkim ruchu poprzecznym daje to widoczne przeskoki, zwane strobingiem. Bywa to używane celowo, dla wrażenia ostrości i nerwowości, i wtedy jest decyzją, a nie błędem.</p>
+
+    <p><strong>Migawka dłuższa</strong> — 270°, 360° — daje smugi dłuższe niż przeskok, więc kolejne klatki na siebie zachodzą. Ruch robi się miękki i senny, a przedmioty tracą krawędzie. Przy 360° migawka nie zamyka się wcale i smuga jest równa całemu przeskokowi.</p>
+
+    <p class="deeper-inline">Rachunek smugi dla typowych ruchów kamery i przedmiotu, tabela przeskoków przy różnych częstotliwościach oraz to, jak liczyć rozmycie w compie z wektorów ruchu — <a href="../dodatki/dodatek-r-rozmycie-ruchu.html">Dodatek R</a>.</p>
+
+    <button class="advanced-btn" data-modal-target="adv-oddech">Zaawansowane: oddech obiektywu przy przejeździe ostrości</button>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Rolling shutter · dół widzi inną chwilę</div>
+    <h2>Kiedy klatka nie ma jednego czasu</h2>
+
+    <p>Do tej pory zakładaliśmy, że cały kadr jest odsłaniany w tym samym odcinku czasu. W matrycy CMOS zwykle nie jest — i to jest źródło zjawiska, którego nie da się naprawić w compie bez odtworzenia jego geometrii.</p>
+
+    <p>Odczyt CMOS przebiega <strong>linia po linii</strong>. Pierwsza linia zaczyna zbierać światło, po chwili zaczyna druga, potem trzecia — i tak przez cały kadr. Każda zbiera przez tyle samo czasu, ale <span class="term-violet">każda zbiera w innym momencie</span>. Między startem pierwszej a startem ostatniej mija czas odczytu całej matrycy.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Rolling shutter</span><span>skos startów</span></div>
+      <svg viewBox="0 0 760 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Wykres: linie matrycy startują kolejno, przez co słup pionowy zapisuje się jako pochylony.">
+        <text x="30" y="24" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">migawka globalna — wszystkie linie w tym samym czasie</text>
+        <g fill="#7fc47f" fill-opacity="0.35" stroke="#7fc47f" stroke-width="0.8">
+          <rect x="120" y="34" width="120" height="9"/><rect x="120" y="46" width="120" height="9"/>
+          <rect x="120" y="58" width="120" height="9"/><rect x="120" y="70" width="120" height="9"/>
+          <rect x="120" y="82" width="120" height="9"/>
+        </g>
+        <rect x="280" y="30" width="66" height="65" fill="#6e93be" fill-opacity="0.5" stroke="#6e93be"/>
+        <text x="360" y="68" font-family="IBM Plex Mono" font-size="9.5" fill="#7fc47f">słup pionowy zostaje pionowy</text>
+
+        <line x1="30" y1="112" x2="730" y2="112" stroke="#2a2f38"/>
+
+        <text x="30" y="134" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">rolling shutter — każda linia startuje później</text>
+        <g fill="#e8a33d" fill-opacity="0.35" stroke="#e8a33d" stroke-width="0.8">
+          <rect x="120" y="144" width="120" height="9"/><rect x="134" y="156" width="120" height="9"/>
+          <rect x="148" y="168" width="120" height="9"/><rect x="162" y="180" width="120" height="9"/>
+          <rect x="176" y="192" width="120" height="9"/>
+        </g>
+        <path d="M280 140 L346 140 L392 205 L326 205 Z" fill="#6e93be" fill-opacity="0.5" stroke="#6e93be"/>
+        <text x="410" y="178" font-family="IBM Plex Mono" font-size="9.5" fill="#e8a33d">słup pionowy pochyla się</text>
+        <text x="30" y="228" font-family="IBM Plex Mono" font-size="9" fill="#8b909b">oś pozioma: czas</text>
+      </svg>
+      <div class="diagram-caption">Przy panoramie w prawo obraz przesuwa się w lewo, a ponieważ dolne linie fotografują później, słup zostaje w nich narysowany dalej w lewo. Pion staje się skosem.</div>
+    </div>
+
+    <p>Konsekwencje są trzy i wszystkie warto rozpoznawać w plate'cie.</p>
+
+    <ul>
+      <li><strong>Skos przy panoramie.</strong> Pionowe krawędzie pochylają się w stronę przeciwną do ruchu kamery. Kąt zależy od prędkości panoramy i od czasu odczytu, nie od czasu otwarcia.</li>
+      <li><strong>Galareta przy drganiu.</strong> Kamera trzymana w ręku drga w obie strony w trakcie jednej klatki, więc kadr faluje zamiast pochylać się jednostajnie.</li>
+      <li><strong>Rozerwany błysk.</strong> Lampa błyskowa albo błyskawica trwająca krócej niż odczyt oświetla tylko część linii. Kadr dzieli się na jasny i ciemny pas o poziomej granicy.</li>
+    </ul>
+
+    <p>Warto przy tym zauważyć, że rolling shutter nie ma nic wspólnego z czasem otwarcia i nie da się go skrócić przymykaniem migawki. <strong>Decyduje czas odczytu matrycy</strong>, czyli to, jak szybko elektronika przechodzi przez wszystkie linie — parametr konstrukcyjny, ustalony raz na kamerę. Dlatego skos przy panoramie jest w danym aparacie zawsze taki sam przy tej samej prędkości ruchu, niezależnie od tego, na jakim czasie się filmuje.</p>
+
+    <p>Dla compu wynika stąd rzecz konkretna: <strong>element wstawiany w ujęcie z rolling shutterem musi być tak samo pochylony</strong>, a pochylenie zależy od pozycji w pionie. Element trzymany pionowo w kadrze, w którym cała reszta się skosi, jest widoczny natychmiast — bo oko porównuje go z tłem, a nie z pionem.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">W CG · trzy rzeczy robione inaczej</div>
+    <h2>Dlaczego smuga z renderu nie pasuje</h2>
+
+    <p>Silnik renderujący też całkuje po czasie, ale robi to inaczej niż migawka — i trzy z tych różnic są na tyle widoczne, że warto je znać z nazwy.</p>
+
+    <p><strong>Całkowanie jest skończone.</strong> Migawka sumuje ruch w sposób ciągły; render bierze skończoną liczbę próbek i uśrednia. Przy zbyt małej liczbie próbek smuga rozpada się na widoczne kopie przedmiotu — <span class="term-violet">zjawisko wyglądające jak duch, a będące po prostu za rzadkim próbkowaniem</span>. Reguła jest prosta: próbek trzeba tyle, żeby sąsiednie kopie dzieliło mniej niż piksel, więc długa smuga potrzebuje ich więcej niż krótka.</p>
+
+    <p><strong>Pozycja migawki jest ustawieniem.</strong> Otwarcie może być wyśrodkowane na czasie klatki, zaczynać się w nim albo w nim kończyć. Różnica wynosi pół czasu otwarcia i objawia się tym, że element <em>wyprzedza</em> tło albo za nim <em>zostaje</em> — mimo że jego animacja jest poprawna, a smuga ma właściwą długość.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Pozycja migawki</span><span>ta sama długość, inne miejsce</span></div>
+      <svg viewBox="0 0 760 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Trzy warianty położenia otwarcia migawki względem czasu klatki: wyśrodkowane, od klatki, do klatki.">
+        <g stroke="#3a424d" stroke-width="1">
+          <line x1="120" y1="26" x2="120" y2="190" stroke-dasharray="4 4"/>
+          <line x1="600" y1="26" x2="600" y2="190" stroke-dasharray="4 4"/>
+        </g>
+        <text x="120" y="18" font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="middle">klatka n</text>
+        <text x="600" y="18" font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="middle">klatka n+1</text>
+
+        <rect x="0" y="36" width="760" height="0"/>
+        <g font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">
+          <text x="20" y="56">wyśrodkowana</text>
+          <text x="20" y="106">od klatki</text>
+          <text x="20" y="156">do klatki</text>
+        </g>
+        <rect x="0" y="42" width="0" height="0"/>
+        <rect x="180" y="42" width="240" height="20" fill="#7fc47f" fill-opacity="0.42" stroke="#7fc47f"/>
+        <rect x="120" y="92" width="240" height="20" fill="#e8a33d" fill-opacity="0.42" stroke="#e8a33d"/>
+        <rect x="240" y="142" width="240" height="20" fill="#6e93be" fill-opacity="0.42" stroke="#6e93be"/>
+
+        <g font-family="IBM Plex Mono" font-size="9" fill="#ecebe4" text-anchor="middle">
+          <text x="300" y="56">smuga wokół pozycji z klatki</text>
+          <text x="240" y="106">smuga za pozycją — element wyprzedza</text>
+          <text x="360" y="156">smuga przed pozycją — element zostaje</text>
+        </g>
+        <text x="380" y="200" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">wszystkie trzy mają tę samą długość otwarcia — różnią się tylko położeniem względem klatki</text>
+      </svg>
+      <div class="diagram-caption">Objaw jest mylący: element wygląda, jakby miał złą animację, a ma złe ustawienie migawki. Rozstrzyga porównanie środka smugi z pozycją przedmiotu w danej klatce.</div>
+    </div>
+
+    <p><strong>Rozmycie z wektorów jest odcinkiem.</strong> Rozmycie liczone w compie z map ruchu ciągnie każdy piksel wzdłuż prostej, bo wektor to prosta. Prawdziwy ruch po łuku — obracające się śmigło, wahadło, koniec kija — zostawia smugę zakrzywioną, i im dłuższe otwarcie, tym różnica większa. Przy szybkim obrocie rozmycie wektorowe daje promienie proste tam, gdzie powinny być łuki, co widać zwłaszcza na końcach.</p>
+
+    <p>Z tego wynika reguła podziału pracy, do której wraca <a href="rozdzial-34-render-czy-comp.html">Rozdział 34</a>: <span class="term-cyan">ruch prostoliniowy można rozmyć w compie, obrotowy trzeba wyrenderować</span>. Granica przebiega tam, gdzie łuk odbiega od cięciwy o więcej niż piksel.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Strobing · kiedy smuga nie sięga</div>
+    <h2>Dziura między klatkami</h2>
+
+    <p>Strobing bywa opisywany jako wada krótkiej migawki, ale to opis niepełny: <strong>decyduje stosunek smugi do przeskoku</strong>, a przeskok zależy od prędkości i od liczby klatek. Ta sama migawka 180° daje spokojny ruch przy panoramie wolnej i wyraźne przeskoki przy szybkiej.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Smuga kontra przeskok</span><span>gdzie zaczyna się strobing</span></div>
+      <svg viewBox="0 0 760 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Trzy przypadki: smugi stykające się, z przerwą i zachodzące na siebie.">
+        <g font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">
+          <text x="20" y="36">180° · smuga = ½ przeskoku</text>
+          <text x="20" y="96">45° · smuga = ⅛ przeskoku</text>
+          <text x="20" y="156">360° · smuga = przeskok</text>
+        </g>
+        <g fill="#7fc47f" fill-opacity="0.4" stroke="#7fc47f" stroke-width="0.8">
+          <rect x="250" y="24" width="60" height="16"/><rect x="370" y="24" width="60" height="16"/>
+          <rect x="490" y="24" width="60" height="16"/><rect x="610" y="24" width="60" height="16"/>
+        </g>
+        <g fill="#d8695f" fill-opacity="0.4" stroke="#d8695f" stroke-width="0.8">
+          <rect x="250" y="84" width="15" height="16"/><rect x="370" y="84" width="15" height="16"/>
+          <rect x="490" y="84" width="15" height="16"/><rect x="610" y="84" width="15" height="16"/>
+        </g>
+        <g fill="#6e93be" fill-opacity="0.4" stroke="#6e93be" stroke-width="0.8">
+          <rect x="250" y="144" width="120" height="16"/><rect x="370" y="144" width="120" height="16"/>
+          <rect x="490" y="144" width="120" height="16"/><rect x="610" y="144" width="120" height="16"/>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="9" fill="#8b909b">
+          <text x="690" y="36" fill="#7fc47f">ciągłość</text>
+          <text x="690" y="96" fill="#d8695f">dziury</text>
+          <text x="690" y="156" fill="#6e93be">styk</text>
+        </g>
+        <text x="380" y="188" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">cztery kolejne klatki — odstęp między słupkami to przeskok obrazu</text>
+      </svg>
+      <div class="diagram-caption">Przy 45° smuga zajmuje ósmą część drogi między klatkami — pozostałe siedem ósmych to przerwa, którą oko czyta jako przeskok.</div>
+    </div>
+
+    <p>Praktyczne granice, przy 24 klatkach i migawce 180°, są znane od dawna i warto je mieć w głowie przy planowaniu ruchu kamery: <strong>przy przesunięciu przekraczającym mniej więcej jedną dwudziestą szerokości kadru na klatkę ruch zaczyna przeskakiwać</strong>, niezależnie od tego, jak dobrze policzone jest rozmycie. Przy 4096 px daje to około 200 px na klatkę.</p>
+
+    <p>Sposoby są dwa i oba są decyzją zdjęciową, nie techniczną. Zwolnić panoramę, albo wydłużyć migawkę i przyjąć miękkość. <span class="term-amber">Trzeciej drogi nie ma</span> — bo problem tkwi w liczbie próbek na sekundę, a nie w tym, jak każda z nich wygląda.</p>
+  </div>
+
+  <div class="panel practice">
+    <div class="panel-label">Z praktyki</div>
+    <p><strong>Zmierz smugę w plate'cie, nie ustawiaj jej z pamięci.</strong> Weź przedmiot o znanej krawędzi, policz, ile pikseli zajmuje jego rozmycie, i porównaj z przesunięciem między dwiema klatkami. Stosunek tych dwóch liczb to kąt migawki wyrażony jako ułamek — i jest to jedyny sposób, żeby go poznać, jeśli nie ma go w metadanych.</p>
+    <p><strong>Sprawdź, czy pion jest pionem.</strong> Jedno spojrzenie na słup, framugę albo krawędź budynku w ruchu wystarczy, żeby rozpoznać rolling shutter. Jeśli jest — element CG potrzebuje tego samego skosu, narastającego w dół kadru.</p>
+    <p><strong>Rozmycie przed nośnikiem, nie po.</strong> Smuga powstaje w trakcie zbierania światła, więc wszystko, co dzieje się przy zapisie — obcięcie z <a href="rozdzial-31-zakres-dynamiczny.html">Rozdziału 31</a>, ziarno, szum — jest po niej. Rozmycie nałożone na końcu rozmywa także ziarno, którego rozmyć się nie da.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>kąt migawki</dt>
+      <dd>Jaka część odstępu między klatkami przypada na otwarcie, wyrażona w stopniach obrotu tarczy. 180° to połowa.</dd>
+      <dt>strobing</dt>
+      <dd>Przeskoki widoczne przy zbyt krótkiej migawce, gdy smugi kolejnych klatek nie stykają się ze sobą.</dd>
+      <dt>rolling shutter</dt>
+      <dd>Odczyt matrycy linia po linii, przez który różne wysokości kadru odpowiadają różnym chwilom.</dd>
+      <dt>migawka globalna</dt>
+      <dd>Odsłonięcie całej matrycy w jednym odcinku czasu. Nie ma skosu ani galarety, kosztuje układ i zwykle zakres dynamiczny.</dd>
+      <dt>oddech obiektywu</dt>
+      <dd>Zmiana kąta widzenia przy przejeździe ostrości, wynikająca ze zmiany odległości układu od matrycy.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Na tym kończy się część o nośniku, a razem z nią cała opowieść o tym, co dzieje się z prawdziwym światłem w prawdziwej kamerze. Od <a href="rozdzial-33-kamera-w-rendererze.html">następnego rozdziału</a> to samo pytanie zadajemy renderowi: co z tego wszystkiego jego kamera ma naprawdę, co udaje, a czego nie ma i mieć nie może.</p>
+  </div>
 
   <div class="deeper">
     <div class="deeper-label">Idź głębiej</div>
@@ -56,8 +292,93 @@ window.SKY3D_MESSAGES = {
       <a class="nav-next" href="rozdzial-33-kamera-w-rendererze.html">Następny →</a>
   </div>
 
+<template id="adv-oddech">
+  <h3>Oddech obiektywu przy przejeździe ostrości</h3>
+  <p>Ostrzenie przez wysuwanie całego układu zmienia jego odległość od matrycy — a razem z nią kąt widzenia. Ustawianie ostrości na bliżej wysuwa obiektyw, co przy stałej ogniskowej powiększa obraz. Kadr „oddycha”: przy przejeździe ostrości z tła na pierwszy plan cała kompozycja lekko się zacieśnia.</p>
+  <p>Wielkość zmiany wynika wprost z rachunku wysuwu z Rozdziału 16. Powiększenie zmienia się w stosunku równym stosunkowi odległości obrazowych, więc:</p>
+  <p style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--accent);">zmiana kadru = e / f, gdzie e = f² / (s − f)</p>
+  <p>Dla pięćdziesiątki ostrzonej z nieskończoności na dwa metry wysuw wynosi 50²/(2000 − 50) = 1,28 mm, czyli 2,6 procent ogniskowej — i o tyle właśnie zacieśnia się kadr. Dla tej samej pięćdziesiątki ostrzonej na pół metra wysuw to 5,6 mm i 11 procent, co jest już wyraźnie widoczne.</p>
+  <p>Dwie rzeczy warte zapamiętania. Po pierwsze, <strong>oddech rośnie przy bliskim ostrzeniu i przy krótkiej ogniskowej</strong> — długie szkła ostrzone daleko praktycznie nie oddychają. Po drugie, obiektywy kinowe konstruuje się tak, żeby oddech minimalizować, ostrząc grupą wewnętrzną zamiast całym układem; jest to jedna z rzeczy, za które płaci się w szkle kinowym, i jeden z powodów, dla których waży ono tyle, ile waży.</p>
+  <p>W compie ma to konsekwencję prostą: <strong>jeśli plate oddycha, element musi oddychać razem z nim</strong>. Statyczna wtyczka w ujęciu z przejazdem ostrości zaczyna dryfować względem tła — nie dlatego, że tracking jest zły, tylko dlatego, że ogniskowa plate'u realnie się zmienia w trakcie ujęcia.</p>
+</template>
+
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal-box">
+    <button class="modal-close" aria-label="Zamknij">&times;</button>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
 </div>
 
 <script src="../assets/interactive.js"></script>
+<script>
+(function () {
+  var suw = document.getElementById('czKat');
+  if (!suw) return;
+  var odczyt = document.getElementById('czOdczyt');
+  var wyc = document.getElementById('czWycinek');
+  var smuga = document.getElementById('czSmuga');
+  var tDl = document.getElementById('czDlugosc');
+  var tCzas = document.getElementById('czCzas');
+  var tStrata = document.getElementById('czStrata');
+  var tWniosek = document.getElementById('czWniosek');
+
+  var CX = 120, CY = 115, R = 76;
+  var KL = 24;          // klatek na sekunde
+  var V = 8192;         // predkosc obrazu na matrycy, px/s
+  var PRZESKOK = V / KL; // przesuniecie miedzy klatkami, px
+
+  function wycinek(kat) {
+    if (kat >= 359.9) {
+      return 'M ' + CX + ' ' + (CY - R) + ' A ' + R + ' ' + R + ' 0 1 1 ' + (CX - 0.01) + ' ' + (CY - R) + ' Z';
+    }
+    var a = (kat - 90) * Math.PI / 180;
+    var x = CX + R * Math.cos(a), y = CY + R * Math.sin(a);
+    return 'M ' + CX + ' ' + CY + ' L ' + CX + ' ' + (CY - R) +
+           ' A ' + R + ' ' + R + ' 0 ' + (kat > 180 ? 1 : 0) + ' 1 ' + x.toFixed(1) + ' ' + y.toFixed(1) + ' Z';
+  }
+
+  function ulamek(t) {
+    var m = Math.round(1 / t);
+    return '1/' + m + ' s';
+  }
+
+  function rysuj() {
+    var kat = parseInt(suw.value, 10);
+    var t = (kat / 360) / KL;
+    var s = V * t;
+
+    odczyt.textContent = kat + '°';
+    wyc.setAttribute('d', wycinek(kat));
+    smuga.setAttribute('width', (160 * kat / 180).toFixed(1));
+    tDl.textContent = 'smuga: ' + Math.round(s) + ' px  (przeskok miedzy klatkami: ' + Math.round(PRZESKOK) + ' px)';
+    tCzas.textContent = 'czas otwarcia: ' + ulamek(t);
+
+    var dz = Math.log(kat / 180) / Math.LN2;
+    tStrata.textContent = 'swiatlo: ' + (Math.abs(dz) < 0.02 ? 'nominalne' :
+      (dz > 0 ? '+' : '') + dz.toFixed(2) + ' dzialki wzgledem 180°');
+
+    var udzial = s / PRZESKOK;
+    var w;
+    if (kat >= 350) {
+      w = 'migawka nie zamyka sie — smuga rowna calemu przeskokowi, ruch maksymalnie miekki';
+    } else if (udzial >= 0.62) {
+      w = 'smugi kolejnych klatek zachodza na siebie — ruch senny, krawedzie znikaja';
+    } else if (udzial >= 0.38) {
+      w = 'standard kinowy — smugi niemal sie stykaja, ruch czytany jako ciagly';
+    } else if (udzial >= 0.2) {
+      w = 'ruch twardnieje, przy szybkich przejazdach zaczyna przeskakiwac';
+    } else {
+      w = 'strobing — miedzy klatkami zostaje ' + Math.round((1 - udzial) * 100) + '% drogi bez sladu';
+    }
+    tWniosek.textContent = w;
+  }
+
+  suw.addEventListener('input', rysuj);
+  rysuj();
+})();
+</script>
+
 </body>
 </html>
