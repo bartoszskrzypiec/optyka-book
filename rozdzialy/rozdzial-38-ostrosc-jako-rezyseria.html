@@ -43,7 +43,221 @@ window.SKY3D_MESSAGES = {
   <h1>Ostrość jako reżyseria uwagi</h1>
   <p class="subtitle">Płytka ostrość mówi widzowi, gdzie ma patrzeć. Głęboka zostawia mu wybór. To nie jest decyzja ekspozycyjna, choć zapada przy pokrętle przysłony.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li><strong>Płaszczyzna ostrości jest jedynym narzędziem, którym operator kieruje uwagą widza bez jego zgody.</strong> Kompozycję można zignorować i popatrzeć w róg kadru. Nieostrości zignorować się nie da.</li>
+      <li><span class="term-amber">Przejazd ostrości jest cięciem</span> — zmienia to, na co patrzysz, tak samo skutecznie jak montaż, tylko bez przerwania ciągłości.</li>
+      <li><strong>Głębia kosztuje światło i kosztuje dużo.</strong> Przejście z f/2,3 na f/11 to około czterech i pół działki, czyli dwadzieścia trzy razy więcej światła na planie.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Przymus · czym różni się od kompozycji</div>
+    <h2>Narzędzie, którego widz nie może odrzucić</h2>
+
+    <p>Operator ma kilka sposobów kierowania uwagą: kompozycję, ruch, kontrast, barwę. Wszystkie działają przez zachętę — widz może im ulec albo nie. Można patrzeć w ciemny róg kadru wbrew całej kompozycji i zobaczyć tam wszystko, co tam jest.</p>
+
+    <p>Ostrość działa inaczej i to jest jej wyjątkowość. <strong>Rzecz nieostra nie da się obejrzeć uważniej.</strong> Widz może na nią patrzeć, ile chce; informacji tam po prostu nie ma, bo optyka jej nie przeniosła. <span class="term-violet">Jest to jedyna decyzja operatora, której widz nie może cofnąć własnym wysiłkiem</span> — i dlatego jest to decyzja reżyserska w mocniejszym sensie niż wszystkie pozostałe.</p>
+
+    <p>Wynika stąd konsekwencja etyczna wręcz, którą warto nazwać: wybierając płaszczyznę ostrości, wybiera się <em>za widza</em>, co jest w tej scenie ważne. Głęboka ostrość oddaje mu wybór; płytka odbiera. Jedno i drugie jest stanowiskiem, nie ustawieniem.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Cena głębi</span><span>ile światła kosztuje ostre tło</span></div>
+      <div class="diagram-controls">
+        <label for="osN">Przysłona</label>
+        <input id="osN" type="range" min="0" max="12" step="1" value="4">
+        <span class="value-readout" id="osOdczyt">f/4,0</span>
+      </div>
+      <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Oś odległości z zaznaczonym zakresem ostrości oraz odczyt kosztu w działkach światła.">
+        <line x1="60" y1="150" x2="712" y2="150" stroke="#8b909b" stroke-width="1.2"/>
+        <g font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">
+          <text x="60" y="170">0</text><text x="153" y="170">1 m</text><text x="223" y="170">2 m</text>
+          <text x="355" y="170">5 m</text><text x="520" y="170">15 m</text><text x="700" y="170">∞</text>
+        </g>
+        <rect id="osPas" x="200" y="112" width="120" height="30" fill="#7fc47f" fill-opacity="0.35" stroke="#7fc47f"/>
+        <line id="osOstrosc" x1="278" y1="100" x2="278" y2="152" stroke="#e8a33d" stroke-width="2.4"/>
+        <text id="osOstrTxt" x="278" y="94" font-family="IBM Plex Mono" font-size="9" fill="#e8a33d" text-anchor="middle">ostrość · 3 m</text>
+        <text x="60" y="196" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">35 mm · Super 35 · krążek 0,025 mm</text>
+
+        <g font-family="IBM Plex Mono" font-size="10.5">
+          <text x="60" y="222" fill="#7fc47f" id="osZakres">strefa ostrości: 2,42 – 3,96 m</text>
+          <text x="60" y="240" fill="#7fc47f" id="osGleb">głębia: 1,54 m</text>
+          <text x="430" y="222" fill="#d8695f" id="osKoszt">światła potrzeba: 3,0× względem f/2,3</text>
+          <text x="430" y="240" fill="#8b909b" id="osWniosek">dwie osoby obok siebie zmieszczą się w ostrości</text>
+        </g>
+      </svg>
+      <div class="diagram-caption">Zielony pas to strefa ostrości przy odległości 3 m. Skala odległości jest nieliniowa, żeby zmieścić i bliskie granice, i nieskończoność.</div>
+    </div>
+
+    <p>Widget pokazuje przy okazji rzecz, którą trzeba znać przed każdą rozmową o głębi: <strong>ostrość jest droga</strong>. Nie w sensie sprzętu — w sensie światła, które trzeba postawić na planie, i mocy, którą trzeba doprowadzić.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Głębia · rachunek i jego historia</div>
+    <h2>Ile naprawdę kosztowało ostre tło</h2>
+
+    <p>Najsłynniejszym przykładem głębokiej ostrości jest <em>Obywatel Kane</em> z 1941 roku w zdjęciach Gregga Tolanda. Warto zobaczyć, co dokładnie za tym stało, bo historia jest ciekawsza niż legenda.</p>
+
+    <p><strong>Przysłona.</strong> Toland zdejmował sceny między f/8 a f/16, podczas gdy typowe wartości w ówczesnej produkcji mieściły się między f/2,3 a f/3,5. Różnica między f/2,3 a f/11 to <span class="term-amber">około czterech i pół działki, czyli dwadzieścia trzy razy więcej światła</span>; między f/2,3 a f/16 — pięć i sześć dziesiątych działki, czyli czterdzieści osiem razy.</p>
+
+    <p><strong>Powłoki.</strong> Toland korzystał z nowych wówczas obiektywów powlekanych, pokrytych preparatem Vard Opticoat, który zmniejszał odblaski i przepuszczał około dziesięciu procent światła więcej. Dziesięć procent to jedna siódma działki — <strong>wobec potrzebnych czterech i pół to prawie nic</strong>, i to jest pierwsza rzecz, którą rachunek prostuje. Powłoki nie umożliwiły głębokiej ostrości; umożliwiły ją lampy.</p>
+
+    <p><strong>Nie wszystko było optyką.</strong> Część ujęć uchodzących za głęboką ostrość powstała inaczej: jako złożenia wykonane w kopiarce optycznej albo jako podwójne naświetlenia w kamerze. Toland sam nie lubił tej pierwszej metody, bo kopiowanie obniżało jakość obrazu — ale w filmie jest jej sporo.</p>
+
+    <p>Wniosek jest podwójny i oba człony warto mieć w głowie. <strong>Głęboka ostrość jest fizycznie kosztowna</strong>, w sposób, który da się policzyć i który nie zmienił się od 1941 roku. I: <span class="term-cyan">nawet najsłynniejszy przykład jest po części efektem specjalnym</span>, co znaczy, że rozdział o compie nie opisuje niczego nowego — opisuje rzecz, którą robiono od początku, tylko innymi narzędziami.</p>
+
+    <button class="advanced-btn" data-modal-target="adv-diopter">Zaawansowane: dioptria dzielona, czyli głębia bez przymykania</button>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Przejazd · cięcie bez cięcia</div>
+    <h2>Zmiana tematu w obrębie jednego ujęcia</h2>
+
+    <p>Przeniesienie ostrości z jednego planu na drugi robi dokładnie to, co cięcie montażowe: <strong>zmienia to, na co widz patrzy, i zmienia temat sceny</strong>. Różnica jest jedna, ale zasadnicza — ciągłość zostaje zachowana, więc widz wie, że obie rzeczy dzieją się naraz.</p>
+
+    <p>Stąd bierze się użyteczność tego chwytu w miejscach, gdzie cięcie byłoby kłamstwem. Reakcja jednej osoby na słowa drugiej, przedmiot zauważony przez bohatera, ktoś wchodzący w tle — wszystko to da się pokazać cięciem, ale wtedy widz dostaje dwie chwile zamiast jednej.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Przejazd kontra cięcie</span><span>co dostaje widz</span></div>
+      <svg viewBox="0 0 760 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Porównanie: cięcie daje dwie chwile, przejazd ostrości daje jedną chwilę z dwoma planami.">
+        <text x="190" y="24" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">CIĘCIE</text>
+        <rect x="40" y="36" width="140" height="80" fill="#0d0f11" stroke="#3a424d"/>
+        <circle cx="90" cy="76" r="18" fill="#6e93be" fill-opacity="0.8"/>
+        <rect x="200" y="36" width="140" height="80" fill="#0d0f11" stroke="#3a424d"/>
+        <circle cx="290" cy="76" r="18" fill="#a98bd8" fill-opacity="0.8"/>
+        <text x="190" y="136" font-family="IBM Plex Mono" font-size="9" fill="#d8695f" text-anchor="middle">dwie chwile · widz nie wie, czy równocześnie</text>
+        <text x="190" y="156" font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="middle">ciągłość przerwana</text>
+
+        <line x1="380" y1="16" x2="380" y2="204" stroke="#2a2f38"/>
+
+        <text x="570" y="24" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">PRZEJAZD OSTROŚCI</text>
+        <rect x="420" y="36" width="140" height="80" fill="#0d0f11" stroke="#3a424d"/>
+        <circle cx="462" cy="88" r="18" fill="#6e93be" fill-opacity="0.85"/>
+        <circle cx="524" cy="60" r="13" fill="#a98bd8" fill-opacity="0.28"/>
+        <rect x="580" y="36" width="140" height="80" fill="#0d0f11" stroke="#3a424d"/>
+        <circle cx="622" cy="88" r="18" fill="#6e93be" fill-opacity="0.25"/>
+        <circle cx="684" cy="60" r="13" fill="#a98bd8" fill-opacity="0.9"/>
+        <text x="570" y="136" font-family="IBM Plex Mono" font-size="9" fill="#7fc47f" text-anchor="middle">jedna chwila · oba plany obecne cały czas</text>
+        <text x="570" y="156" font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="middle">ciągłość zachowana, zmienia się tylko uwaga</text>
+
+        <text x="380" y="196" font-family="IBM Plex Mono" font-size="9.5" fill="#e8a33d" text-anchor="middle">ten sam skutek dla uwagi, inna informacja o czasie</text>
+      </svg>
+      <div class="diagram-caption">W obu przypadkach widz przestaje patrzeć na jedno, a zaczyna na drugie. Różni je tylko to, czy dowiaduje się, że jedno i drugie dzieje się w tej samej chwili.</div>
+    </div>
+
+    <p>Warto przy tym pamiętać o rzeczy technicznej, którą opisywał <a href="rozdzial-32-czas.html">Rozdział 32</a>: <strong>przejazd ostrości zwykle zmienia kadr</strong>. Obiektyw oddycha, więc kompozycja lekko się zacieśnia albo rozluźnia. W szkle kinowym efekt jest zminimalizowany i to jest jeden z powodów, dla których kosztuje ono tyle, ile kosztuje.</p>
+
+    <p>I druga uwaga, praktyczna dla pracy z plate'em: <span class="term-violet">ujęcie z przejazdem ostrości jest ujęciem, w którym ogniskowa realnie się zmienia</span>. Element trzymany na stałej ogniskowej zacznie w nim dryfować — nie z powodu trackingu, tylko dlatego, że tło naprawdę zmienia skalę.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Nieostrość · co mówi rozmycie</div>
+    <h2>Plan, którego nie widać, też jest wypowiedzią</h2>
+
+    <p>Nieostry plan pierwszy bywa traktowany jak wada kadrowania, a jest jednym z najstarszych narzędzi opowiadania. Mówi widzowi trzy rzeczy naraz i warto je rozdzielić.</p>
+
+    <p><strong>Że coś tam jest.</strong> Rozmyta plama informuje o obecności, nie ujawniając szczegółu. Ramię, framuga, tłum — wszystko to buduje przestrzeń, której widz nie ogląda, ale w którą wierzy.</p>
+
+    <p><strong>Gdzie stoi kamera.</strong> Nieostry przedmiot na pierwszym planie mówi, że kamera jest za czymś — a więc obserwuje z ukrycia, zza pleców, przez tłum. Jest to informacja o punkcie widzenia, i to bardzo mocna, bo działa bez żadnego wyjaśnienia.</p>
+
+    <p><strong>Jak głęboka jest scena.</strong> Stopień rozmycia jest miarą odległości. Widz nie liczy, ale odczytuje — i dlatego scena z jednym planem nieostrym mocno, a drugim lekko, czyta się jako głęboka, nawet jeśli w kadrze nie ma żadnej perspektywicznej wskazówki.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Trzy komunikaty</span><span>jedna nieostra plama</span></div>
+      <svg viewBox="0 0 760 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Kadr z nieostrym planem pierwszym: obecność, punkt widzenia i głębia odczytane z jednej plamy.">
+        <rect x="40" y="26" width="360" height="168" fill="#0d0f11" stroke="#3a424d"/>
+        <rect x="40" y="26" width="72" height="168" fill="#a98bd8" fill-opacity="0.3"/>
+        <rect x="46" y="34" width="60" height="152" fill="#a98bd8" fill-opacity="0.22"/>
+        <rect x="356" y="26" width="44" height="168" fill="#a98bd8" fill-opacity="0.24"/>
+        <rect x="200" y="86" width="42" height="108" fill="#6e93be" fill-opacity="0.9"/>
+        <circle cx="221" cy="74" r="16" fill="#6e93be" fill-opacity="0.9"/>
+        <rect x="278" y="120" width="30" height="30" fill="#6e93be" fill-opacity="0.28"/>
+        <text x="220" y="212" font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="middle">nieostre ramy · ostra postać · lekko miękkie tło</text>
+
+        <g font-family="IBM Plex Sans" font-size="11.5" fill="#ecebe4">
+          <text x="432" y="56">· jest tam coś, czego nie widzisz</text>
+          <text x="432" y="86">· kamera stoi za tym czymś</text>
+          <text x="432" y="116">· scena ma trzy różne odległości</text>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="9" fill="#8b909b">
+          <text x="446" y="72">obecność bez szczegółu</text>
+          <text x="446" y="102">punkt widzenia</text>
+          <text x="446" y="132">skala rozmycia = skala głębi</text>
+        </g>
+        <line x1="420" y1="30" x2="420" y2="190" stroke="#3a424d"/>
+        <text x="432" y="168" font-family="IBM Plex Mono" font-size="9.5" fill="#e8a33d">trzy komunikaty, żadnego słowa</text>
+      </svg>
+      <div class="diagram-caption">Trzeci komunikat jest najsłabiej uświadamiany, a najmocniej działa: dwa różne stopnie rozmycia mówią widzowi, że scena ma głębię, nawet gdy nie ma w niej żadnej perspektywicznej wskazówki.</div>
+    </div>
+
+    <p>Wszystkie trzy zależą od jednej rzeczy: <strong>od kształtu i wielkości krążka rozmycia</strong>, czyli od bokeh z <a href="rozdzial-09-bokeh.html">Rozdziału 9</a>. Nerwowy, obwiedziony bokeh przyciąga uwagę do rzeczy, która miała jej nie przyciągać — i to jest przyczyna, dla której miękkie rozmycie kosztuje w szkle tyle, ile kosztuje. Nie chodzi o urodę plamy; chodzi o to, żeby plama nie odbierała uwagi temu, co ostre.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Rzemiosło · ostrzenie jako zawód</div>
+    <h2>Dlaczego to robi osobny człowiek</h2>
+
+    <p>Na planie fabularnym ostrość ustawia oddzielna osoba, która patrzy nie w kadr, tylko na taśmę mierniczą i na skalę obiektywu. Warto rozumieć, dlaczego akurat ta czynność wymaga osobnego etatu — odpowiedź jest optyczna, nie organizacyjna.</p>
+
+    <p><strong>Bo margines jest w centymetrach.</strong> Widget z pierwszej sekcji podaje liczby: przy 35 mm, f/2,3 i odległości trzech metrów cała strefa ostrości ma 85 centymetrów, a więc półtora kroku aktora. Przy dłuższym szkle i bliższym planie schodzi do kilkunastu centymetrów — mniej niż długość twarzy.</p>
+
+    <p><strong>Bo nie da się tego zobaczyć na czas.</strong> Ocena ostrości z podglądu jest oceną po fakcie: zanim operator zauważy, że aktor wyszedł ze strefy, ujęcie już jest nagrane nieostro. Dlatego ostrość ustawia się <span class="term-cyan">z góry, z pomiaru i z zapamiętanych pozycji</span>, a nie z obserwacji obrazu.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Skala odległości</span><span>hiperbola wyryta na metalu</span></div>
+      <svg viewBox="0 0 760 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Pierścień ostrości rozwinięty w linię: odległości gęstnieją ku nieskończoności.">
+        <rect x="40" y="52" width="672" height="44" rx="4" fill="#151a1f" stroke="#3a424d"/>
+        <g stroke="#e8a33d" stroke-width="1.6">
+          <line x1="52" y1="52" x2="52" y2="96"/><line x1="264" y1="52" x2="264" y2="96"/><line x1="397" y1="52" x2="397" y2="96"/><line x1="494" y1="52" x2="494" y2="96"/><line x1="567" y1="52" x2="567" y2="96"/><line x1="624" y1="52" x2="624" y2="96"/><line x1="656" y1="52" x2="656" y2="96"/><line x1="678" y1="52" x2="678" y2="96"/><line x1="694" y1="52" x2="694" y2="96"/><line x1="708" y1="52" x2="708" y2="96"/>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="middle">
+          <text x="52" y="112">0,35</text><text x="264" y="112">0,5</text><text x="397" y="112">0,7</text><text x="494" y="112">1</text><text x="567" y="112">1,5</text><text x="624" y="112">2,5</text><text x="656" y="112">4</text><text x="678" y="112">7</text><text x="694" y="112">15</text><text x="708" y="112">∞</text>
+        </g>
+        <text x="40" y="40" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">pierścień ostrości rozwinięty w linię · odległości w metrach · 35 mm, najbliższa ostrość 0,35 m</text>
+        <path d="M52 132 L494 132" stroke="#7fc47f" stroke-width="4"/>
+        <text x="273" y="150">0,35 – 1 m zajmuje dwie trzecie skali</text>
+        <path d="M678 132 L708 132" stroke="#d8695f" stroke-width="4"/>
+        <text x="648" y="150">7 m – ∞ mieści się w jednej dwudziestej</text>
+        <text x="380" y="176" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">rozkład odpowiada wysuwowi f²/(s−f) — to hiperbola, nie prosta</text>
+      </svg>
+      <div class="diagram-caption">Ten sam obrót pierścienia przenosi ostrość o kilkanaście centymetrów przy metrze i o kilkanaście metrów przy dwudziestu. Stąd zmienna prędkość ręki przy płynnym przejeździe.</div>
+    </div>
+
+    <p><strong>Bo skala obiektywu jest nieliniowa.</strong> Odległości na pierścieniu gęstnieją ku nieskończoności — między trzema a czterema metrami jest sporo miejsca, między dziesięcioma a nieskończonością prawie nic. Przejazd o stałej prędkości obrotu daje więc przyspieszające przejście, a płynny przejazd wymaga zmiennej prędkości ręki.</p>
+
+    <p>Skala z diagramu podaje na to twarde liczby. Przy trzydziestce piątce z najbliższą ostrością 0,35 m odcinek od 0,35 do jednego metra zajmuje <strong>dwie trzecie całego obrotu pierścienia</strong>, a cały zakres od siedmiu metrów do nieskończoności — niecałe pięć procent. Ostrzenie dalekiego planu jest więc pracą na ułamkach milimetra obwodu, a ostrzenie bliskiego — na centymetrach.</p>
+
+    <p>Warto zauważyć, jak bardzo ta ostatnia rzecz jest optyczna. Rozkład odległości na pierścieniu odpowiada wysuwowi obiektywu, czyli funkcji <em>f²/(s−f)</em> z <a href="rozdzial-16-anatomia-obiektywu.html">Rozdziału 16</a> — <strong>hiperboli, a nie prostej</strong>. Nierówna skala nie jest niedoróbką producenta; jest kształtem samego równania soczewki, wyrytym na metalu.</p>
+
+    <p>Dla pracy z plate'em wynika stąd rzecz praktyczna: <span class="term-violet">przejazd ostrości w gotowym materiale nie jest liniowy w czasie</span>. Odtwarzając go w compie albo w rendererze, warto animować odległość ostrzenia, a nie stopień rozmycia — bo tylko wtedy przyspieszenie wyjdzie samo, tak jak wychodzi w kamerze.</p>
+  </div>
+
+  <div class="panel practice">
+    <div class="panel-label">Z praktyki</div>
+    <p><strong>Zanim ustawisz głębię, policz światło.</strong> Różnica dwóch działek przysłony to czterokrotność mocy oświetlenia. Decyzja o głębokiej ostrości jest decyzją produkcyjną, a nie tylko plastyczną, i lepiej podjąć ją przed dniem zdjęciowym.</p>
+    <p><strong>Odtwarzając plate z przejazdem ostrości, odtwórz też oddech.</strong> Zmiana kadru jest tam realna — element trzymany na stałej ogniskowej rozjedzie się z tłem, choć tracking będzie poprawny.</p>
+    <p><strong>Czytaj rozmycie pierwszego planu jako informację o kamerze.</strong> Jeśli w plate'cie jest nieostra plama przy krawędzi, oznacza to konkretny przedmiot w konkretnej odległości — a z jej rozmycia da się tę odległość policzyć wzorem z <a href="../dodatki/dodatek-u-z-depth-w-praktyce.html">Dodatku U</a>.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>przejazd ostrości</dt>
+      <dd>Przeniesienie płaszczyzny ostrości między planami w trakcie ujęcia. Odpowiednik cięcia bez przerwania ciągłości.</dd>
+      <dt>głęboka ostrość</dt>
+      <dd>Kompozycja, w której kilka planów jest ostrych naraz. Kosztuje światło w proporcji do kwadratu przysłony.</dd>
+      <dt>dioptria dzielona</dt>
+      <dd>Soczewka zakrywająca połowę kadru, dająca dwie płaszczyzny ostrości kosztem widocznej granicy.</dd>
+      <dt>oddech</dt>
+      <dd>Zmiana kąta widzenia przy zmianie ostrości. W szkle kinowym minimalizowana konstrukcyjnie.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Dwa poprzednie rozdziały opisały narzędzia. Zostają dwie postawy wobec nich, przeciwstawne i obie konsekwentne. <a href="rozdzial-39-szkola-powsciagliwosci.html">Następny rozdział</a> opisuje tę, która traktuje każdą widoczną cechę obiektywu jako zakłócenie — i pokazuje, co się dostaje w zamian za jej usunięcie.</p>
+  </div>
 
 
   <div class="site-nav chapter-nav">
@@ -52,8 +266,108 @@ window.SKY3D_MESSAGES = {
       <a class="nav-next" href="rozdzial-39-szkola-powsciagliwosci.html">Następny →</a>
   </div>
 
+<template id="adv-diopter">
+  <h3>Dioptria dzielona, czyli głębia bez przymykania</h3>
+  <p>Skoro głęboka ostrość kosztuje działki światła, powstaje pytanie, czy da się ją dostać taniej. Odpowiedź brzmi: częściowo — i za inną cenę.</p>
+  <p><strong>Dioptria dzielona</strong> to soczewka skupiająca przecięta na pół, nakładana przed obiektyw tak, że zakrywa połowę kadru. Ta połowa dostaje dodatkową moc optyczną, więc jej płaszczyzna ostrości leży bliżej; druga połowa zostaje nietknięta. W efekcie w jednym kadrze są <strong>dwie płaszczyzny ostrości</strong>: bardzo bliska po jednej stronie i daleka po drugiej.</p>
+  <p>Rachunek jest prosty. Soczewka o mocy D dioptrii ustawia ostrość na 1/D metra, niezależnie od obiektywu i od jego własnego ustawienia. Dioptria o mocy +1 daje metr, +2 daje pół metra, +0,5 daje dwa metry.</p>
+  <p><strong>Cena jest jedna i widoczna: granica.</strong> Krawędź soczewki przebiega przez kadr i wszystko, co ją przecina, jest w tym miejscu rozmyte i zdwojone. Dlatego granicę chowa się w pionowej krawędzi dekoracji, w słupie, we framudze albo w ciemnym pasie — a kompozycja ujęcia jest podporządkowana temu ukryciu.</p>
+  <p>Wynika stąd rzecz, którą warto rozumieć przy oglądaniu: <strong>ujęcie z dioptrią dzieloną ma zwykle nienaturalnie mocny pionowy podział kompozycji</strong>. Nie dlatego, że tak wymyślono, tylko dlatego, że gdzieś trzeba było schować krawędź.</p>
+  <p>Do czego to porównać? Do rozwiązania z kopiarki optycznej, o którym mówi ten rozdział — obie metody dają głębię, której optyka nie dała. Różnica jest taka, że dioptria robi to <em>w kamerze</em>, w jednym przebiegu, bez straty jakości z kopiowania. Kosztuje za to kompozycję.</p>
+  <p>W compie odpowiednikiem obu jest po prostu złożenie dwóch renderów o różnym ustawieniu ostrości — tanie, bez granicy i bez straty. Jest to jedno z niewielu miejsc, gdzie narzędzia współczesne dają coś naprawdę za darmo, i warto to docenić, wiedząc, ile kosztowało wcześniej.</p>
+</template>
+
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal-box">
+    <button class="modal-close" aria-label="Zamknij">&times;</button>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
 </div>
 
 <script src="../assets/interactive.js"></script>
+<script>
+(function () {
+  var suw = document.getElementById('osN');
+  if (!suw) return;
+  var odczyt = document.getElementById('osOdczyt');
+  var pas = document.getElementById('osPas');
+  var linia = document.getElementById('osOstrosc');
+  var linTxt = document.getElementById('osOstrTxt');
+  var tZakres = document.getElementById('osZakres');
+  var tGleb = document.getElementById('osGleb');
+  var tKoszt = document.getElementById('osKoszt');
+  var tWniosek = document.getElementById('osWniosek');
+
+  var PRZYSLONY = [1.4, 2.0, 2.3, 2.8, 4.0, 5.6, 8.0, 11, 16, 22];
+  suw.max = PRZYSLONY.length - 1;
+
+  var F = 35, C = 0.025, S = 3000;   // mm
+  var ODN = 2.3;                      // odniesienie: typowa przyslona 1941 r.
+
+  /* Os nieliniowa: x = 60 + 640 * d/(d+K), K dobrane tak, zeby 2 m
+     wypadlo na 223 px. Nieskonczonosc ladnie zbiega do 700. */
+  var K = 5.85;
+  function x(dm) {
+    if (!isFinite(dm)) return 700;
+    return 60 + 640 * (dm / (dm + K));
+  }
+  function pl(v, n) { return v.toFixed(n === undefined ? 2 : n).replace('.', ','); }
+
+  function granice(N) {
+    var H = F * F / (N * C) + F;
+    var bl = S * (H - F) / (H + S - 2 * F);
+    var da = (H > S) ? S * (H - F) / (H - S) : Infinity;
+    return [bl / 1000, da / 1000];
+  }
+
+  function rysuj() {
+    var i = parseInt(suw.value, 10);
+    var N = PRZYSLONY[i];
+    var g = granice(N);
+    var xb = x(g[0]), xd = x(g[1]);
+
+    odczyt.textContent = 'f/' + (N < 10 ? pl(N, 1) : N);
+    pas.setAttribute('x', xb.toFixed(1));
+    pas.setAttribute('width', (xd - xb).toFixed(1));
+    var xo = x(3);
+    linia.setAttribute('x1', xo.toFixed(1));
+    linia.setAttribute('x2', xo.toFixed(1));
+    linTxt.setAttribute('x', xo.toFixed(1));
+
+    tZakres.textContent = 'strefa ostrosci: ' + pl(g[0]) + ' – ' +
+      (isFinite(g[1]) ? pl(g[1]) + ' m' : 'nieskonczonosc');
+    tGleb.textContent = 'glebia: ' + (isFinite(g[1]) ? pl(g[1] - g[0]) + ' m' : 'praktycznie od ' + pl(g[0]) + ' m w gore');
+
+    var raz = Math.pow(N / ODN, 2);
+    var dz = 2 * Math.log(N / ODN) / Math.LN2;
+    tKoszt.textContent = 'swiatla potrzeba: ' + pl(raz, 1) + '× wzgledem f/2,3  (' +
+      (dz >= 0 ? '+' : '') + pl(dz, 2) + ' dzialki)';
+
+    var w;
+    if (g[1] - g[0] < 0.6) w = 'oczy ostre, uszy juz nie';
+    else if (g[1] - g[0] < 1.2) w = 'jedna osoba w ostrosci, tlo miekkie';
+    else if (g[1] - g[0] < 3) w = 'dwie osoby obok siebie zmieszcza sie w ostrosci';
+    else if (isFinite(g[1])) w = 'pierwszy plan i tlo naraz — zakres Tolanda';
+    else w = 'od tej przyslony ostrosc siega nieskonczonosci';
+    tWniosek.textContent = w;
+  }
+
+  suw.addEventListener('input', rysuj);
+  suw.value = 4;
+  rysuj();
+
+  var ramka = suw.closest('.diagram-frame');
+  if (ramka) {
+    ramka.dataset.kontrola = [2.3, 8, 11, 16].map(function (N) {
+      var g = granice(N);
+      return 'f/' + N + ':' + pl(g[0]) + '-' + (isFinite(g[1]) ? pl(g[1]) : 'inf') +
+             '/' + pl(Math.pow(N / ODN, 2), 1) + 'x';
+    }).join(' ');
+  }
+})();
+</script>
+
 </body>
 </html>
