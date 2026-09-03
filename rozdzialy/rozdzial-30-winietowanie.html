@@ -43,7 +43,268 @@ window.SKY3D_MESSAGES = {
   <h1>Winietowanie: trzy zjawiska, jedna nazwa</h1>
   <p class="subtitle">Naturalne, optyczne i mechaniczne winietowanie mają inne przyczyny, inny kształt i inną reakcję na przymknięcie przysłony. Mylenie ich to najczęstszy powód, dla którego winieta w CG wygląda naklejona.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li><strong>Trzy różne zjawiska pod jedną nazwą.</strong> <span class="term-amber">Naturalne</span> wynika z geometrii i jest nieusuwalne. <span class="term-amber">Optyczne</span> to obcięta źrenica z <a href="rozdzial-07-zrenice.html">Rozdziału 7</a>. <span class="term-amber">Mechaniczne</span> to coś, co zasłania — kaptur, filtr, oprawa.</li>
+      <li>Rozstrzyga jeden test: <strong>przymknij przysłonę o dwie działki</strong>. Optyczne znika, mechaniczne zostaje bez zmian, naturalne zostaje dokładnie takie samo — bo nie ma nic wspólnego z otworem.</li>
+      <li>Mylenie ich jest najczęstszą przyczyną, dla której winieta dołożona w CG wygląda naklejona: <span class="term-violet">każde z trzech ma inny kształt i inną krawędź</span>.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Naturalne · z samej geometrii</div>
+    <h2>Winieta, której nie da się usunąć</h2>
+
+    <p>Najbardziej podstawowe winietowanie nie ma nic wspólnego z jakością obiektywu. Wynika z tego, że róg kadru leży <em>dalej</em> od źrenicy niż środek i <em>pod kątem</em> do niej. Trzy niezależne czynniki geometryczne mnożą się przez siebie i dają razem czwartą potęgę kosinusa.</p>
+
+    <div class="formula">
+      E(θ) = E₀ · cos⁴<span class="vec" data-tip="Kąt między osią optyczną a kierunkiem na dany punkt kadru">θ</span>
+      <span class="sub">E — natężenie oświetlenia w danym punkcie kadru, E₀ — na osi, θ — kąt polowy. Trzy kosinusy z geometrii (odległość, rzut źrenicy, nachylenie matrycy) i jeden z prawa odwrotnych kwadratów.</span>
+    </div>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Skąd cztery kosinusy</span><span>trzy przyczyny geometryczne, jedna podwójna</span></div>
+      <svg viewBox="0 0 760 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Schemat trzech przyczyn spadku oświetlenia poza osią: dłuższa droga do rogu, skrócenie perspektywiczne źrenicy i nachylenie matrycy względem promienia.">
+        <line x1="60" y1="120" x2="380" y2="120" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 6"/>
+        <line x1="120" y1="60" x2="120" y2="180" stroke="#4fc3c0" stroke-width="2.5"/>
+        <text x="120" y="52" font-family="IBM Plex Mono" font-size="9" fill="#4fc3c0" text-anchor="middle">źrenica</text>
+        <line x1="340" y1="42" x2="340" y2="198" stroke="#6e93be" stroke-width="2.5"/>
+        <text x="340" y="216" font-family="IBM Plex Mono" font-size="9" fill="#6e93be" text-anchor="middle">matryca</text>
+
+        <line x1="120" y1="120" x2="340" y2="120" stroke="#7fc47f" stroke-width="1.8"/>
+        <text x="230" y="112" font-family="IBM Plex Mono" font-size="9" fill="#7fc47f" text-anchor="middle">na osi</text>
+        <line x1="120" y1="120" x2="340" y2="52" stroke="#e8a33d" stroke-width="1.8"/>
+        <text x="248" y="72" font-family="IBM Plex Mono" font-size="9" fill="#e8a33d">do rogu</text>
+        <path d="M 160 120 A 40 40 0 0 0 158 108" fill="none" stroke="#8b909b" stroke-width="1"/>
+        <text x="172" y="112" font-family="IBM Plex Mono" font-size="9" fill="#8b909b">θ</text>
+
+        <g font-family="IBM Plex Mono" font-size="10.5">
+          <text x="420" y="50" fill="#8b909b">1 · droga do rogu dłuższa</text>
+          <text x="700" y="50" fill="#e8a33d" text-anchor="end">cos²θ</text>
+          <text x="420" y="82" fill="#8b909b">2 · źrenica widziana skrótem</text>
+          <text x="700" y="82" fill="#e8a33d" text-anchor="end">cos θ</text>
+          <text x="420" y="114" fill="#8b909b">3 · matryca nachylona do promienia</text>
+          <text x="700" y="114" fill="#e8a33d" text-anchor="end">cos θ</text>
+        </g>
+        <line x1="420" y1="128" x2="700" y2="128" stroke="#2a2f38" stroke-width="1"/>
+        <text x="420" y="152" font-family="IBM Plex Mono" font-size="11" fill="#ecebe4">razem</text>
+        <text x="700" y="152" font-family="IBM Plex Mono" font-size="12" fill="#e8a33d" text-anchor="end">cos⁴θ</text>
+
+        <text x="420" y="192" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">Żaden z trzech czynników nie zależy od konstrukcji obiektywu.</text>
+        <text x="420" y="208" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">Wszystkie trzy wynikają z tego, że róg leży dalej i pod kątem.</text>
+      </svg>
+      <div class="diagram-caption">Pierwszy czynnik daje kwadrat, bo droga wchodzi do prawa odwrotnych kwadratów. Pozostałe dwa po jednym kosinusie.</div>
+    </div>
+
+    <p>Warto prześledzić te trzy czynniki, bo wtedy wzór przestaje być formułą do zapamiętania. <strong>Róg leży dalej</strong> od źrenicy niż środek — dokładnie o czynnik jeden przez kosinus — a natężenie maleje z kwadratem odległości, stąd pierwszy kosinus do kwadratu. <strong>Źrenica widziana z rogu jest elipsą</strong>, bo patrzy się na nią pod kątem; jej powierzchnia maleje o kolejny kosinus. <strong>Promień pada na matrycę ukośnie</strong>, więc rozkłada się na większej powierzchni — trzeci kosinus.</p>
+
+    <p>Skala jest większa, niż podpowiada intuicja, i rośnie gwałtownie przy krótkich ogniskowych — bo kąt polowy rogu rośnie razem z szerokością kadru.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Winietowanie naturalne</span><span>pełna klatka, sam róg kadru</span></div>
+      <div class="diagram-controls">
+        <label for="winOgn">Ogniskowa</label>
+        <input id="winOgn" type="range" min="14" max="135" step="1" value="24">
+        <span class="value-readout" id="winOdczyt">24 mm</span>
+      </div>
+      <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Kadr z gradientem winietowania naturalnego i wykres spadku natężenia w funkcji ogniskowej, z odczytem straty w działkach.">
+        <defs>
+          <radialGradient id="winGrad" cx="50%" cy="50%" r="72%">
+            <stop offset="0%" stop-color="#f2f0e8" stop-opacity="1"/>
+            <stop id="winStop" offset="100%" stop-color="#f2f0e8" stop-opacity="0.3"/>
+          </radialGradient>
+        </defs>
+        <rect x="40" y="34" width="230" height="150" fill="#0d0f11"/>
+        <rect x="40" y="34" width="230" height="150" fill="url(#winGrad)"/>
+        <text x="155" y="26" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">PODGLĄD</text>
+
+        <line x1="330" y1="190" x2="710" y2="190" stroke="#8b909b" stroke-width="1.2"/>
+        <line x1="330" y1="34" x2="330" y2="190" stroke="#8b909b" stroke-width="1.2"/>
+        <g font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">
+          <text x="330" y="208">14</text><text x="450" y="208">40</text><text x="570" y="208">85</text><text x="700" y="208">135 mm</text>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="end">
+          <text x="322" y="38">100%</text><text x="322" y="190">0</text>
+        </g>
+        <path id="winKrzywa" fill="none" stroke="#e8a33d" stroke-width="2.6"/>
+        <circle id="winPunkt" cx="400" cy="100" r="5" fill="#7fc47f"/>
+
+        <g font-family="IBM Plex Mono" font-size="10.5">
+          <text x="40" y="212" fill="#8b909b">kąt rogu</text><text x="150" y="212" fill="#ecebe4" id="winKat">42,0°</text>
+          <text x="40" y="232" fill="#8b909b">róg dostaje</text><text x="150" y="232" fill="#e8a33d" id="winProc">30,4%</text>
+          <text x="215" y="232" fill="#8b909b">=</text><text x="245" y="232" fill="#e8a33d" id="winDzialki">1,72 działki</text>
+        </g>
+      </svg>
+      <div class="diagram-caption" id="winPodpis">Dwudziestka czwórka na pełnej klatce traci w rogu 1,7 działki — z samej geometrii, przy obiektywie idealnym.</div>
+    </div>
+
+    <p>Liczby z tego wykresu bywają zaskoczeniem. Czternastka traci w rogu <strong>ponad trzy i pół działki</strong> zanim jeszcze weźmiemy pod uwagę cokolwiek związanego ze szkłem. Osiemdziesiątka piątka traci mniej niż jedną piątą działki, czyli praktycznie nic.</p>
+
+    <p>Konstruktorzy walczą z tym, odchodząc od modelu dziurki — projektując układ tak, żeby źrenica widziana z rogu kadru była <em>większa</em> niż z osi, co częściowo kompensuje spadek. Skuteczność jest częściowa i nigdy pełna. <span class="term-cyan">Winietowanie naturalne można zmniejszyć, ale nie usunąć</span> — i to jest jedyne z tej trójki, o którym da się to powiedzieć.</p>
+
+    <p>Jest przy tym jeden przypadek, w którym prawo kosinusa czwartej potęgi przestaje obowiązywać, i warto go znać. W układach <strong>telecentrycznych po stronie obrazu</strong> — czyli takich, w których źrenica wyjściowa leży bardzo daleko, jak w <a href="rozdzial-07-zrenice.html">Rozdziale 7</a> — promienie padają na matrycę niemal prostopadle niezależnie od miejsca w kadrze. Trzeci kosinus znika, a spadek jest wyraźnie łagodniejszy niż czwarta potęga.</p>
+
+    <p class="deeper-inline">Skąd biorą się cztery kosinusy i jak policzyć obcięcie źrenicy poza osią — <a href="../dodatki/dodatek-p-winietowanie-w-liczbach.html">Dodatek P</a>.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Optyczne i mechaniczne · dwie pozostałe</div>
+    <h2>Obcięta źrenica i coś, co zasłania</h2>
+
+    <p><strong>Winietowanie optyczne</strong> opisaliśmy już w <a href="rozdzial-07-zrenice.html">Rozdziale 7</a>, tylko pod inną nazwą. Oprawy soczewek, oglądane z rogu kadru, przesuwają się względem siebie i obcinają źrenicę — a obcięta źrenica przepuszcza mniej światła. To jest ta sama przyczyna, co kocie oko: jedno zjawisko, dwa objawy.</p>
+
+    <p>Skala winietowania optycznego bywa większa od naturalnego i jest to jeden z powodów, dla których dobre szerokie kąty są tak duże. Konstruktor może je zmniejszyć tylko jednym sposobem — <strong>poszerzając wszystko, co stoi na drodze wiązki</strong>, jak opisuje blok „Zaawansowane" w <a href="rozdzial-07-zrenice.html">Rozdziale 7</a>. Masa idzie więc nie w jasność, tylko w to, żeby róg kadru dostał pełną źrenicę.</p>
+
+    <p><strong>Winietowanie mechaniczne</strong> nie ma nic wspólnego z optyką. Coś fizycznie zasłania część wiązki: za długi kaptur, zbyt gruby filtr, pierścień adaptera, oprawa nakręcona na obiektyw o zbyt małej średnicy. Objaw jest inny niż w dwóch pozostałych — <span class="term-violet">ciemnienie ma wyraźną krawędź</span>, a nie płynne przejście.</p>
+
+    <p>Warto zauważyć, że mechaniczne jest jedynym z trzech, które <em>nie należy do obiektywu</em>. Zależy od tego, co ktoś na niego nakręcił, więc zmienia się między ujęciami tego samego dnia i tym samym szkłem. Przy pracy z materiałem oznacza to jedno: <span class="term-cyan">profilu winiety nie można przenosić między ujęciami bez sprawdzenia</span>, nawet jeśli metryczka podaje ten sam obiektyw i tę samą przysłonę.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Trzy profile</span><span>ten sam kadr, trzy przyczyny</span></div>
+      <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Trzy kadry z winietowaniem i ich profile jasności: naturalne gładkie i szerokie, optyczne mocniejsze przy brzegu, mechaniczne z ostrą krawędzią w rogach.">
+        <defs>
+          <radialGradient id="w30a" cx="50%" cy="50%" r="70%">
+            <stop offset="0%" stop-color="#f2f0e8" stop-opacity="1"/><stop offset="100%" stop-color="#f2f0e8" stop-opacity="0.34"/>
+          </radialGradient>
+          <radialGradient id="w30b" cx="50%" cy="50%" r="70%">
+            <stop offset="0%" stop-color="#f2f0e8" stop-opacity="1"/><stop offset="62%" stop-color="#f2f0e8" stop-opacity="0.86"/><stop offset="100%" stop-color="#f2f0e8" stop-opacity="0.2"/>
+          </radialGradient>
+        </defs>
+        <g font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">
+          <text x="140" y="20">NATURALNE</text><text x="380" y="20">OPTYCZNE</text><text x="620" y="20">MECHANICZNE</text>
+        </g>
+
+        <rect x="46" y="30" width="188" height="112" fill="#0d0f11"/>
+        <rect x="46" y="30" width="188" height="112" fill="url(#w30a)"/>
+        <rect x="286" y="30" width="188" height="112" fill="#0d0f11"/>
+        <rect x="286" y="30" width="188" height="112" fill="url(#w30b)"/>
+        <rect x="526" y="30" width="188" height="112" fill="#0d0f11"/>
+        <rect x="526" y="30" width="188" height="112" fill="#f2f0e8" fill-opacity="0.92"/>
+        <g fill="#0d0f11">
+          <path d="M 526 30 Q 566 30 526 70 Z"/><path d="M 714 30 Q 674 30 714 70 Z"/>
+          <path d="M 526 142 Q 566 142 526 102 Z"/><path d="M 714 142 Q 674 142 714 102 Z"/>
+        </g>
+
+        <g stroke="#e8a33d" stroke-width="2" fill="none">
+          <path d="M 46 214 Q 90 190 140 184 Q 190 190 234 214"/>
+          <path d="M 286 220 L 320 202 Q 350 186 380 184 Q 410 186 440 202 L 474 220"/>
+          <path d="M 526 186 L 566 186 L 570 220 M 670 220 L 674 186 L 714 186"/>
+        </g>
+        <text x="140" y="240" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">gładkie, od samego środka</text>
+        <text x="380" y="240" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">płaskie w środku, spadek przy brzegu</text>
+        <text x="620" y="240" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">ostra krawędź, tylko w rogach</text>
+      </svg>
+      <div class="diagram-caption">Trzy profile są rozróżnialne gołym okiem, o ile wie się, czego szukać. Krzywa poniżej każdego kadru to przekrój jasności przez środek.</div>
+    </div>
+
+    <p>Kształty różnią się na tyle, że rozpoznanie nie wymaga żadnego pomiaru. <strong>Naturalne zaczyna spadać od samego środka</strong>, bo kosinus maleje od zera. <strong>Optyczne jest płaskie w środku</strong> i spada dopiero tam, gdzie oprawy zaczynają obcinać. <strong>Mechaniczne nie ma przejścia</strong> — jest jasno, a potem nagle ciemno, i zwykle tylko w rogach.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Test · dwie działki rozstrzygają</div>
+    <h2>Jak je odróżnić</h2>
+
+    <p>Test jest jeden i zajmuje tyle, co zrobienie drugiego zdjęcia: <strong>przymknij przysłonę o dwie działki i porównaj</strong>. Trzy zjawiska reagują na to zupełnie inaczej, bo trzy mają różne przyczyny.</p>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead>
+          <tr><th>Rodzaj</th><th>Przyczyna</th><th>Po przymknięciu</th><th>Kształt</th><th>Da się usunąć</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Naturalne</td><td>geometria kąta polowego</td><td>bez zmian</td><td>gładkie, od środka</td><td>nie</td></tr>
+          <tr><td>Optyczne</td><td>obcięcie źrenicy przez oprawy</td><td><strong>znika</strong></td><td>płaskie w środku</td><td>przymknięciem</td></tr>
+          <tr><td>Mechaniczne</td><td>przeszkoda w torze</td><td>bez zmian, czasem ostrzejsze</td><td>ostra krawędź</td><td>zdjęciem przeszkody</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Kolumna trzecia rozstrzyga między optycznym a resztą, kolumna czwarta między naturalnym a mechanicznym. Dwa spojrzenia i wiadomo.</p>
+
+    <p>Jest jeszcze jedna różnica, przydatna przy materiale, w którym nie da się zmienić przysłony: <span class="term-cyan">winietowanie mechaniczne bywa niesymetryczne</span>. Kaptur nakręcony krzywo albo filtr wsunięty niedokładnie zaciemnia mocniej po jednej stronie. Dwa pozostałe są zawsze obrotowo symetryczne, bo obie ich przyczyny są symetryczne z definicji.</p>
+
+    <p>Drugim rozstrzygnięciem bez zmiany przysłony jest <strong>ogniskowa</strong>, o ile materiał zawiera ujęcia różnymi. Naturalne zmienia się z nią gwałtownie i przewidywalnie — według krzywej z widgetu wyżej. Optyczne też się zmienia, ale nieregularnie, bo zależy od konstrukcji. Mechaniczne zwykle znika przy dłuższych ogniskowych całkowicie, bo wiązka przestaje sięgać do przeszkody. Trzy różne zachowania w tej samej sekwencji dają odpowiedź bez żadnego testu na planie.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Test przymknięcia</span><span>trzy zjawiska, trzy reakcje</span></div>
+      <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Trzy pary kadrów przy pełnym otworze i po przymknięciu: naturalne bez zmian, optyczne znika, mechaniczne bez zmian z ostrą krawędzią.">
+        <defs>
+          <radialGradient id="w30t1" cx="50%" cy="50%" r="70%"><stop offset="0%" stop-color="#f2f0e8" stop-opacity="1"/><stop offset="100%" stop-color="#f2f0e8" stop-opacity="0.34"/></radialGradient>
+          <radialGradient id="w30t2" cx="50%" cy="50%" r="70%"><stop offset="0%" stop-color="#f2f0e8" stop-opacity="1"/><stop offset="60%" stop-color="#f2f0e8" stop-opacity="0.86"/><stop offset="100%" stop-color="#f2f0e8" stop-opacity="0.18"/></radialGradient>
+          <radialGradient id="w30t3" cx="50%" cy="50%" r="70%"><stop offset="0%" stop-color="#f2f0e8" stop-opacity="1"/><stop offset="100%" stop-color="#f2f0e8" stop-opacity="0.9"/></radialGradient>
+        </defs>
+        <g font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">
+          <text x="140" y="20">NATURALNE</text><text x="380" y="20">OPTYCZNE</text><text x="620" y="20">MECHANICZNE</text>
+        </g>
+        <text x="26" y="60" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">f/2</text>
+        <text x="26" y="170" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">f/8</text>
+
+        <rect x="60" y="28" width="160" height="88" fill="#0d0f11"/><rect x="60" y="28" width="160" height="88" fill="url(#w30t1)"/>
+        <rect x="60" y="136" width="160" height="88" fill="#0d0f11"/><rect x="60" y="136" width="160" height="88" fill="url(#w30t1)"/>
+        <text x="140" y="242" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">bez zmian</text>
+
+        <rect x="300" y="28" width="160" height="88" fill="#0d0f11"/><rect x="300" y="28" width="160" height="88" fill="url(#w30t2)"/>
+        <rect x="300" y="136" width="160" height="88" fill="#0d0f11"/><rect x="300" y="136" width="160" height="88" fill="url(#w30t3)"/>
+        <text x="380" y="242" font-family="IBM Plex Mono" font-size="9.5" fill="#7fc47f" text-anchor="middle">znika</text>
+
+        <rect x="540" y="28" width="160" height="88" fill="#f2f0e8" fill-opacity="0.92"/>
+        <g fill="#0d0f11"><path d="M 540 28 Q 578 28 540 66 Z"/><path d="M 700 28 Q 662 28 700 66 Z"/><path d="M 540 116 Q 578 116 540 78 Z"/><path d="M 700 116 Q 662 116 700 78 Z"/></g>
+        <rect x="540" y="136" width="160" height="88" fill="#f2f0e8" fill-opacity="0.92"/>
+        <g fill="#0d0f11"><path d="M 540 136 Q 578 136 540 174 Z"/><path d="M 700 136 Q 662 136 700 174 Z"/><path d="M 540 224 Q 578 224 540 186 Z"/><path d="M 700 224 Q 662 224 700 186 Z"/></g>
+        <text x="620" y="242" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">bez zmian, ostrzejsze</text>
+      </svg>
+      <div class="diagram-caption">Środkowa kolumna jest jedyną, która się zmienia. To jest cały test — i wystarcza, żeby wiedzieć, czym winietę odtwarzać.</div>
+    </div>
+
+    <button class="advanced-btn" data-modal-target="adv-winieta-korekcja">Zaawansowane: dlaczego korekcja winiety w kamerze bywa pułapką</button>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">W CG · winieta jako maska, nie jako gradient</div>
+    <h2>Odtwarzanie</h2>
+
+    <p>Winieta dołożona w compie prawie zawsze pochodzi z jednego narzędzia, które rysuje gładki, kołowy gradient. Wygląda to jak winietowanie naturalne — i dlatego pasuje wyłącznie wtedy, gdy w plate'cie było właśnie ono.</p>
+
+    <p>Poprawka wymaga trzech rzeczy i wszystkie są tanie.</p>
+
+    <p><strong>Zmierz profil, nie zgaduj kształtu.</strong> Odczytaj jasność wzdłuż linii od środka do rogu na jednolitej powierzchni w plate'cie. Kształt tej krzywej powie ci od razu, z którym z trzech zjawisk masz do czynienia — i da profil do wpisania.</p>
+
+    <p><strong>Pamiętaj, że winieta nie jest kołowa.</strong> Zależy od kąta polowego, więc jej linie stałej jasności są okręgami <em>w polu widzenia</em>, a nie w kadrze. Na prostokątnym kadrze oznacza to, że rogi są ciemniejsze niż środki krawędzi — i narzędzie rysujące elipsę wpisaną w kadr daje kształt jakościowo inny.</p>
+
+    <p><strong>Winieta idzie przed ziarnem.</strong> Powstaje w obiektywie, więc w łańcuchu z <a href="../dodatki/dodatek-y-ziarno-w-compie.html">Dodatku Y</a> leży przed warstwą czułą. Ciemniejszy róg ma więc <span class="term-raster">więcej względnego szumu</span>, dokładnie tak jak każde inne niedoświetlenie — i to jest szczegół, którego winieta dodana na końcu nie odtworzy.</p>
+
+    <p>Warto też pamiętać, że winieta wpływa na coś więcej niż jasność. Ciemniejsze rogi to rogi <strong>niedoświetlone</strong>, a niedoświetlenie zmienia dwie rzeczy naraz: podnosi względny szum, jak liczy <a href="rozdzial-27-od-fotonow-do-liczb.html">Rozdział 27</a>, i przesuwa je w inne miejsce krzywej tonalnej. Przy silnej winiecie róg kadru bywa więc nie tylko ciemniejszy, ale i <em>mniej kontrastowy</em> — bo leży w innym fragmencie charakterystyki nośnika.</p>
+
+    <p>Dla dopasowania elementu znaczy to, że sam gradient jasności nie wystarcza. <span class="term-cyan">Element wstawiony w róg powinien dostać także podniesiony szum i lekko obniżony kontrast</span> — obie rzeczy w proporcji do tego, o ile działek winieta go przyciemniła. Jest to poprawka rzadko robiona i widoczna dokładnie tam, gdzie element dotyka krawędzi kadru.</p>
+
+    <p>Ostatnia uwaga dotyczy sytuacji odwrotnej i częstszej, niż się wydaje. Wiele kamer i wywoływarek <strong>koryguje winietowanie automatycznie</strong>, rozjaśniając rogi. Plate może więc mieć winietę usuniętą — a razem z nią podniesiony szum w rogach, bo rozjaśnienie podnosi też szum. Element CG z dołożoną winietą będzie wtedy pasował gorzej niż bez niej.</p>
+  </div>
+
+  <div class="panel practice">
+    <div class="panel-label">Z praktyki</div>
+    <p><strong>Zmierz profil na jednolitej ścianie, nie na scenie.</strong> W realnym kadrze jasność zmienia się z treści i nie da się oddzielić winiety od oświetlenia. Jeśli w materiale nie ma jednolitej powierzchni, poszukaj nieba albo poproś o klatkę testową — jedna wystarczy na cały zestaw.</p>
+    <p><strong>Sprawdź, czy winieta w ogóle jest.</strong> Automatyczna korekcja w kamerze i w wywoływarce jest dziś domyślnie włączona. Plate bez winiety to nie jest błąd — to jest stan, do którego trzeba dopasować element, zamiast dokładać mu winietę „bo tak wygląda film”.</p>
+    <p><strong>Przy zoomie zmierz na obu końcach.</strong> Winietowanie zmienia się z ogniskową i to dwukrotnie: naturalne rośnie ku krótkiemu końcowi z kosinusa, optyczne bywa najgorsze tam, gdzie konstrukcja jest najbardziej napięta. Jedna wartość na cały zakres nie wystarczy, tak samo jak przy dystorsji w <a href="rozdzial-19-zoom-kontra-stalka.html">Rozdziale 19</a>.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>winietowanie naturalne</dt>
+      <dd>Spadek oświetlenia jak cos⁴ kąta polowego. Wynika z geometrii, nie z konstrukcji, i nie znika po przymknięciu.</dd>
+      <dt>winietowanie optyczne</dt>
+      <dd>Obcięcie źrenicy przez oprawy przy patrzeniu poza osią. Ta sama przyczyna, co kocie oko. Znika po przymknięciu.</dd>
+      <dt>winietowanie mechaniczne</dt>
+      <dd>Zasłonięcie wiązki przez przeszkodę w torze — kaptur, filtr, adapter. Ma ostrą krawędź i bywa niesymetryczne.</dd>
+      <dt>kąt polowy</dt>
+      <dd>Kąt między osią optyczną a kierunkiem na dany punkt kadru. To od niego, a nie od odległości w pikselach, zależy winietowanie naturalne.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Winietowanie decyduje o tym, ile światła dociera do rogu. Zostaje pytanie, co nośnik robi z tym, co dotarło — zwłaszcza gdy jest go za dużo. W <a href="rozdzial-31-zakres-dynamiczny.html">następnym rozdziale</a> okaże się, że taśma nie ma punktu, w którym się kończy, tylko zakręt, a matryca ma ścianę — i że cała praca nad „filmowym” wyglądem przepaleń jest pracą nad tą jedną różnicą.</p>
+  </div>
 
   <div class="deeper">
     <div class="deeper-label">Idź głębiej</div>
@@ -57,8 +318,75 @@ window.SKY3D_MESSAGES = {
       <a class="nav-next" href="rozdzial-31-zakres-dynamiczny.html">Następny →</a>
   </div>
 
+  <template id="adv-winieta-korekcja">
+    <h3>Dlaczego korekcja winiety w kamerze bywa pułapką</h3>
+
+    <p>Kamery i wywoływarki od lat korygują winietowanie automatycznie, na podstawie profilu obiektywu zapisanego w metadanych. Wynik wygląda lepiej i w większości zastosowań nim jest. Przy pracy z materiałem do złożenia bywa jednak kłopotem, i to z trzech powodów.</p>
+
+    <p><strong>Rozjaśnienie podnosi też szum.</strong> Róg dostał mniej światła, więc miał gorszy stosunek sygnału do szumu — a mnożenie przez stałą tego nie naprawia, tylko podnosi jedno i drugie. Skorygowany plate ma rogi <span class="term-raster">tak samo jasne i wyraźnie bardziej zaszumione</span> niż środek. Element CG z równomiernym szumem odstaje wtedy właśnie w rogach.</p>
+
+    <p><strong>Korekcja bywa niepełna albo nadmiarowa.</strong> Profil opisuje model, a nie egzemplarz, i nie zna filtra ani kaptura. Materiał po korekcji miewa więc resztkową winietę o dziwnym kształcie — albo, przy nadmiarowej korekcji, rogi <em>jaśniejsze</em> od środka. Jedno i drugie łatwo wziąć za błąd oświetlenia.</p>
+
+    <p><strong>Korekcja nie dotyczy elementu CG.</strong> Render trafia do compu nieskorygowany, bo nie miał czego korygować. Jeśli plate przeszedł korekcję, a element dostał dołożoną winietę „dla realizmu”, obraz rozjeżdża się podwójnie.</p>
+
+    <p>Praktyczna kolejność postępowania jest więc taka: <strong>najpierw ustal, czy plate jest skorygowany</strong> — po jednolitej powierzchni albo po metadanych — a dopiero potem zdecyduj, czy element potrzebuje winiety. W materiale skorygowanym zwykle nie potrzebuje, a potrzebuje za to <em>podniesionego szumu w rogach</em>, o czym nikt nie pamięta.</p>
+  </template>
+
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-panel">
+      <button class="modal-close" data-modal-close aria-label="Zamknij">×</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
 </div>
 
 <script src="../assets/interactive.js"></script>
+<script>
+/* Winietowanie naturalne: cos^4 kata polowego. Kat rogu liczony z polprzekatnej
+   pelnej klatki (21,63 mm) i ogniskowej. Zaden parametr obiektywu poza
+   ogniskowa nie wchodzi — to jest cala tresc slowa "naturalne". */
+(function () {
+  var sl = document.getElementById('winOgn');
+  if (!sl) return;
+  var POLPRZEK = 21.63;                 // pelna klatka, polprzekatna w mm
+  var X0 = 330, X1 = 710, Y0 = 190, Y1 = 34;
+  var F0 = 14, F1 = 135;
+
+  function udzial(f) {
+    var th = Math.atan(POLPRZEK / f);
+    return { kat: th * 180 / Math.PI, c: Math.pow(Math.cos(th), 4) };
+  }
+  function px(f) { return X0 + (f - F0) / (F1 - F0) * (X1 - X0); }
+  function py(c) { return Y0 - c * (Y0 - Y1); }
+
+  var d = '';
+  for (var f = F0; f <= F1; f += 1) {
+    d += (f === F0 ? 'M ' : ' L ') + px(f).toFixed(1) + ' ' + py(udzial(f).c).toFixed(1);
+  }
+
+  function odswiez() {
+    var f = parseFloat(sl.value);
+    var u = udzial(f);
+    var dz = Math.abs(Math.log(u.c) / Math.LN2);
+
+    document.getElementById('winKrzywa').setAttribute('d', d);
+    document.getElementById('winPunkt').setAttribute('cx', px(f).toFixed(1));
+    document.getElementById('winPunkt').setAttribute('cy', py(u.c).toFixed(1));
+    document.getElementById('winStop').setAttribute('stop-opacity', u.c.toFixed(3));
+
+    document.getElementById('winOdczyt').textContent = f.toFixed(0) + ' mm';
+    document.getElementById('winKat').textContent = u.kat.toFixed(1).replace('.', ',') + '°';
+    document.getElementById('winProc').textContent = (u.c * 100).toFixed(1).replace('.', ',') + '%';
+    document.getElementById('winDzialki').textContent = dz.toFixed(2).replace('.', ',') + ' działki';
+    document.getElementById('winPodpis').textContent =
+      f.toFixed(0) + ' mm na pełnej klatce traci w rogu ' + dz.toFixed(2).replace('.', ',') +
+      ' działki — z samej geometrii, przy obiektywie idealnym.' +
+      (dz > 2 ? ' Tak duży spadek konstruktorzy kompensują powiększeniem źrenicy widzianej z rogu.' : '');
+  }
+  sl.addEventListener('input', odswiez);
+  odswiez();
+})();
+</script>
 </body>
 </html>

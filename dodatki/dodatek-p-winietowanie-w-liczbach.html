@@ -41,7 +41,119 @@ window.SKY3D_MESSAGES = {
   <h1>Winietowanie w liczbach</h1>
   <p class="subtitle">Skąd cos⁴θ, jak policzyć obcięcie źrenicy poza osią i jak odróżnić jedno od drugiego pomiarem, a nie na oko.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">Co tu jest</div>
+    <ul>
+      <li><strong>Wyprowadzenie cos⁴</strong> — trzy czynniki geometryczne, z których jeden liczy się podwójnie.</li>
+      <li><strong>Tabela dla trzech formatów</strong>: ile działek traci róg kadru przy typowych ogniskowych.</li>
+      <li><strong>Obcięcie źrenicy poza osią</strong> — jak policzyć, ile zostaje z okręgu, gdy oprawy się rozjeżdżają.</li>
+      <li><strong>Jak odróżnić trzy winietowania pomiarem</strong>, a nie na oko.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Wyprowadzenie · skąd czwarta potęga</div>
+    <h2>Trzy czynniki, cztery kosinusy</h2>
+
+    <p>Rozważmy punkt kadru leżący pod kątem <em>θ</em> do osi optycznej i policzmy, ile światła dociera do niego względem punktu na osi. Zakładamy obiektyw idealny — bez obcięcia, bez wad, model dziurki.</p>
+
+    <p><strong>Czynnik pierwszy: odległość.</strong> Punkt poza osią leży od źrenicy dalej niż punkt osiowy, dokładnie o czynnik 1/cos θ. Natężenie maleje z kwadratem odległości, więc daje to <em>cos²θ</em>.</p>
+
+    <p><strong>Czynnik drugi: rzut źrenicy.</strong> Źrenica oglądana z punktu leżącego poza osią jest widziana pod kątem, więc jej pole pozorne maleje o <em>cos θ</em>. Okrąg zamienia się w elipsę o tej samej wysokości i mniejszej szerokości.</p>
+
+    <p><strong>Czynnik trzeci: nachylenie matrycy.</strong> Promień pada na powierzchnię ukośnie, więc ta sama energia rozkłada się na większej powierzchni — kolejny <em>cos θ</em>.</p>
+
+    <div class="formula">
+      E(θ)/E₀ = cos²<span class="vec" data-tip="Kąt polowy">θ</span> · cos <span class="vec" data-tip="Kąt polowy">θ</span> · cos <span class="vec" data-tip="Kąt polowy">θ</span> = cos⁴<span class="vec" data-tip="Kąt polowy">θ</span>
+      <span class="sub">Trzy niezależne czynniki geometryczne. Żaden nie zależy od konstrukcji obiektywu — dlatego zjawisko nazywa się naturalnym i dlatego nie da się go usunąć w ramach modelu dziurki.</span>
+    </div>
+
+    <p>Kąt polowy liczy się z półprzekątnej formatu i ogniskowej — a ponieważ chodzi o róg kadru, jest to kąt największy, jaki w danym układzie występuje:</p>
+
+    <div class="formula">
+      <span class="vec" data-tip="Kąt polowy rogu kadru">θ</span> = arctg(<span class="vec" data-tip="Połowa przekątnej formatu">d</span> / <span class="vec" data-tip="Ogniskowa">f</span>)
+      <span class="sub">d — połowa przekątnej formatu: 21,63 mm dla pełnej klatki, 14,28 mm dla Super 35, 29,93 mm dla formatu 65 mm. f — ogniskowa.</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Tabela · ile to jest w działkach</div>
+    <h2>Spadek w rogu dla trzech formatów</h2>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead>
+          <tr><th>Ogniskowa</th><th class="num">S35</th><th class="num">Pełna klatka</th><th class="num">65 mm</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>14 mm</td><td class="num">2,06 dz</td><td class="num">3,52 dz</td><td class="num">4,96 dz</td></tr>
+          <tr><td>18 mm</td><td class="num">1,41 dz</td><td class="num">2,58 dz</td><td class="num">3,83 dz</td></tr>
+          <tr><td>24 mm</td><td class="num">0,87 dz</td><td class="num">1,72 dz</td><td class="num">2,71 dz</td></tr>
+          <tr><td>35 mm</td><td class="num">0,44 dz</td><td class="num">0,93 dz</td><td class="num">1,58 dz</td></tr>
+          <tr><td>50 mm</td><td class="num">0,23 dz</td><td class="num">0,49 dz</td><td class="num">0,88 dz</td></tr>
+          <tr><td>85 mm</td><td class="num">0,08 dz</td><td class="num">0,18 dz</td><td class="num">0,34 dz</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Strata w rogu kadru wyrażona w działkach, dla obiektywu idealnego. Liczone jako log₂ z cos⁴θ, gdzie θ = arctg(d/f).</p>
+
+    <p>Z tabeli wychodzą trzy obserwacje warte zapamiętania.</p>
+
+    <p><strong>Duży format płaci więcej.</strong> Ta sama ogniskowa na większej matrycy obejmuje szerszy kąt, więc traci mocniej. Dwudziestka czwórka na formacie 65 mm traci w rogu prawie trzy działki — i to jest jeden z niewymienianych kosztów dużego formatu, obok tych z <a href="dodatek-aa-formaty-i-ekwiwalencja.html">Dodatku AA</a>.</p>
+
+    <p><strong>Powyżej pięćdziesiątki zjawisko przestaje istnieć.</strong> Ćwierć działki jest niemierzalna w praktyce, a jedna dziesiąta tym bardziej. <span class="term-cyan">Winieta widoczna na teleobiektywie nie jest naturalna</span> — musi być optyczna albo mechaniczna, i to rozstrzyga bez żadnego testu.</p>
+
+    <p><strong>Rzeczywiste obiektywy tracą mniej.</strong> Podane liczby są górnym oszacowaniem dla modelu dziurki. Realne konstrukcje projektuje się tak, żeby źrenica widziana z rogu była większa niż z osi, co część spadku kompensuje. Wartość zmierzona jest więc zwykle o pół działki do działki lepsza — ale nigdy nie zerowa.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Obcięcie · ile zostaje z okręgu</div>
+    <h2>Winietowanie optyczne w rachunku</h2>
+
+    <p>Winietowanie optyczne wynika z tego, że oprawy — przednia, tylna i pośrednie — oglądane poza osią przesuwają się względem siebie. Widziana źrenica jest częścią wspólną kilku przesuniętych okręgów.</p>
+
+    <p>Dla dwóch okręgów o tym samym promieniu <em>R</em>, przesuniętych o <em>s</em>, pole części wspólnej wyraża się wzorem soczewki kołowej:</p>
+
+    <div class="formula">
+      A = 2<span class="vec" data-tip="Promień źrenicy">R</span>²·arccos(<span class="vec" data-tip="Przesunięcie opraw względem siebie, widziane z danego punktu kadru">s</span>/2<span class="vec" data-tip="Promień źrenicy">R</span>) − (<span class="vec" data-tip="Przesunięcie">s</span>/2)·√(4<span class="vec" data-tip="Promień źrenicy">R</span>² − <span class="vec" data-tip="Przesunięcie">s</span>²)
+      <span class="sub">A — pole części wspólnej. R — promień źrenicy, s — przesunięcie okręgów. Dla s = 0 daje pełne koło πR², dla s = 2R zero. Przesunięcie rośnie z tangensem kąta polowego i z odległością między oprawami.</span>
+    </div>
+
+    <p>Stąd wynikają dwie rzeczy, które rozdział opisuje słowami. Po pierwsze, <strong>obcięcie zależy od promienia źrenicy</strong> — a ten maleje z przymykaniem. Gdy źrenica staje się mniejsza od odstępu między oprawami, obcięcie znika całkowicie i to jest przyczyna testu z dwóch działek.</p>
+
+    <p>Po drugie, <span class="term-violet">obcięcie zależy od kąta polowego przez tangens, a nie przez kosinus</span> — czyli rośnie znacznie szybciej niż winietowanie naturalne i jest praktycznie zerowe w środku kadru. To jest przyczyna różnicy kształtów: naturalne spada od samego środka, optyczne dopiero od pewnej odległości od osi.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Pomiar · rozstrzygnięcie bez zgadywania</div>
+    <h2>Jak zmierzyć, które to jest</h2>
+
+    <p>Protokół zajmuje kwadrans i wymaga jednolitej, równomiernie oświetlonej powierzchni — ściany, rozproszonego nieba albo blatu podświetlanego.</p>
+
+    <p><strong>Krok 1.</strong> Nakręć tę powierzchnię wypełniającą kadr, przy pełnym otworze i przy przymknięciu o dwie oraz cztery działki. Trzy klatki.</p>
+
+    <p><strong>Krok 2.</strong> Dla każdej odczytaj jasność w środku, w połowie drogi do rogu i w samym rogu. Dziewięć liczb.</p>
+
+    <p><strong>Krok 3.</strong> Podziel wartości brzegowe przez środkowe i przelicz na działki. Dostajesz trzy profile.</p>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead>
+          <tr><th>Co widzisz</th><th>Wniosek</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Profil identyczny na trzech przysłonach</td><td>naturalne albo mechaniczne</td></tr>
+          <tr><td>Profil płaskieje z przymykaniem</td><td>optyczne — i tyle, ile ubyło, było optyczne</td></tr>
+          <tr><td>Spadek już w połowie drogi do rogu</td><td>naturalne</td></tr>
+          <tr><td>Środek płaski, spadek dopiero przy rogu</td><td>optyczne albo mechaniczne</td></tr>
+          <tr><td>Spadek niesymetryczny</td><td>mechaniczne</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Dwa wiersze wystarczają zwykle do rozstrzygnięcia; pozostałe potwierdzają. Wiersz drugi jest jedynym, który daje wartość liczbową składowej optycznej.</p>
+
+    <p>Wynik warto zapisać jako <strong>profil, a nie jako jedną liczbę</strong>: trzy wartości na trzech promieniach i dla każdej używanej przysłony. Jest to komplet, z którego da się odtworzyć winietę w compie bez zgadywania kształtu — a kształt, jak pokazuje <a href="../rozdzialy/rozdzial-30-winietowanie.html">Rozdział 30</a>, jest tym, co odróżnia winietę wiarygodną od naklejonej.</p>
+  </div>
 
   <div class="site-nav">
     <a href="../index.html">← Spis treści</a>
