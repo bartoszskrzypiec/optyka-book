@@ -43,7 +43,256 @@ window.SKY3D_MESSAGES = {
   <h1>Ogniskowa jako decyzja</h1>
   <p class="subtitle">Wybór między 24 a 85 milimetrami nie jest wyborem kadru — kadr można wyrównać krokiem w tył. Jest wyborem tego, jak blisko widz stoi i ile świata widzi za bohaterem.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li><strong>Wybór ogniskowej jest wyborem odległości.</strong> Jeśli postać ma zajmować w kadrze tyle samo, to każda ogniskowa wyznacza dokładnie jedno miejsce, z którego wolno stanąć — a to miejsce decyduje o wszystkim pozostałym.</li>
+      <li>Regulowana wielkość to nie „ile widać”, tylko <span class="term-amber">stosunek wielkości planów</span>. Szeroka odsuwa tło i wciąga widza; długa przyciąga tło i spłaszcza przestrzeń.</li>
+      <li><strong>Wady szkła są częścią wypowiedzi.</strong> Osiemnastka nie tylko obejmuje szeroko — zniekształca twarze i rozjeżdża piony, a operator albo z tego korzysta, albo musi to obchodzić.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Teza · ogniskowa to odległość</div>
+    <h2>Czym naprawdę się wybiera</h2>
+
+    <p><a href="rozdzial-05-ogniskowa-format-perspektywa.html">Rozdział 5</a> wykazał rzecz, którą teraz trzeba wykorzystać: <strong>perspektywa jest funkcją położenia kamery, a nie ogniskowej</strong>. Ta sama scena sfotografowana z tego samego miejsca dwiema ogniskowymi daje dwa kadry, z których jeden jest wycinkiem drugiego. Nic poza wycinkiem się nie zmienia.</p>
+
+    <p>Wynika stąd coś, co brzmi paradoksalnie, a jest oczywiste: skoro sama ogniskowa nie zmienia perspektywy, to <span class="term-violet">cały jej wpływ na obraz bierze się z tego, że zmienia miejsce, z którego trzeba stanąć</span>. Operator wybierający osiemnastkę nie wybiera „szerokiego kadru” — wybiera stanie blisko. Wybierający setkę wybiera stanie daleko.</p>
+
+    <p>A stanie blisko albo daleko rozstrzyga o rzeczy, której zwykle się szuka: <strong>o proporcji między planem pierwszym a tłem</strong>. Blisko oznacza, że postać jest wielokrotnie bliżej niż tło, więc jest od niego wielokrotnie większa. Daleko oznacza, że różnica odległości jest ułamkiem całości, więc tło rośnie razem z postacią.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Ta sama postać w kadrze</span><span>co robi tło</span></div>
+      <div class="diagram-controls">
+        <label for="ogF">Ogniskowa</label>
+        <input id="ogF" type="range" min="14" max="200" step="1" value="50">
+        <span class="value-readout" id="ogOdczyt">50 mm</span>
+      </div>
+      <svg viewBox="0 0 760 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Widok z góry: kamera, postać i tło. Przy zmianie ogniskowej kamera odjeżdża, żeby postać zajmowała tyle samo, a tło zmienia szerokość.">
+        <rect x="24" y="20" width="470" height="200" fill="#151a1f" stroke="#3a424d"/>
+        <text x="36" y="38" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">widok z góry</text>
+        <polygon id="ogStozek" points="60,120 470,40 470,200" fill="#e8a33d" fill-opacity="0.1" stroke="#e8a33d" stroke-width="1"/>
+        <circle id="ogKamera" cx="60" cy="120" r="6" fill="#e8a33d"/>
+        <text id="ogKamTxt" x="60" y="146" font-family="IBM Plex Mono" font-size="8.5" fill="#e8a33d" text-anchor="middle">kamera</text>
+        <line id="ogPostac" x1="300" y1="104" x2="300" y2="136" stroke="#6e93be" stroke-width="5"/>
+        <text id="ogPostacTxt" x="300" y="96" font-family="IBM Plex Mono" font-size="8.5" fill="#6e93be" text-anchor="middle">postać</text>
+        <line x1="452" y1="30" x2="452" y2="210" stroke="#a98bd8" stroke-width="3"/>
+        <text x="440" y="24" font-family="IBM Plex Mono" font-size="8.5" fill="#a98bd8" text-anchor="middle">tło · 20 m dalej</text>
+
+        <rect x="516" y="20" width="220" height="200" fill="#0d0f11" stroke="#3a424d"/>
+        <text x="626" y="38" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">kadr</text>
+        <g id="ogTloGrupa"></g>
+        <rect x="600" y="72" width="52" height="132" fill="#6e93be" fill-opacity="0.75"/>
+        <circle cx="626" cy="60" r="15" fill="#6e93be" fill-opacity="0.75"/>
+
+        <g font-family="IBM Plex Mono" font-size="10.5">
+          <text x="30" y="244" fill="#e8a33d" id="ogOdl">odległość: 8,7 m</text>
+          <text x="30" y="262" fill="#a98bd8" id="ogSzer">tło w kadrze: 14,3 m szerokości</text>
+          <text x="400" y="244" fill="#7fc47f" id="ogStos">tło większe niż przy 14 mm: 2,8×</text>
+          <text x="400" y="262" fill="#8b909b" id="ogWniosek">ogniskowa normalna</text>
+        </g>
+      </svg>
+      <div class="diagram-caption">Postać ma w kadrze zawsze tę samą wysokość, więc kamera musi się przesuwać. Zmienia się wyłącznie to, ile tła się mieści i jak duże ono jest — i to jest cały wpływ ogniskowej na obraz.</div>
+    </div>
+
+    <p>Widget pokazuje jedną liczbę, którą warto zapamiętać. Przejście z czternastki na dwusetkę przy zachowaniu wielkości postaci <strong>zmienia wielkość tła mniej więcej sześciokrotnie</strong> — a to jest różnica między tłem jako dalekim otoczeniem a tłem jako ścianą tuż za plecami.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Szeroka · cena bliskości</div>
+    <h2>Co się dostaje i co się traci</h2>
+
+    <p>Wybór szerokiej ogniskowej jest wyborem stania blisko, a stanie blisko ma konsekwencje wykraczające poza kompozycję.</p>
+
+    <p><strong>Zyskuje się obecność.</strong> Widz jest tam, gdzie kamera, więc bliska kamera oznacza bliskiego widza. Przestrzeń rozciąga się przed nim, korytarz robi się dłuższy, pokój większy — bo różnice odległości są w skali kadru ogromne.</p>
+
+    <p><strong>Traci się twarze.</strong> Nos jest wtedy zauważalnie bliżej niż uszy, więc rośnie względem nich. Rachunek z <a href="../dodatki/dodatek-ac-perspektywa-w-liczbach.html">Dodatku AC</a> podaje, o ile dokładnie — i dlatego portrety robi się dłuższymi ogniskowymi, a nie z powodu jakiegoś „efektu obiektywu”.</p>
+
+    <p><strong>Traci się piony.</strong> Najmniejsze pochylenie kamery rozjeżdża pionowe krawędzie, bo przy szerokim kącie zbieganie jest gwałtowne. Jest to konsekwencja czysto geometryczna i niezależna od jakości szkła.</p>
+
+    <p>Ostatnia z tych trzech rzeczy doczekała się rozwiązania, które warto znać, bo jest przykładem tego, jak konsekwencja optyczna kształtuje metodę pracy. Przy <em>Lśnieniu</em> Kubricka głównym obiektywem był <strong>Cooke 18 mm</strong>, używany razem ze Steadicamem. Operator Garrett Brown opisał zasadę, jaką musieli przyjąć: gdy ktoś zbliżał się do kamery i ją mijał, <span class="term-cyan">właściwą górną ramkę utrzymywali zmieniając wysokość obiektywu, a nie pochylając go</span> — bo pochylenie groziło rozjechaniem pionów w dekoracji.</p>
+
+    <p>Jest to rzecz warta zapamiętania jako wzorzec. Wybór ogniskowej narzucił ograniczenie, ograniczenie wymusiło technikę, a technika stała się rozpoznawalną cechą filmu. <strong>Decyzja optyczna zamieniła się w styl</strong> — nie przez zamiar stylistyczny, tylko przez konsekwentne obchodzenie się z tym, co optyka narzuciła.</p>
+
+    <button class="advanced-btn" data-modal-target="adv-18mm">Zaawansowane: dlaczego osiemnastka jest dobra dla mebli i zła dla twarzy</button>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Długa · cena dystansu</div>
+    <h2>Kiedy przestrzeń przestaje istnieć</h2>
+
+    <p>Druga skrajność działa dokładnie odwrotnie i jej koszty są równie konkretne.</p>
+
+    <p><strong>Zyskuje się spłaszczenie.</strong> Plany zbliżają się do siebie, tło podchodzi pod postać, a głębia przestaje być czytelna. Jest to narzędzie do pokazania ciasnoty, osaczenia albo — przeciwnie — dekoracyjnej płaskości.</p>
+
+    <p><strong>Zyskuje się izolację.</strong> Głębia ostrości maleje z kwadratem ogniskowej przy zachowanej wielkości przedmiotu w kadrze, więc długie szkło odcina postać od tła znacznie skuteczniej. Rachunek jest w <a href="../dodatki/dodatek-e-glebia-w-liczbach.html">Dodatku E</a>.</p>
+
+    <p><strong>Traci się obecność.</strong> Widz jest tam, gdzie kamera — a kamera jest daleko. Ujęcie z dwusetki jest ujęciem obserwatora, nie uczestnika, i żadna kompozycja tego nie odwróci.</p>
+
+    <p><strong>Traci się ruch.</strong> Przy długiej ogniskowej dopuszczalna prędkość panoramy spada w tej samej proporcji, jak liczy <a href="../dodatki/dodatek-r-rozmycie-ruchu.html">Dodatek R</a>. Setka wymaga panoramy około czterokrotnie wolniejszej niż dwudziestka czwórka — więc wybór długiego szkła jest po cichu także wyborem spokojnego ruchu kamery.</p>
+
+    <p>Ta ostatnia zależność bywa niedoceniana, a jest bardzo praktyczna: <span class="term-amber">ogniskowa i tempo ruchu są ze sobą związane i nie da się ich wybierać niezależnie</span>. Nerwowa kamera na długim szkle daje przeskoki, spokojna kamera na szerokim daje wrażenie bezruchu. Kto chce jednego i drugiego, musi wybrać, które jest ważniejsze.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Najazd z odjazdem · dowód wprost</div>
+    <h2>Rozdzielenie ogniskowej od położenia</h2>
+
+    <p>Istnieje ujęcie, które robi z tezy tego rozdziału widowisko: <strong>zmienia się ogniskową i odległość jednocześnie, w przeciwnych kierunkach</strong>, tak żeby postać zachowała wielkość. Postać stoi, a przestrzeń wokół niej się rozjeżdża.</p>
+
+    <p>Efekt wymyślił <strong>Irmin Roberts</strong>, operator drugiej ekipy w wytwórni Paramount, na potrzeby <em>Zawrotu głowy</em> Hitchcocka z 1958 roku. W napisach nie został wymieniony; nazwa „zawrót głowy” przylgnęła do samego chwytu.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Najazd z odjazdem</span><span>postać stała, tło ruchome</span></div>
+      <svg viewBox="0 0 760 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Dwa kadry: postać tej samej wielkości, tło raz małe i dalekie, raz duże i bliskie.">
+        <text x="190" y="24" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">początek · szeroka, blisko</text>
+        <rect x="40" y="34" width="300" height="150" fill="#0d0f11" stroke="#3a424d"/>
+        <rect x="70" y="66" width="34" height="24" fill="#a98bd8" fill-opacity="0.5"/>
+        <rect x="122" y="72" width="26" height="18" fill="#a98bd8" fill-opacity="0.5"/>
+        <rect x="252" y="64" width="40" height="28" fill="#a98bd8" fill-opacity="0.5"/>
+        <rect x="172" y="86" width="36" height="98" fill="#6e93be" fill-opacity="0.85"/>
+        <circle cx="190" cy="76" r="12" fill="#6e93be" fill-opacity="0.85"/>
+        <text x="190" y="204" font-family="IBM Plex Mono" font-size="9" fill="#a98bd8" text-anchor="middle">tło małe, dużo przestrzeni</text>
+
+        <line x1="380" y1="20" x2="380" y2="212" stroke="#2a2f38"/>
+
+        <text x="570" y="24" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">koniec · długa, daleko</text>
+        <rect x="420" y="34" width="300" height="150" fill="#0d0f11" stroke="#3a424d"/>
+        <rect x="428" y="44" width="86" height="60" fill="#a98bd8" fill-opacity="0.5"/>
+        <rect x="524" y="54" width="66" height="46" fill="#a98bd8" fill-opacity="0.5"/>
+        <rect x="626" y="40" width="94" height="68" fill="#a98bd8" fill-opacity="0.5"/>
+        <rect x="552" y="86" width="36" height="98" fill="#6e93be" fill-opacity="0.85"/>
+        <circle cx="570" cy="76" r="12" fill="#6e93be" fill-opacity="0.85"/>
+        <text x="570" y="204" font-family="IBM Plex Mono" font-size="9" fill="#7fc47f" text-anchor="middle">tło duże, przestrzeń zniknęła</text>
+      </svg>
+      <div class="diagram-caption">Postać ma w obu kadrach identyczną wysokość — jedyne, co się zmieniło, to wielkość tła. Dokładnie ta sama zależność, którą pokazuje widget wyżej, tylko rozegrana w czasie jednego ujęcia.</div>
+    </div>
+
+    <p>Warto zauważyć, dlaczego ten chwyt działa na widza tak mocno. Oko przez całe życie uczy się, że wielkość tła i wielkość postaci zmieniają się razem — bo w rzeczywistości poruszamy się, a nie zmieniamy ogniskowych. <strong>Rozdzielenie tych dwóch rzeczy jest sygnałem, którego układ wzrokowy nie potrafi zinterpretować</strong>, i to właśnie wywołuje wrażenie zawrotu.</p>
+
+    <p>Dla nas jest to zarazem najczystszy możliwy dowód tezy tego rozdziału. <span class="term-violet">Ogniskowa i położenie są niezależnymi wielkościami</span> — w zwykłym ujęciu wybiera się jedną i dostaje drugą, bo kadr ma być określony. Tutaj wybiera się obie osobno, i widać, że to naprawdę dwie różne rzeczy.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Zestaw · decyzja przed pierwszym dniem</div>
+    <h2>Dlaczego wybiera się kilka ogniskowych, a nie wszystkie</h2>
+
+    <p>Zoom obejmuje cały zakres, a mimo to zdjęcia fabularne robi się zwykle zestawem stałek. Powody techniczne z <a href="rozdzial-19-zoom-kontra-stalka.html">Rozdziału 19</a> — jasność, wielkość, jakość na brzegach — są prawdziwe, ale nie wyczerpują sprawy.</p>
+
+    <p>Powód ważniejszy jest inny: <strong>ograniczony zestaw wymusza decyzję o odległości</strong>. Mając zoom, kadr dopina się z miejsca, w którym stoi statyw. Mając cztery stałki, kadr dopina się nogami — a to znaczy, że każda zmiana kadru jest zmianą perspektywy, czyli decyzją, a nie korektą.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Zestaw jako siatka</span><span>cztery ogniskowe, cztery odległości</span></div>
+      <svg viewBox="0 0 760 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cztery ogniskowe zestawu i przypisane im odległości dla tego samego kadru na postać.">
+        <line x1="60" y1="150" x2="712" y2="150" stroke="#8b909b" stroke-width="1.2"/>
+        <text x="386" y="182" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">odległość od postaci · ten sam kadr na całą sylwetkę</text>
+        <g font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">
+          <text x="60" y="168">0 m</text><text x="240" y="168">10 m</text><text x="420" y="168">20 m</text><text x="600" y="168">30 m</text>
+        </g>
+        <g>
+          <line x1="104" y1="150" x2="104" y2="120" stroke="#e8a33d" stroke-width="2"/>
+          <circle cx="104" cy="120" r="5" fill="#e8a33d"/>
+          <text x="104" y="110" font-family="IBM Plex Mono" font-size="10" fill="#e8a33d" text-anchor="middle">25 mm</text>
+          <text x="104" y="96" font-family="IBM Plex Mono" font-size="8.5" fill="#8b909b" text-anchor="middle">4,4 m</text>
+
+          <line x1="170" y1="150" x2="170" y2="100" stroke="#e8a33d" stroke-width="2"/>
+          <circle cx="170" cy="100" r="5" fill="#e8a33d"/>
+          <text x="170" y="90" font-family="IBM Plex Mono" font-size="10" fill="#e8a33d" text-anchor="middle">35 mm</text>
+          <text x="170" y="76" font-family="IBM Plex Mono" font-size="8.5" fill="#8b909b" text-anchor="middle">6,1 m</text>
+
+          <line x1="217" y1="150" x2="217" y2="72" stroke="#e8a33d" stroke-width="2"/>
+          <circle cx="217" cy="72" r="5" fill="#e8a33d"/>
+          <text x="217" y="62" font-family="IBM Plex Mono" font-size="10" fill="#e8a33d" text-anchor="middle">50 mm</text>
+          <text x="217" y="48" font-family="IBM Plex Mono" font-size="8.5" fill="#8b909b" text-anchor="middle">8,7 m</text>
+
+          <line x1="327" y1="150" x2="327" y2="44" stroke="#e8a33d" stroke-width="2"/>
+          <circle cx="327" cy="44" r="5" fill="#e8a33d"/>
+          <text x="327" y="34" font-family="IBM Plex Mono" font-size="10" fill="#e8a33d" text-anchor="middle">85 mm</text>
+          <text x="360" y="48" font-family="IBM Plex Mono" font-size="8.5" fill="#8b909b">14,8 m</text>
+        </g>
+        <path d="M104 150 L327 150" stroke="#7fc47f" stroke-width="4" stroke-opacity="0.35"/>
+        <text x="470" y="118" font-family="IBM Plex Mono" font-size="9.5" fill="#7fc47f">zestaw = cztery dozwolone miejsca</text>
+        <text x="470" y="136" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">zoom = dowolne miejsce, więc żadne wybrane</text>
+      </svg>
+      <div class="diagram-caption">Odległości policzone dla tej samej sylwetki w kadrze na Super 35. Zestaw stałek nie ogranicza kadrów — ogranicza miejsca, z których wolno je zrobić, i to jest jego funkcja.</div>
+    </div>
+
+    <p>Warto zauważyć, że ograniczenie działa też w drugą stronę i to bywa ważniejsze: <span class="term-cyan">film nakręcony czterema ogniskowymi ma cztery rodzaje relacji z widzem</span>, powtarzane przez cały seans. Powtarzalność jest tu wartością — widz uczy się tego języka, choć nikt mu go nie tłumaczy, i zaczyna czytać zmianę ogniskowej jako zmianę tonu.</p>
+
+    <p>Stąd praktyka, którą warto rozumieć: <strong>zestaw wybiera się raz, przed pierwszym dniem zdjęciowym, i traktuje jak decyzję o filmie, a nie o ujęciu</strong>. Dołożenie w połowie zdjęć nowej ogniskowej nie jest rozszerzeniem możliwości; jest wprowadzeniem słowa, którego widz wcześniej nie słyszał.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Czytanie · rozpoznawanie z kadru</div>
+    <h2>Jak zgadnąć ogniskowatość z gotowego ujęcia</h2>
+
+    <p>Umiejętność praktyczna i przydatna przy pracy z plate'em: z samego obrazu da się oszacować, jak szerokie było szkło, i to bez żadnych metadanych. Trzy tropy, w kolejności niezawodności.</p>
+
+    <p><strong>Stosunek wielkości planów.</strong> Znajdź w kadrze dwie rzeczy o znanej wielkości — drzwi i człowieka, dwa samochody, dwie takie same lampy — leżące w wyraźnie różnych odległościach. Jeśli dalsza jest dramatycznie mniejsza, szkło było szerokie; jeśli obie są podobne, długie. Jest to bezpośredni odczyt tego, co pokazuje widget z pierwszej sekcji.</p>
+
+    <p><strong>Zbieganie pionów.</strong> Pionowe krawędzie w kadrze pochylonym w górę albo w dół zbiegają się tym mocniej, im szersze szkło. Kadr z widocznym zbieganiem przy niewielkim pochyleniu to na pewno szeroka ogniskowa.</p>
+
+    <p><strong>Głębia ostrości.</strong> Przy tym samym kadrze na postać długie szkło daje głębię wielokrotnie mniejszą. Ostre tło za postacią wyklucza długą ogniskową — chyba że przysłona jest bardzo przymknięta, co widać po dyfrakcji i po gwiazdach na światłach.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Trzy tropy</span><span>co widać przy każdym końcu</span></div>
+      <svg viewBox="0 0 760 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tabela: trzy cechy obrazu i jak wyglądają przy szerokim oraz długim szkle.">
+        <g font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">
+          <text x="30" y="26">TROP</text><text x="300" y="26">SZEROKA</text><text x="540" y="26">DŁUGA</text>
+        </g>
+        <line x1="24" y1="34" x2="736" y2="34" stroke="#3a424d"/>
+        <g font-family="IBM Plex Sans" font-size="11.5" fill="#ecebe4">
+          <text x="30" y="60">wielkość planów</text>
+          <text x="300" y="60" fill="#e8a33d">tło drobne i odległe</text>
+          <text x="540" y="60" fill="#6e93be">tło duże, tuż za</text>
+
+          <text x="30" y="90">piony przy pochyleniu</text>
+          <text x="300" y="90" fill="#e8a33d">wyraźnie zbieżne</text>
+          <text x="540" y="90" fill="#6e93be">prawie równoległe</text>
+
+          <text x="30" y="120">głębia ostrości</text>
+          <text x="300" y="120" fill="#e8a33d">duża, tło czytelne</text>
+          <text x="540" y="120" fill="#6e93be">płytka, tło rozmyte</text>
+
+          <text x="30" y="150">twarz w zbliżeniu</text>
+          <text x="300" y="150" fill="#e8a33d">nos wysunięty, uszy małe</text>
+          <text x="540" y="150" fill="#6e93be">proporcje naturalne</text>
+        </g>
+        <line x1="24" y1="162" x2="736" y2="162" stroke="#3a424d"/>
+        <text x="30" y="180" font-family="IBM Plex Mono" font-size="9" fill="#8b909b">cztery zgodne tropy dają pewność; dwa sprzeczne oznaczają, że kadr jest przycięty albo złożony</text>
+      </svg>
+      <div class="diagram-caption">Ostatni wiersz tabeli jest najbardziej wiarygodny, gdy w kadrze jest twarz — bo mózg zna proporcje twarzy dokładniej niż czegokolwiek innego.</div>
+    </div>
+
+    <p>Uwaga na koniec, która ratuje przed najczęstszą pomyłką w tym rozpoznawaniu: <strong>przycięcie kadru wygląda jak dłuższa ogniskowa, ale nią nie jest</strong>. Wycinek z szerokiego ujęcia ma ciasny kadr i szeroką perspektywę naraz — czyli tło drobne mimo ciasnego kadrowania. Jeśli tropy się kłócą, to zwykle właśnie z tego powodu, i sama ta sprzeczność jest informacją wartą zauważenia.</p>
+  </div>
+
+  <div class="panel practice">
+    <div class="panel-label">Z praktyki</div>
+    <p><strong>Wybieraj odległość, nie ogniskową.</strong> Stań tam, skąd scena wygląda tak, jak ma wyglądać, i dopiero wtedy dobierz szkło do kadru. Odwrotna kolejność — najpierw szkło, potem miejsce — oddaje decyzję o perspektywie przypadkowi.</p>
+    <p><strong>Sprawdź, co robi tło przy zmianie.</strong> Przy dobieraniu ogniskowej patrz nie na postać, tylko na to, co za nią. Postać i tak będzie tej wielkości, co trzeba — zmienia się wyłącznie tło, i to jest to, co naprawdę wybierasz.</p>
+    <p><strong>Policz, czy ruch się zmieści.</strong> Zanim ustawisz długie szkło do ujęcia z panoramą, sprawdź w Dodatku R, jaka prędkość jest przy nim dopuszczalna. Bywa, że wybór ogniskowej wyklucza zaplanowany ruch — i lepiej dowiedzieć się o tym przed, a nie w montażu.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>kompresja planów</dt>
+      <dd>Zbliżenie do siebie wielkości przedmiotów o różnych odległościach. Skutek stania daleko, nie właściwość długiego szkła.</dd>
+      <dt>najazd z odjazdem</dt>
+      <dd>Jednoczesna zmiana ogniskowej i odległości, tak by przedmiot zachował wielkość, a tło ją zmieniło.</dd>
+      <dt>keystoning</dt>
+      <dd>Rozjeżdżanie się pionowych krawędzi przy pochyleniu kamery. Gwałtowne przy szerokim kącie.</dd>
+      <dt>ogniskowa normalna</dt>
+      <dd>Taka, której kąt widzenia odpowiada mniej więcej przekątnej formatu. Umowna, ale użyteczna jako punkt odniesienia.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Skoro ogniskowa mówi, gdzie stoisz, to ostrość mówi, na co masz patrzeć. <a href="rozdzial-38-ostrosc-jako-rezyseria.html">Następny rozdział</a> pokazuje, że płaszczyzna ostrości jest jedynym narzędziem, którym operator kieruje uwagą widza bez jego zgody — i że przejazd ostrości jest cięciem, tylko wykonanym w obrębie jednego ujęcia.</p>
+  </div>
 
   <div class="deeper">
     <div class="deeper-label">Idź głębiej</div>
@@ -56,8 +305,126 @@ window.SKY3D_MESSAGES = {
       <a class="nav-next" href="rozdzial-38-ostrosc-jako-rezyseria.html">Następny →</a>
   </div>
 
+<template id="adv-18mm">
+  <h3>Dlaczego osiemnastka jest dobra dla mebli i zła dla twarzy</h3>
+  <p>Zdanie o obiektywie dobrym dla mebli i złym dla twarzy krąży w opowieściach o <em>Lśnieniu</em>, ale ma pod sobą całkiem konkretny rachunek — i warto go zobaczyć, bo tłumaczy, dlaczego granica przebiega akurat tam, gdzie przebiega.</p>
+  <p><strong>Decyduje stosunek głębokości przedmiotu do odległości.</strong> Przedmiot, którego przód jest o ułamek <em>k</em> bliżej niż tył, zostaje odwzorowany z przodem powiększonym względem tyłu w stosunku 1/(1−k). Jeśli k jest małe, różnica jest niewidoczna; jeśli duże — przód pęcznieje.</p>
+  <p>Twarz ma z grubsza 20 cm głębokości: od czubka nosa do ucha. Meble w pokoju mają jej tyle samo albo więcej, ale nie mają w sobie wzorca, który mózg zna na pamięć — a twarz ma.</p>
+  <p><strong>Rachunek dla osiemnastki.</strong> Przyjmijmy zbliżenie, w którym twarz szerokości 16 cm zajmuje 35 procent szerokości kadru Super 35. Przy 18 mm wymaga to stanięcia 35 cm od nosa. Ucho jest wtedy 55 cm od kamery, czyli 1,57 raza dalej — więc nos jest odwzorowany 1,57 raza większy, niż powinien. Jest to zniekształcenie ogromne i natychmiast rozpoznawalne.</p>
+  <p><strong>Ten sam kadr z osiemdziesiątki piątki</strong> wymaga stanięcia 1,65 m od nosa. Ucho jest 1,85 m dalej, czyli o dwanaście procent — i to jest różnica, której oko nie kwestionuje.</p>
+  <p>Warto zauważyć, że stosunek 1,57 do 1,12 nie jest stosunkiem ogniskowych. Zniekształcenie nie skaluje się z ogniskową liniowo — rośnie gwałtownie dopiero wtedy, gdy odległość staje się porównywalna z głębokością przedmiotu. Poniżej mniej więcej metra od twarzy każda ogniskowa daje wynik, który widz nazwie „dziwnym”.</p>
+  <p>Meble są w tym samym ujęciu bezpieczne z prostego powodu: <strong>są dalej</strong>. Krzesło stojące trzy metry od kamery ma przód i tył różniące się o kilkanaście procent odległości, więc jest tylko lekko rozciągnięte — a ponieważ nikt nie zna dokładnych proporcji tego krzesła, nikt nie zauważy.</p>
+  <p>Stąd reguła ogólniejsza, którą warto zapamiętać poza kontekstem tego jednego filmu: <strong>zniekształcenie perspektywiczne nie zależy od obiektywu, tylko od tego, jak blisko trzeba stanąć — i od tego, czy widz zna prawdziwe proporcje przedmiotu.</strong> Pełne rachunki są w <a href="../dodatki/dodatek-ac-perspektywa-w-liczbach.html">Dodatku AC</a>.</p>
+</template>
+
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal-box">
+    <button class="modal-close" aria-label="Zamknij">&times;</button>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
 </div>
 
 <script src="../assets/interactive.js"></script>
+<script>
+(function () {
+  var suw = document.getElementById('ogF');
+  if (!suw) return;
+  var odczyt = document.getElementById('ogOdczyt');
+  var stozek = document.getElementById('ogStozek');
+  var kam = document.getElementById('ogKamera');
+  var kamTxt = document.getElementById('ogKamTxt');
+  var tloGrupa = document.getElementById('ogTloGrupa');
+  var tOdl = document.getElementById('ogOdl');
+  var tSzer = document.getElementById('ogSzer');
+  var tStos = document.getElementById('ogStos');
+  var tWniosek = document.getElementById('ogWniosek');
+
+  /* --- scena ------------------------------------------------------- */
+  var WZROST = 1700;      // mm
+  var UDZIAL = 0.70;      // ile wysokosci kadru zajmuje postac
+  var H_BRAMKI = 14.0;    // mm, Super 35
+  var W_BRAMKI = 24.89;   // mm
+  var TLO_ZA = 20000;     // mm za postacia
+
+  var m = (UDZIAL * H_BRAMKI) / WZROST;   // powiekszenie poprzeczne
+  var K = 1 + 1 / m;                       // s = f * K
+
+  function odleglosc(f) { return f * K; }                 // mm
+  function szerokoscTla(f) { return (odleglosc(f) + TLO_ZA) * W_BRAMKI / f; }
+
+  var SZER14 = szerokoscTla(14);
+
+  /* --- rysunek z gory: postac stoi w miejscu, kamera sie odsuwa ----- */
+  var X_POSTAC = 300, X_TLO = 452, Y = 120;
+  var F_MIN = 14, F_MAX = 200;
+
+  function pl(x) { return x.toFixed(1).replace('.', ','); }
+
+  function rysuj() {
+    var f = parseInt(suw.value, 10);
+    var s = odleglosc(f);
+    var szer = szerokoscTla(f);
+    var stos = SZER14 / szer;   // ile razy tlo jest wieksze niz przy 14 mm
+
+    odczyt.textContent = f + ' mm';
+
+    /* Kamera odjezdza logarytmicznie, zeby caly zakres zmiescil sie
+       w ramce — rysunek jest schematem, liczby sa dokladne. */
+    var t = Math.log(f / F_MIN) / Math.log(F_MAX / F_MIN);
+    var xk = X_POSTAC - 60 - t * 190;
+    kam.setAttribute('cx', xk.toFixed(1));
+    kamTxt.setAttribute('x', xk.toFixed(1));
+
+    /* Stozek: zawsze obejmuje postac (32 px wysokosci) na jej odleglosci. */
+    var polowaNaPostaci = 16;
+    var dlug = X_TLO - xk;
+    var polowaNaTle = polowaNaPostaci * dlug / (X_POSTAC - xk);
+    stozek.setAttribute('points',
+      xk.toFixed(1) + ',' + Y + ' ' +
+      X_TLO + ',' + (Y - polowaNaTle).toFixed(1) + ' ' +
+      X_TLO + ',' + (Y + polowaNaTle).toFixed(1));
+
+    /* Kadr: prostokaty tla skalowane odwrotnie do szerokosci tla. */
+    var skala = SZER14 / szer;      // 1 przy 14 mm, rosnie z ogniskowa
+    var d = '';
+    var elem = [[-0.34, -0.10, 0.16, 0.12], [0.06, -0.02, 0.13, 0.09], [0.30, -0.14, 0.19, 0.15]];
+    for (var i = 0; i < elem.length; i++) {
+      var e = elem[i];
+      var w = e[2] * 220 * skala, h = e[3] * 200 * skala;
+      var cx = 626 + e[0] * 220 * skala, cy = 108 + e[1] * 200 * skala;
+      d += '<rect x="' + (cx - w / 2).toFixed(1) + '" y="' + (cy - h / 2).toFixed(1) +
+           '" width="' + w.toFixed(1) + '" height="' + h.toFixed(1) +
+           '" fill="#a98bd8" fill-opacity="0.45"/>';
+    }
+    tloGrupa.innerHTML = d;
+
+    tOdl.textContent = 'odleglosc: ' + pl(s / 1000) + ' m';
+    tSzer.textContent = 'tlo w kadrze: ' + pl(szer / 1000) + ' m szerokosci';
+    tStos.textContent = 'tlo wieksze niz przy 14 mm: ' + pl(stos) + '×';
+
+    var w;
+    if (f <= 20) w = 'bardzo szeroka — kamera prawie przy postaci, tlo daleko';
+    else if (f <= 32) w = 'szeroka — obecnosc, przestrzen, ryzyko przy twarzach';
+    else if (f <= 58) w = 'ogniskowa normalna';
+    else if (f <= 110) w = 'portretowa — tlo podchodzi, glebia sie kurczy';
+    else w = 'dluga — plany splaszczone, ruch kamery musi zwolnic';
+    tWniosek.textContent = w;
+  }
+
+  suw.addEventListener('input', rysuj);
+  rysuj();
+
+  /* Odczyt kontrolny do sprawdzenia zrzutem, bez czytania pikseli. */
+  var d = document.getElementById('ogF').closest('.diagram-frame');
+  if (d) {
+    d.dataset.kontrola = [14, 35, 50, 85, 200].map(function (f) {
+      return f + ':' + (odleglosc(f) / 1000).toFixed(2) + 'm/' + (szerokoscTla(f) / 1000).toFixed(2) + 'm';
+    }).join(' ');
+  }
+})();
+</script>
+
 </body>
 </html>
