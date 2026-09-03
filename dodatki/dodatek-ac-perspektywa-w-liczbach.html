@@ -41,7 +41,131 @@ window.SKY3D_MESSAGES = {
   <h1>Perspektywa w liczbach</h1>
   <p class="subtitle">Rachunek pokazujący, że stosunek wielkości bliskiego i dalekiego obiektu zależy wyłącznie od odległości kamery — i dlaczego mit o kompresji jest tak żywotny.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">Co tu jest</div>
+    <ul>
+      <li><strong>Wzór na zniekształcenie perspektywiczne</strong> — jedna liczba opisująca całe zjawisko „nosa i uszu”.</li>
+      <li><strong>Tabela odległości i zniekształceń</strong> dla typowych ogniskowych przy trzech kadrach na twarz.</li>
+      <li><strong>Rozciągnięcie poza osią</strong>: dlaczego twarze przy brzegu szerokiego kadru pęcznieją i o ile.</li>
+      <li><strong>Rachunek zbieżności pionów</strong> przy pochyleniu kamery.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Wzór · jedna liczba na całe zjawisko</div>
+    <h2>Zniekształcenie wzdłuż osi</h2>
+
+    <p>Przedmiot ma głębokość: jego przednia część leży bliżej kamery niż tylna. Ponieważ powiększenie maleje z odległością, przód zostaje odwzorowany większy niż tył — i stosunek tych dwóch powiększeń jest całą treścią zjawiska.</p>
+
+    <div class="formula">
+      Z = <span class="vec" data-tip="Odległość do tylnej części przedmiotu">s + g</span> / <span class="vec" data-tip="Odległość do przedniej części przedmiotu">s</span> = 1 + <span class="vec" data-tip="Głębokość przedmiotu">g</span> / <span class="vec" data-tip="Odległość do przodu przedmiotu">s</span>
+      <span class="sub">Z — ile razy przód jest odwzorowany większy niż tył. s — odległość do przodu przedmiotu, g — jego głębokość. Zależy wyłącznie od stosunku g/s; ogniskowa nie występuje we wzorze wcale.</span>
+    </div>
+
+    <p>Warto ten wniosek podkreślić, bo jest kontrintuicyjny i zarazem centralny dla <a href="../rozdzialy/rozdzial-05-ogniskowa-format-perspektywa.html">Rozdziału 5</a>: <span class="term-violet">we wzorze nie ma ogniskowej</span>. Zniekształcenie zależy tylko od tego, jak blisko stoisz w stosunku do głębokości przedmiotu. Ogniskowa wchodzi pośrednio — przez to, że dla zadanego kadru wyznacza odległość.</p>
+
+    <p>Odległość dla zadanego kadru liczy się z powiększenia:</p>
+
+    <div class="formula">
+      <span class="vec" data-tip="Odległość do przedmiotu">s</span> = <span class="vec" data-tip="Ogniskowa">f</span> · (1 + 1/<span class="vec" data-tip="Powiększenie poprzeczne: wielkość na matrycy dzielona przez wielkość w scenie">m</span>),&nbsp;&nbsp; <span class="vec" data-tip="Powiększenie poprzeczne">m</span> = <span class="vec" data-tip="Ułamek szerokości kadru zajmowany przez przedmiot">u</span> · <span class="vec" data-tip="Szerokość bramki">w</span> / <span class="vec" data-tip="Szerokość przedmiotu w scenie">W<sub>obj</sub></span>
+      <span class="sub">u — jaki ułamek szerokości kadru ma zajmować przedmiot. w — szerokość bramki. W<sub>obj</sub> — rzeczywista szerokość przedmiotu. Wszystkie długości w tych samych jednostkach.</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Tabela · nos i uszy w liczbach</div>
+    <h2>Trzy kadry na twarz</h2>
+
+    <p>Przyjmujemy twarz o szerokości 16 cm i głębokości 20 cm od czubka nosa do ucha, bramkę Super 35 o szerokości 24,89 mm. Trzy kadry: portret amerykański (twarz zajmuje 20% szerokości), popiersie (35%) i duże zbliżenie (55%).</p>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead>
+          <tr><th>Ogniskowa</th><th class="num">Portret · s</th><th class="num">Z</th><th class="num">Popiersie · s</th><th class="num">Z</th><th class="num">Zbliżenie · s</th><th class="num">Z</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>18 mm</td><td class="num">0,60 m</td><td class="num">1,34</td><td class="num">0,35 m</td><td class="num">1,57</td><td class="num">0,23 m</td><td class="num">1,88</td></tr>
+          <tr><td>25 mm</td><td class="num">0,83 m</td><td class="num">1,24</td><td class="num">0,48 m</td><td class="num">1,41</td><td class="num">0,32 m</td><td class="num">1,63</td></tr>
+          <tr><td>35 mm</td><td class="num">1,16 m</td><td class="num">1,17</td><td class="num">0,68 m</td><td class="num">1,30</td><td class="num">0,44 m</td><td class="num">1,45</td></tr>
+          <tr><td>50 mm</td><td class="num">1,66 m</td><td class="num">1,12</td><td class="num">0,97 m</td><td class="num">1,21</td><td class="num">0,63 m</td><td class="num">1,32</td></tr>
+          <tr><td>85 mm</td><td class="num">2,82 m</td><td class="num">1,07</td><td class="num">1,65 m</td><td class="num">1,12</td><td class="num">1,08 m</td><td class="num">1,19</td></tr>
+          <tr><td>135 mm</td><td class="num">4,47 m</td><td class="num">1,04</td><td class="num">2,61 m</td><td class="num">1,08</td><td class="num">1,71 m</td><td class="num">1,12</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">s — odległość od przodu twarzy. Z — ile razy nos jest odwzorowany większy względem ucha. Wartość 1,00 oznaczałaby brak zniekształcenia; osiąga się ją tylko w granicy nieskończonej odległości.</p>
+
+    <p>Z tabeli wychodzą trzy obserwacje warte zapamiętania.</p>
+
+    <p><strong>Granica akceptowalności leży około Z = 1,15.</strong> Powyżej niej widzowie zaczynają opisywać twarz jako zniekształconą, choć rzadko potrafią powiedzieć czym. Odpowiada to mniej więcej pięćdziesiątce przy popiersiu i osiemdziesiątce piątce przy zbliżeniu — czyli dokładnie tym ogniskowym, które tradycja nazywa portretowymi.</p>
+
+    <p><strong>Ciaśniejszy kadr wymaga dłuższego szkła przy tej samej jakości.</strong> Przejście z portretu do zbliżenia mniej więcej podwaja odległość potrzebną do zachowania Z — dlatego zestawy do portretu mają zwykle dwie ogniskowe, a nie jedną.</p>
+
+    <p><strong>Powyżej 135 mm zysk przestaje być odczuwalny.</strong> Różnica między Z = 1,08 a Z = 1,05 jest poniżej progu rozpoznania, więc <span class="term-cyan">dłuższe szkło do portretu bierze się już nie dla proporcji, tylko dla płytszej głębi i mocniejszej kompresji tła</span>.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Poza osią · rozciągnięcie przy brzegu</div>
+    <h2>Dlaczego twarze w rogu pęcznieją</h2>
+
+    <p>Rzut perspektywiczny odwzorowuje kierunki na płaską matrycę. Punkt leżący pod kątem <em>θ</em> do osi trafia w miejsce oddalone od środka o <em>f·tg θ</em> — a tangens rośnie szybciej niż kąt. Skutek: <strong>przedmioty przy brzegu kadru są rozciągnięte</strong>, i to tym mocniej, im szersze szkło.</p>
+
+    <div class="formula">
+      R = 1 / cos³<span class="vec" data-tip="Kąt między osią a kierunkiem na przedmiot">θ</span>&nbsp;&nbsp;(wzdłuż promienia),&nbsp;&nbsp; R<sub>⊥</sub> = 1 / cos <span class="vec" data-tip="Kąt polowy">θ</span>&nbsp;&nbsp;(w poprzek)
+      <span class="sub">R — ile razy przedmiot jest rozciągnięty w kierunku od środka kadru, R<sub>⊥</sub> — w kierunku prostopadłym. Kula odwzorowuje się jako elipsa o tym stosunku osi; twarz też.</span>
+    </div>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead>
+          <tr><th>Ogniskowa (S35)</th><th class="num">Kąt rogu</th><th class="num">R wzdłuż</th><th class="num">R w poprzek</th><th class="num">Stosunek osi</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>14 mm</td><td class="num">45,6°</td><td class="num">2,91</td><td class="num">1,43</td><td class="num">2,04</td></tr>
+          <tr><td>18 mm</td><td class="num">38,4°</td><td class="num">2,08</td><td class="num">1,28</td><td class="num">1,63</td></tr>
+          <tr><td>25 mm</td><td class="num">29,7°</td><td class="num">1,53</td><td class="num">1,15</td><td class="num">1,33</td></tr>
+          <tr><td>35 mm</td><td class="num">22,2°</td><td class="num">1,26</td><td class="num">1,08</td><td class="num">1,17</td></tr>
+          <tr><td>50 mm</td><td class="num">15,9°</td><td class="num">1,12</td><td class="num">1,04</td><td class="num">1,08</td></tr>
+          <tr><td>85 mm</td><td class="num">9,5°</td><td class="num">1,04</td><td class="num">1,01</td><td class="num">1,03</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Kąt rogu liczony z półprzekątnej Super 35 (14,28 mm). Ostatnia kolumna to stosunek osi elipsy, na jaką odwzorowuje się kula — czyli twarz.</p>
+
+    <p>Warto połączyć tę tabelę z poprzednią, bo razem tłumaczą coś, czego żadna z nich osobno nie wyjaśnia. <strong>Twarz w rogu kadru z osiemnastki jest zniekształcona dwa razy</strong>: raz przez bliskość (Z), raz przez położenie poza osią (R). Efekty się mnożą, a wynik bywa dramatyczny — i to jest przyczyna, dla której grupowe zdjęcia szerokim szkłem wychodzą źle dla osób stojących na skraju.</p>
+
+    <p>Zjawisko nie jest wadą obiektywu i nie da się go skorygować bez zmiany rzutu. <span class="term-amber">Jest ceną płaskiej matrycy</span>: rzut na kulę nie miałby tego problemu, ale za to nie odwzorowywałby prostych jako prostych, co byłoby gorsze.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Piony · rachunek zbiegania</div>
+    <h2>Ile rozjeżdża pochylenie kamery</h2>
+
+    <p>Kamera pochylona o kąt <em>φ</em> odwzorowuje pionowe krawędzie jako zbieżne. Wielkość zbieżności da się wyrazić jako stosunek szerokości pionowego przedmiotu na górze kadru do jego szerokości na dole:</p>
+
+    <div class="formula">
+      S ≈ cos(<span class="vec" data-tip="Kąt pochylenia kamery">φ</span> − <span class="vec" data-tip="Połowa pionowego kąta widzenia">α</span>) / cos(<span class="vec" data-tip="Kąt pochylenia">φ</span> + <span class="vec" data-tip="Połowa pionowego kąta widzenia">α</span>)
+      <span class="sub">S — stosunek szerokości u dołu do szerokości u góry kadru dla płaszczyzny pionowej. φ — pochylenie kamery od poziomu, α — połowa pionowego kąta widzenia. Przybliżenie dobre dla płaszczyzny prostopadłej do kierunku patrzenia w środku kadru.</span>
+    </div>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead>
+          <tr><th>Ogniskowa (S35, kadr 14 mm wys.)</th><th class="num">α</th><th class="num">φ = 5°</th><th class="num">φ = 10°</th><th class="num">φ = 20°</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>18 mm</td><td class="num">21,3°</td><td class="num">1,07</td><td class="num">1,15</td><td class="num">1,33</td></tr>
+          <tr><td>25 mm</td><td class="num">15,6°</td><td class="num">1,05</td><td class="num">1,10</td><td class="num">1,23</td></tr>
+          <tr><td>35 mm</td><td class="num">11,3°</td><td class="num">1,04</td><td class="num">1,07</td><td class="num">1,16</td></tr>
+          <tr><td>50 mm</td><td class="num">8,0°</td><td class="num">1,02</td><td class="num">1,05</td><td class="num">1,11</td></tr>
+          <tr><td>85 mm</td><td class="num">4,7°</td><td class="num">1,01</td><td class="num">1,03</td><td class="num">1,06</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Wartość 1,00 oznacza piony równoległe. Widoczność zaczyna się mniej więcej od 1,10. Przy osiemnastce próg przekracza się między pięcioma a dziesięcioma stopniami; przy pięćdziesiątce dopiero powyżej dwudziestu.</p>
+
+    <p>Tabela tłumaczy praktykę opisaną w <a href="../rozdzialy/rozdzial-37-ogniskowa-jako-decyzja.html">Rozdziale 37</a>. Przy osiemnastce dziesięć stopni pochylenia daje już 1,15, czyli zbieganie wyraźnie widoczne w dekoracji z pionowymi krawędziami — a dziesięć stopni to niewiele, tyle wystarcza, żeby złapać górną ramkę nad przechodzącą postacią. Stąd konieczność <strong>zmiany wysokości kamery zamiast jej pochylania</strong>. Przy pięćdziesiątce ten sam ruch byłby niepotrzebny: dziesięć stopni daje 1,05, poniżej progu.</p>
+  </div>
 
   <div class="site-nav">
     <a href="../index.html">← Spis treści</a>
