@@ -43,7 +43,250 @@ window.SKY3D_MESSAGES = {
   <h1>Format jako autorstwo</h1>
   <p class="subtitle">Proporcje kadru decydują, ile twarzy mieści się obok siebie, jak długo można trzymać ujęcie i czy pion w ogóle istnieje. Wybór formatu zapada przed pierwszym dniem zdjęciowym i rządzi wszystkim potem.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li><strong>Format wybiera się raz, przed wszystkim innym, i wiąże resztę produkcji.</strong> Narzuca ogniskowe, narzuca głębię ostrości i narzuca to, gdzie w kadrze wolno postawić człowieka.</li>
+      <li>Przy tym samym kącie widzenia <span class="term-amber">duży format wymaga dłuższego szkła, a dłuższe szkło daje płytszą głębię</span>. Przejście z Super 35 na anamorficzne 65 mm skraca strefę ostrości czterokrotnie.</li>
+      <li><strong>Wybór formatu jest w praktyce wyborem tego, czego nie da się zrobić.</strong> Szeroka proporcja wyklucza kadr pionowy w kompozycji, wielki format wyklucza głębię, mały wyklucza izolację.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Pierwszeństwo · decyzja przed decyzjami</div>
+    <h2>Dlaczego to nie jest wybór techniczny</h2>
+
+    <p>Format bywa traktowany jako pozycja w karcie technicznej, obok liczby klatek i przestrzeni barwnej. Tymczasem jest to <strong>decyzja podejmowana najwcześniej i wiążąca najdłużej</strong> — bo wszystko, co robi potem operator, dzieje się w jej granicach.</p>
+
+    <p>Zależności są trzy i wszystkie wynikają wprost z wcześniejszych części tej książki.</p>
+
+    <p><strong>Format wyznacza ogniskowe.</strong> Kąt widzenia to iloraz szerokości bramki i ogniskowej, więc ta sama kompozycja na większym formacie wymaga dłuższego szkła. To nie jest kwestia przyzwyczajenia; to jest ten sam wzór, co w <a href="../dodatki/dodatek-s-kamery-w-rendererach.html">Dodatku S</a>.</p>
+
+    <p><strong>Ogniskowa wyznacza głębię.</strong> Dłuższe szkło przy tej samej kompozycji daje płytszą strefę ostrości, jak liczy <a href="../dodatki/dodatek-e-glebia-w-liczbach.html">Dodatek E</a>. Duży format nie ma więc „ładniejszej głębi” z jakiegoś nieuchwytnego powodu — ma <span class="term-cyan">płytszą, i to o mierzalną wielkość</span>.</p>
+
+    <p><strong>Proporcja wyznacza kompozycję.</strong> Kadr 2,4:1 nie mieści postaci stojącej w pełnej wysokości bez wielkiego zapasu po bokach; kadr 1,33:1 nie mieści dwóch osób w rozmowie bez ciasnoty. Proporcja rozstrzyga więc, które ujęcia są naturalne, a które wymagają wysiłku.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Cztery formaty</span><span>ten sam kąt widzenia, cztery konsekwencje</span></div>
+      <div class="diagram-controls" id="fmPrzyciski">
+        <button data-fm="s35">Super 35</button>
+        <button data-fm="ff">Pełna klatka</button>
+        <button data-fm="65">65 mm</button>
+        <button data-fm="up70">Ultra Panavision 70</button>
+      </div>
+      <svg viewBox="0 0 760 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Kształt kadru wybranego formatu oraz ogniskowa i głębia ostrości potrzebne do tego samego kąta widzenia.">
+        <rect x="24" y="24" width="330" height="150" fill="#0d0f11" stroke="#3a424d"/>
+        <rect id="fmKadr" x="60" y="60" width="258" height="78" fill="#6e93be" fill-opacity="0.18" stroke="#6e93be" stroke-width="1.6"/>
+        <rect id="fmPostac" x="176" y="72" width="14" height="54" fill="#e8a33d" fill-opacity="0.8"/>
+        <text x="189" y="192" font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="middle">kształt kadru · postać 1,7 m dla skali</text>
+
+        <rect x="386" y="24" width="350" height="150" rx="4" fill="#151a1f" stroke="#3a424d"/>
+        <g font-family="IBM Plex Mono" font-size="10.5">
+          <text x="404" y="50" fill="#8b909b">bramka</text><text x="620" y="50" fill="#ecebe4" id="fmBramka">—</text>
+          <text x="404" y="76" fill="#8b909b">proporcja</text><text x="620" y="76" fill="#ecebe4" id="fmProp">—</text>
+          <text x="404" y="102" fill="#8b909b">ogniskowa na 40°</text><text x="620" y="102" fill="#e8a33d" id="fmF">—</text>
+          <text x="404" y="128" fill="#8b909b">głębia · 3 m, T/2,8</text><text x="620" y="128" fill="#7fc47f" id="fmGleb">—</text>
+          <text x="404" y="154" fill="#8b909b">wobec Super 35</text><text x="620" y="154" fill="#d8695f" id="fmWzgl">—</text>
+        </g>
+        <text x="30" y="218" font-family="IBM Plex Sans" font-size="11.5" fill="#ecebe4" id="fmCzegoNie">—</text>
+        <text x="30" y="236" font-family="IBM Plex Mono" font-size="9" fill="#8b909b">krążek dopuszczalny liczony jako przekątna formatu / 1500</text>
+      </svg>
+      <div class="diagram-caption">Wszystkie cztery ustawione na ten sam kąt widzenia 40° w poziomie i tę samą odległość. Zmienia się wyłącznie format — i za nim wszystko inne.</div>
+    </div>
+
+    <p>Ostatni wiersz odczytu jest tym, na co warto patrzeć. <strong>Przejście z Super 35 na anamorficzne 65 mm skraca strefę ostrości z dziewięćdziesięciu centymetrów do dwudziestu trzech</strong> przy identycznym kadrze i tej samej przysłonie. Jest to różnica między swobodą aktora a taśmą mierniczą przy każdym ujęciu.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Przypadek · format wybrany dla ograniczeń</div>
+    <h2>Ultra Panavision 70</h2>
+
+    <p><em>Nienawistna ósemka</em> ze zdjęciami Roberta Richardsona jest przykładem szczególnym, bo format wybrano tu nie mimo jego ograniczeń, tylko właśnie dla nich.</p>
+
+    <p><strong>Co to jest.</strong> Ultra Panavision 70 to taśma 65 mm z anamorficznymi obiektywami o ściśnięciu <strong>1,25×</strong>, rozciągana przy projekcji do proporcji około 2,75–2,76:1. Zestaw obiektywów odnaleziono w zapleczu Panavisionu; był to sprzęt nieużywany od dekad. Film był pierwszym fabularnym pokazywanym w anamorficznym formacie 70 mm w systemie jednoprojektorowym od <em>Chartumu</em> z 1966 roku.</p>
+
+    <p><strong>Ściśnięcie 1,25× jest tu kluczowe i nietypowe.</strong> Anamorf kinowy zwykle ściska dwukrotnie; tutaj ściśnięcie jest niewielkie, bo negatyw 65 mm sam z siebie jest już szeroki. Efekt uboczny jest taki, że <span class="term-violet">wszystkie zjawiska anamorficzne z <a href="rozdzial-20-anamorf.html">Rozdziału 20</a> występują w wersji przytłumionej</span> — owalne bokeh jest lekko owalne, smugi są słabe, oddech przy ostrzeniu mniejszy.</p>
+
+    <p><strong>Rachunek, który warto zrobić samemu.</strong> Negatyw 65 mm z tym ściśnięciem daje w kamerze proporcję około 2,86:1, a podawana proporcja projekcyjna to 2,76:1. Różnica bierze się z kadrowania kopii, nie z optyki — i jest przykładem tego, o czym mówił <a href="../dodatki/dodatek-s-kamery-w-rendererach.html">Dodatek S</a>: <strong>bramka kamery i bramka projekcji to dwie różne liczby</strong>, a mylenie ich daje błąd kadru rzędu czterech procent.</p>
+
+    <button class="advanced-btn" data-modal-target="adv-format-zakaz">Zaawansowane: czego zakazuje proporcja 2,76:1</button>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Proporcja · gdzie wolno postawić człowieka</div>
+    <h2>Kadr jako plan miejsca</h2>
+
+    <p>Proporcja kadru bywa opisywana jako sprawa gustu albo tradycji gatunku. Ma jednak konsekwencję czysto geometryczną, którą warto nazwać, bo z niej wynika reszta.</p>
+
+    <p><strong>Człowiek jest pionowy, a kadr filmowy poziomy.</strong> Postać stojąca w pełnej wysokości wypełnia kadr w pionie, więc im szersza proporcja, tym więcej miejsca zostaje po bokach — i tym więcej trzeba tam czymś zapełnić. Sylwetka o proporcji 1,7 m na 0,45 m, wypełniająca kadr na całą wysokość, zajmuje przy 2,39:1 około jedenastu procent jego szerokości, a przy 1,33:1 dwadzieścia — czyli prawie dwa razy więcej.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Ta sama postać</span><span>trzy proporcje kadru</span></div>
+      <svg viewBox="0 0 760 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sylwetka o stałej wysokości wpisana w kadry 1,33:1, 1,85:1 i 2,39:1 — udział jej szerokości maleje.">
+        <g stroke="#6e93be" stroke-width="1.6" fill="#6e93be" fill-opacity="0.1">
+          <rect x="40" y="44" width="133" height="100"/>
+          <rect x="211" y="44" width="185" height="100"/>
+          <rect x="434" y="44" width="239" height="100"/>
+        </g>
+        <g fill="#e8a33d" fill-opacity="0.85">
+          <rect x="93" y="54" width="27" height="80"/>
+          <rect x="290" y="54" width="27" height="80"/>
+          <rect x="540" y="54" width="27" height="80"/>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">
+          <text x="106" y="34">1,33:1</text><text x="303" y="34">1,85:1</text><text x="553" y="34">2,39:1</text>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#e8a33d" text-anchor="middle">
+          <text x="106" y="166">20% szerokości</text><text x="303" y="166">14%</text><text x="553" y="166">11%</text>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="middle">
+          <text x="106" y="184">wystarcza jedna postać</text>
+          <text x="303" y="184">zostaje miejsce na kontekst</text>
+          <text x="553" y="184">pustkę trzeba czymś uzasadnić</text>
+        </g>
+        <text x="380" y="204" font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="middle">sylwetka 1,7 × 0,45 m, wypełniająca kadr na całą wysokość</text>
+      </svg>
+      <div class="diagram-caption">Kadry mają jednakową wysokość, żeby porównanie dotyczyło wyłącznie szerokości. Postać jest w każdym tej samej wielkości — zmienia się tylko to, ile miejsca zostaje obok niej.</div>
+    </div>
+
+
+    <p>Wynikają stąd trzy rozwiązania, po które szeroka proporcja sięga i po których się ją rozpoznaje.</p>
+
+    <ul>
+      <li><strong>Dwie osoby zamiast jednej.</strong> Szeroki kadr naturalnie mieści rozmowę bez cięcia — stąd jego związek z filmem, w którym postacie stoją naprzeciw siebie.</li>
+      <li><strong>Krajobraz zamiast tła.</strong> Miejsce po bokach wypełnia się przestrzenią, co czyni ten format wygodnym dla plenerów i niewygodnym dla wnętrz.</li>
+      <li><strong>Pustka jako środek.</strong> Trzecia możliwość to zostawienie pustki, która wtedy staje się treścią — samotność, osaczenie, oczekiwanie.</li>
+    </ul>
+
+    <p>Odwrotnie działa proporcja bliska kwadratowi. Mieści postać wygodnie, ale <span class="term-cyan">zmusza do cięcia przy dwóch osobach</span> i utrudnia pokazanie przestrzeni. Nie jest więc ani lepsza, ani gorsza — jest wyborem, który jedne sceny czyni łatwymi, a inne kosztownymi.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">W CG · co z tego wynika przy pracy</div>
+    <h2>Format w wirtualnej kamerze</h2>
+
+    <p>Dla pracy z plate'em format przekłada się na trzy konkretne rzeczy i wszystkie trzy bywają źródłem błędów.</p>
+
+    <p><strong>Bramka, a nie proporcja.</strong> Kamera renderera potrzebuje szerokości bramki w milimetrach, a nie proporcji kadru. Wpisanie „2,39:1” zamiast „24,89 mm” daje kąt widzenia przypadkowy — i jest to najczęstsza pomyłka z listy w <a href="../dodatki/dodatek-s-kamery-w-rendererach.html">Dodatku S</a>.</p>
+
+    <p><strong>Anamorf wymaga dwóch liczb.</strong> Materiał anamorficzny ma inną szerokość efektywną niż fizyczną. Renderer trzeba ustawić albo na bramkę pomnożoną przez ściśnięcie, albo na niekwadratowe piksele — i te dwa sposoby dają ten sam wynik tylko wtedy, gdy się ich nie miesza.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Anamorf w rendererze</span><span>dwa sposoby, jeden wynik</span></div>
+      <svg viewBox="0 0 760 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Dwa poprawne sposoby ustawienia anamorfu w rendererze i jeden błędny, powstający z ich pomieszania.">
+        <rect x="24" y="24" width="228" height="96" rx="4" fill="#132018" stroke="#7fc47f" stroke-width="1.2"/>
+        <text x="138" y="46" font-family="IBM Plex Mono" font-size="10" fill="#7fc47f" text-anchor="middle">SPOSÓB A</text>
+        <text x="40" y="70" font-family="IBM Plex Sans" font-size="11" fill="#ecebe4">bramka × ściśnięcie</text>
+        <text x="40" y="90" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">24,89 × 2 = 49,78 mm</text>
+        <text x="40" y="108" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">piksele kwadratowe</text>
+
+        <rect x="266" y="24" width="228" height="96" rx="4" fill="#132018" stroke="#7fc47f" stroke-width="1.2"/>
+        <text x="380" y="46" font-family="IBM Plex Mono" font-size="10" fill="#7fc47f" text-anchor="middle">SPOSÓB B</text>
+        <text x="282" y="70" font-family="IBM Plex Sans" font-size="11" fill="#ecebe4">bramka bez zmian</text>
+        <text x="282" y="90" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">24,89 mm</text>
+        <text x="282" y="108" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">piksel 2:1, niekwadratowy</text>
+
+        <rect x="508" y="24" width="228" height="96" rx="4" fill="#201318" stroke="#d8695f" stroke-width="1.6"/>
+        <text x="622" y="46" font-family="IBM Plex Mono" font-size="10" fill="#d8695f" text-anchor="middle">OBA NARAZ</text>
+        <text x="524" y="70" font-family="IBM Plex Sans" font-size="11" fill="#ecebe4">bramka × 2 i piksel 2:1</text>
+        <text x="524" y="90" font-family="IBM Plex Mono" font-size="9.5" fill="#d8695f">kadr dwukrotnie za szeroki</text>
+        <text x="524" y="108" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">objaw: element ściśnięty w pionie</text>
+
+        <text x="380" y="150" font-family="IBM Plex Sans" font-size="11.5" fill="#ecebe4" text-anchor="middle">A i B dają identyczny obraz. Pomieszanie ich daje błąd o czynnik równy ściśnięciu.</text>
+        <text x="380" y="176" font-family="IBM Plex Mono" font-size="9.5" fill="#e8a33d" text-anchor="middle">test: okrąg w scenie musi wyjść okręgiem po rozciągnięciu</text>
+      </svg>
+      <div class="diagram-caption">Obie kolumny zielone są poprawne i wzajemnie wymienne. Czerwona jest najczęstszym błędem przy materiale anamorficznym — i rozpoznaje się ją jednym testem z okręgiem.</div>
+    </div>
+
+    <p><strong>Głębia musi odpowiadać formatowi.</strong> Element wyrenderowany z głębią policzoną dla Super 35 wstawiony w plate z 65 mm będzie zbyt ostry w tle, i to o czynnik, który da się odczytać z widgetu wyżej. <strong>Nie jest to kwestia gustu ani siły rozmycia</strong> — jest to inny rozkład ostrości w głąb sceny, a rozkład jest tym, co oko sprawdza.</p>
+
+    <p>Ostatnia uwaga wraca do tezy tego rozdziału. Skoro format narzuca ogniskowe, ogniskowe narzucają głębię, a głębia jest tym, po czym poznaje się nieprawidłowo osadzony element — to <span class="term-amber">format jest pierwszą rzeczą, którą trzeba ustalić, i ostatnią, którą można zmienić</span>. Jest to decyzja autorska w tym sensie, że wszystkie następne podejmuje się już w jej granicach.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Dwie drogi do szerokiego kadru</div>
+    <h2>Ściśnięcie kontra przycięcie</h2>
+
+    <p>Szeroką proporcję da się osiągnąć na dwa sposoby, które dają ten sam kształt kadru i zupełnie różny obraz. Rozróżnienie jest praktyczne, bo z materiału da się je odczytać i bo w compie wymagają innego traktowania.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Dwie drogi</span><span>ten sam kadr, inny nośnik</span></div>
+      <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Anamorf wykorzystuje całą powierzchnię negatywu i ściska obraz; przycięcie sferyczne odrzuca górę i dół.">
+        <text x="190" y="24" font-family="IBM Plex Mono" font-size="10" fill="#4fc3c0" text-anchor="middle">ANAMORF · ściśnięcie</text>
+        <rect x="70" y="36" width="240" height="132" fill="#4fc3c0" fill-opacity="0.18" stroke="#4fc3c0" stroke-width="1.6"/>
+        <g stroke="#4fc3c0" stroke-width="1" opacity="0.55">
+          <line x1="110" y1="36" x2="110" y2="168"/><line x1="150" y1="36" x2="150" y2="168"/>
+          <line x1="190" y1="36" x2="190" y2="168"/><line x1="230" y1="36" x2="230" y2="168"/><line x1="270" y1="36" x2="270" y2="168"/>
+        </g>
+        <ellipse cx="190" cy="102" rx="26" ry="40" fill="none" stroke="#e8a33d" stroke-width="2"/>
+        <text x="190" y="188" font-family="IBM Plex Mono" font-size="9" fill="#7fc47f" text-anchor="middle">cały negatyw wykorzystany</text>
+        <text x="190" y="204" font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="middle">okrąg zapisany jako elipsa — prostuje go projekcja</text>
+        <text x="190" y="228" font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="middle">bokeh owalne, smugi poziome, oddech większy</text>
+
+        <line x1="380" y1="16" x2="380" y2="238" stroke="#2a2f38"/>
+
+        <text x="570" y="24" font-family="IBM Plex Mono" font-size="10" fill="#6e93be" text-anchor="middle">SFERYK · przycięcie</text>
+        <rect x="450" y="36" width="240" height="132" fill="#6e93be" fill-opacity="0.08" stroke="#3a424d" stroke-dasharray="3 3"/>
+        <rect x="450" y="66" width="240" height="72" fill="#6e93be" fill-opacity="0.22" stroke="#6e93be" stroke-width="1.6"/>
+        <rect x="450" y="36" width="240" height="30" fill="#d8695f" fill-opacity="0.22"/>
+        <rect x="450" y="138" width="240" height="30" fill="#d8695f" fill-opacity="0.22"/>
+        <circle cx="570" cy="102" r="26" fill="none" stroke="#e8a33d" stroke-width="2"/>
+        <text x="570" y="188" font-family="IBM Plex Mono" font-size="9" fill="#d8695f" text-anchor="middle">44% wysokości odrzucone</text>
+        <text x="570" y="204" font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="middle">okrąg zostaje okręgiem, nic nie trzeba prostować</text>
+        <text x="570" y="228" font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="middle">bokeh okrągłe, brak smug, mniej ziarna w kadrze</text>
+      </svg>
+      <div class="diagram-caption">Przy proporcji 2,39:1 z bramki 1,33:1 przycięcie odrzuca 44 procent wysokości negatywu. Anamorf zachowuje ją całą — i to jest jego jedyny obiektywny argument.</div>
+    </div>
+
+    <p><strong>Anamorf wykorzystuje cały negatyw.</strong> Obraz jest ściśnięty w poziomie, więc mieści się w kadrze o proporcji bliskiej kwadratowi, a przy projekcji zostaje rozciągnięty. Zysk jest mierzalny: przy przejściu z 1,33:1 na 2,39:1 przycięcie odrzuca prawie połowę powierzchni światłoczułej, a więc i połowę stosunku sygnału do szumu z <a href="../dodatki/dodatek-n-szum-w-liczbach.html">Dodatku N</a>.</p>
+
+    <p><strong>Sferyk z przycięciem niczego nie ściska.</strong> Kadr powstaje przez odrzucenie góry i dołu, więc obraz jest zwykły — okrągłe bokeh, brak smug, brak zwiększonego oddechu. Płaci się powierzchnią nośnika, co przy dzisiejszych matrycach bywa ceną akceptowalną, a przy taśmie było wysoką.</p>
+
+    <p>Dla nas najważniejsza jest konsekwencja praktyczna: <span class="term-amber">z gotowego kadru 2,39:1 da się rozpoznać, którą drogą powstał</span> — po kształcie bokeh, po obecności poziomych smug i po tym, czy rozmycie tła jest okrągłe, czy owalne. A rozpoznanie decyduje, czym element trzeba dopasować.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Historia · dlaczego formaty w ogóle się mnożyły</div>
+    <h2>Format jako odpowiedź na presję</h2>
+
+    <p>Warto na koniec zauważyć, że wielość formatów nie wzięła się z poszukiwania wyrazu. Wzięła się z kolejnych nacisków technicznych i handlowych — a każdy z nich zostawił po sobie proporcję, której dziś używa się już dla innych powodów.</p>
+
+    <p><strong>Rozmiar klatki wyznaczyła perforacja.</strong> Format 35 mm z czterema otworami na klatkę dał kadr bliski 1,33:1 i przez dekady nikt tego nie kwestionował, bo nie było po co.</p>
+
+    <p><strong>Ścieżka dźwiękowa zwęziła kadr.</strong> Miejsce na dźwięk trzeba było zabrać z szerokości obrazu, więc proporcja poszła w stronę kwadratu — i dopiero korekta bramki przywróciła coś zbliżonego do wcześniejszego kształtu.</p>
+
+    <p><strong>Konkurencja z telewizją rozszerzyła go z powrotem.</strong> Szeroki kadr był rzeczą, której mały odbiornik nie potrafił pokazać — i stąd wysyp formatów panoramicznych, w tym anamorficznych i wielkoformatowych.</p>
+
+    <p>Konsekwencja dla czytania kadru jest taka, że <strong>proporcja niesie ze sobą historyczne skojarzenia niezależne od jej geometrii</strong>. Kadr bliski kwadratowi czyta się jako dawny albo intymny, bardzo szeroki jako widowiskowy — i nie dlatego, że coś w geometrii to narzuca, tylko dlatego, że widz widział tysiące filmów, które tak właśnie tych proporcji używały.</p>
+
+    <p>Jest to jedyne miejsce w tej książce, gdzie działa mechanizm nieoptyczny, i warto to nazwać wprost. <span class="term-cyan">Wszystkie pozostałe zjawiska działały przez fizykę; ten działa przez pamięć widza</span> — a operator korzysta z niego dokładnie tak samo świadomie.</p>
+  </div>
+
+  <div class="panel practice">
+    <div class="panel-label">Z praktyki</div>
+    <p><strong>Zapisuj bramkę w milimetrach, nie proporcję.</strong> Proporcja da się policzyć z bramki, bramka z proporcji nie. Jedna liczba mniej w notatce oznacza godzinę szukania przy poprawkach.</p>
+    <p><strong>Przy anamorfie sprawdź ściśnięcie pomiarem.</strong> Okrąg w scenie musi wyjść okręgiem po rozciągnięciu. Ściśnięcie 1,25×, 1,3×, 1,5× i 2× występują wszystkie i wyglądają podobnie na pierwszy rzut oka.</p>
+    <p><strong>Porównuj głębię, nie ostrość.</strong> Element sprawdza się na gradiencie rozmycia w głąb sceny, a nie na jednym planie. Dwie rzeczy w różnych odległościach w plate'cie dają odniesienie lepsze niż jakikolwiek suwak.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>bramka kadrowa</dt>
+      <dd>Fizyczny obszar rejestrowany przez kamerę, w milimetrach. Podstawa wszystkich rachunków kąta widzenia.</dd>
+      <dt>ściśnięcie anamorficzne</dt>
+      <dd>Ile razy obraz jest ściśnięty w poziomie na nośniku. Spotykane wartości: 1,25×, 1,3×, 1,5×, 2×.</dd>
+      <dt>proporcja projekcyjna</dt>
+      <dd>Proporcja kadru pokazywanego widzowi. Bywa węższa niż proporcja negatywu, bo kopia jest kadrowana.</dd>
+      <dt>krążek dopuszczalny</dt>
+      <dd>Największe rozmycie punktu uznawane jeszcze za ostre. Skaluje się z formatem, więc głębia zależy od niego podwójnie.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Na tym kończy się część o wyborach. Zostaje ostatnia rzecz: <a href="rozdzial-42-czytanie-kadru.html">czytanie kadru</a> — zebranie wszystkiego z tej książki w jedną procedurę, która z gotowego obrazu odtwarza decyzje, jakie za nim stały.</p>
+  </div>
 
   <div class="deeper">
     <div class="deeper-label">Idź głębiej</div>
@@ -56,8 +299,119 @@ window.SKY3D_MESSAGES = {
       <a class="nav-next" href="rozdzial-42-czytanie-kadru.html">Następny →</a>
   </div>
 
+<template id="adv-format-zakaz">
+  <h3>Czego zakazuje proporcja 2,76:1</h3>
+  <p>Bardzo szeroki kadr bywa opisywany jako format dający więcej. Warto policzyć, ile przy tym zabiera — bo ograniczenia są tu wyraźniejsze niż możliwości.</p>
+  <p><strong>Postać stojąca.</strong> Człowiek o wzroście 1,7 m i szerokości ramion około 0,45 m ma proporcję mniej więcej 3,8:1 w pionie. Wpisany w kadr 2,76:1 tak, żeby wypełniał 80 procent wysokości, zajmuje niecałe <strong>osiem procent szerokości kadru</strong>. Pozostałe dziewięćdziesiąt dwa procent trzeba czymś zapełnić — i to jest cała treść pracy operatora w tym formacie.</p>
+  <p>Dla porównania w kadrze 1,33:1 ta sama postać zajmuje około szesnastu procent szerokości, czyli dwa razy więcej. Nie jest to różnica ilościowa; jest to różnica w tym, co kadr w ogóle potrafi pokazać.</p>
+  <p><strong>Zbliżenie na twarz.</strong> Twarz jest z grubsza kwadratowa, więc w kadrze 2,76:1 duże zbliżenie zostawia po bokach dwa pasy o łącznej szerokości większej niż sama twarz. Stąd bierze się charakterystyczna dla tego formatu kompozycja, w której zbliżenie sąsiaduje z kawałkiem przestrzeni — bo inaczej pasy byłyby puste.</p>
+  <p><strong>Ruch pionowy.</strong> Panorama w górę albo w dół przy tak szerokim kadrze zmienia obraz w niewielkim stopniu, bo pionowy kąt widzenia jest mały. Dynamika ruchu kamery przenosi się więc do poziomu, i to jest kolejna rzecz, którą format narzuca, zanim ktokolwiek podejmie decyzję.</p>
+  <p><strong>Wnętrza.</strong> Ostatnia i najbardziej praktyczna konsekwencja: żeby zmieścić szerokość kadru we wnętrzu, trzeba albo bardzo szerokiego szkła, albo bardzo dużego pomieszczenia. Pierwsze wraca do rachunków z <a href="../dodatki/dodatek-ac-perspektywa-w-liczbach.html">Dodatku AC</a> i zniekształceń przy brzegach; drugie kosztuje w scenografii.</p>
+  <p>Warto z tego wyciągnąć wniosek ogólniejszy niż jeden format. <strong>Każda proporcja kadru jest zestawem zakazów</strong>, a nie zestawem możliwości — i wybór formatu jest w istocie wyborem, które ujęcia mają być łatwe, a które trudne. To rozstrzyga o filmie mocniej niż większość późniejszych decyzji, bo działa w każdym ujęciu bez wyjątku.</p>
+</template>
+
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal-box">
+    <button class="modal-close" aria-label="Zamknij">&times;</button>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
 </div>
 
 <script src="../assets/interactive.js"></script>
+<script>
+(function () {
+  var pas = document.getElementById('fmPrzyciski');
+  if (!pas) return;
+
+  var FORMATY = {
+    s35:  { nazwa: 'Super 35',            w: 24.89, h: 18.66, sq: 1,
+            czego: 'Najkrótsze szkło i najgłębsza ostrość — izolowanie postaci od tła wymaga tu otwierania do końca.' },
+    ff:   { nazwa: 'Pełna klatka',        w: 36,    h: 24,    sq: 1,
+            czego: 'Dłuższe szkło i o jedną trzecią płytsza głębia — mniejsza tolerancja na błąd ostrzenia.' },
+    '65': { nazwa: '65 mm',               w: 52.63, h: 23.01, sq: 1,
+            czego: 'Strefa ostrości mieści jedną pozycję aktora, nie dwie — ruch w głąb wymaga przejazdu ostrości.' },
+    up70: { nazwa: 'Ultra Panavision 70', w: 52.63, h: 23.01, sq: 1.25,
+            czego: 'Kadr na jedną stojącą postać zostawia po bokach przestrzeń, którą trzeba czymś uzasadnić.' }
+  };
+
+  var FOV = 40 * Math.PI / 180;
+  var S = 3000, N = 2.8;   // mm, przysłona
+
+  function pl(v, n) { return v.toFixed(n === undefined ? 2 : n).replace('.', ','); }
+
+  function licz(f) {
+    var wef = f.w * f.sq;
+    var ogn = wef / (2 * Math.tan(FOV / 2));
+    var diag = Math.sqrt(f.w * f.w + f.h * f.h);
+    var c = diag / 1500;
+    var H = ogn * ogn / (N * c) + ogn;
+    var bl = S * (H - ogn) / (H + S - 2 * ogn);
+    var da = (H > S) ? S * (H - ogn) / (H - S) : Infinity;
+    return { wef: wef, ogn: ogn, c: c, bl: bl / 1000, da: da / 1000, prop: wef / f.h };
+  }
+
+  var BAZA = licz(FORMATY.s35);
+
+  var el = {
+    kadr: document.getElementById('fmKadr'), postac: document.getElementById('fmPostac'),
+    bramka: document.getElementById('fmBramka'), prop: document.getElementById('fmProp'),
+    f: document.getElementById('fmF'), gleb: document.getElementById('fmGleb'),
+    wzgl: document.getElementById('fmWzgl'), czego: document.getElementById('fmCzegoNie')
+  };
+  var przyciski = pas.querySelectorAll('[data-fm]');
+
+  function pokaz(k, btn) {
+    var f = FORMATY[k], r = licz(f);
+
+    /* Kadr rysowany o stalej WYSOKOSCI, zeby bylo widac, jak rosnie szerokosc. */
+    var Hpx = 78, Wpx = Hpx * r.prop;
+    var maks = 300;
+    if (Wpx > maks) { Wpx = maks; Hpx = maks / r.prop; }
+    var cx = 189, cy = 99;
+    el.kadr.setAttribute('x', (cx - Wpx / 2).toFixed(1));
+    el.kadr.setAttribute('y', (cy - Hpx / 2).toFixed(1));
+    el.kadr.setAttribute('width', Wpx.toFixed(1));
+    el.kadr.setAttribute('height', Hpx.toFixed(1));
+    /* Postac wypelnia 70% wysokosci kadru — stala w kadrze, zmienna wzgledem szerokosci. */
+    var hp = Hpx * 0.7, wp = hp / 4;
+    el.postac.setAttribute('x', (cx - wp / 2).toFixed(1));
+    el.postac.setAttribute('y', (cy - hp / 2).toFixed(1));
+    el.postac.setAttribute('width', wp.toFixed(1));
+    el.postac.setAttribute('height', hp.toFixed(1));
+
+    el.bramka.textContent = pl(f.w) + ' × ' + pl(f.h) + ' mm' + (f.sq > 1 ? '  (ściśnięcie ' + pl(f.sq) + '×)' : '');
+    el.prop.textContent = pl(r.prop) + ':1' + (f.sq > 1 ? '  po rozciągnięciu' : '');
+    el.f.textContent = pl(r.ogn, 1) + ' mm';
+    el.gleb.textContent = isFinite(r.da)
+      ? pl(r.da - r.bl) + ' m   (' + pl(r.bl) + ' – ' + pl(r.da) + ')'
+      : 'od ' + pl(r.bl) + ' m w gore';
+    var stos = (BAZA.da - BAZA.bl) / (r.da - r.bl);
+    el.wzgl.textContent = (k === 's35')
+      ? 'odniesienie'
+      : 'glebia ' + pl(stos, 1) + '× plytsza, szklo ' + pl(r.ogn / BAZA.ogn, 1) + '× dluzsze';
+    el.czego.textContent = 'Co narzuca: ' + f.czego;
+
+    for (var i = 0; i < przyciski.length; i++) {
+      przyciski[i].classList.toggle('is-active', przyciski[i] === btn);
+    }
+  }
+
+  for (var i = 0; i < przyciski.length; i++) {
+    (function (b) { b.addEventListener('click', function () { pokaz(b.dataset.fm, b); }); })(przyciski[i]);
+  }
+  pokaz('s35', przyciski[0]);
+
+  var ramka = pas.closest('.diagram-frame');
+  if (ramka) {
+    ramka.dataset.kontrola = Object.keys(FORMATY).map(function (k) {
+      var r = licz(FORMATY[k]);
+      return k + ':' + pl(r.prop) + '/' + pl(r.ogn, 1) + 'mm/' + pl(r.da - r.bl) + 'm';
+    }).join(' ');
+  }
+})();
+</script>
+
 </body>
 </html>
