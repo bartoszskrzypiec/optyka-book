@@ -43,7 +43,244 @@ window.SKY3D_MESSAGES = {
   <h1>Powłoki: dlaczego flara ma kolor</h1>
   <p class="subtitle">Warstwa grubości ćwierci długości fali kasuje odbicie przez interferencję — ale tylko dla tej jednej fali. Reszta widma zostaje, i to ona nadaje flarze kolor rozpoznawalny jak logo producenta.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li><strong>Powłoka nie pochłania światła — kasuje odbicie przez interferencję.</strong> Warstwa grubości ćwierci długości fali sprawia, że odbicie od jej wierzchu i od spodu spotykają się w przeciwfazie.</li>
+      <li>Warunek da się spełnić dokładnie <span class="term-amber">dla jednej długości fali</span>. Reszta widma zostaje odbita — i to, co zostaje, ma barwę. Stąd fiolet na starym szkle i zieleń na nowym.</li>
+      <li>Kolor flary jest więc <strong>bezpośrednim odczytem konstrukcji powłok</strong>, rozpoznawalnym jak logo. Da się go policzyć z trzech liczb i odtworzyć w compie z tego samego rachunku.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Mechanizm · dwie fale, jedna przeciwfaza</div>
+    <h2>Jak warstwa kasuje odbicie</h2>
+
+    <p>Powłoka przeciwodblaskowa działa wbrew intuicji: <strong>dokłada powierzchnię, żeby zmniejszyć odbicie</strong>. Zamiast jednej granicy powietrze–szkło są teraz dwie: powietrze–warstwa i warstwa–szkło. Każda z nich odbija, ale odbicia się znoszą.</p>
+
+    <p>Warunek jest geometryczny. Fala odbita od spodu warstwy przebywa ją dwa razy, więc wraca opóźniona o podwojoną grubość. Jeśli to opóźnienie wynosi <em>pół długości fali</em>, obie fale spotykają się grzbiet na dolinę i wygaszają. Grubość musi więc wynosić ćwierć długości fali — mierzonej wewnątrz warstwy, gdzie fala jest krótsza.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Ćwierć fali</span><span>dwie fale wracają w przeciwfazie</span></div>
+      <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Przekrój powłoki: fala odbita od wierzchu i od spodu warstwy wracają przesunięte o pół długości fali i sumują się do zera.">
+        <rect x="40" y="30" width="680" height="70" fill="#101215"/>
+        <text x="52" y="48" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">powietrze · n = 1,00</text>
+        <rect x="40" y="100" width="680" height="34" fill="#9c82d8" fill-opacity="0.18" stroke="#9c82d8" stroke-width="1.2"/>
+        <text x="52" y="122" font-family="IBM Plex Mono" font-size="9.5" fill="#9c82d8">powłoka MgF₂ · n = 1,38 · grubość λ/4n ≈ 100 nm</text>
+        <rect x="40" y="134" width="680" height="70" fill="#4fc3c0" fill-opacity="0.14"/>
+        <text x="52" y="154" font-family="IBM Plex Mono" font-size="9.5" fill="#4fc3c0">szkło · n = 1,52</text>
+
+        <path d="M 120 40 L 200 100" stroke="#e8a33d" stroke-width="1.8" fill="none"/>
+        <text x="112" y="36" font-family="IBM Plex Mono" font-size="9" fill="#e8a33d">padająca</text>
+        <path d="M 200 100 L 280 40" stroke="#4fc3c0" stroke-width="1.8" fill="none"/>
+        <text x="288" y="38" font-family="IBM Plex Mono" font-size="9" fill="#4fc3c0">odbicie od wierzchu</text>
+        <path d="M 200 100 L 224 134" stroke="#e8a33d" stroke-width="1.4" fill="none" opacity="0.7"/>
+        <path d="M 224 134 L 248 100" stroke="#9c82d8" stroke-width="1.8" fill="none"/>
+        <path d="M 248 100 L 328 40" stroke="#9c82d8" stroke-width="1.8" fill="none"/>
+        <text x="336" y="52" font-family="IBM Plex Mono" font-size="9" fill="#9c82d8">odbicie od spodu</text>
+
+        <line x1="420" y1="30" x2="420" y2="204" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 5"/>
+        <g transform="translate(0,0)">
+          <path d="M 450 60 q 15 -18 30 0 q 15 18 30 0 q 15 -18 30 0 q 15 18 30 0 q 15 -18 30 0" fill="none" stroke="#4fc3c0" stroke-width="2"/>
+          <text x="450" y="46" font-family="IBM Plex Mono" font-size="9" fill="#4fc3c0">od wierzchu</text>
+          <path d="M 450 110 q 15 18 30 0 q 15 -18 30 0 q 15 18 30 0 q 15 -18 30 0 q 15 18 30 0" fill="none" stroke="#9c82d8" stroke-width="2"/>
+          <text x="450" y="96" font-family="IBM Plex Mono" font-size="9" fill="#9c82d8">od spodu · przesunięta o λ/2</text>
+          <line x1="450" y1="170" x2="600" y2="170" stroke="#7fc47f" stroke-width="2.4"/>
+          <text x="612" y="174" font-family="IBM Plex Mono" font-size="9.5" fill="#7fc47f">suma · zero</text>
+        </g>
+
+        <text x="40" y="230" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">Nic nie zostało pochłonięte. Światło, które nie wróciło, po prostu poszło dalej w szkło.</text>
+      </svg>
+      <div class="diagram-caption">Interferencja nie niszczy energii — przenosi ją. To, co nie odbiło się z powrotem, przeszło do przodu.</div>
+    </div>
+
+    <p>Warto zauważyć, że jest to zjawisko <strong>ściśle falowe</strong> — jedno z trzech wymienionych w <a href="rozdzial-01-fala-czy-promien.html">Rozdziale 1</a> jako niewyprowadzalne z modelu promieniowego. Promień nie ma fazy, więc nie ma czym się wygasić. Cała technologia powłok jest praktycznym zastosowaniem faktu, że światło jest falą.</p>
+
+    <p>Jest tu jeszcze jeden szczegół, który decyduje o znaku całego zjawiska i bywa źródłem pomyłek. Odbicie od granicy, na której współczynnik załamania <em>rośnie</em>, dostaje dodatkowe przesunięcie fazy o pół fali. W powłoce na szkle rośnie on <strong>na obu granicach</strong> — z 1,00 na 1,38 i z 1,38 na 1,52 — więc oba odbicia dostają to samo przesunięcie i wzajemnie się ono znosi. Zostaje sama różnica dróg, i dlatego warunkiem wygaszenia jest ćwierć fali.</p>
+
+    <p>Gdyby po drugiej stronie warstwy było powietrze, a nie szkło, drugie odbicie tego przesunięcia by nie dostało — i warunek odwróciłby się na przeciwny. Tak właśnie jest w bańce mydlanej i w plamie oleju na wodzie: <span class="term-violet">te same wzory, przeciwne barwy</span>. Rozróżnienie warto mieć w głowie, bo wzory na interferencję cienkiej warstwy krążą w obu wersjach i użycie niewłaściwej daje kolory dokładnie odwrotne do prawdziwych.</p>
+
+    <p class="deeper-inline">Rachunek na grubość, warunek na współczynnik załamania powłoki i dlaczego zostaje 1,3% — <a href="../dodatki/dodatek-b-wzory-fresnela.html">Dodatek B</a>.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Kolor · resztka, której nie dało się wygasić</div>
+    <h2>Dlaczego stare szkło świeci na fioletowo</h2>
+
+    <p>Warunek na grubość zawiera długość fali. Można go więc spełnić <em>dokładnie</em> dla jednej barwy — i wybiera się zwykle środek widma, około 550 nanometrów, bo tam oko jest najczulsze.</p>
+
+    <p>Dla pozostałych barw warstwa nie ma już ćwierci fali. Wygaszenie jest niepełne i tym słabsze, im dalej od barwy, na którą powłokę zestrojono. <span class="term-cyan">Odbite zostaje więc to, co leży na skrajach widma</span> — czerwień i błękit — a czerwień z błękitem to fiolet.</p>
+
+    <p>To jest cała przyczyna fioletowego połysku widocznego na przedniej soczewce każdego starszego obiektywu. Nie jest to zabarwienie szkła ani powłoki. Jest to <strong>widmo tego, czego powłoka nie zdążyła wygasić</strong> — i dokładnie ta sama resztka nadaje kolor flarze.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Odbicie resztkowe</span><span>przesuń długość fali, na którą zestrojono powłokę</span></div>
+      <div class="diagram-controls">
+        <label for="powlokaLambda">Powłoka zestrojona na</label>
+        <input id="powlokaLambda" type="range" min="420" max="650" step="5" value="550">
+        <span class="value-readout" id="powlokaOdczyt">550 nm · zieleń</span>
+      </div>
+      <svg viewBox="0 0 760 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Wykres odbicia resztkowego w funkcji długości fali: minimum przy długości, na którą zestrojono powłokę, wzrost ku skrajom widma; obok próbka barwy światła odbitego.">
+        <line x1="70" y1="200" x2="580" y2="200" stroke="#8b909b" stroke-width="1.2"/>
+        <line x1="70" y1="30" x2="70" y2="200" stroke="#8b909b" stroke-width="1.2"/>
+        <g font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">
+          <text x="70" y="218">400</text><text x="197" y="218">500</text><text x="325" y="218">600</text>
+          <text x="452" y="218">700</text><text x="540" y="218">nm</text>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="end">
+          <text x="62" y="34">4,3%</text><text x="62" y="118">2,2%</text><text x="62" y="204">0</text>
+        </g>
+        <line x1="70" y1="32" x2="580" y2="32" stroke="#d8695f" stroke-width="1" stroke-dasharray="5 4"/>
+        <text x="584" y="36" font-family="IBM Plex Mono" font-size="9" fill="#d8695f">bez powłoki</text>
+
+        <path id="powlokaKrzywa" fill="none" stroke="#9c82d8" stroke-width="2.6"/>
+        <line id="powlokaZnacznik" x1="261" y1="30" x2="261" y2="200" stroke="#7fc47f" stroke-width="1.4" stroke-dasharray="4 4"/>
+
+        <text x="620" y="46" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">BARWA ODBICIA</text>
+        <rect id="powlokaProbka" x="600" y="58" width="110" height="110" fill="#8080ff" stroke="#2a2f38" stroke-width="1.5"/>
+        <text id="powlokaBarwa" x="655" y="188" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b" text-anchor="middle">fiolet</text>
+
+        <g font-family="IBM Plex Mono" font-size="9.5">
+          <text x="600" y="216" fill="#d8695f">R</text><text x="628" y="216" fill="#d8695f" id="powlokaR">1,3%</text>
+          <text x="600" y="234" fill="#7fc47f">G</text><text x="628" y="234" fill="#7fc47f" id="powlokaG">1,2%</text>
+          <text x="600" y="252" fill="#6ea8e8">B</text><text x="628" y="252" fill="#6ea8e8" id="powlokaB">1,6%</text>
+        </g>
+        <text x="70" y="252" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">Krzywa liczona z interferencji dwóch odbić, nie z tablicy barw.</text>
+        <text x="70" y="268" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">Barwa próbki to bezpośrednio te trzy odczyty, znormalizowane.</text>
+      </svg>
+      <div class="diagram-caption" id="powlokaPodpis">Powłoka zestrojona na 550 nm: minimum w zieleni, resztka na skrajach — odbicie wychodzi fioletowe.</div>
+    </div>
+
+    <p>Przesuwając suwak, widać rzecz, która tłumaczy różnice między producentami. <strong>Barwa odbicia jest dopełnieniem barwy, na którą zestrojono powłokę.</strong> Powłoka na zieleń daje fiolet; powłoka przesunięta ku błękitowi daje odbicie bursztynowe. Nie ma tu wyboru estetycznego — jest wybór, którą część widma chroni się najlepiej, a kolor jest jego skutkiem.</p>
+
+    <p>Warto też odczytać z wykresu skalę zjawiska, bo bywa przeceniana. Odbicie waha się między jednym a dwoma procentami — czyli <em>całe</em> zróżnicowanie barwne mieści się w kilku dziesiątych procenta różnicy między kanałami. Fiolet, który widać na soczewce, jest fioletem bardzo bladym; wygląda mocno tylko dlatego, że pojawia się na tle ciemnego wnętrza obiektywu.</p>
+
+    <p>Ma to bezpośrednie przełożenie na ocenę materiału. <span class="term-cyan">Jeśli flara w plate'cie jest wyraźnie i czysto zabarwiona, kolor nie pochodzi z samej powłoki</span> — pochodzi z tego, że źródło było barwne, albo z korekcji, albo z filtra. Powłoka jedynie <em>przesuwa</em> barwę o kilka procent; nie potrafi zrobić plamy zielonej z białego słońca.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Wielowarstwa · kilka minimów zamiast jednego</div>
+    <h2>Dlaczego nowoczesna flara jest zielona</h2>
+
+    <p>Jedna warstwa ma jedno minimum. Kilka warstw o różnych grubościach i różnych współczynnikach daje <strong>kilka minimów naraz</strong> — i tak działa powłoka wielowarstwowa, która schodzi poniżej dwóch dziesiątych procenta w całym zakresie widzialnym.</p>
+
+    <p>Krzywa odbicia przestaje wtedy być prostą literą V i robi się falista: kilka dolin, kilka niskich garbów między nimi. Resztka nie leży już na skrajach widma, tylko <em>tam, gdzie akurat wypadły garby</em> — a to zależy od projektu stosu, czyli od decyzji konkretnego producenta.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Jedna warstwa kontra stos</span><span>krzywe odbicia przez widmo</span></div>
+      <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Porównanie krzywych odbicia: bez powłoki linia płaska na 4,3 procenta, jedna warstwa litera V z minimum w zieleni, wielowarstwa falista krzywa poniżej pół procenta.">
+        <line x1="80" y1="200" x2="700" y2="200" stroke="#8b909b" stroke-width="1.2"/>
+        <line x1="80" y1="26" x2="80" y2="200" stroke="#8b909b" stroke-width="1.2"/>
+        <g font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">
+          <text x="80" y="218">400</text><text x="235" y="218">500</text><text x="390" y="218">600</text>
+          <text x="545" y="218">700 nm</text>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="end">
+          <text x="72" y="34">4,3%</text><text x="72" y="122">2,2%</text><text x="72" y="204">0</text>
+        </g>
+
+        <line x1="80" y1="30" x2="700" y2="30" stroke="#d8695f" stroke-width="2.2"/>
+        <text x="600" y="24" font-family="IBM Plex Mono" font-size="10" fill="#d8695f">bez powłoki · płasko</text>
+
+        <path d="M 80 112 Q 160 152 235 178 Q 300 194 340 196 Q 420 190 500 172 Q 600 150 700 130" fill="none" stroke="#9c82d8" stroke-width="2.4"/>
+        <text x="470" y="164" font-family="IBM Plex Mono" font-size="10" fill="#9c82d8">jedna warstwa · jedno minimum</text>
+
+        <path d="M 80 190 Q 130 178 180 192 Q 235 200 290 190 Q 350 178 410 191 Q 470 200 530 189 Q 600 176 700 192" fill="none" stroke="#4fc3c0" stroke-width="2.4"/>
+        <text x="150" y="168" font-family="IBM Plex Mono" font-size="10" fill="#4fc3c0">wielowarstwa · kilka minimów</text>
+
+        <g stroke="#7fc47f" stroke-width="1" stroke-dasharray="3 3">
+          <line x1="180" y1="192" x2="180" y2="200"/><line x1="290" y1="190" x2="290" y2="200"/>
+          <line x1="410" y1="191" x2="410" y2="200"/><line x1="530" y1="189" x2="530" y2="200"/>
+        </g>
+        <text x="80" y="240" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">Resztka wielowarstwy leży w garbach między minimami — i to ich położenie decyduje o barwie flary.</text>
+      </svg>
+      <div class="diagram-caption">Fioletowa krzywa ma resztkę na skrajach widma. Cyjanowa ma ją w kilku wąskich pasmach w środku — stąd zupełnie inna barwa odbicia.</div>
+    </div>
+
+    <p>Stąd bierze się fakt, który operatorzy traktują jak wiedzę plemienną, a który jest po prostu odczytem konstrukcji: <span class="term-cyan">flara ma barwę charakterystyczną dla producenta i bywa po niej rozpoznawana</span>. Zieleń, bursztyn, chłodny błękit — to nie są decyzje stylistyczne, tylko miejsca, w których dany stos warstw ma swoje garby.</p>
+
+    <p>Liczba warstw bywa podawana w materiałach marketingowych i warto wiedzieć, ile znaczy. Przejście z jednej na trzy warstwy daje skok ogromny — z 1,3% na jakieś 0,4%. Z trzech na siedem już znacznie mniejszy, do jakichś 0,2%. Powyżej dziesięciu zysk jest w praktyce niemierzalny, a <span class="term-violet">rośnie za to wrażliwość na kąt padania i na uszkodzenia</span>. Stos jest tym delikatniejszy, im bardziej wyrafinowany, i dlatego przednie soczewki czyści się ostrożniej, niż sugerowałaby twardość szkła.</p>
+
+    <p>Warto przy tym pamiętać o czymś, co komplikuje odczyt: <strong>powłoka jest inna na każdej powierzchni</strong>. Konstruktor dobiera stos osobno dla każdej granicy, bo każda ma inne szkło po drugiej stronie i inny typowy kąt padania. Dlatego ghosty w jednym sznurze mają różne barwy — każdy powstał na innej parze, a każda para ma własną resztkę.</p>
+
+    <button class="advanced-btn" data-modal-target="adv-powloki-kat">Zaawansowane: dlaczego kolor zmienia się z kątem patrzenia</button>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">W CG · barwa flary jako parametr, nie jako obrazek</div>
+    <h2>Odtwarzanie koloru</h2>
+
+    <p>Najczęstszy sposób dokładania flary w compie polega na wklejeniu gotowego elementu z biblioteki. Działa, dopóki ujęcie jest jedno. Przy sekwencji zaczyna przeszkadzać, bo biblioteczny element ma barwę <em>innego</em> obiektywu niż ten, którym nakręcono plate.</p>
+
+    <p>Alternatywa jest tańsza, niż się wydaje. Barwa resztkowego odbicia daje się policzyć z trzech liczb — współczynnika załamania powłoki, jej grubości i współczynnika szkła — czyli dokładnie z tego, co liczy widget wyżej. <strong>Wynik jest trójką RGB, którą wystarczy podać jako barwę warstwy flary.</strong></p>
+
+    <p>Warto zauważyć, że jest to jedna z niewielu rzeczy w tej książce, którą da się odtworzyć <strong>dokładnie</strong>, a nie z przybliżenia. Odbicie resztkowe wynika z trzech współczynników i jednej grubości; nie ma w nim żadnej wielkości umownej, żadnego krążka rozmycia ani przyjętego kryterium. Widget wyżej liczy to samo równanie, które policzyłby program do projektowania optyki.</p>
+
+    <p>W praktyce nie zna się tych trzech liczb dla konkretnego obiektywu. Zna się natomiast <em>skutek</em>: barwę ghostów w plate'cie. Wystarczy ją odczytać próbnikiem i użyć jako barwy dokładanych elementów — a jeśli plamy w materiale mają różne barwy, warto dać dokładanym również różne, z tej samej wąskiej palety.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Nasycenie flary</span><span>skąd wiadomo, że podrobiona</span></div>
+      <svg viewBox="0 0 760 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Porównanie palet: realna resztka odbicia daje barwy blade i bliskie sobie, podrobiona flara zwykle ma barwy nasycone i rozrzucone po kole barw.">
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b" text-anchor="middle">
+          <text x="200" y="24">Z FIZYKI POWŁOKI</text><text x="560" y="24">Z BIBLIOTEKI EFEKTÓW</text>
+        </g>
+        <rect x="60" y="36" width="280" height="110" fill="#101215" stroke="#2a2f38"/>
+        <g stroke="#2a2f38" stroke-width="0.6">
+          <circle cx="110" cy="76" r="19" fill="#9aa0c8"/>
+          <circle cx="170" cy="96" r="15" fill="#a8a6c0"/>
+          <circle cx="230" cy="70" r="21" fill="#96a4bc"/>
+          <circle cx="292" cy="104" r="14" fill="#a2a2c4"/>
+        </g>
+        <text x="200" y="166" font-family="IBM Plex Mono" font-size="10" fill="#7fc47f" text-anchor="middle">wąska paleta, niskie nasycenie</text>
+        <text x="200" y="184" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">bo różnica między kanałami to kilkanaście procent</text>
+
+        <line x1="380" y1="16" x2="380" y2="204" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 5"/>
+
+        <rect x="420" y="36" width="280" height="110" fill="#101215" stroke="#2a2f38"/>
+        <g stroke="#2a2f38" stroke-width="0.6">
+          <circle cx="470" cy="76" r="19" fill="#2fd8c0"/>
+          <circle cx="530" cy="96" r="15" fill="#e85a3a"/>
+          <circle cx="590" cy="70" r="21" fill="#4a6ef0"/>
+          <circle cx="652" cy="104" r="14" fill="#f0c020"/>
+        </g>
+        <text x="560" y="166" font-family="IBM Plex Mono" font-size="10" fill="#d8695f" text-anchor="middle">paleta szeroka, barwy czyste</text>
+        <text x="560" y="184" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">nie ma takiego stosu warstw</text>
+
+        <text x="60" y="212" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">Lewa strona wygląda nudno na pojedynczej klatce i poprawnie w ujęciu. Prawa odwrotnie.</text>
+      </svg>
+      <div class="diagram-caption">Bladość nie jest tu niedoskonałością rysunku. Jest bezpośrednią konsekwencją tego, że resztka odbicia różni się między kanałami o ułamki procenta.</div>
+    </div>
+
+    <p>Jedna rzecz wymaga przy tym uwagi, bo jest źródłem flar, które wyglądają „za ładnie”. <span class="term-violet">Resztka odbicia jest zawsze mało nasycona</span> — mówimy o różnicy między 1,3% a 1,6%, czyli o kilkunastu procentach względnych. Flara o barwie czystej, mocno nasyconej zieleni albo błękitu nie ma odpowiednika w fizyce powłoki; realna jest blada i to właśnie ta bladość czyta się jako prawdziwa.</p>
+  </div>
+
+  <div class="panel practice">
+    <div class="panel-label">Z praktyki</div>
+    <p><strong>Odczytaj barwę ghosta próbnikiem, zanim sięgniesz po bibliotekę.</strong> Trzy liczby z plate'u są dokładniejsze niż jakikolwiek gotowy element, bo pochodzą z tego samego obiektywu. Jeśli ghostów jest kilka i różnią się barwą, użyj tej palety w całości — jednolity kolor wszystkich plam jest jednym z sygnałów podróbki.</p>
+    <p><strong>Fiolet na przedniej soczewce datuje obiektyw.</strong> Wyraźny fioletowy połysk oznacza powłokę jednowarstwową, czyli konstrukcję sprzed lat siedemdziesiątych albo tanią. Odbicie zielonkawe, słabe i zmieniające barwę przy przechylaniu to wielowarstwa. Dziesięć sekund oglądania mówi tyle, co metryczka.</p>
+    <p><strong>Nie nasycaj flary.</strong> Kusi, bo nasycona wygląda efektownie na pojedynczej klatce. W ruchu i w zestawieniu z plate'em zdradza się natychmiast — realna resztka odbicia to kilkanaście procent różnicy między kanałami, nie kilkaset.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>powłoka ćwierćfalowa</dt>
+      <dd>Warstwa o grubości równej ćwierci długości fali mierzonej w niej samej. Kasuje odbicie przez interferencję dla tej jednej fali.</dd>
+      <dt>odbicie resztkowe</dt>
+      <dd>To, czego powłoka nie wygasiła. Jego widmo decyduje o barwie flary i o połysku przedniej soczewki.</dd>
+      <dt>powłoka wielowarstwowa</dt>
+      <dd>Stos warstw dający kilka minimów odbicia naraz. Schodzi poniżej 0,2% w całym zakresie widzialnym.</dd>
+      <dt>MgF₂</dt>
+      <dd>Fluorek magnezu, n = 1,38. Najczęstszy materiał powłoki jednowarstwowej — kompromis między optyką a twardością.</dd>
+      <dt>podpis barwny powłok</dt>
+      <dd>Charakterystyczna barwa flary danego producenta, wynikająca z rozmieszczenia garbów na krzywej odbicia jego stosu warstw.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Została ostatnia rodzina zjawisk związanych z zabłąkanym światłem, i jedyna, która nie bierze się z odbić: promienie rozchodzące się od jasnych punktów. W <a href="rozdzial-25-starburst.html">następnym rozdziale</a> okaże się, że ich liczba nie zależy od jasności ani od obiektywu, tylko od listków przysłony — z jednym nieoczywistym haczykiem przy liczbie nieparzystej.</p>
+  </div>
 
   <div class="deeper">
     <div class="deeper-label">Idź głębiej</div>
@@ -56,8 +293,99 @@ window.SKY3D_MESSAGES = {
       <a class="nav-next" href="rozdzial-25-starburst.html">Następny →</a>
   </div>
 
+  <template id="adv-powloki-kat">
+    <h3>Dlaczego kolor zmienia się z kątem patrzenia</h3>
+
+    <p>Przechyl obiektyw pod światło i obróć go w dłoni. Barwa połysku na przedniej soczewce zmieni się — zwykle przesunie ku błękitowi. Nie jest to złudzenie ani odbicie otoczenia; to bezpośrednia konsekwencja warunku na grubość.</p>
+
+    <p>Warstwa ma ustaloną grubość fizyczną, ale liczy się <strong>droga optyczna</strong>, którą fala w niej przebywa. Przy padaniu ukośnym promień biegnie w warstwie po skosie, więc droga jest dłuższa — ale zarazem jego składowa prostopadła do warstwy maleje. Wypadkowo <span class="term-cyan">warunek ćwierci fali spełnia się dla fali krótszej</span> niż przy padaniu prostopadłym.</p>
+
+    <p>Minimum odbicia przesuwa się więc ku błękitowi, a razem z nim przesuwa się cała krzywa. Resztka, która przy padaniu prostopadłym leżała na skrajach, przy padaniu ukośnym leży gdzie indziej — i barwa połysku się zmienia.</p>
+
+    <p>Ma to trzy konsekwencje praktyczne. <strong>Pierwsza</strong>: powłokę projektuje się pod typowy kąt padania na danej powierzchni, a nie pod prostopadły — dlatego stosy różnią się między przednim a środkowym elementem. <strong>Druga</strong>: skuteczność powłoki spada przy dużych kątach, więc rogi kadru zawsze mają nieco więcej odbicia niż środek, co dokłada się do winietowania. <strong>Trzecia</strong> dotyczy compu: ghosty powstałe z torów bardzo ukośnych mają barwę przesuniętą względem tych z torów przyosiowych, i to jest dodatkowy powód, dla którego plamy w jednym sznurze różnią się kolorem.</p>
+
+    <p>Ten sam mechanizm tłumaczy zjawisko znane spoza optyki: bańka mydlana i plama oleju na wodzie zmieniają barwę przy przechylaniu z dokładnie tego samego powodu. Różni je tylko to, że tam nie ma szkła pod spodem — i przez to przesunięcie fazy jest inne, a barwy wychodzą dopełniające do tych, które daje powłoka.</p>
+  </template>
+
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-panel">
+      <button class="modal-close" data-modal-close aria-label="Zamknij">×</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
 </div>
 
 <script src="../assets/interactive.js"></script>
+<script>
+/* Odbicie resztkowe powloki cwiercfalowej na szkle.
+   UWAGA na faze: powietrze(1,00) -> powloka(1,38) -> szklo(1,52). Wspolczynnik
+   rosnie na obu granicach, wiec OBA odbicia dostaja to samo przesuniecie fazy
+   i wzglednego przesuniecia nie ma. Warunek wygaszenia to droga optyczna rowna
+   polowie fali, czyli grubosc lambda/4n — i tylko wtedy wychodzi minimum.
+   (To odroznia ten przypadek od banki mydlanej, gdzie po drugiej stronie jest
+   powietrze i przesuniecie o pi jednak zostaje.) */
+(function () {
+  var sl = document.getElementById('powlokaLambda');
+  if (!sl) return;
+  var n0 = 1.00, n1 = 1.38, n2 = 1.52;
+  var r1 = (n0 - n1) / (n0 + n1);
+  var r2 = (n1 - n2) / (n1 + n2);
+  var BEZ = Math.pow((n0 - n2) / (n0 + n2), 2);      // 4,26%
+  var X0 = 70, X1 = 580, L0 = 400, L1 = 700;
+  var Y0 = 200, YTOP = 32;                            // Y dla 0 i dla 4,3%
+
+  function R(lam, lam0) {
+    return r1 * r1 + r2 * r2 + 2 * r1 * r2 * Math.cos(Math.PI * lam0 / lam);
+  }
+  function px(lam) { return X0 + (lam - L0) / (L1 - L0) * (X1 - X0); }
+  function py(r) { return Y0 - (r / BEZ) * (Y0 - YTOP); }
+
+  function nazwij(lam) {
+    if (lam < 460) return 'błękit';
+    if (lam < 500) return 'cyjan';
+    if (lam < 570) return 'zieleń';
+    if (lam < 600) return 'żółć';
+    return 'czerwień';
+  }
+
+  function odswiez() {
+    var lam0 = parseFloat(sl.value);
+
+    var d = '';
+    for (var lam = L0; lam <= L1; lam += 5) {
+      d += (lam === L0 ? 'M ' : ' L ') + px(lam).toFixed(1) + ' ' + py(R(lam, lam0)).toFixed(1);
+    }
+    document.getElementById('powlokaKrzywa').setAttribute('d', d);
+    var xz = px(lam0);
+    var zn = document.getElementById('powlokaZnacznik');
+    zn.setAttribute('x1', xz.toFixed(1)); zn.setAttribute('x2', xz.toFixed(1));
+
+    var rR = R(620, lam0), rG = R(545, lam0), rB = R(450, lam0);
+    var maks = Math.max(rR, rG, rB);
+    var kanal = function (v) { return Math.round(255 * Math.pow(v / maks, 0.9)); };
+    var kolor = 'rgb(' + kanal(rR) + ',' + kanal(rG) + ',' + kanal(rB) + ')';
+    document.getElementById('powlokaProbka').setAttribute('fill', kolor);
+
+    document.getElementById('powlokaR').textContent = (rR * 100).toFixed(2).replace('.', ',') + '%';
+    document.getElementById('powlokaG').textContent = (rG * 100).toFixed(2).replace('.', ',') + '%';
+    document.getElementById('powlokaB').textContent = (rB * 100).toFixed(2).replace('.', ',') + '%';
+
+    // Barwa odbicia jest dopelnieniem tej, na ktora zestrojono powloke.
+    var opis = rB > rR
+      ? (rG > rR ? 'chłodna, ku błękitowi' : 'fiolet')
+      : (rG > rB ? 'zieleń' : 'bursztyn');
+    document.getElementById('powlokaBarwa').textContent = opis;
+
+    document.getElementById('powlokaOdczyt').textContent =
+      lam0.toFixed(0) + ' nm · ' + nazwij(lam0);
+    document.getElementById('powlokaPodpis').textContent =
+      'Powłoka zestrojona na ' + lam0.toFixed(0) + ' nm: minimum w tej barwie (' +
+      nazwij(lam0) + '), resztka poza nią — odbicie wychodzi ' + opis + '.';
+  }
+  sl.addEventListener('input', odswiez);
+  odswiez();
+})();
+</script>
 </body>
 </html>
