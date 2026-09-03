@@ -43,7 +43,264 @@ window.SKY3D_MESSAGES = {
   <h1>Starburst: listki i promienie</h1>
   <p class="subtitle">Liczba promieni wokół latarni nie jest przypadkowa i nie zależy od jasności. Zależy od liczby listków przysłony — a reguła ma jeden nieoczywisty haczyk przy liczbie nieparzystej.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li><strong>Liczba promieni nie zależy od jasności ani od obiektywu.</strong> Zależy od listków przysłony — a dokładniej od liczby <em>kierunków</em>, w jakich ustawione są ich krawędzie.</li>
+      <li>Stąd reguła z haczykiem: <span class="term-amber">parzysta liczba listków daje tyle promieni, ile listków; nieparzysta daje dwa razy więcej</span>. Sześć listków to sześć promieni, siedem to czternaście.</li>
+      <li>Gwiazdki wymagają <strong>prostych krawędzi i przymkniętej przysłony</strong>. Zaokrąglone listki, wybierane dla ładniejszego bokeh, dają promienie słabe i rozmyte — i to jest bezpośredni kompromis, nie kwestia jakości.</li>
+    </ul>
+  </div>
+
+<div class="section">
+    <div class="section-eyebrow">Gwiazdki · ta sama przyczyna, inny objaw</div>
+    <h2>Skąd promienie wokół świateł</h2>
+
+    <p>Do tej pory patrzyliśmy na dyfrakcję jako na coś, co psuje. Ma jednak drugą twarz, tę, dla której ludzie celowo przymykają przysłonę: promienie rozchodzące się od jasnych punktowych źródeł.</p>
+
+    <p>Mechanizm jest ten sam co wcześniej, tylko liczy się teraz nie sam otwór, a jego <strong>krawędzie</strong>. Prosta krawędź listka przysłony rozprasza światło w kierunku do siebie prostopadłym — tak samo jak szczelina rozlewa wiązkę w poprzek. Każdy listek daje więc jedną smugę, prostopadłą do swojej krawędzi.</p>
+
+    <p>I tu wchodzi reguła, która przy pierwszym spotkaniu wygląda na kaprys:</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Parzyste kontra nieparzyste</span><span>dlaczego liczba promieni się podwaja</span></div>
+      <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sześciokątna przysłona: przeciwległe krawędzie są równoległe, więc ich smugi się pokrywają, dając sześć promieni. Pięciokątna nie ma równoległych krawędzi, więc daje dziesięć.">
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b" text-anchor="middle">
+          <text x="190" y="26">6 LISTKÓW · krawędzie parami równoległe</text>
+          <text x="570" y="26">5 LISTKÓW · brak par równoległych</text>
+        </g>
+        <g>
+          <polygon points="190,64 232,88 232,136 190,160 148,136 148,88" fill="#4fc3c0" fill-opacity="0.14" stroke="#4fc3c0" stroke-width="2"/>
+          <g stroke="#e8a33d" stroke-width="1.6" opacity="0.85">
+            <line x1="190" y1="30" x2="190" y2="194"/>
+            <line x1="119" y1="71" x2="261" y2="153"/>
+            <line x1="119" y1="153" x2="261" y2="71"/>
+          </g>
+          <text x="190" y="232" font-family="IBM Plex Mono" font-size="13" fill="#e8a33d" text-anchor="middle">6 promieni</text>
+          <text x="190" y="256" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">smugi z przeciwległych krawędzi</text>
+          <text x="190" y="272" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">nakładają się na siebie</text>
+        </g>
+        <line x1="380" y1="16" x2="380" y2="284" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 5"/>
+        <g>
+          <polygon points="570,62 610,91 595,138 545,138 530,91" fill="#4fc3c0" fill-opacity="0.14" stroke="#4fc3c0" stroke-width="2"/>
+          <g stroke="#e8a33d" stroke-width="1.6" opacity="0.85">
+            <line x1="570" y1="26" x2="570" y2="174"/>
+            <line x1="500" y1="79" x2="640" y2="121"/>
+            <line x1="500" y1="121" x2="640" y2="79"/>
+            <line x1="518" y1="150" x2="622" y2="50"/>
+            <line x1="518" y1="50" x2="622" y2="150"/>
+          </g>
+          <text x="570" y="232" font-family="IBM Plex Mono" font-size="13" fill="#e8a33d" text-anchor="middle">10 promieni</text>
+          <text x="570" y="256" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">każda krawędź daje własną smugę,</text>
+          <text x="570" y="272" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">żadna z żadną się nie pokrywa</text>
+        </g>
+      </svg>
+      <div class="diagram-caption">Reguła nie dotyczy listków, tylko kierunków krawędzi. Liczba nieparzysta nie potrafi ustawić żadnej pary równolegle.</div>
+    </div>
+
+    <p>Sześciokąt ma trzy pary krawędzi równoległych. Smuga od górnej krawędzi i smuga od dolnej mają ten sam kierunek, więc <strong>pokrywają się</strong> — zostaje sześć promieni, po jednym na parę, w dwie strony. Pięciokąt nie ma ani jednej pary równoległych krawędzi, więc każda z pięciu daje własną smugę w dwie strony: dziesięć promieni.</p>
+
+    <p>Stąd reguła w pełnej postaci: <span class="term-amber">parzysta liczba listków daje tyle promieni, ile listków; nieparzysta daje ich dwa razy więcej</span>. Siedem listków to czternaście promieni, dziewięć to osiemnaście, jedenaście to dwadzieścia dwa.</p>
+
+    <p>Dwie uwagi praktyczne. Po pierwsze, gwiazdki wymagają <strong>prostych krawędzi</strong> — zaokrąglone listki, stosowane dla ładniejszego bokeh, dają promienie rozmyte i słabe. To jest bezpośredni kompromis: obiektyw o ładnym bokeh ma brzydkie gwiazdki i odwrotnie. Po drugie, siła gwiazdek rośnie z przymknięciem, bo maleje otwór, a rośnie względny udział krawędzi.</p>
+  </div>
+  <div class="section">
+    <div class="section-eyebrow">Warunki · kiedy gwiazdki w ogóle są</div>
+    <h2>Czego promienie potrzebują, żeby powstać</h2>
+
+    <p>Nie każde jasne światło w kadrze daje gwiazdkę. Potrzebne są trzy rzeczy naraz i brak którejkolwiek wystarcza, żeby efektu nie było.</p>
+
+    <p><strong>Źródło musi być małe.</strong> Promienie powstają na krawędzi przysłony i rozchodzą się z <em>punktu</em>. Źródło rozciągłe — okno, lampa z kloszem, odbite słońce w wodzie — daje tyle nakładających się gwiazdek, ile ma punktów, a ich suma jest zwykłą poświatą. Dlatego latarnia w nocy daje piękne promienie, a ta sama latarnia widziana z bliska już nie.</p>
+
+    <p><strong>Przysłona musi być przymknięta.</strong> Przy pełnym otworze listki chowają się poza oprawę i otwór wyznacza okrągła tuleja — a okrąg nie ma krawędzi ustawionych w konkretnych kierunkach, więc rozprasza równomiernie we wszystkie strony. Efekt narasta z przymykaniem z dwóch powodów naraz: pojawiają się proste krawędzie, a udział krawędzi w całym obwodzie rośnie, bo otwór maleje.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Trzy warunki</span><span>brak jednego wystarczy</span></div>
+      <svg viewBox="0 0 760 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Trzy pary: źródło punktowe kontra rozciągłe, przysłona przymknięta kontra otwarta, krawędź prosta kontra zaokrąglona — z wynikiem dla każdej pary.">
+        <g font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">
+          <text x="150" y="22">ŹRÓDŁO</text><text x="390" y="22">PRZYSŁONA</text><text x="630" y="22">KRAWĘDŹ</text>
+        </g>
+
+        <rect x="40" y="34" width="100" height="76" fill="#101215" stroke="#7fc47f" stroke-width="1.2"/>
+        <circle cx="90" cy="72" r="3" fill="#f2f0e8"/>
+        <g stroke="#f2f0e8" stroke-width="1" opacity="0.8">
+          <line x1="90" y1="46" x2="90" y2="98"/><line x1="64" y1="72" x2="116" y2="72"/>
+          <line x1="72" y1="54" x2="108" y2="90"/><line x1="108" y1="54" x2="72" y2="90"/>
+        </g>
+        <text x="90" y="126" font-family="IBM Plex Mono" font-size="9" fill="#7fc47f" text-anchor="middle">punktowe</text>
+
+        <rect x="160" y="34" width="100" height="76" fill="#101215" stroke="#d8695f" stroke-width="1.2"/>
+        <circle cx="210" cy="72" r="20" fill="#f2f0e8" fill-opacity="0.45"/>
+        <circle cx="210" cy="72" r="28" fill="#f2f0e8" fill-opacity="0.12"/>
+        <text x="210" y="126" font-family="IBM Plex Mono" font-size="9" fill="#d8695f" text-anchor="middle">rozciągłe</text>
+
+        <rect x="290" y="34" width="100" height="76" fill="#101215" stroke="#7fc47f" stroke-width="1.2"/>
+        <path d="M 340 54 L 356 63 L 356 81 L 340 90 L 324 81 L 324 63 Z" fill="none" stroke="#4fc3c0" stroke-width="1.6"/>
+        <text x="340" y="126" font-family="IBM Plex Mono" font-size="9" fill="#7fc47f" text-anchor="middle">przymknięta</text>
+
+        <rect x="410" y="34" width="100" height="76" fill="#101215" stroke="#d8695f" stroke-width="1.2"/>
+        <circle cx="460" cy="72" r="19" fill="none" stroke="#4fc3c0" stroke-width="1.6"/>
+        <text x="460" y="126" font-family="IBM Plex Mono" font-size="9" fill="#d8695f" text-anchor="middle">pełny otwór</text>
+
+        <rect x="540" y="34" width="100" height="76" fill="#101215" stroke="#7fc47f" stroke-width="1.2"/>
+        <path d="M 562 56 L 618 56 M 562 88 L 618 88" stroke="#4fc3c0" stroke-width="2"/>
+        <text x="590" y="126" font-family="IBM Plex Mono" font-size="9" fill="#7fc47f" text-anchor="middle">prosta</text>
+
+        <rect x="660" y="34" width="100" height="76" fill="#101215" stroke="#d8695f" stroke-width="1.2"/>
+        <path d="M 682 58 Q 710 48 738 58 M 682 86 Q 710 96 738 86" fill="none" stroke="#4fc3c0" stroke-width="2"/>
+        <text x="710" y="126" font-family="IBM Plex Mono" font-size="9" fill="#d8695f" text-anchor="middle">zaokrąglona</text>
+
+        <text x="40" y="164" font-family="IBM Plex Mono" font-size="10.5" fill="#7fc47f">Górny warunek spełniony → ostre, policzalne promienie.</text>
+        <text x="40" y="184" font-family="IBM Plex Mono" font-size="10.5" fill="#d8695f">Którykolwiek niespełniony → poświata bez struktury.</text>
+        <text x="40" y="212" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">Ostatnia para jest wyborem konstruktora: te same listki nie mogą dać naraz ładnego bokeh i ostrych gwiazdek.</text>
+      </svg>
+      <div class="diagram-caption">Trzeci warunek jest jedynym, na który użytkownik nie ma wpływu — wynika z kształtu listków, wybranego przy projektowaniu.</div>
+    </div>
+
+    <p><strong>Krawędzie muszą być proste.</strong> Producenci zaokrąglają listki, żeby bokeh przy przymkniętej przysłonie zostało bliższe koła — o czym w <a href="../dodatki/dodatek-af-katalog-bokeh.html">Dodatku AF</a>. Zaokrąglona krawędź nie ma jednego kierunku, tylko cały ich wachlarz, więc jej wkład rozmazuje się zamiast składać w jeden promień. <span class="term-violet">Ten sam obiektyw nie może mieć naraz okrągłego bokeh i ostrych gwiazdek</span> — i jest to jeden z najczystszych kompromisów w całej tej książce.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Wygląd · co jeszcze da się odczytać</div>
+    <h2>Długość, ostrość i barwa promieni</h2>
+
+    <p>Poza liczbą promieni jest jeszcze kilka cech, z których każda o czymś mówi.</p>
+
+    <p><strong>Długość rośnie z przymknięciem.</strong> Skala kątowa rozproszenia na krawędzi to długość fali podzielona przez rozmiar otworu — czyli ta sama wielkość, która wyznacza krążek Airy'ego z <a href="rozdzial-10-dyfrakcja.html">Rozdziału 10</a>. Przeliczona na matrycę daje wynik zależny wyłącznie od liczby przysłony, a nie od ogniskowej: <span class="term-cyan">przy f/16 promienie są dwa razy dłuższe niż przy f/8</span>, niezależnie od tego, czy to szeroki kąt, czy tele.</p>
+
+    <p><strong>Ostrość promienia zależy od prostoliniowości krawędzi</strong>, ale też od tego, jak dokładnie listki są wykonane i wzajemnie ustawione. Zestaw, w którym jeden listek odstaje o ułamek stopnia, daje gwiazdkę z jednym promieniem grubszym albo rozdwojonym — i jest to jedna z tych rzeczy, które odróżniają egzemplarze tego samego modelu.</p>
+
+    <p><strong>Barwa jest tęczowa i to jest nieuniknione.</strong> Skala rozproszenia zależy od długości fali, więc czerwień rozchodzi się dalej niż błękit. Każdy promień jest więc lekko rozszczepiony wzdłuż swojej długości — bliżej środka chłodniejszy, na końcu cieplejszy. Efekt jest subtelny i właśnie ta subtelność jest tym, czego najczęściej brakuje gwiazdkom dokładanym w compie.</p>
+
+    <p>Warto też zauważyć, czego na tej liście <em>nie</em> ma. Nie ma jakości obiektywu ani ceny — gwiazdka jest zjawiskiem dyfrakcyjnym, czyli wynikającym z falowej natury światła, a nie z korekcji. <span class="term-cyan">Najdroższe szkło świata daje przy f/16 dokładnie tak samo długie promienie, jak najtańsze</span>, o ile oba mają tyle samo listków i równie proste krawędzie. Różni je co najwyżej czystość: obiektyw o gorszym kontraście topi promienie w poświacie z <a href="rozdzial-22-veiling-glare.html">Rozdziału 22</a>.</p>
+
+    <p>Jest to zresztą jedyne zjawisko w tej części, którego <strong>nie da się poprawić żadną konstrukcją</strong>. Powłoki usuwają ghosty, czernienie usuwa glare, symetria usuwa dystorsję — gwiazdek nie usuwa nic poza zaokrągleniem listków, a to jest wybór, nie ulepszenie. Dyfrakcja jest, jak w <a href="rozdzial-10-dyfrakcja.html">Rozdziale 10</a>, granicą, a nie wadą.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Długość promieni a przysłona</span><span>skala rośnie liniowo z liczbą f</span></div>
+      <svg viewBox="0 0 760 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cztery gwiazdki przy kolejnych przysłonach: przy pełnym otworze brak promieni, przy przymkniętych promienie coraz dłuższe i ostrzejsze.">
+        <g font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">
+          <text x="105" y="22">f/2</text><text x="290" y="22">f/5,6</text>
+          <text x="475" y="22">f/11</text><text x="660" y="22">f/22</text>
+        </g>
+
+        <rect x="30" y="32" width="150" height="120" fill="#0d0f11" stroke="#2a2f38"/>
+        <circle cx="105" cy="92" r="13" fill="#f2f0e8" fill-opacity="0.9"/>
+        <circle cx="105" cy="92" r="24" fill="#f2f0e8" fill-opacity="0.12"/>
+
+        <rect x="215" y="32" width="150" height="120" fill="#0d0f11" stroke="#2a2f38"/>
+        <circle cx="290" cy="92" r="9" fill="#f2f0e8" fill-opacity="0.9"/>
+        <g stroke="#f2f0e8" stroke-width="1.4" opacity="0.55">
+          <line x1="290" y1="74" x2="290" y2="110"/><line x1="274" y1="83" x2="306" y2="101"/><line x1="274" y1="101" x2="306" y2="83"/>
+        </g>
+
+        <rect x="400" y="32" width="150" height="120" fill="#0d0f11" stroke="#2a2f38"/>
+        <circle cx="475" cy="92" r="7" fill="#f2f0e8" fill-opacity="0.9"/>
+        <g stroke="#f2f0e8" stroke-width="1.3" opacity="0.7">
+          <line x1="475" y1="56" x2="475" y2="128"/><line x1="444" y1="74" x2="506" y2="110"/><line x1="444" y1="110" x2="506" y2="74"/>
+        </g>
+
+        <rect x="585" y="32" width="150" height="120" fill="#0d0f11" stroke="#2a2f38"/>
+        <circle cx="660" cy="92" r="5" fill="#f2f0e8" fill-opacity="0.9"/>
+        <g stroke="#f2f0e8" stroke-width="1.2" opacity="0.85">
+          <line x1="660" y1="36" x2="660" y2="148"/><line x1="611" y1="64" x2="709" y2="120"/><line x1="611" y1="120" x2="709" y2="64"/>
+        </g>
+
+        <line x1="30" y1="172" x2="735" y2="172" stroke="#8b909b" stroke-width="1"/>
+        <g font-family="IBM Plex Mono" font-size="9.5" fill="#e8a33d" text-anchor="middle">
+          <text x="105" y="190">brak</text><text x="290" y="190">×1</text><text x="475" y="190">×2</text><text x="660" y="190">×4</text>
+        </g>
+        <text x="30" y="214" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">Długość skaluje się z liczbą przysłony — i to niezależnie od ogniskowej, bo ogniskowa skraca się w rachunku.</text>
+      </svg>
+      <div class="diagram-caption">Ta sama scena, cztery nastawy. Promienie rosną dokładnie wtedy, gdy krążek Airy'ego z Rozdziału 10 też rośnie — bo to jedna wielkość.</div>
+    </div>
+
+    <p class="deeper-inline">Skala kątowa w liczbach, tabela dla kolejnych przysłon i rachunek na krążek Airy'ego, z którego to wynika — <a href="../dodatki/dodatek-d-krazek-airyego.html">Dodatek D</a>.</p>
+
+    <button class="advanced-btn" data-modal-target="adv-gwiazdki-inne">Zaawansowane: gwiazdki, które nie pochodzą z przysłony</button>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">W CG · jedyna flara, którą warto liczyć</div>
+    <h2>Odtwarzanie gwiazdek</h2>
+
+    <p>Gwiazdki są wśród zjawisk z tej części wyjątkiem: <strong>ich kształt wynika z jednej liczby</strong>, którą znamy z metryczki albo odczytujemy z bokeh. Nie trzeba tu ani biblioteki elementów, ani zgadywania.</p>
+
+    <p>Przepis jest krótki. Weź maskę jasnych źródeł, rozciągnij ją w N kierunkach rozłożonych równomiernie po okręgu — gdzie N wynika z reguły parzystej i nieparzystej — i dodaj wynik do obrazu. Kierunki muszą być <em>prostopadłe do krawędzi listków</em>, a nie dowolne, więc gwiazdka ma określoną orientację względem kadru, tę samą co wielokąt w bokeh.</p>
+
+    <p>Maskę warto przy tym wyciąć progiem znacznie wyższym niż intuicyjny. Gwiazdki powstają tylko na źródłach o jasności przekraczającej resztę kadru o rzędy wielkości — czyli na kilku pikselach, a nie na wszystkim, co jest jasne. <strong>Zbyt niski próg daje promienie na białej koszuli i na chmurze</strong>, co jest jednym z najszybciej rozpoznawalnych błędów, bo w rzeczywistości nigdy się nie zdarza.</p>
+
+    <p>Trzy rzeczy, na których podrobione gwiazdki najczęściej się sypią:</p>
+
+    <ul>
+      <li><strong>Liczba niezgodna z bokeh.</strong> Jeśli w tym samym ujęciu widać wielokątne krążki o sześciu bokach, gwiazdka musi mieć sześć promieni. Rozjazd między jednym a drugim to najłatwiejszy do wychwycenia błąd, bo obie rzeczy są w kadrze naraz.</li>
+      <li><strong>Stała długość.</strong> Promienie rosną z jasnością źródła — słabsze światło daje krótsze. Gwiazdki o jednakowej długości przy różnie jasnych lampach czytają się jako naklejone.</li>
+      <li><strong>Obrót razem z kamerą.</strong> Przysłona jest przymocowana do obiektywu, więc gwiazdka obraca się razem z nim. Przy obrocie kamery wokół osi optycznej promienie idą za nią; przy panoramie zostają w miejscu względem kadru.</li>
+    </ul>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Orientacja</span><span>gwiazdka i bokeh z tej samej przysłony</span></div>
+      <svg viewBox="0 0 760 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sześciokątna przysłona, wynikające z niej sześciokątne bokeh i sześciopromienna gwiazdka, z zaznaczeniem, że promienie są prostopadłe do boków wielokąta.">
+        <g font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">
+          <text x="130" y="22">PRZYSŁONA</text><text x="380" y="22">BOKEH</text><text x="630" y="22">GWIAZDKA</text>
+        </g>
+
+        <path d="M 130 44 L 176 71 L 176 125 L 130 152 L 84 125 L 84 71 Z" fill="none" stroke="#4fc3c0" stroke-width="2"/>
+        <g stroke="#e8a33d" stroke-width="1.2" stroke-dasharray="4 3">
+          <line x1="130" y1="98" x2="130" y2="44"/>
+          <line x1="130" y1="98" x2="176" y2="71"/>
+          <line x1="130" y1="98" x2="176" y2="125"/>
+        </g>
+        <text x="130" y="176" font-family="IBM Plex Mono" font-size="9" fill="#e8a33d" text-anchor="middle">normalne do boków</text>
+
+        <rect x="300" y="40" width="160" height="116" fill="#101215" stroke="#2a2f38"/>
+        <path d="M 380 62 L 414 82 L 414 122 L 380 142 L 346 122 L 346 82 Z" fill="#e8a33d" fill-opacity="0.4" stroke="#e8a33d" stroke-width="1.2"/>
+        <text x="380" y="176" font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="middle">ten sam wielokąt</text>
+
+        <rect x="550" y="40" width="160" height="116" fill="#0d0f11" stroke="#2a2f38"/>
+        <circle cx="630" cy="98" r="6" fill="#f2f0e8"/>
+        <g stroke="#f2f0e8" stroke-width="1.3" opacity="0.8">
+          <line x1="630" y1="46" x2="630" y2="150"/>
+          <line x1="585" y1="72" x2="675" y2="124"/>
+          <line x1="585" y1="124" x2="675" y2="72"/>
+        </g>
+        <text x="630" y="176" font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="middle">promienie prostopadle do boków</text>
+
+        <text x="30" y="206" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">Obie rzeczy pochodzą z tego samego wielokąta, więc ich kąty są ze sobą sztywno związane. Rozjazd zdradza dokładkę.</text>
+      </svg>
+      <div class="diagram-caption">Wielokąt bokeh obrócony względem gwiazdki o połowę kąta między promieniami — to nie przypadek, tylko zależność normalnej od boku.</div>
+    </div>
+
+    <p>Zależność orientacji warto wykorzystać jako kontrolę własnej pracy. Jeśli w ujęciu jest jednocześnie nieostre światło i gwiazdka, <strong>ich kąty muszą się zgadzać</strong>: promień biegnie prostopadle do boku wielokąta, więc gwiazdka jest obrócona względem bokeh o połowę kąta między sąsiednimi promieniami. Sprawdzenie zajmuje chwilę i wyłapuje błąd, którego inaczej nikt nie zauważy świadomie.</p>
+
+    <p>Ostatnia uwaga dotyczy proporcji. Gwiazdka jest zjawiskiem <span class="term-violet">o bardzo dużym zakresie jasności</span>: przy źródle promienie są niemal tak jasne jak ono samo, a na końcu tysiące razy słabsze. Dodawanie ich z liniowym spadkiem daje efekt zbyt równomierny i zbyt widoczny; realny spadek jest gwałtowny na początku i długi w ogonie, i to on odpowiada za wrażenie, że promień „ginie w powietrzu”, a nie kończy się w konkretnym miejscu.</p>
+  </div>
+
+  <div class="panel practice">
+    <div class="panel-label">Z praktyki</div>
+    <p><strong>Policz promienie, żeby poznać listki.</strong> Parzysta liczba promieni oznacza tyle samo listków; nieparzysta jest niemożliwa, a liczba nieparzysta listków daje jej dwukrotność. Sześć promieni to sześć listków, czternaście to siedem. Jedna informacja więcej o obiektywie, za darmo, z każdego nocnego ujęcia.</p>
+    <p><strong>Gwiazdki i kocie oko wykluczają się nawzajem.</strong> Gwiazdki wymagają przymknięcia, kocie oko z <a href="rozdzial-07-zrenice.html">Rozdziału 7</a> znika po przymknięciu. Jeśli widzisz w kadrze oba naraz, patrzysz na dwa różne ujęcia albo na coś dołożonego.</p>
+    <p><strong>Przy dokładaniu sprawdź orientację względem bokeh.</strong> Wielokąt bokeh i gwiazdka pochodzą z tej samej przysłony, więc ich kąty są ze sobą sztywno związane: promienie idą prostopadle do boków wielokąta. Zgodność tych dwóch rzeczy jest szczegółem, którego nikt świadomie nie sprawdza, a którego brak każdy zauważa.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>gwiazdka (starburst, sunstar)</dt>
+      <dd>Promienie rozchodzące się od jasnego punktowego źródła, powstałe z dyfrakcji na prostych krawędziach przysłony.</dd>
+      <dt>reguła parzystości</dt>
+      <dd>Parzysta liczba listków daje tyle promieni, ile listków; nieparzysta dwa razy tyle. Wynika z tego, że przeciwległe krawędzie parzystego wielokąta są równoległe.</dd>
+      <dt>listki zaokrąglone</dt>
+      <dd>Listki o wygiętej krawędzi, dające bokeh bliższe koła po przymknięciu — kosztem ostrości gwiazdek.</dd>
+      <dt>rozszczepienie promienia</dt>
+      <dd>Tęczowe zabarwienie wzdłuż promienia, wynikające z zależności skali dyfrakcji od długości fali.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Została ostatnia pozycja tej części i jedyna, która nie dotyczy obiektywów obrotowo symetrycznych. W <a href="rozdzial-26-smugi-anamorficzne.html">następnym rozdziale</a> zobaczymy, dlaczego smugi anamorficzne są poziome, dlaczego bywają niebieskie i w którym miejscu sypią się próby ich podrobienia — a wszystko trzy wyniknie z tego samego cylindra, który w <a href="rozdzial-20-anamorf.html">Rozdziale 20</a> miał tylko ścisnąć obraz.</p>
+  </div>
 
   <div class="deeper">
     <div class="deeper-label">Idź głębiej</div>
@@ -54,6 +311,27 @@ window.SKY3D_MESSAGES = {
       <a class="nav-prev" href="rozdzial-24-powloki.html">← Poprzedni</a>
       <a class="nav-toc" href="../index.html">Spis treści</a>
       <a class="nav-next" href="rozdzial-26-smugi-anamorficzne.html">Następny →</a>
+  </div>
+
+  <template id="adv-gwiazdki-inne">
+    <h3>Gwiazdki, które nie pochodzą z przysłony</h3>
+
+    <p>Promienie wokół świateł mają jeszcze trzy źródła, wszystkie dające podobny obraz i wszystkie zachowujące się inaczej. Rozróżnienie bywa potrzebne, bo decyduje o tym, czy da się je odtworzyć tym samym mechanizmem.</p>
+
+    <p><strong>Filtr gwiazdkowy.</strong> Płytka z wygrawerowaną siatką równoległych rowków. Każdy rowek dyfraktuje tak samo jak krawędź listka, więc daje promień prostopadły do siebie. Rozpoznaje się go po tym, że liczba promieni <em>nie zmienia się z przysłoną</em> i po tym, że promienie są zwykle bardzo długie i jednakowe.</p>
+
+    <p><strong>Rzęsy przysłony w kamerach z bardzo wieloma listkami.</strong> Przy kilkunastu listkach promienie robią się liczne, krótkie i zlewają w wieniec. To wciąż ten sam mechanizm, ale przy takiej gęstości gwiazdka przestaje być policzalna i czyta się jako poświata — co jest jednym z powodów, dla których zestawy kinowe nie idą w bardzo duże liczby listków.</p>
+
+    <p><strong>Konstrukcje z podporami lustra.</strong> W teleskopie zwierciadlanym lustro wtórne trzyma się na krzyżaku, a jego ramiona diffraktują jak krawędzie. Stąd czteropromienne gwiazdki na zdjęciach astronomicznych — z czterech ramion, ustawionych parami równolegle, powstają cztery promienie, dokładnie według reguły parzystości z tego rozdziału.</p>
+
+    <p>Wspólny mianownik warto zapamiętać, bo upraszcza całe zagadnienie: <span class="term-cyan">każda prosta krawędź na drodze światła daje promień prostopadły do siebie</span>. Przysłona, rowek w filtrze, ramię krzyżaka, a nawet pęknięcie w powłoce — mechanizm jest ten sam, zmienia się tylko, co tę krawędź tworzy.</p>
+  </template>
+
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-panel">
+      <button class="modal-close" data-modal-close aria-label="Zamknij">×</button>
+      <div id="modal-body"></div>
+    </div>
   </div>
 
 </div>

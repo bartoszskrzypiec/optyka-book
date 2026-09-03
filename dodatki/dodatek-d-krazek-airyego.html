@@ -102,58 +102,47 @@ window.SKY3D_MESSAGES = {
     <p>Drugi wniosek dotyczy pracy z materiałem. Jeśli wiesz, na czym kręcono ujęcie, tabela mówi ci, <span class="term-cyan">ile miękkości w plate'cie jest dyfrakcją, a nie rozmyciem ruchu ani błędem ostrości</span>. Miękkość dyfrakcyjna jest jednorodna w całym kadrze i niezależna od odległości — to ją odróżnia od wszystkich pozostałych.</p>
   </div>
 
-<div class="section">
-    <div class="section-eyebrow">Gwiazdki · ta sama przyczyna, inny objaw</div>
-    <h2>Skąd promienie wokół świateł</h2>
+  <div class="section">
+    <div class="section-eyebrow">Gwiazdki w liczbach · skala i jej skalowanie</div>
+    <h2>Jak długie są promienie</h2>
 
-    <p>Do tej pory patrzyliśmy na dyfrakcję jako na coś, co psuje. Ma jednak drugą twarz, tę, dla której ludzie celowo przymykają przysłonę: promienie rozchodzące się od jasnych punktowych źródeł.</p>
+    <p>Mechanizm gwiazdek opisuje <a href="../rozdzialy/rozdzial-25-starburst.html">Rozdział 25</a>. Tu chodzi o jedną rzecz: <strong>od czego zależy ich długość</strong> — bo odpowiedź jest zaskakująco prosta i przydaje się przy odtwarzaniu.</p>
 
-    <p>Mechanizm jest ten sam co wcześniej, tylko liczy się teraz nie sam otwór, a jego <strong>krawędzie</strong>. Prosta krawędź listka przysłony rozprasza światło w kierunku do siebie prostopadłym — tak samo jak szczelina rozlewa wiązkę w poprzek. Każdy listek daje więc jedną smugę, prostopadłą do swojej krawędzi.</p>
+    <p>Rozproszenie na prostej krawędzi ma tę samą skalę kątową, co dyfrakcja na otworze: długość fali podzielona przez rozmiar otworu. Przeliczona na matrycę, przez pomnożenie przez odległość obrazu, daje wielkość, w której ogniskowa się skraca — dokładnie tak samo jak przy krążku Airy'ego w pierwszej sekcji tego dodatku.</p>
 
-    <p>I tu wchodzi reguła, która przy pierwszym spotkaniu wygląda na kaprys:</p>
-
-    <div class="diagram-frame">
-      <div class="diagram-hud"><span>Parzyste kontra nieparzyste</span><span>dlaczego liczba promieni się podwaja</span></div>
-      <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sześciokątna przysłona: przeciwległe krawędzie są równoległe, więc ich smugi się pokrywają, dając sześć promieni. Pięciokątna nie ma równoległych krawędzi, więc daje dziesięć.">
-        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b" text-anchor="middle">
-          <text x="190" y="26">6 LISTKÓW · krawędzie parami równoległe</text>
-          <text x="570" y="26">5 LISTKÓW · brak par równoległych</text>
-        </g>
-        <g>
-          <polygon points="190,64 232,88 232,136 190,160 148,136 148,88" fill="#4fc3c0" fill-opacity="0.14" stroke="#4fc3c0" stroke-width="2"/>
-          <g stroke="#e8a33d" stroke-width="1.6" opacity="0.85">
-            <line x1="190" y1="30" x2="190" y2="194"/>
-            <line x1="119" y1="71" x2="261" y2="153"/>
-            <line x1="119" y1="153" x2="261" y2="71"/>
-          </g>
-          <text x="190" y="232" font-family="IBM Plex Mono" font-size="13" fill="#e8a33d" text-anchor="middle">6 promieni</text>
-          <text x="190" y="256" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">smugi z przeciwległych krawędzi</text>
-          <text x="190" y="272" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">nakładają się na siebie</text>
-        </g>
-        <line x1="380" y1="16" x2="380" y2="284" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 5"/>
-        <g>
-          <polygon points="570,62 610,91 595,138 545,138 530,91" fill="#4fc3c0" fill-opacity="0.14" stroke="#4fc3c0" stroke-width="2"/>
-          <g stroke="#e8a33d" stroke-width="1.6" opacity="0.85">
-            <line x1="570" y1="26" x2="570" y2="174"/>
-            <line x1="500" y1="79" x2="640" y2="121"/>
-            <line x1="500" y1="121" x2="640" y2="79"/>
-            <line x1="518" y1="150" x2="622" y2="50"/>
-            <line x1="518" y1="50" x2="622" y2="150"/>
-          </g>
-          <text x="570" y="232" font-family="IBM Plex Mono" font-size="13" fill="#e8a33d" text-anchor="middle">10 promieni</text>
-          <text x="570" y="256" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">każda krawędź daje własną smugę,</text>
-          <text x="570" y="272" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">żadna z żadną się nie pokrywa</text>
-        </g>
-      </svg>
-      <div class="diagram-caption">Reguła nie dotyczy listków, tylko kierunków krawędzi. Liczba nieparzysta nie potrafi ustawić żadnej pary równolegle.</div>
+    <div class="formula">
+      skala = <span class="vec" data-tip="Długość fali">λ</span> · <span class="vec" data-tip="Liczba przysłony">N</span>
+      <span class="sub">Skala rozproszenia na matrycy. Wychodzi z pomnożenia kąta λ/D przez odległość obrazu f, przy D = f/N — ogniskowa się skraca. Nie jest to długość widocznego promienia, tylko jednostka, w której ta długość się mierzy.</span>
     </div>
 
-    <p>Sześciokąt ma trzy pary krawędzi równoległych. Smuga od górnej krawędzi i smuga od dolnej mają ten sam kierunek, więc <strong>pokrywają się</strong> — zostaje sześć promieni, po jednym na parę, w dwie strony. Pięciokąt nie ma ani jednej pary równoległych krawędzi, więc każda z pięciu daje własną smugę w dwie strony: dziesięć promieni.</p>
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead>
+          <tr><th>Przysłona</th><th class="num">Skala λ·N</th><th class="num">Względem f/5,6</th><th>Co widać</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>f/2</td><td class="num">1,10 µm</td><td class="num">0,36×</td><td>listki schowane — brak promieni</td></tr>
+          <tr><td>f/4</td><td class="num">2,20 µm</td><td class="num">0,71×</td><td>ledwie zaznaczone</td></tr>
+          <tr><td>f/5,6</td><td class="num">3,08 µm</td><td class="num">1,00×</td><td>wyraźne, krótkie</td></tr>
+          <tr><td>f/11</td><td class="num">6,05 µm</td><td class="num">1,96×</td><td>długie i ostre</td></tr>
+          <tr><td>f/16</td><td class="num">8,80 µm</td><td class="num">2,86×</td><td>bardzo długie</td></tr>
+          <tr><td>f/22</td><td class="num">12,10 µm</td><td class="num">3,93×</td><td>przez pół kadru</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Liczone dla λ = 550 nm. Kolumna trzecia jest tą, która ma znaczenie praktyczne: mówi, ile razy dłuższe będą promienie względem nastawy odniesienia.</p>
 
-    <p>Stąd reguła w pełnej postaci: <span class="term-amber">parzysta liczba listków daje tyle promieni, ile listków; nieparzysta daje ich dwa razy więcej</span>. Siedem listków to czternaście promieni, dziewięć to osiemnaście, jedenaście to dwadzieścia dwa.</p>
+    <p>Trzy wnioski z tej tabeli warto mieć w głowie.</p>
 
-    <p>Dwie uwagi praktyczne. Po pierwsze, gwiazdki wymagają <strong>prostych krawędzi</strong> — zaokrąglone listki, stosowane dla ładniejszego bokeh, dają promienie rozmyte i słabe. To jest bezpośredni kompromis: obiektyw o ładnym bokeh ma brzydkie gwiazdki i odwrotnie. Po drugie, siła gwiazdek rośnie z przymknięciem, bo maleje otwór, a rośnie względny udział krawędzi.</p>
+    <p><strong>Długość jest wprost proporcjonalna do liczby przysłony.</strong> Przymknięcie o dwie działki — z f/5,6 na f/11 — podwaja promienie. Nie ma tu żadnej nieliniowości ani progu; jedyny próg jest na drugim końcu, gdzie listki chowają się poza oprawę i promienie znikają zupełnie.</p>
+
+    <p><strong>Ogniskowa nie ma znaczenia.</strong> Skala zależy tylko od <em>N</em>, bo ogniskowa skraca się w rachunku — tak samo jak przy krążku Airy'ego. Szeroki kąt i teleobiektyw przy tej samej przysłonie dają promienie tej samej długości w milimetrach na matrycy. W kadrze wyglądają więc identycznie, o ile format jest ten sam.</p>
+
+    <p><strong>Tabela nie podaje długości widocznego promienia</strong> i jest to celowe. Widoczny promień sięga setek razy dalej niż podana skala, bo rozproszenie na prostej krawędzi opada znacznie wolniej niż pierścienie krążka Airy'ego — a jak daleko dokładnie, zależy od jasności źródła i od kontrastu tła. <span class="term-cyan">Stała jest proporcja, nie wartość bezwzględna</span>, i to właśnie proporcji potrzeba przy odtwarzaniu.</p>
+
+    <p>Dla compu wynika stąd prosty przepis. Zmierz długość promienia w jednym ujęciu z materiału, zapisz przy jakiej przysłonie je nakręcono, i przeskaluj proporcjonalnie do <em>N</em> dla pozostałych. Jedno dopasowanie wystarcza na całą sekwencję, o ile znasz nastawy — a jeśli ich nie znasz, długość promienia sama je zdradza.</p>
   </div>
+
   <div class="section">
     <div class="section-eyebrow">Pomiar · kwadrans zamiast tabelek</div>
     <h2>Jak zmierzyć to na własnym sprzęcie</h2>
