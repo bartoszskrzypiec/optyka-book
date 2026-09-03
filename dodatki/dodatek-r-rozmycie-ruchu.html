@@ -41,7 +41,166 @@ window.SKY3D_MESSAGES = {
   <h1>Rozmycie ruchu: kąt, czas, próbkowanie</h1>
   <p class="subtitle">Przeliczanie kąta migawki na czas, ile próbek potrzeba, żeby smuga nie była schodkowa, i dlaczego rozmycie w CG bywa zbyt czyste.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">Co tu jest</div>
+    <ul>
+      <li><strong>Tabela czasów</strong> dla typowych kątów migawki przy 24, 25, 30, 48 i 60 klatkach.</li>
+      <li><strong>Rachunek smugi</strong> dla ruchu przedmiotu i dla panoramy — dwa różne wzory, bo pierwszy zależy od odległości, a drugi nie.</li>
+      <li><strong>Granica strobingu</strong> wyprowadzona liczbowo, plus tabela dopuszczalnych prędkości panoramy.</li>
+      <li><strong>Ile próbek potrzebuje render</strong>, żeby smuga nie rozpadła się na kopie.</li>
+      <li><strong>Rolling shutter</strong>: jak z pochylenia w kadrze odczytać czas odczytu matrycy.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Tabela · kąt na czas</div>
+    <h2>Czasy otwarcia</h2>
+
+    <div class="formula">
+      t = (<span class="vec" data-tip="Kąt migawki w stopniach">α</span> / 360°) / <span class="vec" data-tip="Liczba klatek na sekundę">F</span>
+      <span class="sub">t — czas otwarcia w sekundach. α — kąt migawki. F — częstotliwość klatek. Wzór jest definicją kąta migawki, nie przybliżeniem.</span>
+    </div>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead>
+          <tr><th>Kąt</th><th class="num">24 kl./s</th><th class="num">25 kl./s</th><th class="num">30 kl./s</th><th class="num">48 kl./s</th><th class="num">60 kl./s</th><th class="num">Δ do 180°</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>360°</td><td class="num">1/24</td><td class="num">1/25</td><td class="num">1/30</td><td class="num">1/48</td><td class="num">1/60</td><td class="num">+1,00 dz</td></tr>
+          <tr><td>270°</td><td class="num">1/32</td><td class="num">1/33</td><td class="num">1/40</td><td class="num">1/64</td><td class="num">1/80</td><td class="num">+0,58 dz</td></tr>
+          <tr><td>180°</td><td class="num">1/48</td><td class="num">1/50</td><td class="num">1/60</td><td class="num">1/96</td><td class="num">1/120</td><td class="num">0</td></tr>
+          <tr><td>144°</td><td class="num">1/60</td><td class="num">1/63</td><td class="num">1/75</td><td class="num">1/120</td><td class="num">1/150</td><td class="num">−0,32 dz</td></tr>
+          <tr><td>90°</td><td class="num">1/96</td><td class="num">1/100</td><td class="num">1/120</td><td class="num">1/192</td><td class="num">1/240</td><td class="num">−1,00 dz</td></tr>
+          <tr><td>45°</td><td class="num">1/192</td><td class="num">1/200</td><td class="num">1/240</td><td class="num">1/384</td><td class="num">1/480</td><td class="num">−2,00 dz</td></tr>
+          <tr><td>22,5°</td><td class="num">1/384</td><td class="num">1/400</td><td class="num">1/480</td><td class="num">1/768</td><td class="num">1/960</td><td class="num">−3,00 dz</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Ostatnia kolumna nie zależy od częstotliwości: różnica ekspozycji względem 180° to log₂(α/180). Połowienie kąta zawsze kosztuje dokładnie działkę.</p>
+
+    <p>Warto zauważyć rzecz, którą tabela pokazuje wprost, a która bywa myląca w praktyce: <strong>przejście z 24 na 48 klatek przy zachowaniu 180° kosztuje działkę</strong>. Podwojenie częstotliwości połowi czas otwarcia, więc materiał kręcony do zwolnienia potrzebuje albo otwartej przysłony, albo więcej światła — i jest to koszt fizyczny, nie do obejścia.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Rachunek · dwa wzory na smugę</div>
+    <h2>Przedmiot i panorama</h2>
+
+    <p>Prędkość obrazu na matrycy liczy się inaczej dla przedmiotu poruszającego się w scenie i dla kamery obracającej się w miejscu. Różnica jest istotna, bo pierwsza zależy od odległości, a druga nie.</p>
+
+    <p><strong>Przedmiot poruszający się poprzecznie.</strong> Prędkość obrazu jest prędkością przedmiotu przemnożoną przez powiększenie, czyli przez stosunek ogniskowej do odległości:</p>
+
+    <div class="formula">
+      v<sub>obr</sub> = <span class="vec" data-tip="Prędkość przedmiotu w scenie, m/s">V</span> · <span class="vec" data-tip="Ogniskowa">f</span> / <span class="vec" data-tip="Odległość do przedmiotu">s</span> · (<span class="vec" data-tip="Szerokość kadru w pikselach">W</span> / <span class="vec" data-tip="Szerokość matrycy w mm">w</span>)
+      <span class="sub">v<sub>obr</sub> — prędkość obrazu w px/s. V — prędkość przedmiotu w m/s. f, s — ogniskowa i odległość w tych samych jednostkach. W/w — przelicznik z milimetrów na piksele.</span>
+    </div>
+
+    <p><strong>Panorama.</strong> Tu przedmiot stoi, a obraca się kamera. Prędkość obrazu zależy wyłącznie od prędkości kątowej i od ogniskowej — odległość nie występuje wcale, i dlatego panorama rozmywa jednakowo tło i pierwszy plan:</p>
+
+    <div class="formula">
+      v<sub>obr</sub> = <span class="vec" data-tip="Prędkość kątowa panoramy, stopnie na sekundę">ω</span> · (π/180) · <span class="vec" data-tip="Ogniskowa">f</span> · (<span class="vec" data-tip="Szerokość kadru w pikselach">W</span> / <span class="vec" data-tip="Szerokość matrycy w mm">w</span>)
+      <span class="sub">ω — prędkość kątowa w stopniach na sekundę. Reszta jak wyżej. Dla małych kątów przybliżenie liniowe wystarcza; przy szerokich obiektywach i dużych kątach dochodzi poprawka na tangens.</span>
+    </div>
+
+    <div class="worked">
+      <div class="wlabel">Rachunek · samochód przecinający kadr</div>
+      <div class="step"><span class="k">Dane</span><span class="v">V = 15 m/s (54 km/h), f = 50 mm, s = 20 m, matryca 24,89 mm szeroka, kadr 4096 px</span></div>
+      <div class="step"><span class="k">Powiększenie</span><span class="v">f/s = 50/20000 = 0,0025</span></div>
+      <div class="step"><span class="k">Prędkość na matrycy</span><span class="v">15 000 mm/s · 0,0025 = 37,5 mm/s</span></div>
+      <div class="step"><span class="k">Na piksele</span><span class="v">37,5 · (4096/24,89) = 6172 px/s</span></div>
+      <div class="step"><span class="k">Smuga przy 1/48 s</span><span class="v">6172 / 48 = 129 px</span></div>
+      <div class="result">Smuga ma 129 px, czyli 3,1% szerokości kadru. Przeskok między klatkami: 6172/24 = 257 px.</div>
+      <div class="check">Kontrola: smuga wynosi dokładnie połowę przeskoku, jak musi przy 180°. Zgadza się niezależnie od wszystkich pozostałych liczb — jest to najszybszy sposób sprawdzenia, czy rachunek nie ma pomyłki.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Strobing · dwie różne granice</div>
+    <h2>Dopuszczalna prędkość panoramy</h2>
+
+    <p>Krążą tu obok siebie dwie liczby i warto je rozdzielić, bo różnią się sześciokrotnie i opisują co innego.</p>
+
+    <p><strong>Granica strobingu</strong> to punkt, w którym ruch przestaje być czytany jako ciągły. Leży tam, gdzie przeskok między klatkami przekracza mniej więcej jedną dwudziestą szerokości kadru — przy 4096 px około 205 px na klatkę, czyli przebiegnięcie całego kadru w 0,8 sekundy. Powyżej tego widać przeskoki niezależnie od rozmycia.</p>
+
+    <p><strong>Granica komfortu</strong> jest znacznie niżej i pochodzi z praktyki zdjęciowej, nie z rachunku: <span class="term-cyan">kadr nie powinien przebiegać przez ekran szybciej niż w pięć do siedmiu sekund</span>. To około 34 px na klatkę, czyli sześć razy mniej niż granica strobingu. Między jedną a drugą ruch jest coraz mniej przyjemny, ale wciąż ciągły.</p>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead>
+          <tr><th>Ogniskowa</th><th class="num">Kąt kadru</th><th class="num">ω komfortu (5 s)</th><th class="num">ω strobingu (0,8 s)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>18 mm</td><td class="num">69,3°</td><td class="num">13,9 °/s</td><td class="num">95,1 °/s</td></tr>
+          <tr><td>24 mm</td><td class="num">54,8°</td><td class="num">11,0 °/s</td><td class="num">71,3 °/s</td></tr>
+          <tr><td>35 mm</td><td class="num">39,1°</td><td class="num">7,8 °/s</td><td class="num">48,9 °/s</td></tr>
+          <tr><td>50 mm</td><td class="num">28,0°</td><td class="num">5,6 °/s</td><td class="num">34,2 °/s</td></tr>
+          <tr><td>85 mm</td><td class="num">16,7°</td><td class="num">3,3 °/s</td><td class="num">20,1 °/s</td></tr>
+          <tr><td>135 mm</td><td class="num">10,5°</td><td class="num">2,1 °/s</td><td class="num">12,7 °/s</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Super 35, matryca 24,89 mm szeroka, kadr 4096 px, 24 kl./s, migawka 180°. Kolumna komfortu to kąt kadru podzielony przez pięć sekund; kolumna strobingu to prędkość dająca 205 px przeskoku na klatkę.</p>
+
+    <p>Tabela wyjaśnia obserwację, którą operatorzy znają z praktyki: <span class="term-violet">im dłuższa ogniskowa, tym wolniej wolno panoramować</span>. Nie jest to kwestia stabilności ani drgania — jest to ta sama liczba pikseli na klatkę, osiągana przy coraz mniejszym ruchu kamery. Setka wymaga panoramy około czterokrotnie wolniejszej niż dwudziestka czwórka, i próba zrobienia inaczej daje przeskoki, których nie usunie żadne rozmycie.</p>
+
+    <p>Dla compu ma to znaczenie odwrotne, niż się wydaje. <strong>Nie chodzi o to, żeby element nie strobował</strong> — chodzi o to, żeby strobował dokładnie tak samo jak plate. Ujęcie z panoramą powyżej granicy komfortu ma przeskoki w tle; element wstawiony z gładkim, gęsto próbkowanym rozmyciem będzie od tego tła płynniejszy, a płynniejszy znaczy w tym kontekście: obcy.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Render · ile próbek</div>
+    <h2>Kiedy smuga rozpada się na kopie</h2>
+
+    <p>Silnik przybliża całkę po czasie skończoną sumą. Jeśli kolejne próbki dzieli więcej niż piksel, przedmiot pojawia się w smudze jako ciąg oddzielnych kopii. Warunek jest więc prosty:</p>
+
+    <div class="formula">
+      <span class="vec" data-tip="Liczba próbek czasowych">n</span> ≥ <span class="vec" data-tip="Długość smugi w pikselach">s</span> / <span class="vec" data-tip="Dopuszczalny odstęp między kopiami, w pikselach">Δ</span>
+      <span class="sub">n — liczba próbek. s — długość smugi w px. Δ — dopuszczalny odstęp; dla ostrych krawędzi Δ = 1 px, dla przedmiotów już nieostrych wystarcza 2–3 px.</span>
+    </div>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead>
+          <tr><th>Smuga</th><th class="num">Krawędź ostra (Δ=1)</th><th class="num">Lekko nieostra (Δ=2)</th><th class="num">Wyraźnie nieostra (Δ=4)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>16 px</td><td class="num">16</td><td class="num">8</td><td class="num">4</td></tr>
+          <tr><td>64 px</td><td class="num">64</td><td class="num">32</td><td class="num">16</td></tr>
+          <tr><td>129 px</td><td class="num">129</td><td class="num">65</td><td class="num">33</td></tr>
+          <tr><td>256 px</td><td class="num">256</td><td class="num">128</td><td class="num">64</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Liczba próbek czasowych. Wiersz 129 px odpowiada rachunkowi samochodu z sekcji wyżej.</p>
+
+    <p>Dwie rzeczy warto z tego wyciągnąć. Po pierwsze, <strong>przedmiot już nieostry potrzebuje kilkakrotnie mniej próbek</strong>, bo jego własne rozmycie zaciera odstępy — dlatego tło w głębi rzadko wymaga wysokich ustawień, a szybki przedmiot na pierwszym planie zawsze. Po drugie, <span class="term-cyan">koszt rośnie liniowo z długością smugi</span>, czyli z kątem migawki; ujęcie kręcone na 360° kosztuje dwa razy więcej próbek niż to samo na 180°.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Rolling shutter · pomiar z kadru</div>
+    <h2>Odczytanie czasu odczytu</h2>
+
+    <p>Czas odczytu matrycy rzadko bywa podawany, ale da się go zmierzyć z dowolnego ujęcia, w którym pion się skosił. Potrzebne są dwie liczby: pochylenie krawędzi i prędkość obrazu.</p>
+
+    <p>Jeśli obraz przesuwa się poziomo z prędkością <em>v</em> px/s, a pionowa krawędź w kadrze o wysokości <em>H</em> pikseli pochyliła się o <em>Δx</em> pikseli od góry do dołu, to czas odczytu wynosi:</p>
+
+    <div class="formula">
+      t<sub>odcz</sub> = <span class="vec" data-tip="Pochylenie krawędzi od góry do dołu kadru, w pikselach">Δx</span> / <span class="vec" data-tip="Prędkość obrazu na matrycy, px/s">v</span>
+      <span class="sub">t<sub>odcz</sub> — czas odczytu całego kadru. Wzór zakłada, że skos zmierzono na całej wysokości H; przy pomiarze na fragmencie należy wynik przeskalować.</span>
+    </div>
+
+    <div class="worked">
+      <div class="wlabel">Rachunek · pomiar z panoramy</div>
+      <div class="step"><span class="k">Dane</span><span class="v">panorama 8 °/s, f = 35 mm, S35, kadr 4096×2160, słup pochylony o 96 px</span></div>
+      <div class="step"><span class="k">Prędkość obrazu</span><span class="v">8 · (π/180) · 35 · (4096/24,89) = 804 px/s</span></div>
+      <div class="step"><span class="k">Czas odczytu</span><span class="v">96 / 804 = 0,119 s</span></div>
+      <div class="result">Odczyt całej matrycy trwa 119 ms, czyli blisko trzy klatki przy 24 kl./s. Jest to wartość typowa dla taniej elektroniki; kamery kinowe schodzą poniżej 10 ms.</div>
+      <div class="check">Kontrola: przy tym czasie odczytu i tej panoramie każde 10 ms opóźnienia daje 8 px przesunięcia. Dolna linia kadru fotografuje o 119 ms później niż górna — i o dokładnie tyle pikseli dalej.</div>
+    </div>
+
+    <p>Do compu wystarcza z tego jedna liczba: <strong>skos wyrażony jako przesunięcie na całą wysokość kadru</strong>. Element wstawiany w takie ujęcie dostaje ścinanie proporcjonalne do pozycji w pionie, o tej samej wartości. Jeśli w plate'cie zmienia się prędkość panoramy, zmienia się też skos — i wtedy jest to krzywa, a nie stała.</p>
+
+    <p>Warto sprawdzić jedną rzecz przed rekonstrukcją: czy materiał nie został już skorygowany w kamerze albo przy wywołaniu. Korekcja rolling shuttera prostuje skos, ale zostawia ślad — <span class="term-amber">brzegi kadru bywają wtedy lekko rozciągnięte albo obcięte</span>, a ruch pionowy w kadrze przestaje być liniowy. Jeśli plate jest już wyprostowany, element ma być prosty i żadnego ścinania nie potrzebuje.</p>
+  </div>
 
   <div class="site-nav">
     <a href="../index.html">← Spis treści</a>
