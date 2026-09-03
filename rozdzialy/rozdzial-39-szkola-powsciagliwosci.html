@@ -43,7 +43,225 @@ window.SKY3D_MESSAGES = {
   <h1>Szkoła powściągliwości</h1>
   <p class="subtitle">Najbardziej rozpoznawalne kadry ostatnich dekad powstały na czystym szkle, bez filtrów dyfuzyjnych i prawie bez flary. Brak efektu też jest decyzją optyczną — i zwykle trudniejszą.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li><strong>Szkoła powściągliwości traktuje każdą widoczną cechę obiektywu jako zakłócenie.</strong> Obraz ma pokazywać świat, a nie przyrząd — więc flara, winieta i miękkość są usterkami do usunięcia, nie środkami wyrazu.</li>
+      <li>Ceną jest przeniesienie całego ciężaru na <span class="term-amber">światło, kompozycję i ruch</span>. Kiedy szkło nic nie mówi, wszystko musi powiedzieć to, co przed nim.</li>
+      <li><strong>Powściągliwość nie znaczy neutralność.</strong> Wybór najostrzejszego i najjaśniejszego szkła jest równie mocnym stanowiskiem, co wybór starej optyki — tylko mniej rzucającym się w oczy.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Teza · przyrząd ma zniknąć</div>
+    <h2>Obraz świata, nie obraz obiektywu</h2>
+
+    <p>Cała ta książka opisywała zjawiska, przez które obiektyw zostawia w obrazie ślad po sobie. Flara mówi, że były tam soczewki. Winieta mówi, że była oprawa. Miękkie rogi mówią, że korekcja nie sięgnęła brzegu pola.</p>
+
+    <p>Pierwsza z dwóch postaw wobec tych śladów jest prosta i konsekwentna: <strong>to wszystko są zakłócenia</strong>. Widz ma patrzeć na świat przedstawiony, a nie na przyrząd, którym go zarejestrowano. Każdy artefakt, który przypomina o istnieniu kamery, oddala widza od tego, co ma zobaczyć.</p>
+
+    <p>Postawa ta ma zresztą starszy rodowód niż kino. Optyka od czasów pierwszych achromatów rozwijała się jako ciąg prób usunięcia tego, co przyrząd dokłada od siebie — i cała Część III tej książki jest w istocie historią tych prób. Szkoła powściągliwości przyjmuje ten kierunek za swój i doprowadza go do końca: skoro konstruktorzy przez dwa stulecia usuwali wady, to nie po to, żeby operator dokładał je z powrotem.</p>
+
+    <p>Warto od razu odrzucić najczęstsze nieporozumienie na temat tej szkoły. <span class="term-violet">Powściągliwość nie oznacza obojętności ani braku stylu</span>. Operator wybierający najostrzejsze dostępne szkło podejmuje decyzję dokładnie tak samo mocną, jak ten, który wybiera stare soczewki z lat sześćdziesiątych — po prostu jej skutki są rozłożone równomiernie po całym filmie, zamiast skupione w kilku efektownych ujęciach.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Sygnatury obiektywu</span><span>co robi z nimi każda ze szkół</span></div>
+      <div class="diagram-controls" id="pwPrzyciski">
+        <button data-syg="flara">Flara</button>
+        <button data-syg="winieta">Winieta</button>
+        <button data-syg="bokeh">Bokeh</button>
+        <button data-syg="aberracja">Aberracja</button>
+        <button data-syg="miekkosc">Miękkość brzegów</button>
+      </div>
+      <svg viewBox="0 0 760 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Dla wybranej cechy obiektywu: co robi z nią szkoła powściągliwości, co szkoła faktury i co kosztuje każda decyzja.">
+        <rect x="24" y="22" width="350" height="86" rx="4" fill="#132018" stroke="#7fc47f" stroke-width="1.2"/>
+        <text x="40" y="42" font-family="IBM Plex Mono" font-size="9.5" fill="#7fc47f">POWŚCIĄGLIWOŚĆ</text>
+        <text x="40" y="64" font-family="IBM Plex Sans" font-size="11.5" fill="#ecebe4" id="pwPow1"></text>
+        <text x="40" y="86" font-family="IBM Plex Sans" font-size="11.5" fill="#ecebe4" id="pwPow2"></text>
+        <text x="40" y="102" font-family="IBM Plex Mono" font-size="9" fill="#8b909b" id="pwPowKoszt"></text>
+
+        <rect x="386" y="22" width="350" height="86" rx="4" fill="#201a12" stroke="#e8a33d" stroke-width="1.2"/>
+        <text x="402" y="42" font-family="IBM Plex Mono" font-size="9.5" fill="#e8a33d">FAKTURA</text>
+        <text x="402" y="64" font-family="IBM Plex Sans" font-size="11.5" fill="#ecebe4" id="pwFak1"></text>
+        <text x="402" y="86" font-family="IBM Plex Sans" font-size="11.5" fill="#ecebe4" id="pwFak2"></text>
+        <text x="402" y="102" font-family="IBM Plex Mono" font-size="9" fill="#8b909b" id="pwFakKoszt"></text>
+
+        <rect x="24" y="122" width="712" height="66" rx="4" fill="#151a1f" stroke="#3a424d"/>
+        <text x="40" y="142" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">SKĄD SIĘ BIERZE · GDZIE W KSIĄŻCE</text>
+        <text x="40" y="164" font-family="IBM Plex Sans" font-size="11.5" fill="#ecebe4" id="pwSkad"></text>
+        <text x="40" y="182" font-family="IBM Plex Mono" font-size="9.5" fill="#4fc3c0" id="pwUwaga"></text>
+      </svg>
+      <div class="diagram-caption">Ten sam widget wraca w <a href="rozdzial-40-szkola-faktury.html">Rozdziale 40</a> — bo obie szkoły mówią o tej samej liście zjawisk, tylko robią z nimi co innego.</div>
+    </div>
+
+    <p>Warto zauważyć, przeglądając tę listę, że <strong>żadna z decyzji nie jest darmowa</strong>. Usunięcie flary wymaga osłon, powłok i planowania oświetlenia; usunięcie winiety wymaga szkła z zapasem koła obrazowego; ostrość do brzegów wymaga większej liczby soczewek, czyli cięższego i droższego obiektywu. Powściągliwość jest kosztowna, tylko jej koszt jest niewidoczny w obrazie.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Przypadek · najostrzejsze, jakie się da</div>
+    <h2>Blade Runner 2049 jako wykład tej szkoły</h2>
+
+    <p><em>Blade Runner 2049</em> ze zdjęciami Rogera Deakinsa jest wygodnym przykładem, bo jego wybory są udokumentowane, a przy tym idą wbrew oczekiwaniom gatunku.</p>
+
+    <p><strong>Kamera i szkło.</strong> Film zrealizowano cyfrowo, kamerami ARRI Alexa XT i Alexa Mini, w formacie ARRIRAW przy otwartej bramce 3,4K, na <strong>sferycznych obiektywach Zeiss Master Prime</strong> — z zakresu obejmującego ogniskowe od 12 do 150 mm. Nie anamorficznie, mimo że film science fiction w tej skali niemal domyślnie kojarzy się z anamorfem.</p>
+
+    <p><strong>Uzasadnienie.</strong> Deakins wybrał Master Prime'y dlatego, że są najszybszymi i najostrzejszymi obiektywami, jakie da się dostać. Jest to sformułowanie warte zacytowania, bo streszcza całą szkołę w jednym zdaniu: <span class="term-cyan">kryterium wyboru jest brak charakteru, a nie jego rodzaj</span>.</p>
+
+    <p><strong>Ogniskowe.</strong> Deakins i Villeneuve zwykle trzymają się środka zakresu, mniej więcej między 27 a 50 mm; przy tym filmie sięgali po szerokie znacznie częściej niż zazwyczaj.</p>
+
+    <p>Warto zauważyć, jak wiele ten zestaw decyzji <em>wyklucza</em>. Sferyczne szkło oznacza brak poziomych smug i owalnego bokeh z <a href="rozdzial-26-smugi-anamorficzne.html">Rozdziału 26</a>. Master Prime oznacza brak miękkich rogów i mocnej flary. Otwarta bramka oznacza, że kadrowanie do proporcji docelowych odbywa się później, a więc świadomie, a nie przez samą optykę. <strong>Każda z tych decyzji zamyka jakieś źródło charakteru</strong> — i wszystkie razem zamykają ich tyle, że nie zostaje nic poza sceną i światłem.</p>
+
+    <p>Wniosek dla nas nie dotyczy tego jednego filmu. <strong>Skoro szkło nie wnosi charakteru, cały charakter obrazu musi pochodzić skądinąd</strong> — ze światła, z proporcji kadru, z ruchu i z tego, co w kadrze stoi. Powściągliwość przenosi ciężar, a nie zdejmuje go.</p>
+
+    <button class="advanced-btn" data-modal-target="adv-neutralnosc">Zaawansowane: dlaczego „neutralny obiektyw” nie istnieje</button>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Konsekwencje · na czym wtedy stoi obraz</div>
+    <h2>Co niesie film, w którym szkło milczy</h2>
+
+    <p>Usunięcie sygnatur obiektywu zostawia pustkę, którą trzeba czymś wypełnić. Trzy rzeczy przejmują wtedy rolę, którą gdzie indziej pełni charakter szkła.</p>
+
+    <p><strong>Światło.</strong> Kiedy obraz nie ma własnej faktury, jedynym źródłem nastroju zostaje to, co oświetla scenę: kierunek, twardość, barwa i kontrast. Stąd bierze się obserwacja, że filmy tej szkoły są zwykle bardzo mocno oświetlone w sensie kompozycyjnym — nie jasno, tylko <em>zdecydowanie</em>.</p>
+
+    <p><strong>Proporcje i ruch.</strong> Kadr wypełniony ostrym obrazem od rogu do rogu wymaga, żeby każdy róg był czymś uzasadniony. Nie da się schować niedopracowanego brzegu w winiecie ani miękkości — <span class="term-violet">wszystko, co jest w kadrze, jest w nim widoczne</span>.</p>
+
+    <p><strong>Spójność.</strong> Ponieważ ujęcia nie różnią się fakturą, spójność między nimi musi być zbudowana na czymś innym. Zwykle jest to konsekwentna paleta i konsekwentne ogniskowe — czyli decyzje z <a href="rozdzial-37-ogniskowa-jako-decyzja.html">Rozdziału 37</a>, powtarzane przez cały film.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Przeniesienie ciężaru</span><span>na czym stoi obraz w każdej ze szkół</span></div>
+      <svg viewBox="0 0 760 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Dwa słupki: w szkole powściągliwości cały ciężar niosą światło, kompozycja i ruch; w szkole faktury część przejmuje sygnatura obiektywu.">
+        <text x="200" y="26" font-family="IBM Plex Mono" font-size="10" fill="#7fc47f" text-anchor="middle">POWŚCIĄGLIWOŚĆ</text>
+        <g stroke="#0d0f11" stroke-width="1">
+          <rect x="80" y="38" width="240" height="44" fill="#e8a33d" fill-opacity="0.5"/>
+          <rect x="80" y="82" width="240" height="40" fill="#4fc3c0" fill-opacity="0.45"/>
+          <rect x="80" y="122" width="240" height="34" fill="#6e93be" fill-opacity="0.45"/>
+          <rect x="80" y="156" width="240" height="10" fill="#9c82d8" fill-opacity="0.4"/>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="9.5" fill="#ecebe4" text-anchor="middle">
+          <text x="200" y="65">światło</text><text x="200" y="107">kompozycja</text><text x="200" y="145">ruch</text>
+        </g>
+        <text x="330" y="164" font-family="IBM Plex Mono" font-size="8.5" fill="#9c82d8">sygnatura ledwie obecna</text>
+
+        <line x1="380" y1="16" x2="380" y2="188" stroke="#2a2f38"/>
+
+        <text x="570" y="26" font-family="IBM Plex Mono" font-size="10" fill="#e8a33d" text-anchor="middle">FAKTURA</text>
+        <g stroke="#0d0f11" stroke-width="1">
+          <rect x="450" y="38" width="240" height="34" fill="#e8a33d" fill-opacity="0.5"/>
+          <rect x="450" y="72" width="240" height="30" fill="#4fc3c0" fill-opacity="0.45"/>
+          <rect x="450" y="102" width="240" height="24" fill="#6e93be" fill-opacity="0.45"/>
+          <rect x="450" y="126" width="240" height="40" fill="#9c82d8" fill-opacity="0.5"/>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="9.5" fill="#ecebe4" text-anchor="middle">
+          <text x="570" y="60">światło</text><text x="570" y="92">kompozycja</text><text x="570" y="119">ruch</text><text x="570" y="151">sygnatura szkła</text>
+        </g>
+        <text x="380" y="188" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">ta sama wysokość słupka — obraz musi być czymś wypełniony w całości</text>
+      </svg>
+      <div class="diagram-caption">Słupki mają jednakową wysokość i to jest sedno porównania. Usunięcie sygnatury nie zmniejsza pracy — przenosi ją na trzy pozostałe warstwy.</div>
+    </div>
+
+    <p>Ma to jeszcze jedną konsekwencję, mniej oczywistą. <strong>Powściągliwość jest bezlitosna dla scenografii i charakteryzacji.</strong> Ostry obraz od rogu do rogu pokazuje wszystko, co w kadrze stoi, i pokazuje to dokładnie — więc dekoracja musi wytrzymać oglądanie, którego w miękkim obrazie nikt by nie przeprowadził. Koszt tej szkoły nie kończy się na obiektywie i nie kończy się nawet w ekipie zdjęciowej.</p>
+
+    <p>Dla pracy w CG szkoła powściągliwości ma jedną konsekwencję, którą warto nazwać wprost, bo bywa zaskoczeniem: <strong>jest trudniejsza, nie łatwiejsza</strong>. Faktura obiektywu jest wygodnym miejscem, w którym niedoskonałości elementu się chowają — miękkie rogi wybaczają uproszczoną geometrię, mocne ziarno kryje różnice szumu, flara zasłania granicę. Kiedy obraz jest czysty od rogu do rogu, <span class="term-amber">nie ma się za czym schować</span>.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Skąd się wzięła · szkoła możliwa dopiero od niedawna</div>
+    <h2>Czystość jako zdobycz techniczna</h2>
+
+    <p>Powściągliwość jako postawa jest stara — dążenie do wiernego obrazu towarzyszy fotografii od początku. Ale <strong>powściągliwość jako osiągalny stan jest zdobyczą ostatnich dekad</strong>, i warto rozumieć, co po kolei ją umożliwiło, bo każdy z tych kroków opisywały wcześniejsze części tej książki.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Cztery kroki ku czystości</span><span>każdy usunął jedną sygnaturę</span></div>
+      <svg viewBox="0 0 760 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cztery zdobycze techniczne i sygnatura, którą każda usunęła: powłoki, szkła specjalne, asferyki, projektowanie obliczeniowe.">
+        <line x1="60" y1="150" x2="712" y2="150" stroke="#8b909b" stroke-width="1.2"/>
+        <g stroke="#4fc3c0" stroke-width="2">
+          <line x1="130" y1="150" x2="130" y2="52"/><line x1="290" y1="150" x2="290" y2="76"/>
+          <line x1="450" y1="150" x2="450" y2="100" /><line x1="610" y1="150" x2="610" y2="64"/>
+        </g>
+        <g fill="#4fc3c0"><circle cx="130" cy="52" r="5"/><circle cx="290" cy="76" r="5"/><circle cx="450" cy="100" r="5"/><circle cx="610" cy="64" r="5"/></g>
+        <g font-family="IBM Plex Mono" font-size="10" fill="#4fc3c0" text-anchor="middle">
+          <text x="130" y="42">powłoki</text><text x="290" y="66">szkła specjalne</text>
+          <text x="450" y="90">asferyki</text><text x="610" y="54">projektowanie obliczeniowe</text>
+        </g>
+        <g font-family="IBM Plex Sans" font-size="11" fill="#ecebe4" text-anchor="middle">
+          <text x="130" y="176">flara i ghosty</text><text x="290" y="176">aberracja chrom.</text>
+          <text x="450" y="176">sferyczna i koma</text><text x="610" y="176">reszta naraz</text>
+        </g>
+        <text x="386" y="200" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">co każda z nich usunęła z obrazu</text>
+        <text x="60" y="34" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">kolejność, nie skala czasu</text>
+      </svg>
+      <div class="diagram-caption">Każda zdobycz zabrała z obrazu jedną z tych rzeczy, które dziś bywają celowo przywracane. Szkoła faktury sięga więc po materiał, który technika konsekwentnie usuwała.</div>
+    </div>
+
+    <p><strong>Powłoki</strong> zabrały flarę i ghosty, obniżając odbicie z każdej powierzchni o rząd wielkości — mechanizm opisuje <a href="rozdzial-24-powloki.html">Rozdział 24</a>. Przed nimi obiektyw o kilkunastu powierzchniach po prostu nie mógł być kontrastowy.</p>
+
+    <p><strong>Szkła o niskiej dyspersji</strong> zabrały kolorowe obwódki, bo pozwoliły dobrać pary o dużej różnicy liczby Abbego przy zbliżonym współczynniku załamania. To jest treść <a href="rozdzial-15-korekcja-i-jej-cena.html">Rozdziału 15</a>.</p>
+
+    <p><strong>Powierzchnie asferyczne</strong> zabrały aberrację sferyczną i komę, bo jedna taka powierzchnia robi to, co wcześniej wymagało kilku sferycznych — a każda usunięta soczewka to mniej odbić i mniejsza masa.</p>
+
+    <p><strong>Projektowanie obliczeniowe</strong> zabrało resztę. Optymalizacja układu o kilkunastu powierzchniach z siedmioma wadami do zbalansowania jest zadaniem, którego nie da się rozwiązać ołówkiem — <span class="term-cyan">i to jest powód, dla którego szkło z ostatnich dekad jest jakościowo inne, a nie tylko lepsze</span>.</p>
+
+    <p>Wniosek historyczny warto zapamiętać, bo porządkuje całą Część VIII: <strong>szkoła powściągliwości korzysta z tego, co technika zdobyła, a szkoła faktury z tego, co przy okazji straciła</strong>. Nie są to więc dwa gusta, tylko dwie strony tej samej przemiany.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Rozpoznanie · po czym poznać w kadrze</div>
+    <h2>Sześć rzeczy, których nie ma</h2>
+
+    <p>Rozpoznanie tej szkoły polega na zauważeniu nieobecności, co jest trudniejsze niż zauważenie obecności. Poniższa lista podaje, czego szukać — i czego brak jest sygnałem.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Lista nieobecności</span><span>i co znaczy każda</span></div>
+      <svg viewBox="0 0 760 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sześć cech, których brak wskazuje na szkołę powściągliwości, wraz z interpretacją każdej.">
+        <g font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">
+          <text x="30" y="24">CZEGO NIE MA</text><text x="330" y="24">CO TO ZNACZY</text><text x="590" y="24">GDZIE SPRAWDZIĆ</text>
+        </g>
+        <line x1="24" y1="32" x2="736" y2="32" stroke="#3a424d"/>
+        <g font-family="IBM Plex Sans" font-size="11.5" fill="#ecebe4">
+          <text x="30" y="56">rozbłysku przy źródle</text><text x="330" y="56">powłoki i osłony</text><text x="590" y="56" fill="#8b909b">okno, lampa w kadrze</text>
+          <text x="30" y="84">ciemnych rogów</text><text x="330" y="84">zapas koła obrazowego</text><text x="590" y="84" fill="#8b909b">jednolite niebo, ściana</text>
+          <text x="30" y="112">obwódek barwnych</text><text x="330" y="112">szkła niskodyspersyjne</text><text x="590" y="112" fill="#8b909b">gałęzie pod światło</text>
+          <text x="30" y="140">miękkich brzegów</text><text x="330" y="140">korekcja pola do rogu</text><text x="590" y="140" fill="#8b909b">detal w rogu kadru</text>
+          <text x="30" y="168">nerwowego bokeh</text><text x="330" y="168">okrągły otwór, gładkie tło</text><text x="590" y="168" fill="#8b909b">punktowe światła w tle</text>
+          <text x="30" y="196">wygiętych prostych</text><text x="330" y="196">dystorsja poniżej progu</text><text x="590" y="196" fill="#8b909b">framuga przy krawędzi</text>
+        </g>
+        <line x1="24" y1="208" x2="736" y2="208" stroke="#3a424d"/>
+        <text x="30" y="224" font-family="IBM Plex Mono" font-size="9" fill="#8b909b">brak wszystkich sześciu naraz jest sam w sobie sygnaturą — i to bardzo wyrazistą</text>
+      </svg>
+      <div class="diagram-caption">Ostatnia linia jest sednem tego rozdziału: konsekwentna nieobecność sygnatur jest rozpoznawalna równie dobrze, jak konsekwentna ich obecność.</div>
+    </div>
+
+    <p>Warto przy tej liście pamiętać o ograniczeniu, które sama sobie narzuca. <strong>Każdą z sześciu pozycji da się dziś usunąć w postprodukcji</strong> — brak winiety w gotowym filmie nie dowodzi, że obiektyw jej nie miał. Wnioski o szkle wyciąga się z materiału surowego, a z gotowego wyciąga się wnioski o <em>zamiarze</em>, i to jest inna, choć równie ciekawa informacja.</p>
+
+    <p>Dla pracy z plate'em ma to konsekwencję praktyczną: <span class="term-violet">plate wygląda inaczej niż ujęcie, do którego trafi</span>. Element dopasowuje się do plate'u, a nie do referencji z gotowego filmu — bo między jednym a drugim stoi cała korekcja, która część sygnatur usunęła, a część mogła dołożyć.</p>
+  </div>
+
+  <div class="panel practice">
+    <div class="panel-label">Z praktyki</div>
+    <p><strong>Nie dodawaj sygnatur „dla realizmu”, jeśli plate ich nie ma.</strong> Element z widoczną flarą albo winietą w ujęciu, które ich nie ma, jest bardziej obcy niż element zupełnie czysty. Realizm polega tu na zgodności z konkretnym materiałem, a nie z ogólnym wyobrażeniem o filmie.</p>
+    <p><strong>Zmierz, ile sygnatury naprawdę jest.</strong> Nawet najostrzejsze szkło ma jakieś winietowanie i jakąś dystorsję — po prostu małą. Protokoły z <a href="../dodatki/dodatek-p-winietowanie-w-liczbach.html">Dodatku P</a> i <a href="../dodatki/dodatek-v-stmapy.html">Dodatku V</a> podają liczby, a nie wrażenia.</p>
+    <p><strong>Przy czystym plate'cie sprawdzaj geometrię dwa razy uważniej.</strong> Skoro nic nie zasłania brzegów kadru, błąd kąta widzenia albo wysokości kamery będzie tam widoczny wprost. To jest ta praca, którą faktura w innych filmach wykonuje za ciebie.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>sygnatura obiektywu</dt>
+      <dd>Zbiór cech, po których da się rozpoznać, jakim szkłem zrobiono zdjęcie: flara, bokeh, winieta, spadek ostrości ku brzegom.</dd>
+      <dt>szkło szybkie</dt>
+      <dd>Obiektyw o dużym otworze względnym. Pozwala na płytką głębię przy mniejszej ilości światła; kosztuje wielkość i cenę.</dd>
+      <dt>otwarta bramka</dt>
+      <dd>Tryb zapisu wykorzystujący całą powierzchnię matrycy, bez kadrowania do proporcji docelowych.</dd>
+      <dt>szkło sferyczne</dt>
+      <dd>Zwykły obiektyw bez ściskania obrazu, w odróżnieniu od anamorficznego. Wybór sferyczny jest decyzją, nie ustawieniem domyślnym.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Druga postawa przyjmuje dokładnie odwrotne założenie: że ślad przyrządu jest częścią obrazu, a nie zanieczyszczeniem. <a href="rozdzial-40-szkola-faktury.html">Następny rozdział</a> pokazuje, że i ona ma swoją konsekwencję i swoją cenę — a widget z tej strony wraca tam z drugą kolumną wypełnioną.</p>
+  </div>
 
 
   <div class="site-nav chapter-nav">
@@ -52,8 +270,105 @@ window.SKY3D_MESSAGES = {
       <a class="nav-next" href="rozdzial-40-szkola-faktury.html">Następny →</a>
   </div>
 
+<template id="adv-neutralnosc">
+  <h3>Dlaczego „neutralny obiektyw” nie istnieje</h3>
+  <p>Szkoła powściągliwości dąży do przezroczystości przyrządu. Warto zobaczyć, dlaczego jest to dążenie asymptotyczne, a nie osiągalny stan — i dlaczego nawet najlepsze szkło ma charakter, tylko słabszy.</p>
+  <p><strong>Dyfrakcja nie znika nigdy.</strong> Krążek Airy'ego ma średnicę 2,44·λ·N i jest własnością otworu, nie jakości wykonania. Przy T/2,8 i świetle zielonym daje to 3,8 µm — poniżej rozmiaru piksela, więc niewidoczne; ale przy T/11 już 15 µm, czyli więcej niż piksel, i wtedy najlepszy obiektyw świata jest miękki. Powściągliwość ma tu twardą granicę: <strong>im głębsza ostrość, tym mniej ostry obraz</strong>, i nie da się mieć obu naraz.</p>
+  <p><strong>Odbicia nie znikają, tylko maleją.</strong> Powłoka ćwierćfalowa sprowadza odbicie z około czterech procent na powierzchnię do ułamka procenta, ale nie do zera — a przy kilkunastu powierzchniach suma nadal jest mierzalna. Nowoczesny obiektyw ma flarę słabą i o innym charakterze, nie nie ma jej wcale.</p>
+  <p><strong>Winietowanie naturalne wynika z geometrii.</strong> Cos⁴θ nie zależy od konstrukcji, więc dwudziestka czwórka na pełnej klatce traci w rogu 1,7 działki niezależnie od tego, ile kosztowała. Konstruktor może to częściowo skompensować kształtem źrenicy, ale nie może usunąć.</p>
+  <p><strong>Korekcja jest kompromisem, nie rozwiązaniem.</strong> Pięć wad Seidla i dwie chromatyczne dają siedem rzeczy do poprawienia i skończoną liczbę stopni swobody. Każdy projekt wybiera, którą wadę zostawić — a ten wybór jest tym, co odróżnia dwa równie dobre obiektywy od siebie.</p>
+  <p>Wniosek jest taki, że <strong>„neutralne” szkło to szkło, którego charakter mieści się poniżej progu zauważalności w typowych warunkach</strong> — a nie takie, które charakteru nie ma. Postawcie je pod słońce, otwórzcie do końca albo przymknijcie do f/16, a charakter pokaże się natychmiast.</p>
+  <p>Dla compu wynika stąd rzecz praktyczna: <strong>także czysty plate ma zmierzalną sygnaturę</strong>, i warto ją zmierzyć zamiast zakładać zero. Winieta o pół działki, dystorsja 0,3 procenta i lekka aberracja przy brzegach to nie jest „brak” — to są liczby, które element też powinien mieć.</p>
+</template>
+
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal-box">
+    <button class="modal-close" aria-label="Zamknij">&times;</button>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
 </div>
 
 <script src="../assets/interactive.js"></script>
+<script>
+(function () {
+  var pas = document.getElementById('pwPrzyciski');
+  if (!pas) return;
+
+  var DANE = {
+    flara: {
+      pow: ['Osłony, powłoki, planowanie kierunku świateł.', 'Źródła poza kadrem trzymane poza kątem padania.'],
+      powKoszt: 'kosztuje: czas na planie i ograniczenie ustawień lamp',
+      fak: ['Źródło celowo w kadrze albo tuż przy krawędzi.', 'Stare szkło bez powłok, żeby flara była mocna.'],
+      fakKoszt: 'kosztuje: kontrast, czerń i przewidywalność ujęcia',
+      skad: 'Odbicia między powierzchniami szkła i światło rozproszone w tubusie.',
+      uwaga: 'Rozdziały 22–23, Dodatki L i X'
+    },
+    winieta: {
+      pow: ['Szkło z zapasem koła obrazowego.', 'Przymknięcie o dwie działki usuwa część optyczną.'],
+      powKoszt: 'kosztuje: większy i cięższy obiektyw albo światło na przymknięcie',
+      fak: ['Winieta zostawiona albo dołożona.', 'Kieruje wzrok do środka bez cięcia i bez ruchu.'],
+      fakKoszt: 'kosztuje: dwie działki w rogach, czyli szum w cieniach przy brzegu',
+      skad: 'Cos^4 dla naturalnej, obcięcie źrenicy dla optycznej, oprawa dla mechanicznej.',
+      uwaga: 'Rozdział 30, Dodatek P'
+    },
+    bokeh: {
+      pow: ['Okrągły otwór, dużo listków, gładkie tło.', 'Rozmycie ma nie zwracać uwagi.'],
+      powKoszt: 'kosztuje: skomplikowana przysłona i korekcja sferyczna pod bokeh',
+      fak: ['Kocie oko przy brzegach, wirujące tło, obwódki.', 'Rozmycie jako osobny element kompozycji.'],
+      fakKoszt: 'kosztuje: uwaga widza odciągana od tego, co ostre',
+      skad: 'Kształt źrenicy widzianej z danego punktu kadru; obcięcie daje kocie oko.',
+      uwaga: 'Rozdział 9'
+    },
+    aberracja: {
+      pow: ['Szkła niskodyspersyjne, achromaty i apochromaty.', 'Resztka usuwana w postprodukcji.'],
+      powKoszt: 'kosztuje: cena szkła i masa układu',
+      fak: ['Kolorowe obwódki przy brzegach zostawione.', 'Czyta się jako materiał, nie jako obiektyw.'],
+      fakKoszt: 'kosztuje: rozdzielczość przy brzegach i kłopot przy kluczowaniu',
+      skad: 'Współczynnik załamania zależy od długości fali — liczba Abbego.',
+      uwaga: 'Rozdziały 14–15, Dodatek B'
+    },
+    miekkosc: {
+      pow: ['Więcej soczewek, korekcja pola do samego rogu.', 'MTF wyrównane w całym kadrze.'],
+      powKoszt: 'kosztuje: waga, cena i więcej powierzchni, czyli więcej ghostów',
+      fak: ['Spadek ostrości ku brzegom zostawiony.', 'Środek kadru wyróżniony bez winiety.'],
+      fakKoszt: 'kosztuje: detal przy brzegach, którego już się nie odzyska',
+      skad: 'Krzywizna pola i astygmatyzm — dwie z pięciu wad Seidla.',
+      uwaga: 'Rozdziały 11–13, Dodatek H'
+    }
+  };
+
+  var el = {
+    pow1: document.getElementById('pwPow1'), pow2: document.getElementById('pwPow2'),
+    powK: document.getElementById('pwPowKoszt'),
+    fak1: document.getElementById('pwFak1'), fak2: document.getElementById('pwFak2'),
+    fakK: document.getElementById('pwFakKoszt'),
+    skad: document.getElementById('pwSkad'), uwaga: document.getElementById('pwUwaga')
+  };
+  var przyciski = pas.querySelectorAll('[data-syg]');
+
+  function pokaz(k, btn) {
+    var d = DANE[k];
+    el.pow1.textContent = '· ' + d.pow[0];
+    el.pow2.textContent = '· ' + d.pow[1];
+    el.powK.textContent = d.powKoszt;
+    el.fak1.textContent = '· ' + d.fak[0];
+    el.fak2.textContent = '· ' + d.fak[1];
+    el.fakK.textContent = d.fakKoszt;
+    el.skad.textContent = d.skad;
+    el.uwaga.textContent = d.uwaga;
+    for (var i = 0; i < przyciski.length; i++) {
+      przyciski[i].classList.toggle('is-active', przyciski[i] === btn);
+    }
+  }
+
+  for (var i = 0; i < przyciski.length; i++) {
+    (function (b) { b.addEventListener('click', function () { pokaz(b.dataset.syg, b); }); })(przyciski[i]);
+  }
+  pokaz('flara', przyciski[0]);
+})();
+</script>
+
 </body>
 </html>
