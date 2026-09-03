@@ -43,7 +43,250 @@ window.SKY3D_MESSAGES = {
   <h1>Co w renderze, a co w compie</h1>
   <p class="subtitle">Część efektów z tej książki da się udać po renderze i nikt nie zauważy. Część nie da się nigdy, bo wymaga informacji, której na płaskim obrazie już nie ma. Ten rozdział rysuje tę granicę.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li><strong>Jedno pytanie rozstrzyga wszystkie przypadki:</strong> czy zjawisko potrzebuje informacji, której płaski obraz już nie ma? Jeśli tak — render. Jeśli nie — comp, i to zwykle taniej oraz z możliwością poprawki.</li>
+      <li>Płaski obraz pamięta <span class="term-raster">jedną barwę na piksel</span>. Zapomina, co było za tym, pod jakim kątem to widział i jak daleko leżało — o ile nie zapisano tego osobno.</li>
+      <li><strong>Kanały pomocnicze przesuwają granicę, ale jej nie znoszą.</strong> Mapa głębi dokłada jedną liczbę na piksel, a nie całą scenę — i dlatego zawodzi dokładnie tam, gdzie w jednym pikselu spotykają się dwa plany.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Kryterium · jedno pytanie</div>
+    <h2>Czego płaski obraz już nie wie</h2>
+
+    <p>Rozdział 33 zostawił listę zjawisk, które trzeba dołożyć, bo kamera renderera ich nie ma. Zostaje pytanie, gdzie je dołożyć — a odpowiedzi udziela się zwykle nawykiem albo tym, co akurat jest wygodniejsze. Tymczasem istnieje kryterium, i jest ostre.</p>
+
+    <p>Wyrenderowany obraz jest siatką pikseli, z których każdy niesie jedną wartość na kanał. Ta wartość jest <strong>wynikiem uśrednienia wszystkiego, co przez ten piksel przeszło</strong>: wszystkich kierunków, wszystkich odległości i wszystkich powierzchni, które się w nim zmieściły. Uśrednienie jest operacją nieodwracalną — po nim nie da się już ustalić, co się na nie złożyło.</p>
+
+    <p>Stąd kryterium: <span class="term-amber">jeśli zjawisko wymaga rozdzielenia rzeczy, które piksel już uśrednił, musi powstać w rendererze</span>. Jeśli operuje na tym, co piksel niesie, wolno je zrobić w compie — i wtedy warto, bo comp jest kilkadziesiąt razy szybszy i pozwala poprawiać bez powtarzania obliczeń.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Co pamięta piksel</span><span>i czego już nie ma</span></div>
+      <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Piksel jako uśrednienie: wiele promieni, wiele odległości i powierzchni sprowadzone do jednej wartości.">
+        <text x="150" y="24" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">co przez piksel przeszło</text>
+        <rect x="60" y="40" width="180" height="150" fill="none" stroke="#3a424d" stroke-dasharray="3 3"/>
+        <g stroke="#e8a33d" stroke-width="1" opacity="0.75">
+          <line x1="30" y1="115" x2="240" y2="52"/><line x1="30" y1="115" x2="240" y2="86"/>
+          <line x1="30" y1="115" x2="240" y2="120"/><line x1="30" y1="115" x2="240" y2="154"/>
+          <line x1="30" y1="115" x2="240" y2="184"/>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="8.5" fill="#8b909b">
+          <text x="246" y="55">gałąź, 4 m</text><text x="246" y="89">niebo, ∞</text>
+          <text x="246" y="123">gałąź, 4 m</text><text x="246" y="157">dach, 22 m</text>
+          <text x="246" y="187">niebo, ∞</text>
+        </g>
+
+        <path d="M348 115 L392 115" stroke="#8b909b" stroke-width="1.4" marker-end="url(#strzalkaR34)"/>
+        <defs><marker id="strzalkaR34" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0 L7 3.5 L0 7 Z" fill="#8b909b"/></marker></defs>
+
+        <rect x="410" y="80" width="70" height="70" fill="#6e93be" fill-opacity="0.55" stroke="#6e93be"/>
+        <text x="445" y="120" font-family="IBM Plex Mono" font-size="10" fill="#ecebe4" text-anchor="middle">0,412</text>
+        <text x="445" y="168" font-family="IBM Plex Mono" font-size="9.5" fill="#6e93be" text-anchor="middle">jedna wartość</text>
+
+        <rect x="520" y="40" width="216" height="150" rx="4" fill="#201318" stroke="#d8695f" stroke-width="1.1"/>
+        <text x="628" y="62" font-family="IBM Plex Mono" font-size="10" fill="#d8695f" text-anchor="middle">CZEGO JUŻ NIE MA</text>
+        <g font-family="IBM Plex Sans" font-size="11" fill="#ecebe4">
+          <text x="536" y="88">ile było planów</text>
+          <text x="536" y="110">w jakich odległościach</text>
+          <text x="536" y="132">w jakich proporcjach</text>
+          <text x="536" y="154">co było za którym</text>
+          <text x="536" y="176">z których kierunków</text>
+        </g>
+        <text x="150" y="216" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">pięć promieni, trzy przedmioty, dwie odległości</text>
+        <text x="628" y="216" font-family="IBM Plex Mono" font-size="9.5" fill="#d8695f" text-anchor="middle">uśrednienie jest nieodwracalne</text>
+      </svg>
+      <div class="diagram-caption">Piksel na krawędzi gałęzi niesie mieszankę gałęzi i nieba. Nie ma w nim informacji, w jakiej proporcji ani w jakich odległościach — a obie te rzeczy są potrzebne, żeby go poprawnie rozmyć.</div>
+    </div>
+
+    <p>Warto zauważyć, że utrata informacji nie jest wadą renderu ani błędem formatu. Jest tym, czym obraz <em>jest</em> — prostokątną siatką wartości. Ta sama utrata dotyczy plate'u z kamery, i to nawet bardziej dotkliwie, bo tam nie ma żadnych kanałów pomocniczych. Kiedy więc mówimy, że czegoś „nie da się zrobić w compie”, mówimy w istocie, że tej rzeczy nie da się odtworzyć z fotografii — a to jest twierdzenie o fotografii, nie o narzędziu.</p>
+
+    <p>Ma to jedną pociechę, wartą zapamiętania przy pracy z materiałem zdjęciowym. <strong>Wszystko, co zrobiła prawdziwa kamera, zrobiła na płaskim obrazie</strong> — flara, halacja, ziarno, winieta i rozmycie nośnika działały na obrazie już spłaszczonym przez optykę. Dlatego odtworzenie ich w compie nie jest przybliżeniem: jest odtworzeniem tego samego kroku w tym samym miejscu łańcucha. Przybliżeniem staje się dopiero to, co w prawdziwej kamerze zdarzyło się <em>przed</em> spłaszczeniem, czyli głębia ostrości i rozmycie ruchu.</p>
+
+    <p>Warto zwrócić uwagę, że kryterium nie mówi nic o jakości ani o „fizycznej poprawności”. Mówi o <strong>dostępności danych</strong>. Comp wykonany tam, gdzie dane są, jest tak samo poprawny jak render — a często bardziej użyteczny, bo daje się zmienić po obejrzeniu.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Rozstrzygnięcia · zjawisko po zjawisku</div>
+    <h2>Gdzie co robić</h2>
+
+    <p>Przełóżmy kryterium na konkrety. Poniższy widget przechodzi przez zjawiska z tej książki i pokazuje, jakiej informacji każde z nich potrzebuje.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Render czy comp</span><span>kryterium zastosowane</span></div>
+      <div class="diagram-controls" id="rcPrzyciski">
+        <button data-zj="dof">Głębia ostrości</button>
+        <button data-zj="motion">Rozmycie ruchu</button>
+        <button data-zj="flara">Flara i ghosty</button>
+        <button data-zj="ca">Aberracja chromat.</button>
+        <button data-zj="winieta">Winietowanie</button>
+        <button data-zj="ziarno">Ziarno</button>
+      </div>
+      <svg viewBox="0 0 760 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Widget: dla wybranego zjawiska pokazuje potrzebną informację i rozstrzygnięcie render albo comp.">
+        <rect x="24" y="24" width="330" height="120" rx="4" fill="#151a1f" stroke="#3a424d"/>
+        <text x="40" y="46" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">POTRZEBUJE</text>
+        <g font-family="IBM Plex Sans" font-size="11.5" fill="#ecebe4">
+          <text x="40" y="72" id="rcP1">—</text><text x="40" y="96" id="rcP2">—</text><text x="40" y="120" id="rcP3">—</text>
+        </g>
+        <rect id="rcRamka" x="386" y="24" width="350" height="120" rx="4" fill="#132018" stroke="#7fc47f" stroke-width="1.4"/>
+        <text x="561" y="56" font-family="IBM Plex Mono" font-size="15" id="rcWerdykt" fill="#7fc47f" text-anchor="middle">wybierz zjawisko</text>
+        <text x="561" y="86" font-family="IBM Plex Sans" font-size="11.5" id="rcCzemu1" fill="#ecebe4" text-anchor="middle"></text>
+        <text x="561" y="108" font-family="IBM Plex Sans" font-size="11.5" id="rcCzemu2" fill="#ecebe4" text-anchor="middle"></text>
+        <text x="561" y="130" font-family="IBM Plex Sans" font-size="11.5" id="rcCzemu3" fill="#ecebe4" text-anchor="middle"></text>
+        <text x="380" y="176" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle" id="rcUwaga">Kryterium: czy potrzebna informacja przetrwała spłaszczenie do pikseli.</text>
+        <text x="380" y="196" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle" id="rcUwaga2"></text>
+      </svg>
+      <div class="diagram-caption">Trzy zjawiska wychodzą jednoznacznie na comp, dwa na render, jedno warunkowo — i ten warunek jest wart zapamiętania, bo wraca w każdym ujęciu z nieostrym tłem.</div>
+    </div>
+
+    <p>Trzy wnioski z tego przeglądu zasługują na nazwanie osobno.</p>
+
+    <p><strong>Flara zawsze w compie.</strong> Jest to jedyne zjawisko z tej książki, które potrzebuje <em>mniej</em> informacji niż piksel niesie — działa na jasnościach obrazu, i to na jasnościach po zsumowaniu. Renderowanie flary oznacza modelowanie wnętrza tubusa, czego żaden renderer nie robi, i zamyka drogę do poprawek.</p>
+
+    <p><strong>Rozmycie ruchu warunkowo.</strong> Ruch prostoliniowy wystarcza opisać wektorem na piksel, więc comp go udźwignie. Ruch obrotowy i przecięcia planów wymagają czasu jako wymiaru, a nie jako wektora — i wtedy jest to render, zgodnie z rachunkiem z <a href="../dodatki/dodatek-r-rozmycie-ruchu.html">Dodatku R</a>.</p>
+
+    <p><strong>Głębia ostrości jest przypadkiem granicznym</strong> i to ona najczęściej bywa źle rozstrzygnięta. Mapa głębi daje jedną odległość na piksel, więc krawędź, na której spotykają się bliski i daleki plan, dostaje jedną z nich — a potrzebowałaby obu.</p>
+
+    <button class="advanced-btn" data-modal-target="adv-krawedz-dof">Zaawansowane: co dokładnie psuje się na krawędzi przy rozmyciu z mapy głębi</button>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Kanały pomocnicze · przesuwanie granicy</div>
+    <h2>Ile z rendera da się wynieść</h2>
+
+    <p>Granica nie jest nieruchoma. Render potrafi zapisać obok obrazu dodatkowe warstwy, z których każda przywraca kawałek utraconej informacji — i każda przesuwa jedno zjawisko z lewej strony na prawą.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Kanały pomocnicze</span><span>co przywraca który</span></div>
+      <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tabela kanałów pomocniczych i tego, co każdy przywraca oraz gdzie zawodzi.">
+        <g font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">
+          <text x="30" y="24">KANAŁ</text><text x="180" y="24">PRZYWRACA</text><text x="420" y="24">ZAWODZI, GDY</text>
+        </g>
+        <line x1="24" y1="32" x2="736" y2="32" stroke="#3a424d"/>
+        <g font-family="IBM Plex Sans" font-size="11.5">
+          <text x="30" y="56" fill="#6e93be">głębia (Z)</text>
+          <text x="180" y="56" fill="#ecebe4">odległość, jedna na piksel</text>
+          <text x="420" y="56" fill="#d8695f">w pikselu są dwa plany albo przezroczystość</text>
+
+          <text x="30" y="88" fill="#6e93be">wektory ruchu</text>
+          <text x="180" y="88" fill="#ecebe4">przesunięcie między klatkami</text>
+          <text x="420" y="88" fill="#d8695f">ruch jest łukiem albo coś się odsłania</text>
+
+          <text x="30" y="120" fill="#6e93be">normalne</text>
+          <text x="180" y="120" fill="#ecebe4">nachylenie powierzchni</text>
+          <text x="420" y="120" fill="#d8695f">powierzchnia jest rozmyta albo półprzezroczysta</text>
+
+          <text x="30" y="152" fill="#6e93be">pozycja w świecie</text>
+          <text x="180" y="152" fill="#ecebe4">gdzie punkt leży w scenie</text>
+          <text x="420" y="152" fill="#d8695f">piksel obejmuje więcej niż jedno miejsce</text>
+
+          <text x="30" y="184" fill="#6e93be">maski obiektów</text>
+          <text x="180" y="184" fill="#ecebe4">który obiekt gdzie</text>
+          <text x="420" y="184" fill="#d8695f">obiekty się przenikają na krawędzi</text>
+
+          <text x="30" y="216" fill="#6e93be">składowe oświetlenia</text>
+          <text x="180" y="216" fill="#ecebe4">rozbicie na odbicia i rozproszenie</text>
+          <text x="420" y="216" fill="#7fc47f">praktycznie nie zawodzi — suma jest ścisła</text>
+        </g>
+        <line x1="24" y1="230" x2="736" y2="230" stroke="#3a424d"/>
+        <text x="30" y="246" font-family="IBM Plex Mono" font-size="9" fill="#8b909b">każdy z nich niesie jedną wartość na piksel — i stąd bierze się każda z kolumn po prawej</text>
+      </svg>
+      <div class="diagram-caption">Wszystkie kanały poza ostatnim mają tę samą wadę: opisują piksel tak, jakby zawierał jedną rzecz. Ostatni jest wyjątkiem, bo rozkłada wartość na składniki, których suma jest równa całości.</div>
+    </div>
+
+    <p>Wynika stąd praktyczna hierarchia, którą warto stosować. <span class="term-cyan">Rozbicie na składowe oświetlenia jest zawsze bezpieczne</span> i daje w compie ogromną swobodę bez żadnego ryzyka — bo ich suma odtwarza obraz dokładnie. Pozostałe kanały są przybliżeniami i działają dobrze wszędzie poza krawędziami, przezroczystościami i przenikaniem.</p>
+
+    <p>Stąd też bierze się reguła, która brzmi banalnie, a rozstrzyga większość sporów o to, co gdzie robić: <strong>jeśli element ma dużo krawędzi na tle o innej odległości — włosy, liście, siatka, dym — to głębię i rozmycie ruchu robi się w rendererze</strong>. Jeśli jest zwarty i wyraźnie oddzielony od tła, comp poradzi sobie i będzie tańszy.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Druga oś · koszt i odwracalność</div>
+    <h2>Kiedy oba są możliwe</h2>
+
+    <p>Kryterium z pierwszej sekcji rozstrzyga, co jest <em>możliwe</em>. Zostaje spora grupa przypadków, w których możliwe jest jedno i drugie — i tam decyduje druga oś, o której warto myśleć osobno.</p>
+
+    <p><strong>Render jest ścisły i zamrożony.</strong> Liczy zjawisko z pełnej sceny, więc wynik jest poprawny na krawędziach, w przezroczystościach i w przenikaniu. Kosztuje jednak czas maszyny i — co ważniejsze — czas człowieka: zmiana o dziesięć procent wymaga policzenia wszystkiego od nowa.</p>
+
+    <p><strong>Comp jest przybliżony i żywy.</strong> Działa na tym, co zostało, więc na krawędziach zgaduje. Za to zmiana jest natychmiastowa, a reżyser oglądający wynik może poprosić o inny — i dostanie go w tym samym posiedzeniu, a nie następnego dnia.</p>
+
+    <p>Praktyka pokazuje, że <span class="term-violet">druga oś przeważa częściej, niż wypada przyznać</span>. Element, który przeszedł osiem rund poprawek w compie, jest zwykle bliżej celu niż element policzony raz, dokładnie, i obejrzany dwa razy. Nie dlatego, że przybliżenie jest lepsze od ścisłości — dlatego, że liczba obejrzeń jest tym, co naprawdę poprawia obraz.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Dwie osie decyzji</span><span>możliwość i odwracalność</span></div>
+      <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Wykres dwóch osi: czy dane przetrwały spłaszczenie oraz jak kosztowna jest poprawka.">
+        <line x1="90" y1="210" x2="700" y2="210" stroke="#8b909b" stroke-width="1.2"/>
+        <line x1="90" y1="30" x2="90" y2="210" stroke="#8b909b" stroke-width="1.2"/>
+        <text x="395" y="234" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">← dane stracone przy spłaszczeniu · dane zachowane →</text>
+        <text x="34" y="120" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" transform="rotate(-90 34 120)" text-anchor="middle">poprawka droga → tania</text>
+
+        <rect x="90" y="30" width="305" height="90" fill="#201318" fill-opacity="0.6"/>
+        <rect x="395" y="120" width="305" height="90" fill="#132018" fill-opacity="0.6"/>
+        <text x="242" y="52" font-family="IBM Plex Mono" font-size="10" fill="#d8695f" text-anchor="middle">RENDER — nie ma wyboru</text>
+        <text x="547" y="202" font-family="IBM Plex Mono" font-size="10" fill="#7fc47f" text-anchor="middle">COMP — oczywisty wybór</text>
+
+        <g font-family="IBM Plex Sans" font-size="11" fill="#ecebe4">
+          <text x="150" y="82">głębia na włosach</text>
+          <text x="150" y="102">rozmycie obrotu</text>
+          <text x="480" y="150">flara i ghosty</text>
+          <text x="480" y="170">ziarno</text>
+          <text x="620" y="150">winietowanie</text>
+          <text x="620" y="170">aberracja chrom.</text>
+        </g>
+        <g font-family="IBM Plex Sans" font-size="11" fill="#e8a33d">
+          <text x="420" y="82">głębia zwartego elementu</text>
+          <text x="150" y="170">halacja przy przepaleniu</text>
+        </g>
+        <text x="395" y="128" font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="middle">strefa, w której decyduje druga oś</text>
+      </svg>
+      <div class="diagram-caption">Lewy górny róg i prawy dolny rozstrzygają się same. Ciekawe są dwa pozostałe — i tam wybór jest decyzją produkcyjną, nie optyczną.</div>
+    </div>
+
+    <p>Warto przy tym pamiętać o rzeczy, która zwykle przesądza sprawę w praktyce: <strong>decyzję można odłożyć</strong>. Wyrenderowanie kanałów pomocniczych kosztuje niewiele i nie zobowiązuje do niczego. Element z zapisaną głębią, wektorami ruchu i składowymi oświetlenia daje się zrobić w compie <em>albo</em> dorenderować później, jeśli comp zawiedzie — a element bez nich zamyka drugą drogę.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Trzy pomyłki · jak wyglądają na obrazie</div>
+    <h2>Objawy złego rozstrzygnięcia</h2>
+
+    <p>Wybór po złej stronie granicy nie daje komunikatu o błędzie. Daje obraz, który wygląda prawie dobrze — i warto znać trzy objawy, po których poznaje się, że przyczyna leży tutaj, a nie w ustawieniach.</p>
+
+    <p><strong>Obwódka wokół nieostrego elementu.</strong> Rozmycie z mapy głębi rozmywa piksele, ale nie rozmywa kształtu maski — więc na granicy elementu zostaje wąski pasek o ostrej krawędzi albo, przy odwrotnym błędzie, ciemna obwódka z tła. Objaw jest tym wyraźniejszy, im większy kontrast między elementem a tłem, i znika całkowicie przy głębi renderowanej.</p>
+
+    <p><strong>Przedmiot, który nie odsłania tego, co za nim.</strong> Rozmycie ruchu z wektorów przesuwa piksele, których nie ma czym zastąpić — więc za szybko poruszającym się przedmiotem zostaje ślad w kolorze przedmiotu zamiast tła. W rendererze tło jest widoczne, bo w połowie czasu otwarcia przedmiotu tam nie było.</p>
+
+    <p><strong>Flara, która nie reaguje na scenę.</strong> Flara zrobiona w rendererze albo doklejona jako gotowy obrazek trzyma się kamery, a nie źródła — więc przy ruchu przesuwa się nie tak, jak powinna, a przy zmianie jasności źródła nie zmienia się wcale. Objaw jest odwrotny do dwóch poprzednich: tu render jest błędem, a comp poprawnością.</p>
+
+    <p>Wszystkie trzy mają wspólną cechę, którą warto nazwać, bo pozwala je szybko rozpoznać: <span class="term-amber">psują się przy ruchu, nie na zatrzymanej klatce</span>. Element oceniony na jednej klatce potrafi wyglądać bez zarzutu i rozsypać się w odtworzeniu — i dlatego rozstrzygnięcia z tego rozdziału podejmuje się przed renderem, a nie po obejrzeniu pierwszego wyniku.</p>
+  </div>
+
+  <div class="panel practice">
+    <div class="panel-label">Z praktyki</div>
+    <p><strong>Zapytaj o dane, nie o wygodę.</strong> „Zrobimy to w compie” jest odpowiedzią na pytanie o harmonogram, a nie o obraz. Właściwe pytanie brzmi: czy w płaskim obrazie została informacja, której to zjawisko potrzebuje. Jeśli nie została, comp da wynik, który da się poprawiać w nieskończoność i nigdy nie będzie poprawny.</p>
+    <p><strong>Wyrenderuj składowe oświetlenia zawsze.</strong> Kosztują niewiele, a dają w compie możliwość zmiany siły odbić i rozproszenia bez powtarzania rendera. Jest to jedyny kanał, przy którym nie ma haczyka.</p>
+    <p><strong>Sprawdź krawędzie, nie środek.</strong> Element rozmyty z mapy głębi wygląda dobrze wszędzie poza obwódką — a obwódka jest tym, na co oko patrzy w pierwszej kolejności. Test zajmuje sekundę: powiększ krawędź na tle o innej odległości.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>kanał pomocniczy</dt>
+      <dd>Dodatkowa warstwa zapisana obok obrazu, niosąca informację o scenie: odległość, ruch, nachylenie, przynależność.</dd>
+      <dt>mapa głębi</dt>
+      <dd>Kanał z jedną odległością na piksel. Podstawa rozmycia w compie i źródło jego ograniczeń.</dd>
+      <dt>składowe oświetlenia</dt>
+      <dd>Rozbicie obrazu na wkłady poszczególnych zjawisk, których suma odtwarza całość dokładnie.</dd>
+      <dt>przenikanie planów</dt>
+      <dd>Sytuacja, w której jeden piksel obejmuje przedmioty o różnych odległościach. Granica użyteczności kanałów pomocniczych.</dd>
+      <dt>krycie</dt>
+      <dd>Ułamek piksela zajęty przez przedmiot. Na krawędziach mniejszy od jedności — i stąd większość kłopotów tego rozdziału.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Zostało pytanie o samą scenę: skąd wiadomo, gdzie stała kamera i jak wyglądała przestrzeń, którą sfilmowała. <a href="rozdzial-35-geometria-plateu.html">Następny rozdział</a> pokazuje, że plate niesie na to więcej dowodów, niż się wydaje — i że większość z nich to zjawiska optyczne z pierwszych części tej książki, czytane wstecz.</p>
+  </div>
 
   <div class="deeper">
     <div class="deeper-label">Idź głębiej</div>
@@ -56,8 +299,121 @@ window.SKY3D_MESSAGES = {
       <a class="nav-next" href="rozdzial-35-geometria-plateu.html">Następny →</a>
   </div>
 
+<template id="adv-krawedz-dof">
+  <h3>Co dokładnie psuje się na krawędzi przy rozmyciu z mapy głębi</h3>
+  <p>Rozmycie z mapy głębi zawodzi zawsze w tym samym miejscu i z tego samego powodu. Warto ten mechanizm zobaczyć krok po kroku, bo jego zrozumienie od razu podpowiada, kiedy wolno go użyć.</p>
+  <p><strong>Krok pierwszy: piksel krawędziowy niesie mieszankę.</strong> Na granicy gałęzi i nieba piksel ma wartość będącą średnią ważoną obu — powiedzmy w 40 procentach gałąź, w 60 niebo. Jest to prawidłowy, dokładny wynik renderowania.</p>
+  <p><strong>Krok drugi: mapa głębi musi wybrać jedną liczbę.</strong> Nie ma czegoś takiego jak „odległość 40 procent cztery metry, 60 procent nieskończoność”. Kanał głębi zapisuje albo cztery metry, albo nieskończoność — zwykle to, co trafił promień środkowy. Już tutaj informacja przestaje być zgodna z barwą tego piksela.</p>
+  <p><strong>Krok trzeci: rozmycie stosuje jeden promień do całego piksela.</strong> Jeśli mapa wybrała cztery metry, piksel dostaje rozmycie gałęzi — czyli sześćdziesiąt procent nieba zostaje rozmazane tak, jakby leżało na gałęzi. Jeśli wybrała nieskończoność, czterdzieści procent gałęzi zostaje rozmazane po niebie.</p>
+  <p>Objaw zależy od tego, która strona wygrała, i dlatego bywa mylący: raz jest to ostra obwódka wokół rozmytego elementu, raz ciemny albo jasny halo. Obie postacie mają jedną przyczynę.</p>
+  <p><strong>Czego to nie psuje.</strong> W obszarach jednorodnych — środek gałęzi, otwarte niebo — mapa głębi jest dokładna i rozmycie wychodzi poprawnie. Dlatego reguła praktyczna brzmi: <strong>błąd jest proporcjonalny do długości krawędzi w kadrze</strong>. Zwarty przedmiot na tle o zbliżonej odległości ma ich mało i comp da wynik nie do odróżnienia. Włosy, liście albo siatka mają ich tysiące i wynik będzie zły w każdym miejscu naraz.</p>
+  <p>Częściowym ratunkiem jest zapisanie krycia osobno i rozmywanie elementu razem z nim, przed złożeniem z tłem. Nie usuwa to problemu tam, gdzie przedmiot przecina sam siebie na różnych odległościach, ale usuwa go na granicy z tłem — czyli w większości ujęć wystarczy. Szczegóły w <a href="../dodatki/dodatek-u-z-depth-w-praktyce.html">Dodatku U</a>.</p>
+</template>
+
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal-box">
+    <button class="modal-close" aria-label="Zamknij">&times;</button>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
 </div>
 
 <script src="../assets/interactive.js"></script>
+<script>
+(function () {
+  var pas = document.getElementById('rcPrzyciski');
+  if (!pas) return;
+
+  var DANE = {
+    dof: {
+      potrzeba: ['odległość każdej rzeczy w pikselu', 'krycie na krawędziach', 'co leży za elementem'],
+      werdykt: 'WARUNKOWO',
+      kolor: '#e8a33d',
+      czemu: ['Mapa głębi daje jedną odległość na piksel.',
+              'Zwarty element — comp wystarczy.',
+              'Włosy, liście, siatka, dym — render.'],
+      uwaga: 'Granica biegnie przez długość krawędzi w kadrze, nie przez wielkość rozmycia.'
+    },
+    motion: {
+      potrzeba: ['tor ruchu w trakcie otwarcia', 'co odsłania się za przedmiotem', 'kształt toru: prosta czy łuk'],
+      werdykt: 'WARUNKOWO',
+      kolor: '#e8a33d',
+      czemu: ['Wektor na piksel opisuje prostą, nie łuk.',
+              'Ruch prostoliniowy — comp.',
+              'Obrót i odsłanianie — render.'],
+      uwaga: 'Granica: gdy łuk odbiega od cięciwy o więcej niż piksel (Dodatek R).'
+    },
+    flara: {
+      potrzeba: ['jasność obrazu po zsumowaniu', 'pozycja źródła w kadrze'],
+      werdykt: 'COMP',
+      kolor: '#7fc47f',
+      czemu: ['Działa na gotowym obrazie, nie na scenie.',
+              'Renderer i tak nie modeluje wnętrza tubusa.',
+              'W compie daje się poprawiać bez liczenia od nowa.'],
+      uwaga: 'Jedyne zjawisko z tej książki, które potrzebuje mniej, niż piksel niesie.'
+    },
+    ca: {
+      potrzeba: ['odległość punktu od środka kadru', 'jasność w trzech kanałach'],
+      werdykt: 'COMP',
+      kolor: '#7fc47f',
+      czemu: ['Obie potrzebne rzeczy są w płaskim obrazie.',
+              'Rozsunięcie kanałów rośnie z promieniem.',
+              'Zrobione w rendererze zamraża siłę efektu.'],
+      uwaga: 'Chodzi o odmianę poprzeczną; podłużna wymaga głębi i jest przypadkiem DOF.'
+    },
+    winieta: {
+      potrzeba: ['pozycja piksela w kadrze'],
+      werdykt: 'COMP',
+      kolor: '#7fc47f',
+      czemu: ['Zależy wyłącznie od położenia w kadrze.',
+              "Profil zmierzony z plate'u wchodzi wprost.",
+              'Najtańsze zjawisko z całej listy.'],
+      uwaga: 'Profil, nie jedna liczba — trzy promienie i każda używana przysłona (Dodatek P).'
+    },
+    ziarno: {
+      potrzeba: ['jasność piksela', 'na którym etapie łańcucha powstaje'],
+      werdykt: 'COMP',
+      kolor: '#7fc47f',
+      czemu: ['Powstaje w nośniku, czyli po całej optyce.',
+              'Zależy tylko od tonu, a ten jest w obrazie.',
+              'W rendererze nie ma go czym wywołać.'],
+      uwaga: 'Warunek: nakładane na końcu i nie rozmywane niczym po sobie.'
+    }
+  };
+
+  var P = [document.getElementById('rcP1'), document.getElementById('rcP2'), document.getElementById('rcP3')];
+  var C = [document.getElementById('rcCzemu1'), document.getElementById('rcCzemu2'), document.getElementById('rcCzemu3')];
+  var werdykt = document.getElementById('rcWerdykt');
+  var ramka = document.getElementById('rcRamka');
+  var uwaga2 = document.getElementById('rcUwaga2');
+  var przyciski = pas.querySelectorAll('[data-zj]');
+
+  function pokaz(klucz, btn) {
+    var d = DANE[klucz];
+    for (var i = 0; i < 3; i++) {
+      P[i].textContent = d.potrzeba[i] ? '· ' + d.potrzeba[i] : '';
+      C[i].textContent = d.czemu[i] || '';
+      C[i].setAttribute('fill', '#ecebe4');
+    }
+    werdykt.textContent = d.werdykt;
+    werdykt.setAttribute('fill', d.kolor);
+    ramka.setAttribute('stroke', d.kolor);
+    ramka.setAttribute('fill', d.kolor === '#7fc47f' ? '#132018' : '#201a12');
+    uwaga2.textContent = d.uwaga;
+    for (var j = 0; j < przyciski.length; j++) {
+      przyciski[j].classList.toggle('is-active', przyciski[j] === btn);
+    }
+  }
+
+  for (var k = 0; k < przyciski.length; k++) {
+    (function (b) {
+      b.addEventListener('click', function () { pokaz(b.dataset.zj, b); });
+    })(przyciski[k]);
+  }
+  pokaz('dof', przyciski[0]);
+})();
+</script>
+
 </body>
 </html>
