@@ -41,7 +41,87 @@ window.SKY3D_MESSAGES = {
   <h1>Filtry: dyfuzja, ND, IRND, polaryzator</h1>
   <p class="subtitle">Co każdy z nich robi z obrazem w kategoriach z tej książki, dlaczego cyfra potrzebuje IRND, i jak dyfuzja podnosi czernie dokładnie tam, gdzie robi to stare szkło.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">Co tu jest</div>
+    <ul>
+      <li><strong>Cztery filtry</strong> opisane w kategoriach z tej książki, a nie w kategoriach katalogu.</li>
+      <li><strong>Dlaczego cyfra potrzebuje IRND</strong>, a taśma nie potrzebowała.</li>
+      <li><strong>Który filtr da się odtworzyć w compie, a który nie</strong> — i dlaczego akurat ten jeden nie.</li>
+      <li><strong>Dyfuzja jako sterowany glare</strong>: to samo zjawisko, co w <a href="../rozdzialy/rozdzial-22-veiling-glare.html">Rozdziale 22</a>, tylko wpuszczone celowo.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Wspólny mianownik · każdy filtr to dwie powierzchnie</div>
+    <h2>Czego wszystkie mają po równo</h2>
+
+    <p>Zanim przejdziemy do różnic, warto zauważyć, co każdy filtr robi niezależnie od swojego przeznaczenia. <strong>Dokłada dwie płaskie, równoległe powierzchnie ustawione prostopadle do osi optycznej</strong> — czyli w konfiguracji najgorszej z możliwych z punktu widzenia <a href="../rozdzialy/rozdzial-03-fresnel-kazda-powierzchnia-swieci.html">Rozdziału 3</a>.</p>
+
+    <p>Najgorszej, bo odbicie od powierzchni prostopadłej wraca dokładnie tam, skąd przyszło. Powstaje wnęka między filtrem a przednią soczewką, w której światło może odbić się kilka razy, zanim trafi na matrycę. Dobry filtr wielowarstwowy dokłada z tego tytułu rzędu dwóch dziesiątych procenta; filtr niepowlekany — kilka procent, czyli <span class="term-violet">tyle, ile cała reszta obiektywu</span>.</p>
+
+    <p>Wniosek praktyczny jest jeden i dotyczy wszystkich czterech rodzajów: <strong>powłoka filtra jest ważniejsza od jego funkcji</strong>. Tani filtr polaryzacyjny psuje więcej, niż naprawia, i to samo dotyczy taniego ND.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">ND i IRND · dlaczego cyfra potrzebuje więcej</div>
+    <h2>Filtry szare i ich pułapka</h2>
+
+    <p>Filtr szary odbiera światło, nie zmieniając niczego innego — po to, żeby móc kręcić przy pełnym otworze w słońcu. Siłę podaje się jako gęstość optyczną, czyli logarytm dziesiętny osłabienia.</p>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead>
+          <tr><th>Oznaczenie</th><th class="num">Osłabienie</th><th class="num">Działki</th><th>Typowe użycie</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>ND 0.3</td><td class="num">2×</td><td class="num">1</td><td>korekta drobna</td></tr>
+          <tr><td>ND 0.6</td><td class="num">4×</td><td class="num">2</td><td>pochmurno, pełny otwór</td></tr>
+          <tr><td>ND 0.9</td><td class="num">8×</td><td class="num">3</td><td>słońce w cieniu</td></tr>
+          <tr><td>ND 1.2</td><td class="num">16×</td><td class="num">4</td><td>pełne słońce</td></tr>
+          <tr><td>ND 1.8</td><td class="num">64×</td><td class="num">6</td><td>śnieg, plaża, T1.3</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Gęstość to log₁₀ osłabienia: 0.3 daje dwukrotność, bo 10<sup>0,3</sup> ≈ 2. Każde 0.3 to jedna działka.</p>
+
+    <p>Pułapka nazywa się <strong>zanieczyszczeniem podczerwienią</strong> i jest problemem wyłącznie cyfrowym. Materiały używane na filtry ND osłabiają światło widzialne mocniej niż podczerwień — czyli nie są tak neutralne, jak sugeruje nazwa. Przy słabym filtrze nie ma to znaczenia, ale przy sześciu działkach osłabienia proporcja się odwraca: podczerwieni zostaje relatywnie <em>dużo więcej</em> niż światła widzialnego.</p>
+
+    <p>Matryca ma resztkową czułość na podczerwień, więc rejestruje ten nadmiar. Objaw jest charakterystyczny i łatwy do rozpoznania: <span class="term-raster">czernie i ciemne tkaniny ciągną w magentę albo czerwień</span>, podczas gdy reszta kadru wygląda poprawnie. Najmocniej widać to na czarnych syntetykach, bo one odbijają w podczerwieni znacznie więcej niż w świetle widzialnym.</p>
+
+    <p>Rozwiązaniem jest <strong>IRND</strong> — filtr szary, który osłabia też podczerwień, utrzymując proporcję. Taśma tego problemu nie miała, bo jej czułość kończyła się tam, gdzie kończy się widzialne; matryca krzemowa widzi dalej i trzeba jej to odciąć.</p>
+
+    <p>Dla pracy z materiałem wniosek jest praktyczny: <strong>przebarwienie czerni w stronę magenty przy mocnym ND to nie jest wada balansu bieli</strong>. Globalna korekcja zepsuje resztę kadru, bo problem dotyczy tylko ciemnych partii i tylko niektórych materiałów. Poprawia się to maską opartą na luminancji, nie krzywą globalną.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Polaryzator · jedyny filtr nie do odtworzenia</div>
+    <h2>Dlaczego akurat tego nie da się dodać w compie</h2>
+
+    <p>Filtr polaryzacyjny przepuszcza tylko jeden kierunek drgania fali. Działa dzięki zjawisku z <a href="dodatek-b-wzory-fresnela.html">Dodatku B</a>: odbicie od powierzchni niemetalicznej pod kątem bliskim Brewstera jest silnie spolaryzowane, więc filtr ustawiony w poprzek tego kierunku usuwa je niemal w całości.</p>
+
+    <p>Skutki są trzy i wszystkie bierze się za coś innego, niż są. <strong>Znikają odblaski</strong> z szyb, wody i mokrych powierzchni. <strong>Niebo ciemnieje</strong>, bo światło rozproszone w atmosferze też jest częściowo spolaryzowane — najmocniej pod kątem prostym do słońca. <strong>Barwy nasycają się</strong>, ale nie dlatego, że filtr coś dodaje — dlatego, że usunął rozjaśniającą je warstwę odbić.</p>
+
+    <p>Cena to półtorej do dwóch działek światła, i to niezależnie od ustawienia, bo połowa światła niespolaryzowanego zostaje zatrzymana zawsze.</p>
+
+    <p>Najważniejsza jest jednak własność, przez którą polaryzator trafia do tej książki. <span class="term-violet">Jest jedynym z czterech filtrów, którego efektu nie da się odtworzyć w postprodukcji</span> — i nie jest to kwestia trudności, tylko braku informacji. Filtr wybiera światło według stanu polaryzacji, a obraz zarejestrowany tej informacji nie zawiera. Kiedy odblask i tło mają tę samą jasność i barwę, a różnią się wyłącznie polaryzacją, żadna operacja na pikselach ich nie rozróżni.</p>
+
+    <p>Konsekwencja dla planu jest oczywista i warto ją mieć powiedzianą wprost: <strong>decyzja o polaryzatorze jest nieodwracalna w obie strony</strong>. Nie da się go dodać później ani usunąć jego działania. Wszystkie pozostałe rzeczy z tej książki — glare, dyfuzja, winieta, dystorsja — są w jakimś stopniu odwracalne albo dodawalne. Ta jedna nie.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Dyfuzja · glare wpuszczony celowo</div>
+    <h2>Filtr, który psuje obraz na życzenie</h2>
+
+    <p>Filtr dyfuzyjny rozprasza niewielką część przechodzącego światła. Robi więc dokładnie to, co <a href="../rozdzialy/rozdzial-22-veiling-glare.html">Rozdział 22</a> opisuje jako wadę — z tą różnicą, że w kontrolowanej ilości i z kontrolowanym rozkładem.</p>
+
+    <p>Skutek widać w dwóch miejscach naraz. Wokół jasnych źródeł pojawia się <strong>poświata</strong>, bo rozproszone światło rozlewa się z miejsc, gdzie jest go najwięcej. W całym kadrze <strong>podnosi się czerń</strong>, bo część rozproszenia trafia wszędzie. Proporcja między jednym a drugim zależy od konstrukcji filtra i jest tym, co odróżnia rodziny dyfuzji od siebie.</p>
+
+    <p>Dlaczego ktokolwiek miałby chcieć obniżyć kontrast celowo? Z dwóch powodów, obu praktycznych. Po pierwsze, <span class="term-cyan">cyfrowa matryca ma większy kontrast niż potrzeba</span> i obraz bywa przez to ostry w sposób, który czyta się jako surowy. Po drugie, poświata wokół świateł jest cechą, którą widz kojarzy z filmem — bo taśma miała ją z halacji, o czym w <a href="../rozdzialy/rozdzial-28-halacja.html">Rozdziale 28</a>.</p>
+
+    <p>Z punktu widzenia tej książki dyfuzja jest więc <strong>tym samym zjawiskiem, co stare szkło</strong>, tylko wywołanym świadomie. Obiektyw z lat sześćdziesiątych podnosił czernie, bo miał jedną warstwę fluorku magnezu; filtr dyfuzyjny podnosi je, bo tak zaprojektowano jego powierzchnię. Obraz wychodzi podobny i mechanizm jest ten sam.</p>
+
+    <p>Dla compu ma to konkretne przełożenie. Dyfuzję odtwarza się jak glare — dodaniem światła — ale z <strong>dwiema składowymi</strong>: stałą na całym kadrze i lokalną wokół jasnych źródeł, uzyskaną przez rozmycie maski świateł i dodanie jej z małą wagą. Odtworzenie samą stałą daje wynik zbyt równomierny; odtworzenie samą poświatą zostawia czernie zbyt głębokie. Przepis, razem z kolejnością warstw, jest w <a href="dodatek-x-odtwarzanie-flary.html">Dodatku X</a>.</p>
+  </div>
 
   <div class="site-nav">
     <a href="../index.html">← Spis treści</a>

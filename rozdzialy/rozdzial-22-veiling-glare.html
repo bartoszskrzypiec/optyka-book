@@ -43,7 +43,247 @@ window.SKY3D_MESSAGES = {
   <h1>Veiling glare: dlaczego czernie się podnoszą</h1>
   <p class="subtitle">Najczęstsza flara nie ma kształtu. Jest równomierną mgiełką, która podnosi czarny i zjada kontrast — i to ona, bardziej niż ghosty, odróżnia szkło stare od nowego.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li><strong>Najczęstsza flara nie ma kształtu.</strong> Ghosty widać i da się je zamaskować; ta jest równomierną mgiełką rozsianą po całym kadrze, więc nie da się jej ani wskazać, ani odjąć.</li>
+      <li>Objaw jest jeden i mierzalny: <span class="term-amber">podniesiony czarny</span>. Jeden procent zabłąkanego światła zamienia kontrast tysiąc do jednego w dziewięćdziesiąt do jednego — i to jest cała różnica między szkłem starym a nowym.</li>
+      <li>W rendererze jej <strong>nie ma wcale</strong>, bo renderer nie ma ani powierzchni, ani tubusa. Dołożenie jej jest najtańszą i najskuteczniejszą pojedynczą poprawką, jaką można zrobić, żeby CG usiadło w materiale.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Podział · dwa rodzaje zabłąkanego światła</div>
+    <h2>Flara, która nie ma kształtu</h2>
+
+    <p>W <a href="rozdzial-03-fresnel-kazda-powierzchnia-swieci.html">Rozdziale 3</a> policzyliśmy, ile światła zawraca na każdej powierzchni. Nie policzyliśmy, co się z nim potem dzieje — a dzieje się z nim dwie różne rzeczy, o zupełnie różnych skutkach.</p>
+
+    <p>Część zawraca w sposób <strong>uporządkowany</strong>: odbija się dokładnie dwa razy między dwiema gładkimi powierzchniami i trafia na matrycę jako rozpoznawalna plama. To jest ghost i ma własny <a href="rozdzial-23-ghosting.html">Rozdział 23</a>. Reszta rozprasza się <strong>bezładnie</strong> — na krawędziach soczewek, na ściankach tubusa, na mikroskopijnych nierównościach powłok, na kurzu — i dociera na matrycę ze wszystkich kierunków naraz.</p>
+
+    <p>Ta druga część nazywa się po angielsku <em>veiling glare</em>, czyli dosłownie „zasłaniającym blaskiem”, i nie ma dobrej polskiej nazwy. Nazwa jest jednak trafna: zachowuje się dokładnie jak cienka biała zasłona rozpięta przed obrazem.</p>
+
+    <p>Proporcje między jednym a drugim bywają zaskakujące. Ghosty, mimo że rzucają się w oczy, niosą zwykle <strong>ułamek</strong> całego zabłąkanego światła — bo tylko nieliczne z setek możliwych par powierzchni trafiają geometrią w matrycę. Cała reszta rozprasza się bezładnie. Widzialność i ilość idą tu więc w przeciwne strony: widać to, czego jest mało, a nie widać tego, czego jest dużo.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Dwa rodzaje zabłąkanego światła</span><span>uporządkowane kontra bezładne</span></div>
+      <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Po lewej ghost: dwa odbicia między gładkimi powierzchniami dają zwartą plamę. Po prawej rozproszenie na krawędziach i ściankach daje równomierną mgiełkę na całym kadrze.">
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b" text-anchor="middle">
+          <text x="190" y="22">GHOST · dwa odbicia, jedna plama</text>
+          <text x="570" y="22">GLARE · rozproszenie, cały kadr</text>
+        </g>
+
+        <line x1="40" y1="128" x2="340" y2="128" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 6"/>
+        <path d="M 120 78 Q 140 128 120 178 Q 100 128 120 78 Z" fill="#4fc3c0" fill-opacity="0.14" stroke="#4fc3c0" stroke-width="1.3"/>
+        <path d="M 220 78 Q 240 128 220 178 Q 200 128 220 78 Z" fill="#4fc3c0" fill-opacity="0.14" stroke="#4fc3c0" stroke-width="1.3"/>
+        <line x1="320" y1="76" x2="320" y2="180" stroke="#6e93be" stroke-width="2.5"/>
+        <g stroke="#e8a33d" stroke-width="1.6" fill="none">
+          <path d="M 44 92 L 232 116"/>
+          <path d="M 232 116 L 112 142"/>
+          <path d="M 112 142 L 320 158"/>
+        </g>
+        <circle cx="320" cy="158" r="6" fill="#e8a33d" fill-opacity="0.7"/>
+        <text x="190" y="212" font-family="IBM Plex Mono" font-size="10" fill="#e8a33d" text-anchor="middle">tor określony · da się wskazać</text>
+        <text x="190" y="230" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">i zamaskować</text>
+
+        <line x1="380" y1="16" x2="380" y2="240" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 5"/>
+
+        <line x1="420" y1="128" x2="720" y2="128" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 6"/>
+        <path d="M 500 78 Q 520 128 500 178 Q 480 128 500 78 Z" fill="#4fc3c0" fill-opacity="0.14" stroke="#4fc3c0" stroke-width="1.3"/>
+        <rect x="470" y="66" width="240" height="8" fill="#8b909b" fill-opacity="0.35"/>
+        <rect x="470" y="182" width="240" height="8" fill="#8b909b" fill-opacity="0.35"/>
+        <text x="590" y="62" font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="middle">ścianka tubusa</text>
+        <line x1="700" y1="76" x2="700" y2="180" stroke="#6e93be" stroke-width="2.5"/>
+        <rect x="694" y="76" width="12" height="104" fill="#e8a33d" fill-opacity="0.22"/>
+        <g stroke="#e8a33d" stroke-width="1" fill="none" opacity="0.55">
+          <path d="M 424 92 L 500 104 L 560 74 L 700 96"/>
+          <path d="M 424 92 L 500 118 L 600 186 L 700 140"/>
+          <path d="M 424 92 L 486 128 L 560 186 L 700 168"/>
+          <path d="M 424 92 L 512 96 L 640 70 L 700 112"/>
+        </g>
+        <text x="570" y="212" font-family="IBM Plex Mono" font-size="10" fill="#e8a33d" text-anchor="middle">torów tysiące · nie da się wskazać</text>
+        <text x="570" y="230" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">ani odjąć</text>
+      </svg>
+      <div class="diagram-caption">Ghosta widać i można go zakryć. Glare jest wszędzie po trochu — i dlatego jest problemem gorszym, mimo że mniej widocznym.</div>
+    </div>
+
+    <p>Różnica praktyczna jest zasadnicza. Ghost jest <em>lokalny</em>: zajmuje kilka procent kadru i w razie potrzeby da się go wymaskować. Glare jest <em>globalny</em>: dokłada się do każdego piksela naraz, a ponieważ nie wiadomo, ile go jest w którym miejscu, nie da się go odwrócić. <span class="term-violet">Można go tylko nie wpuścić</span> — i na tym polega cała walka konstruktorów, o której dalej.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Miara · jedna liczba, która robi całą różnicę</div>
+    <h2>Ile kosztuje jeden procent</h2>
+
+    <p>Glare mierzy się prosto: fotografuje się czarny obiekt w jasnym otoczeniu i sprawdza, ile światła zarejestrowano tam, gdzie powinno być zero. Wynik podaje się jako ułamek jasności najjaśniejszego miejsca kadru.</p>
+
+    <p>Liczby wychodzą pozornie znikome — jeden procent, pół procenta — i dlatego bywają lekceważone. Warto raz przeliczyć, co robią z kontrastem, bo skutek jest nieproporcjonalny do przyczyny.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Glare a kontrast</span><span>scena o kontraście 1000:1</span></div>
+      <div class="diagram-controls">
+        <label for="glareIlosc">Zabłąkane światło</label>
+        <input id="glareIlosc" type="range" min="0" max="50" step="1" value="10">
+        <span class="value-readout" id="glareOdczyt">1,0%</span>
+      </div>
+      <svg viewBox="0 0 760 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Pasek od czerni do bieli z podnoszącym się poziomem czerni w miarę wzrostu zabłąkanego światła, oraz odczyt wynikowego kontrastu.">
+        <text x="30" y="24" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">SCENA · kontrast 1000:1</text>
+        <defs>
+          <linearGradient id="gl1" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#000000"/><stop offset="100%" stop-color="#f2f0e8"/>
+          </linearGradient>
+        </defs>
+        <rect x="30" y="34" width="700" height="34" fill="url(#gl1)"/>
+
+        <text x="30" y="98" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">PO PRZEJŚCIU PRZEZ OBIEKTYW</text>
+        <rect id="glarePasek" x="30" y="108" width="700" height="34" fill="url(#gl1)"/>
+        <rect id="glareWoal" x="30" y="108" width="700" height="34" fill="#f2f0e8" fill-opacity="0.01"/>
+
+        <line x1="30" y1="164" x2="730" y2="164" stroke="#2a2f38" stroke-width="1"/>
+        <g font-family="IBM Plex Mono" font-size="11">
+          <text x="30" y="190" fill="#8b909b">kontrast wyjściowy</text>
+          <text x="300" y="190" fill="#4fc3c0" id="glareKontrast">92:1</text>
+          <text x="30" y="212" fill="#8b909b">czarny zarejestrowany jako</text>
+          <text x="300" y="212" fill="#9c82d8" id="glareCzarny">1,1% bieli</text>
+          <text x="30" y="234" fill="#8b909b">strata</text>
+          <text x="300" y="234" fill="#d8695f" id="glareStrata">3,4 działki kontrastu</text>
+        </g>
+      </svg>
+      <div class="diagram-caption" id="glarePodpis">Jeden procent zabłąkanego światła obcina kontrast dziesięciokrotnie. To nie jest przesada rysunku.</div>
+    </div>
+
+    <p>Wynik zaskakuje przy pierwszym spotkaniu i warto go zapamiętać: <strong>jeden procent glare'u obcina kontrast tysiąc do jednego mniej więcej dziesięciokrotnie</strong>. Powód jest arytmetyczny — glare dokłada się do jasności bezwzględnej, a czerń jest z definicji miejscem, gdzie jasności bezwzględnej prawie nie ma. Procent bieli to jedna dziesiąta procenta czerni razy dziesięć.</p>
+
+    <p>Stąd bierze się fakt, dla którego producenci walczą o ostatnie dziesiąte procenta odbicia, choć w bilansie energii są bez znaczenia. Przejście z powłoki wielowarstwowej dającej 0,2% na 0,1% zmienia przepuszczalność o niecały procent — i jednocześnie <span class="term-cyan">podwaja kontrast w cieniach</span>. Cała różnica między szkłem dobrym a bardzo dobrym siedzi w tej jednej wielkości.</p>
+
+    <p>Warto przy tym zauważyć, że glare nie jest wielkością stałą dla obiektywu. Zależy od tego, <strong>ile jasnego światła w ogóle wpada w układ</strong>, a więc od sceny. Ten sam obiektyw w równomiernie oświetlonym wnętrzu daje czernie głębokie, a skierowany pod słońce — szare. Dlatego dane producenta podaje się dla ustalonego układu testowego i dlatego nie da się ich przenieść wprost na plan.</p>
+
+    <p>Ma to bezpośrednie przełożenie na sposób pracy z materiałem. <span class="term-violet">Glare zmienia się w obrębie jednej sceny</span>, ujęcie po ujęciu, razem z tym, gdzie stoi kamera względem światła. Ustawienie jednej wartości dla całej sekwencji jest więc uproszczeniem — czasem dopuszczalnym, ale zawsze uproszczeniem, i warto sprawdzić, czy w tej konkretnej sekwencji uchodzi.</p>
+
+    <p>Jest jeszcze jeden powód, dla którego akurat ta wada jest tak istotna dla artysty CG, choć w rozmowach o obiektywach pada rzadziej niż flara czy bokeh. <strong>Dotyczy każdego ujęcia bez wyjątku.</strong> Ghosty pojawiają się, gdy w kadrze jest jasne źródło; kocie oko, gdy przysłona jest otwarta; smugi, gdy szkło jest anamorficzne. Podniesiona czerń jest w każdym kadrze nakręconym rzeczywistym obiektywem — i jej brak jest tym, co najczęściej zdradza render, zanim widz zdąży zauważyć cokolwiek innego.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Źródła · skąd bierze się rozproszenie</div>
+    <h2>Cztery miejsca, w których światło błądzi</h2>
+
+    <p>Warto wiedzieć, skąd glare pochodzi, bo lista tłumaczy zarówno różnice między obiektywami, jak i to, co pogarsza sytuację na planie.</p>
+
+    <p><strong>Powierzchnie soczewek.</strong> Nawet z najlepszą powłoką każda odbija resztkę, a przy dwudziestu powierzchniach resztki się sumują. To jest źródło podstawowe i jedyne, na które konstruktor ma pełny wpływ — liczbą granic i jakością powłok.</p>
+
+    <p><strong>Krawędzie soczewek.</strong> Szlifowany brzeg szkła jest matowy i rozprasza we wszystkie strony. Co gorsza, światło, które trafiło pod duży kąt, nie może wyjść ze szkła przez całkowite odbicie wewnętrzne z <a href="rozdzial-02-zalamanie-i-dyspersja.html">Rozdziału 2</a> — więc wędruje w soczewce jak w światłowodzie, aż dotrze do krawędzi. Dlatego krawędzie w dobrych obiektywach są czernione, i dlatego jest to jedna z pierwszych rzeczy, na których się oszczędza.</p>
+
+    <p><strong>Ścianki tubusa.</strong> Metal jest matowany i czerniony, a mimo to odbija kilka procent. Konstrukcje dobre mają dodatkowo <em>przesłony</em> — pierścienie zwężające światło w miejscach, gdzie wiązka użyteczna jest wąska, a zabłąkana szeroka. Kosztują grosze i widać je na przekroju jako karby.</p>
+
+    <p><strong>Wszystko, co dołożysz z przodu.</strong> Filtr to dwie nowe powierzchnie, i to powierzchnie płaskie, równoległe i ustawione prostopadle do osi — czyli w konfiguracji najgorszej z możliwych, bo odbicie wraca dokładnie tam, skąd przyszło. Filtr dyfuzyjny robi to <span class="term-cyan">celowo i w kontrolowany sposób</span>, o czym w <a href="../dodatki/dodatek-ab-filtry.html">Dodatku AB</a>.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Cztery drogi zabłąkania</span><span>przekrój tubusa</span></div>
+      <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Przekrój obiektywu z zaznaczonymi czterema źródłami rozproszenia: powierzchnie soczewek, krawędzie szkła, ścianki tubusa i filtr dołożony z przodu.">
+        <rect x="120" y="62" width="500" height="12" fill="#8b909b" fill-opacity="0.4"/>
+        <rect x="120" y="176" width="500" height="12" fill="#8b909b" fill-opacity="0.4"/>
+        <line x1="120" y1="125" x2="660" y2="125" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 6"/>
+
+        <rect x="96" y="70" width="8" height="110" fill="#9c82d8" fill-opacity="0.3" stroke="#9c82d8" stroke-width="1.2"/>
+        <text x="100" y="62" font-family="IBM Plex Mono" font-size="9" fill="#9c82d8" text-anchor="middle">filtr</text>
+
+        <path d="M 220 78 Q 246 125 220 172 Q 194 125 220 78 Z" fill="#4fc3c0" fill-opacity="0.15" stroke="#4fc3c0" stroke-width="1.3"/>
+        <path d="M 380 82 Q 404 125 380 168 Q 356 125 380 82 Z" fill="#4fc3c0" fill-opacity="0.15" stroke="#4fc3c0" stroke-width="1.3"/>
+        <path d="M 520 78 Q 546 125 520 172 Q 494 125 520 78 Z" fill="#4fc3c0" fill-opacity="0.15" stroke="#4fc3c0" stroke-width="1.3"/>
+        <line x1="640" y1="78" x2="640" y2="172" stroke="#6e93be" stroke-width="2.5"/>
+
+        <g stroke="#d8695f" stroke-width="2.4">
+          <line x1="216" y1="76" x2="224" y2="76"/><line x1="216" y1="174" x2="224" y2="174"/>
+          <line x1="376" y1="80" x2="384" y2="80"/><line x1="376" y1="170" x2="384" y2="170"/>
+          <line x1="516" y1="76" x2="524" y2="76"/><line x1="516" y1="174" x2="524" y2="174"/>
+        </g>
+
+        <g stroke="#e8a33d" stroke-width="1.1" fill="none" opacity="0.75">
+          <path d="M 60 96 L 100 108 L 96 118"/>
+          <path d="M 60 96 L 220 106 L 300 88 L 380 112 L 640 104"/>
+          <path d="M 60 96 L 220 174 L 340 186 L 520 172 L 640 148"/>
+          <path d="M 60 96 L 260 70 L 420 74 L 560 68 L 640 118"/>
+        </g>
+
+        <g font-family="IBM Plex Mono" font-size="9.5">
+          <text x="60" y="212" fill="#9c82d8">1 · filtr — dwie płaskie powierzchnie, odbicie wraca wprost</text>
+          <text x="60" y="228" fill="#4fc3c0">2 · powierzchnie soczewek — resztka po powłoce, ×20</text>
+          <text x="420" y="212" fill="#d8695f">3 · krawędzie szkła — matowe, rozpraszają</text>
+          <text x="420" y="228" fill="#8b909b">4 · ścianki tubusa — czernione, ale nie idealnie</text>
+        </g>
+      </svg>
+      <div class="diagram-caption">Tylko drugie źródło zależy od jakości optyki. Pozostałe trzy zależą od wykończenia — i dlatego dwa obiektywy o identycznym przekroju bywają różne.</div>
+    </div>
+
+    <p>Podział ten ma praktyczne znaczenie przy ocenie szkła. <strong>Rozproszenie na powierzchniach zależy od projektu i powłok</strong>, więc jest cechą modelu. Trzy pozostałe źródła zależą od wykończenia i stanu egzemplarza — a te bywają różne w dwóch sztukach z tej samej serii, co wraca do rozrzutu opisanego w <a href="rozdzial-21-rodziny-szkla-kinowego.html">Rozdziale 21</a>.</p>
+
+    <button class="advanced-btn" data-modal-target="adv-glare">Zaawansowane: dlaczego kaptur działa, a filtr UV szkodzi</button>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">W CG · najtańsza poprawka, jaką można zrobić</div>
+    <h2>Podniesienie czerni jako operacja</h2>
+
+    <p>Renderer nie ma glare'u, bo nie ma powierzchni, krawędzi ani tubusa. Promień albo trafia w geometrię, albo leci w tło — nie ma trzeciej możliwości, w której odbija się od czegoś, czego w scenie nie zamodelowano. <strong>Czernie w renderze są doskonałe</strong>, i to jest jedna z najłatwiej rozpoznawalnych cech obrazu syntetycznego.</p>
+
+    <p>Poprawka jest prosta i tania: dodać do obrazu stałą wartość, proporcjonalną do jasności sceny. Warto jednak zrobić to <em>jako dodawanie</em>, a nie jako podniesienie punktu czerni krzywą, bo różnica jest istotna. Glare fizycznie <span class="term-amber">dokłada światło</span>, więc jasne partie zmieniają się procentowo znikomo, a ciemne kilkukrotnie. Krzywa podnosząca czerń robi coś podobnego, ale nie identycznego — i przy porównaniu bok w bok widać, że render „siedzi płasko” zamiast się rozjaśnić.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Dodawanie kontra krzywa</span><span>dwie operacje, które wyglądają podobnie</span></div>
+      <svg viewBox="0 0 760 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Wykres wejście-wyjście: dodanie stałej przesuwa całą prostą w górę równolegle, natomiast podniesienie punktu czerni krzywą zmienia nachylenie i zbiega z powrotem w bieli.">
+        <line x1="90" y1="200" x2="410" y2="200" stroke="#8b909b" stroke-width="1.2"/>
+        <line x1="90" y1="40" x2="90" y2="200" stroke="#8b909b" stroke-width="1.2"/>
+        <text x="250" y="222" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">wejście</text>
+        <text x="60" y="46" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">wyjście</text>
+        <path d="M 90 200 L 410 40" fill="none" stroke="#5a6068" stroke-width="1.6" stroke-dasharray="5 4"/>
+        <path d="M 90 178 L 410 18" fill="none" stroke="#4fc3c0" stroke-width="2.4"/>
+        <text x="120" y="168" font-family="IBM Plex Mono" font-size="10" fill="#4fc3c0">dodanie stałej</text>
+        <text x="120" y="184" font-family="IBM Plex Mono" font-size="9" fill="#8b909b">równoległe przesunięcie</text>
+
+        <line x1="440" y1="200" x2="720" y2="200" stroke="#8b909b" stroke-width="1.2"/>
+        <line x1="440" y1="40" x2="440" y2="200" stroke="#8b909b" stroke-width="1.2"/>
+        <text x="580" y="222" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">wejście</text>
+        <path d="M 440 200 L 720 40" fill="none" stroke="#5a6068" stroke-width="1.6" stroke-dasharray="5 4"/>
+        <path d="M 440 178 L 720 40" fill="none" stroke="#9c82d8" stroke-width="2.4"/>
+        <text x="466" y="168" font-family="IBM Plex Mono" font-size="10" fill="#9c82d8">krzywa punktu czerni</text>
+        <text x="466" y="184" font-family="IBM Plex Mono" font-size="9" fill="#8b909b">zbiega w bieli</text>
+
+        <circle cx="716" cy="42" r="4" fill="#d8695f"/>
+        <text x="708" y="62" font-family="IBM Plex Mono" font-size="9" fill="#d8695f" text-anchor="end">tu różnica</text>
+      </svg>
+      <div class="diagram-caption">Obie operacje podnoszą czerń. Tylko pierwsza podnosi też biel — a glare fizycznie podnosi jedno i drugie, bo dokłada światło wszędzie.</div>
+    </div>
+
+    <p>Ilość ustala się z plate'u i jest to pomiar, nie ocena. Znajdź w materiale miejsce, które powinno być czarne — cień pod obiektem, otwarte drzwi, tkanina — i odczytaj jego wartość. To jest twoje <em>g</em>. Ten sam pomiar powtórz w ujęciu ze światłem w kadrze i bez niego; różnica między nimi mówi, ile glare'u pochodzi od źródła, a ile jest stałe.</p>
+
+    <p>Ostatnia uwaga dotyczy kolejności i wynika z tego, gdzie zjawisko zachodzi w rzeczywistym torze. Glare powstaje <strong>w obiektywie</strong>, czyli po uformowaniu obrazu, ale przed matrycą i przed jakąkolwiek obróbką. W compie należy więc do warstwy optycznej — po rozmyciu i po dystorsji, a przed ziarnem i przed korekcją barwną. Wstawiony po gradingu zachowuje się jak mgła w kadrze, a nie jak flara w szkle.</p>
+  </div>
+
+  <div class="panel practice">
+    <div class="panel-label">Z praktyki</div>
+    <p><strong>Zmierz czerń w dwóch ujęciach, nie w jednym.</strong> Ujęcie ze słońcem w kadrze i sąsiednie bez niego dają dwie wartości. Różnica to glare zależny od źródła, wartość niższa to podstawa stała. Bez tego rozróżnienia dołożysz stałą mgiełkę do wszystkich ujęć w sekwencji, także tych, w których jej nie było.</p>
+    <p><strong>Podnoszenie czerni jest operacją odwracalną tylko w jedną stronę.</strong> Do renderu można dodać; z plate'u nie da się odjąć, bo nie wiadomo, ile było gdzie. Dlatego przy dopasowywaniu zawsze podnosi się render do plate'u, nigdy odwrotnie — a jeśli plate wygląda na zbyt mglisty, to jest decyzja produkcyjna, nie techniczna.</p>
+    <p><strong>Uwaga na filtry w metryczce.</strong> Jeśli w danych ujęcia widnieje filtr dyfuzyjny, część podniesionej czerni pochodzi z niego, a nie z obiektywu — i zachowuje się inaczej: mocniej wokół świateł, słabiej w pozostałych miejscach. Odtwarzanie tego stałą wartością daje wynik zbyt równomierny.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>veiling glare</dt>
+      <dd>Równomierne rozproszone światło dokładające się do całego kadru. Objawia się podniesieniem czerni i spadkiem kontrastu.</dd>
+      <dt>ghost</dt>
+      <dd>Zabłąkane światło uporządkowane: konkretne odbicie między dwiema powierzchniami, dające rozpoznawalną plamę.</dd>
+      <dt>przesłona wewnętrzna (baffle)</dt>
+      <dd>Pierścień w tubusie zwężający światło tam, gdzie wiązka użyteczna jest wąska. Tania i skuteczna obrona przed glarem.</dd>
+      <dt>czernienie krawędzi</dt>
+      <dd>Matowanie i barwienie brzegu soczewki, żeby światło uwięzione w szkle nie wracało do toru optycznego.</dd>
+      <dt>współczynnik glare</dt>
+      <dd>Ułamek jasności najjaśniejszego miejsca kadru rejestrowany tam, gdzie powinno być zero.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Zajęliśmy się światłem rozproszonym bezładnie. Została druga połowa: to, które odbija się w sposób uporządkowany i trafia na matrycę jako konkretna plama. W <a href="rozdzial-23-ghosting.html">następnym rozdziale</a> okaże się, że ghosty nie lecą byle gdzie — układają się wzdłuż linii przechodzącej przez środek kadru, i da się policzyć, gdzie wypadnie każdy z nich.</p>
+  </div>
 
   <div class="deeper">
     <div class="deeper-label">Idź głębiej</div>
@@ -57,8 +297,67 @@ window.SKY3D_MESSAGES = {
       <a class="nav-next" href="rozdzial-23-ghosting.html">Następny →</a>
   </div>
 
+  <template id="adv-glare">
+    <h3>Dlaczego kaptur działa, a filtr UV szkodzi</h3>
+
+    <p>Dwa najtańsze akcesoria świata robią z glarem dokładnie przeciwne rzeczy, i warto wiedzieć dlaczego, bo wyjaśnienie jest tym samym rachunkiem, co cały rozdział.</p>
+
+    <p><strong>Kaptur</strong> nie zasłania niczego, co jest w kadrze — nie mógłby, bo wtedy obcinałby obraz. Zasłania światło przychodzące <em>spoza</em> kadru, pod kątem większym niż pole widzenia. Takie światło nie może utworzyć obrazu, więc jedyne, co może zrobić, to odbić się gdzieś wewnątrz i dołożyć do glare'u. <span class="term-cyan">Kaptur usuwa wyłącznie to, co i tak było stratą</span> — dlatego działa zawsze i nigdy nie kosztuje.</p>
+
+    <p>Skuteczność zależy od tego, jak ciasno kaptur obejmuje pole widzenia. Stąd płatkowy kształt kapturów do szerokich kątów: prostokątne pole widzenia obcina się prostokątnym otworem, a nie okrągłym. Kaptur okrągły na szerokim kącie jest kompromisem, który przepuszcza rogami więcej, niż musi.</p>
+
+    <p><strong>Filtr ochronny</strong> działa odwrotnie. Dokłada dwie płaskie, równoległe powierzchnie ustawione prostopadle do osi — czyli w konfiguracji, w której odbicie wraca dokładnie tam, skąd przyszło, i ma szansę odbić się jeszcze raz od przedniej soczewki. Powstaje <em>wnęka</em> między filtrem a obiektywem, w której światło może krążyć.</p>
+
+    <p>Przy dobrym filtrze wielowarstwowym dodatek jest rzędu dwóch dziesiątych procenta i w większości ujęć nie ma znaczenia. Przy filtrze tanim, niepowlekanym, wynosi kilka procent — czyli <strong>tyle, ile cała reszta obiektywu razem wzięta</strong>. Ten sam rachunek, który mówi, że jeden procent obcina kontrast dziesięciokrotnie, mówi też, że dziesięciozłotowy filtr potrafi zniweczyć różnicę między szkłem tanim a drogim.</p>
+
+    <p>Praktyczny wniosek dla pracy z materiałem: jeśli w metryczce jest filtr ochronny, a ujęcie ma podniesione czernie mocniej, niż wynikałoby z klasy obiektywu — to prawdopodobnie właśnie on. Warto to sprawdzić, zanim zacznie się dopasowywać render do „charakteru szkła”, którego w ujęciu nie ma.</p>
+  </template>
+
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-panel">
+      <button class="modal-close" data-modal-close aria-label="Zamknij">×</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
 </div>
 
 <script src="../assets/interactive.js"></script>
+<script>
+/* Glare kontra kontrast. Scena o kontraescie 1000:1, czyli czern na poziomie
+   0,001 bieli. Glare dokłada sie do OBU koncow, ale dla bieli jest to zmiana
+   procentowo znikoma, a dla czerni kilkukrotna — i o to w calym rozdziale
+   chodzi. Strata podana w dzialkach, bo tak sie o kontrascie mysli na planie. */
+(function () {
+  var sl = document.getElementById('glareIlosc');
+  if (!sl) return;
+  var CZERN = 0.001;                 // kontrast sceny 1000:1
+
+  function odswiez() {
+    var g = parseFloat(sl.value) / 1000;        // 0 .. 0,05
+    var czern = CZERN + g, biel = 1 + g;
+    var kontrast = biel / czern;
+    var strata = Math.log(1000 / kontrast) / Math.LN2;
+
+    document.getElementById('glareWoal').setAttribute('fill-opacity', Math.min(0.6, g * 12).toFixed(3));
+    document.getElementById('glareOdczyt').textContent =
+      (g * 100).toFixed(1).replace('.', ',') + '%';
+    document.getElementById('glareKontrast').textContent = kontrast.toFixed(0) + ':1';
+    document.getElementById('glareCzarny').textContent =
+      (czern * 100).toFixed(2).replace('.', ',') + '% bieli';
+    document.getElementById('glareStrata').textContent =
+      strata < 0.05 ? 'brak' : strata.toFixed(1).replace('.', ',') + ' działki kontrastu';
+
+    var opis;
+    if (g < 0.0005) opis = 'Obiektyw doskonały — taki nie istnieje, ale tak wygląda render.';
+    else if (g <= 0.003) opis = 'Nowoczesne powłoki wielowarstwowe. Czernie wciąż głębokie.';
+    else if (g <= 0.012) opis = 'Jeden procent obcina kontrast dziesięciokrotnie. To nie jest przesada rysunku.';
+    else opis = 'Stare szkło albo tani filtr z przodu. Czernie szare, kontrast zjedzony.';
+    document.getElementById('glarePodpis').textContent = opis;
+  }
+  sl.addEventListener('input', odswiez);
+  odswiez();
+})();
+</script>
 </body>
 </html>
