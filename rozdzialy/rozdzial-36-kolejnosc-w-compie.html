@@ -43,7 +43,272 @@ window.SKY3D_MESSAGES = {
   <h1>Kolejność operacji w compie</h1>
   <p class="subtitle">Te same węzły w innej kolejności dają inny obraz — i tylko jedna kolejność odtwarza to, co naprawdę robi kamera. Halacja przed ziarnem, ziarno przed dystorsją, i tak dalej.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li><strong>Kolejność w compie nie jest kwestią przyzwyczajenia.</strong> Wynika wprost z tego, w jakiej kolejności zdarzenia zachodziły w prawdziwej kamerze — a każde odstępstwo daje błąd, który da się nazwać z góry.</li>
+      <li>Łańcuch ma cztery odcinki: <span class="term-amber">scena → optyka → nośnik → korekcja</span>. Wewnątrz odcinka bywa swoboda; między odcinkami nie ma jej wcale.</li>
+      <li><strong>Najczęstszy błąd to nakładanie flary po ziarnie.</strong> Flara powstała w szkle, ziarno w emulsji — więc ziarno pada na flarę, a nie odwrotnie. Objaw: element wygląda na naklejony, choć wszystko inne się zgadza.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Zasada · jedno źródło porządku</div>
+    <h2>Skąd bierze się kolejność</h2>
+
+    <p>Comp jest odtworzeniem drogi światła. Wszystko, co robimy z obrazem, zdarzyło się kiedyś naprawdę — w tej albo w innej kamerze — i zdarzyło się w określonej kolejności. <strong>Ta kolejność jest jedynym uzasadnieniem porządku operacji</strong>, jakie w ogóle istnieje.</p>
+
+    <p>Brzmi to jak truizm, dopóki nie zobaczy się konsekwencji. Wynika stąd, że sporu o to, czy najpierw ziarno, czy flara, nie rozstrzyga się gustem ani wynikiem — rozstrzyga się pytaniem, gdzie każde z nich powstaje w prawdziwym aparacie. A na to pytanie odpowiedziały poprzednie części tej książki, po kolei, zjawisko po zjawisku.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Cztery odcinki</span><span>i co należy do którego</span></div>
+      <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Łańcuch compu podzielony na cztery odcinki: scena, optyka, nośnik, korekcja, z listą zjawisk w każdym.">
+        <rect x="20" y="30" width="168" height="220" rx="4" fill="#151a1f" stroke="#7fc47f" stroke-width="1.3"/>
+        <text x="104" y="52" font-family="IBM Plex Mono" font-size="11" fill="#7fc47f" text-anchor="middle">1 · SCENA</text>
+        <g font-family="IBM Plex Sans" font-size="11" fill="#ecebe4">
+          <text x="34" y="80">geometria</text><text x="34" y="102">oświetlenie</text>
+          <text x="34" y="124">materiały</text><text x="34" y="146">cienie i odbicia</text>
+          <text x="34" y="168">okluzja</text>
+        </g>
+        <text x="34" y="234" font-family="IBM Plex Mono" font-size="8.5" fill="#8b909b">render</text>
+
+        <rect x="204" y="30" width="168" height="220" rx="4" fill="#151a1f" stroke="#4fc3c0" stroke-width="1.3"/>
+        <text x="288" y="52" font-family="IBM Plex Mono" font-size="11" fill="#4fc3c0" text-anchor="middle">2 · OPTYKA</text>
+        <g font-family="IBM Plex Sans" font-size="11" fill="#ecebe4">
+          <text x="218" y="80">głębia ostrości</text><text x="218" y="102">aberracje</text>
+          <text x="218" y="124">dystorsja</text><text x="218" y="146">winietowanie</text>
+          <text x="218" y="168">flara i ghosty</text><text x="218" y="190">dyfrakcja</text>
+        </g>
+        <text x="218" y="234" font-family="IBM Plex Mono" font-size="8.5" fill="#8b909b">szkło i oprawa</text>
+
+        <rect x="388" y="30" width="168" height="220" rx="4" fill="#151a1f" stroke="#6e93be" stroke-width="1.3"/>
+        <text x="472" y="52" font-family="IBM Plex Mono" font-size="11" fill="#6e93be" text-anchor="middle">3 · NOŚNIK</text>
+        <g font-family="IBM Plex Sans" font-size="11" fill="#ecebe4">
+          <text x="402" y="80">rozmycie ruchu</text><text x="402" y="102">halacja</text>
+          <text x="402" y="124">zakończenie skali</text><text x="402" y="146">mozaika i demozaik</text>
+          <text x="402" y="168">ziarno i szum</text><text x="402" y="190">rolling shutter</text>
+        </g>
+        <text x="402" y="234" font-family="IBM Plex Mono" font-size="8.5" fill="#8b909b">matryca albo taśma</text>
+
+        <rect x="572" y="30" width="168" height="220" rx="4" fill="#151a1f" stroke="#9c82d8" stroke-width="1.3"/>
+        <text x="656" y="52" font-family="IBM Plex Mono" font-size="11" fill="#9c82d8" text-anchor="middle">4 · KOREKCJA</text>
+        <g font-family="IBM Plex Sans" font-size="11" fill="#ecebe4">
+          <text x="586" y="80">krzywa tonalna</text><text x="586" y="102">balans i kolor</text>
+          <text x="586" y="124">wyostrzanie</text><text x="586" y="146">kompresja zapisu</text>
+          <text x="586" y="168">skalowanie do celu</text>
+        </g>
+        <text x="586" y="234" font-family="IBM Plex Mono" font-size="8.5" fill="#8b909b">po zapisie</text>
+
+        <g stroke="#8b909b" stroke-width="1.6" fill="none">
+          <path d="M188 140 L202 140"/><path d="M372 140 L386 140"/><path d="M556 140 L570 140"/>
+        </g>
+        <text x="380" y="278" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">wewnątrz kolumny bywa swoboda · między kolumnami nie ma jej wcale</text>
+      </svg>
+      <div class="diagram-caption">Podział jest ten sam, co w całej książce: co robi scena, co robi szkło, co robi nośnik i co dzieje się po zapisie. Kolejność w compie to po prostu ta sama kolejność, przepisana.</div>
+    </div>
+
+    <p>Warto zwrócić uwagę na jedną rzecz, która ratuje przed nadmierną pedanterią. <span class="term-cyan">Wewnątrz odcinka kolejność bywa obojętna</span> — winietowanie przed czy po dystorsji daje ten sam wynik z dokładnością do drobiazgu, bo obie operacje są geometryczne i słabe. Między odcinkami natomiast pomyłka jest zawsze widoczna, bo zmienia to, co na co działa.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Klasyczne pomyłki · trzy pary</div>
+    <h2>Co się psuje przy zamianie</h2>
+
+    <p>Trzy zamiany zdarzają się najczęściej i każda ma rozpoznawalny objaw. Warto je znać nie po to, żeby ich unikać z pamięci, tylko żeby umieć rozpoznać przyczynę po skutku.</p>
+
+    <p><strong>Flara po ziarnie.</strong> Flara powstaje w szkle, ziarno w emulsji — więc w rzeczywistości ziarno pada na flarę, a nie odwrotnie. Nałożenie flary na koniec daje gładką poświatę na ziarnistym obrazie: <span class="term-violet">obszar, w którym ziarno nagle znika</span>. Oko wyłapuje to natychmiast, choć rzadko potrafi nazwać.</p>
+
+    <p><strong>Rozmycie ruchu przed głębią ostrości.</strong> Obiektyw rozmywa w głąb niezależnie od czasu; nośnik całkuje dopiero potem. Odwrócona kolejność daje przedmiot, którego smuga jest ostra na krawędziach, mimo że sam przedmiot jest nieostry — bo rozmycie głębi nałożone na smugę rozmywa smugę, a nie przedmiot.</p>
+
+    <p><strong>Ziarno przed rozmyciem czegokolwiek.</strong> Ziarno jest ostatnią rzeczą, jaka dzieje się z obrazem w kamerze. Każda operacja wykonana po nim — rozmycie, skalowanie, wyostrzenie — zmienia jego wielkość i kontrast, a wtedy przestaje pasować do ziarna w plate'cie. Objaw: element ma ziarno drobniejsze i słabsze niż tło, mimo że nakładano to samo.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Zamiana kolejności</span><span>i objaw każdej</span></div>
+      <div class="diagram-controls" id="koPrzyciski">
+        <button data-para="flara">Flara ↔ ziarno</button>
+        <button data-para="ruch">Ruch ↔ głębia</button>
+        <button data-para="ziarno">Ziarno ↔ skalowanie</button>
+        <button data-para="krzywa">Korekcja ↔ optyka</button>
+      </div>
+      <svg viewBox="0 0 760 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Widget: dla wybranej pary pokazuje kolejność prawidłową, odwróconą i objaw pomyłki.">
+        <rect x="24" y="20" width="330" height="56" rx="4" fill="#132018" stroke="#7fc47f" stroke-width="1.2"/>
+        <text x="40" y="40" font-family="IBM Plex Mono" font-size="9.5" fill="#7fc47f">JAK W KAMERZE</text>
+        <text x="40" y="62" font-family="IBM Plex Sans" font-size="12" fill="#ecebe4" id="koDobra">—</text>
+
+        <rect x="24" y="88" width="330" height="56" rx="4" fill="#201318" stroke="#d8695f" stroke-width="1.2"/>
+        <text x="40" y="108" font-family="IBM Plex Mono" font-size="9.5" fill="#d8695f">ODWROTNIE</text>
+        <text x="40" y="130" font-family="IBM Plex Sans" font-size="12" fill="#ecebe4" id="koZla">—</text>
+
+        <rect x="386" y="20" width="350" height="124" rx="4" fill="#151a1f" stroke="#3a424d"/>
+        <text x="402" y="40" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">OBJAW</text>
+        <g font-family="IBM Plex Sans" font-size="11.5" fill="#ecebe4">
+          <text x="402" y="64" id="koObj1"></text><text x="402" y="86" id="koObj2"></text><text x="402" y="108" id="koObj3"></text>
+        </g>
+        <text x="402" y="132" font-family="IBM Plex Mono" font-size="9.5" fill="#e8a33d" id="koTest"></text>
+        <text x="380" y="176" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle" id="koCzemu">Wybierz parę.</text>
+      </svg>
+      <div class="diagram-caption">Każda z czterech pomyłek ma objaw, po którym da się ją rozpoznać bez porównywania z niczym — i test, który ją potwierdza w kilkanaście sekund.</div>
+    </div>
+
+    <button class="advanced-btn" data-modal-target="adv-liniowo">Zaawansowane: dlaczego to wszystko musi się dziać w wartościach liniowych</button>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Wyjątki · kiedy wolno inaczej</div>
+    <h2>Trzy odstępstwa, które są uzasadnione</h2>
+
+    <p>Zasada „jak w kamerze” jest mocna, ale nie jest jedyną, jaką trzeba znać. Trzy odstępstwa mają dobre uzasadnienie i warto je odróżniać od zwykłego bałaganu.</p>
+
+    <p><strong>Operacje geometryczne łączy się w jedną, nawet jeśli logicznie należą do różnych odcinków.</strong> Dystorsja jest optyką, stabilizacja korekcją, skalowanie zapisem — a mimo to wykonuje się je razem, bo każde przepróbkowanie kosztuje ostrość i ziarno, jak liczy <a href="../dodatki/dodatek-v-stmapy.html">Dodatek V</a>. Jest to świadome ustępstwo: tracimy trochę ścisłości kolejności, zyskujemy dużo na jakości.</p>
+
+    <p><strong>Rzeczy słabe wolno przestawiać.</strong> Winietowanie o pół działki nałożone przed lub po lekkiej korekcie tonalnej daje różnicę poniżej progu widoczności. Reguła praktyczna: <span class="term-amber">jeśli oba efekty są słabe, ich kolejność nie ma znaczenia; jeśli choć jeden jest mocny, ma</span> — bo nieliniowość ujawnia się dopiero przy dużych wartościach.</p>
+
+    <p><strong>Elementy dodane po nośniku bywają celowe.</strong> Nie każda decyzja jest rekonstrukcją. Delikatna poświata dodana na końcu, poza łańcuchem, dla nastroju ujęcia, jest wyborem plastycznym — i wtedy jedyne, co się liczy, to świadomość, że nie jest to symulacja niczego. Kłopot zaczyna się wtedy, gdy taką decyzję podejmuje się przypadkiem, myśląc, że odtwarza się zjawisko.</p>
+
+    <p>Warto na koniec powiedzieć rzecz, która porządkuje całą tę część książki. <strong>Comp zgodny z łańcuchem nie jest comp'em „poprawnym fizycznie” — jest comp'em, w którym każdą decyzję da się uzasadnić.</strong> To rozróżnienie ma znaczenie praktyczne: obraz, którego kolejność wynika z kamery, daje się poprawiać w sposób przewidywalny, bo zmiana jednego ogniwa zmienia dokładnie to, co powinna. Obraz zbudowany przypadkiem reaguje na każdą poprawkę czymś nieoczekiwanym — i to, a nie brak realizmu, jest prawdziwym kosztem złej kolejności.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Punkt spotkania · gdzie wchodzi element</div>
+    <h2>W którym miejscu łańcucha łączy się z plate'em</h2>
+
+    <p>Jest jeszcze jedno pytanie, którego sam porządek zjawisk nie rozstrzyga: <strong>w którym ogniwie element CG dołącza do plate'u</strong>. Odpowiedź wynika z prostej obserwacji — plate przeszedł przez cały łańcuch, bo zrobiła go prawdziwa kamera.</p>
+
+    <p>Wynika stąd zasada: <span class="term-amber">element musi zostać doprowadzony do tego samego miejsca łańcucha, w którym stoi plate, i dopiero wtedy się łączą</span>. Jeśli plate jest surowy — prosto z kamery, bez korekcji — to element potrzebuje pełnej optyki i pełnego nośnika, a łączenie odbywa się na granicy odcinka trzeciego i czwartego.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Punkt złączenia</span><span>zależy od stanu plate'u</span></div>
+      <svg viewBox="0 0 760 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Dwa scenariusze: plate surowy łączy się po nośniku, plate już skorygowany wymaga cofnięcia korekcji albo doprowadzenia elementu dalej.">
+        <text x="30" y="22" font-family="IBM Plex Mono" font-size="10" fill="#7fc47f">PLATE SUROWY — przypadek zwykły</text>
+        <g font-family="IBM Plex Mono" font-size="9">
+          <rect x="30" y="32" width="86" height="30" rx="3" fill="#151a1f" stroke="#7fc47f"/><text x="73" y="51" fill="#7fc47f" text-anchor="middle">scena</text>
+          <rect x="126" y="32" width="86" height="30" rx="3" fill="#151a1f" stroke="#4fc3c0"/><text x="169" y="51" fill="#4fc3c0" text-anchor="middle">optyka</text>
+          <rect x="222" y="32" width="86" height="30" rx="3" fill="#151a1f" stroke="#6e93be"/><text x="265" y="51" fill="#6e93be" text-anchor="middle">nośnik</text>
+          <rect x="330" y="26" width="96" height="42" rx="3" fill="#2a1a12" stroke="#e8a33d" stroke-width="1.8"/><text x="378" y="51" fill="#e8a33d" text-anchor="middle">ZŁĄCZENIE</text>
+          <rect x="446" y="32" width="96" height="30" rx="3" fill="#151a1f" stroke="#9c82d8"/><text x="494" y="51" fill="#9c82d8" text-anchor="middle">korekcja</text>
+        </g>
+        <path d="M30 82 L318 60" stroke="#6e93be" stroke-width="1.6" fill="none"/>
+        <text x="34" y="96" font-family="IBM Plex Mono" font-size="9" fill="#6e93be">plate wchodzi tu, gotowy</text>
+        <g stroke="#8b909b" stroke-width="1.2" fill="none">
+          <path d="M116 47 L124 47"/><path d="M212 47 L220 47"/><path d="M308 47 L328 47"/><path d="M426 47 L444 47"/>
+        </g>
+        <text x="560" y="51" font-family="IBM Plex Mono" font-size="9" fill="#7fc47f">element przechodzi całą drogę</text>
+
+        <line x1="24" y1="120" x2="736" y2="120" stroke="#2a2f38"/>
+
+        <text x="30" y="146" font-family="IBM Plex Mono" font-size="10" fill="#d8695f">PLATE JUŻ SKORYGOWANY — przypadek kłopotliwy</text>
+        <g font-family="IBM Plex Mono" font-size="9">
+          <rect x="30" y="156" width="86" height="30" rx="3" fill="#151a1f" stroke="#7fc47f"/><text x="73" y="175" fill="#7fc47f" text-anchor="middle">scena</text>
+          <rect x="126" y="156" width="86" height="30" rx="3" fill="#151a1f" stroke="#4fc3c0"/><text x="169" y="175" fill="#4fc3c0" text-anchor="middle">optyka</text>
+          <rect x="222" y="156" width="86" height="30" rx="3" fill="#151a1f" stroke="#6e93be"/><text x="265" y="175" fill="#6e93be" text-anchor="middle">nośnik</text>
+          <rect x="318" y="156" width="96" height="30" rx="3" fill="#151a1f" stroke="#9c82d8"/><text x="366" y="175" fill="#9c82d8" text-anchor="middle">korekcja</text>
+          <rect x="430" y="150" width="112" height="42" rx="3" fill="#201318" stroke="#d8695f" stroke-width="1.8"/><text x="486" y="169" fill="#d8695f" text-anchor="middle">ZŁĄCZENIE</text><text x="486" y="183" fill="#d8695f" text-anchor="middle">po krzywej</text>
+        </g>
+        <g stroke="#8b909b" stroke-width="1.2" fill="none">
+          <path d="M116 171 L124 171"/><path d="M212 171 L220 171"/><path d="M308 171 L316 171"/><path d="M414 171 L428 171"/>
+        </g>
+        <text x="560" y="168" font-family="IBM Plex Mono" font-size="9" fill="#d8695f">element traci liniowość razem z plate'em</text>
+        <text x="560" y="184" font-family="IBM Plex Mono" font-size="9" fill="#8b909b">lepiej: cofnąć korekcję plate'u i wrócić do góry</text>
+        <text x="380" y="222" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">plate wyznacza punkt złączenia — element ma do niego dojść, nie odwrotnie</text>
+      </svg>
+      <div class="diagram-caption">Wariant dolny zdarza się, gdy dostaje się materiał już obrobiony. Wtedy warto cofnąć korekcję znaną krzywą i wrócić do wariantu górnego, zamiast pracować po niej.</div>
+    </div>
+
+    <p>Sytuacja z dolnej połowy diagramu zdarza się często i nie zawsze da się jej uniknąć, ale warto rozumieć jej koszt. <strong>Po korekcji tonalnej wartości nie są już proporcjonalne do światła</strong> — a wtedy wszystkie operacje z odcinka drugiego i trzeciego, wykonane na złączonym obrazie, dają wynik błędny w sposób opisany w bloku „Zaawansowane”.</p>
+
+    <p>Ratunek jest zwykle prosty: jeśli krzywa użyta do korekcji jest znana, da się ją odwrócić, doprowadzić plate z powrotem do liniowej, wykonać pracę i nałożyć korekcję ponownie na koniec. <span class="term-cyan">Odwrócenie nie odzyskuje tego, co obcięcie zabrało</span> — ale przywraca proporcjonalność wszędzie tam, gdzie coś jeszcze zostało, a to wystarcza do poprawnej pracy w większości kadru.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Kontrola · trzy testy na cały łańcuch</div>
+    <h2>Jak sprawdzić, czy porządek się zgadza</h2>
+
+    <p>Łańcuch zbudowany poprawnie da się zweryfikować trzema testami, z których każdy zajmuje minutę i sprawdza inne ogniwo. Warto je wykonywać na gotowym drzewie, zanim ujęcie pójdzie dalej.</p>
+
+    <p><strong>Test jasnego punktu.</strong> Wstaw w scenę bardzo jasne, punktowe źródło i przepuść przez cały łańcuch. Poprawny łańcuch daje po kolei: krążek rozmycia o kształcie przysłony, wokół niego poświatę flary, dalej ewentualny ghost po przeciwnej stronie środka, halację jako miękką aureolę, wreszcie ziarno pokrywające to wszystko równomiernie. <em>Brak któregokolwiek ogniwa albo zła kolejność są w tym teście widoczne od razu</em>, bo każde zjawisko ma inny kształt.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Test jasnego punktu</span><span>pięć kształtów, jeden porządek</span></div>
+      <svg viewBox="0 0 760 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Jasny punkt przepuszczony przez lańcuch: krążek przysłony, poświata flary, ghost, halacja i ziarno.">
+        <g font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="middle">
+          <text x="88" y="24">1 · krążek</text><text x="240" y="24">2 · flara</text>
+          <text x="392" y="24">3 · ghost</text><text x="544" y="24">4 · halacja</text><text x="684" y="24">5 · ziarno</text>
+        </g>
+        <circle cx="88" cy="100" r="26" fill="#e8a33d" fill-opacity="0.85"/>
+        <text x="88" y="150" font-family="IBM Plex Mono" font-size="8.5" fill="#8b909b" text-anchor="middle">kształt przysłony</text>
+        <text x="88" y="166" font-family="IBM Plex Mono" font-size="8.5" fill="#4fc3c0" text-anchor="middle">optyka</text>
+
+        <circle cx="240" cy="100" r="52" fill="#e8a33d" fill-opacity="0.12"/>
+        <circle cx="240" cy="100" r="34" fill="#e8a33d" fill-opacity="0.2"/>
+        <circle cx="240" cy="100" r="26" fill="#e8a33d" fill-opacity="0.85"/>
+        <text x="240" y="150" font-family="IBM Plex Mono" font-size="8.5" fill="#8b909b" text-anchor="middle">poświata wokół</text>
+        <text x="240" y="166" font-family="IBM Plex Mono" font-size="8.5" fill="#4fc3c0" text-anchor="middle">optyka</text>
+
+        <circle cx="392" cy="100" r="52" fill="#e8a33d" fill-opacity="0.12"/>
+        <circle cx="392" cy="100" r="26" fill="#e8a33d" fill-opacity="0.85"/>
+        <circle cx="440" cy="72" r="13" fill="none" stroke="#4fc3c0" stroke-width="1.6" stroke-opacity="0.8"/>
+        <text x="392" y="150" font-family="IBM Plex Mono" font-size="8.5" fill="#8b909b" text-anchor="middle">po drugiej stronie osi</text>
+        <text x="392" y="166" font-family="IBM Plex Mono" font-size="8.5" fill="#4fc3c0" text-anchor="middle">optyka</text>
+
+        <circle cx="544" cy="100" r="52" fill="#e8a33d" fill-opacity="0.12"/>
+        <circle cx="544" cy="100" r="38" fill="#d8695f" fill-opacity="0.22"/>
+        <circle cx="544" cy="100" r="26" fill="#e8a33d" fill-opacity="0.85"/>
+        <circle cx="592" cy="72" r="13" fill="none" stroke="#4fc3c0" stroke-width="1.6" stroke-opacity="0.8"/>
+        <text x="544" y="150" font-family="IBM Plex Mono" font-size="8.5" fill="#8b909b" text-anchor="middle">miękka aureola, ciepła</text>
+        <text x="544" y="166" font-family="IBM Plex Mono" font-size="8.5" fill="#6e93be" text-anchor="middle">nośnik</text>
+
+        <g opacity="0.9">
+          <circle cx="684" cy="100" r="52" fill="#e8a33d" fill-opacity="0.12"/>
+          <circle cx="684" cy="100" r="38" fill="#d8695f" fill-opacity="0.22"/>
+          <circle cx="684" cy="100" r="26" fill="#e8a33d" fill-opacity="0.85"/>
+        </g>
+        <g fill="#ecebe4" fill-opacity="0.5">
+          <circle cx="656" cy="70" r="1.3"/><circle cx="700" cy="64" r="1.3"/><circle cx="670" cy="120" r="1.3"/>
+          <circle cx="712" cy="112" r="1.3"/><circle cx="690" cy="92" r="1.3"/><circle cx="648" cy="128" r="1.3"/>
+          <circle cx="722" cy="86" r="1.3"/><circle cx="662" cy="98" r="1.3"/><circle cx="706" cy="134" r="1.3"/>
+        </g>
+        <text x="684" y="150" font-family="IBM Plex Mono" font-size="8.5" fill="#8b909b" text-anchor="middle">równomiernie po wszystkim</text>
+        <text x="684" y="166" font-family="IBM Plex Mono" font-size="8.5" fill="#6e93be" text-anchor="middle">nośnik</text>
+
+        <text x="380" y="192" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">każde zjawisko ma inny kształt — dlatego brak albo przestawienie widać na jednym obrazku</text>
+      </svg>
+      <div class="diagram-caption">Pięć warstw narastających w tej samej kolejności, co w kamerze. Ziarno jest ostatnie i pokrywa wszystko — także flarę i halację.</div>
+    </div>
+
+    <p>Warto zauważyć, że ten jeden test sprawdza aż cztery ogniwa naraz, i to bez żadnego materiału odniesienia. <strong>Wystarczy popatrzeć, czy każdy kształt leży pod tym, co powstało po nim</strong> — ziarno na flarze, halacja pod ziarnem, ghost pod jednym i drugim.</p>
+
+    <p><strong>Test ziarna na granicy.</strong> Powiększ do czterokrotności miejsce, w którym element styka się z plate'em, i porównaj wielkość oraz kontrast ziarna po obu stronach. Muszą być takie same — a jeśli nie są, przyczyną jest zwykle operacja wykonana po ziarnie na jednej ze stron.</p>
+
+    <p><strong>Test przepalenia.</strong> Znajdź w plate'cie miejsce obcięte i porównaj z odpowiadającym miejscem w elemencie. Barwa dryfu, o której mówił <a href="rozdzial-31-zakres-dynamiczny.html">Rozdział 31</a>, musi zachowywać się tak samo — a jeśli element bieleje neutralnie tam, gdzie plate ciągnie w barwę, zakończenie skali stoi w złym miejscu albo nie ma go wcale.</p>
+
+    <p>Trzy testy razem sprawdzają wszystkie cztery odcinki: pierwszy weryfikuje optykę i nośnik, drugi koniec nośnika, trzeci przejście między nośnikiem a korekcją. <strong>Żaden nie wymaga porównania z referencją ani doświadczenia</strong> — wystarczy popatrzeć, czy dwie strony obrazu zachowują się tak samo.</p>
+  </div>
+
+  <div class="panel practice">
+    <div class="panel-label">Z praktyki</div>
+    <p><strong>Ustaw drzewo raz i trzymaj się go.</strong> Kolejność z tego rozdziału nie zależy od ujęcia — jest ta sama dla wszystkiego, co ma wyglądać na sfilmowane. Szablon zbudowany raz oszczędza tę decyzję przy każdym następnym ujęciu i, co ważniejsze, sprawia, że poprawki trafiają zawsze w to samo miejsce.</p>
+    <p><strong>Wyłącz wszystko i włączaj po kolei.</strong> Przy szukaniu przyczyny problemu wyłącz cały łańcuch po elemencie i włączaj ogniwa jedno po drugim. Miejsce, w którym obraz przestaje się zgadzać, jest miejscem błędu — a szukanie po omacku w gotowym drzewie potrafi zająć godziny.</p>
+    <p><strong>Wszystko w liniowej.</strong> Cały łańcuch od sceny do końca odcinka nośnika operuje na wartościach proporcjonalnych do światła. Korekcja jest jedynym odcinkiem, w którym wolno wyjść z liniowej — i dopiero na samym końcu, przy zapisie do celu.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>łańcuch</dt>
+      <dd>Uporządkowany ciąg operacji odtwarzających drogę światła: scena, optyka, nośnik, korekcja.</dd>
+      <dt>odcinek łańcucha</dt>
+      <dd>Grupa zjawisk o wspólnej przyczynie fizycznej. Wewnątrz bywa swoboda, między odcinkami jej nie ma.</dd>
+      <dt>wartości liniowe</dt>
+      <dd>Zapis, w którym liczba jest proporcjonalna do ilości światła. Warunek poprawności wszystkich operacji optycznych.</dd>
+      <dt>składanie geometrii</dt>
+      <dd>Łączenie kilku przekształceń w jedno, żeby obraz był próbkowany raz. Uzasadnione odstępstwo od kolejności.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Na tym kończy się część o odtwarzaniu. Zostaje pytanie, którego żadna z poprzednich części nie zadała: <em>po co</em> ktoś wybiera taki, a nie inny obiektyw. <a href="rozdzial-37-ogniskowa-jako-decyzja.html">Następna część</a> patrzy na tę samą optykę z drugiej strony — jako na język, którym operator coś mówi.</p>
+  </div>
 
   <div class="deeper">
     <div class="deeper-label">Idź głębiej</div>
@@ -56,8 +321,96 @@ window.SKY3D_MESSAGES = {
       <a class="nav-next" href="rozdzial-37-ogniskowa-jako-decyzja.html">Następny →</a>
   </div>
 
+<template id="adv-liniowo">
+  <h3>Dlaczego to wszystko musi się dziać w wartościach liniowych</h3>
+  <p>Reguła „pracuj w liniowej” bywa powtarzana bez uzasadnienia, przez co brzmi jak konwencja. Nie jest konwencją — jest warunkiem, bez którego wzory z tej książki przestają obowiązywać.</p>
+  <p><strong>Powód jest jeden i wystarczający: wszystkie operacje optyczne są sumowaniem światła.</strong> Rozmycie to średnia ważona. Flara to dodanie części światła z jednego miejsca do drugiego. Rozmycie ruchu to całka po czasie. Każda z tych operacji zakłada, że dodanie dwóch liczb odpowiada dodaniu dwóch strumieni światła — a to jest prawdą tylko wtedy, gdy liczba jest proporcjonalna do strumienia.</p>
+  <p>Rachunek pokazuje skalę błędu wyraźniej niż opis. Weźmy dwa piksele: jeden o jasności 1,0, drugi o 0,0, i uśrednijmy je — czyli wykonajmy najprostsze możliwe rozmycie.</p>
+  <p><strong>W liniowej:</strong> (1,0 + 0,0)/2 = 0,50. Wynik odpowiada połowie światła, i tak właśnie zachowa się prawdziwe rozmycie.</p>
+  <p><strong>Po krzywej z wykładnikiem 1/2,2:</strong> wartości to 1,0 i 0,0, średnia 0,50 — ale po powrocie do liniowej 0,50<sup>2,2</sup> = 0,22. Zamiast połowy światła dostajemy dwadzieścia dwa procent, czyli <strong>błąd ponad dwukrotny</strong> i wyraźnie widoczny.</p>
+  <p>Warto zauważyć, gdzie ten błąd jest największy: <strong>tam, gdzie kontrast jest największy</strong>. Przy dwóch sąsiednich pikselach o zbliżonej jasności różnica jest znikoma. Na granicy jasnego nieba i ciemnej gałęzi — ogromna. Dlatego objaw pokazuje się dokładnie na krawędziach o dużym kontraście, czyli tam, gdzie oko patrzy najuważniej.</p>
+  <p><strong>Jeden wyjątek.</strong> Ostatni odcinek łańcucha, czyli korekcja, z definicji nie odtwarza żadnego zjawiska optycznego — jest przetwarzaniem obrazu dla widza. Tam wolno wyjść z liniowej i tam się to robi, na samym końcu, przy zapisie do docelowej przestrzeni. Wszystko wcześniej zostaje liniowe.</p>
+</template>
+
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal-box">
+    <button class="modal-close" aria-label="Zamknij">&times;</button>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
 </div>
 
 <script src="../assets/interactive.js"></script>
+<script>
+(function () {
+  var pas = document.getElementById('koPrzyciski');
+  if (!pas) return;
+
+  var DANE = {
+    flara: {
+      dobra: 'flara (szkło) → ziarno (emulsja)',
+      zla: 'ziarno → flara',
+      objaw: ['Gładka poświata na ziarnistym obrazie.',
+              'Ziarno znika dokładnie tam, gdzie flara jest jasna.',
+              'Element czytany jako naklejony mimo dobrej geometrii.'],
+      test: 'Test: powiększ obszar flary i sprawdź, czy ziarno w nim jest.',
+      czemu: 'Flara powstaje między soczewkami, ziarno w emulsji — a emulsja jest dalej w łańcuchu.'
+    },
+    ruch: {
+      dobra: 'głębia ostrości (obiektyw) → rozmycie ruchu (czas otwarcia)',
+      zla: 'rozmycie ruchu → głębia ostrości',
+      objaw: ['Smuga rozmyta, ale jej krawędzie zbyt ostre.',
+              'Nieostry przedmiot ma ostro zakończoną smugę.',
+              'Rozmycie działa na smudze zamiast na przedmiocie.'],
+      test: 'Test: zatrzymaj na klatce z szybkim ruchem i obejrzyj koniec smugi.',
+      czemu: 'Obiektyw rozmywa w głąb niezależnie od czasu; nośnik całkuje dopiero to, co dostał.'
+    },
+    ziarno: {
+      dobra: 'ziarno → (koniec nośnika) → skalowanie i wyostrzanie',
+      zla: 'skalowanie → ziarno, albo ziarno → rozmycie',
+      objaw: ['Ziarno elementu drobniejsze i słabsze niż w tle.',
+              'Przy zbliżeniu widać dwie różne wielkości ziarna.',
+              'Dokładanie siły nie pomaga — zmienia się kontrast, nie skala.'],
+      test: 'Test: powiększ do 400% granicę elementu i tła, porównaj wielkość ziarna.',
+      czemu: 'Ziarno jest ostatnią rzeczą w kamerze. Wszystko po nim zmienia jego skalę.'
+    },
+    krzywa: {
+      dobra: 'cała optyka i nośnik w wartościach liniowych → korekcja',
+      zla: 'korekcja tonalna → rozmycie, flara, ziarno',
+      objaw: ['Rozmycie zjada jasne krawędzie zamiast je rozlewać.',
+              'Flara jest za słaba przy świateł i za mocna w półtonach.',
+              'Przepalenia mają neutralną biel zamiast dryfu barwy.'],
+      test: 'Test: rozmyj jasny punkt na ciemnym tle i sprawdź, czy suma jasności została.',
+      czemu: 'Operacje optyczne sumują światło. Po krzywej dodawanie wartości nie jest już dodawaniem światła.'
+    }
+  };
+
+  var dobra = document.getElementById('koDobra');
+  var zla = document.getElementById('koZla');
+  var obj = [document.getElementById('koObj1'), document.getElementById('koObj2'), document.getElementById('koObj3')];
+  var test = document.getElementById('koTest');
+  var czemu = document.getElementById('koCzemu');
+  var przyciski = pas.querySelectorAll('[data-para]');
+
+  function pokaz(klucz, btn) {
+    var d = DANE[klucz];
+    dobra.textContent = d.dobra;
+    zla.textContent = d.zla;
+    for (var i = 0; i < 3; i++) obj[i].textContent = d.objaw[i] ? '· ' + d.objaw[i] : '';
+    test.textContent = d.test;
+    czemu.textContent = d.czemu;
+    for (var j = 0; j < przyciski.length; j++) {
+      przyciski[j].classList.toggle('is-active', przyciski[j] === btn);
+    }
+  }
+
+  for (var k = 0; k < przyciski.length; k++) {
+    (function (b) { b.addEventListener('click', function () { pokaz(b.dataset.para, b); }); })(przyciski[k]);
+  }
+  pokaz('flara', przyciski[0]);
+})();
+</script>
+
 </body>
 </html>
