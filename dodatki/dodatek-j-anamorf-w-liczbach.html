@@ -41,7 +41,115 @@ window.SKY3D_MESSAGES = {
   <h1>Anamorf w liczbach</h1>
   <p class="subtitle">Squeeze i jego wpływ na kadr, dlaczego bokeh jest owalne dokładnie w proporcji ściśnięcia, skąd mumps i czym różni się squeeze przedni od tylnego.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">Co tu jest</div>
+    <ul>
+      <li><strong>Tabela ściśnięć</strong> — który współczynnik do której matrycy i co z niego wychodzi.</li>
+      <li><strong>Dlaczego anamorf daje kadr krótszej ogniskowej przy głębi dłuższej</strong> — najważniejsza liczba w całym rozdziale, i ta, którą najczęściej się pomija.</li>
+      <li><strong>Mumps w liczbach</strong>: skąd się bierze i ile go widać.</li>
+      <li><strong>Ściśnięcie przednie kontra tylne</strong> — czym różnią się optycznie, a nie tylko wizualnie.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Kadr · który współczynnik do której matrycy</div>
+    <h2>Ściśnięcie w liczbach</h2>
+
+    <p>Cały rachunek na kadr mieści się w jednym mnożeniu: <strong>proporcja obrazu po rozciągnięciu to proporcja matrycy razy współczynnik</strong>. Poniższa tabela robi to dla dwóch najczęstszych proporcji rejestracji.</p>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead>
+          <tr><th>Ściśnięcie</th><th class="num">Na matrycy 4:3</th><th class="num">Na matrycy 16:9</th><th>Do czego pasuje</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1,33×</td><td class="num">1,78:1</td><td class="num">2,37:1</td><td>16:9 → format szerokoekranowy</td></tr>
+          <tr><td>1,50×</td><td class="num">2,00:1</td><td class="num">2,67:1</td><td>4:3 → format pośredni</td></tr>
+          <tr><td>1,60×</td><td class="num">2,13:1</td><td class="num">2,84:1</td><td>kompromis, wymaga przycięcia</td></tr>
+          <tr><td>1,80×</td><td class="num">2,40:1</td><td class="num">3,20:1</td><td>4:3 → format szerokoekranowy</td></tr>
+          <tr><td>2,00×</td><td class="num">2,67:1</td><td class="num">3,56:1</td><td>4:3 z przycięciem, klasyka kina</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Pogrubione w praktyce są dwa wiersze: 1,33× dla matryc 16:9 i 1,8× dla otwartej klatki 4:3 — obie trafiają w 2,39:1 niemal dokładnie, bez marnowania pikseli na przycięcie.</p>
+
+    <p>Wiersz ostatni wymaga komentarza, bo bywa źródłem nieporozumień. Klasyczne dwukrotne ściśnięcie na klatce 4:3 daje 2,67:1, czyli <em>więcej</em> niż format szerokoekranowy — nadmiar przycina się w górze i na dole. W kinie taśmowym było to naturalne, bo klatka i tak miała zapas. Na matrycy cyfrowej oznacza to wyrzucenie części zarejestrowanych pikseli, więc <span class="term-violet">dwójka na małej matrycy kosztuje rozdzielczość</span>.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Głębia · liczba, którą najczęściej się pomija</div>
+    <h2>Kadr krótszej ogniskowej, głębia dłuższej</h2>
+
+    <p>To jest najważniejsza konsekwencja anamorfu i zarazem najrzadziej wymieniana. Wynika wprost z tego, że cylinder zmienia ogniskową <em>tylko w jednej osi</em>.</p>
+
+    <p>Anamorf opisany jako „50 mm” ma pięćdziesiąt milimetrów w pionie. W poziomie, dzięki ściśnięciu dwukrotnemu, obejmuje dwa razy szersze pole — czyli tyle, ile obiektyw sferyczny o ogniskowej dwadzieścia pięć. Ale głębia ostrości nie idzie za polem widzenia; idzie za średnicą źrenicy, jak ustalono w <a href="../rozdzialy/rozdzial-08-glebia-ostrosci.html">Rozdziale 8</a> i policzono w <a href="dodatek-ae-geometria-zrenic.html">Dodatku AE</a>.</p>
+
+    <div class="formula">
+      pole widzenia jak <span class="vec" data-tip="Ogniskowa anamorfu, mierzona w pionie">f</span>/<span class="vec" data-tip="Współczynnik ściśnięcia">s</span>  ·  głębia jak <span class="vec" data-tip="Ogniskowa anamorfu">f</span>
+      <span class="sub">f — nominalna ogniskowa anamorfu (pionowa). s — współczynnik ściśnięcia. Anamorf 50 mm o ściśnięciu 2× kadruje w poziomie jak sferyczna dwudziestka piątka, a rozmywa tło jak pięćdziesiątka.</span>
+    </div>
+
+    <div class="worked">
+      <div class="wlabel">Anamorf 50 mm T2 kontra sferyk o tym samym kadrze</div>
+      <p class="step"><span class="k">anamorf</span> <span class="v">pole poziome jak 25 mm, źrenica pionowa 50/2 = </span><span class="result">25 mm</span></p>
+      <p class="step"><span class="k">sferyk 25 mm T2</span> <span class="v">to samo pole, źrenica 25/2 = </span><span class="result">12,5 mm</span></p>
+      <p class="step"><span class="k">stosunek źrenic</span> <span class="v">25 / 12,5 = </span><span class="result">2×</span></p>
+      <p class="check">Przy identycznym kadrze i identycznej liczbie przysłony anamorf ma <strong>dwukrotnie większą źrenicę</strong> w pionie — czyli głębię płytszą o dwie działki. To jest cała tajemnica „kinowego” wrażenia anamorfu i jedyna jego przewaga, której nie da się kupić inaczej niż większym formatem. Warto zauważyć, że jest to dokładnie ten sam mechanizm, co przewaga dużego formatu z <a href="dodatek-aa-formaty-i-ekwiwalencja.html">Dodatku AA</a>: nie magia, tylko większa dziura.</p>
+    </div>
+
+    <p>Stąd też bierze się asymetria rozmycia. Źrenica ma dwie różne średnice, więc rozmycie w pionie jest <span class="term-cyan">tyle razy większe od poziomego, ile wynosi współczynnik</span> — i to jest ta sama liczba, która opisuje proporcję owalu. Jedna przyczyna, trzy objawy: kadr, owal i głębia.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Mumps · skąd i ile</div>
+    <h2>Dlaczego twarz puchnie przy zbliżeniu</h2>
+
+    <p>Nakładka anamorficzna jest układem <strong>afokalnym</strong>: nie tworzy obrazu, tylko przekształca wiązkę. Warunek ten jest spełniony dokładnie dla światła przychodzącego z nieskończoności, czyli równoległego.</p>
+
+    <p>Przy bliskim przedmiocie wiązka wchodząca do nakładki jest rozbieżna, a nie równoległa. Nakładka przestaje wtedy być afokalna i <span class="term-violet">jej rzeczywisty współczynnik ściśnięcia spada poniżej nominalnego</span>. Obraz jest ściśnięty słabiej, niż zakłada projektor albo postprodukcja — a te rozciągają go zawsze o stałą wartość.</p>
+
+    <div class="worked">
+      <div class="wlabel">Co robi kilkuprocentowy spadek ściśnięcia</div>
+      <p class="step"><span class="k">nominalnie</span> <span class="v">ściśnięcie 2,00×, rozciągnięcie 2,00× → </span><span class="result">bez zmian</span></p>
+      <p class="step"><span class="k">przy bliskiej ostrości</span> <span class="v">ściśnięcie spada do ok. 1,90×</span></p>
+      <p class="step"><span class="k">po rozciągnięciu</span> <span class="v">2,00 / 1,90 = </span><span class="result">+5% szerokości</span></p>
+      <p class="step"><span class="k">na twarzy 20 cm</span> <span class="v">20 × 1,05 = </span><span class="result">21 cm</span></p>
+      <p class="check">Centymetr na twarzy brzmi niewiele, ale oko jest na proporcje twarzy wyczulone jak na nic innego — i dlatego akurat ta wada dostała własną nazwę. Wartość 1,90× jest tu przykładowa i służy pokazaniu skali; rzeczywisty spadek zależy od konstrukcji i bywa mniejszy. <strong>Kierunek jest natomiast zawsze ten sam</strong>: przy bliskiej ostrości obraz wychodzi rozciągnięty, nigdy zwężony.</p>
+    </div>
+
+    <p>Historycznie rozwiązano to <em>sprzężonym ostrzeniem</em>: pierścień ostrości porusza jednocześnie obiektyw sferyczny i grupę w nakładce, tak żeby współczynnik został stały. Kosztuje to drugą krzywkę i drugi mechanizm — i to jest jeden z konkretnych powodów, dla których anamorf kinowy jest tak drogi.</p>
+
+    <p>Dla pracy z materiałem wniosek jest prosty i tani w realizacji: jeśli plate pochodzi ze starego anamorfu i element CG ma siedzieć na twarzy, <strong>sprawdź skalę w poziomie osobno dla ujęć bliskich i dalekich</strong>. Poprawka jest jednym mnożnikiem, ale bez niej element rozjedzie się dokładnie w zbliżeniach.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Konstrukcja · dwie szkoły, jedna różnica</div>
+    <h2>Przednie kontra tylne — po stronie optyki</h2>
+
+    <p>Różnicę widać w obrazie, ale jej przyczyna jest jedna i czysto geometryczna: <strong>po której stronie przysłony stoi cylinder</strong>.</p>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead>
+          <tr><th>Cecha</th><th>Ściśnięcie przednie</th><th>Ściśnięcie tylne</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Źrenica wejściowa</td><td>eliptyczna</td><td>okrągła</td></tr>
+          <tr><td>Bokeh po rozciągnięciu</td><td>owalne, w proporcji ściśnięcia</td><td>okrągłe</td></tr>
+          <tr><td>Głębia w obu osiach</td><td>różna</td><td>taka sama</td></tr>
+          <tr><td>Poziome smugi</td><td>tak</td><td>nie</td></tr>
+          <tr><td>Mumps</td><td>tak, o ile brak sprzężenia</td><td>nie</td></tr>
+          <tr><td>Średnica cylindra</td><td>pełna szerokość wiązki</td><td>wiązka już zwężona</td></tr>
+          <tr><td>Masa i cena</td><td>wysokie</td><td>umiarkowane</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Pierwszy wiersz jest przyczyną wszystkich pozostałych poza dwoma ostatnimi, które wynikają wprost z tego, gdzie wiązka jest szeroka.</p>
+
+    <p>Warto zwrócić uwagę, że tabela nie ma wiersza „kadr”. Kadr wychodzi identyczny w obu przypadkach — i to jest dokładnie powód, dla którego ściśnięcie tylne w ogóle się stosuje: jest tańszym sposobem na uzyskanie tej samej proporcji obrazu. <span class="term-cyan">Kupuje się nim format, a nie charakter</span>, i tylko brak tego rozróżnienia sprawia, że bywa źródłem rozczarowań.</p>
+
+    <p>Istnieje jeszcze trzecia droga, wymieniona tu dla porządku: obiektyw sferyczny z <strong>eliptyczną przysłoną</strong>. Nie ściska niczego, więc nie daje ani formatu, ani asymetrycznej głębi — daje wyłącznie owalne bokeh, bo źrenica jest eliptyczna z innego powodu. Jest to najtańszy sposób kupienia jednego z trzech objawów bez pozostałych dwóch, i przy dopasowywaniu renderu warto umieć go rozpoznać: owal bez różnicy głębi w osiach oznacza właśnie taką konstrukcję.</p>
+  </div>
 
   <div class="site-nav">
     <a href="../index.html">← Spis treści</a>

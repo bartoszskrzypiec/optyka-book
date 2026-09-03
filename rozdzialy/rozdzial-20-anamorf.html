@@ -43,7 +43,261 @@ window.SKY3D_MESSAGES = {
   <h1>Anamorf: cylinder w torze optycznym</h1>
   <p class="subtitle">Anamorf powstał z oszczędności na taśmie, a przetrwał jako estetyka. Wszystko, co w nim lubimy — owalne bokeh, poziome smugi, dziwny oddech — to skutki uboczne jednej cylindrycznej soczewki.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li><strong>Anamorf powstał z oszczędności na taśmie.</strong> Cylindryczna soczewka ściska obraz w poziomie, więc szeroki kadr mieści się na wąskiej klatce. Wszystko, co dziś nazywamy „looku anamorficznym”, jest skutkiem ubocznym tego jednego elementu.</li>
+      <li>Owalne bokeh nie jest efektem, tylko konsekwencją zdania z <a href="rozdzial-09-bokeh.html">Rozdziału 9</a>: <span class="term-amber">nieostry punkt jest obrazem źrenicy</span>. Cylinder ściska źrenicę w poziomie, więc krążek wychodzi owalny — dokładnie w proporcji ściśnięcia.</li>
+      <li>Decyduje <strong>położenie cylindra względem przysłony</strong>. Przed nią — owalne bokeh, poziome smugi i mumps. Za nią — kadr się zgadza, a charakteru nie ma.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Pochodzenie · rachunek, nie estetyka</div>
+    <h2>Po co komu cylinder w torze optycznym</h2>
+
+    <p>W latach pięćdziesiątych kino potrzebowało szerokiego kadru, a miało wąską klatkę filmu. Rozwiązanie prostsze — szersza taśma — oznaczało wymianę wszystkich kamer i wszystkich projektorów na świecie. Anamorf był rozwiązaniem tańszym: <strong>ścisnąć szeroki obraz do istniejącej klatki i rozciągnąć go z powrotem w projektorze</strong>.</p>
+
+    <p>Robi to soczewka <span class="term-cyan">cylindryczna</span>: taka, która ma moc optyczną tylko w jednej osi. Zwykła soczewka jest wycinkiem kuli i zagina światło jednakowo we wszystkich kierunkach; cylindryczna jest wycinkiem walca i zagina tylko w poprzek jego osi. Ustawiona pionowo ściska obraz w poziomie, nie ruszając pionu.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Soczewka cylindryczna</span><span>moc tylko w jednej osi</span></div>
+      <svg viewBox="0 0 760 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Po lewej soczewka sferyczna skupia promienie w obu przekrojach jednakowo. Po prawej cylindryczna skupia w przekroju poziomym, a w pionowym przepuszcza bez zmiany.">
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b" text-anchor="middle">
+          <text x="180" y="22">SFERYCZNA</text><text x="570" y="22">CYLINDRYCZNA</text>
+        </g>
+
+        <text x="40" y="62" font-family="IBM Plex Mono" font-size="9" fill="#8b909b">przekrój poziomy</text>
+        <path d="M 180 44 Q 200 74 180 104 Q 160 74 180 44 Z" fill="#4fc3c0" fill-opacity="0.18" stroke="#4fc3c0" stroke-width="1.4"/>
+        <g stroke="#e8a33d" stroke-width="1.4" fill="none">
+          <path d="M 100 52 L 180 52 L 300 74"/><path d="M 100 96 L 180 96 L 300 74"/>
+        </g>
+        <circle cx="300" cy="74" r="3.5" fill="#e8a33d"/>
+
+        <text x="40" y="160" font-family="IBM Plex Mono" font-size="9" fill="#8b909b">przekrój pionowy</text>
+        <path d="M 180 142 Q 200 172 180 202 Q 160 172 180 142 Z" fill="#4fc3c0" fill-opacity="0.18" stroke="#4fc3c0" stroke-width="1.4"/>
+        <g stroke="#e8a33d" stroke-width="1.4" fill="none">
+          <path d="M 100 150 L 180 150 L 300 172"/><path d="M 100 194 L 180 194 L 300 172"/>
+        </g>
+        <circle cx="300" cy="172" r="3.5" fill="#e8a33d"/>
+        <text x="200" y="226" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">oba przekroje jednakowe</text>
+
+        <line x1="380" y1="16" x2="380" y2="230" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 5"/>
+
+        <path d="M 570 44 Q 590 74 570 104 Q 550 74 570 44 Z" fill="#9c82d8" fill-opacity="0.18" stroke="#9c82d8" stroke-width="1.4"/>
+        <g stroke="#e8a33d" stroke-width="1.4" fill="none">
+          <path d="M 490 52 L 570 52 L 690 74"/><path d="M 490 96 L 570 96 L 690 74"/>
+        </g>
+        <circle cx="690" cy="74" r="3.5" fill="#e8a33d"/>
+
+        <rect x="562" y="142" width="16" height="60" fill="#9c82d8" fill-opacity="0.14" stroke="#9c82d8" stroke-width="1.4"/>
+        <g stroke="#e8a33d" stroke-width="1.4" fill="none">
+          <path d="M 490 150 L 690 150"/><path d="M 490 194 L 690 194"/>
+        </g>
+        <text x="590" y="226" font-family="IBM Plex Mono" font-size="10" fill="#9c82d8" text-anchor="middle">pion przechodzi bez zmiany</text>
+      </svg>
+      <div class="diagram-caption">To jest cała różnica: jedna oś jest zaginana, druga nie. Wszystko dalsze z niej wynika.</div>
+    </div>
+
+    <p>Współczynnik ściśnięcia — po angielsku <em>squeeze</em> — mówi, ile razy obraz jest ściśnięty. Klasyczne kino używało dwójki, bo dwójka na klatce o proporcji 1,33 daje 2,67 i po przycięciu wychodzi format szerokoekranowy. Dzisiejsze wartości bywają inne, bo dzisiejsze matryce mają inne proporcje — i to jest cały powód istnienia anamorfów 1,33× i 1,5×.</p>
+
+    <p>Arytmetyka jest tu banalna i warto ją mieć w głowie, bo natychmiast tłumaczy, który współczynnik pasuje do której kamery. <strong>Proporcja kadru po rozciągnięciu to proporcja matrycy pomnożona przez współczynnik.</strong> Matryca 16:9 ma 1,78, więc anamorf 1,33× daje 2,36 — czyli praktycznie format szerokoekranowy. Otwarta klatka 4:3 ma 1,33, więc potrzebuje 1,8×, żeby trafić w to samo miejsce.</p>
+
+    <p>Stąd wniosek, który oszczędza rozczarowania przy zakupie: <span class="term-cyan">współczynnika nie wybiera się dla wyglądu, tylko pod proporcję matrycy</span>. Dwójka na matrycy 16:9 daje 3,56:1 — kadr, którego nikt nie dostarcza — więc trzeba by go przyciąć, tracąc dokładnie tę rozdzielczość, dla której się anamorfu użyło. A ponieważ wygląd zależy od współczynnika, wybór matrycy przesądza o tym, ile charakteru w ogóle będzie dostępne.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Ściśnięcie i to, co z niego wychodzi</span><span>klatka 4:3, po rozciągnięciu</span></div>
+      <div class="diagram-controls">
+        <label for="anaSqueeze">Współczynnik ściśnięcia</label>
+        <input id="anaSqueeze" type="range" min="100" max="200" step="1" value="200">
+        <span class="value-readout" id="anaOdczyt">2,00×</span>
+      </div>
+      <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Klatka zarejestrowana w proporcji 4:3 po rozciągnięciu daje kadr o proporcji zależnej od współczynnika ściśnięcia; obok kształt nieostrego światła.">
+        <text x="40" y="24" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">NA MATRYCY · ściśnięte</text>
+        <rect x="40" y="36" width="140" height="105" fill="#141619" stroke="#2a2f38" stroke-width="1.5"/>
+        <ellipse id="anaKolo" cx="110" cy="88" rx="10" ry="20" fill="#e8a33d" fill-opacity="0.5" stroke="#e8a33d"/>
+        <text x="110" y="160" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">4:3</text>
+
+        <text x="240" y="24" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">PO ROZCIĄGNIĘCIU · docelowy kadr</text>
+        <rect id="anaKadr" x="240" y="36" width="280" height="105" fill="#141619" stroke="#4fc3c0" stroke-width="1.5"/>
+        <ellipse id="anaBokeh" cx="380" cy="88" rx="10" ry="20" fill="#e8a33d" fill-opacity="0.5" stroke="#e8a33d"/>
+        <text id="anaProporcja" x="380" y="160" font-family="IBM Plex Mono" font-size="11" fill="#4fc3c0" text-anchor="middle">2,67:1</text>
+
+        <text x="580" y="24" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">ŹRENICA</text>
+        <ellipse id="anaZrenica" cx="640" cy="88" rx="26" ry="52" fill="#4fc3c0" fill-opacity="0.28" stroke="#4fc3c0" stroke-width="1.4"/>
+        <text x="640" y="160" font-family="IBM Plex Mono" font-size="9.5" fill="#4fc3c0" text-anchor="middle">ściśnięta w poziomie</text>
+
+        <text id="anaPodpis2" x="40" y="196" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">Owal jest dokładnie tak wysoki, ile wynosi współczynnik — bo obie rzeczy mają tę samą przyczynę.</text>
+        <text x="40" y="220" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">Typowe wartości: 1,33× i 1,5× do matryc 16:9, 1,8× i 2× do otwartej klatki 4:3.</text>
+      </svg>
+      <div class="diagram-caption" id="anaPodpis">Ściśnięcie 2,00× na klatce 4:3 daje po rozciągnięciu 2,67:1 — i owalne bokeh dwa razy wyższe niż szersze.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Bokeh · źrenica przestała być kołem</div>
+    <h2>Dlaczego owale są dokładnie w proporcji ściśnięcia</h2>
+
+    <p>Owalne bokeh bywa opisywane jako „efekt anamorficzny”, jakby ktoś je zaprojektował. Nie zaprojektował. Wynika w całości ze zdania, które padło w <a href="rozdzial-09-bokeh.html">Rozdziale 9</a> i od tamtej pory tłumaczy wszystko: <strong>nieostry punkt jest obrazem źrenicy</strong>.</p>
+
+    <p>W anamorfie klasycznym cylindryczne elementy stoją <span class="term-cyan">przed przysłoną</span>. Źrenica wejściowa jest więc obrazem przysłony widzianym przez cylinder — a cylinder ściska w poziomie. Okrągły otwór przysłony daje w efekcie źrenicę <strong>eliptyczną, węższą niż wyższą</strong>, i to dokładnie w tej samej proporcji, w jakiej ściskany jest obraz.</p>
+
+    <p>Reszta jest już mechaniczna. Nieostre światło rysuje kształt źrenicy, więc rysuje elipsę. Ta sama proporcja, ten sam mechanizm, jedna przyczyna dla dwóch rzeczy, które wyglądają na niezwiązane. Przy ściśnięciu dwukrotnym owale są <em>dwa razy wyższe niż szersze</em>; przy 1,33× różnica jest ledwie widoczna — i dlatego tanie anamorfy o małym współczynniku rozczarowują tych, którzy kupili je dla wyglądu.</p>
+
+    <p>Z tej samej asymetrii bierze się druga cecha, mniej opisywana i ważniejsza przy dopasowywaniu renderu: <strong>głębia ostrości nie jest taka sama w obu osiach</strong>. Szerokość stożka promieni zależy od średnicy źrenicy, a źrenica ma dwie różne średnice. Anamorf rozmywa tło mocniej w pionie niż w poziomie — co w praktyce czyta się jako „płytsza głębia niż wynikałoby z liczby przysłony”.</p>
+
+    <p>Warto zauważyć, co się dzieje z krążkiem <em>na matrycy</em>, zanim obraz zostanie rozciągnięty. Cylinder ściska naraz i scenę, i źrenicę, więc na klatce nieostre światło jest z grubsza <strong>okrągłe</strong> — a owalne robi się dopiero po rozciągnięciu, razem z całym obrazem. To jest drobiazg, który ratuje przed pomyłką przy ocenie surowego materiału: okrągłe bokeh w pliku ze ściśniętego anamorfu nie oznacza, że coś jest nie tak.</p>
+
+    <p>Druga rzecz warta zapamiętania dotyczy przymykania. Przysłona jest okrągła i mechanicznie zwykła, więc <span class="term-cyan">przymknięcie zmniejsza owal, ale nie zmienia jego proporcji</span> — bo cylinder ściska tak samo otwór duży i mały. Różni to anamorf od kociego oka z <a href="rozdzial-07-zrenice.html">Rozdziału 7</a>, które po przymknięciu znika całkowicie, i daje kolejny test rozstrzygający na gotowym materiale.</p>
+
+    <p class="deeper-inline">Rachunek na proporcję owalu, wpływ na kadr i skąd bierze się mumps — <a href="../dodatki/dodatek-j-anamorf-w-liczbach.html">Dodatek J</a>.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Konstrukcja · gdzie stoi cylinder</div>
+    <h2>Ściśnięcie przednie kontra tylne</h2>
+
+    <p>Cylinder da się postawić w dwóch miejscach i wybór między nimi rozstrzyga o wszystkim, co dalej. To jest najważniejsze rozróżnienie w tym rozdziale.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Dwa położenia cylindra</span><span>przed przysłoną albo za nią</span></div>
+      <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ściśnięcie przednie: cylinder przed przysłoną, źrenica eliptyczna, bokeh owalne. Ściśnięcie tylne: cylinder za przysłoną, źrenica okrągła, bokeh okrągłe.">
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">
+          <text x="30" y="24">ŚCIŚNIĘCIE PRZEDNIE · cylinder przed przysłoną</text>
+        </g>
+        <line x1="30" y1="72" x2="470" y2="72" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 6"/>
+        <rect x="82" y="48" width="14" height="48" fill="#9c82d8" fill-opacity="0.2" stroke="#9c82d8" stroke-width="1.4"/>
+        <text x="89" y="40" font-family="IBM Plex Mono" font-size="9" fill="#9c82d8" text-anchor="middle">cylinder</text>
+        <path d="M 170 50 Q 190 72 170 94 Q 150 72 170 50 Z" fill="#4fc3c0" fill-opacity="0.16" stroke="#4fc3c0" stroke-width="1.3"/>
+        <g stroke="#8b909b" stroke-width="3.5">
+          <line x1="240" y1="46" x2="240" y2="62"/><line x1="240" y1="82" x2="240" y2="98"/>
+        </g>
+        <text x="240" y="40" font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="middle">przysłona</text>
+        <path d="M 310 50 Q 330 72 310 94 Q 290 72 310 50 Z" fill="#4fc3c0" fill-opacity="0.16" stroke="#4fc3c0" stroke-width="1.3"/>
+        <ellipse cx="410" cy="72" rx="12" ry="26" fill="#e8a33d" fill-opacity="0.45" stroke="#e8a33d" stroke-width="1.3"/>
+        <text x="410" y="112" font-family="IBM Plex Mono" font-size="9.5" fill="#e8a33d" text-anchor="middle">źrenica eliptyczna</text>
+        <g font-family="IBM Plex Mono" font-size="9.5" fill="#7fc47f">
+          <text x="500" y="52">owalne bokeh</text><text x="500" y="68">poziome smugi</text>
+          <text x="500" y="84">oddech i mumps</text><text x="500" y="100">duży, ciężki, drogi</text>
+        </g>
+
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">
+          <text x="30" y="156">ŚCIŚNIĘCIE TYLNE · cylinder za przysłoną</text>
+        </g>
+        <line x1="30" y1="200" x2="470" y2="200" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 6"/>
+        <path d="M 130 178 Q 150 200 130 222 Q 110 200 130 178 Z" fill="#4fc3c0" fill-opacity="0.16" stroke="#4fc3c0" stroke-width="1.3"/>
+        <g stroke="#8b909b" stroke-width="3.5">
+          <line x1="200" y1="174" x2="200" y2="190"/><line x1="200" y1="210" x2="200" y2="226"/>
+        </g>
+        <rect x="272" y="176" width="14" height="48" fill="#9c82d8" fill-opacity="0.2" stroke="#9c82d8" stroke-width="1.4"/>
+        <text x="279" y="168" font-family="IBM Plex Mono" font-size="9" fill="#9c82d8" text-anchor="middle">cylinder</text>
+        <circle cx="410" cy="200" r="20" fill="#e8a33d" fill-opacity="0.45" stroke="#e8a33d" stroke-width="1.3"/>
+        <text x="410" y="240" font-family="IBM Plex Mono" font-size="9.5" fill="#e8a33d" text-anchor="middle">źrenica okrągła</text>
+        <g font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">
+          <text x="500" y="180">bokeh okrągłe</text><text x="500" y="196">brak smug</text>
+          <text x="500" y="212">mniejszy i tańszy</text><text x="500" y="228">kadr identyczny</text>
+        </g>
+      </svg>
+      <div class="diagram-caption">Oba dają ten sam kadr po rozciągnięciu. Różnią się wszystkim, co dzieje się poza ostrością.</div>
+    </div>
+
+    <p><strong>Ściśnięcie przednie</strong> daje pełny zestaw cech, dla których anamorf się wybiera. Cylinder pracuje na całej szerokiej wiązce, więc musi być duży — stąd rozmiar, masa i cena. Ale to on ściska źrenicę i to on, mając ogromne płaskie powierzchnie ustawione w jednej osi, rozprasza światło w <span class="term-cyan">poziomą smugę</span>, o której w <a href="rozdzial-26-smugi-anamorficzne.html">Rozdziale 26</a>.</p>
+
+    <p><strong>Ściśnięcie tylne</strong> stawia cylinder za przysłoną, gdzie wiązka jest już wąska. Element jest mały i tani, kadr wychodzi identyczny — a charakteru nie ma żadnego, bo źrenica pozostaje okrągła. Jest to rozwiązanie uczciwe technicznie i rozczarowujące wizualnie, i warto o nim wiedzieć przed zakupem.</p>
+
+    <p>Rozróżnienie da się sprawdzić bez zaglądania w dane, jednym zdjęciem punktowego światła poza ostrością. Owal oznacza cylinder przed przysłoną, koło — za nią. Nie ma tu przypadków pośrednich, bo <span class="term-cyan">źrenica albo jest obrazem przysłony widzianym przez cylinder, albo nie jest</span>. Ten sam test rozstrzyga o tym, czego można się spodziewać po smugach: konstrukcja bez eliptycznej źrenicy nie da ich w ogóle.</p>
+
+    <p>Z przedniego ściśnięcia bierze się też wada, która ma własną nazwę. Przy ostrzeniu na blisko współczynnik ściśnięcia lekko się zmienia, więc twarz w zbliżeniu <strong>rozszerza się</strong> po rozciągnięciu obrazu. Nazywa się to <span class="term-violet">mumps</span>, od świnki, i było jedną z głównych wad wczesnego kina szerokoekranowego. Współczesne konstrukcje rozwiązują to sprzężonym ostrzeniem obu grup — i to jest jeden z powodów, dla których anamorf kinowy kosztuje tyle, co samochód.</p>
+
+    <button class="advanced-btn" data-modal-target="adv-anamorf-hist">Zaawansowane: dlaczego anamorf przetrwał własną przyczynę</button>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">W CG · kolejność, która ratuje ujęcie</div>
+    <h2>Anamorf w pipelinie</h2>
+
+    <p>Materiał anamorficzny wymaga jednej dodatkowej operacji i jednej dodatkowej ostrożności. Obie są proste, o ile wykona się je we właściwej kolejności — a kolejność jest wymuszona, nie umowna.</p>
+
+    <p><strong>Rozciągnięcie idzie przed odprostowaniem.</strong> Model dystorsji promieniowej z <a href="../dodatki/dodatek-g-modele-dystorsji.html">Dodatku G</a> zakłada symetrię obrotową: przesunięcie punktu zależy wyłącznie od odległości od środka. Obraz ściśnięty tej symetrii nie ma, więc dopasowanie modelu do niego daje wynik bez sensu. Najpierw rozciągnij o znany współczynnik, dopiero potem mierz i odwracaj dystorsję.</p>
+
+    <p><strong>Renderuj w proporcjach docelowych, nie ściśniętych.</strong> To jest pułapka, w którą wpada się raz. Renderer z kamerą o ściśniętych proporcjach policzy poprawnie geometrię, ale <span class="term-violet">rozmycie ruchu i głębia ostrości wyjdą anizotropowe w złą stronę</span> — bo silnik rozmywa w pikselach obrazu, a piksele obrazu ściśniętego nie są kwadratowe w scenie. Renderuj docelowo i ściśnij na końcu, jeśli ściśnięcie jest w ogóle potrzebne w dostawie.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Kolejność operacji</span><span>rozciągnięcie przed odprostowaniem</span></div>
+      <svg viewBox="0 0 760 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Poprawna kolejność: plate ściśnięty, rozciągnięcie, odprostowanie, tracking i render, ponowne zniekształcenie, złożenie na oryginale. Poniżej kolejność błędna, w której odprostowanie idzie przed rozciągnięciem.">
+        <defs><marker id="a20" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8b909b"/></marker></defs>
+
+        <text x="30" y="24" font-family="IBM Plex Mono" font-size="10" fill="#7fc47f">POPRAWNIE</text>
+        <g font-family="IBM Plex Mono" font-size="10">
+          <rect x="30" y="38" width="86" height="34" fill="#20242c" stroke="#6e93be" stroke-width="1.4"/>
+          <text x="73" y="59" fill="#6e93be" text-anchor="middle">plate</text>
+          <rect x="156" y="38" width="106" height="34" fill="#20242c" stroke="#9c82d8" stroke-width="1.6"/>
+          <text x="209" y="59" fill="#9c82d8" text-anchor="middle">rozciągnięcie</text>
+          <rect x="302" y="38" width="106" height="34" fill="#20242c" stroke="#9c82d8" stroke-width="1.4"/>
+          <text x="355" y="59" fill="#9c82d8" text-anchor="middle">odprostowanie</text>
+          <rect x="448" y="38" width="96" height="34" fill="#20242c" stroke="#e8a33d" stroke-width="1.4"/>
+          <text x="496" y="59" fill="#e8a33d" text-anchor="middle">render CG</text>
+          <rect x="584" y="38" width="140" height="34" fill="#20242c" stroke="#4fc3c0" stroke-width="1.4"/>
+          <text x="654" y="59" fill="#4fc3c0" text-anchor="middle">powrót do oryginału</text>
+        </g>
+        <g stroke="#8b909b" stroke-width="1.4" fill="none" marker-end="url(#a20)">
+          <path d="M 116 55 L 152 55"/><path d="M 262 55 L 298 55"/>
+          <path d="M 408 55 L 444 55"/><path d="M 544 55 L 580 55"/>
+        </g>
+
+        <text x="30" y="124" font-family="IBM Plex Mono" font-size="10" fill="#d8695f">BŁĘDNIE</text>
+        <g font-family="IBM Plex Mono" font-size="10">
+          <rect x="30" y="138" width="86" height="34" fill="#20242c" stroke="#6e93be" stroke-width="1.4"/>
+          <text x="73" y="159" fill="#6e93be" text-anchor="middle">plate</text>
+          <rect x="156" y="138" width="106" height="34" fill="#20242c" stroke="#d8695f" stroke-width="1.6"/>
+          <text x="209" y="159" fill="#d8695f" text-anchor="middle">odprostowanie</text>
+          <rect x="302" y="138" width="106" height="34" fill="#20242c" stroke="#d8695f" stroke-width="1.4"/>
+          <text x="355" y="159" fill="#d8695f" text-anchor="middle">rozciągnięcie</text>
+        </g>
+        <g stroke="#8b909b" stroke-width="1.4" fill="none" marker-end="url(#a20)">
+          <path d="M 116 155 L 152 155"/><path d="M 262 155 L 298 155"/>
+        </g>
+        <text x="428" y="152" font-family="IBM Plex Mono" font-size="10.5" fill="#d8695f">Model dystorsji dopasowany</text>
+        <text x="428" y="168" font-family="IBM Plex Mono" font-size="10.5" fill="#d8695f">do obrazu bez symetrii obrotowej.</text>
+        <text x="428" y="184" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">Wynik wygląda prawie dobrze — i nie jest.</text>
+
+        <text x="30" y="216" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">Kolejność nie jest umowna: wynika z założenia, które model dystorsji przyjmuje o kadrze.</text>
+      </svg>
+      <div class="diagram-caption">Jedno przestawienie dwóch kroków. Skutek widać dopiero na krawędziach kadru, czyli po dwóch dniach pracy.</div>
+    </div>
+
+    <p>Zostaje pytanie, jak odtworzyć sam charakter. Odpowiedź jest zaskakująco tania, bo wszystko sprowadza się do jednej rzeczy: <strong>podaj rendererowi eliptyczną źrenicę</strong>. Z niej wyjdzie owalne bokeh i asymetryczna głębia, obie w poprawnej proporcji, bez żadnego dokładania po fakcie. To ta sama tekstura źrenicy, którą <a href="../dodatki/dodatek-af-katalog-bokeh.html">Dodatek AF</a> opisuje dla wszystkich pozostałych kształtów.</p>
+
+    <p>Poza zasięgiem tego mechanizmu zostają dwie rzeczy: poziome smugi i mumps. Pierwsze dokłada się w compie jako osobną warstwę, o czym w <a href="rozdzial-26-smugi-anamorficzne.html">Rozdziale 26</a>. Drugiego zwykle nie odtwarza się wcale, bo współczesne szkło go nie ma — a jeśli plate pochodzi ze starego anamorfu i mumps w nim jest, prostsze bywa dopasowanie skali elementu klatka po klatce niż symulowanie przyczyny.</p>
+  </div>
+
+  <div class="panel practice">
+    <div class="panel-label">Z praktyki</div>
+    <p><strong>Zmierz proporcję owalu, żeby odczytać współczynnik.</strong> Wysokość podzielona przez szerokość nieostrego światła daje wprost squeeze — bez metryczki i bez zgadywania. Jeśli wychodzi około jedynki, a materiał ma proporcje szerokoekranowe, to albo ściśnięcie było tylne, albo kadr wycięto ze sferycznego.</p>
+    <p><strong>Sprawdź, czy plate jest już rozciągnięty.</strong> Materiał bywa dostarczany i tak, i tak. Najszybszy test to okrągły przedmiot w kadrze — koło zegara, talerz, opona. Jeśli jest owalny, plate jest jeszcze ściśnięty i wszystko, co zrobisz przed rozciągnięciem, będzie liczone w złych proporcjach.</p>
+    <p><strong>Nie dokładaj owalnego bokeh filtrem po renderze.</strong> Rozciągnięcie gotowego, okrągłego bokeh daje owale — ale rozciąga też ziarno, krawędzie i wszystko inne. Eliptyczna źrenica w kamerze kosztuje tyle samo i daje wynik poprawny w każdym szczególe, łącznie z głębią.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>soczewka cylindryczna</dt>
+      <dd>Soczewka o mocy optycznej tylko w jednej osi. Wycinek walca, nie kuli.</dd>
+      <dt>współczynnik ściśnięcia (squeeze)</dt>
+      <dd>Ile razy obraz jest ściśnięty w poziomie. Typowo 1,33×, 1,5×, 1,8× albo 2×.</dd>
+      <dt>ściśnięcie przednie</dt>
+      <dd>Cylinder przed przysłoną. Daje eliptyczną źrenicę, a z niej owalne bokeh, smugi i mumps.</dd>
+      <dt>ściśnięcie tylne</dt>
+      <dd>Cylinder za przysłoną. Ten sam kadr, okrągła źrenica, brak charakterystycznych cech.</dd>
+      <dt>mumps</dt>
+      <dd>Rozszerzanie się twarzy przy bliskiej ostrości, wynikające ze zmiany współczynnika ściśnięcia razem z odległością.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Część IV kończy się pytaniem najbardziej praktycznym: skoro znamy już wszystkie kompromisy, to czym właściwie różnią się rodziny szkła kinowego, o których mówi się na planie jak o charakterach? W <a href="rozdzial-21-rodziny-szkla-kinowego.html">następnym rozdziale</a> ustawimy cztery kryteria, które da się sprawdzić, i zobaczymy, że każda nazwa jest konkretnym punktem w kompromisach z poprzednich sześciu rozdziałów.</p>
+  </div>
 
   <div class="deeper">
     <div class="deeper-label">Idź głębiej</div>
@@ -56,8 +310,76 @@ window.SKY3D_MESSAGES = {
       <a class="nav-next" href="rozdzial-21-rodziny-szkla-kinowego.html">Następny →</a>
   </div>
 
+  <template id="adv-anamorf-hist">
+    <h3>Dlaczego anamorf przetrwał własną przyczynę</h3>
+
+    <p>Anamorf rozwiązywał konkretny problem: jak zmieścić szeroki kadr na wąskiej klatce. Problem zniknął całkowicie. Matryce cyfrowe mają dowolne proporcje, a kadrowanie kosztuje jedno pole w menu. <strong>Mimo to anamorfów używa się dziś więcej niż w latach osiemdziesiątych</strong> — i warto rozumieć, dlaczego, bo to jest przypadek wzorcowy dla całej tej książki.</p>
+
+    <p>Powód jest taki, że przez pół wieku ściśnięcie było <em>skorelowane</em> z produkcją drogą. Anamorf oznaczał film kinowy, duży budżet i szeroki ekran; sferyk oznaczał telewizję. Widz nauczył się owalnych bokeh i poziomych smug jako <span class="term-cyan">sygnału, że ogląda kino</span>, nie mając pojęcia, że patrzy na skutki uboczne oszczędności na taśmie.</p>
+
+    <p>Kiedy przyczyna techniczna zniknęła, sygnał został. Dziś kupuje się go wprost: producent projektuje cylinder nie po to, żeby ścisnąć obraz, tylko po to, żeby dać owale i smugi. Istnieją nawet obiektywy sferyczne z eliptyczną przysłoną — udające anamorf bez ściskania czegokolwiek.</p>
+
+    <p>Wniosek warto zapamiętać, bo dotyczy nie tylko anamorfu. <strong>Cechy obrazu, które dziś nazywamy stylem, prawie zawsze zaczynały jako ograniczenia.</strong> Ziarno było wadą emulsji, flara wadą powłok, płytka głębia skutkiem słabej czułości. Kiedy ograniczenie znika, cecha zostaje jako znaczenie — i wtedy trzeba ją produkować celowo. To jest dokładnie ta praca, którą wykonuje się w compie.</p>
+  </template>
+
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-panel">
+      <button class="modal-close" data-modal-close aria-label="Zamknij">×</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
 </div>
 
 <script src="../assets/interactive.js"></script>
+<script>
+/* Sciskanie anamorficzne. Proporcja kadru po rozciagnieciu to proporcja
+   matrycy razy wspolczynnik — tu matryca 4:3. Owal bokeh ma wysokosc do
+   szerokosci rowna wspolczynnikowi, bo obie rzeczy maja te sama przyczyne:
+   cylinder sciska w poziomie i obraz, i zrenice. */
+(function () {
+  var sl = document.getElementById('anaSqueeze');
+  if (!sl) return;
+  var MATRYCA = 4 / 3;
+  var X0 = 240, MAX_SZER = 280, WYS = 105, Y0 = 36;
+
+  function odswiez() {
+    var s = parseFloat(sl.value) / 100;
+    var proporcja = MATRYCA * s;
+
+    // Kadr docelowy: stala wysokosc, szerokosc z proporcji.
+    var szer = Math.min(MAX_SZER, WYS * proporcja);
+    var kadr = document.getElementById('anaKadr');
+    kadr.setAttribute('width', szer.toFixed(1));
+    var cx = X0 + szer / 2;
+    document.getElementById('anaBokeh').setAttribute('cx', cx.toFixed(1));
+    document.getElementById('anaProporcja').setAttribute('x', cx.toFixed(1));
+    document.getElementById('anaProporcja').textContent =
+      proporcja.toFixed(2).replace('.', ',') + ':1';
+
+    // Bokeh po rozciagnieciu: wysokosc do szerokosci = wspolczynnik.
+    var ry = 20, rx = ry / s;
+    document.getElementById('anaBokeh').setAttribute('rx', rx.toFixed(1));
+    document.getElementById('anaBokeh').setAttribute('ry', ry.toFixed(1));
+    // Na matrycy, przed rozciagnieciem, krazek jest okragly.
+    document.getElementById('anaKolo').setAttribute('rx', ry.toFixed(1));
+    document.getElementById('anaKolo').setAttribute('ry', ry.toFixed(1));
+    // Zrenica sciśnięta w poziomie dokladnie tak samo.
+    document.getElementById('anaZrenica').setAttribute('rx', (52 / s).toFixed(1));
+
+    document.getElementById('anaOdczyt').textContent = s.toFixed(2).replace('.', ',') + '×';
+    document.getElementById('anaPodpis2').textContent = s < 1.05
+      ? 'Przy współczynniku jeden nie ma ściśnięcia — to zwykły obiektyw sferyczny.'
+      : 'Owal jest ' + s.toFixed(2).replace('.', ',') +
+        ' raza wyższy niż szerszy — dokładnie tyle, ile wynosi współczynnik.';
+    document.getElementById('anaPodpis').textContent =
+      'Ściśnięcie ' + s.toFixed(2).replace('.', ',') + '× na klatce 4:3 daje po rozciągnięciu ' +
+      proporcja.toFixed(2).replace('.', ',') + ':1' +
+      (Math.abs(proporcja - 2.39) < 0.06 ? ' — czyli praktycznie format szerokoekranowy.' : '.');
+  }
+  sl.addEventListener('input', odswiez);
+  odswiez();
+})();
+</script>
 </body>
 </html>
