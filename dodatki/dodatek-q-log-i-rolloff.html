@@ -41,7 +41,142 @@ window.SKY3D_MESSAGES = {
   <h1>Log, rolloff i zakres dynamiczny w EV</h1>
   <p class="subtitle">Krzywe log najpopularniejszych kamer, charakterystyka gęstości negatywu i porównanie tego, co dzieje się dwie przysłony nad bielą.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">Co tu jest</div>
+    <ul>
+      <li><strong>Zakres dynamiczny w działkach</strong> — czym się go mierzy i dlaczego liczby producentów bywają nieporównywalne.</li>
+      <li><strong>Rachunek na bity</strong>: ile poziomów dostaje działka przy zapisie liniowym, a ile przy logarytmicznym.</li>
+      <li><strong>Kształt barku</strong> — trzy sposoby dołożenia zakończenia w compie i który z nich zachowuje się jak taśma.</li>
+      <li><strong>Ile trzeba przepalić</strong>, żeby przepalenie zbielało — rachunek strefy dryfu barwy.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Definicja · co się właściwie mierzy</div>
+    <h2>Zakres dynamiczny w działkach</h2>
+
+    <p>Zakres dynamiczny to stosunek największego rejestrowalnego sygnału do najmniejszego odróżnialnego od szumu. Wyrażony w działkach jest logarytmem dwójkowym tego stosunku:</p>
+
+    <div class="formula">
+      DR = log₂(<span class="vec" data-tip="Pojemność studni w elektronach">N<sub>max</sub></span> / <span class="vec" data-tip="Szum odczytu w elektronach">σ<sub>odczyt</sub></span>)
+      <span class="sub">N<sub>max</sub> — pojemność studni piksela w elektronach. σ<sub>odczyt</sub> — szum odczytu, też w elektronach. Wynik w działkach.</span>
+    </div>
+
+    <p>Rachunek jest prosty, ale kryje się w nim pułapka, przez którą liczby producentów bywają nieporównywalne: <strong>dolną granicę wyznacza przyjęte kryterium, a nie fizyka</strong>. Jeśli za granicę uznać sygnał równy szumowi (stosunek 1:1), zakres wyjdzie o dwie do trzech działek większy niż przy kryterium użytecznym w praktyce, czyli stosunku około 5:1.</p>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead>
+          <tr><th>Studnia</th><th class="num">σ = 2 e⁻</th><th class="num">σ = 4 e⁻</th><th class="num">σ = 8 e⁻</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>20 000 e⁻</td><td class="num">13,3 dz</td><td class="num">12,3 dz</td><td class="num">11,3 dz</td></tr>
+          <tr><td>40 000 e⁻</td><td class="num">14,3 dz</td><td class="num">13,3 dz</td><td class="num">12,3 dz</td></tr>
+          <tr><td>80 000 e⁻</td><td class="num">15,3 dz</td><td class="num">14,3 dz</td><td class="num">13,3 dz</td></tr>
+          <tr><td>150 000 e⁻</td><td class="num">16,2 dz</td><td class="num">15,2 dz</td><td class="num">14,2 dz</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Zakres przy kryterium 1:1. Dla kryterium użytecznego (5:1) odejmij 2,3 działki od każdej wartości.</p>
+
+    <p>Z tabeli widać dwie rzeczy. Po pierwsze, <strong>zakres rośnie z pojemnością studni, a ta rośnie z polem piksela</strong> — czyli z powierzchnią matrycy przy tej samej rozdzielczości. Jest to ten sam argument, który w <a href="dodatek-n-szum-w-liczbach.html">Dodatku N</a> daje przewagę większego formatu w szumie; obie korzyści mają jedną przyczynę.</p>
+
+    <p>Po drugie, <span class="term-violet">podwojenie czegokolwiek zmienia wynik o jedną działkę</span> — a różnica między dobrą a przeciętną matrycą to zwykle dwie działki, czyli czynnik cztery. Deklaracje różniące się o pół działki są w praktyce deklaracjami o wyborze kryterium.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Bity · dlaczego log w ogóle powstał</div>
+    <h2>Ile poziomów dostaje działka</h2>
+
+    <p>Przy zapisie liniowym na <em>b</em> bitów całkowita liczba poziomów wynosi 2<sup>b</sup>, a działka położona <em>k</em> działek poniżej maksimum dostaje ich:</p>
+
+    <div class="formula">
+      L<sub>lin</sub>(k) = 2<sup><span class="vec" data-tip="Liczba bitów">b</span></sup> · 2<sup>−<span class="vec" data-tip="Ile działek poniżej maksimum">k</span></sup> · ½
+      <span class="sub">b — liczba bitów. k — położenie działki liczone w dół od maksimum (k = 0 to najwyższa działka). Czynnik ½ bierze się stąd, że działka obejmuje odcinek od połowy do całości swojego zakresu.</span>
+    </div>
+
+    <p>Przy zapisie logarytmicznym podział jest równy: każda z <em>D</em> działek zakresu dostaje 2<sup>b</sup>/<em>D</em> poziomów, niezależnie od położenia.</p>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead>
+          <tr><th>Działka</th><th class="num">10 bitów liniowo</th><th class="num">10 bitów w log (14 dz)</th><th class="num">Stosunek</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>najwyższa</td><td class="num">512</td><td class="num">73</td><td class="num">0,14×</td></tr>
+          <tr><td>−2 dz</td><td class="num">128</td><td class="num">73</td><td class="num">0,57×</td></tr>
+          <tr><td>−3 dz</td><td class="num">64</td><td class="num">73</td><td class="num">1,14×</td></tr>
+          <tr><td>−5 dz</td><td class="num">16</td><td class="num">73</td><td class="num">4,6×</td></tr>
+          <tr><td>−8 dz</td><td class="num">2</td><td class="num">73</td><td class="num">36×</td></tr>
+          <tr><td>−10 dz</td><td class="num">&lt;1</td><td class="num">73</td><td class="num">—</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Liczba poziomów kodowych przypadająca na jedną działkę. Punkt zrównania leży około trzeciej działki poniżej maksimum; poniżej niego log wygrywa, powyżej traci.</p>
+
+    <p>Tabela mówi trzy rzeczy naraz. <strong>Log nie jest darmowy</strong> — górne działki tracą rozdzielczość, i to znacznie. <strong>Log jest opłacalny</strong>, bo górne działki i tak mają najwięcej fotonów, a więc najlepszy stosunek sygnału do szumu; poziomów potrzebują tam najmniej. I wreszcie: <span class="term-cyan">poniżej ósmej działki zapis liniowy na dziesięciu bitach po prostu przestaje działać</span>, bo dwa poziomy na działkę to widoczne pasy.</p>
+
+    <p>Stąd też wynika, dlaczego szesnaście bitów zmiennoprzecinkowych rozwiązuje problem inaczej i lepiej: wykładnik przechowuje działkę, a mantysa — położenie w niej. Jest to w istocie zapis logarytmiczny z liniowym doprecyzowaniem, i dlatego materiał zmiennoprzecinkowy można trzymać liniowo bez strat.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Bark · trzy sposoby i jeden dobry</div>
+    <h2>Kształt zakończenia w compie</h2>
+
+    <p>Zakończenie dokłada się funkcją, która dla małych wartości jest bliska tożsamości, a dla dużych dąży do jedynki. Trzy używane kandydatki różnią się tym, jak długo trwa przejście.</p>
+
+    <div class="formula">
+      Reinhard:&nbsp; y = <span class="vec" data-tip="Wartość liniowa">x</span> / (1 + <span class="vec" data-tip="Wartość liniowa">x</span>)
+      <span class="sub">Najkrótsze przejście. Osiąga 0,5 przy x = 1 i 0,9 przy x = 9. Nachylenie spada już od zera, więc kontrast obniża się w całym zakresie, nie tylko w światłach.</span>
+    </div>
+
+    <div class="formula">
+      wykładnicza:&nbsp; y = 1 − e<sup>−<span class="vec" data-tip="Wartość liniowa">x</span></sup>
+      <span class="sub">Nachylenie jednostkowe przy zerze, więc cienie zostają nietknięte. Osiąga 0,9 przy x = 2,3 i 0,99 przy x = 4,6 — czyli około dwie działki na przejście.</span>
+    </div>
+
+    <div class="formula">
+      z progiem:&nbsp; y = <span class="vec" data-tip="Wartość liniowa">x</span> dla <span class="vec" data-tip="Wartość liniowa">x</span> &lt; <span class="vec" data-tip="Próg, poniżej którego nic się nie dzieje">p</span>,&nbsp; y = <span class="vec" data-tip="Próg">p</span> + (1 − <span class="vec" data-tip="Próg">p</span>)(1 − e<sup>−(<span class="vec" data-tip="Wartość liniowa">x</span>−<span class="vec" data-tip="Próg">p</span>)/(1−<span class="vec" data-tip="Próg">p</span>)</sup>) powyżej
+      <span class="sub">p — próg, zwykle 0,6–0,8. Poniżej progu obraz jest nietknięty, powyżej wygina się gładko. Pierwsza pochodna jest ciągła w punkcie p, więc nie ma widocznego załamania.</span>
+    </div>
+
+    <p>Trzecia jest tą, która zachowuje się jak taśma, i z jednego konkretnego powodu: <strong>taśma ma odcinek prostoliniowy</strong>. Charakterystyka negatywu biegnie prosto przez większość zakresu i wygina się dopiero na końcu — dwie pierwsze funkcje wyginają się od samego początku, przez co obniżają kontrast półtonów, czego prawdziwy nośnik nie robi.</p>
+
+    <p>Wartości progu warte zapamiętania: <span class="term-amber">p = 0,7 daje przejście trwające półtorej do dwóch działek</span>, co odpowiada typowemu negatywowi. p = 0,9 daje przejście poniżej działki, czytane raczej jako miękkie obcięcie niż jako materiał. p = 0,4 rozciąga bark na blisko trzy działki, co wygląda jak film archiwalny albo jak kompresja — zależnie od reszty obrazu.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Dryf barwy · rachunek strefy</div>
+    <h2>Ile trzeba przepalić, żeby zbielało</h2>
+
+    <p>Rozdział 31 pokazuje, że kanały nasycają się kolejno i że między pierwszym a ostatnim progiem barwa przepalenia dryfuje. Szerokość tej strefy da się policzyć z barwy światła.</p>
+
+    <p>Niech kanały mają względne odpowiedzi <em>r</em>, <em>g</em>, <em>b</em> na dane światło (po zbalansowaniu bieli, więc dla światła neutralnego wszystkie równe). Kanał najsilniejszy nasyca się pierwszy; najsłabszy ostatni. Szerokość strefy w działkach to:</p>
+
+    <div class="formula">
+      Δ = log₂(max(<span class="vec" data-tip="Odpowiedzi kanałów na dane światło">r, g, b</span>) / min(<span class="vec" data-tip="Odpowiedzi kanałów">r, g, b</span>))
+      <span class="sub">Δ — ile działek dzieli nasycenie pierwszego kanału od nasycenia ostatniego. Dla światła neutralnego Δ = 0 i przepalenie bieleje natychmiast.</span>
+    </div>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead>
+          <tr><th>Źródło</th><th class="num">Δ</th><th>Barwa w strefie dryfu</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>niebo zachmurzone</td><td class="num">0,6 dz</td><td>ku cyjanowi — czerwony nasyca się ostatni</td></tr>
+          <tr><td>żarówka 2700 K</td><td class="num">1,9 dz</td><td>ku żółci, potem ku pomarańczy</td></tr>
+          <tr><td>sodowa uliczna</td><td class="num">3,4 dz</td><td>bursztyn utrzymuje się długo</td></tr>
+          <tr><td>biel referencyjna</td><td class="num">0 dz</td><td>brak — bieleje od razu</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Wartości orientacyjne, przy balansie ustawionym na światło dzienne. Δ zależy od balansu: przy balansie na żarówkę jej Δ spada niemal do zera, a niebo zyskuje.</p>
+
+    <p>Praktyczny wniosek dla compu jest jeden i wart zapisania: <strong>strefa dryfu zależy od balansu bieli, a nie tylko od źródła</strong>. Ten sam praktikabl przepala się inaczej w ujęciu zbalansowanym na dzień i na wnętrze — a element CG dopasowany do jednego z nich nie pasuje do drugiego. Wartość Δ dla konkretnego ujęcia najłatwiej odczytać wprost z plate'u, mierząc, ile działek dzieli moment nasycenia pierwszego kanału od momentu, w którym wszystkie trzy siedzą na maksimum.</p>
+
+    <p>Metoda pomiaru jest ta sama, co w <a href="dodatek-p-winietowanie-w-liczbach.html">Dodatku P</a>: kilka klatek tej samej rzeczy przy różnych ekspozycjach, odczyt trzech kanałów, porównanie. Kwadrans pracy zamiast zgadywania.</p>
+  </div>
 
   <div class="site-nav">
     <a href="../index.html">← Spis treści</a>

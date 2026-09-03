@@ -43,7 +43,247 @@ window.SKY3D_MESSAGES = {
   <h1>Zakres dynamiczny, rolloff i log</h1>
   <p class="subtitle">Taśma nie ma punktu, w którym się kończy — ma zakręt. Matryca ma ścianę. Cała praca nad „filmowym” wyglądem przepaleń jest pracą nad tą różnicą.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li><strong>Taśma nie ma punktu, w którym się kończy — ma zakręt.</strong> Gęstość rośnie coraz wolniej, aż przestaje rosnąć. Matryca rośnie liniowo i urywa się w jednej klatce: studnia jest pełna i koniec.</li>
+      <li>Cała praca nad „filmowym” wyglądem przepaleń jest pracą nad tą jedną różnicą. <span class="term-amber">Zakręt daje przejście, ściana daje krawędź</span> — a oko rozpoznaje krawędź natychmiast.</li>
+      <li><strong>Log nie dodaje zakresu.</strong> Jest sposobem zapisu, nie właściwością kamery: rozdziela dostępne bity równomiernie po działkach zamiast po jasności. Zakres jest ten sam, zmienia się to, ile z niego przetrwa zapis.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Dwa końce · zakręt kontra ściana</div>
+    <h2>Co się dzieje na górze skali</h2>
+
+    <p>Zacznijmy od tego, co właściwie ogranicza jedno i drugie, bo przyczyny są zupełnie różne.</p>
+
+    <p><strong>Matrycę ogranicza pojemność studni.</strong> Piksel gromadzi elektrony, aż zabraknie miejsca — a wtedy przestaje. Nie ma stanu pośredniego: do ostatniego elektronu odpowiedź jest liniowa, a po nim płaska. <span class="term-raster">Przejście między jednym a drugim zajmuje jedną działkę albo mniej</span>, i to jest ściana.</p>
+
+    <p>Ma to jedną własność, którą warto nazwać wprost: <strong>obcięcie jest nieodwracalne</strong>. Kiedy trzy kanały siedzą na maksimum, informacja o tym, ile światła tam było i jakiej barwy, nie istnieje. Żadne narzędzie jej nie odzyska, bo nie ma czego odzyskiwać.</p>
+
+    <p><strong>Taśmę ogranicza wyczerpywanie się kryształków.</strong> Im więcej ich już się wywołało, tym mniej zostaje do wywołania — więc każda kolejna działka światła dokłada mniej gęstości niż poprzednia. Odpowiedź nie urywa się; wygina się i asymptotycznie spłaszcza. Ten łagodny wygin nazywa się <span class="term-cyan">barkiem charakterystyki</span> i jest tym, co odróżnia obraz z taśmy od obrazu z matrycy w każdym ujęciu z jasnym oknem.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Charakterystyka nośnika</span><span>ta sama scena, dwa zakończenia</span></div>
+      <div class="diagram-controls">
+        <label for="dynEksp">Ekspozycja</label>
+        <input id="dynEksp" type="range" min="-30" max="30" step="1" value="0">
+        <span class="value-readout" id="dynOdczyt">nominalna</span>
+      </div>
+      <svg viewBox="0 0 760 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Wykres odpowiedzi nośnika: matryca rośnie liniowo i urywa się, taśma wygina się w bark i spłaszcza asymptotycznie.">
+        <line x1="80" y1="200" x2="700" y2="200" stroke="#8b909b" stroke-width="1.2"/>
+        <line x1="80" y1="30" x2="80" y2="200" stroke="#8b909b" stroke-width="1.2"/>
+        <g font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">
+          <text x="80" y="218">−6</text><text x="235" y="218">−2</text><text x="390" y="218">0</text>
+          <text x="545" y="218">+2</text><text x="700" y="218">+6 działek</text>
+        </g>
+        <text x="390" y="238" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">naświetlenie względem bieli</text>
+        <text x="30" y="36" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">zapis</text>
+
+        <line x1="80" y1="44" x2="700" y2="44" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 4"/>
+        <text x="706" y="48" font-family="IBM Plex Mono" font-size="9" fill="#8b909b">maks.</text>
+
+        <path id="dynMatryca" fill="none" stroke="#6e93be" stroke-width="2.6"/>
+        <path id="dynTasma" fill="none" stroke="#e8a33d" stroke-width="2.6"/>
+        <line id="dynZnacznik" x1="390" y1="30" x2="390" y2="200" stroke="#7fc47f" stroke-width="1.4" stroke-dasharray="4 4"/>
+
+        <text x="150" y="80" font-family="IBM Plex Mono" font-size="10" fill="#6e93be">matryca · prosta i ściana</text>
+        <text x="470" y="96" font-family="IBM Plex Mono" font-size="10" fill="#e8a33d">taśma · bark</text>
+
+        <g font-family="IBM Plex Mono" font-size="10.5">
+          <text x="90" y="256" fill="#6e93be" id="dynMat">matryca: 25% maks.</text>
+          <text x="400" y="256" fill="#e8a33d" id="dynTas">taśma: 22% maks.</text>
+        </g>
+      </svg>
+      <div class="diagram-caption" id="dynPodpis">Przy nominalnej ekspozycji obie krzywe biegną blisko siebie. Rozchodzą się dopiero powyżej bieli.</div>
+    </div>
+
+    <p>Przesuwając suwak widać rzecz, która tłumaczy praktykę zdjęciową ostatnich dekad. <strong>W dół obie krzywe zachowują się podobnie</strong> — cienie giną w szumie i w jednym, i w drugim przypadku. W górę rozchodzą się gwałtownie: taśma wciąż coś rejestruje trzy działki nad bielą, matryca już nic.</p>
+
+    <p>Stąd asymetria, którą zna każdy operator: <span class="term-violet">na taśmie prześwietlało się celowo, na cyfrze naświetla się „na światła”</span>. Nie jest to kwestia gustu ani przyzwyczajenia — jest to bezpośrednia konsekwencja tego, po której stronie krzywa jest łagodna.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Bark · dlaczego taśma ma zakręt</div>
+    <h2>Skąd bierze się łagodne zakończenie</h2>
+
+    <p>Bark charakterystyki nie jest ozdobą ani wynikiem szlachetności materiału. Ma dwie konkretne przyczyny, obie wynikające z budowy emulsji opisanej w <a href="../dodatki/dodatek-o-budowa-tasmy.html">Dodatku O</a>.</p>
+
+    <p><strong>Wyczerpywanie kryształków.</strong> Ta sama statystyka, która daje ziarno w <a href="rozdzial-29-ziarno-to-nie-szum.html">Rozdziale 29</a>, daje tu wygięcie. Im więcej kryształków już się wywołało, tym mniejsze prawdopodobieństwo, że kolejny foton trafi w nienaświetlony. Przyrost gęstości maleje asymptotycznie — dokładnie tak, jak maleje szansa na trafienie w niezajęte miejsce.</p>
+
+    <p><strong>Warstwy o różnej czułości.</strong> Producenci wykorzystali to celowo i poszli dalej: każda barwa ma nie jedną emulsję, tylko kilka podwarstw o różnej czułości. Warstwa najczulsza nasyca się pierwsza, mniej czuła przejmuje pałeczkę, najmniej czuła pracuje na samej górze zakresu. Suma trzech krzywych o przesuniętych progach daje charakterystykę <span class="term-cyan">dłuższą i bardziej wygiętą</span> niż którakolwiek z nich osobno.</p>
+
+    <p>Warto zauważyć, że obie przyczyny działają w tę samą stronę i obie są statystyczne. Nośnik chemiczny nie ma nigdzie progu, po którym coś się kończy — ma malejące prawdopodobieństwo, a to nie osiąga zera w skończonym czasie. Matryca ma przeciwnie: <span class="term-raster">jej ograniczenie jest przeliczalne i twarde</span>, bo studnia mieści określoną liczbę elektronów i ani jednego więcej. Jest to różnica między granicą statystyczną a granicą pojemnościową i stąd bierze się wszystko pozostałe w tym rozdziale.</p>
+
+    <p>To drugie jest inżynierią, nie fizyką — i dlatego różne materiały mają różne barki. Negatyw do zdjęć dziennych ma go dłuższy niż materiał do przeźroczy, bo przeznaczenie jest inne: negatyw ma zebrać jak najwięcej i oddać decyzję do kopiowania, przeźrocze ma być gotowym obrazem.</p>
+
+    <p class="deeper-inline">Krzywe log najpopularniejszych kamer, charakterystyka gęstości negatywu i porównanie tego, co dzieje się dwie działki nad bielą — <a href="../dodatki/dodatek-q-log-i-rolloff.html">Dodatek Q</a>.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Log · sposób zapisu, nie właściwość</div>
+    <h2>Czego log nie robi</h2>
+
+    <p>Zapis logarytmiczny bywa opisywany tak, jakby dodawał kamerze zakres dynamiczny. Nie dodaje. <strong>Zakres wyznacza matryca</strong> — od pojemności studni na górze do szumu na dole — a log decyduje wyłącznie o tym, jak ten zakres upakować w skończonej liczbie bitów.</p>
+
+    <p>Problem, który log rozwiązuje, jest realny i wart zrozumienia. Zapis liniowy przydziela wartości proporcjonalnie do ilości światła. Ponieważ każda działka to podwojenie, <span class="term-violet">górna działka zjada połowę wszystkich dostępnych wartości</span>, a najniższa dostaje ich garstkę. Przy dziesięciu bitach oznacza to, że najciemniejsze działki mają po kilka poziomów — czyli widoczne pasy zamiast płynnych przejść.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Podział wartości</span><span>liniowo kontra logarytmicznie</span></div>
+      <svg viewBox="0 0 760 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Porównanie: przy zapisie liniowym górna działka dostaje połowę wszystkich wartości, przy logarytmicznym każda działka dostaje tyle samo.">
+        <g font-family="IBM Plex Mono" font-size="10" fill="#8b909b">
+          <text x="30" y="24">ZAPIS LINIOWY</text>
+        </g>
+        <g stroke="#0d0f11" stroke-width="1">
+          <rect x="30" y="34" width="350" height="34" fill="#6e93be" fill-opacity="0.55"/>
+          <rect x="380" y="34" width="175" height="34" fill="#6e93be" fill-opacity="0.45"/>
+          <rect x="555" y="34" width="88" height="34" fill="#6e93be" fill-opacity="0.35"/>
+          <rect x="643" y="34" width="44" height="34" fill="#6e93be" fill-opacity="0.28"/>
+          <rect x="687" y="34" width="22" height="34" fill="#6e93be" fill-opacity="0.22"/>
+          <rect x="709" y="34" width="21" height="34" fill="#6e93be" fill-opacity="0.16"/>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="9" fill="#ecebe4" text-anchor="middle">
+          <text x="205" y="56">512</text><text x="467" y="56">256</text><text x="599" y="56">128</text>
+          <text x="665" y="56">64</text><text x="698" y="56">32</text>
+        </g>
+        <text x="30" y="86" font-family="IBM Plex Mono" font-size="9.5" fill="#d8695f">górna działka zjada połowę wszystkich wartości; najniższa dostaje kilka</text>
+
+        <g font-family="IBM Plex Mono" font-size="10" fill="#8b909b">
+          <text x="30" y="124">ZAPIS LOGARYTMICZNY</text>
+        </g>
+        <g stroke="#0d0f11" stroke-width="1" fill="#7fc47f" fill-opacity="0.45">
+          <rect x="30" y="134" width="116" height="34"/><rect x="146" y="134" width="116" height="34"/>
+          <rect x="262" y="134" width="117" height="34"/><rect x="379" y="134" width="117" height="34"/>
+          <rect x="496" y="134" width="117" height="34"/><rect x="613" y="134" width="117" height="34"/>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="9" fill="#ecebe4" text-anchor="middle">
+          <text x="88" y="156">170</text><text x="204" y="156">170</text><text x="320" y="156">170</text>
+          <text x="437" y="156">170</text><text x="554" y="156">170</text><text x="671" y="156">170</text>
+        </g>
+        <text x="30" y="186" font-family="IBM Plex Mono" font-size="9.5" fill="#7fc47f">każda działka dostaje tyle samo — cienie mają tyle poziomów, co światła</text>
+
+        <g font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">
+          <text x="88" y="212">−5 dz</text><text x="204" y="212">−4</text><text x="320" y="212">−3</text>
+          <text x="437" y="212">−2</text><text x="554" y="212">−1</text><text x="671" y="212">biel</text>
+        </g>
+      </svg>
+      <div class="diagram-caption">Ta sama liczba wartości, dwa sposoby jej rozdania. Zakres dynamiczny jest w obu przypadkach identyczny — zmienia się tylko, gdzie leżą stopnie.</div>
+    </div>
+
+    <p>Log rozdziela wartości równomiernie po <em>działkach</em>, a nie po jasności. Każda działka dostaje tyle samo poziomów, więc cienie mają ich tyle, co światła. Wynik nie jest ładniejszy — jest <strong>równomiernie nieładny</strong>, i o to chodzi, bo materiał logarytmiczny nie jest przeznaczony do oglądania, tylko do dalszej obróbki.</p>
+
+    <p>Dwie rzeczy warto z tego wyciągnąć przy pracy z materiałem. Po pierwsze, <strong>materiał w log wygląda płasko i tak ma być</strong> — kontrast nadaje mu się dopiero przy korekcji. Ocenianie ostrości, szumu czy koloru na surowym log jest oceną czegoś innego niż obraz końcowy.</p>
+
+    <p>Po drugie, i ważniejsze dla compu: <span class="term-cyan">operacje optyczne wykonuje się w danych liniowych, nie w log</span>. Rozmycie, flara, ziarno i wszystko inne z tej książki to zjawiska dodające albo uśredniające <em>światło</em> — a w log dodawanie nie odpowiada dodawaniu światła. Rozmycie wykonane na materiale logarytmicznym daje krawędzie o innej jasności niż w rzeczywistości, i różnica jest największa dokładnie tam, gdzie kontrast jest duży.</p>
+
+    <button class="advanced-btn" data-modal-target="adv-log-clip">Zaawansowane: co dokładnie ginie przy obcięciu</button>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">W CG · render nie ma ani jednego, ani drugiego</div>
+    <h2>Dokładanie zakończenia</h2>
+
+    <p>Render nie ma ani studni, ani kryształków. Jego wartości rosną w nieskończoność — jasne źródło może mieć milion, a nic go nie ogranicza. Jest to wygodne przy obliczeniach i całkowicie niepodobne do jakiegokolwiek nośnika.</p>
+
+    <p>Wynika stąd, że <strong>zakończenie trzeba dołożyć świadomie</strong>, i że wybór między ścianą a zakrętem jest decyzją, a nie ustawieniem domyślnym. Jeśli plate pochodzi z matrycy, element potrzebuje twardego obcięcia w tym samym miejscu. Jeśli z taśmy — potrzebuje barku o podobnym kształcie.</p>
+
+    <p>Trzy rzeczy, które przy tym najczęściej się psuje:</p>
+
+    <ul>
+      <li><strong>Obcięcie per kanał zamiast wspólnego.</strong> Gdy jeden kanał nasyca się przed pozostałymi, barwa jasnych miejsc dryfuje ku pozostałym dwóm. W matrycy to zjawisko realne i widoczne; w renderze trzeba je odtworzyć, bo obcinanie wszystkich trzech razem daje przepalenia neutralne, których nie ma.</li>
+      <li><strong>Zakręt zbyt krótki.</strong> Bark taśmy rozciąga się na kilka działek, a nie na ułamek. Krzywa wyginająca się tuż pod bielą daje wynik czytany jako kompresja, a nie jako materiał.</li>
+      <li><strong>Zakończenie po flarze zamiast przed.</strong> Nośnik obcina to, co do niego dotarło — łącznie z flarą i halacją. Obcięcie wykonane na końcu łańcucha obcina także rzeczy, które w rzeczywistości nigdy nie zdążyłyby do niego dotrzeć.</li>
+    </ul>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Nasycanie kanałów</span><span>skąd barwa przepalenia</span></div>
+      <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Trzy kanały nasycają się kolejno przy różnych poziomach; między pierwszym a ostatnim barwa jasnego miejsca dryfuje.">
+        <line x1="70" y1="190" x2="700" y2="190" stroke="#8b909b" stroke-width="1.2"/>
+        <line x1="70" y1="30" x2="70" y2="190" stroke="#8b909b" stroke-width="1.2"/>
+        <line x1="70" y1="50" x2="700" y2="50" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 4"/>
+        <text x="704" y="54" font-family="IBM Plex Mono" font-size="9" fill="#8b909b">pełna studnia</text>
+
+        <path d="M70 190 L440 50 L700 50" fill="none" stroke="#d8695f" stroke-width="2.4"/>
+        <path d="M70 190 L505 50 L700 50" fill="none" stroke="#7fc47f" stroke-width="2.4"/>
+        <path d="M70 190 L575 50 L700 50" fill="none" stroke="#6e93be" stroke-width="2.4"/>
+
+        <rect x="440" y="30" width="135" height="160" fill="#e8a33d" fill-opacity="0.09"/>
+        <text x="507" y="24" font-family="IBM Plex Mono" font-size="9.5" fill="#e8a33d" text-anchor="middle">strefa dryfu barwy</text>
+
+        <g font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">
+          <text x="330" y="212">tu jeszcze neutralnie</text>
+          <text x="452" y="212" fill="#e8a33d">tu barwa ucieka</text>
+          <text x="592" y="212" fill="#ecebe4">tu biel na płask</text>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="9.5">
+          <text x="90" y="46" fill="#d8695f">R</text><text x="110" y="46" fill="#7fc47f">G</text><text x="130" y="46" fill="#6e93be">B</text>
+          <text x="150" y="46" fill="#8b909b">— trzy kanały, trzy progi</text>
+        </g>
+      </svg>
+      <div class="diagram-caption">Kanały rzadko nasycają się jednocześnie — zależy to od barwy światła i od czułości filtrów Bayera. Między pierwszym a ostatnim progiem barwa jasnego miejsca dryfuje ku dwóm pozostałym, i dopiero potem robi się neutralna biel.</div>
+    </div>
+
+    <p>Ta strefa dryfu jest wąska — zwykle mniej niż działka — ale występuje w każdym przepaleniu i oko ją zna, choć nikt jej świadomie nie nazywa. <span class="term-raster">Przepalone niebo najpierw idzie ku cyjanowi, dopiero potem bieleje</span>; przepalona żarówka najpierw żółknie. Element CG obcięty na wszystkich trzech kanałach naraz nie ma tego wcale i to jest jeden z tańszych sposobów, żeby się zdradzić.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Miejsce w łańcuchu</span><span>przed czy po</span></div>
+      <svg viewBox="0 0 760 170" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Łańcuch: render, rozmycie ruchu, flara, halacja, zakończenie nośnika, korekcja. Zakończenie leży przed korekcją i po zjawiskach optycznych.">
+        <g font-family="IBM Plex Mono" font-size="9.5" text-anchor="middle">
+          <rect x="24" y="52" width="98" height="40" rx="3" fill="#151a1f" stroke="#3a424d"/>
+          <text x="73" y="76" fill="#8b909b">render</text>
+          <rect x="146" y="52" width="98" height="40" rx="3" fill="#151a1f" stroke="#3a424d"/>
+          <text x="195" y="70" fill="#8b909b">rozmycie</text><text x="195" y="83" fill="#8b909b">ruchu</text>
+          <rect x="268" y="52" width="98" height="40" rx="3" fill="#151a1f" stroke="#e8a33d"/>
+          <text x="317" y="70" fill="#e8a33d">flara</text><text x="317" y="83" fill="#e8a33d">halacja</text>
+          <rect x="390" y="46" width="120" height="52" rx="3" fill="#2a1a12" stroke="#e8a33d" stroke-width="2"/>
+          <text x="450" y="66" fill="#e8a33d">ZAKOŃCZENIE</text><text x="450" y="80" fill="#e8a33d">nośnika</text>
+          <text x="450" y="92" fill="#8b909b" font-size="8.5">bark albo ściana</text>
+          <rect x="534" y="52" width="98" height="40" rx="3" fill="#151a1f" stroke="#3a424d"/>
+          <text x="583" y="70" fill="#8b909b">ziarno</text><text x="583" y="83" fill="#8b909b">szum</text>
+          <rect x="656" y="52" width="86" height="40" rx="3" fill="#151a1f" stroke="#3a424d"/>
+          <text x="699" y="76" fill="#8b909b">korekcja</text>
+        </g>
+        <g stroke="#8b909b" stroke-width="1.2" fill="none">
+          <path d="M122 72 L144 72"/><path d="M244 72 L266 72"/><path d="M366 72 L388 72"/>
+          <path d="M510 72 L532 72"/><path d="M632 72 L654 72"/>
+        </g>
+        <text x="450" y="126" font-family="IBM Plex Mono" font-size="9.5" fill="#7fc47f" text-anchor="middle">flara i halacja są PRZED — nośnik obcina także je</text>
+        <text x="450" y="144" font-family="IBM Plex Mono" font-size="9.5" fill="#d8695f" text-anchor="middle">korekcja jest PO — obcięcie na końcu obcina rzeczy, których tam nigdy nie było</text>
+      </svg>
+      <div class="diagram-caption">Zakończenie nośnika ma jedno właściwe miejsce: po wszystkim, co dzieje się w optyce, przed wszystkim, co dzieje się po zapisie.</div>
+    </div>
+
+    <p>Warto na koniec zauważyć asymetrię, która wraca w całej tej części. <span class="term-violet">Obcięcia nie da się cofnąć, a zakrętu nie da się dodać po nim.</span> Materiał raz przepalony jest przepalony na zawsze; render z nieskończonym zakresem można zakończyć dowolnie, ale tylko raz i tylko we właściwym miejscu łańcucha. Jest to jedna z niewielu decyzji w compie, która jest nieodwracalna — i dlatego warto ją podejmować świadomie, a nie zostawiać domyślnej.</p>
+  </div>
+
+  <div class="panel practice">
+    <div class="panel-label">Z praktyki</div>
+    <p><strong>Sprawdź w plate'cie, czy przepalenia mają barwę.</strong> Neutralnie białe przepalenie oznacza obcięcie wszystkich trzech kanałów naraz — czyli cyfrę albo materiał już przetworzony. Przepalenie ciągnące w jakąś barwę oznacza, że kanały nasycały się kolejno, i to jest zachowanie, które element CG musi odtworzyć.</p>
+    <p><strong>Pracuj w liniowej, nie w log.</strong> Wszystkie operacje optyczne z tej książki zakładają, że wartości są proporcjonalne do światła. Comp wykonany na materiale logarytmicznym daje wyniki poprawne w połowie zakresu i błędne na obu końcach — a błąd rośnie z kontrastem sceny.</p>
+    <p><strong>Nie ratuj przepaleń.</strong> Narzędzia obiecujące odzyskanie świateł zgadują, a nie odzyskują — bo informacji tam nie ma. Uczciwsze jest przyjęcie przepalenia jako faktu i dopasowanie do niego elementu, niż zgadywanie, co tam było, i budowanie na tym.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>bark charakterystyki</dt>
+      <dd>Górna, wygięta część krzywej odpowiedzi nośnika, w której przyrost gęstości maleje. Cecha taśmy, której matryca nie ma.</dd>
+      <dt>obcięcie (clip)</dt>
+      <dd>Nagłe zatrzymanie odpowiedzi po napełnieniu studni piksela. Nieodwracalne — informacja o poziomie i barwie nie istnieje.</dd>
+      <dt>zapis logarytmiczny</dt>
+      <dd>Sposób kodowania, w którym równym przyrostom wartości odpowiadają równe przyrosty w działkach. Nie zwiększa zakresu, tylko rozdziela bity.</dd>
+      <dt>zakres dynamiczny</dt>
+      <dd>Stosunek największej rejestrowalnej jasności do najmniejszej odróżnialnej od szumu, podawany w działkach.</dd>
+      <dt>warstwy o różnej czułości</dt>
+      <dd>Kilka emulsji na jedną barwę, nasycających się kolejno. Wydłużają bark i zwiększają zakres.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Została ostatnia rzecz, którą nośnik dokłada do obrazu, i jedyna, która dzieje się w czasie, a nie w przestrzeni. W <a href="rozdzial-32-czas.html">następnym rozdziale</a> okaże się, że klatka nie jest chwilą, tylko odcinkiem — a w matrycy CMOS nie wszystkie linie mają ten sam odcinek. Stąd sto osiemdziesiąt stopni, stąd pochylone słupy i stąd zmiana kadru przy przejeździe ostrości.</p>
+  </div>
 
   <div class="deeper">
     <div class="deeper-label">Idź głębiej</div>
@@ -56,8 +296,94 @@ window.SKY3D_MESSAGES = {
       <a class="nav-next" href="rozdzial-32-czas.html">Następny →</a>
   </div>
 
+<template id="adv-log-clip">
+  <h3>Co dokładnie ginie przy obcięciu</h3>
+  <p>Obcięcie bywa opisywane jako „utrata szczegółu w światłach”, co jest prawdą, ale niepełną. Ginie tam więcej niż jasność.</p>
+  <p><strong>Ginie poziom.</strong> Piksel na maksimum mówi tylko „co najmniej tyle”. Czy było o pół działki więcej, czy o osiem — nie ma w danych żadnej różnicy. Wszystkie obcięte piksele mają tę samą wartość, niezależnie od tego, co je obcięło.</p>
+  <p><strong>Ginie barwa.</strong> Gdy nasycą się wszystkie trzy kanały, informacja o proporcjach między nimi znika razem z poziomami. Płomień, żarówka i słońce dają dokładnie ten sam neutralny kwadrat.</p>
+  <p><strong>Ginie gradient, czyli kształt.</strong> Obszar obcięty jest płaski, więc krawędź między nim a resztą jest krawędzią danych, a nie krawędzią przedmiotu. Rozmycie wykonane po obcięciu rozmywa tę sztuczną krawędź i utrwala ją jako miękki kształt — który do niczego w scenie nie należy.</p>
+  <p>Ostatnie jest przyczyną praktycznej reguły: <strong>obcięcie wykonuje się na końcu operacji optycznych, nigdy w środku</strong>. Flara policzona z obciętego źródła jest flarą policzoną z płaskiego kwadratu i ma kształt kwadratu — zamiast kształtu tego, co świeciło.</p>
+  <p>Stąd też bierze się różnica między materiałem, który przeszedł przez obcięcie raz, a takim, który przeszedł przez nie kilka razy w łańcuchu. Każde kolejne obcięcie zabiera trochę z tego, co poprzednie zostawiło — i po trzecim nie da się już ustalić, gdzie właściwie leżał nośnik.</p>
+</template>
+
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal-box">
+    <button class="modal-close" aria-label="Zamknij">&times;</button>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
 </div>
 
 <script src="../assets/interactive.js"></script>
+<script>
+(function () {
+  var suw = document.getElementById('dynEksp');
+  if (!suw) return;
+  var odczyt = document.getElementById('dynOdczyt');
+  var pMat = document.getElementById('dynMatryca');
+  var pTas = document.getElementById('dynTasma');
+  var znac = document.getElementById('dynZnacznik');
+  var tMat = document.getElementById('dynMat');
+  var tTas = document.getElementById('dynTas');
+  var podpis = document.getElementById('dynPodpis');
+
+  var X0 = 80, X1 = 700, Y0 = 200, Y1 = 44;
+  var DZ0 = -6, DZ1 = 6;
+
+  function x(dz) { return X0 + (dz - DZ0) / (DZ1 - DZ0) * (X1 - X0); }
+  function y(v) { return Y0 + v * (Y1 - Y0); }
+
+  // matryca: liniowo w naswietleniu, biel (0 dz) na 0.9 maks., potem sciana
+  function matryca(dz) {
+    return Math.min(1, Math.pow(2, dz) * 0.25);
+  }
+  // tasma: bark - nasycenie wykladnicze, ta sama nachylenie w poblizu bieli
+  function tasma(dz) {
+    return 1 - Math.exp(-0.25 * Math.pow(2, dz));
+  }
+
+  function sciezka(f) {
+    var d = '';
+    for (var i = 0; i <= 240; i++) {
+      var dz = DZ0 + (DZ1 - DZ0) * i / 240;
+      d += (i ? 'L' : 'M') + x(dz).toFixed(1) + ' ' + y(f(dz)).toFixed(1) + ' ';
+    }
+    return d;
+  }
+
+  pMat.setAttribute('d', sciezka(matryca));
+  pTas.setAttribute('d', sciezka(tasma));
+
+  function rysuj() {
+    var dz = parseInt(suw.value, 10) / 10;
+    var m = matryca(dz), t = tasma(dz);
+    znac.setAttribute('x1', x(dz).toFixed(1));
+    znac.setAttribute('x2', x(dz).toFixed(1));
+    odczyt.textContent = (dz === 0 ? 'nominalna' : (dz > 0 ? '+' : '') + dz.toFixed(1) + ' dz');
+    tMat.textContent = 'matryca: ' + Math.round(m * 100) + '% maks.' + (m >= 0.999 ? '  OBCIETE' : '');
+    tTas.textContent = 'tasma: ' + Math.round(t * 100) + '% maks.';
+
+    var s;
+    if (m >= 0.999 && t < 0.995) {
+      s = 'Matryca stoi na ścianie — poziom i barwa nie istnieją. Taśma wciąż różnicuje: ' +
+          'zostało jej ' + Math.round((1 - t) * 100) + '% drogi do nasycenia, więc jaśniejsze miejsca nadal się od siebie różnią.';
+    } else if (m >= 0.999) {
+      s = 'Obie na końcu skali. Powyżej tego punktu żaden nośnik nie różnicuje niczego — różnica dotyczy tylko drogi dojścia.';
+    } else if (dz > 0.4) {
+      s = 'Nad bielą krzywe zaczynają się rozchodzić: matryca biegnie prosto ku ścianie, taśma już zwalnia.';
+    } else if (dz < -1.5) {
+      s = 'W cieniach obie zachowują się podobnie — tu o wyniku decyduje szum, a nie kształt charakterystyki.';
+    } else {
+      s = 'Przy nominalnej ekspozycji obie krzywe biegną blisko siebie. Rozchodzą się dopiero powyżej bieli.';
+    }
+    podpis.textContent = s;
+  }
+
+  suw.addEventListener('input', rysuj);
+  rysuj();
+})();
+</script>
+
 </body>
 </html>
