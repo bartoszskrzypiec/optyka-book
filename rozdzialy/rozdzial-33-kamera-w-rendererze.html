@@ -43,7 +43,253 @@ window.SKY3D_MESSAGES = {
   <h1>Kamera w rendererze</h1>
   <p class="subtitle">Domyślna kamera w każdym rendererze to dziurka bez średnicy: nieskończona głębia, zero aberracji, zero flary. Wszystko z tej książki trzeba do niej dołożyć — i warto wiedzieć, gdzie się co dokłada.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li><strong>Domyślna kamera renderera jest dziurką</strong>, a nie uproszczonym obiektywem. Jej źrenica ma zerową średnicę, więc każdy punkt sceny trafia w dokładnie jeden punkt kadru i wszystko jest ostre — nie „bardzo ostre”, tylko ostre matematycznie.</li>
+      <li>Model cienkiej soczewki dokłada jedną rzecz: <span class="term-cyan">źrenicę o niezerowej średnicy</span>. To wystarcza na głębię ostrości i na bokeh, i nie wystarcza na nic więcej.</li>
+      <li><strong>Wszystko pozostałe z tej książki jest własnością szkła albo nośnika, nie geometrii.</strong> Aberracje, flara, powłoki, winietowanie optyczne, oddech, rolling shutter — nic z tego nie wynika z modelu kamery i nic z tego nie pojawi się samo.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Dziurka · co renderer ma naprawdę</div>
+    <h2>Kamera, która nie ma szkła</h2>
+
+    <p>Przez trzydzieści dwa rozdziały budowaliśmy opis tego, co dzieje się z prawdziwym światłem w prawdziwej kamerze. Teraz to samo pytanie zadajemy renderowi — i pierwsza odpowiedź jest zaskakująco radykalna.</p>
+
+    <p>Domyślna kamera w każdym rendererze jest <strong>kamerą otworkową</strong>. Nie jest to uproszczony obiektyw ani przybliżenie soczewki. Jest to inny obiekt: punkt w przestrzeni plus prostokąt, przez który patrzy. Promień wychodzi z tego punktu, biegnie prosto, trafia w coś i wraca z barwą.</p>
+
+    <p>Konsekwencja jest jedna i bardzo daleko idąca. Skoro źrenica jest punktem, to <span class="term-violet">każdy punkt sceny odwzorowuje się w dokładnie jeden punkt kadru</span> — bez względu na odległość. Nie ma płaszczyzny ostrości, bo wszystko jest w niej naraz. Nie ma krążka rozmycia, bo krążek ma zerową średnicę.</p>
+
+    <p>Warto zauważyć, że to nie jest uproszczenie, które da się „poprawić dokładnością”. Rachunek jest dokładny — po prostu opisuje przyrząd, którego nikt nigdy nie zbudował. Dziurka fizyczna ma niezerową średnicę i przez to dyfrakcję z <a href="../rozdzialy/rozdzial-10-dyfrakcja.html">Rozdziału 10</a>; dziurka renderera nie ma ani jednego, ani drugiego.</p>
+
+    <p>Stąd bierze się właściwość, którą każdy zna z pierwszych renderów i mało kto nazywa: <strong>obraz z domyślnej kamery jest zbyt ostry, żeby wyglądał na zdjęcie</strong>. Nie brakuje mu detalu — brakuje mu wszystkich powodów, dla których prawdziwe zdjęcie detalu nie ma wszędzie.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Źrenica · jedyna rzecz, którą się dokłada</div>
+    <h2>Model cienkiej soczewki</h2>
+
+    <p>Wszystkie renderery oferują drugi model, zwykle nazywany kamerą z głębią ostrości albo modelem cienkiej soczewki. Dokłada on <strong>dokładnie jedną rzecz</strong>: promień pierwotny startuje nie z punktu, tylko z losowego miejsca na krążku o zadanej średnicy.</p>
+
+    <p>To wystarcza, żeby pojawiły się dwa zjawiska naraz. Punkty leżące na płaszczyźnie ostrości nadal zbiegają się w jeden punkt kadru. Punkty przed nią i za nią rozkładają się na <span class="term-cyan">krążek o średnicy proporcjonalnej do odległości od tej płaszczyzny</span>, dokładnie tak, jak wyprowadzał to Rozdział 8. Kształt krążka odpowiada kształtowi otworu, czyli mamy też bokeh z Rozdziału 9.</p>
+
+    <div class="viz3d" id="kamLab">
+      <div class="viz3d__head">
+        <p class="viz3d__title">Dziurka kontra źrenica</p>
+        <p class="viz3d__sub">Obróć scenę, żeby zobaczyć, że źrenica jest krążkiem, a nie punktem. Warstwy przełącz przyciskami.</p>
+      </div>
+      <div class="viz3d__stage">
+        <canvas></canvas>
+        <div class="viz3d__badge">przeciągnij, żeby obrócić</div>
+        <div class="viz3d__fallback">
+          <strong>Ten widget potrzebuje WebGL</strong>
+          <span>Akapity obok opisują tę samą rzecz w całości — widget jest ilustracją, nie nośnikiem argumentu.</span>
+        </div>
+      </div>
+      <div class="viz3d__presets">
+        <button data-warstwa="dziurka" class="is-active">Dziurka</button>
+        <button data-warstwa="otwor14">Źrenica f/1,4</button>
+        <button data-warstwa="otwor8">Źrenica f/8</button>
+      </div>
+      <p class="viz3d__note">Zielona płaszczyzna to płaszczyzna ostrości, bursztynowy prostokąt to matryca. Punkt sceny leżący za płaszczyzną ostrości wysyła promienie przez całą źrenicę — i dlatego na matrycy zostawia krążek, a nie punkt. Przy dziurce promień jest jeden i krążek nie powstaje.</p>
+    </div>
+
+    <p>Widget pokazuje przy okazji rzecz, którą łatwo przeoczyć w płaskim rysunku: <strong>źrenica jest powierzchnią, a nie odcinkiem</strong>. Krążek rozmycia powstaje dlatego, że promienie wychodzą z całego jej pola — i dlatego jego kształt jest rzutem tego pola, ze wszystkimi konsekwencjami z Rozdziału 9, łącznie z kocim okiem przy brzegu kadru.</p>
+
+    <p class="deeper-inline">Jak nazywają się te parametry w konkretnych rendererach, co która nazwa naprawdę robi i gdzie kryją się różnice w przeliczaniu ogniskowej na kąt widzenia — <a href="../dodatki/dodatek-s-kamery-w-rendererach.html">Dodatek S</a>.</p>
+
+    <button class="advanced-btn" data-modal-target="adv-probki-dof">Zaawansowane: dlaczego głębia ostrości kosztuje tyle próbek</button>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Nieobecni · czego tam nie ma</div>
+    <h2>Lista rzeczy, które nie pojawią się same</h2>
+
+    <p>Skoro model kamery składa się z punktu, prostokąta i ewentualnie krążka, to wszystko, co w tej książce wynikało z <em>materiału</em> — ze szkła, z powłok, z oprawy, z emulsji — nie ma w nim żadnej reprezentacji. Warto tę listę zobaczyć w całości, bo jest dłuższa, niż się pamięta.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Model kamery</span><span>co jest, czego nie ma</span></div>
+      <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Zestawienie: renderer ma geometrię i głębię ostrości; nie ma aberracji, flary, powłok, winietowania optycznego, oddechu ani rolling shuttera.">
+        <rect x="24" y="30" width="340" height="248" rx="4" fill="#132018" stroke="#7fc47f" stroke-width="1.2"/>
+        <text x="194" y="52" font-family="IBM Plex Mono" font-size="11" fill="#7fc47f" text-anchor="middle">MA Z DEFINICJI</text>
+        <g font-family="IBM Plex Sans" font-size="11.5" fill="#ecebe4">
+          <text x="46" y="84">perspektywa i kąt widzenia</text>
+          <text x="46" y="110">położenie i orientacja kamery</text>
+          <text x="46" y="136">przesunięcie i pochylenie kadru</text>
+          <text x="46" y="162">głębia ostrości (model soczewki)</text>
+          <text x="46" y="188">kształt bokeh (kształt otworu)</text>
+          <text x="46" y="214">rozmycie ruchu (całka po czasie)</text>
+          <text x="46" y="240">rzut prostokątny albo panoramiczny</text>
+        </g>
+        <text x="46" y="266" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">wszystko to jest geometrią</text>
+
+        <rect x="396" y="30" width="340" height="248" rx="4" fill="#201318" stroke="#d8695f" stroke-width="1.2"/>
+        <text x="566" y="52" font-family="IBM Plex Mono" font-size="11" fill="#d8695f" text-anchor="middle">NIE MA WCALE</text>
+        <g font-family="IBM Plex Sans" font-size="11.5" fill="#ecebe4">
+          <text x="418" y="84">aberracje sferyczna, komatyczna, astygmatyzm</text>
+          <text x="418" y="110">aberracja chromatyczna, obie odmiany</text>
+          <text x="418" y="136">flara zasłaniająca i ghosty</text>
+          <text x="418" y="162">winietowanie optyczne i mechaniczne</text>
+          <text x="418" y="188">dyfrakcja przy przymkniętej przysłonie</text>
+          <text x="418" y="214">oddech przy przejeździe ostrości</text>
+          <text x="418" y="240">rolling shutter, halacja, ziarno</text>
+        </g>
+        <text x="418" y="266" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">wszystko to jest materiałem</text>
+      </svg>
+      <div class="diagram-caption">Podział przebiega dokładnie tam, gdzie kończy się geometria. Lewa kolumna wynika z modelu; prawa musi zostać dołożona, i to jest treść dwóch następnych rozdziałów.</div>
+    </div>
+
+    <p>Podział ma jedną cechę, która czyni go użytecznym w praktyce: <span class="term-amber">jest ostry</span>. Nie ma zjawisk pół na pół. Jeśli coś wynika z tego, gdzie biegną promienie, renderer to ma. Jeśli z tego, przez co biegną — nie ma i mieć nie będzie, choćby liczba próbek rosła w nieskończoność.</p>
+
+    <p>Warto też zauważyć, czego <strong>nie ma po żadnej stronie</strong>, a bywa mylone z jednym i drugim. Kompresja tonalna, krzywa kontrastu i „look” nie są własnością kamery ani nośnika — są tym, co dzieje się po zapisie, i należą do korekcji. Wrzucanie ich do kamery renderera daje obraz, którego nie da się już potem poprawić, bo dane wyszły z rendera już przetworzone.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Ustawienia · co musi się zgadzać</div>
+    <h2>Trzy liczby, które nie mają marginesu</h2>
+
+    <p>Kamera renderera ustawiana do plate'u ma parametry, w których pomyłka o procent widać, i takie, gdzie margines jest szeroki. Warto wiedzieć, które są które.</p>
+
+    <p><strong>Rozmiar matrycy i ogniskowa razem, nigdy osobno.</strong> Kąt widzenia wynika z ilorazu tych dwóch liczb, więc podanie ogniskowej bez rozmiaru matrycy nie znaczy nic. Najczęstszy błąd w tej książce opisany był już w <a href="../dodatki/dodatek-aa-formaty-i-ekwiwalencja.html">Dodatku AA</a>: pięćdziesiątka na Super 35 i pięćdziesiątka na pełnej klatce to dwa różne kadry.</p>
+
+    <p><strong>Odległość ostrzenia, a nie „rozmycie tła”.</strong> Głębia wynika z odległości i przysłony, więc ustawiona wprost daje właściwy gradient rozmycia w całej scenie. Dobrana „na oko” do jednego planu daje zwykle zły rozkład w pozostałych — a rozkład jest tym, co oko sprawdza.</p>
+
+    <p><strong>Punkt zbiegu, czyli wysokość i pochylenie.</strong> Perspektywa jest funkcją położenia, a nie ogniskowej — to była teza <a href="rozdzial-05-ogniskowa-format-perspektywa.html">Rozdziału 5</a>. Kamera postawiona pół metra za nisko daje inne zbieganie pionów niż plate, i żadna korekta ogniskowej tego nie naprawi.</p>
+
+    <p>Margines jest natomiast szeroki tam, gdzie zjawisko i tak zostanie dołożone później: przy dokładnej wartości przysłony (jeśli rozmycie robi się w compie), przy kącie migawki (jeśli rozmycie liczy się z wektorów) i przy krzywej tonalnej. Te rzeczy warto ustawiać rozsądnie, ale ich pomyłka jest odwracalna — w odróżnieniu od trzech powyższych, które wchodzą w geometrię obrazu i po renderze nie da się ich już zmienić.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Rzuty · gdzie renderer wychodzi poza fizykę</div>
+    <h2>Kadry, których nie da się sfotografować</h2>
+
+    <p>Jest też druga strona tej różnicy, mniej opisywana. Skoro kamera renderera nie jest przyrządem, tylko regułą przypisującą kierunki do pikseli, to <strong>nie obowiązują jej ograniczenia konstrukcyjne</strong> — i część rzeczy, które robi bez wysiłku, w szkle byłaby niewykonalna albo bardzo droga.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Trzy rzuty</span><span>ten sam sześcian, trzy reguły</span></div>
+      <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Porównanie rzutu perspektywicznego, równoległego i panoramicznego na tym samym rzędzie sześcianów.">
+        <text x="126" y="26" font-family="IBM Plex Mono" font-size="10" fill="#e8a33d" text-anchor="middle">perspektywiczny</text>
+        <g stroke="#e8a33d" stroke-width="1.2" fill="none">
+          <path d="M40 70 L212 60 L212 140 L40 160 Z"/>
+          <path d="M40 70 L70 84 M212 60 L232 74 M212 140 L232 128 M40 160 L70 146"/>
+          <path d="M70 84 L232 74 L232 128 L70 146 Z"/>
+        </g>
+        <circle cx="126" cy="196" r="4" fill="#e8a33d"/>
+        <g stroke="#e8a33d" stroke-width="0.7" opacity="0.5">
+          <line x1="126" y1="196" x2="40" y2="70"/><line x1="126" y1="196" x2="232" y2="74"/>
+        </g>
+        <text x="126" y="220" font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="middle">jeden punkt zbiegu</text>
+        <text x="126" y="236" font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="middle">tak działa każdy obiektyw</text>
+
+        <line x1="266" y1="20" x2="266" y2="240" stroke="#2a2f38"/>
+
+        <text x="380" y="26" font-family="IBM Plex Mono" font-size="10" fill="#6e93be" text-anchor="middle">równoległy</text>
+        <g stroke="#6e93be" stroke-width="1.2" fill="none">
+          <path d="M300 66 L462 66 L462 146 L300 146 Z"/>
+          <path d="M300 66 L326 80 M462 66 L488 80 M462 146 L488 160 M300 146 L326 160"/>
+          <path d="M326 80 L488 80 L488 160 L326 160 Z"/>
+        </g>
+        <g stroke="#6e93be" stroke-width="0.7" opacity="0.5">
+          <line x1="300" y1="190" x2="300" y2="150"/><line x1="380" y1="190" x2="380" y2="150"/><line x1="462" y1="190" x2="462" y2="150"/>
+        </g>
+        <text x="380" y="220" font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="middle">brak punktu zbiegu</text>
+        <text x="380" y="236" font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="middle">wymagałby soczewki wielkości sceny</text>
+
+        <line x1="520" y1="20" x2="520" y2="240" stroke="#2a2f38"/>
+
+        <text x="634" y="26" font-family="IBM Plex Mono" font-size="10" fill="#a98bd8" text-anchor="middle">panoramiczny 360°</text>
+        <path d="M554 70 Q634 52 714 70 L714 148 Q634 166 554 148 Z" fill="none" stroke="#a98bd8" stroke-width="1.2"/>
+        <path d="M554 108 Q634 92 714 108" fill="none" stroke="#a98bd8" stroke-width="0.8" opacity="0.6"/>
+        <circle cx="634" cy="196" r="4" fill="#a98bd8"/>
+        <g stroke="#a98bd8" stroke-width="0.7" opacity="0.5">
+          <path d="M634 196 L554 70"/><path d="M634 196 L634 52"/><path d="M634 196 L714 70"/>
+        </g>
+        <text x="634" y="220" font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="middle">pełna kula kierunków</text>
+        <text x="634" y="236" font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="middle">w szkle niewykonalny w jednym ujęciu</text>
+      </svg>
+      <div class="diagram-caption">Tylko pierwszy z trzech ma odpowiednik w obiektywie. Pozostałe dwa są regułami przypisania kierunków, których żadna konstrukcja optyczna nie realizuje.</div>
+    </div>
+
+    <p>Trzy przypadki warte nazwania. <strong>Rzut równoległy</strong> nie ma punktu zbiegu — promienie biegną równolegle, więc przedmiot odległy jest tak samo duży, jak bliski. Odpowiednik optyczny wymagałby soczewki o średnicy równej szerokości kadrowanej sceny, co przy budynku oznacza soczewkę wielkości budynku. Renderer robi to jedną linijką.</p>
+
+    <p><strong>Przesunięcie kadru bez granic.</strong> Obiektyw typu shift przesuwa kadr w obrębie koła obrazowego i kończy się tam, gdzie koło się kończy — stąd winietowanie przy dużych przesunięciach. Kamera renderera przesuwa kadr dowolnie daleko, bo nie ma koła obrazowego. <span class="term-cyan">Jest to jedyne miejsce, gdzie brak fizyki bywa praktyczną zaletą</span>, i wykorzystuje się je przy dopasowywaniu do plate'ów kręconych shiftem.</p>
+
+    <p><strong>Rzut panoramiczny.</strong> Pełna kula kierunków zapisana w jednym obrazie nie ma optycznego odpowiednika w ogóle — nawet obiektyw typu rybie oko obejmuje najwyżej półkulę i mocno ją zniekształca. Renderer traktuje to jak każdy inny rzut, bo dla niego jest to tylko inna funkcja kierunku.</p>
+
+    <p>Wniosek dla pracy z plate'em jest jednak odwrotny do intuicji. <strong>Wszystkie te możliwości są nieprzydatne, gdy element ma pasować do zdjęcia</strong> — bo zdjęcie zrobił obiektyw i obowiązuje je rzut perspektywiczny. Przydają się tam, gdzie obraz nie udaje fotografii: przy mapach otoczenia, podglądach technicznych i rysunkach.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Kąt widzenia · jedno równanie</div>
+    <h2>Skąd renderer bierze perspektywę</h2>
+
+    <p>Wszystkie interfejsy kamer sprowadzają się do jednego równania, które warto mieć w głowie, bo pozwala przełożyć każdy z nich na każdy inny.</p>
+
+    <div class="formula">
+      FOV = 2 · arctg(<span class="vec" data-tip="Szerokość matrycy albo bramki kadrowej">w</span> / 2<span class="vec" data-tip="Ogniskowa">f</span>)
+      <span class="sub">FOV — poziomy kąt widzenia. w — szerokość matrycy w mm. f — ogniskowa w mm. Ten sam wzór z pionową wysokością daje pionowy kąt widzenia, a z przekątną — kąt przekątny; trzy różne liczby dla tej samej kamery.</span>
+    </div>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Kąt widzenia</span><span>trzy sposoby podania tej samej rzeczy</span></div>
+      <svg viewBox="0 0 760 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ten sam kadr opisany kątem poziomym, pionowym i przekątnym — trzy różne liczby.">
+        <circle cx="80" cy="110" r="5" fill="#e8a33d"/>
+        <text x="80" y="134" font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="middle">źrenica</text>
+        <rect x="430" y="42" width="230" height="136" fill="none" stroke="#6e93be" stroke-width="1.6"/>
+        <g stroke="#e8a33d" stroke-width="1.1" opacity="0.8">
+          <line x1="80" y1="110" x2="430" y2="42"/><line x1="80" y1="110" x2="660" y2="42"/>
+          <line x1="80" y1="110" x2="430" y2="178"/><line x1="80" y1="110" x2="660" y2="178"/>
+        </g>
+        <line x1="430" y1="42" x2="660" y2="178" stroke="#a98bd8" stroke-width="1.2" stroke-dasharray="4 3"/>
+        <g font-family="IBM Plex Mono" font-size="10">
+          <text x="676" y="46" fill="#6e93be">w</text>
+          <text x="676" y="182" fill="#6e93be">h</text>
+          <text x="560" y="126" fill="#a98bd8">przekątna</text>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="10.5">
+          <text x="150" y="70" fill="#e8a33d">poziomy 39,1°</text>
+          <text x="150" y="92" fill="#e8a33d">pionowy 22,6°</text>
+          <text x="150" y="114" fill="#a98bd8">przekątny 44,4°</text>
+        </g>
+        <text x="150" y="146" font-family="IBM Plex Mono" font-size="9" fill="#8b909b">35 mm · Super 35 · 24,89 × 14 mm</text>
+        <text x="150" y="164" font-family="IBM Plex Mono" font-size="9" fill="#8b909b">ta sama kamera, trzy różne liczby</text>
+        <text x="150" y="196" font-family="IBM Plex Mono" font-size="9.5" fill="#d8695f">pomyłka między nimi to błąd rzędu kilkunastu procent</text>
+      </svg>
+      <div class="diagram-caption">Podanie samego „FOV” bez wskazania, którego, jest niedookreślone. Renderery różnią się domyślnym wyborem, i jest to jedno z częstszych źródeł niezgodności kadru.</div>
+    </div>
+
+    <p>Wynika stąd praktyczna zasada, którą warto stosować bez wyjątków: <span class="term-violet">wpisuj ogniskową i rozmiar bramki, nie kąt</span>. Ogniskowa jest liczbą z raportu zdjęciowego, rozmiar bramki liczbą z dokumentacji kamery, a kąt — wynikiem, który program policzy sam i policzy poprawnie. Wpisywanie kąta oznacza policzenie tego samego ręcznie, z ryzykiem pomylenia, o który z trzech chodziło.</p>
+  </div>
+
+  <div class="panel practice">
+    <div class="panel-label">Z praktyki</div>
+    <p><strong>Zacznij od kamery otworkowej, nawet jeśli finalnie ma być głębia.</strong> Ustawianie kadru, perspektywy i geometrii jest łatwiejsze na ostrym obrazie, a głębia ostrości nie zmienia ani jednej z tych rzeczy. Włącz ją, kiedy geometria się zgadza — nie wcześniej.</p>
+    <p><strong>Sprawdź kąt widzenia na prostej, nie na oko.</strong> Prosta linia w scenie i ta sama prosta w plate'cie muszą przecinać krawędź kadru w tym samym miejscu. Jest to test dokładniejszy niż jakiekolwiek porównywanie wrażenia i zajmuje minutę.</p>
+    <p><strong>Nie szukaj w kamerze parametrów, których tam nie ma.</strong> Suwak nazwany „lens flare” albo „chromatic aberration” przy kamerze renderera nie modeluje szkła — jest efektem doklejonym do wyniku, i wypada lepiej wtedy, gdy zrobi się go świadomie w compie. Rozstrzyga to <a href="rozdzial-34-render-czy-comp.html">następny rozdział</a>.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>kamera otworkowa</dt>
+      <dd>Model, w którym źrenica jest punktem. Wszystko ostre, brak głębi ostrości. Domyślna w każdym rendererze.</dd>
+      <dt>model cienkiej soczewki</dt>
+      <dd>Rozszerzenie kamery otworkowej o źrenicę o niezerowej średnicy. Daje głębię ostrości i bokeh, nic poza tym.</dd>
+      <dt>promień pierwotny</dt>
+      <dd>Promień wychodzący z kamery w stronę sceny. Jego punkt startu decyduje, czy kamera jest dziurką, czy soczewką.</dd>
+      <dt>rzut</dt>
+      <dd>Sposób odwzorowania kierunków na kadr: prostokątny (perspektywiczny), równoległy albo panoramiczny.</dd>
+      <dt>przesunięcie kadru</dt>
+      <dd>Odsunięcie prostokąta kadru od osi. Odpowiednik obiektywu typu shift; geometryczne, więc renderer je ma.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Skoro prawa kolumna tabeli musi zostać dołożona, zostaje pytanie, gdzie ją dołożyć. Część rzeczy da się policzyć w rendererze, część w compie, a wybór nie jest kwestią gustu — <a href="rozdzial-34-render-czy-comp.html">następny rozdział</a> pokazuje, że decyduje jedna rzecz: czy zjawisko potrzebuje informacji, której obraz płaski już nie ma.</p>
+  </div>
 
   <div class="deeper">
     <div class="deeper-label">Idź głębiej</div>
@@ -57,8 +303,150 @@ window.SKY3D_MESSAGES = {
       <a class="nav-next" href="rozdzial-34-render-czy-comp.html">Następny →</a>
   </div>
 
+<template id="adv-probki-dof">
+  <h3>Dlaczego głębia ostrości kosztuje tyle próbek</h3>
+  <p>Włączenie modelu cienkiej soczewki potrafi wydłużyć render kilkakrotnie, mimo że dokłada tylko jedną operację: losowanie punktu startu na krążku źrenicy. Przyczyna jest statystyczna, nie obliczeniowa.</p>
+  <p>W kamerze otworkowej wszystkie promienie pierwotne z danego piksela biegną prawie tak samo i trafiają w to samo miejsce sceny. Ich wyniki są do siebie podobne, więc średnia ustala się po kilku próbkach. W modelu soczewki promienie z jednego piksela rozchodzą się po całym stożku i <strong>mogą trafić w zupełnie różne przedmioty</strong> — jeden w jasne niebo, drugi w ciemną gałąź. Wariancja tej próby jest ogromna, a szum maleje jak pierwiastek z liczby próbek.</p>
+  <p>Stąd reguła orientacyjna: <strong>koszt rośnie z kwadratem średnicy krążka rozmycia</strong>. Podwojenie średnicy — czyli otwarcie o dwie działki — wymaga mniej więcej czterokrotnie więcej próbek dla tego samego poziomu szumu.</p>
+  <p>Wynika stąd praktyczna kolejność decyzji. Jeśli rozmycie jest duże i tło mocno nieostre, tańsze bywa wyrenderowanie sceny ostro i rozmycie jej w compie z mapy głębi — pod warunkiem że scena nie ma przenikających się planów, bo wtedy płaski obraz nie ma już potrzebnej informacji. Granicę tę wyznacza <a href="../rozdzialy/rozdzial-34-render-czy-comp.html">Rozdział 34</a>, a szczegóły pracy z mapą głębi — <a href="../dodatki/dodatek-u-z-depth-w-praktyce.html">Dodatek U</a>.</p>
+  <p>Warto też pamiętać o rzeczy odwrotnej: <strong>przy małym rozmyciu głębia z rendera jest tania</strong>. Krążek o średnicy kilku pikseli nie zwiększa wariancji znacząco, a daje wynik dokładny w każdym miejscu sceny — łącznie z krawędziami, przenikaniem i przezroczystościami, gdzie comp z mapy głębi zawodzi. Poniżej mniej więcej dziesięciu pikseli renderowanie głębi wprost jest zwykle prostsze niż jej odtwarzanie.</p>
+</template>
+
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal-box">
+    <button class="modal-close" aria-label="Zamknij">&times;</button>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
 </div>
 
 <script src="../assets/interactive.js"></script>
+<script type="module">
+import { createDiagram3D } from '../assets/sky3d.js';
+
+const host = document.getElementById('kamLab');
+if (host) {
+  /* --- geometria, wszystko w jednostkach umownych ------------------ */
+  const ZF = -1.5;          // matryca
+  const ZO = 4.0;           // plaszczyzna ostrosci
+  const FW = 2.2, FH = 1.25; // matryca: szerokosc i wysokosc
+  const P = [0.5, 0.3, 1.8]; // punkt sceny, blizej niz plaszczyzna ostrosci
+  const DZ = -1.2;           // przesuniecie sceny, zeby orbita krecila sie wokol srodka
+
+  const Z = (z) => z + DZ;
+
+  /* Kadr rozszerza sie od matrycy przez zrenice: polowa szerokosci
+     na odleglosci z wynosi (FW/2) * z / |ZF|. */
+  const K = (FW / 2) / (-ZF);
+  const KH = (FH / 2) / (-ZF);
+  const OW = 2 * K * ZO, OH = 2 * KH * ZO;
+
+  /* Cienka soczewka. Ostrosc na ZO, obraz na ZF, wiec 1/F = 1/|ZF| + 1/ZO. */
+  const invF = 1 / (-ZF) + 1 / ZO;
+  const sP = P[2];
+  const spP = 1 / (invF - 1 / sP);       // odleglosc obrazowa punktu P
+  const m = -spP / sP;                    // powiekszenie poprzeczne
+  const I = [m * P[0], m * P[1], -spP];   // obraz punktu P — LEZY ZA MATRYCA
+  const u = (-ZF) / spP;                  // ulamek drogi od zrenicy do obrazu
+  const SKALA_KRAZKA = 1 - u;             // promien krazka = SKALA_KRAZKA * promien zrenicy
+  const C = [I[0] * u, I[1] * u];         // srodek krazka na matrycy
+
+  const parts = [];
+
+  /* --- elementy stale ---------------------------------------------- */
+  parts.push({ type: 'plane', w: FW, h: FH, at: [0, 0, Z(ZF)], color: '#e8a33d', opacity: 0.14, edges: '#e8a33d' });
+  parts.push({ type: 'label', text: 'matryca', at: [0, -FH / 2 - 0.22, Z(ZF)], color: '#e8a33d' });
+
+  parts.push({ type: 'plane', w: OW, h: OH, at: [0, 0, Z(ZO)], color: '#7fc47f', opacity: 0.08, edges: '#7fc47f' });
+  parts.push({ type: 'label', text: 'płaszczyzna ostrości', at: [0, OH / 2 + 0.26, Z(ZO)], color: '#7fc47f' });
+
+  /* Krawedzie bryly widzenia: rogi matrycy przez zrenice do rogow
+     plaszczyzny ostrosci. */
+  for (const sx of [-1, 1]) for (const sy of [-1, 1]) {
+    parts.push({
+      type: 'polyline', color: '#3a424d',
+      points: [[sx * FW / 2, sy * FH / 2, Z(ZF)], [0, 0, Z(0)], [-sx * OW / 2, -sy * OH / 2, Z(ZO)]],
+    });
+  }
+
+  parts.push({ type: 'sphere', r: 0.075, at: [P[0], P[1], Z(P[2])], color: '#6e93be', opacity: 0.95 });
+  parts.push({ type: 'label', text: 'punkt sceny', at: [P[0], P[1] + 0.24, Z(P[2])], color: '#6e93be' });
+
+  /* --- warstwa: dziurka -------------------------------------------- */
+  {
+    const t = (P[2] - ZF) / P[2];                 // od P przez (0,0,0) do plaszczyzny matrycy
+    const F = [P[0] * (1 - t), P[1] * (1 - t)];
+    parts.push({ type: 'sphere', r: 0.045, at: [0, 0, Z(0)], color: '#ecebe4', opacity: 0.95, layer: 'dziurka' });
+    parts.push({ type: 'label', text: 'źrenica = punkt', at: [0, 0.3, Z(0)], color: '#ecebe4', layer: 'dziurka' });
+    parts.push({
+      type: 'polyline', color: '#6e93be', layer: 'dziurka',
+      points: [[P[0], P[1], Z(P[2])], [0, 0, Z(0)], [F[0], F[1], Z(ZF)]],
+    });
+    parts.push({ type: 'sphere', r: 0.05, at: [F[0], F[1], Z(ZF) + 0.01], color: '#a98bd8', layer: 'dziurka' });
+    parts.push({ type: 'label', text: 'punkt, nie krążek', at: [F[0], F[1] - 0.26, Z(ZF)], color: '#a98bd8', layer: 'dziurka' });
+  }
+
+  /* --- warstwy ze zrenica o niezerowej srednicy --------------------- */
+  function warstwaZrenicy(nazwa, r, podpis) {
+    parts.push({ type: 'disc', r, at: [0, 0, Z(0)], color: '#e8a33d', opacity: 0.3, layer: nazwa });
+    parts.push({ type: 'torus', r, tube: 0.014, at: [0, 0, Z(0)], color: '#e8a33d', opacity: 0.9, layer: nazwa });
+    parts.push({ type: 'label', text: podpis, at: [0, r + 0.28, Z(0)], color: '#e8a33d', layer: nazwa });
+
+    const N = 16;
+    for (let i = 0; i < N; i++) {
+      const a = (i / N) * Math.PI * 2;
+      const A = [r * Math.cos(a), r * Math.sin(a), 0];
+      /* Po soczewce promien biegnie ku obrazowi I; rysujemy go do matrycy. */
+      const H = [A[0] + u * (I[0] - A[0]), A[1] + u * (I[1] - A[1])];
+      parts.push({
+        type: 'polyline', color: '#6e93be', opacity: 0.55, layer: nazwa,
+        points: [[P[0], P[1], Z(P[2])], [A[0], A[1], Z(0)], [H[0], H[1], Z(ZF)]],
+      });
+    }
+
+    const rk = SKALA_KRAZKA * r;
+    parts.push({ type: 'disc', r: rk, at: [C[0], C[1], Z(ZF) + 0.012], color: '#a98bd8', opacity: 0.75, layer: nazwa });
+    parts.push({
+      type: 'label', text: 'krążek ⌀ ' + (2 * rk).toFixed(2).replace('.', ','),
+      at: [C[0], C[1] - rk - 0.24, Z(ZF)], color: '#a98bd8', layer: nazwa,
+    });
+  }
+
+  warstwaZrenicy('otwor14', 0.5, 'źrenica f/1,4');
+  warstwaZrenicy('otwor8', 0.115, 'źrenica f/8');
+
+  const widget = createDiagram3D(host, {
+    parts,
+    camera: { dist: 8.6, phi: 1.16, theta: 0.62 },
+    hiddenLayers: ['otwor14', 'otwor8'],
+  });
+
+  if (widget.ok) {
+    const przyciski = host.querySelectorAll('[data-warstwa]');
+    const wszystkie = ['dziurka', 'otwor14', 'otwor8'];
+    przyciski.forEach((b) => {
+      b.addEventListener('click', () => {
+        const w = b.dataset.warstwa;
+        wszystkie.forEach((n) => widget.setLayer(n, n === w));
+        przyciski.forEach((x) => x.classList.toggle('is-active', x === b));
+      });
+    });
+  }
+
+  /* Odczyt liczbowy dla kontroli — zapisany w atrybucie, zeby dalo sie
+     go sprawdzic zrzutem z przegladarki bez czytania pikseli. */
+  host.dataset.kontrola = [
+    'F=' + (1 / invF).toFixed(4),
+    'spP=' + spP.toFixed(4),
+    'm=' + m.toFixed(4),
+    'u=' + u.toFixed(4),
+    'skala=' + SKALA_KRAZKA.toFixed(4),
+    'srodek=' + C[0].toFixed(4) + ',' + C[1].toFixed(4),
+    'dziurka=' + (P[0] * (ZF / P[2])).toFixed(4) + ',' + (P[1] * (ZF / P[2])).toFixed(4),
+  ].join(' ');
+}
+</script>
+
 </body>
 </html>
