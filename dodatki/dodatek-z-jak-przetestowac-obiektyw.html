@@ -41,7 +41,109 @@ window.SKY3D_MESSAGES = {
   <h1>Jak przetestować obiektyw</h1>
   <p class="subtitle">Protokół testu, który da się zrobić w jeden dzień: siatka na dystorsję, tablica na MTF, punktowe światła na bokeh i flarę, twarz na rysunek skóry.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">Co tu jest</div>
+    <ul>
+      <li><strong>Protokół na jedno popołudnie</strong> — osiem testów, każdy z listą potrzebnych rzeczy i z tym, co się z niego odczytuje.</li>
+      <li><strong>Karta wyników</strong>: jakie liczby zapisać, żeby dało się z nich potem odtworzyć obiektyw w compie.</li>
+      <li><strong>Czego nie trzeba mierzyć</strong> i dlaczego — bo połowa krążących testów sprawdza rzeczy nieistotne dla pracy.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Przygotowanie · co trzeba mieć</div>
+    <h2>Sprzęt i warunki</h2>
+
+    <p>Cały protokół da się wykonać w pomieszczeniu o długości sześciu metrów, w jedno popołudnie, bez sprzętu pomiarowego. Potrzebne są cztery rzeczy.</p>
+
+    <p><strong>Płaska siatka</strong> wielkości pozwalającej wypełnić kadr z dwóch metrów. Wydrukowana kratka o kroku 5 cm na sztywnej płycie wystarcza; ważniejsza od dokładności druku jest płaskość i to, żeby dała się ustawić równolegle do matrycy.</p>
+
+    <p><strong>Jednolita, równomiernie oświetlona powierzchnia</strong> — ściana, blat podświetlany albo zachmurzone niebo. Służy do winietowania i musi być jednorodna z dokładnością lepszą niż to, co się mierzy.</p>
+
+    <p><strong>Punktowe źródło światła</strong>: goła żarówka o małej bańce, dioda albo odblask słońca w kulce łożyskowej. Do bokeh, do ghostów i do gwiazdy dyfrakcyjnej.</p>
+
+    <p><strong>Cel o drobnej strukturze</strong> do oceny ostrości: wydrukowany szum, gazeta, ceglana ściana. Nie musi to być tablica testowa — <span class="term-cyan">porównuje się środek z rogiem tego samego zdjęcia</span>, więc bezwzględna skala nie ma znaczenia.</p>
+
+    <p>Warunek wspólny dla wszystkich testów: <strong>statyw, ostrość ustawiana ręcznie i zapis surowy</strong>. Automatyka i wywołanie z korekcjami zafałszują dokładnie to, co się mierzy.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Osiem testów · co po kolei</div>
+    <h2>Protokół</h2>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead>
+          <tr><th class="num">#</th><th>Test</th><th>Ustawienie</th><th>Co odczytujesz</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="num">1</td><td>dystorsja</td><td>siatka równolegle, wypełnia kadr, f/5,6</td><td>k₁, k₂ i środek dystorsji</td></tr>
+          <tr><td class="num">2</td><td>winietowanie</td><td>jednolita powierzchnia, pełny otwór oraz −2 i −4 działki</td><td>profil w działkach; rozdział na naturalne i optyczne</td></tr>
+          <tr><td class="num">3</td><td>ostrość w polu</td><td>drobna struktura na płasko, kilka przysłon</td><td>spadek MTF ku brzegom, przysłona optimum</td></tr>
+          <tr><td class="num">4</td><td>bokeh</td><td>punktowe światło, tło 5× dalej niż ostrość, kilka przysłon</td><td>kształt krążka w środku i przy brzegu, kocie oko</td></tr>
+          <tr><td class="num">5</td><td>aberracja poprzeczna</td><td>kontrastowe krawędzie przy brzegu kadru</td><td>rozsunięcie kanałów w px jako funkcja promienia</td></tr>
+          <tr><td class="num">6</td><td>flara i ghosty</td><td>punktowe źródło w kadrze i tuż poza nim, kilka pozycji</td><td>barwa i kierunek ghostów, przyrost czerni</td></tr>
+          <tr><td class="num">7</td><td>gwiazda dyfrakcyjna</td><td>punktowe źródło, przymknięcie do końca</td><td>liczba i kąt promieni; parzystość listków</td></tr>
+          <tr><td class="num">8</td><td>oddech</td><td>siatka, przejazd ostrości z ∞ na minimum</td><td>zmiana kadru w procentach</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Kolejność ma znaczenie tylko dla dwóch pierwszych: dystorsję mierzy się przed wszystkim, bo bez niej pomiar promieni w kadrze jest przesunięty.</p>
+
+    <p>Trzy testy zasługują na dopowiedzenie, bo najłatwiej wykonać je źle.</p>
+
+    <p><strong>Test 2 wymaga trzech przysłon, nie jednej.</strong> Cały sens polega na porównaniu: to, co znika przy przymykaniu, było winietowaniem optycznym; to, co zostaje, jest naturalne albo mechaniczne. Protokół podaje <a href="dodatek-p-winietowanie-w-liczbach.html">Dodatek P</a>.</p>
+
+    <p><strong>Test 4 wymaga tła znacznie dalszego niż ostrość.</strong> Przy tle bliskim krążki są małe i ich kształtu nie widać. Reguła: tło co najmniej pięć razy dalej niż płaszczyzna ostrości, a punktowe światła w kilku miejscach kadru, w tym w rogu — bo <span class="term-violet">kocie oko istnieje tylko poza osią</span>.</p>
+
+    <p><strong>Test 7 rozstrzyga parzystość jednym spojrzeniem.</strong> Przysłona o parzystej liczbie listków daje tyle promieni, ile listków; nieparzysta daje dwa razy tyle. Policzenie promieni na zdjęciu jest szybsze niż zaglądanie w obiektyw — i działa też wtedy, gdy się go nie ma, a tylko materiał z niego.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Karta wyników · co zapisać</div>
+    <h2>Liczby, które mają przetrwać</h2>
+
+    <p>Test jest wart tyle, co jego zapis. Poniższa karta to komplet, z którego da się odtworzyć obiektyw w compie bez powtarzania pomiarów — i bez dostępu do samego obiektywu.</p>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead>
+          <tr><th>Pozycja</th><th>Postać zapisu</th><th>Przykład</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>identyfikacja</td><td>marka, ogniskowa, egzemplarz</td><td>seria X, 35 mm, nr 4</td></tr>
+          <tr><td>bramka pomiaru</td><td>szerokość w mm i rozdzielczość</td><td>24,89 mm, 4096 px</td></tr>
+          <tr><td>dystorsja</td><td>k₁, k₂, środek w px od środka kadru</td><td>−0,042; 0,008; (+6, −3)</td></tr>
+          <tr><td>winietowanie</td><td>działki w rogu, dla każdej przysłony</td><td>T/1,5: 1,8 · T/2,8: 1,1 · T/5,6: 0,9</td></tr>
+          <tr><td>ostrość</td><td>szerokość krawędzi w px: środek / róg</td><td>1,8 / 3,4 przy T/2,8</td></tr>
+          <tr><td>bokeh</td><td>listki, kształt, kocie oko w rogu</td><td>9 listków, lekko sześciokątny, ścięcie 35%</td></tr>
+          <tr><td>aberracja</td><td>rozsunięcie R–B w px przy brzegu</td><td>1,2 px przy pełnym otworze</td></tr>
+          <tr><td>flara</td><td>barwa ghostów, liczba, przyrost czerni</td><td>3 ghosty zielone, +0,4 działki</td></tr>
+          <tr><td>oddech</td><td>zmiana kadru ∞ → minimum, w %</td><td>3,5%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Egzemplarz zapisuje się celowo: dwa obiektywy z tej samej serii różnią się mierzalnie, a przy dopasowywaniu do plate'u ta różnica bywa większa niż tolerancja pracy.</p>
+
+    <p>Warto zwrócić uwagę na dwie pozycje, które bywają pomijane, a są najbardziej użyteczne. <strong>Środek dystorsji</strong> rzadko leży dokładnie w środku kadru; jego pominięcie zostawia resztkowy błąd rosnący ku jednemu brzegowi. <strong>Ścięcie krążka w rogu</strong> jest jedyną liczbą, która pozwala odtworzyć kocie oko wiarygodnie — bez niej rozmycie w rogach będzie okrągłe, a więc obce.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Czego nie mierzyć · oszczędność popołudnia</div>
+    <h2>Testy, które nic nie wnoszą do pracy</h2>
+
+    <p>Krąży sporo procedur testowych, których wynik nie wchodzi do żadnego rachunku w tej książce. Warto wiedzieć, które pominąć.</p>
+
+    <p><strong>Rozdzielczość w liniach na milimetr, w skali bezwzględnej.</strong> Liczba ta zależy od kryterium, od nośnika i od sposobu odczytu, a do compu i tak wchodzi tylko porównanie środka z rogiem. Wystarczy szerokość krawędzi w pikselach, mierzona na tym samym zdjęciu.</p>
+
+    <p><strong>Transmisja w wartościach bezwzględnych.</strong> Różnica między T a f interesuje operatora ustawiającego ekspozycję, nie osobę odtwarzającą obraz. Element dopasowuje się do plate'u, którego jasność i tak jest znana z samego materiału.</p>
+
+    <p><strong>Powtarzalność mechaniki.</strong> Luz pierścienia, dokładność skali i podobne rzeczy są ważne przy zdjęciach i nieistotne potem. W gotowym materiale ich skutki są już zawarte w obrazie.</p>
+
+    <p><strong>Testy porównawcze między obiektywami.</strong> Kuszące i praktycznie bezużyteczne, bo do pracy potrzeba wartości <em>tego</em> obiektywu, a nie jego miejsca w rankingu. <span class="term-amber">Ranking odpowiada na pytanie, co kupić; karta pomiarowa na pytanie, jak to odtworzyć</span> — a tylko drugie z nich stawia comp.</p>
+
+    <p>Ostatnia uwaga, praktyczna dla czytelnika bez dostępu do sprzętu. <strong>Siedem z ośmiu testów da się wykonać na gotowym materiale</strong>, jeśli tylko w ujęciach jest odpowiedni motyw: prosta krawędź przy brzegu na dystorsję, jednolite niebo na winietę, punktowe światła w tle na bokeh, przejazd ostrości na oddech. Jest to wolniejsze i mniej dokładne, ale wystarcza — a bywa jedyną dostępną drogą, kiedy obiektyw dawno wrócił do wypożyczalni.</p>
+  </div>
 
   <div class="site-nav">
     <a href="../index.html">← Spis treści</a>
