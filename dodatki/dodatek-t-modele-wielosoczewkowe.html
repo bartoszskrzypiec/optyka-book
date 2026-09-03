@@ -41,7 +41,133 @@ window.SKY3D_MESSAGES = {
   <h1>Modele wielosoczewkowe w rendererze</h1>
   <p class="subtitle">Kiedy opłaca się prześledzić promień przez prawdziwy układ zamiast przybliżać go cienką soczewką, i co się wtedy dostaje za darmo.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">Co tu jest</div>
+    <ul>
+      <li><strong>Na czym polega model wielosoczewkowy</strong> — czym różni się od cienkiej soczewki i co dokładnie liczy.</li>
+      <li><strong>Co dostaje się za darmo</strong>, gdy promień naprawdę przechodzi przez szkło, a czego nadal nie ma.</li>
+      <li><strong>Skąd wziąć opis układu</strong> i jak czytać tabelę powierzchni.</li>
+      <li><strong>Kiedy to się opłaca</strong>, a kiedy jest kosztowną ozdobą.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Co to jest · trzeci model kamery</div>
+    <h2>Promień, który naprawdę przechodzi przez szkło</h2>
+
+    <p>Rozdział 33 opisał dwa modele kamery: dziurkę i cienką soczewkę. Istnieje trzeci, rzadziej używany i wart znajomości, bo rozwiązuje część problemów z prawej kolumny tamtej tabeli.</p>
+
+    <p>W modelu wielosoczewkowym promień pierwotny nie startuje ze źrenicy w stronę sceny, tylko <strong>przechodzi przez kolejne powierzchnie zadanego układu</strong>, załamując się na każdej według prawa Snella z <a href="../rozdzialy/rozdzial-02-zalamanie-i-dyspersja.html">Rozdziału 2</a>. Kamera dostaje opis w postaci tabeli: promień krzywizny, odległość do następnej powierzchni, współczynnik załamania i liczba Abbego szkła, średnica.</p>
+
+    <div class="formula">
+      <span class="vec" data-tip="Współczynnik załamania ośrodka przed powierzchnią">n₁</span>·sin <span class="vec" data-tip="Kąt padania">θ₁</span> = <span class="vec" data-tip="Współczynnik załamania za powierzchnią">n₂</span>·sin <span class="vec" data-tip="Kąt załamania">θ₂</span>
+      <span class="sub">Stosowane na każdej powierzchni po kolei, dla każdej długości fali osobno. Nic ponad to — cała reszta zjawisk z tego dodatku wynika z wielokrotnego zastosowania tego jednego prawa.</span>
+    </div>
+
+    <p>Warto od razu nazwać kluczową różnicę. Cienka soczewka jest <em>opisem zachowania</em>: mówi, gdzie promień wyjdzie, nie pytając, co się z nim działo w środku. Model wielosoczewkowy jest <span class="term-cyan">symulacją drogi</span> — i dlatego wady, które w rzeczywistości biorą się z tej drogi, pojawiają się w nim same, bez dokładania ich osobno.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Za darmo · co wychodzi samo</div>
+    <h2>Zjawiska, których nie trzeba dokładać</h2>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead>
+          <tr><th>Zjawisko</th><th>Skąd się bierze</th><th class="num">Wychodzi samo?</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>aberracja sferyczna</td><td>brzeg powierzchni ogniskuje bliżej niż środek</td><td class="num">tak</td></tr>
+          <tr><td>koma</td><td>ta sama wada dla wiązki ukośnej</td><td class="num">tak</td></tr>
+          <tr><td>astygmatyzm i krzywizna pola</td><td>różne płaszczyzny padania, różne ogniska</td><td class="num">tak</td></tr>
+          <tr><td>dystorsja</td><td>powiększenie zależne od kąta polowego</td><td class="num">tak</td></tr>
+          <tr><td>aberracja chromatyczna</td><td>n zależy od długości fali (liczba Abbego)</td><td class="num">tak</td></tr>
+          <tr><td>winietowanie optyczne</td><td>średnice powierzchni obcinają wiązkę ukośną</td><td class="num">tak</td></tr>
+          <tr><td>koci głaz bokeh</td><td>ta sama obcięta źrenica, widziana z rozmycia</td><td class="num">tak</td></tr>
+          <tr><td>przesunięcie ostrości przy przymykaniu</td><td>aberracja sferyczna zależna od otworu</td><td class="num">tak</td></tr>
+          <tr><td>ghosty i flara zasłaniająca</td><td>odbicia od powierzchni, nie załamania</td><td class="num">tylko z osobnym trybem</td></tr>
+          <tr><td>dyfrakcja na przysłonie</td><td>falowa, nie geometryczna</td><td class="num">nie</td></tr>
+          <tr><td>halacja, ziarno, rolling shutter</td><td>nośnik, nie optyka</td><td class="num">nie</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Osiem pierwszych wierszy to zjawiska geometryczne — wynikają z drogi promienia i pojawiają się bez dokładania czegokolwiek. Trzy ostatnie nie, i to z trzech różnych powodów.</p>
+
+    <p>Ostatnie trzy wiersze warto rozumieć osobno, bo ich przyczyny się różnią.</p>
+
+    <p><strong>Ghosty wymagają śledzenia odbić.</strong> Promień padający na powierzchnię szkła w większości się załamuje, ale kilka procent odbija — i to te kilka procent daje zjawiska z Części V. Model śledzący tylko załamania ich nie zobaczy; potrzebny jest tryb, w którym promień może wybrać odbicie. Kosztuje to wykładniczo, bo każde odbicie mnoży liczbę dróg.</p>
+
+    <p><strong>Dyfrakcja nie jest geometryczna.</strong> Śledzenie promieni z definicji nie zna zjawisk falowych, więc krzyż z <a href="../rozdzialy/rozdzial-25-starburst.html">Rozdziału 25</a> i krążek Airy'ego z Rozdziału 10 nie pojawią się nigdy, niezależnie od dokładności układu.</p>
+
+    <p><strong>Nośnik jest osobną warstwą.</strong> Model opisuje obiektyw, a nie to, co za nim. Halacja, ziarno i rolling shutter są dalej po łańcuchu i pozostają zadaniem compu.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Dane · skąd wziąć opis układu</div>
+    <h2>Jak czytać tabelę powierzchni</h2>
+
+    <p>Opis układu ma postać tabeli, w której każdy wiersz to jedna powierzchnia. Poniżej przykład czterech pierwszych powierzchni triplet-podobnego układu, z objaśnieniem kolumn.</p>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead>
+          <tr><th class="num">#</th><th class="num">R [mm]</th><th class="num">d [mm]</th><th class="num">n</th><th class="num">V</th><th class="num">⌀ [mm]</th><th>co to jest</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="num">1</td><td class="num">30,81</td><td class="num">5,20</td><td class="num">1,617</td><td class="num">55,0</td><td class="num">23,0</td><td>przód soczewki skupiającej</td></tr>
+          <tr><td class="num">2</td><td class="num">−188,3</td><td class="num">8,90</td><td class="num">1,000</td><td class="num">—</td><td class="num">23,0</td><td>tył tejże, dalej powietrze</td></tr>
+          <tr><td class="num">3</td><td class="num">−78,2</td><td class="num">1,80</td><td class="num">1,649</td><td class="num">33,8</td><td class="num">14,0</td><td>przód soczewki rozpraszającej</td></tr>
+          <tr><td class="num">4</td><td class="num">25,45</td><td class="num">6,40</td><td class="num">1,000</td><td class="num">13,0</td><td class="num">13,0</td><td>tył, tu zwykle stoi przysłona</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">R — promień krzywizny; dodatni gdy środek krzywizny leży za powierzchnią, ujemny gdy przed. d — odległość do następnej powierzchni. n — współczynnik załamania ośrodka <em>za</em> powierzchnią. V — liczba Abbego tego ośrodka. ⌀ — średnica użyteczna, ta która obcina.</p>
+
+    <p>Trzy pułapki przy wczytywaniu takich danych warto znać z góry.</p>
+
+    <p><strong>Znak promienia zależy od konwencji.</strong> Część źródeł liczy od strony przedmiotu, część od obrazu. Objaw pomyłki jest wyraźny: układ ogniskuje za matrycą albo w ogóle nie ogniskuje. Test zajmuje chwilę — promień równoległy do osi musi przeciąć oś w odległości równej ogniskowej.</p>
+
+    <p><strong>Współczynnik załamania podaje się dla jednej długości fali.</strong> Zwykle jest to linia d, czyli 587,6 nm. Bez liczby Abbego model nie policzy aberracji chromatycznej wcale — a wtedy traci jedną z głównych rzeczy, dla których się go używa.</p>
+
+    <p><strong>Średnica bywa pomijana.</strong> Bez niej nie ma winietowania optycznego ani kociego oka, bo nie ma czym obcinać wiązki. <span class="term-violet">Układ bez średnic zachowuje się jak cienka soczewka o wielu powierzchniach</span> — droższy i niewiele bogatszy.</p>
+
+    <p>Źródłem danych są opisy patentowe, które dla konstrukcji sprzed kilkudziesięciu lat są publiczne, oraz zestawy dołączane do samych rendererów. Konstrukcji współczesnych producenci nie publikują i nie ma sensu ich zgadywać: <strong>układ przybliżony daje wady, których w tamtym obiektywie nie ma</strong>, co jest gorsze niż brak wad w ogóle.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Opłacalność · kiedy warto</div>
+    <h2>Rachunek za dokładność</h2>
+
+    <p>Model wielosoczewkowy kosztuje. Każdy promień pierwotny przechodzi przez kilkanaście powierzchni, na każdej liczone jest załamanie, a przy trzech długościach fali — trzykrotnie. Do tego dochodzą promienie, które w układ nie trafią i trzeba je odrzucić.</p>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead>
+          <tr><th>Model</th><th class="num">Koszt promienia pierwotnego</th><th>Co daje</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>dziurka</td><td class="num">1×</td><td>geometria i nic więcej</td></tr>
+          <tr><td>cienka soczewka</td><td class="num">1× (ale więcej próbek)</td><td>głębia ostrości, bokeh</td></tr>
+          <tr><td>wielosoczewkowy, 1 fala</td><td class="num">10–20×</td><td>+ wady geometryczne, winietowanie</td></tr>
+          <tr><td>wielosoczewkowy, 3 fale</td><td class="num">30–60×</td><td>+ aberracja chromatyczna</td></tr>
+          <tr><td>z odbiciami</td><td class="num">100×+</td><td>+ ghosty i flara</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Rzędy wielkości, nie pomiary. Koszt dotyczy samego generowania promienia pierwotnego, a nie całego renderu — udział w całości zależy od tego, jak drogie jest oświetlenie sceny.</p>
+
+    <p>Ostatnia uwaga tłumaczy, dlaczego liczby wyglądają groźniej, niż bywa w praktyce. <span class="term-cyan">W scenie z ciężkim oświetleniem koszt promienia pierwotnego jest ułamkiem całości</span> — dwudziestokrotnie droższy ułamek procenta pozostaje ułamkiem procenta. W scenie prostej, oświetlonej jednym światłem, ten sam model potrafi zdominować czas renderu.</p>
+
+    <p>Kiedy więc warto? Trzy sytuacje, w których model wielosoczewkowy zwraca koszt:</p>
+
+    <ul>
+      <li><strong>Ujęcie z widocznym bokeh poza osią.</strong> Kocie oko, jego kierunek i to, jak zmienia się przez kadr, są trudne do wiarygodnego podrobienia w compie, a wychodzą tu same.</li>
+      <li><strong>Materiał do porównania z plate'em z konkretnego obiektywu.</strong> Jeśli plate ma zmierzoną dystorsję i winietowanie, dopasowany układ daje zgodność w całym kadrze naraz, a nie punkt po punkcie.</li>
+      <li><strong>Obiektyw jako element opowieści.</strong> Ujęcie, w którym charakter szkła jest tematem — miękkie stare portretowe, wyraźnie zakrzywione pole — jest tańsze do zrobienia w ten sposób niż do udania.</li>
+    </ul>
+
+    <p>We wszystkich pozostałych przypadkach obowiązuje reguła z <a href="../rozdzialy/rozdzial-34-render-czy-comp.html">Rozdziału 34</a>: <strong>zjawiska, które zależą tylko od położenia w kadrze, robi się w compie</strong>. Dystorsja, winietowanie i aberracja poprzeczna należą do tej grupy — i dokładanie ich przez symulację całego układu jest płaceniem stukrotności za coś, co daje się zmierzyć i odtworzyć w minutę.</p>
+  </div>
 
   <div class="site-nav">
     <a href="../index.html">← Spis treści</a>
