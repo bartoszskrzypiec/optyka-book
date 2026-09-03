@@ -43,7 +43,278 @@ window.SKY3D_MESSAGES = {
   <h1>Ghosting: odbicia przez środek kadru</h1>
   <p class="subtitle">Ghosty nie lecą byle gdzie. Układają się w linii przechodzącej przez środek kadru, mają kształt przysłony i kolor powłoki — bo każdy z nich to konkretne odbicie między dwiema konkretnymi powierzchniami.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li><strong>Ghosty nie lecą byle gdzie.</strong> Układają się wzdłuż linii łączącej jasne źródło ze środkiem kadru — po przeciwnej stronie. Wynika to z symetrii obrotowej układu i nie ma wyjątków.</li>
+      <li>Każdy ghost to <span class="term-amber">konkretne odbicie między dwiema konkretnymi powierzchniami</span>: ma kształt przysłony, bo przechodzi przez nią, i kolor powłoki, bo powłoka odbija to, czego nie wygasiła.</li>
+      <li>Liczy się tylko <strong>drugi rząd</strong>, czyli dwa odbicia. Cztery odbicia są słabsze o kolejny czynnik R² — przy powłokach dwieście pięćdziesiąt tysięcy razy — więc nie istnieją.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Geometria · dlaczego linia przez środek</div>
+    <h2>Ghosty mają tor, nie przypadek</h2>
+
+    <p>Skierowanie obiektywu w stronę słońca daje na obrazie sznur plam. Wygląda to na bałagan, a jest układem ściśle uporządkowanym — i to uporządkowanie ma jedną przyczynę, którą znamy od <a href="rozdzial-16-anatomia-obiektywu.html">Rozdziału 16</a>: <strong>obiektyw jest bryłą obrotową</strong>.</p>
+
+    <p>Każda powierzchnia jest wycinkiem kuli o środku na osi optycznej. Promień padający ukośnie odbija się więc w płaszczyźnie zawierającej oś — i po drugim odbiciu trafia na matrycę <em>w tej samej płaszczyźnie</em>. Przecięcie tej płaszczyzny z matrycą jest prostą przechodzącą przez środek kadru.</p>
+
+    <p>Stąd reguła bez wyjątków: <span class="term-cyan">wszystkie ghosty leżą na jednej prostej, przechodzącej przez środek kadru i przez obraz źródła</span>. Źródło z lewej góry daje ghosty w prawym dole. Źródło przesunięte ku środkowi ściąga cały sznur ku środkowi; źródło wysunięte poza kadr wypycha ghosty do środka z drugiej strony.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Sznur ghostów</span><span>przesuń źródło światła</span></div>
+      <div class="diagram-controls">
+        <label for="ghostKat">Położenie źródła</label>
+        <input id="ghostKat" type="range" min="-100" max="100" step="1" value="70">
+        <span class="value-readout" id="ghostOdczyt">w kadrze, lewy górny róg</span>
+      </div>
+      <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Kadr z jasnym źródłem światła i sznurem ghostów ułożonych wzdłuż prostej przechodzącej przez środek kadru, po przeciwnej stronie niż źródło.">
+        <rect x="80" y="30" width="600" height="240" fill="#101215" stroke="#2a2f38" stroke-width="1.5"/>
+        <line x1="380" y1="150" x2="380" y2="150" stroke="#2a2f38"/>
+        <circle cx="380" cy="150" r="3" fill="#5a6068"/>
+        <text x="380" y="288" font-family="IBM Plex Mono" font-size="9.5" fill="#5a6068" text-anchor="middle">środek kadru</text>
+
+        <line id="ghostOs" x1="80" y1="150" x2="680" y2="150" stroke="#4fc3c0" stroke-width="1" stroke-dasharray="5 5" opacity="0.5"/>
+        <g id="ghostGrupa"></g>
+        <circle id="ghostZrodlo" cx="180" cy="80" r="16" fill="#f2f0e8" fill-opacity="0.95"/>
+        <text id="ghostEtZrodlo" x="180" y="58" font-family="IBM Plex Mono" font-size="9.5" fill="#f2f0e8" text-anchor="middle">źródło</text>
+      </svg>
+      <div class="diagram-caption" id="ghostPodpis">Źródło w prawym górnym rogu: sznur biegnie przez środek i wychodzi w lewym dolnym.</div>
+    </div>
+
+    <p>Reguła ma bezpośrednie zastosowanie przy ocenie materiału i przy podrabianiu. <strong>Flara doklejona w compie zdradza się najczęściej właśnie tym</strong>, że jej elementy nie leżą na jednej prostej albo prosta nie przechodzi przez środek kadru. Oko nie umie tego nazwać, ale rozpoznaje natychmiast, bo widziało tysiące poprawnych przypadków.</p>
+
+    <p>Drugi wniosek dotyczy ruchu. Kiedy kamera obraca się względem źródła, sznur <span class="term-violet">przesuwa się w przeciwną stronę i przez środek</span>, a poszczególne plamy zmieniają rozmiar. Statyczna flara nałożona na ujęcie z ruchem kamery jest błędem widocznym natychmiast — i to jest najczęstszy sposób, w jaki podrobiona flara się sypie.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Kształt i kolor · każdy ghost ma metrykę</div>
+    <h2>Skąd wiadomo, którędy leciał</h2>
+
+    <p>Pojedynczy ghost niesie dwie informacje o swojej drodze, i obie da się odczytać gołym okiem.</p>
+
+    <p><strong>Kształt pochodzi od przysłony.</strong> Ghost powstaje z dwóch odbić, więc światło przechodzi przez przysłonę — raz albo trzy razy, zależnie od tego, czy obie powierzchnie leżą po tej samej stronie otworu. W efekcie plama ma kształt otworu przysłony, dokładnie tak samo jak nieostry punkt z <a href="rozdzial-09-bokeh.html">Rozdziału 9</a>: okrągła przy pełnym otworze, wielokątna po przymknięciu. To jest test na przysłonę, działający nawet wtedy, gdy w kadrze nie ma żadnej nieostrości.</p>
+
+    <p>Jest przy tym wyjątek wart znajomości: ghost powstały z dwóch odbić po <em>tej samej stronie</em> przysłony nie przechodzi przez nią wcale i wtedy jego kształt wyznacza nie otwór, tylko oprawa soczewki. Takie plamy są zwykle większe, bardziej rozmyte i okrągłe niezależnie od nastawy — i to jest drugi rodzaj plam widoczny w tym samym sznurze.</p>
+
+    <p>Rozmiar plamy niesie trzecią informację, o której łatwo zapomnieć. Ghost jest <strong>nieostrym obrazem źródła</strong>, utworzonym przez część układu, przez którą przypadkiem przeszedł — a ta część ma inną ogniskową niż całość. Im bardziej jej ognisko odbiega od matrycy, tym większa i bledsza plama. Stąd bierze się rozpiętość rozmiarów w jednym sznurze: od punktu po plamę zajmującą ćwierć kadru.</p>
+
+    <p>Zestawiając te trzy rzeczy — położenie, kształt i rozmiar — dostaje się coś w rodzaju metryki każdej plamy. <span class="term-cyan">Położenie mówi, jak daleko od osi jest źródło; kształt, czy droga prowadziła przez przysłonę; rozmiar, jak głęboko w układzie zaszło odbicie.</span> Trzy odczyty z jednego spojrzenia, i żaden nie wymaga niczego poza patrzeniem.</p>
+
+    <p><strong>Kolor pochodzi od powłok.</strong> Powłoka wygasza odbicie tylko dla jednej długości fali, więc to, co się odbija, jest resztką widma — o czym w całości <a href="rozdzial-24-powloki.html">Rozdział 24</a>. Ghost ma barwę tego, czego powłoka nie zdążyła wygasić, a ponieważ każdy powstaje na innej parze powierzchni, każdy bywa nieco innego koloru. <span class="term-cyan">Sznur ghostów jest więc kolorowy, a paleta jest podpisem producenta</span>.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Dwa rodzaje plam w jednym sznurze</span><span>przez przysłonę i obok niej</span></div>
+      <svg viewBox="0 0 760 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Schemat toru dwóch ghostów: jeden przechodzi przez przysłonę i ma jej kształt, drugi odbija się po jednej stronie i ma kształt oprawy.">
+        <line x1="40" y1="118" x2="620" y2="118" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 6"/>
+        <path d="M 140 72 Q 164 118 140 164 Q 116 118 140 72 Z" fill="#4fc3c0" fill-opacity="0.14" stroke="#4fc3c0" stroke-width="1.3"/>
+        <path d="M 270 76 Q 292 118 270 160 Q 248 118 270 76 Z" fill="#4fc3c0" fill-opacity="0.14" stroke="#4fc3c0" stroke-width="1.3"/>
+        <g stroke="#8b909b" stroke-width="3.5">
+          <line x1="340" y1="82" x2="340" y2="106"/><line x1="340" y1="130" x2="340" y2="154"/>
+        </g>
+        <text x="340" y="74" font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="middle">przysłona</text>
+        <path d="M 420 76 Q 442 118 420 160 Q 398 118 420 76 Z" fill="#4fc3c0" fill-opacity="0.14" stroke="#4fc3c0" stroke-width="1.3"/>
+        <path d="M 520 72 Q 544 118 520 164 Q 496 118 520 72 Z" fill="#4fc3c0" fill-opacity="0.14" stroke="#4fc3c0" stroke-width="1.3"/>
+        <line x1="600" y1="66" x2="600" y2="170" stroke="#6e93be" stroke-width="2.5"/>
+
+        <g stroke="#e8a33d" stroke-width="1.5" fill="none">
+          <path d="M 40 90 L 520 100"/>
+          <path d="M 520 100 L 300 128"/>
+          <path d="M 300 128 L 600 146"/>
+        </g>
+        <text x="40" y="84" font-family="IBM Plex Mono" font-size="9" fill="#e8a33d">przez przysłonę</text>
+
+        <g stroke="#9c82d8" stroke-width="1.5" fill="none">
+          <path d="M 40 100 L 270 90"/>
+          <path d="M 270 90 L 140 104"/>
+          <path d="M 140 104 L 600 92"/>
+        </g>
+        <text x="40" y="112" font-family="IBM Plex Mono" font-size="9" fill="#9c82d8">obok przysłony</text>
+
+        <g>
+          <circle cx="678" cy="146" r="12" fill="#e8a33d" fill-opacity="0.45" stroke="#e8a33d"/>
+          <path d="M 668 146 L 673 137 L 683 137 L 688 146 L 683 155 L 673 155 Z" fill="none" stroke="#e8a33d" stroke-width="1.2"/>
+          <text x="678" y="176" font-family="IBM Plex Mono" font-size="9" fill="#e8a33d" text-anchor="middle">kształt</text>
+          <text x="678" y="188" font-family="IBM Plex Mono" font-size="9" fill="#e8a33d" text-anchor="middle">przysłony</text>
+
+          <circle cx="678" cy="92" r="18" fill="#9c82d8" fill-opacity="0.28" stroke="#9c82d8" stroke-width="1"/>
+          <text x="678" y="58" font-family="IBM Plex Mono" font-size="9" fill="#9c82d8" text-anchor="middle">kształt oprawy</text>
+          <text x="678" y="70" font-family="IBM Plex Mono" font-size="9" fill="#9c82d8" text-anchor="middle">większy, miękki</text>
+        </g>
+      </svg>
+      <div class="diagram-caption">Tor bursztynowy mija przysłonę trzykrotnie, fioletowy ani razu. Stąd dwa różne kształty w jednym sznurze.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Rząd odbicia · dlaczego liczy się tylko drugi</div>
+    <h2>Ile ich właściwie jest</h2>
+
+    <p>Ghost musi mieć <strong>parzystą</strong> liczbę odbić, żeby wrócić na kurs w stronę matrycy. Najprostszy przypadek to dwa — i okazuje się, że jest to jedyny przypadek, który ma znaczenie.</p>
+
+    <p>Powód jest arytmetyczny. Każde odbicie mnoży natężenie przez współczynnik odbicia <em>R</em>. Ghost drugiego rzędu ma więc jasność proporcjonalną do R², czwartego rzędu do R⁴ — czyli słabszy o kolejny czynnik R².</p>
+
+    <div class="worked">
+      <div class="wlabel">Ile zostaje po dwóch i po czterech odbiciach</div>
+      <p class="step"><span class="k">bez powłok, R = 4,3%</span> <span class="v">2. rząd: R² = </span><span class="result">1,85 · 10⁻³</span></p>
+      <p class="step"><span class="k"> </span> <span class="v">4. rząd: R⁴ = 3,42 · 10⁻⁶, czyli </span><span class="result">540× słabszy</span></p>
+      <p class="step"><span class="k">z powłoką, R = 0,2%</span> <span class="v">2. rząd: R² = </span><span class="result">4,00 · 10⁻⁶</span></p>
+      <p class="step"><span class="k"> </span> <span class="v">4. rząd: R⁴ = 1,60 · 10⁻¹¹, czyli </span><span class="result">250 000× słabszy</span></p>
+      <p class="check">Wniosek jest jednoznaczny: <strong>liczy się wyłącznie drugi rząd</strong>. I to jest dobra wiadomość, bo drugi rząd da się policzyć — liczba możliwych ghostów to po prostu liczba par powierzchni. Im lepsze powłoki, tym mocniej wyższe rzędy znikają, więc nowoczesny obiektyw daje mniej plam, ale też <em>czystszych</em>: każda jest jednym konkretnym odbiciem, a nie sumą wielu.</p>
+    </div>
+
+    <p>Warto przy tym zestawić te liczby z jasnością słońca. Słońce w kadrze jest jakieś sto tysięcy razy jaśniejsze od średniego tonu sceny. Ghost drugiego rzędu w obiektywie powlekanym ma więc jasność <strong>około czterech dziesiątych średniego tonu</strong> — czyli wyraźnie widoczną plamę. W obiektywie bez powłok wychodzi sto osiemdziesiąt pięć razy jaśniej niż średni ton, czyli plamę przepaloną na biało.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Jasność a rząd odbicia</span><span>skala logarytmiczna, inaczej nic nie widać</span></div>
+      <svg viewBox="0 0 760 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Wykres słupkowy w skali logarytmicznej: jasność ghosta maleje o czynnik R kwadrat z każdym kolejnym rzędem, dla szkła bez powłok i z powłoką wielowarstwową.">
+        <line x1="90" y1="200" x2="710" y2="200" stroke="#8b909b" stroke-width="1.2"/>
+        <line x1="90" y1="30" x2="90" y2="200" stroke="#8b909b" stroke-width="1.2"/>
+        <g font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="end">
+          <text x="82" y="38">10⁰</text><text x="82" y="78">10⁻³</text>
+          <text x="82" y="118">10⁻⁶</text><text x="82" y="158">10⁻⁹</text><text x="82" y="198">10⁻¹²</text>
+        </g>
+
+        <g font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">
+          <text x="200" y="220">2. rząd</text><text x="400" y="220">4. rząd</text><text x="600" y="220">6. rząd</text>
+        </g>
+
+        <g fill="#9c82d8" fill-opacity="0.55" stroke="#9c82d8">
+          <rect x="150" y="73" width="46" height="127"/>
+          <rect x="350" y="106" width="46" height="94"/>
+          <rect x="550" y="139" width="46" height="61"/>
+        </g>
+        <text x="212" y="68" font-family="IBM Plex Mono" font-size="9.5" fill="#9c82d8">bez powłok · R = 4,3%</text>
+
+        <g fill="#4fc3c0" fill-opacity="0.55" stroke="#4fc3c0">
+          <rect x="204" y="112" width="46" height="88"/>
+          <rect x="404" y="182" width="46" height="18"/>
+          <rect x="604" y="199" width="46" height="1"/>
+        </g>
+        <text x="266" y="108" font-family="IBM Plex Mono" font-size="9.5" fill="#4fc3c0">z powłoką · R = 0,2%</text>
+
+        <line x1="90" y1="118" x2="710" y2="118" stroke="#d8695f" stroke-width="1.2" stroke-dasharray="5 4"/>
+        <text x="714" y="122" font-family="IBM Plex Mono" font-size="9" fill="#d8695f">próg widoczności</text>
+
+        <text x="90" y="236" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">Przy powłokach już czwarty rząd leży sto tysięcy razy poniżej progu. Praktycznie nie istnieje.</text>
+      </svg>
+      <div class="diagram-caption">Skala jest logarytmiczna, więc równe słupki znaczą równe <em>krotności</em>. Każdy kolejny rząd to ten sam skok w dół.</div>
+    </div>
+
+    <p>Z wykresu widać jeszcze jedną rzecz, wartą uwagi przy odtwarzaniu starego szkła. Przy braku powłok czwarty rząd leży tylko pięćset czterdzieści razy niżej niż drugi — czyli przy bardzo jasnym źródle <strong>wciąż bywa widoczny jako słaba poświata</strong>. Stąd bierze się część różnicy w charakterze flary: nowoczesny obiektyw daje kilka czystych plam na czarnym tle, stary daje te same plamy zanurzone w mgle z wyższych rzędów.</p>
+
+    <p class="deeper-inline">Ile ghostów daje układ o N powierzchniach i jak policzyć, gdzie w kadrze wypadnie konkretny — <a href="../dodatki/dodatek-l-ghost-n-tego-rzedu.html">Dodatek L</a>.</p>
+
+    <button class="advanced-btn" data-modal-target="adv-ghost-czerwony">Zaawansowane: dlaczego jeden ghost bywa czerwony i nieostry</button>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">W CG · co musi się zgadzać, żeby uwierzyć</div>
+    <h2>Flara, która nie zdradza</h2>
+
+    <p>Renderer nie daje ghostów, bo nie modeluje powierzchni obiektywu. Dokłada się je w compie, i jest to jedna z tych operacji, w których <em>wygląd pojedynczego elementu</em> jest łatwy, a <em>zachowanie całości</em> trudne. Wyjątkiem jest model wielosoczewkowy z <a href="../dodatki/dodatek-i-katalog-ukladow.html">Dodatku I</a>, który daje ghosty sam — ale za cenę, o której tam mowa, i z pułapką powłok, przez którą wychodzą kilkanaście razy za jasne.</p>
+
+    <p>Cztery warunki, których spełnienie decyduje o wiarygodności, wszystkie wynikają z tego rozdziału:</p>
+
+    <ul>
+      <li><strong>Jedna prosta przez środek kadru.</strong> Wszystkie elementy na niej, po przeciwnej stronie niż źródło. To jest warunek pierwszy i najczęściej łamany.</li>
+      <li><strong>Ruch przeciwny do źródła.</strong> Gdy źródło idzie w prawo, sznur idzie w lewo — i przechodzi przez środek, gdy źródło mija oś.</li>
+      <li><strong>Kształt zgodny z przysłoną</strong> użytą w ujęciu. Wielokąt przy przymkniętej, koło przy otwartej, i ta sama liczba boków, co w bokeh.</li>
+      <li><strong>Barwy z jednej palety.</strong> Plamy różnią się kolorem, ale wszystkie pochodzą z tego samego zestawu powłok — więc paleta jest wąska i spójna, a nie losowa.</li>
+    </ul>
+
+    <p>Piąty warunek jest najmniej oczywisty i najczęściej pomijany: <span class="term-violet">ghosty muszą zniknąć, gdy źródło wychodzi poza pole widzenia obiektywu</span>. Nie poza kadr — poza pole widzenia, które jest szersze, bo obejmuje też światło wpadające pod kątem większym niż kadr. Flara utrzymująca się, gdy słońce jest już daleko za krawędzią, wygląda źle z powodu, którego widz nie umie nazwać.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Cztery sposoby, w jakie flara się sypie</span><span>po lewej poprawnie, po prawej typowe błędy</span></div>
+      <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cztery pary kadrów porównujące poprawną flarę z typowymi błędami: rozproszone plamy, prosta nieprzechodząca przez środek, ruch zgodny ze źródłem, kształt niezgodny z przysłoną.">
+        <g font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">
+          <text x="105" y="20">OŚ PRZEZ ŚRODEK</text><text x="290" y="20">KIERUNEK RUCHU</text>
+          <text x="475" y="20">KSZTAŁT</text><text x="660" y="20">ZANIK ZA POLEM</text>
+        </g>
+
+        <rect x="30" y="30" width="150" height="88" fill="#101215" stroke="#7fc47f" stroke-width="1.2"/>
+        <line x1="42" y1="42" x2="168" y2="106" stroke="#4fc3c0" stroke-width="0.8" stroke-dasharray="4 4"/>
+        <circle cx="105" cy="74" r="2" fill="#5a6068"/>
+        <circle cx="52" cy="47" r="7" fill="#f2f0e8" fill-opacity="0.9"/>
+        <circle cx="122" cy="83" r="5" fill="#9c82d8" fill-opacity="0.5"/>
+        <circle cx="148" cy="96" r="7" fill="#e8a33d" fill-opacity="0.4"/>
+
+        <rect x="30" y="128" width="150" height="88" fill="#101215" stroke="#d8695f" stroke-width="1.2"/>
+        <circle cx="105" cy="172" r="2" fill="#5a6068"/>
+        <circle cx="52" cy="145" r="7" fill="#f2f0e8" fill-opacity="0.9"/>
+        <circle cx="140" cy="150" r="5" fill="#9c82d8" fill-opacity="0.5"/>
+        <circle cx="96" cy="200" r="7" fill="#e8a33d" fill-opacity="0.4"/>
+
+        <rect x="215" y="30" width="150" height="88" fill="#101215" stroke="#7fc47f" stroke-width="1.2"/>
+        <circle cx="290" cy="74" r="2" fill="#5a6068"/>
+        <circle cx="240" cy="48" r="7" fill="#f2f0e8" fill-opacity="0.9"/>
+        <path d="M 252 56 L 268 66" stroke="#f2f0e8" stroke-width="1" marker-end=""/>
+        <circle cx="330" cy="96" r="6" fill="#e8a33d" fill-opacity="0.45"/>
+        <path d="M 318 88 L 302 78" stroke="#e8a33d" stroke-width="1"/>
+
+        <rect x="215" y="128" width="150" height="88" fill="#101215" stroke="#d8695f" stroke-width="1.2"/>
+        <circle cx="290" cy="172" r="2" fill="#5a6068"/>
+        <circle cx="240" cy="146" r="7" fill="#f2f0e8" fill-opacity="0.9"/>
+        <path d="M 252 154 L 268 164" stroke="#f2f0e8" stroke-width="1"/>
+        <circle cx="330" cy="194" r="6" fill="#e8a33d" fill-opacity="0.45"/>
+        <path d="M 338 202 L 352 210" stroke="#e8a33d" stroke-width="1"/>
+
+        <rect x="400" y="30" width="150" height="88" fill="#101215" stroke="#7fc47f" stroke-width="1.2"/>
+        <path d="M 462 60 L 478 60 L 486 74 L 478 88 L 462 88 L 454 74 Z" fill="#e8a33d" fill-opacity="0.45" stroke="#e8a33d"/>
+        <circle cx="510" cy="96" r="4" fill="#e8a33d" fill-opacity="0.35"/>
+        <text x="475" y="112" font-family="IBM Plex Mono" font-size="8" fill="#7fc47f" text-anchor="middle">6 boków, jak bokeh</text>
+
+        <rect x="400" y="128" width="150" height="88" fill="#101215" stroke="#d8695f" stroke-width="1.2"/>
+        <circle cx="470" cy="172" r="15" fill="#e8a33d" fill-opacity="0.45" stroke="#e8a33d"/>
+        <circle cx="510" cy="194" r="4" fill="#e8a33d" fill-opacity="0.35"/>
+        <text x="475" y="210" font-family="IBM Plex Mono" font-size="8" fill="#d8695f" text-anchor="middle">koło przy f/11</text>
+
+        <rect x="585" y="30" width="150" height="88" fill="#101215" stroke="#7fc47f" stroke-width="1.2"/>
+        <text x="660" y="78" font-family="IBM Plex Mono" font-size="9.5" fill="#5a6068" text-anchor="middle">źródło daleko poza</text>
+        <text x="660" y="92" font-family="IBM Plex Mono" font-size="9.5" fill="#7fc47f" text-anchor="middle">flary brak</text>
+
+        <rect x="585" y="128" width="150" height="88" fill="#101215" stroke="#d8695f" stroke-width="1.2"/>
+        <circle cx="640" cy="164" r="6" fill="#e8a33d" fill-opacity="0.4"/>
+        <circle cx="682" cy="188" r="9" fill="#9c82d8" fill-opacity="0.4"/>
+        <text x="660" y="210" font-family="IBM Plex Mono" font-size="9" fill="#d8695f" text-anchor="middle">flara wisi bez źródła</text>
+
+        <text x="30" y="240" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">Górny rząd zielony · poprawnie.   Dolny czerwony · te same błędy, które oko wychwytuje, nie umiejąc ich nazwać.</text>
+      </svg>
+      <div class="diagram-caption">Żaden z czterech błędów nie dotyczy wyglądu pojedynczej plamy. Wszystkie dotyczą tego, jak plamy zachowują się razem.</div>
+    </div>
+
+    <p>Sam przepis na warstwy, wraz z tym, skąd brać maski jasnych źródeł i jak nie zabić wydajności, jest w <a href="../dodatki/dodatek-x-odtwarzanie-flary.html">Dodatku X</a>.</p>
+  </div>
+
+  <div class="panel practice">
+    <div class="panel-label">Z praktyki</div>
+    <p><strong>Narysuj linię przez środek, zanim ocenisz flarę.</strong> Jeśli plamy na niej nie leżą, materiał albo ma coś doklejonego, albo obiektyw nie jest obrotowo symetryczny — czyli jest anamorfem. Trzeciej możliwości nie ma i to rozstrzygnięcie zajmuje sekundę.</p>
+    <p><strong>Policz boki plamy, żeby odczytać przysłonę.</strong> Ghost przechodzący przez przysłonę ma jej kształt, więc liczba boków to liczba listków, a sama widoczność wielokąta oznacza, że obiektyw był przymknięty. Działa w ujęciach, w których nie ma żadnego nieostrego światła do policzenia.</p>
+    <p><strong>Odtwarzaj sznur jako całość, nie plama po plamie.</strong> Element sterowany jednym parametrem — pozycją źródła — zachowa spójność w ruchu automatycznie. Plamy animowane osobno rozjadą się przy pierwszym obrocie kamery, i będzie to widać dokładnie w tym momencie.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>ghost</dt>
+      <dd>Plama powstała z parzystej liczby odbić wewnątrz obiektywu. W praktyce zawsze z dwóch.</dd>
+      <dt>rząd odbicia</dt>
+      <dd>Liczba odbić na drodze ghosta. Jasność maleje jak R do potęgi równej temu rzędowi.</dd>
+      <dt>oś flary</dt>
+      <dd>Prosta łącząca obraz źródła ze środkiem kadru. Wszystkie ghosty leżą na niej.</dd>
+      <dt>ghost przysłonowy</dt>
+      <dd>Ghost przechodzący przez otwór przysłony, więc mający jej kształt. Odróżnia się od ghosta ograniczonego oprawą, który jest większy i miękki.</dd>
+      <dt>pole widzenia obiektywu</dt>
+      <dd>Szersze niż kadr — obejmuje kąty, pod którymi światło jeszcze wpada w układ. Poza nim ghosty znikają.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Zostało pytanie o kolor. Dlaczego jeden ghost jest zielony, drugi bursztynowy, a stare szkło daje flarę fioletową? W <a href="rozdzial-24-powloki.html">następnym rozdziale</a> okaże się, że barwa jest resztką po interferencji w warstwie grubości ćwierci długości fali — i że da się ją policzyć, a potem odtworzyć w compie z tego samego wzoru.</p>
+  </div>
 
   <div class="deeper">
     <div class="deeper-label">Idź głębiej</div>
@@ -57,8 +328,114 @@ window.SKY3D_MESSAGES = {
       <a class="nav-next" href="rozdzial-24-powloki.html">Następny →</a>
   </div>
 
+  <template id="adv-ghost-czerwony">
+    <h3>Dlaczego jeden ghost bywa czerwony i nieostry</h3>
+
+    <p>W sznurze plam zdarza się jedna wyraźnie inna od pozostałych: większa, bardziej rozmyta i ciągnąca w czerwień albo w magentę. Nie jest to przypadek ani wada egzemplarza — to <strong>odbicie od matrycy</strong>.</p>
+
+    <p>Matryca nie jest czarną dziurą. Ma mikrosoczewki, filtr barwny i szkło ochronne, a każda z tych warstw odbija kilka procent. Światło zawrócone od niej wraca w obiektyw, odbija się od tylnej powierzchni ostatniej soczewki i przychodzi po raz drugi — tworząc ghosta, w którym jedną z dwóch „powierzchni” jest sam sensor.</p>
+
+    <p>Plama ta ma trzy cechy odróżniające ją od pozostałych. <strong>Jest większa i miększa</strong>, bo matryca jest płaska i nie ogniskuje — odbite światło wraca rozbieżnie. <strong>Bywa czerwonawa</strong>, bo filtr barwny i powłoka szkła ochronnego odbijają najmocniej w długich falach, a resztkowa czułość krzemu na podczerwień to podbija. <strong>Leży blisko obrazu źródła</strong>, a nie po przeciwnej stronie kadru, bo droga jest krótka i przebiega tylko przez ostatnią część układu.</p>
+
+    <p>Zjawisko jest <span class="term-raster">czysto cyfrowe</span>. Emulsja była matowa i rozpraszała zamiast odbijać kierunkowo, więc taśma tego ghosta nie dawała — dawała za to halację, opisaną w <a href="rozdzial-28-halacja.html">Rozdziale 28</a>, która jest zjawiskiem podobnym z pozoru i zupełnie innym w mechanizmie.</p>
+
+    <p>Dla pracy z materiałem wniosek jest praktyczny: jeśli w plate'cie widać czerwonawą, miękką plamę tuż obok jasnego źródła, <strong>nie próbuj jej odtwarzać jako zwykłego ghosta</strong>. Nie leży na osi flary, nie ma kształtu przysłony i nie porusza się razem ze sznurem. Jest osobną warstwą, przyczepioną do źródła, a nie do układu odbić.</p>
+  </template>
+
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-panel">
+      <button class="modal-close" data-modal-close aria-label="Zamknij">×</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
 </div>
 
 <script src="../assets/interactive.js"></script>
+<script>
+/* Sznur ghostow. Kazdy ghost lezy na prostej laczacej obraz zrodla ze
+   srodkiem kadru, po przeciwnej stronie — bo uklad jest brylą obrotowa
+   i odbicia zachodza w plaszczyznie zawierajacej os. Wspolczynnik t dla
+   kazdej plamy jest staly (zalezy od pary powierzchni), wiec caly sznur
+   skaluje sie razem z odlegloscia zrodla od osi. */
+(function () {
+  var sl = document.getElementById('ghostKat');
+  if (!sl) return;
+  var CX = 380, CY = 150, W = 300, H = 120;
+
+  // t < 0 znaczy po przeciwnej stronie srodka; |t| to ulamek odleglosci zrodla
+  var GHOSTY = [
+    { t: -0.28, r: 5,  kolor: '#9c82d8', op: 0.45, wielokat: false },
+    { t: -0.46, r: 9,  kolor: '#4fc3c0', op: 0.34, wielokat: true },
+    { t: -0.62, r: 6,  kolor: '#e8a33d', op: 0.42, wielokat: true },
+    { t: -0.80, r: 13, kolor: '#9c82d8', op: 0.26, wielokat: false },
+    { t: -1.00, r: 8,  kolor: '#7fc47f', op: 0.34, wielokat: true },
+    { t: -1.22, r: 17, kolor: '#e8a33d', op: 0.20, wielokat: false },
+    { t: -1.46, r: 7,  kolor: '#4fc3c0', op: 0.30, wielokat: true }
+  ];
+
+  function szescioBok(cx, cy, r) {
+    var d = '';
+    for (var i = 0; i < 6; i++) {
+      var a = Math.PI / 6 + i * Math.PI / 3;
+      d += (i ? ' L ' : 'M ') + (cx + r * Math.cos(a)).toFixed(1) + ' ' + (cy + r * Math.sin(a)).toFixed(1);
+    }
+    return d + ' Z';
+  }
+
+  function odswiez() {
+    var v = parseFloat(sl.value) / 100;          // -1 .. 1
+    var zx = CX + v * W, zy = CY - v * H;        // zrodlo jedzie po skosie
+
+    document.getElementById('ghostZrodlo').setAttribute('cx', zx.toFixed(1));
+    document.getElementById('ghostZrodlo').setAttribute('cy', zy.toFixed(1));
+    document.getElementById('ghostEtZrodlo').setAttribute('x', zx.toFixed(1));
+    document.getElementById('ghostEtZrodlo').setAttribute('y', (zy - 22).toFixed(1));
+
+    // Os flary: przedluzenie prostej zrodlo-srodek w obie strony.
+    var os = document.getElementById('ghostOs');
+    var dx = zx - CX, dy = zy - CY, dl = Math.sqrt(dx * dx + dy * dy) || 1;
+    var k = 460 / dl;
+    os.setAttribute('x1', (CX - dx * k).toFixed(1)); os.setAttribute('y1', (CY - dy * k).toFixed(1));
+    os.setAttribute('x2', (CX + dx * k).toFixed(1)); os.setAttribute('y2', (CY + dy * k).toFixed(1));
+
+    var g = document.getElementById('ghostGrupa');
+    while (g.firstChild) g.removeChild(g.firstChild);
+    var widoczne = 0;
+    GHOSTY.forEach(function (gh) {
+      var x = CX + dx * gh.t, y = CY + dy * gh.t;
+      if (x < 84 || x > 676 || y < 34 || y > 266) return;
+      widoczne++;
+      var el;
+      if (gh.wielokat) {
+        el = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        el.setAttribute('d', szescioBok(x, y, gh.r));
+      } else {
+        el = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        el.setAttribute('cx', x.toFixed(1)); el.setAttribute('cy', y.toFixed(1));
+        el.setAttribute('r', gh.r);
+      }
+      el.setAttribute('fill', gh.kolor);
+      el.setAttribute('fill-opacity', gh.op);
+      el.setAttribute('stroke', gh.kolor);
+      el.setAttribute('stroke-width', '0.8');
+      g.appendChild(el);
+    });
+
+    var poza = Math.abs(v) > 0.86;
+    var gdzie = Math.abs(v) < 0.06 ? 'na osi, w środku kadru'
+              : (v > 0 ? 'w kadrze, prawy górny róg' : 'w kadrze, lewy dolny róg');
+    if (poza) gdzie = 'poza kadrem, ale wciąż w polu widzenia';
+    document.getElementById('ghostOdczyt').textContent = gdzie;
+
+    document.getElementById('ghostPodpis').textContent = Math.abs(v) < 0.06
+      ? 'Źródło dokładnie na osi: wszystkie ghosty nakładają się na środek kadru i zlewają w jedną plamę.'
+      : 'Źródło ' + gdzie + ': sznur biegnie przez środek i wychodzi po przeciwnej stronie. Widocznych plam: ' +
+        widoczne + ' z ' + GHOSTY.length + '.';
+  }
+  sl.addEventListener('input', odswiez);
+  odswiez();
+})();
+</script>
 </body>
 </html>

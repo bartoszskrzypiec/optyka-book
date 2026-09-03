@@ -41,7 +41,113 @@ window.SKY3D_MESSAGES = {
   <h1>Ghost jako odbicie N-tego rzędu</h1>
   <p class="subtitle">Ile ghostów daje układ o N powierzchniach, dlaczego liczba rośnie kwadratowo i jak policzyć, gdzie w kadrze wypadnie konkretne odbicie.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">Co tu jest</div>
+    <ul>
+      <li><strong>Ile ghostów</strong> daje układ o N powierzchniach i dlaczego liczba rośnie kwadratowo.</li>
+      <li><strong>Dlaczego wyższe rzędy nie istnieją</strong> — z tabelą, z której widać, gdzie leży granica.</li>
+      <li><strong>Jak policzyć, gdzie wypadnie konkretny ghost</strong>: układ zastępczy z dwoma lustrami.</li>
+      <li><strong>Dlaczego położenie skaluje się liniowo</strong> z odległością źródła od osi — czyli uzasadnienie modelu użytego w widgecie z <a href="../rozdzialy/rozdzial-23-ghosting.html">Rozdziału 23</a>.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Liczenie · pary, nie powierzchnie</div>
+    <h2>Ile ghostów daje układ</h2>
+
+    <p>Ghost drugiego rzędu powstaje z odbicia od jednej powierzchni, a potem od drugiej. Liczba możliwych ghostów to więc liczba sposobów wybrania <strong>dwóch powierzchni z N</strong>:</p>
+
+    <div class="formula">
+      liczba par = <span class="vec" data-tip="Liczba powierzchni granicznych szkło-powietrze">N</span>(<span class="vec" data-tip="Liczba powierzchni">N</span> − 1) / 2
+      <span class="sub">N — liczba powierzchni ze szkła na powietrze, czyli dwa razy liczba grup (reguła z Rozdziału 16). Wzór jest zwykłą liczbą kombinacji dwuelementowych.</span>
+    </div>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead>
+          <tr><th>Konstrukcja</th><th class="num">Grupy</th><th class="num">Powierzchnie</th><th class="num">Par</th><th class="num">Zwykle widocznych</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Tessar</td><td class="num">3</td><td class="num">6</td><td class="num">15</td><td class="num">2–4</td></tr>
+          <tr><td>Sonnar</td><td class="num">3</td><td class="num">6</td><td class="num">15</td><td class="num">2–4</td></tr>
+          <tr><td>Double Gauss</td><td class="num">4</td><td class="num">8</td><td class="num">28</td><td class="num">3–6</td></tr>
+          <tr><td>Stałka nowoczesna</td><td class="num">6</td><td class="num">12</td><td class="num">66</td><td class="num">4–8</td></tr>
+          <tr><td>Zoom średni</td><td class="num">11</td><td class="num">22</td><td class="num">231</td><td class="num">10–16</td></tr>
+          <tr><td>Zoom rozbudowany</td><td class="num">15</td><td class="num">30</td><td class="num">435</td><td class="num">15–25</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Kolumna „par” to wzór wyżej. Kolumna ostatnia jest szacunkiem: większość par daje ghosty leżące poza kadrem albo zbyt słabe, żeby je zauważyć.</p>
+
+    <p>Rozjazd między dwiema ostatnimi kolumnami jest ważny i warto rozumieć jego przyczynę. <strong>Nie każda para daje widocznego ghosta</strong>, z trzech powodów. Po pierwsze, geometria: obraz odbicia bywa daleko poza matrycą. Po drugie, wielkość: bardzo nieostry ghost rozkłada się na tak dużej powierzchni, że przestaje być plamą i staje się częścią glare'u z <a href="../rozdzialy/rozdzial-22-veiling-glare.html">Rozdziału 22</a>. Po trzecie, przesłony wewnętrzne odcinają część torów celowo.</p>
+
+    <p>Ostatni punkt jest tym, na którym polega walka konstruktora. <span class="term-cyan">Liczby par nie da się zmniejszyć inaczej niż zmniejszając liczbę powierzchni</span> — a tego zwykle zrobić nie można. Da się natomiast <em>zabić poszczególne tory</em> przesłonami, czernieniem i doborem krzywizn tak, żeby obraz odbicia wypadał daleko poza kadrem. Dlatego dwa obiektywy o tej samej liczbie powierzchni potrafią dawać zupełnie różną liczbę widocznych plam.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Rzędy · gdzie leży granica</div>
+    <h2>Dlaczego czwarty rząd nie istnieje</h2>
+
+    <p>Ghost musi mieć parzystą liczbę odbić. Poza dwoma możliwe są cztery, sześć i tak dalej — a ich jasność maleje jak <em>R</em> do potęgi równej liczbie odbić.</p>
+
+    <div class="formula">
+      jasność ∝ <span class="vec" data-tip="Współczynnik odbicia jednej powierzchni">R</span><sup><span class="vec" data-tip="Liczba odbić — zawsze parzysta">k</span></sup>
+      <span class="sub">R — współczynnik odbicia pojedynczej powierzchni: 4,3% bez powłoki, około 1,3% z jednowarstwową, 0,2% z wielowarstwową. k — liczba odbić, zawsze parzysta.</span>
+    </div>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead>
+          <tr><th>Powłoka</th><th class="num">R</th><th class="num">2 odbicia</th><th class="num">4 odbicia</th><th class="num">6 odbić</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>brak</td><td class="num">4,3%</td><td class="num">1,8·10⁻³</td><td class="num">3,4·10⁻⁶</td><td class="num">6,3·10⁻⁹</td></tr>
+          <tr><td>jednowarstwowa</td><td class="num">1,3%</td><td class="num">1,7·10⁻⁴</td><td class="num">2,9·10⁻⁸</td><td class="num">4,8·10⁻¹²</td></tr>
+          <tr><td>wielowarstwowa</td><td class="num">0,2%</td><td class="num">4,0·10⁻⁶</td><td class="num">1,6·10⁻¹¹</td><td class="num">6,4·10⁻¹⁷</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Każda kolejna kolumna to poprzednia pomnożona przez R². Przy powłoce wielowarstwowej jest to czynnik czterech milionowych.</p>
+
+    <p>Żeby te liczby coś znaczyły, trzeba je zestawić z jasnością źródła. Słońce w kadrze jest około stu tysięcy razy jaśniejsze od średniego tonu sceny. Mnożąc:</p>
+
+    <div class="worked">
+      <div class="wlabel">Ghost słońca względem średniego tonu sceny</div>
+      <p class="step"><span class="k">bez powłok, 2 odbicia</span> <span class="v">10⁵ · 1,8·10⁻³ = </span><span class="result">185× średni ton</span></p>
+      <p class="step"><span class="k">bez powłok, 4 odbicia</span> <span class="v">10⁵ · 3,4·10⁻⁶ = </span><span class="result">0,34× średni ton</span></p>
+      <p class="step"><span class="k">wielowarstwowa, 2 odbicia</span> <span class="v">10⁵ · 4,0·10⁻⁶ = </span><span class="result">0,40× średni ton</span></p>
+      <p class="step"><span class="k">wielowarstwowa, 4 odbicia</span> <span class="v">10⁵ · 1,6·10⁻¹¹ = </span><span class="result">1,6·10⁻⁶ — nic</span></p>
+      <p class="check">Dwa środkowe wiersze są niemal równe i to jest najciekawsza liczba w tej tabeli. <strong>Ghost czwartego rzędu w obiektywie bez powłok ma mniej więcej tę samą jasność, co ghost drugiego rzędu w obiektywie nowoczesnym.</strong> Stąd bierze się różnica charakteru flary: stare szkło daje kilka jasnych plam <em>plus</em> całą populację słabych z wyższych rzędów, nowoczesne daje kilka słabych i nic poza tym. Pierwsze czyta się jako bogactwo, drugie jako czystość.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Położenie · układ zastępczy z dwoma lustrami</div>
+    <h2>Gdzie wypadnie konkretny ghost</h2>
+
+    <p>Ghost powstający na parze powierzchni <em>i</em> oraz <em>j</em> jest zwykłym obrazem optycznym — tylko utworzonym przez inny układ niż reszta obrazu. Ten układ zastępczy składa się z pięciu części:</p>
+
+    <ul>
+      <li>elementy od pierwszego do <em>i</em>, przechodzone normalnie;</li>
+      <li>powierzchnia <em>i</em> jako <strong>lustro wklęsłe albo wypukłe</strong> o ogniskowej równej połowie promienia krzywizny;</li>
+      <li>elementy od <em>i</em> do <em>j</em>, przechodzone wstecz;</li>
+      <li>powierzchnia <em>j</em> jako drugie lustro;</li>
+      <li>elementy od <em>j</em> do końca, znów normalnie.</li>
+    </ul>
+
+    <p>Prześledzenie promienia przez taki układ daje położenie i rozmiar plamy. Rachunek jest żmudny, ale <span class="term-cyan">nie zawiera niczego, czego nie ma w <a href="dodatek-c-rownanie-soczewki.html">Dodatku C</a></span> — to wciąż to samo równanie soczewki, tylko zastosowane wielokrotnie, z dwoma lustrami po drodze. Programy do projektowania optyki robią to automatycznie i to właśnie na tym polega analiza flary w fazie projektu.</p>
+
+    <p>Dla pracy w compie ważniejsza od samego rachunku jest jego <strong>własność</strong>. Cały układ zastępczy jest liniowy dla małych kątów, a źródło znajduje się praktycznie w nieskończoności. Wynika stąd, że położenie ghosta w kadrze jest <em>proporcjonalne</em> do odległości obrazu źródła od środka, ze współczynnikiem stałym dla danej pary powierzchni.</p>
+
+    <div class="formula">
+      <span class="vec" data-tip="Odległość ghosta od środka kadru">r<sub>ghost</sub></span> = <span class="vec" data-tip="Współczynnik zależny wyłącznie od pary powierzchni">t<sub>ij</sub></span> · <span class="vec" data-tip="Odległość obrazu źródła od środka kadru">r<sub>źródła</sub></span>
+      <span class="sub">t<sub>ij</sub> — liczba charakteryzująca parę powierzchni, zwykle ujemna (ghost po przeciwnej stronie środka) i o wartości bezwzględnej od kilku dziesiątych do kilku. Nie zależy od położenia źródła, tylko od konstrukcji.</span>
+    </div>
+
+    <p>To jest dokładnie model użyty w widgecie w <a href="../rozdzialy/rozdzial-23-ghosting.html">Rozdziale 23</a>: każda plama ma stały współczynnik, a cały sznur skaluje się i obraca razem ze źródłem. <strong>Prostota tego modelu nie jest uproszczeniem rysunkowym</strong> — wynika z liniowości układu i jest powodem, dla którego wiarygodną flarę da się w compie sparametryzować jedną wielkością: pozycją źródła.</p>
+
+    <p>Ostatnia uwaga dotyczy granic stosowalności. Liniowość załamuje się przy dużych kątach, czyli wtedy, gdy źródło jest daleko poza kadrem — a to jest właśnie zakres, w którym ghosty zaczynają znikać, bo światło przestaje wchodzić w układ. <span class="term-violet">Model traci ważność mniej więcej tam, gdzie i tak przestaje być potrzebny</span>, i to jest szczęśliwy zbieg okoliczności, na którym opiera się większość narzędzi do flary.</p>
+  </div>
 
   <div class="site-nav">
     <a href="../index.html">← Spis treści</a>
