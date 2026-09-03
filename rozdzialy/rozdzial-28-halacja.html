@@ -43,7 +43,245 @@ window.SKY3D_MESSAGES = {
   <h1>Halacja: dlaczego czerwona i wokół przepaleń</h1>
   <p class="subtitle">Światło nie zatrzymuje się w emulsji. Przechodzi ją, odbija się od spodu podłoża i naświetla ją drugi raz — od tyłu. Stąd obwódka, i stąd jej kolor.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li><strong>Halacja to drugie naświetlenie, od tyłu.</strong> Światło przechodzi przez warstwę czułą, odbija się od spodu podłoża i wraca — rozproszone, więc szersze niż wiązka, która je wywołała.</li>
+      <li>Jest <span class="term-raster">czerwona z dwóch powodów naraz</span>: czerwień przenika emulsję najgłębiej, a warstwa czuła na czerwień leży w negatywie najbliżej podłoża. Oba efekty pchają w tę samą stronę.</li>
+      <li>Nie mylić z dwoma podobnymi: <strong>veiling glare</strong> powstaje w obiektywie i obejmuje cały kadr, <strong>blooming</strong> to przelew ładunku w matrycy. Halacja jest odbiciem <em>za</em> warstwą czułą i ma obwódkę.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Mechanizm · światło, które nie zatrzymało się</div>
+    <h2>Drugie naświetlenie od tyłu</h2>
+
+    <p>Warstwa czuła nie pochłania całego padającego światła. Część przechodzi ją na wylot i trafia na przezroczyste podłoże — kawałek plastiku o grubości ułamka milimetra. Na jego tylnej powierzchni, na granicy z powietrzem, obowiązuje ten sam <a href="rozdzial-03-fresnel-kazda-powierzchnia-swieci.html">Fresnel</a>, co wszędzie indziej: <strong>kilka procent zawraca</strong>.</p>
+
+    <p>Zawrócone światło wraca w warstwę czułą i naświetla ją po raz drugi. Kluczowe jest to, że wraca <em>rozproszone i rozbieżne</em>, a nie w to samo miejsce: przebyło podłoże dwa razy pod różnymi kątami, więc rozłożyło się na obszarze znacznie szerszym niż pierwotna plamka. Stąd <span class="term-raster">obwódka wokół jasnych miejsc</span>, a nie ich rozmycie.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Przekrój materiału</span><span>dwa naświetlenia, jedno od tyłu</span></div>
+      <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Przekrój taśmy: światło przechodzi przez emulsję, przebywa podłoże, odbija się od jego tylnej powierzchni i wraca w emulsję rozproszone, dając obwódkę.">
+        <rect x="40" y="46" width="560" height="40" fill="#7fc47f" fill-opacity="0.16" stroke="#7fc47f" stroke-width="1.2"/>
+        <text x="52" y="70" font-family="IBM Plex Mono" font-size="9.5" fill="#7fc47f">warstwy czułe</text>
+        <rect x="40" y="86" width="560" height="76" fill="#6e93be" fill-opacity="0.1" stroke="#6e93be" stroke-width="1.2"/>
+        <text x="52" y="128" font-family="IBM Plex Mono" font-size="9.5" fill="#6e93be">podłoże · przezroczysty plastik</text>
+        <line x1="40" y1="162" x2="600" y2="162" stroke="#d8695f" stroke-width="2.4"/>
+        <text x="52" y="180" font-family="IBM Plex Mono" font-size="9.5" fill="#d8695f">tylna powierzchnia — tu odbija kilka procent</text>
+
+        <g stroke="#e8a33d" stroke-width="2" fill="none">
+          <path d="M 300 20 L 300 162"/>
+        </g>
+        <text x="308" y="32" font-family="IBM Plex Mono" font-size="9.5" fill="#e8a33d">jasne światło</text>
+
+        <g stroke="#d8695f" stroke-width="1.3" fill="none" opacity="0.85">
+          <path d="M 300 162 L 226 86"/><path d="M 300 162 L 262 86"/>
+          <path d="M 300 162 L 338 86"/><path d="M 300 162 L 374 86"/>
+          <path d="M 300 162 L 190 86"/><path d="M 300 162 L 410 86"/>
+        </g>
+        <rect x="186" y="46" width="228" height="40" fill="#d8695f" fill-opacity="0.14"/>
+        <text x="300" y="212" font-family="IBM Plex Mono" font-size="10" fill="#d8695f" text-anchor="middle">powrót rozproszony — szeroko</text>
+
+        <text x="650" y="42" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">W OBRAZIE</text>
+        <rect x="620" y="54" width="110" height="110" fill="#0d0f11" stroke="#2a2f38"/>
+        <circle cx="675" cy="109" r="34" fill="#d8695f" fill-opacity="0.28"/>
+        <circle cx="675" cy="109" r="22" fill="#d8695f" fill-opacity="0.35"/>
+        <circle cx="675" cy="109" r="12" fill="#f2f0e8"/>
+        <text x="675" y="184" font-family="IBM Plex Mono" font-size="9.5" fill="#d8695f" text-anchor="middle">obwódka, nie rozmycie</text>
+      </svg>
+      <div class="diagram-caption">Jasny punkt zostaje ostry — to nie jest utrata ostrości. Wokół niego pojawia się dodatkowa, szeroka poświata o wyraźnej barwie.</div>
+    </div>
+
+    <p>Taśma filmowa miała na to lekarstwo: <strong>warstwę antyhalacyjną</strong> nałożoną z tyłu podłoża, pochłaniającą światło, zanim dotrze do granicy z powietrzem. W materiale kinowym była to zwykle czarna warstwa zmywana podczas wywoływania. Halacja występowała więc głównie tam, gdzie warstwa nie nadążała — przy bardzo jasnych źródłach — i to jest powód, dla którego kojarzy się z przepaleniami.</p>
+
+    <p class="deeper-inline">Przekrój negatywu warstwa po warstwie i co się zmienia, gdy warstwy antyhalacyjnej zabraknie — <a href="../dodatki/dodatek-o-budowa-tasmy.html">Dodatek O</a>.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Kolor · dwa powody, ta sama strona</div>
+    <h2>Dlaczego czerwona</h2>
+
+    <p>Barwa halacji nie jest przypadkiem ani konwencją. Wynika z dwóch niezależnych rzeczy, które <span class="term-cyan">obie działają w tę samą stronę</span>.</p>
+
+    <p><strong>Pierwszy powód: czerwień przenika głębiej.</strong> Rozpraszanie w emulsji, jak każde rozpraszanie na drobinach, jest silniejsze dla fal krótkich. Błękit gubi się w warstwie czułej po drodze; czerwień przechodzi ją znacznie skuteczniej i dociera do podłoża. Do odbicia dolatuje więc światło już przesunięte ku czerwieni.</p>
+
+    <p><strong>Drugi powód: kolejność warstw.</strong> Negatyw barwny ma emulsje ułożone w ustalonym porządku, a warstwa czuła na czerwień leży <em>najgłębiej</em> — najbliżej podłoża. Światło wracające od spodu trafia więc najpierw i najsilniej właśnie w nią.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Kolejność warstw</span><span>czerwona leży najbliżej podłoża</span></div>
+      <svg viewBox="0 0 760 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Przekrój negatywu barwnego: od góry warstwa czuła na błękit, filtr żółty, warstwa zielona, warstwa czerwona, podłoże i warstwa antyhalacyjna.">
+        <g font-family="IBM Plex Mono" font-size="9.5">
+          <rect x="120" y="34" width="380" height="26" fill="#6ea8e8" fill-opacity="0.24" stroke="#6ea8e8" stroke-width="1"/>
+          <text x="512" y="52" fill="#6ea8e8">czuła na błękit</text>
+          <rect x="120" y="60" width="380" height="14" fill="#e8d24a" fill-opacity="0.3" stroke="#e8d24a" stroke-width="1"/>
+          <text x="512" y="72" fill="#e8d24a">filtr żółty</text>
+          <rect x="120" y="74" width="380" height="26" fill="#7fc47f" fill-opacity="0.24" stroke="#7fc47f" stroke-width="1"/>
+          <text x="512" y="92" fill="#7fc47f">czuła na zieleń</text>
+          <rect x="120" y="100" width="380" height="26" fill="#d8695f" fill-opacity="0.28" stroke="#d8695f" stroke-width="1.4"/>
+          <text x="512" y="118" fill="#d8695f">czuła na czerwień ← najgłębiej</text>
+          <rect x="120" y="126" width="380" height="56" fill="#6e93be" fill-opacity="0.1" stroke="#6e93be" stroke-width="1"/>
+          <text x="512" y="158" fill="#6e93be">podłoże</text>
+          <rect x="120" y="182" width="380" height="16" fill="#1c1c1e" stroke="#8b909b" stroke-width="1"/>
+          <text x="512" y="194" fill="#8b909b">warstwa antyhalacyjna</text>
+        </g>
+
+        <g stroke="#e8a33d" stroke-width="2" fill="none">
+          <path d="M 220 16 L 220 126"/>
+        </g>
+        <g stroke="#d8695f" stroke-width="1.6" fill="none">
+          <path d="M 220 182 L 160 126"/><path d="M 220 182 L 290 126"/>
+        </g>
+        <circle cx="220" cy="182" r="3" fill="#d8695f"/>
+        <text x="132" y="222" font-family="IBM Plex Mono" font-size="10" fill="#d8695f">powracające światło trafia najpierw w warstwę czerwoną</text>
+        <text x="132" y="18" font-family="IBM Plex Mono" font-size="9.5" fill="#e8a33d">wejście</text>
+      </svg>
+      <div class="diagram-caption">Kolejność warstw jest wymuszona czułością emulsji, a nie wygodą. Czerwony kolor halacji jest jej skutkiem ubocznym.</div>
+    </div>
+
+    <p>Efekt stał się w ostatnich latach szeroko rozpoznawalny za sprawą materiałów, w których <strong>warstwę antyhalacyjną usunięto celowo</strong> — po to, żeby halacja była mocna i widoczna. To jest ten sam wzorzec, co przy anamorfie w <a href="rozdzial-20-anamorf.html">Rozdziale 20</a>: wada usuwana przez sto lat stała się cechą, za którą się dopłaca.</p>
+
+    <p>Warto przy tym zauważyć skalę zjawiska, bo tłumaczy, dlaczego obwódka ma taki, a nie inny rozmiar. Podłoże ma grubość rzędu <strong>stu kilkudziesięciu mikrometrów</strong>, a światło przebywa je dwa razy — więc rozproszenie rozkłada się na obszarze porównywalnym z tą odległością. Przeliczone na kadr daje obwódkę o promieniu rzędu kilkudziesięciu mikrometrów na negatywie, czyli kilkudziesięciu pikseli po skanie w wysokiej rozdzielczości.</p>
+
+    <p>Stąd wniosek praktyczny, który bywa zaskoczeniem: <span class="term-raster">rozmiar halacji w pikselach zależy od rozdzielczości skanu</span>, a nie od tego, co było w kadrze. Ten sam negatyw zeskanowany w 2K i w 6K daje obwódkę o tym samym rozmiarze fizycznym, ale trzykrotnie różnej liczbie pikseli. Przy dopasowywaniu elementu do materiału z taśmy trzeba więc znać rozdzielczość skanu, a nie tylko rozdzielczość dostawy.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Cyfra · to samo zjawisko, inny stos</div>
+    <h2>Czy matryca ma halację</h2>
+
+    <p>Odpowiedź brzmi: tak, i to z tego samego powodu. Matryca też nie jest czarną dziurą — jest <span class="term-raster">stosem warstw</span>, a pod fotodiodą leżą ścieżki metalizacji i krzemowe podłoże, które odbijają.</p>
+
+    <p>Światło, które przeszło przez fotodiodę bez pochłonięcia, odbija się od tych warstw i wraca — do tego samego piksela albo do sąsiednich. Objawy są rozpoznawalne i takie same jak na taśmie: poświata wokół bardzo jasnych źródeł, przesunięta ku czerwieni, bo <strong>krzem pochłania czerwień słabiej niż błękit</strong> i to ona przenika najgłębiej.</p>
+
+    <p>Skala zjawiska zależy od budowy matrycy. Konstrukcje z oświetleniem od tyłu, w których metalizacja leży pod fotodiodą, a nie nad nią, mają je słabsze. Nie znika jednak nigdy — bo krzem ma wysoki współczynnik załamania, a przy wysokim współczynniku odbicie na granicy jest silne, dokładnie jak liczy <a href="rozdzial-03-fresnel-kazda-powierzchnia-swieci.html">Rozdział 3</a>.</p>
+
+    <p>Różnica skali jest przy tym duża i warto o niej pamiętać przy ocenie materiału. Podłoże taśmy ma grubość liczoną w setkach mikrometrów, a stos matrycy w jednostkach — więc obwódka cyfrowa jest <strong>o rząd wielkości węższa</strong> od tej z taśmy. Czyta się ją jako lekkie zmiękczenie krawędzi przepalenia, a nie jako wyraźną poświatę. Kto szuka w cyfrowym plate'cie halacji filmowej, nie znajdzie jej — bo tam jej nie ma, choć samo zjawisko występuje.</p>
+
+    <p>Warto rozdzielić halację od dwóch zjawisk, z którymi bywa mylona — a które mają inne przyczyny i inne zachowanie.</p>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead>
+          <tr><th>Zjawisko</th><th>Gdzie powstaje</th><th>Kształt</th><th>Barwa</th><th>Reaguje na</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Veiling glare</td><td>w obiektywie</td><td>cały kadr, bez struktury</td><td>neutralna</td><td>powłoki, filtry</td></tr>
+          <tr><td>Halacja</td><td>za warstwą czułą</td><td>obwódka wokół świateł</td><td>czerwonawa</td><td>jasność źródła</td></tr>
+          <tr><td>Blooming</td><td>w studni piksela</td><td>rozlanie w sąsiednie</td><td>zależna od mozaiki</td><td>przepełnienie studni</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Trzy różne rzeczy pod jednym potocznym określeniem „świecenie wokół świateł”. Kolumna ostatnia jest tą, która rozstrzyga pomiarem.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Trzy poświaty</span><span>ta sama lampa, trzy przyczyny</span></div>
+      <svg viewBox="0 0 760 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Trzy kadry z tą samą lampą: veiling glare podnosi całe tło, halacja daje czerwonawą obwódkę, blooming rozlewa się w zwarty prostokątny obszar.">
+        <g font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">
+          <text x="140" y="22">VEILING GLARE</text><text x="380" y="22">HALACJA</text><text x="620" y="22">BLOOMING</text>
+        </g>
+
+        <rect x="40" y="32" width="200" height="130" fill="#26292f"/>
+        <circle cx="140" cy="82" r="16" fill="#f2f0e8"/>
+        <rect x="52" y="130" width="30" height="22" fill="#3a3d43"/>
+        <text x="140" y="184" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">całe tło podniesione</text>
+        <text x="140" y="200" font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="middle">także w rogu bez świateł</text>
+
+        <rect x="280" y="32" width="200" height="130" fill="#101215"/>
+        <circle cx="380" cy="82" r="44" fill="#d8695f" fill-opacity="0.16"/>
+        <circle cx="380" cy="82" r="28" fill="#d8695f" fill-opacity="0.26"/>
+        <circle cx="380" cy="82" r="16" fill="#f2f0e8"/>
+        <rect x="292" y="130" width="30" height="22" fill="#16181c"/>
+        <text x="380" y="184" font-family="IBM Plex Mono" font-size="9.5" fill="#d8695f" text-anchor="middle">obwódka wokół źródła</text>
+        <text x="380" y="200" font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="middle">róg pozostaje czarny</text>
+
+        <rect x="520" y="32" width="200" height="130" fill="#101215"/>
+        <rect x="596" y="52" width="48" height="60" fill="#f2f0e8"/>
+        <rect x="600" y="44" width="40" height="76" fill="#f2f0e8" fill-opacity="0.85"/>
+        <rect x="532" y="130" width="30" height="22" fill="#16181c"/>
+        <text x="620" y="184" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">rozlanie w kształcie siatki</text>
+        <text x="620" y="200" font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="middle">ostre krawędzie, bez ogona</text>
+
+        <text x="40" y="222" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">Ciemny prostokąt w lewym dolnym rogu każdego kadru jest tym samym testem: co się dzieje z czernią daleko od światła.</text>
+      </svg>
+      <div class="diagram-caption">Trzy zjawiska, trzy odpowiedzi na jedno pytanie o ciemny róg. Rozpoznanie zajmuje sekundę i decyduje o tym, czym to odtwarzać.</div>
+    </div>
+
+    <p>Test z ciemnym rogiem rozstrzyga większość przypadków w praktyce. <strong>Glare podnosi czerń wszędzie</strong>, także daleko od źródła. <strong>Halacja zostawia róg czarnym</strong>, bo jej zasięg jest ograniczony grubością podłoża — kilkadziesiąt mikrometrów przekłada się na obwódkę o promieniu rzędu kilkudziesięciu pikseli, a nie na pół kadru. <strong>Blooming w ogóle nie ma ogona</strong>: ma ostre krawędzie i kształt narzucony siatką pikseli.</p>
+
+    <button class="advanced-btn" data-modal-target="adv-halacja-test">Zaawansowane: jak odróżnić je pomiarem</button>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">W CG · to nie jest glow</div>
+    <h2>Odtwarzanie halacji</h2>
+
+    <p>Halację odtwarza się w compie najczęściej jednym suwakiem opisanym „glow” — i dlatego najczęściej źle. Prawdziwa halacja ma cztery cechy, których zwykła poświata nie ma, i każda z nich jest tania do dodania.</p>
+
+    <p><strong>Próg jest wysoki.</strong> Halacja pojawia się wokół miejsc przepalonych albo bliskich przepalenia, a nie wokół wszystkiego jasnego. To jest ten sam błąd, co przy gwiazdkach z <a href="rozdzial-25-starburst.html">Rozdziału 25</a>: maska wycięta zbyt nisko daje efekt wszędzie.</p>
+
+    <p><strong>Barwa jest przesunięta ku czerwieni</strong>, ale nie jest czerwona. Poświata ma zwykle barwę źródła zmieszaną z czerwienią — biała lampa daje obwódkę pomarańczową, a nie karminową. Nasycenie jest umiarkowane, z tego samego powodu, co przy powłokach w <a href="rozdzial-24-powloki.html">Rozdziale 24</a>.</p>
+
+    <p><strong>Profil ma ostrą krawędź w środku i długi ogon.</strong> Rozproszenie w podłożu nie jest gaussowskie — jest sumą odbić pod wieloma kątami, więc opada wolniej niż krzywa dzwonowa. Dwie warstwy rozmycia o różnym promieniu, dodane z różną wagą, przybliżają to znacznie lepiej niż jedno rozmycie.</p>
+
+    <p><strong>Element leży pod ziarnem.</strong> Halacja powstaje w warstwie czułej, więc ziarno z <a href="rozdzial-29-ziarno-to-nie-szum.html">Rozdziału 29</a> nakłada się na nią, a nie odwrotnie. Poświata dodana po ziarnie wygląda jak nałożona na obraz, bo jest gładka tam, gdzie wszystko inne ma strukturę.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Profil poświaty</span><span>glow gaussowski kontra halacja</span></div>
+      <svg viewBox="0 0 760 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Wykres profilu jasności wokół źródła: krzywa gaussowska opada szybko i kończy się, halacja ma ostre jądro i długi ogon sięgający dalej.">
+        <line x1="70" y1="180" x2="700" y2="180" stroke="#8b909b" stroke-width="1.2"/>
+        <line x1="385" y1="30" x2="385" y2="180" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 4"/>
+        <text x="385" y="200" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">źródło</text>
+        <text x="640" y="200" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">odległość od źródła</text>
+
+        <path d="M 245 180 Q 320 178 355 120 Q 375 44 385 38 Q 395 44 415 120 Q 450 178 525 180" fill="none" stroke="#9c82d8" stroke-width="2.4"/>
+        <text x="200" y="106" font-family="IBM Plex Mono" font-size="10" fill="#9c82d8">glow gaussowski</text>
+        <text x="200" y="122" font-family="IBM Plex Mono" font-size="9" fill="#8b909b">kończy się nagle</text>
+
+        <path d="M 80 176 Q 200 172 300 152 Q 355 130 372 46 L 385 38 L 398 46 Q 415 130 470 152 Q 570 172 690 176" fill="none" stroke="#d8695f" stroke-width="2.4"/>
+        <text x="500" y="120" font-family="IBM Plex Mono" font-size="10" fill="#d8695f">halacja</text>
+        <text x="500" y="136" font-family="IBM Plex Mono" font-size="9" fill="#8b909b">ostre jądro, długi ogon</text>
+
+        <g stroke="#7fc47f" stroke-width="1" stroke-dasharray="3 3">
+          <line x1="80" y1="176" x2="80" y2="186"/><line x1="690" y1="176" x2="690" y2="186"/>
+        </g>
+        <text x="70" y="222" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">Ogon halacji nie znika — dochodzi do zera powoli i to on daje wrażenie, że światło „rozlewa się w materiał”.</text>
+      </svg>
+      <div class="diagram-caption">Obie krzywe mają tę samą wysokość i podobną szerokość połówkową. Różni je wyłącznie to, co dzieje się dalej — i to widać.</div>
+    </div>
+
+    <p>Różnica między tymi dwiema krzywymi jest w praktyce ważniejsza niż dobór jasności. Rozmycie gaussowskie ma <strong>określony zasięg</strong> i za nim nie ma nic; halacja dochodzi do zera powoli i jej ogon sięga kilkakrotnie dalej niż jądro. Właśnie ten ogon daje wrażenie, że światło „wsiąka” w materiał, a jego brak sprawia, że poświata czyta się jako nałożona.</p>
+
+    <p>Praktyczna realizacja jest banalna: <span class="term-cyan">dwie warstwy rozmycia zamiast jednej</span>. Jedna wąska i mocna, druga cztery–pięć razy szersza i kilkakrotnie słabsza. Suma dwóch krzywych dzwonowych o bardzo różnych szerokościach przybliża profil z ogonem znacznie lepiej niż jakiekolwiek strojenie pojedynczego rozmycia.</p>
+
+    <p>Ostatnia uwaga o kolejności, bo różni się od reszty tej książki. Halacja jest jedynym zjawiskiem z Części V i VI, które powstaje <span class="term-raster">za</span> warstwą rejestrującą. W łańcuchu compu idzie więc po całej optyce i po flarze, ale <em>przed</em> ziarnem i przed korekcją — dokładnie w tym samym miejscu, co szum z <a href="rozdzial-27-od-fotonow-do-liczb.html">Rozdziału 27</a>.</p>
+  </div>
+
+  <div class="panel practice">
+    <div class="panel-label">Z praktyki</div>
+    <p><strong>Sprawdź, czy poświata ma obwódkę, czy jest wszędzie.</strong> Halacja otacza konkretne jasne miejsca i zanika z odległością od nich. Veiling glare podnosi czernie także tam, gdzie w pobliżu nie ma nic jasnego. Jedno spojrzenie na ciemny róg kadru rozstrzyga, z czym masz do czynienia — i czym to odtwarzać.</p>
+    <p><strong>Nie dodawaj halacji do renderu, jeśli plate jest cyfrowy i czysty.</strong> Nowoczesne matryce mają ją słabą, a ujęcie bez niej z elementem, który ją ma, wygląda gorzej niż odwrotnie. Halacja jest cechą materiału, nie normą — sprawdź, czy w plate'cie w ogóle występuje.</p>
+    <p><strong>Przy materiale z taśmy sprawdź obwódkę w kanałach osobno.</strong> Kanał czerwony ma ją najszerszą, zielony węższą, niebieski prawie żadną. Ta proporcja jest podpisem halacji i odtworzenie jej w trzech kanałach osobno kosztuje tyle samo, co w jednym, a wygląda nieporównanie lepiej.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>halacja</dt>
+      <dd>Powtórne naświetlenie warstwy czułej światłem odbitym od spodu podłoża. Daje szeroką, czerwonawą obwódkę wokół jasnych miejsc.</dd>
+      <dt>warstwa antyhalacyjna</dt>
+      <dd>Pochłaniająca warstwa z tyłu podłoża, usuwana w wywoływaniu. Jej brak — czasem celowy — daje halację silną i widoczną.</dd>
+      <dt>blooming</dt>
+      <dd>Przelew ładunku z przepełnionej studni piksela do sąsiadów. Zjawisko elektroniczne, reagujące na ekspozycję, nie na jasność źródła.</dd>
+      <dt>oświetlenie od tyłu (BSI)</dt>
+      <dd>Budowa matrycy, w której metalizacja leży pod fotodiodą. Zmniejsza odbicia wewnętrzne, ale ich nie usuwa.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Halacja jest strukturą, którą nośnik dokłada do obrazu. Nie jedyną — jest jeszcze ta, która pokrywa cały kadr i którą wszyscy próbują podrobić. W <a href="rozdzial-29-ziarno-to-nie-szum.html">następnym rozdziale</a> zobaczymy, dlaczego ziarno nie jest szumem, dlaczego szum gaussowski nigdy nie wygląda jak taśma i co trzeba zmienić, żeby zaczął.</p>
+  </div>
 
   <div class="deeper">
     <div class="deeper-label">Idź głębiej</div>
@@ -54,6 +292,27 @@ window.SKY3D_MESSAGES = {
       <a class="nav-prev" href="rozdzial-27-od-fotonow-do-liczb.html">← Poprzedni</a>
       <a class="nav-toc" href="../index.html">Spis treści</a>
       <a class="nav-next" href="rozdzial-29-ziarno-to-nie-szum.html">Następny →</a>
+  </div>
+
+  <template id="adv-halacja-test">
+    <h3>Jak odróżnić je pomiarem</h3>
+
+    <p>Trzy zjawiska dają się rozdzielić trzema testami, z których każdy wymaga dwóch ujęć i żaden nie wymaga sprzętu pomiarowego.</p>
+
+    <p><strong>Test zasięgu.</strong> Zmierz jasność czerni w rogu kadru przy jasnym źródle i bez niego. Różnica to <em>veiling glare</em>: dotyczy całego kadru. Jeśli różnicy nie ma, a poświata wokół źródła jest, masz halację albo blooming.</p>
+
+    <p><strong>Test ekspozycji.</strong> Nakręć to samo źródło raz poprawnie, raz o dwie działki jaśniej. Halacja urośnie mniej więcej proporcjonalnie do jasności źródła. <span class="term-raster">Blooming pojawi się skokowo</span> — dopóki studnia się nie przepełni, nie ma go wcale, a po przepełnieniu narasta gwałtownie. To jest test najpewniejszy, bo zachowania progowego nie da się pomylić z liniowym.</p>
+
+    <p><strong>Test kanałów.</strong> Obejrzyj poświatę w trzech kanałach osobno. Halacja jest wyraźnie szersza w czerwonym niż w niebieskim — z obu powodów opisanych w rozdziale. Blooming rozlewa się zgodnie z geometrią mozaiki, więc bywa najsilniejszy w zielonym, bo zielonych pikseli jest dwa razy więcej. Glare nie ma preferencji barwnej poza tą, którą wnoszą powłoki.</p>
+
+    <p>Jest jeszcze czwarty przypadek, o którym warto wiedzieć, bo bywa mylony z halacją, a nie jest niczym z tej trójki: <strong>rozproszenie na brudnym filtrze albo na przedniej soczewce</strong>. Zachowuje się jak glare, ale ma strukturę — smugi, plamy, kierunkowe rozmycia zgodne z zabrudzeniem. Rozpoznaje się je po tym, że nie jest obrotowo symetryczne wokół źródła i że w drugim ujęciu z inną pozycją kamery wygląda tak samo.</p>
+  </template>
+
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-panel">
+      <button class="modal-close" data-modal-close aria-label="Zamknij">×</button>
+      <div id="modal-body"></div>
+    </div>
   </div>
 
 </div>

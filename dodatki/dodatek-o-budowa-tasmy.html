@@ -41,7 +41,90 @@ window.SKY3D_MESSAGES = {
   <h1>Budowa taśmy warstwa po warstwie</h1>
   <p class="subtitle">Przekrój negatywu koloru: emulsje, filtr żółty, podłoże i warstwa antyhalacyjna — plus to, co się zmienia, gdy tej ostatniej zabraknie.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">Co tu jest</div>
+    <ul>
+      <li><strong>Przekrój negatywu barwnego</strong> warstwa po warstwie, z uzasadnieniem kolejności — bo nie jest dowolna.</li>
+      <li><strong>Po co filtr żółty</strong>, którego istnienia większość ludzi nie podejrzewa, a bez którego kolorowa fotografia by nie działała.</li>
+      <li><strong>Warstwa antyhalacyjna</strong>: dwa sposoby jej wykonania i co się zmienia, gdy jej zabraknie.</li>
+      <li><strong>Co z tego wynika dla wyglądu</strong> — trzy cechy obrazu z taśmy, które mają w tym przekroju swoją przyczynę.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Przekrój · siedem warstw, każda z powodem</div>
+    <h2>Jak zbudowany jest negatyw</h2>
+
+    <p>Negatyw barwny nie jest jedną emulsją, tylko stosem. Uproszczony przekrój, od strony padającego światła, wygląda tak:</p>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead>
+          <tr><th class="num">#</th><th>Warstwa</th><th>Po co</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="num">1</td><td>Warstwa ochronna</td><td>chroni emulsję przed zarysowaniem</td></tr>
+          <tr><td class="num">2</td><td>Emulsja czuła na błękit</td><td>rejestruje kanał niebieski</td></tr>
+          <tr><td class="num">3</td><td>Filtr żółty</td><td>zatrzymuje błękit przed dalszymi warstwami</td></tr>
+          <tr><td class="num">4</td><td>Emulsja czuła na zieleń</td><td>rejestruje kanał zielony</td></tr>
+          <tr><td class="num">5</td><td>Emulsja czuła na czerwień</td><td>rejestruje kanał czerwony</td></tr>
+          <tr><td class="num">6</td><td>Podłoże</td><td>nośnik mechaniczny, przezroczysty</td></tr>
+          <tr><td class="num">7</td><td>Warstwa antyhalacyjna</td><td>pochłania światło, które przeszło na wylot</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Uproszczenie: rzeczywisty materiał ma po kilka podwarstw na każdą barwę, o różnej czułości, żeby poszerzyć zakres — o czym w <a href="dodatek-q-log-i-rolloff.html">Dodatku Q</a>.</p>
+
+    <p>Kolejność nie jest kwestią wygody produkcji. <strong>Wynika z fizyki srebra.</strong> Halogenek srebra, z którego zrobiona jest każda emulsja, jest z natury czuły <em>wyłącznie</em> na błękit i nadfiolet. Czułość na zieleń i czerwień trzeba mu dopiero nadać barwnikami uczulającymi — ale nadanie jej nie odbiera czułości pierwotnej.</p>
+
+    <p>Każda warstwa jest więc czuła na swoją barwę <span class="term-raster">plus na błękit</span>. Gdyby ułożyć je bez zabezpieczenia, warstwa zielona i czerwona rejestrowałyby razem ze swoją barwą także niebieską — i obraz barwny by nie powstał.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Filtr żółty · najważniejsza warstwa, o której nikt nie wie</div>
+    <h2>Dlaczego trzecia warstwa jest żółta</h2>
+
+    <p>Rozwiązanie jest proste i eleganckie. <strong>Emulsja czuła na błękit idzie na wierzch</strong>, więc dostaje błękit jako pierwsza. Zaraz pod nią kładzie się filtr żółty, czyli taki, który błękit pochłania, a zieleń i czerwień przepuszcza. Do warstw niżej błękit już nie dociera i mogą rejestrować wyłącznie to, na co je uczulono.</p>
+
+    <p>Filtr ten jest zwykle zawiesiną koloidalnego srebra i ma tę wygodną własność, że <span class="term-cyan">rozpuszcza się w wywoływaniu</span>. W gotowym negatywie po nim nie ma śladu — i dlatego jego istnienie jest tak mało znane, mimo że bez niego nie byłoby fotografii barwnej w tej postaci.</p>
+
+    <p>Z takiego ułożenia wynikają dwie konsekwencje widoczne w obrazie.</p>
+
+    <p><strong>Kanał niebieski jest najostrzejszy.</strong> Leży na wierzchu, więc światło dociera do niego bez przechodzenia przez inne warstwy, czyli bez rozproszenia po drodze. Kanał czerwony jest najmiększy, bo jego światło przebyło całą grubość stosu.</p>
+
+    <p><strong>Kanał niebieski jest zarazem najbardziej ziarnisty.</strong> Emulsja czuła na błękit musi być gruboziarnista, żeby dorównać czułością pozostałym — a to jest wprost przeciwna zależność niż przy ostrości. Ta pozorna sprzeczność jest jedną z rzeczy, które odróżniają obraz z taśmy od cyfrowego: <span class="term-raster">najostrzejszy kanał jest najbardziej ziarnisty</span>, podczas gdy w matrycy Bayera z <a href="dodatek-m-bayer-i-demozaikowanie.html">Dodatku M</a> najostrzejszy jest zielony i on też jest najczystszy.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Warstwa antyhalacyjna · dwa sposoby</div>
+    <h2>Jak zatrzymuje się światło z tyłu</h2>
+
+    <p>Zadanie jest jedno — pochłonąć światło, które przeszło emulsję na wylot, zanim odbije się od tylnej powierzchni podłoża. Realizacji są dwie i różnią się skutkami.</p>
+
+    <p><strong>Warstwa nakładana z tyłu podłoża.</strong> W materiale kinowym jest to zwykle gruba, czarna powłoka na bazie sadzy, usuwana mechanicznie i chemicznie na początku wywoływania. Działa bardzo skutecznie, bo jest gęsta i leży dokładnie tam, gdzie trzeba. Wymaga za to osobnego etapu obróbki — i dlatego materiał kinowy nie da się wywołać w zwykłym procesie do filmów fotograficznych.</p>
+
+    <p><strong>Barwnik w samym podłożu albo w warstwie pod emulsją.</strong> Rozwiązanie stosowane w materiałach fotograficznych, wygodniejsze w obróbce, bo barwnik odbarwia się w kąpieli. Jest jednak mniej skuteczne: pochłania mniej i leży bliżej emulsji, więc część światła zdąży się odbić.</p>
+
+    <p>Stąd bierze się różnica, którą widać w obrazie i którą łatwo pomylić z różnicą obiektywów. <span class="term-violet">Materiał fotograficzny ma zwykle wyraźniejszą halację niż kinowy</span> — nie dlatego, że jest gorszy, tylko dlatego, że jego warstwa antyhalacyjna musi być zmywalna w prostszym procesie.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Bez warstwy · co się dzieje</div>
+    <h2>Gdy antyhalacyjnej zabraknie</h2>
+
+    <p>Istnieją materiały, w których warstwę antyhalacyjną usunięto celowo — najczęściej przez zdjęcie czarnej powłoki z taśmy kinowej, żeby dało się ją wywołać w standardowym procesie fotograficznym. Skutki są cztery i wszystkie wynikają wprost z <a href="../rozdzialy/rozdzial-28-halacja.html">Rozdziału 28</a>.</p>
+
+    <ul>
+      <li><strong>Silna, czerwonawa obwódka</strong> wokół każdego jasnego źródła — zjawisko, dla którego te materiały są dziś kupowane.</li>
+      <li><strong>Obniżony kontrast w okolicach przepaleń</strong>, bo powracające światło podnosi gęstość także tam, gdzie obrazu nie było.</li>
+      <li><strong>Utrata drobnego detalu przy jasnych krawędziach</strong>, bo rozproszone światło zaciera granicę.</li>
+      <li><strong>Zależność od jasności źródła</strong> silniejsza niż liniowa — obwódka pojawia się skokowo powyżej pewnego progu, bo dopiero wtedy dociera do podłoża dość światła.</li>
+    </ul>
+
+    <p>Ostatni punkt jest tym, który najczęściej umyka przy odtwarzaniu. <strong>Halacja nie skaluje się gładko z jasnością.</strong> Poniżej progu nie ma jej wcale, powyżej rośnie szybko. Efekt dodany z liniową zależnością od jasności pojawia się w zbyt wielu miejscach i jest zbyt równomierny — a to jest dokładnie ta cecha, która odróżnia dołożoną poświatę od prawdziwej.</p>
+
+    <p>Warto na koniec zauważyć, że wszystkie cztery skutki są <span class="term-cyan">stratami</span>. Halacja nie dodaje do obrazu żadnej informacji — odbiera kontrast, detal i przewidywalność. Jest kupowana wyłącznie za to, że sygnalizuje pochodzenie: obraz z taśmy, a nie z matrycy. To jest ten sam mechanizm, co przy anamorfie i przy vintage'owym szkle — i trzeci już przypadek w tej książce, w którym cena stała się ceną w drugą stronę.</p>
+  </div>
 
   <div class="site-nav">
     <a href="../index.html">← Spis treści</a>
