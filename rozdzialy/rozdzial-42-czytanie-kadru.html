@@ -42,7 +42,251 @@ window.SKY3D_MESSAGES = {
   <h1>Czytanie kadru</h1>
   <p class="subtitle">Dostajesz jedną klatkę i masz do niej dorobić render. Ta książka kończy się umiejętnością odwrotną do całej reszty: z obrazu odczytać ogniskową, przysłonę, format, wiek szkła i filtrację.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li><strong>Cała ta książka daje się odwrócić.</strong> Opisywaliśmy, jak decyzje zamieniają się w obraz; ten rozdział czyta obraz wstecz i odtwarza z niego decyzje.</li>
+      <li>Procedura ma <span class="term-amber">sześć kroków w ustalonej kolejności</span>, bo każdy zawęża pole dla następnego. Pierwsze cztery są pomiarem, dwa ostatnie interpretacją.</li>
+      <li><strong>Kiedy pomiary się kłócą, to też jest odpowiedź.</strong> Sprzeczność między tropami zwykle oznacza, że kadr jest przycięty, złożony albo przetworzony — a to jest informacja warta tyle, co każda inna.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Odwrócenie · książka czytana wstecz</div>
+    <h2>Co da się odczytać z jednego kadru</h2>
+
+    <p>Przez czterdzieści jeden rozdziałów szła jedna strzałka: od decyzji i od fizyki do obrazu. Ogniskowa dawała kąt widzenia, przysłona głębię, powierzchnie szkła flarę, emulsja ziarno.</p>
+
+    <p>Każda z tych zależności jest funkcją, a większość funkcji da się odwrócić. Ostatni rozdział polega więc na <strong>przejściu tej samej drogi w drugą stronę</strong>: od obrazu do liczb i od liczb do decyzji, które za nimi stały.</p>
+
+    <p>Nie jest to ćwiczenie akademickie. Jest to <span class="term-cyan">codzienna procedura pracy z plate'em</span>, opisana wcześniej po kawałku w Rozdziale 35 i w kilkunastu dodatkach — tutaj zebrana w jedną kolejność i uzupełniona o to, co robić, gdy odczyty się nie zgadzają.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Sześć kroków</span><span>każdy zawęża pole dla następnego</span></div>
+      <div class="diagram-controls" id="czKroki">
+        <button data-krok="1">1 · Format</button>
+        <button data-krok="2">2 · Ogniskowa</button>
+        <button data-krok="3">3 · Kamera</button>
+        <button data-krok="4">4 · Ostrość i czas</button>
+        <button data-krok="5">5 · Sygnatura</button>
+        <button data-krok="6">6 · Decyzja</button>
+      </div>
+      <svg viewBox="0 0 760 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Dla wybranego kroku procedury: czego szukać w kadrze, jak to zmierzyć, co z tego wynika i gdzie w książce jest rachunek.">
+        <rect x="24" y="20" width="712" height="52" rx="4" fill="#151a1f" stroke="#3a424d"/>
+        <text x="40" y="40" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">CZEGO SZUKAĆ W KADRZE</text>
+        <text x="40" y="62" font-family="IBM Plex Sans" font-size="12" fill="#ecebe4" id="czSzukaj">—</text>
+
+        <rect x="24" y="82" width="350" height="76" rx="4" fill="#132018" stroke="#7fc47f" stroke-width="1.2"/>
+        <text x="40" y="102" font-family="IBM Plex Mono" font-size="9.5" fill="#7fc47f">JAK ZMIERZYĆ</text>
+        <text x="40" y="124" font-family="IBM Plex Sans" font-size="11.5" fill="#ecebe4" id="czMierz1">—</text>
+        <text x="40" y="146" font-family="IBM Plex Sans" font-size="11.5" fill="#ecebe4" id="czMierz2"></text>
+
+        <rect x="386" y="82" width="350" height="76" rx="4" fill="#201a12" stroke="#e8a33d" stroke-width="1.2"/>
+        <text x="402" y="102" font-family="IBM Plex Mono" font-size="9.5" fill="#e8a33d">CO Z TEGO WYNIKA</text>
+        <text x="402" y="124" font-family="IBM Plex Sans" font-size="11.5" fill="#ecebe4" id="czWynik1">—</text>
+        <text x="402" y="146" font-family="IBM Plex Sans" font-size="11.5" fill="#ecebe4" id="czWynik2"></text>
+
+        <rect x="24" y="168" width="712" height="46" rx="4" fill="#1a1220" stroke="#9c82d8" stroke-width="1.2"/>
+        <text x="40" y="188" font-family="IBM Plex Mono" font-size="9.5" fill="#9c82d8">GDY SIĘ NIE ZGADZA</text>
+        <text x="40" y="206" font-family="IBM Plex Sans" font-size="11.5" fill="#ecebe4" id="czKonflikt">—</text>
+        <text x="700" y="40" font-family="IBM Plex Mono" font-size="9" fill="#4fc3c0" text-anchor="end" id="czGdzie"></text>
+      </svg>
+      <div class="diagram-caption">Kolejność nie jest dowolna: format wyznacza przelicznik dla ogniskowej, ogniskowa dla głębi, a wszystkie trzy razem dla oceny sygnatury.</div>
+    </div>
+
+    <p>Warto zwrócić uwagę na dolny pas widgetu. <strong>Konflikt między pomiarami nie jest porażką procedury</strong> — jest jej najbardziej wartościowym wynikiem, bo wskazuje, że z materiałem coś zrobiono, i mówi co.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Pomiar · cztery pierwsze kroki</div>
+    <h2>Co da się ustalić liczbowo</h2>
+
+    <p>Pierwsze cztery kroki dają wyniki, których nie da się zakwestionować gustem. Warto je robić w tej kolejności i zapisywać po drodze, bo każdy następny na nich stoi.</p>
+
+    <p><strong>Krok 1 — format i proporcja.</strong> Proporcję odczytuje się wprost z pliku, ale ważniejsze jest, czy materiał jest anamorficzny. Test jest jeden: <span class="term-violet">okrągłe rzeczy w tle mają być okrągłe</span>. Owalne krążki rozmycia albo owalne odblaski na chromie oznaczają ściśnięcie, a jego wielkość odczytuje się ze stosunku osi.</p>
+
+    <p><strong>Krok 2 — ogniskowa.</strong> Trzy tropy z <a href="rozdzial-37-ogniskowa-jako-decyzja.html">Rozdziału 37</a>: stosunek wielkości planów, zbieganie pionów przy pochyleniu i głębia ostrości. Dokładniej — punkty zbiegu z <a href="rozdzial-35-geometria-plateu.html">Rozdziału 35</a>, jeśli w kadrze jest cokolwiek prostokątnego.</p>
+
+    <p><strong>Krok 3 — położenie kamery.</strong> Wysokość odczytuje się z linii horyzontu, która przecina każdą pionową rzecz na poziomie oka kamery. Pochylenie — ze zbiegania pionów, którego wielkość podaje tabela w <a href="../dodatki/dodatek-ac-perspektywa-w-liczbach.html">Dodatku AC</a>.</p>
+
+    <p><strong>Krok 4 — ostrość i czas.</strong> Przysłonę z średnicy krążków rozmycia w tle, wzorem z <a href="../dodatki/dodatek-u-z-depth-w-praktyce.html">Dodatku U</a>. Kąt migawki ze stosunku długości smugi do przesunięcia między klatkami, wzorem z <a href="../dodatki/dodatek-r-rozmycie-ruchu.html">Dodatku R</a>.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Siedem liczb</span><span>i skąd bierze się każda</span></div>
+      <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Siedem parametrów kamery i trop w obrazie, z którego każdy się odczytuje.">
+        <g font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">
+          <text x="30" y="24">LICZBA</text><text x="240" y="24">TROP W OBRAZIE</text><text x="580" y="24">KROK</text>
+        </g>
+        <line x1="24" y1="32" x2="736" y2="32" stroke="#3a424d"/>
+        <g font-family="IBM Plex Sans" font-size="11.5" fill="#ecebe4">
+          <text x="30" y="58">bramka</text><text x="240" y="58">proporcja pliku plus historia kadrowania</text><text x="580" y="58" fill="#4fc3c0">1</text>
+          <text x="30" y="86">ściśnięcie</text><text x="240" y="86">stosunek osi krążka rozmycia</text><text x="580" y="86" fill="#4fc3c0">1</text>
+          <text x="30" y="114">ogniskowa</text><text x="240" y="114">stosunek wielkości planów, punkt zbiegu</text><text x="580" y="114" fill="#4fc3c0">2</text>
+          <text x="30" y="142">wysokość</text><text x="240" y="142">gdzie horyzont przecina pionową rzecz</text><text x="580" y="142" fill="#4fc3c0">3</text>
+          <text x="30" y="170">pochylenie</text><text x="240" y="170">zbieganie pionowych krawędzi</text><text x="580" y="170" fill="#4fc3c0">3</text>
+          <text x="30" y="198">przysłona</text><text x="240" y="198">średnica krążka rozmycia w tle</text><text x="580" y="198" fill="#4fc3c0">4</text>
+          <text x="30" y="226">kąt migawki</text><text x="240" y="226">długość smugi wobec przeskoku klatki</text><text x="580" y="226" fill="#4fc3c0">4</text>
+        </g>
+        <g stroke="#7fc47f" stroke-width="3" opacity="0.7">
+          <line x1="632" y1="52" x2="632" y2="92"/><line x1="654" y1="108" x2="654" y2="120"/>
+          <line x1="676" y1="136" x2="676" y2="176"/><line x1="698" y1="192" x2="698" y2="232"/>
+        </g>
+        <text x="720" y="126" font-family="IBM Plex Mono" font-size="9" fill="#7fc47f" text-anchor="middle" transform="rotate(90 720 126)">komplet do odtworzenia kamery</text>
+      </svg>
+      <div class="diagram-caption">Żadna z siedmiu liczb nie wymaga metadanych. Każda ma swój trop w obrazie i każda daje się skontrolować drugim tropem, jeśli w kadrze jest z czego.</div>
+    </div>
+
+    <p>Cztery kroki dają siedem liczb — bramkę, ściśnięcie, ogniskową, wysokość, pochylenie, przysłonę i kąt migawki — czyli dokładnie ten komplet, którego <a href="../dodatki/dodatek-s-kamery-w-rendererach.html">Dodatek S</a> wymaga do odtworzenia kamery. <strong>Wszystkie siedem odczytano z obrazu, bez żadnych metadanych.</strong></p>
+
+    <button class="advanced-btn" data-modal-target="adv-kolejnosc-pomiaru">Zaawansowane: dlaczego akurat ta kolejność</button>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Interpretacja · dwa kroki ostatnie</div>
+    <h2>Od liczb do decyzji</h2>
+
+    <p>Dwa ostatnie kroki wychodzą poza pomiar i wymagają sądu — ale sądu opartego na tym, co zmierzono, a nie na wrażeniu.</p>
+
+    <p><strong>Krok 5 — sygnatura.</strong> Lista z <a href="rozdzial-39-szkola-powsciagliwosci.html">Rozdziału 39</a> czytana jako zestaw obecności i nieobecności: flara, winieta, obwódki barwne, miękkość brzegów, kształt bokeh, wygięcie prostych. Zapisuje się nie „jest / nie ma”, tylko wartości — bo każda z tych rzeczy jest mierzalna i każda ma profil.</p>
+
+    <p><strong>Krok 6 — decyzja.</strong> Ostatnie pytanie brzmi: co z tego wynika o zamiarze. Szeroka ogniskowa i niska kamera oznaczają, że widz ma być uczestnikiem. Długa i płytka głębia — że ma obserwować jedną rzecz. Mocna sygnatura oznacza szkołę faktury, jej brak — powściągliwości.</p>
+
+    <p>Warto tu być ostrożnym, i to ostrożnym w konkretny sposób. <span class="term-amber">Krok szósty jest hipotezą, a nie odczytem</span> — obraz nie zawiera intencji, tylko jej ślady. Uczciwe sformułowanie brzmi „ten kadr zachowuje się tak, jakby chodziło o…”, a nie „operator chciał…”.</p>
+
+    <p>Dla naszej pracy różnica jest zresztą mniejsza, niż się wydaje. <strong>Element CG musi pasować do tego, co w kadrze jest, a nie do tego, co ktoś zamierzał.</strong> Kroki 1–5 wystarczają w zupełności; krok szósty służy do czegoś innego — do rozstrzygania sytuacji, w których pomiar nie daje odpowiedzi, bo w plate'cie po prostu czegoś nie widać.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Sprzeczności · gdy tropy się kłócą</div>
+    <h2>Cztery typowe konflikty i co znaczą</h2>
+
+    <p>Sprzeczność między odczytami jest najbardziej użyteczną rzeczą, jaką ta procedura produkuje. Cztery układy powtarzają się na tyle często, że warto je znać z pamięci.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Cztery sprzeczności</span><span>i co za każdą stoi</span></div>
+      <svg viewBox="0 0 760 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cztery typowe sprzeczności między pomiarami i ich najczęstsze przyczyny.">
+        <g font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">
+          <text x="30" y="24">CO SIĘ KŁÓCI</text><text x="420" y="24">NAJCZĘSTSZA PRZYCZYNA</text>
+        </g>
+        <line x1="24" y1="32" x2="736" y2="32" stroke="#3a424d"/>
+        <g font-family="IBM Plex Sans" font-size="11.5" fill="#ecebe4">
+          <text x="30" y="58">ciasny kadr, ale tło drobne i odległe</text>
+          <text x="420" y="58" fill="#e8a33d">kadr przycięty z szerszego ujęcia</text>
+
+          <text x="30" y="96">płytka głębia, ale ostrość od rogu do rogu</text>
+          <text x="420" y="96" fill="#e8a33d">złożenie dwóch planów albo rozmycie z mapy</text>
+
+          <text x="30" y="134">winieta jest, ale nie znika przy przymknięciu</text>
+          <text x="420" y="134" fill="#e8a33d">dołożona w korekcji, nie optyczna</text>
+
+          <text x="30" y="172">ziarno jednakowe mimo różnych jasności</text>
+          <text x="420" y="172" fill="#e8a33d">nałożone w postprodukcji, nie z nośnika</text>
+
+          <text x="30" y="210">piony proste, ale kamera wyraźnie pochylona</text>
+          <text x="420" y="210" fill="#e8a33d">korekcja perspektywy albo obiektyw typu shift</text>
+        </g>
+        <line x1="24" y1="222" x2="736" y2="222" stroke="#3a424d"/>
+        <text x="30" y="238" font-family="IBM Plex Mono" font-size="9" fill="#8b909b">każdy wiersz oznacza, że materiał nie jest surowy — i mówi, co dokładnie z nim zrobiono</text>
+      </svg>
+      <div class="diagram-caption">Wiersz czwarty jest najczęstszy i najłatwiejszy do przeoczenia. Ziarno z nośnika ma wariancję zależną od jasności — jednorodne ziarno w cieniach i w światłach nie pochodzi z emulsji ani z matrycy.</div>
+    </div>
+
+    <p>Ostatni wiersz zasługuje na komentarz, bo prowadzi do praktycznego wniosku. Jeśli piony są proste, a wszystko inne mówi, że kamera patrzyła w górę, to <strong>geometria plate'u została zmieniona po zdjęciach</strong> — a wtedy element ustawiony według rzeczywistej kamery nie zejdzie się z tłem. Trzeba wtedy ustawić kamerę pod obraz, jaki jest, a nie pod ten, który był rejestrowany.</p>
+
+    <p>Wniosek ogólniejszy dotyczy całej tej procedury. <span class="term-cyan">Odczyt mówi o obrazie, nie o zdarzeniu</span> — i to jest dokładnie ta informacja, której potrzeba, bo element ma pasować do obrazu.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Przykład · procedura na jednym kadrze</div>
+    <h2>Sześć kroków od początku do końca</h2>
+
+    <p>Weźmy kadr opisany słowami, bo o rekonstrukcję właśnie chodzi. Ujęcie: mężczyzna stoi w drzwiach magazynu, widoczny w pełnej sylwetce i wypełniający około 85 procent wysokości kadru, lekko na lewo od środka. Framuga drzwi sięga niemal górnej i dolnej krawędzi. Za nim głęboki, nieostry korytarz z rzędem lamp pod sufitem. Kamera nieco poniżej wysokości jego oczu. Kadr 2,39:1, plik 4096 × 1714 px.</p>
+
+    <div class="worked">
+      <div class="wlabel">Czytanie kadru · krok po kroku</div>
+      <div class="step"><span class="k">1 · Format</span><span class="v">Nieostre lampy w tle dają krążki wyraźnie owalne, oś pionowa dłuższa od poziomej w stosunku 2:1 → materiał anamorficzny, ściśnięcie 2×. Bramka Super 35: 24,89 mm.</span></div>
+      <div class="step"><span class="k">2 · Ogniskowa</span><span class="v">Sylwetka 1,75 m zajmuje 85% wysokości kadru, czyli 15,86 mm na negatywie o wysokości 18,66 mm. Powiększenie wynosi 0,00906, więc odległość to f·(1+1/m) — a framuga o wysokości 2,0 m wypełnia przy tym 97% kadru, co się zgadza z obrazem. Dla ogniskowej 40 mm daje to 4,45 m; przy ściśnięciu 2× poziomy kąt widzenia odpowiada dwudziestce sferycznej.</span></div>
+      <div class="step"><span class="k">3 · Kamera</span><span class="v">Horyzont przecina postać na wysokości piersi, czyli około 1,35 m nad podłogą. Piony framugi zbiegają się nieznacznie — poniżej 1,05 na wysokość kadru, więc pochylenie mniejsze niż pięć stopni.</span></div>
+      <div class="step"><span class="k">4 · Ostrość i czas</span><span class="v">Lampy leżą jakieś 18 m za postacią, czyli 22,5 m od kamery. Ich krążki mierzą 13 px w pionie. Ze wzoru na krążek wychodzi przysłona T/2,0. Ruchu w kadrze brak, więc kąta migawki odczytać się nie da — i to trzeba zapisać.</span></div>
+      <div class="step"><span class="k">5 · Sygnatura</span><span class="v">Rogi ciemniejsze o około działkę, krążki przy brzegu ścięte z jednej strony (kocie oko), na krawędziach framugi widoczne obwódki. Poziomej smugi od lamp brak, mimo anamorfu — więc lampy są za słabe albo szkło ma powłoki tłumiące.</span></div>
+      <div class="step"><span class="k">6 · Decyzja</span><span class="v">Szeroki efektywny kąt, kamera nisko, płytka głębia mimo szerokiej ogniskowej, wyraźna sygnatura anamorfu. Kadr zachowuje się tak, jakby chodziło o obecność w przestrzeni i o jednoczesne odcięcie postaci od niej.</span></div>
+      <div class="result">Do rendera wchodzi: bramka 24,89 mm, ściśnięcie 2×, ogniskowa 40 mm, kamera na 1,35 m, pochylenie poniżej 5°, ostrość 4,45 m, T/2,0. Sygnatura: winieta około działki, kocie oko przy brzegach, aberracja poprzeczna widoczna.</div>
+      <div class="check">Kontrola spójności: przy 40 mm, T/2,0 i ostrości na 4,45 m głębia wychodzi od 4,00 do 5,03 m, czyli nieco ponad metr. Zgadza się z obrazem: framuga jest ostra, korytarz nie. Gdyby wyszło pięć metrów głębi, któryś z wcześniejszych odczytów byłby błędny — i to sprawdzenie jest jedynym powodem, dla którego warto liczyć głębię, skoro i tak się ją widzi.</div>
+    </div>
+
+    <p>Przykład pokazuje dwie rzeczy warte zapamiętania poza samą procedurą. Po pierwsze, <strong>kroki się kontrolują</strong>: głębia policzona z kroku 4 musi zgadzać się z tym, co widać, a jeśli nie zgadza, wracamy do kroku 2. Po drugie, <span class="term-violet">brak odczytu jest wynikiem</span> — kąta migawki nie dało się zmierzyć i to trzeba zapisać, a nie wpisać wartość domyślną.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Granice · czego z kadru nie wyczytasz</div>
+    <h2>Cztery rzeczy, których w obrazie nie ma</h2>
+
+    <p>Procedura jest mocna, ale nie wszechmocna, i uczciwość wymaga wyliczenia, gdzie się kończy. Cztery rzeczy są w obrazie nieobecne z zasady, a nie z powodu niedokładności pomiaru.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Granice metody</span><span>i co robić zamiast</span></div>
+      <svg viewBox="0 0 760 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cztery rzeczy nieodczytywalne z kadru, powód każdej i sposób postępowania.">
+        <g font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">
+          <text x="30" y="24">CZEGO NIE MA</text><text x="270" y="24">DLACZEGO</text><text x="530" y="24">CO ZAMIAST</text>
+        </g>
+        <line x1="24" y1="32" x2="736" y2="32" stroke="#3a424d"/>
+        <g font-family="IBM Plex Sans" font-size="11.5" fill="#ecebe4">
+          <text x="30" y="58" fill="#d8695f">skala sceny</text>
+          <text x="270" y="58">perspektywa nie zmienia się przy skalowaniu</text>
+          <text x="530" y="58" fill="#7fc47f">jeden pomiar z planu</text>
+
+          <text x="30" y="92" fill="#d8695f">bezwzględna jasność</text>
+          <text x="270" y="92">korekcja zapisuje tylko proporcje</text>
+          <text x="530" y="92" fill="#7fc47f">szara kula albo znany wzorzec</text>
+
+          <text x="30" y="126" fill="#d8695f">nazwa obiektywu</text>
+          <text x="270" y="126">sygnatura nie jest podpisem</text>
+          <text x="530" y="126" fill="#7fc47f">raport zdjęciowy lub siatka</text>
+
+          <text x="30" y="160" fill="#d8695f">zamiar operatora</text>
+          <text x="270" y="160">obraz niesie skutki, nie powody</text>
+          <text x="530" y="160" fill="#7fc47f">hipoteza, jawnie oznaczona</text>
+
+          <text x="30" y="194" fill="#e8a33d">geometria za kadrem</text>
+          <text x="270" y="194">poza kadrem po prostu nic nie zarejestrowano</text>
+          <text x="530" y="194" fill="#7fc47f">zdjęcia otoczenia z planu</text>
+        </g>
+        <line x1="24" y1="206" x2="736" y2="206" stroke="#3a424d"/>
+        <text x="30" y="224" font-family="IBM Plex Mono" font-size="9" fill="#8b909b">pierwsze cztery są nieodwracalne z zasady; piąta tylko dlatego, że nikt tam nie skierował kamery</text>
+      </svg>
+      <div class="diagram-caption">Wiersz pierwszy jest najgroźniejszy, bo zła skala fałszuje spójnie wszystko, co zależy od odległości — i przez tę spójność jest trudna do wykrycia.</div>
+    </div>
+
+    <p>Warto zwrócić uwagę, że wszystkie cztery pierwsze pozycje mają wspólną cechę: <strong>informacja nie zaginęła w przetwarzaniu, tylko nigdy nie została zarejestrowana</strong>. Żadne narzędzie ich nie odzyska, bo nie ma czego odzyskiwać — jest to ta sama sytuacja, co przy obcięciu świateł z <a href="rozdzial-31-zakres-dynamiczny.html">Rozdziału 31</a>.</p>
+
+    <p>I ostatnia obserwacja, którą warto wynieść z całej tej książki. <span class="term-cyan">Wszystkie cztery da się zdobyć na planie w kwadrans</span>: jeden pomiar taśmą, jedna kula, jedna notatka o szkle, kilka zdjęć otoczenia. Lista z <a href="../dodatki/dodatek-w-kolejnosc-w-compie.html">Dodatku W</a> nie jest więc listą życzeń — jest listą rzeczy, których później nie da się już zrobić żadnym kosztem.</p>
+  </div>
+
+  <div class="panel practice">
+    <div class="panel-label">Z praktyki</div>
+    <p><strong>Zapisz siedem liczb, zanim cokolwiek zbudujesz.</strong> Bramka, ściśnięcie, ogniskowa, wysokość, pochylenie, przysłona, kąt migawki. Kwadrans pracy, który oszczędza dzień poprawiania.</p>
+    <p><strong>Traktuj sprzeczność jako wynik, nie jako błąd.</strong> Gdy dwa tropy się kłócą, przestań mierzyć i zapytaj, co zrobiono z materiałem. Odpowiedź na to pytanie zwykle rozwiązuje sprawę szybciej niż trzeci pomiar.</p>
+    <p><strong>Nie kończ na kroku szóstym.</strong> Hipoteza o zamiarze jest ciekawa, ale element buduje się z kroków 1–5. Zamiar przydaje się dopiero tam, gdzie pomiar milczy — a takie miejsca warto umieć rozpoznać.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>czytanie kadru</dt>
+      <dd>Odtwarzanie parametrów kamery i decyzji zdjęciowych z gotowego obrazu, bez metadanych.</dd>
+      <dt>trop</dt>
+      <dd>Cecha obrazu, z której da się wnioskować o jednym parametrze. Rzetelność rośnie z liczbą zgodnych tropów.</dd>
+      <dt>konflikt tropów</dt>
+      <dd>Sytuacja, w której dwa pomiary dają sprzeczne wyniki. Zwykle oznacza, że materiał został przetworzony.</dd>
+      <dt>siedem liczb</dt>
+      <dd>Komplet potrzebny do odtworzenia kamery: bramka, ściśnięcie, ogniskowa, wysokość, pochylenie, przysłona, kąt migawki.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Tu książka się kończy, ale procedura z tego rozdziału nie ma końca — sprawdza się ją na każdym kolejnym ujęciu. Jeśli chcesz zweryfikować konkretny obiektyw zamiast konkretnego kadru, <a href="../dodatki/dodatek-z-jak-przetestowac-obiektyw.html">Dodatek Z</a> podaje protokół, który da się wykonać w popołudnie. Terminy używane w całej książce, razem z odpowiednikami angielskimi, zbiera <a href="../dodatki/dodatek-ad-slownik-pl-en.html">Dodatek AD</a>.</p>
+  </div>
 
   <div class="deeper">
     <div class="deeper-label">Idź głębiej</div>
@@ -54,8 +298,117 @@ window.SKY3D_MESSAGES = {
       <a class="nav-toc" href="../index.html">Spis treści</a>
   </div>
 
+<template id="adv-kolejnosc-pomiaru">
+  <h3>Dlaczego akurat ta kolejność</h3>
+  <p>Sześć kroków da się z pozoru wykonać w dowolnym porządku — każdy mierzy coś innego. W praktyce kolejność jest wymuszona i warto zobaczyć czym, bo ta sama logika wraca w każdym rachunku tej książki.</p>
+  <p><strong>Format przed ogniskową, bo ogniskowa bez bramki nie znaczy nic.</strong> Kąt widzenia to iloraz szerokości bramki i ogniskowej. Zmierzywszy z obrazu kąt, dostajemy iloczyn dwóch niewiadomych; dopiero ustalenie bramki rozwiązuje go na jedną. Wykonanie kroków w odwrotnej kolejności daje ogniskową wyrażoną w nieznanych jednostkach.</p>
+  <p><strong>Ogniskowa przed kamerą, bo zbieganie pionów zależy od obu.</strong> Ten sam skos pionowych krawędzi powstaje przy szerokim szkle i małym pochyleniu albo przy długim i dużym. Tabela w <a href="../dodatki/dodatek-ac-perspektywa-w-liczbach.html">Dodatku AC</a> pokazuje to wprost: przy 18 mm pięć stopni daje 1,07, a przy 85 mm dopiero dwadzieścia stopni daje 1,06. Bez znanej ogniskowej pomiar pochylenia ma dwa rozwiązania.</p>
+  <p><strong>Kamera przed ostrością, bo krążek rozmycia zależy od odległości.</strong> Wzór na średnicę krążka zawiera odległość ostrzenia i odległość przedmiotu. Znając położenie kamery, znamy skalę sceny, a z nią obie te odległości — bez tego przysłona wychodzi z dokładnością do nieznanego mnożnika.</p>
+  <p><strong>Wszystko przed sygnaturą, bo sygnatura jest funkcją pozostałych.</strong> Winietowanie naturalne zależy od kąta polowego, więc od ogniskowej i bramki. Winietowanie optyczne zależy dodatkowo od przysłony. Ocena, czy winieta w kadrze jest „mocna”, wymaga więc wiedzy, ile powinno jej być — a to wynika z czterech poprzednich kroków.</p>
+  <p><strong>Praktyczna konsekwencja.</strong> Jeśli któryś krok nie daje się wykonać — bo w kadrze nie ma prostych, nie ma punktowych świateł albo nie ma ruchu — <strong>następne kroki dziedziczą tę niepewność</strong> i trzeba to zapisać, a nie zapomnieć. Uczciwy zapis brzmi „przysłona T/2,8 przy założeniu ostrzenia na 3 m”, a nie „przysłona T/2,8”.</p>
+  <p>Jest to ta sama zasada, która obowiązywała przy weryfikacji liczb w całej tej książce: <strong>wynik jest wart tyle, co najsłabsze ogniwo, na którym stoi</strong> — i lepiej wiedzieć, które to ogniwo, niż mieć jedną ładną liczbę bez rodowodu.</p>
+</template>
+
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal-box">
+    <button class="modal-close" aria-label="Zamknij">&times;</button>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
 </div>
 
 <script src="../assets/interactive.js"></script>
+<script>
+(function () {
+  var pas = document.getElementById('czKroki');
+  if (!pas) return;
+
+  var KROKI = {
+    '1': {
+      szukaj: 'Okrągłe rzeczy w tle: krążki rozmycia, odblaski na chromie, koła.',
+      mierz: ['Stosunek osi owalnego krążka rozmycia — to jest ściśnięcie.',
+              'Proporcję kadru odczytaj z pliku, ale sprawdź, czy nie przycięto.'],
+      wynik: ['Bramka w milimetrach i ściśnięcie anamorficzne.',
+              'Przelicznik, bez którego wszystkie następne kroki są bezwartościowe.'],
+      konflikt: 'Owalne bokeh przy proporcji 1,85:1 oznacza materiał anamorficzny wykadrowany później.',
+      gdzie: 'R.20, R.41, Dodatek J'
+    },
+    '2': {
+      szukaj: 'Dwie rzeczy o znanej wielkości w różnych odległościach; proste biegnące ku horyzontowi.',
+      mierz: ['Stosunek wielkości bliskiej i dalekiej rzeczy o znanym rozmiarze.',
+              'Położenie punktu zbiegu względem środka kadru.'],
+      wynik: ['Ogniskowa — a przy znanej bramce także kąt widzenia.',
+              'Odległość kamery od pierwszego planu, jako produkt uboczny.'],
+      konflikt: 'Ciasny kadr przy drobnym, odległym tle oznacza wycinek z szerszego ujęcia.',
+      gdzie: 'R.5, R.37, R.35, Dodatek AC'
+    },
+    '3': {
+      szukaj: 'Linia horyzontu i pionowe krawędzie: framugi, słupy, narożniki budynków.',
+      mierz: ['Na jakiej wysokości postaci przecina je horyzont — to wysokość kamery.',
+              'Stosunek szerokości pionowej płaszczyzny u góry i u dołu kadru.'],
+      wynik: ['Wysokość kamery nad ziemią i kąt jej pochylenia.',
+              'Perspektywa, czyli to, czego zmiana ogniskowej już nie naprawi.'],
+      konflikt: 'Piony proste mimo wyraźnego pochylenia to korekcja perspektywy albo obiektyw shift.',
+      gdzie: 'R.5, R.35, Dodatek AC'
+    },
+    '4': {
+      szukaj: 'Punktowe światła w tle i cokolwiek, co się szybko porusza.',
+      mierz: ['Średnica krążka rozmycia punktowego światła, w pikselach.',
+              'Długość smugi wobec przesunięcia przedmiotu między klatkami.'],
+      wynik: ['Przysłona i odległość ostrzenia; kąt migawki.',
+              'Komplet siedmiu liczb potrzebnych do odtworzenia kamery.'],
+      konflikt: 'Płytka głębia przy ostrości od rogu do rogu to złożenie albo rozmycie z mapy głębi.',
+      gdzie: 'R.8, R.32, Dodatki E, R, U'
+    },
+    '5': {
+      szukaj: 'Rogi kadru, okolice jasnych źródeł, krawędzie o dużym kontraście.',
+      mierz: ['Spadek jasności w rogu w działkach, na kilku przysłonach.',
+              'Rozsunięcie kanałów jako funkcja promienia; barwa i kierunek ghostów.'],
+      wynik: ['Profil sygnatury: winieta, dystorsja, aberracja, flara, miękkość.',
+              'To, co element CG musi mieć w tych samych wartościach.'],
+      konflikt: 'Winieta niezmieniająca się przy przymknięciu została dołożona w korekcji.',
+      gdzie: 'R.39, R.40, Dodatki P, V, X'
+    },
+    '6': {
+      szukaj: 'Wszystkiego naraz: liczb z kroków 1–5 zestawionych obok siebie.',
+      mierz: ['Nie mierzy się — zestawia i pyta, co te wartości razem robią.',
+              'Szeroka i nisko: uczestnik. Długa i płytko: obserwator.'],
+      wynik: ['Hipoteza o zamiarze, nie odczyt. Obraz nie zawiera intencji.',
+              'Przydatna tam, gdzie pomiar milczy, bo czegoś w kadrze nie widać.'],
+      konflikt: 'Sprzeczny odczyt zamiaru zwykle znaczy, że ujęcie należy do sekwencji o innej regule.',
+      gdzie: 'R.37–R.41'
+    }
+  };
+
+  var el = {
+    szukaj: document.getElementById('czSzukaj'),
+    m1: document.getElementById('czMierz1'), m2: document.getElementById('czMierz2'),
+    w1: document.getElementById('czWynik1'), w2: document.getElementById('czWynik2'),
+    konflikt: document.getElementById('czKonflikt'), gdzie: document.getElementById('czGdzie')
+  };
+  var przyciski = pas.querySelectorAll('[data-krok]');
+
+  function pokaz(k, btn) {
+    var d = KROKI[k];
+    el.szukaj.textContent = d.szukaj;
+    el.m1.textContent = '· ' + d.mierz[0];
+    el.m2.textContent = '· ' + d.mierz[1];
+    el.w1.textContent = '· ' + d.wynik[0];
+    el.w2.textContent = '· ' + d.wynik[1];
+    el.konflikt.textContent = d.konflikt;
+    el.gdzie.textContent = d.gdzie;
+    for (var i = 0; i < przyciski.length; i++) {
+      przyciski[i].classList.toggle('is-active', przyciski[i] === btn);
+    }
+  }
+
+  for (var i = 0; i < przyciski.length; i++) {
+    (function (b) { b.addEventListener('click', function () { pokaz(b.dataset.krok, b); }); })(przyciski[i]);
+  }
+  pokaz('1', przyciski[0]);
+})();
+</script>
+
 </body>
 </html>
