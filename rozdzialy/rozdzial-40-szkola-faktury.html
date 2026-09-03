@@ -43,7 +43,245 @@ window.SKY3D_MESSAGES = {
   <h1>Szkoła faktury</h1>
   <p class="subtitle">Drugi biegun: duży format, rehousowane szkło sprzed pół wieku, dyfuzja przed obiektywem i winieta zostawiona tam, gdzie wypadła. Wada jako materiał, nie jako usterka.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li><strong>Szkoła faktury przyjmuje odwrotne założenie:</strong> ślad przyrządu jest częścią obrazu, a nie zanieczyszczeniem. Flara, miękkie rogi i owalne bokeh to materiał, z którego buduje się ujęcie.</li>
+      <li>Nie chodzi o „stary wygląd”. Chodzi o to, że <span class="term-amber">sygnatura obiektywu jest jedyną warstwą obrazu, która działa na widza bez pośrednictwa treści</span> — nie mówi, co się dzieje, tylko jak to oglądać.</li>
+      <li><strong>Cena jest wysoka i konkretna:</strong> mniej kontrastu, mniej detalu przy brzegach, mniej przewidywalności i znacznie więcej pracy przy dopasowywaniu elementów CG.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Teza · przyrząd jako współautor</div>
+    <h2>Kiedy ślad po szkle jest treścią</h2>
+
+    <p>Poprzedni rozdział opisał postawę, która chce, żeby obiektyw zniknął. Druga postawa zaczyna od zauważenia, że <strong>on i tak nie zniknie</strong> — a skoro ma zostawić ślad, to lepiej wybrać jaki, niż udawać, że go nie ma.</p>
+
+    <p>Argument jest mocniejszy, niż wygląda na pierwszy rzut oka. Widz nie ma dostępu do sceny; ma dostęp do obrazu sceny. <span class="term-cyan">Wszystko, co wie o świecie przedstawionym, przeszło przez szkło i przez nośnik</span> — więc ich właściwości nie są zakłóceniem sygnału, tylko jego częścią. Obraz bez sygnatury nie jest bardziej prawdziwy; jest po prostu obrazem zrobionym innym przyrządem.</p>
+
+    <p>Stąd druga obserwacja, która nadaje tej szkole sens praktyczny. Sygnatura obiektywu działa na widza <strong>przed treścią i niezależnie od niej</strong>. Zanim ktoś zdąży rozpoznać, co jest w kadrze, już wie, czy patrzy na obraz twardy, czy miękki, czysty czy zabrudzony. Jest to warstwa komunikatu, której nie da się zastąpić ani scenografią, ani światłem — bo obie te rzeczy działają dopiero wtedy, gdy widz zaczął patrzeć na <em>co</em>, a nie na <em>jak</em>.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Sygnatury obiektywu</span><span>ta sama lista, druga kolumna</span></div>
+      <div class="diagram-controls" id="fkPrzyciski">
+        <button data-syg="flara">Flara</button>
+        <button data-syg="winieta">Winieta</button>
+        <button data-syg="bokeh">Bokeh</button>
+        <button data-syg="aberracja">Aberracja</button>
+        <button data-syg="miekkosc">Miękkość brzegów</button>
+      </div>
+      <svg viewBox="0 0 760 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Dla wybranej cechy obiektywu: co robi z nią szkoła faktury, co szkoła powściągliwości i co kosztuje każda decyzja.">
+        <rect x="24" y="22" width="350" height="86" rx="4" fill="#201a12" stroke="#e8a33d" stroke-width="1.6"/>
+        <text x="40" y="42" font-family="IBM Plex Mono" font-size="9.5" fill="#e8a33d">FAKTURA</text>
+        <text x="40" y="64" font-family="IBM Plex Sans" font-size="11.5" fill="#ecebe4" id="fkFak1"></text>
+        <text x="40" y="86" font-family="IBM Plex Sans" font-size="11.5" fill="#ecebe4" id="fkFak2"></text>
+        <text x="40" y="102" font-family="IBM Plex Mono" font-size="9" fill="#8b909b" id="fkFakKoszt"></text>
+
+        <rect x="386" y="22" width="350" height="86" rx="4" fill="#132018" stroke="#7fc47f" stroke-width="1.2"/>
+        <text x="402" y="42" font-family="IBM Plex Mono" font-size="9.5" fill="#7fc47f">POWŚCIĄGLIWOŚĆ</text>
+        <text x="402" y="64" font-family="IBM Plex Sans" font-size="11.5" fill="#ecebe4" id="fkPow1"></text>
+        <text x="402" y="86" font-family="IBM Plex Sans" font-size="11.5" fill="#ecebe4" id="fkPow2"></text>
+        <text x="402" y="102" font-family="IBM Plex Mono" font-size="9" fill="#8b909b" id="fkPowKoszt"></text>
+
+        <rect x="24" y="122" width="712" height="66" rx="4" fill="#151a1f" stroke="#3a424d"/>
+        <text x="40" y="142" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">CO TRZEBA ZMIERZYĆ, ŻEBY TO ODTWORZYĆ</text>
+        <text x="40" y="164" font-family="IBM Plex Sans" font-size="11.5" fill="#ecebe4" id="fkPomiar"></text>
+        <text x="40" y="182" font-family="IBM Plex Mono" font-size="9.5" fill="#4fc3c0" id="fkGdzie"></text>
+      </svg>
+      <div class="diagram-caption">Dolny pas jest tu inny niż w <a href="rozdzial-39-szkola-powsciagliwosci.html">Rozdziale 39</a>: zamiast pochodzenia zjawiska podaje, co trzeba zmierzyć, żeby element CG dostał tę samą sygnaturę.</div>
+    </div>
+
+    <p>Dolny pas widgetu wskazuje na rzecz, która odróżnia poważną pracę od naśladownictwa. <strong>Odtworzenie faktury oznacza zmierzenie konkretnego obiektywu, a nie sięgnięcie po „stary wygląd”.</strong> Winieta ma profil, dystorsja ma współczynniki, flara ma barwę i kierunek — wszystko to są liczby, i wszystkie da się odczytać z materiału.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Przypadek · obiektyw zbudowany, żeby był niedoskonały</div>
+    <h2>Szkło projektowane pod ubytek</h2>
+
+    <p><em>Batman</em> z 2022 roku ze zdjęciami Greiga Frasera jest przykładem szczególnym, bo pokazuje szkołę faktury w wersji nie znalezionej, tylko zaprojektowanej.</p>
+
+    <p><strong>Sprzęt.</strong> Film zrealizowano kamerą ARRI Alexa LF, na anamorficznych obiektywach wielkoformatowych ARRI ALFA, budowanych przez wypożyczalnię ARRI specjalnie pod ten film. Fraser opisuje, że powstawały w trakcie prób: ARRI przywoziło kolejne wersje na testy, a zestaw dobierał się stopniowo.</p>
+
+    <p><strong>Kryterium doboru było odwrotne niż zwykle.</strong> Fraser mówi wprost, że nie zależało im na ostrości od krawędzi do krawędzi, bo zdecydowana większość kadrów miała być komponowana centralnie, bardziej klasycznie. Szukali więc szkła <span class="term-amber">ostrzejszego w środku, z ładnym spadkiem ku brzegom</span>.</p>
+
+    <p><strong>Uzasadnienie techniczne jest tym, co czyni ten przypadek ciekawym dla nas.</strong> Materiał miał trafić na negatyw — a naświetlenie na taśmę dokłada warstwy emulsji, które obniżają rozdzielczość. Wybór szkła był więc decyzją podjętą z uwzględnieniem <strong>całego łańcucha</strong>, a nie samego obiektywu.</p>
+
+    <p>Jest to dokładnie kaskada z <a href="../dodatki/dodatek-h-mtf.html">Dodatku H</a>, zastosowana w praktyce zdjęciowej. Skoro odpowiedzi kolejnych ogniw się mnożą, a nośnik i tak obetnie górę pasma, to nadmiarowa ostrość obiektywu wypadnie z obrazu, zanim ktokolwiek ją zobaczy. <span class="term-violet">Płacenie za ostrość, którą zje emulsja, jest płaceniem za nic</span> — a rezygnacja z niej pozwala kupić coś innego w zamian.</p>
+
+    <button class="advanced-btn" data-modal-target="adv-faktura-mtf">Zaawansowane: ile ostrości naprawdę traci film-out</button>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Cena · co się oddaje</div>
+    <h2>Rachunek za charakter</h2>
+
+    <p>Faktura nie jest darmowa i jej koszty są równie mierzalne, co koszty powściągliwości — tylko ujawniają się w innych miejscach.</p>
+
+    <p><strong>Kontrast.</strong> Flara i rozproszenie w tubusie podnoszą poziom czerni, więc obraz traci głębię tonalną. Rachunek z <a href="rozdzial-22-veiling-glare.html">Rozdziału 22</a> pokazuje, że nawet kilka procent światła rozproszonego potrafi zjeść działkę kontrastu w cieniach.</p>
+
+    <p><strong>Detal przy brzegach.</strong> Miękkie rogi to detal, którego już nie będzie — i który, w odróżnieniu od kontrastu, nie da się odzyskać żadnym przetworzeniem, bo informacji tam nie ma.</p>
+
+    <p><strong>Przewidywalność.</strong> Flara zależy od kąta padania światła, więc zmienia się między ujęciami i między dublami. Ekipa musi ją albo kontrolować, albo zaakceptować, że dwa kolejne ujęcia będą się różnić czymś, czego nie planowano.</p>
+
+    <p><strong>Praca w postprodukcji.</strong> To jest koszt, który spada na czytelnika tej książki. Element wstawiony w ujęcie o mocnej fakturze musi mieć <em>tę samą</em> fakturę — nie podobną. Kilka procent różnicy w dystorsji, inny kierunek smugi, inny kształt winiety: każda z tych rzeczy zdradza element natychmiast, bo widz porównuje go z tłem leżącym obok w tym samym kadrze.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Rachunek za charakter</span><span>gdzie kto płaci</span></div>
+      <svg viewBox="0 0 760 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Zestawienie kosztów szkoły faktury: kontrast, detal, przewidywalność i praca w postprodukcji, z podziałem na etapy produkcji.">
+        <g font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">
+          <text x="30" y="24">CO SIĘ ODDAJE</text><text x="290" y="24">ILE</text><text x="470" y="24">KTO PŁACI</text><text x="620" y="24">ODZYSKIWALNE?</text>
+        </g>
+        <line x1="24" y1="32" x2="736" y2="32" stroke="#3a424d"/>
+        <g font-family="IBM Plex Sans" font-size="11.5" fill="#ecebe4">
+          <text x="30" y="58">kontrast w cieniach</text><text x="290" y="58">do działki</text><text x="470" y="58">korekcja</text><text x="620" y="58" fill="#e8a33d">częściowo</text>
+          <text x="30" y="86">detal przy brzegach</text><text x="290" y="86">30–50% MTF</text><text x="470" y="86">nikt</text><text x="620" y="86" fill="#d8695f">nie</text>
+          <text x="30" y="114">przewidywalność flary</text><text x="290" y="114">dubel po dublu</text><text x="470" y="114">plan</text><text x="620" y="114" fill="#e8a33d">przez kontrolę światła</text>
+          <text x="30" y="142">czas w postprodukcji</text><text x="290" y="142">pomiar + odtworzenie</text><text x="470" y="142">comp</text><text x="620" y="142" fill="#7fc47f">tak, ale kosztuje</text>
+          <text x="30" y="170">rozdzielczość przy zoomie</text><text x="290" y="170">zmienna z ogniskową</text><text x="470" y="170">comp</text><text x="620" y="170" fill="#e8a33d">tylko z siatką na każdą ogniskową</text>
+        </g>
+        <line x1="24" y1="182" x2="736" y2="182" stroke="#3a424d"/>
+        <text x="30" y="200" font-family="IBM Plex Mono" font-size="9" fill="#8b909b">jedyna pozycja nieodzyskiwalna to detal — reszta jest kwestią pracy albo kontroli</text>
+      </svg>
+      <div class="diagram-caption">Drugi wiersz jest jedynym, w którym nikt nie płaci i nic się nie da zrobić: detal, którego obiektyw nie przeniósł, nie istnieje w żadnej postaci.</div>
+    </div>
+
+    <p>Warto z tego zestawienia wyciągnąć wniosek, który obowiązuje niezależnie od szkoły: <strong>decyzja o fakturze jest nieodwracalna w jedną stronę</strong>. Fakturę zawsze można dołożyć później, jeśli plate jest czysty. Usunąć jej nie można — bo usunięcie miękkości nie przywraca detalu, a usunięcie flary nie przywraca czerni.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Granica · kiedy przestaje być decyzją</div>
+    <h2>Faktura kontra maniera</h2>
+
+    <p>Szkoła faktury ma jedną charakterystyczną chorobę, którą warto umieć nazwać, bo jest częsta i zaraźliwa. Polega na tym, że <strong>sygnatura przestaje być wyborem, a staje się nawykiem</strong> — dokłada się ją wszędzie, bo tak się robi, a nie dlatego, że ta scena czegoś potrzebuje.</p>
+
+    <p>Rozpoznanie jest proste i sprowadza się do jednego pytania: <span class="term-cyan">czy da się powiedzieć, po co jest ta flara właśnie tutaj</span>. Jeśli odpowiedź brzmi „bo film ma taki styl”, to jest to odpowiedź o filmie, a nie o ujęciu — i zwykle znaczy, że decyzji nie podjęto, tylko ją odziedziczono.</p>
+
+    <p>Druga postać tej samej choroby dotyczy bezpośrednio pracy w CG. Dokładanie flary, winiety i aberracji do elementu, żeby „lepiej się wtapiał”, bywa sposobem na ukrycie tego, że coś innego się nie zgadza. <strong>Faktura zasłania błędy, ale ich nie usuwa</strong> — a ujęcie obejrzane na dużym ekranie albo w innym kolorze pokaże to, co zasłonięto.</p>
+
+    <p>Uczciwa reguła brzmi więc tak: <strong>najpierw geometria i światło, potem faktura</strong>. Jeśli element pasuje bez faktury, faktura go dopełni. Jeśli nie pasuje, faktura go tylko przykryje — a przykrycie jest tymczasowe, bo każdy następny etap postprodukcji może je odsłonić.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Cztery źródła · skąd bierze się faktura</div>
+    <h2>Nie każda pochodzi z obiektywu</h2>
+
+    <p>Mówiąc o fakturze, łatwo zebrać wszystko pod jedną nazwą i przypisać obiektywowi. Tymczasem pochodzi ona z czterech różnych miejsc łańcucha, a rozróżnienie ma znaczenie praktyczne: <strong>każde z nich odtwarza się w compie w innym punkcie i innym narzędziem</strong>.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Cztery źródła faktury</span><span>i gdzie każde wchodzi</span></div>
+      <svg viewBox="0 0 760 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cztery źródła faktury: szkło, oprawa i filtr, nośnik, korekcja — z tym, co daje każde i gdzie wchodzi w łańcuch.">
+        <g font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">
+          <text x="30" y="24">ŹRÓDŁO</text><text x="230" y="24">CO DAJE</text><text x="510" y="24">GDZIE W ŁAŃCUCHU</text>
+        </g>
+        <line x1="24" y1="32" x2="736" y2="32" stroke="#3a424d"/>
+        <g font-family="IBM Plex Sans" font-size="11.5" fill="#ecebe4">
+          <text x="30" y="58" fill="#4fc3c0">szkło</text>
+          <text x="230" y="58">bokeh, miękkość, aberracja, dystorsja</text>
+          <text x="510" y="58" fill="#4fc3c0">optyka · przed nośnikiem</text>
+
+          <text x="30" y="92" fill="#4fc3c0">oprawa i filtr</text>
+          <text x="230" y="92">flara, ghosty, winieta, smugi</text>
+          <text x="510" y="92" fill="#4fc3c0">optyka · przed nośnikiem</text>
+
+          <text x="30" y="126" fill="#6e93be">nośnik</text>
+          <text x="230" y="126">ziarno, halacja, zakończenie skali</text>
+          <text x="510" y="126" fill="#6e93be">nośnik · po całej optyce</text>
+
+          <text x="30" y="160" fill="#9c82d8">korekcja</text>
+          <text x="230" y="160">krzywa, barwa, wyostrzanie</text>
+          <text x="510" y="160" fill="#9c82d8">po zapisie · na końcu</text>
+
+          <text x="30" y="194" fill="#e8a33d">kadr i format</text>
+          <text x="230" y="194">proporcje, ściśnięcie, głębia dla ogniskowej</text>
+          <text x="510" y="194" fill="#e8a33d">przed wszystkim · nieodwracalne</text>
+        </g>
+        <line x1="24" y1="206" x2="736" y2="206" stroke="#3a424d"/>
+        <text x="30" y="226" font-family="IBM Plex Mono" font-size="9" fill="#8b909b">pomylenie źródeł daje element z właściwą fakturą w niewłaściwym miejscu łańcucha — i to widać</text>
+      </svg>
+      <div class="diagram-caption">Ostatni wiersz jest jedynym, którego nie da się dołożyć w compie. Reszta jest kwestią kolejności z <a href="rozdzial-36-kolejnosc-w-compie.html">Rozdziału 36</a>.</div>
+    </div>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Kaskada MTF</span><span>argument Frasera w liczbach</span></div>
+      <svg viewBox="0 0 760 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Dwa łańcuchy MTF: obiektyw bardzo dobry i celowo miękki, przemnożone przez matrycę, film-out i kopiowanie.">
+        <g font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">
+          <text x="30" y="26">obiektyw</text><text x="200" y="26">matryca</text><text x="350" y="26">film-out</text><text x="500" y="26">kopiowanie</text><text x="640" y="26">RAZEM</text>
+        </g>
+        <line x1="24" y1="34" x2="736" y2="34" stroke="#3a424d"/>
+
+        <text x="30" y="62" font-family="IBM Plex Sans" font-size="11.5" fill="#7fc47f">bardzo dobry</text>
+        <g font-family="IBM Plex Mono" font-size="12" fill="#ecebe4">
+          <text x="120" y="62">0,80</text><text x="200" y="62">× 0,70</text><text x="350" y="62">× 0,60</text><text x="500" y="62">× 0,75</text>
+        </g>
+        <text x="640" y="62" font-family="IBM Plex Mono" font-size="13" fill="#7fc47f">0,252</text>
+        <rect x="30" y="72" width="176" height="12" fill="#7fc47f" fill-opacity="0.55"/>
+
+        <text x="30" y="118" font-family="IBM Plex Sans" font-size="11.5" fill="#e8a33d">celowo miękki</text>
+        <g font-family="IBM Plex Mono" font-size="12" fill="#ecebe4">
+          <text x="120" y="118">0,45</text><text x="200" y="118">× 0,70</text><text x="350" y="118">× 0,60</text><text x="500" y="118">× 0,75</text>
+        </g>
+        <text x="640" y="118" font-family="IBM Plex Mono" font-size="13" fill="#e8a33d">0,142</text>
+        <rect x="30" y="128" width="99" height="12" fill="#e8a33d" fill-opacity="0.55"/>
+
+        <line x1="24" y1="156" x2="736" y2="156" stroke="#3a424d"/>
+        <text x="30" y="178" font-family="IBM Plex Mono" font-size="10" fill="#d8695f">stosunek przed łańcuchem: 1,78×</text>
+        <text x="330" y="178" font-family="IBM Plex Mono" font-size="10" fill="#d8695f">stosunek po łańcuchu: 1,78× — bez zmian</text>
+        <text x="30" y="202" font-family="IBM Plex Sans" font-size="11.5" fill="#ecebe4">Mnożenie zachowuje proporcje. Zmienia się poziom bezwzględny: 0,25 to jeszcze detal, 0,14 to już próg.</text>
+        <text x="30" y="222" font-family="IBM Plex Mono" font-size="9" fill="#8b909b">im dłuższy łańcuch, tym mniejszy udział pojedynczego ogniwa w tym, co widz naprawdę zobaczy</text>
+      </svg>
+      <div class="diagram-caption">Wbrew intuicji kaskada nie zrównuje obiektywów — zachowuje ich stosunek. Sprowadza za to obie wartości tak nisko, że o odbiorze zaczyna decydować kształt spadku, a nie jego wielkość.</div>
+    </div>
+
+    <p>Rozróżnienie to ratuje przed dwoma częstymi pomyłkami.</p>
+
+    <p><strong>Pierwsza: przypisywanie obiektywowi tego, co robi taśma.</strong> „Filmowy” wygląd, o który zwykle chodzi, w połowie pochodzi z emulsji — z ziarna, z barku charakterystyki i z halacji. Kupowanie starego szkła w nadziei na ten wygląd daje połowę rezultatu, i to nie tę, o którą chodziło.</p>
+
+    <p><strong>Druga: dokładanie faktury nośnika przed optyką.</strong> Ziarno nałożone przed flarą albo przed rozmyciem wychodzi rozmyte, więc trzeba go dołożyć więcej, żeby było widać — a wtedy w ostrych partiach obrazu jest go za dużo. Jest to jedna z częstszych przyczyn elementu, który ma „za mocne ziarno w jednych miejscach i za słabe w innych”.</p>
+
+    <p>Warto zauważyć, że wiersz o kadrze i formacie stoi tu osobno, i nie przez przypadek. <span class="term-violet">Jest to jedyna pozycja podejmowana przed zdjęciami i niedostępna później</span> — i właśnie dlatego zasługuje na osobny rozdział.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Dwie szkoły razem · nie ma trzeciej drogi</div>
+    <h2>Dlaczego trzeba wybrać</h2>
+
+    <p>Naturalne pytanie po dwóch rozdziałach o przeciwstawnych postawach brzmi: czy nie da się wziąć po trochu z każdej. Odpowiedź jest twierdząca co do pojedynczego ujęcia i przecząca co do filmu — a powód jest praktyczny, nie ideologiczny.</p>
+
+    <p><strong>Sygnatura działa przez powtarzalność.</strong> Widz uczy się jej w pierwszych kilku minutach i od tej chwili odbiera jej zmiany jako znaczące. Film, w którym jedno ujęcie ma mocną flarę, a następne żadnej, nie czyta się jako bogatszy — czyta się jako niespójny, i widz szuka powodu, którego nie ma.</p>
+
+    <p><strong>Zestaw wybiera się raz.</strong> Argument z <a href="rozdzial-37-ogniskowa-jako-decyzja.html">Rozdziału 37</a> o zestawie ogniskowych stosuje się tu jeszcze mocniej. Mieszanie szkła o różnym charakterze w obrębie jednej sceny daje ujęcia, których nie da się skleić w montażu — i naprawa tego w postprodukcji jest jedną z droższych rzeczy, jakie się w niej robi.</p>
+
+    <p>Istnieje natomiast trzecia droga <em>w obrębie filmu</em>, i to droga stara: <strong>zmiana szkoły jako środek dramaturgiczny</strong>. Sekwencja wspomnieniowa nakręcona innym szkłem, świat równoległy o innej fakturze, przejście od czystości do brudu w miarę rozpadu bohatera. Warunek jest jeden i ten sam, co przy manierze: <span class="term-cyan">zmiana musi dać się uzasadnić w tym miejscu opowieści</span>, a nie tylko wyglądać ciekawie.</p>
+
+    <p>Dla pracy w postprodukcji ma to konsekwencję czysto organizacyjną, ale ważną. <strong>Warto wiedzieć, w której szkole pracuje ujęcie, zanim się je zacznie.</strong> Ta sama praca wykonana w złym założeniu — czysty element w brudnym filmie albo odwrotnie — nie jest gorszą wersją tego samego, tylko wersją, którą trzeba zrobić od nowa.</p>
+  </div>
+
+  <div class="panel practice">
+    <div class="panel-label">Z praktyki</div>
+    <p><strong>Zmierz sygnaturę, nie naśladuj jej.</strong> Winieta ma profil, dystorsja współczynniki, flara barwę i kierunek. Protokoły są w Dodatkach <a href="../dodatki/dodatek-p-winietowanie-w-liczbach.html">P</a>, <a href="../dodatki/dodatek-v-stmapy.html">V</a> i <a href="../dodatki/dodatek-x-odtwarzanie-flary.html">X</a>. Pomiar zajmuje pół godziny i zastępuje tydzień dopasowywania na oko.</p>
+    <p><strong>Przy zoomie mierz kilka ogniskowych.</strong> Dystorsja i winietowanie zmieniają się w trakcie zakresu i potrafią zmienić znak. Jedna siatka z jednego końca daje wynik poprawny tylko tam.</p>
+    <p><strong>Sprawdzaj element bez faktury.</strong> Wyłącz całą warstwę sygnatury i popatrz, czy element nadal pasuje geometrią i światłem. Jeśli nie, faktura tego nie naprawi — tylko odsunie moment, w którym problem wyjdzie.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>szkło budowane pod film</dt>
+      <dd>Zestaw projektowany albo dobierany pod konkretną produkcję, z celowo przyjętymi ograniczeniami.</dd>
+      <dt>ostrość centralna</dt>
+      <dd>Konstrukcja, w której MTF jest wysokie w środku kadru i celowo spada ku brzegom.</dd>
+      <dt>film-out</dt>
+      <dd>Naświetlenie materiału cyfrowego na taśmę. Dokłada kolejne ogniwo do kaskady MTF.</dd>
+      <dt>maniera</dt>
+      <dd>Sygnatura stosowana z nawyku, nie z decyzji. Rozpoznaje się po tym, że nie da się jej uzasadnić w danym ujęciu.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Zostaje decyzja poprzedzająca obie szkoły, bo podejmowana przed wyborem szkła i nieodwracalna do końca produkcji. <a href="rozdzial-41-format-jako-autorstwo.html">Następny rozdział</a> pokazuje, że wybór formatu i proporcji kadru narzuca ogniskowe, głębię i sposób kadrowania — a więc rozstrzyga o rzeczach, które później wygląda się na decyzje operatorskie.</p>
+  </div>
 
   <div class="deeper">
     <div class="deeper-label">Idź głębiej</div>
@@ -56,8 +294,105 @@ window.SKY3D_MESSAGES = {
       <a class="nav-next" href="rozdzial-41-format-jako-autorstwo.html">Następny →</a>
   </div>
 
+<template id="adv-faktura-mtf">
+  <h3>Ile ostrości naprawdę traci film-out</h3>
+  <p>Argument Frasera — że nie warto płacić za ostrość, którą i tak zje emulsja — daje się policzyć. Warto to zrobić, bo pokazuje, gdzie w łańcuchu przestaje się opłacać kupowanie jakości.</p>
+  <p><strong>Zasada kaskady.</strong> Odpowiedzi kolejnych ogniw mnożą się przy każdej częstotliwości przestrzennej osobno. Jeśli obiektyw ma przy danej częstotliwości MTF 0,80, matryca 0,70, a naświetlenie na negatyw 0,60, to całość ma 0,80 · 0,70 · 0,60 = 0,34. Reguła i jej konsekwencje są w <a href="../dodatki/dodatek-h-mtf.html">Dodatku H</a>.</p>
+  <p><strong>Co z tego wynika dla wyboru szkła.</strong> Porównajmy dwa obiektywy przy tej samej częstotliwości: bardzo dobry o MTF 0,80 w rogu i celowo miękki o MTF 0,45. Bez dalszego łańcucha różnica jest ogromna — 0,80 wobec 0,45, czyli obraz niemal dwukrotnie bardziej kontrastowy w detalu.</p>
+  <p>Dołóżmy resztę łańcucha: matrycę 0,70, naświetlenie na negatyw 0,60 i kopiowanie 0,75. Dobry obiektyw daje 0,80 · 0,70 · 0,60 · 0,75 = <strong>0,252</strong>. Miękki daje 0,45 · 0,70 · 0,60 · 0,75 = <strong>0,142</strong>.</p>
+  <p>Różnica nadal jest — <strong>i to jest pierwsza rzecz, którą rachunek prostuje</strong>. Kaskada nie zrównuje obiektywów; mnożenie zachowuje proporcje. Stosunek 0,80 do 0,45 wynosi 1,78 i taki sam pozostaje po całym łańcuchu.</p>
+  <p><strong>Co się więc naprawdę zmienia?</strong> Poziom bezwzględny. Przy końcowej wartości 0,25 detal jest jeszcze widoczny; przy 0,14 jest już blisko progu, poniżej którego nie odróżnia się go od szumu. Argument nie brzmi więc „różnica znika”, tylko: <strong>obie wartości i tak lądują nisko, więc różnica przestaje decydować o odbiorze</strong>, a zaczynają decydować rzeczy, których mnożenie nie dotyczy — kształt spadku, bokeh, flara.</p>
+  <p>Stąd bardziej ogólny wniosek, wart zapamiętania poza tym jednym filmem: <strong>im dłuższy łańcuch, tym mniejszy udział pojedynczego ogniwa w wyniku</strong> — a więc tym więcej sensu ma wybieranie ogniw według charakteru, a nie według czystej liczby. W krótkim łańcuchu (matryca, bez film-outu, bez kopiowania) ten sam argument nie działa i najostrzejsze szkło rzeczywiście widać.</p>
+</template>
+
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal-box">
+    <button class="modal-close" aria-label="Zamknij">&times;</button>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
 </div>
 
 <script src="../assets/interactive.js"></script>
+<script>
+(function () {
+  var pas = document.getElementById('fkPrzyciski');
+  if (!pas) return;
+
+  var DANE = {
+    flara: {
+      fak: ['Źródło celowo w kadrze albo tuż przy krawędzi.', 'Stare albo słabo powlekane szkło, żeby flara była mocna.'],
+      fakKoszt: 'kosztuje: poziom czerni, kontrast i przewidywalność dubla',
+      pow: ['Osłony, powłoki, planowanie kierunku świateł.', 'Źródła poza kątem padania.'],
+      powKoszt: 'kosztuje: czas na planie i ograniczenie ustawień lamp',
+      pomiar: 'Barwa i kierunek ghostów, promień poświaty, przyrost czerni w działkach.',
+      gdzie: 'Dodatek X · rozdziały 22–23'
+    },
+    winieta: {
+      fak: ['Winieta zostawiona albo wzmocniona.', 'Prowadzi wzrok do środka bez cięcia i bez ruchu.'],
+      fakKoszt: 'kosztuje: do dwóch działek w rogach, czyli szum w cieniach przy brzegu',
+      pow: ['Szkło z zapasem koła obrazowego.', 'Przymknięcie usuwa część optyczną.'],
+      powKoszt: 'kosztuje: większy obiektyw albo światło na przymknięcie',
+      pomiar: 'Profil w działkach na trzech promieniach, dla każdej używanej przysłony.',
+      gdzie: 'Dodatek P · rozdział 30'
+    },
+    bokeh: {
+      fak: ['Kocie oko przy brzegach, wirujące tło, wyraźne obwódki.', 'Rozmycie jako osobny element kompozycji.'],
+      fakKoszt: 'kosztuje: uwagę widza odciąganą od tego, co ostre',
+      pow: ['Okrągły otwór, dużo listków, gładkie tło.', 'Rozmycie ma nie zwracać uwagi.'],
+      powKoszt: 'kosztuje: skomplikowana przysłona i korekcja sferyczna pod bokeh',
+      pomiar: 'Kształt i kierunek krążka w kilku miejscach kadru, rozkład jasności w krążku.',
+      gdzie: 'Rozdział 9 · Dodatek U'
+    },
+    aberracja: {
+      fak: ['Kolorowe obwódki przy brzegach zostawione.', 'Czyta się jako materiał, a nie jako usterka.'],
+      fakKoszt: 'kosztuje: rozdzielczość przy brzegach i kłopot przy kluczowaniu',
+      pow: ['Szkła niskodyspersyjne, achromaty i apochromaty.', 'Resztka usuwana w postprodukcji.'],
+      powKoszt: 'kosztuje: cena szkła i masa układu',
+      pomiar: 'Rozsunięcie kanałów w pikselach jako funkcja promienia od środka kadru.',
+      gdzie: 'Rozdział 14 · Dodatek B'
+    },
+    miekkosc: {
+      fak: ['Spadek ostrości ku brzegom zostawiony albo zaprojektowany.', 'Środek kadru wyróżniony bez winiety.'],
+      fakKoszt: 'kosztuje: detal, którego już się nie odzyska niczym',
+      pow: ['Więcej soczewek, korekcja pola do rogu.', 'MTF wyrównane w całym kadrze.'],
+      powKoszt: 'kosztuje: waga, cena i więcej powierzchni, czyli więcej ghostów',
+      pomiar: 'MTF przy kilku częstotliwościach, w środku i w rogu — albo choć szerokość krawędzi w px.',
+      gdzie: 'Dodatek H · rozdziały 11–13'
+    }
+  };
+
+  var el = {
+    fak1: document.getElementById('fkFak1'), fak2: document.getElementById('fkFak2'),
+    fakK: document.getElementById('fkFakKoszt'),
+    pow1: document.getElementById('fkPow1'), pow2: document.getElementById('fkPow2'),
+    powK: document.getElementById('fkPowKoszt'),
+    pomiar: document.getElementById('fkPomiar'), gdzie: document.getElementById('fkGdzie')
+  };
+  var przyciski = pas.querySelectorAll('[data-syg]');
+
+  function pokaz(k, btn) {
+    var d = DANE[k];
+    el.fak1.textContent = '· ' + d.fak[0];
+    el.fak2.textContent = '· ' + d.fak[1];
+    el.fakK.textContent = d.fakKoszt;
+    el.pow1.textContent = '· ' + d.pow[0];
+    el.pow2.textContent = '· ' + d.pow[1];
+    el.powK.textContent = d.powKoszt;
+    el.pomiar.textContent = d.pomiar;
+    el.gdzie.textContent = d.gdzie;
+    for (var i = 0; i < przyciski.length; i++) {
+      przyciski[i].classList.toggle('is-active', przyciski[i] === btn);
+    }
+  }
+
+  for (var i = 0; i < przyciski.length; i++) {
+    (function (b) { b.addEventListener('click', function () { pokaz(b.dataset.syg, b); }); })(przyciski[i]);
+  }
+  pokaz('flara', przyciski[0]);
+})();
+</script>
+
 </body>
 </html>
