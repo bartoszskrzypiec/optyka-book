@@ -43,7 +43,251 @@ window.SKY3D_MESSAGES = {
   <h1>Geometria plate'u: Z-depth i dystorsja</h1>
   <p class="subtitle">Dwie rzeczy muszą się zgadzać, zanim cokolwiek dołożysz: gdzie naprawdę jest głębia i jak obiektyw wygiął obraz. Obie potrafią wyglądać dobrze i być kompletnie błędne.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li><strong>Plate niesie więcej dowodów o kamerze, niż się wydaje</strong> — i wszystkie to zjawiska optyczne z pierwszych części tej książki, czytane wstecz.</li>
+      <li>Cztery rzeczy da się odczytać bez żadnych metadanych: <span class="term-amber">kąt widzenia z prostych, wysokość z horyzontu, przysłonę z rozmycia, kąt migawki ze smugi</span>.</li>
+      <li><strong>Dystorsję usuwa się przed pracą i przywraca po niej.</strong> Element wstawiony w kadr zniekształcony przez obiektyw musi zostać zniekształcony tak samo — inaczej trzyma się tylko w środku kadru.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Odczyt · plate jako protokół pomiarowy</div>
+    <h2>Cztery liczby ukryte w obrazie</h2>
+
+    <p>Raport zdjęciowy bywa niekompletny, spóźniony albo nieprawdziwy — a praca ma iść dalej. Na szczęście obraz sam niesie dowody, bo każde zjawisko z tej książki jest funkcją parametrów kamery i daje się odwrócić.</p>
+
+    <p><strong>Kąt widzenia z prostych.</strong> Dwie równoległe w scenie proste, biegnące ku horyzontowi, przecinają się w kadrze w punkcie zbiegu. Odległość tego punktu od środka kadru wiąże się z kątem, pod jakim proste biegły — a mając dwie takie pary o znanym kącie, na przykład dwie krawędzie prostokątnego budynku, kąt widzenia wyznacza się jednoznacznie.</p>
+
+    <p><strong>Wysokość kamery z horyzontu.</strong> Linia horyzontu przecina każdą pionową rzecz na wysokości oka kamery. Człowiek, którego horyzont przecina na wysokości pasa, mówi, że kamera stała mniej więcej metr nad ziemią — bez żadnego rachunku i z dokładnością wystarczającą do zaczęcia pracy.</p>
+
+    <p><strong>Przysłona z rozmycia.</strong> Znając odległość ostrzenia i mierząc średnicę krążka rozmycia jakiegoś punktowego światła w tle, przysłonę liczy się wprost ze wzoru na głębię z <a href="../dodatki/dodatek-e-glebia-w-liczbach.html">Dodatku E</a>.</p>
+
+    <p><strong>Kąt migawki ze smugi.</strong> Stosunek długości smugi do przesunięcia między klatkami to kąt migawki wyrażony ułamkiem — rachunek z <a href="../dodatki/dodatek-r-rozmycie-ruchu.html">Dodatku R</a>.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Dowody w kadrze</span><span>co gdzie czytać</span></div>
+      <svg viewBox="0 0 760 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Kadr z zaznaczonymi miejscami, z których odczytuje się kąt widzenia, wysokość kamery, przysłonę i kąt migawki.">
+        <rect x="30" y="24" width="700" height="216" fill="#151a1f" stroke="#3a424d"/>
+        <line x1="30" y1="150" x2="730" y2="150" stroke="#7fc47f" stroke-width="1.2" stroke-dasharray="6 4"/>
+        <text x="40" y="144" font-family="IBM Plex Mono" font-size="9.5" fill="#7fc47f">horyzont = wysokość kamery</text>
+
+        <g stroke="#e8a33d" stroke-width="1.3">
+          <line x1="30" y1="238" x2="452" y2="150"/><line x1="240" y1="240" x2="452" y2="150"/>
+          <line x1="730" y1="230" x2="452" y2="150"/>
+        </g>
+        <circle cx="452" cy="150" r="4" fill="#e8a33d"/>
+        <text x="462" y="142" font-family="IBM Plex Mono" font-size="9.5" fill="#e8a33d">punkt zbiegu → kąt widzenia</text>
+
+        <rect x="86" y="96" width="26" height="54" fill="#6e93be" fill-opacity="0.5" stroke="#6e93be"/>
+        <text x="99" y="90" font-family="IBM Plex Mono" font-size="8.5" fill="#6e93be" text-anchor="middle">postać</text>
+        <line x1="80" y1="150" x2="118" y2="150" stroke="#7fc47f" stroke-width="2"/>
+        <text x="126" y="120" font-family="IBM Plex Mono" font-size="9" fill="#7fc47f">przecięcie na pasie ≈ 1 m</text>
+
+        <circle cx="600" cy="72" r="17" fill="#a98bd8" fill-opacity="0.45" stroke="#a98bd8"/>
+        <circle cx="646" cy="88" r="17" fill="#a98bd8" fill-opacity="0.45" stroke="#a98bd8"/>
+        <text x="560" y="52" font-family="IBM Plex Mono" font-size="9.5" fill="#a98bd8">krążki w tle → przysłona</text>
+
+        <rect x="300" y="186" width="130" height="18" fill="#6e93be" fill-opacity="0.35"/>
+        <rect x="296" y="186" width="7" height="18" fill="#6e93be"/>
+        <text x="300" y="220" font-family="IBM Plex Mono" font-size="9.5" fill="#6e93be">smuga → kąt migawki</text>
+
+        <text x="380" y="264" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">cztery pomiary, żadnych metadanych — każdy odwraca jedno zjawisko z tej książki</text>
+      </svg>
+      <div class="diagram-caption">Każdy z czterech odczytów jest odwróceniem wzoru z wcześniejszych części. Optyka opisana w jedną stronę daje się czytać w drugą — i to jest najbardziej praktyczne zastosowanie całej tej książki.</div>
+    </div>
+
+    <p>Warto zauważyć, że te pomiary <strong>kontrolują się nawzajem</strong>. Kąt widzenia zmierzony z punktów zbiegu musi zgadzać się z ogniskową z raportu przy właściwej bramce. Jeśli nie zgadza się, jedna z trzech rzeczy jest błędna — i sam fakt niezgodności jest cenną informacją, bo wskazuje, gdzie szukać.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Dystorsja · zdejmowanie i zakładanie</div>
+    <h2>Kadr, który nie jest prostokątem</h2>
+
+    <p>Obiektyw rzadko odwzorowuje proste jako proste. Dystorsja beczkowata i poduszkowata z <a href="rozdzial-12-poza-osia.html">Rozdziału 12</a> to odchylenie rzeczywistego kadru od tego, co zakłada każde narzędzie do trackingu i każda kamera renderera.</p>
+
+    <p>Ma to konsekwencję, która bywa źródłem długich poszukiwań: <span class="term-violet">element dopasowany do zniekształconego plate'u trzyma się w środku kadru i rozjeżdża przy brzegach</span>. Przyczyna jest oczywista, gdy się ją nazwie — renderer rysuje idealny rzut perspektywiczny, a plate go nie ma.</p>
+
+    <p>Standardowe postępowanie jest trzyetapowe i warto rozumieć, dlaczego akurat takie.</p>
+
+    <p><strong>Etap 1: zdjąć dystorsję z plate'u.</strong> Powstaje obraz zgodny z rzutem perspektywicznym — czyli z tym, co renderer i tracker umieją. Przy okazji obraz nieco się rozciąga na brzegach, więc trzyma się większy prostokąt niż oryginał.</p>
+
+    <p><strong>Etap 2: pracować na wyprostowanym.</strong> Tracking, ustawienie kamery, render elementu — wszystko w świecie bez dystorsji, gdzie proste są proste i geometria się zgadza.</p>
+
+    <p><strong>Etap 3: nałożyć dystorsję na element i złożyć z oryginałem.</strong> Nie na wyprostowany plate — na oryginalny, nietknięty. W ten sposób plate nigdy nie przechodzi przez przepróbkowanie, a więc nie traci ostrości ani ziarna.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Trzy etapy</span><span>i dlaczego plate wraca nietknięty</span></div>
+      <svg viewBox="0 0 760 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Schemat: plate wyprostowany służy tylko do pracy, a składanie odbywa się z oryginałem.">
+        <g font-family="IBM Plex Mono" font-size="9.5" text-anchor="middle">
+          <rect x="24" y="30" width="110" height="42" rx="3" fill="#151a1f" stroke="#6e93be"/>
+          <text x="79" y="48" fill="#6e93be">plate</text><text x="79" y="62" fill="#6e93be">oryginalny</text>
+
+          <rect x="182" y="30" width="120" height="42" rx="3" fill="#151a1f" stroke="#3a424d"/>
+          <text x="242" y="48" fill="#8b909b">zdjęcie</text><text x="242" y="62" fill="#8b909b">dystorsji</text>
+
+          <rect x="350" y="30" width="130" height="42" rx="3" fill="#151a1f" stroke="#3a424d"/>
+          <text x="415" y="48" fill="#8b909b">tracking</text><text x="415" y="62" fill="#8b909b">i render</text>
+
+          <rect x="528" y="30" width="120" height="42" rx="3" fill="#151a1f" stroke="#a98bd8"/>
+          <text x="588" y="48" fill="#a98bd8">nałożenie</text><text x="588" y="62" fill="#a98bd8">dystorsji</text>
+
+          <rect x="350" y="150" width="130" height="46" rx="3" fill="#2a1a12" stroke="#e8a33d" stroke-width="1.8"/>
+          <text x="415" y="170" fill="#e8a33d">SKŁADANIE</text><text x="415" y="186" fill="#e8a33d">z oryginałem</text>
+        </g>
+        <g stroke="#8b909b" stroke-width="1.2" fill="none">
+          <path d="M134 51 L180 51"/><path d="M302 51 L348 51"/><path d="M480 51 L526 51"/>
+          <path d="M588 72 L588 173 L482 173"/>
+        </g>
+        <path d="M79 72 L79 173 L348 173" stroke="#e8a33d" stroke-width="1.8" fill="none"/>
+        <text x="150" y="166" font-family="IBM Plex Mono" font-size="9.5" fill="#e8a33d">plate omija cały łańcuch</text>
+        <text x="150" y="196" font-family="IBM Plex Mono" font-size="9" fill="#8b909b">bez przepróbkowania, bez utraty ziarna</text>
+        <text x="620" y="196" font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="middle">element wraca zniekształcony tak samo</text>
+      </svg>
+      <div class="diagram-caption">Wyprostowany plate jest narzędziem roboczym, a nie materiałem wyjściowym. Wszystko, co wychodzi do widza, składa się z nietkniętego oryginału i z elementu doprowadzonego do jego geometrii.</div>
+    </div>
+
+    <p class="deeper-inline">Jak zmierzyć dystorsję z siatki, jak zapisać ją jako STMapę i dlaczego STMapa bywa lepsza od wzoru — <a href="../dodatki/dodatek-v-stmapy.html">Dodatek V</a>.</p>
+
+    <button class="advanced-btn" data-modal-target="adv-przeprobkowanie">Zaawansowane: co traci obraz przy każdym przepróbkowaniu</button>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Skala · skąd wiadomo, jak duży jest świat</div>
+    <h2>Jedna miara zamiast dziesięciu domysłów</h2>
+
+    <p>Tracking daje kamerę poruszającą się w przestrzeni, ale nie daje jej skali. Ta sama chmura punktów opisuje pokój przemierzany krokiem i stadion przemierzany biegiem — <strong>obraz nie zawiera informacji o wielkości sceny</strong> i zawierać jej nie może, bo perspektywa jest niezmiennicza względem skalowania.</p>
+
+    <p>Wynika stąd, że skalę trzeba <span class="term-cyan">wnieść z zewnątrz, i wystarczy do tego jedna zmierzona odległość</span>. Jedna, nie kilka — wszystkie pozostałe wynikają z niej przez proporcje, które tracking już zna.</p>
+
+    <p>Najwygodniejsze źródła tej jednej liczby, w kolejności od najpewniejszego:</p>
+
+    <ul>
+      <li><strong>Pomiar z planu.</strong> Odległość między dwoma znacznikami, wysokość drzwi, szerokość jezdni — cokolwiek zmierzone taśmą w trakcie zdjęć. Jest to jedyne źródło bez założeń.</li>
+      <li><strong>Przedmiot o znanym rozmiarze.</strong> Standardowa cegła, płyta chodnikowa, tablica rejestracyjna, stopień schodów. Wymaga założenia, że przedmiot jest typowy, ale w architekturze jest to zwykle prawda.</li>
+      <li><strong>Wzrost człowieka.</strong> Najgorsze z trzech, bo rozrzut jest duży, ale często jedyne dostępne. Warto wtedy zaznaczyć niepewność zamiast udawać, że jej nie ma.</li>
+    </ul>
+
+    <p>Warto pamiętać o rzeczy, która czyni ten krok ważniejszym, niż wygląda: <strong>skala wchodzi w każde zjawisko zależne od odległości</strong>. Głębia ostrości, natężenie świateł spadające z kwadratem odległości, rozmycie ruchu liczone z prędkości — wszystkie te rzeczy będą fałszywe w scenie o złej skali, i to fałszywe w sposób spójny, więc trudny do wykrycia. Scena dwukrotnie za mała da głębię ostrości jak przy makrofotografii, a przyczyna nie będzie widoczna nigdzie poza wynikiem.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Paralaksa · co daje ruch kamery</div>
+    <h2>Dlaczego panorama nie wystarcza</h2>
+
+    <p>Tracking odczytuje ruch kamery z tego, jak przesuwają się w kadrze punkty sceny. Kluczowa jest tu jedna zależność, którą warto rozumieć, bo tłumaczy większość niepowodzeń: <strong>przesunięcie punktu w kadrze zależy od jego odległości tylko wtedy, gdy kamera zmienia położenie</strong>.</p>
+
+    <p>Przy panoramie z jednego miejsca wszystkie punkty przesuwają się identycznie, bez względu na to, czy leżą metr, czy kilometr od kamery. Wynikało to już z <a href="../dodatki/dodatek-r-rozmycie-ruchu.html">Dodatku R</a>, gdzie prędkość obrazu przy panoramie okazała się niezależna od odległości. Konsekwencja dla trackingu jest ostra: <span class="term-violet">ujęcie kręcone z głowicy, bez przesunięcia, nie zawiera informacji o głębi sceny</span> — i nie ma programu, który by ją stamtąd wydobył.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Paralaksa</span><span>obrót kontra przesunięcie</span></div>
+      <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Porównanie: przy obrocie kamery bliski i daleki punkt przesuwają się tak samo, przy przesunięciu kamery różnie.">
+        <text x="190" y="24" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">kamera się OBRACA</text>
+        <circle cx="60" cy="150" r="6" fill="#e8a33d"/>
+        <circle cx="60" cy="150" r="14" fill="none" stroke="#e8a33d" stroke-dasharray="2 2"/>
+        <circle cx="190" cy="80" r="6" fill="#6e93be"/><text x="190" y="66" font-family="IBM Plex Mono" font-size="8.5" fill="#6e93be" text-anchor="middle">bliski</text>
+        <circle cx="320" cy="60" r="6" fill="#a98bd8"/><text x="320" y="46" font-family="IBM Plex Mono" font-size="8.5" fill="#a98bd8" text-anchor="middle">daleki</text>
+        <g stroke="#8b909b" stroke-width="0.9" opacity="0.7">
+          <line x1="60" y1="150" x2="190" y2="80"/><line x1="60" y1="150" x2="320" y2="60"/>
+        </g>
+        <rect x="40" y="196" width="300" height="26" fill="#151a1f" stroke="#3a424d"/>
+        <rect x="150" y="200" width="26" height="18" fill="#6e93be" fill-opacity="0.6"/>
+        <rect x="182" y="200" width="26" height="18" fill="#a98bd8" fill-opacity="0.6"/>
+        <text x="190" y="240" font-family="IBM Plex Mono" font-size="9" fill="#d8695f" text-anchor="middle">oba przesuwają się o tyle samo</text>
+
+        <line x1="390" y1="20" x2="390" y2="240" stroke="#2a2f38"/>
+
+        <text x="570" y="24" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">kamera się PRZESUWA</text>
+        <circle cx="430" cy="150" r="6" fill="#e8a33d"/>
+        <circle cx="430" cy="118" r="6" fill="#e8a33d" fill-opacity="0.4"/>
+        <line x1="430" y1="150" x2="430" y2="118" stroke="#e8a33d" stroke-width="1.6"/>
+        <circle cx="560" cy="80" r="6" fill="#6e93be"/><text x="560" y="66" font-family="IBM Plex Mono" font-size="8.5" fill="#6e93be" text-anchor="middle">bliski</text>
+        <circle cx="690" cy="60" r="6" fill="#a98bd8"/><text x="690" y="46" font-family="IBM Plex Mono" font-size="8.5" fill="#a98bd8" text-anchor="middle">daleki</text>
+        <g stroke="#8b909b" stroke-width="0.9" opacity="0.7">
+          <line x1="430" y1="150" x2="560" y2="80"/><line x1="430" y1="150" x2="690" y2="60"/>
+          <line x1="430" y1="118" x2="560" y2="80" stroke-dasharray="3 3"/><line x1="430" y1="118" x2="690" y2="60" stroke-dasharray="3 3"/>
+        </g>
+        <rect x="410" y="196" width="300" height="26" fill="#151a1f" stroke="#3a424d"/>
+        <rect x="500" y="200" width="26" height="18" fill="#6e93be" fill-opacity="0.6"/>
+        <rect x="596" y="200" width="26" height="18" fill="#a98bd8" fill-opacity="0.6"/>
+        <text x="560" y="240" font-family="IBM Plex Mono" font-size="9" fill="#7fc47f" text-anchor="middle">bliski przesuwa się bardziej — stąd głębia</text>
+      </svg>
+      <div class="diagram-caption">Różnica przesunięć jest jedyną informacją o odległości, jaką niesie ciąg obrazów. Bez przesunięcia kamery ta różnica jest zerowa i nie ma czego mierzyć.</div>
+    </div>
+
+    <p>Warto dodać, że wielkość paralaksy zależy nie tylko od tego, ile kamera przejechała, ale od stosunku tej drogi do odległości przedmiotów. Metr przesunięcia przy przedmiotach oddalonych o dwa metry daje paralaksę ogromną; ten sam metr przy panoramie miasta z dachu daje zerową. <strong>Ujęcie krajobrazowe z ręki jest więc, z punktu widzenia trackingu, panoramą</strong> — mimo że kamera fizycznie się poruszała.</p>
+
+    <p>Praktyczne skutki są dwa i oba wypada znać przed rozpoczęciem pracy, a nie po.</p>
+
+    <p><strong>Ujęcie z samej panoramy rozwiązuje się jako obrót</strong> i tylko jako obrót. Da się w nie wstawić element odległy albo element trzymający się jednej płaszczyzny, ale nie da się zbudować przestrzeni. Nie jest to wada narzędzia; jest to brak danych.</p>
+
+    <p><strong>Mała paralaksa jest gorsza niż żadna.</strong> Ujęcie z ledwie zauważalnym przesunięciem daje rozwiązanie o dużej niepewności — kamera dryfuje, punkty pływają, a wynik wygląda na błąd trackingu, choć jest poprawnym rozwiązaniem źle uwarunkowanego zadania. Wtedy uczciwiej jest potraktować ujęcie jak panoramę, niż walczyć o głębię, której w nim nie ma.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Plan zdjęciowy · o co poprosić</div>
+    <h2>Materiały, których później nie da się odtworzyć</h2>
+
+    <p>Część informacji z tego rozdziału daje się wydobyć z obrazu, ale znacznie taniej jest zebrać ją na planie. Poniższa lista to rzeczy, których nieobecność kosztuje potem godziny — uporządkowane według tego, ile kosztują na planie.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Lista z planu</span><span>koszt tam kontra koszt tutaj</span></div>
+      <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Zestawienie materiałów z planu: czas potrzebny na planie i czas potrzebny na odtworzenie ich później.">
+        <g font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">
+          <text x="30" y="24">CO</text><text x="330" y="24">NA PLANIE</text><text x="470" y="24">BEZ TEGO</text><text x="620" y="24">CO DAJE</text>
+        </g>
+        <line x1="24" y1="32" x2="736" y2="32" stroke="#3a424d"/>
+        <g font-family="IBM Plex Sans" font-size="11" fill="#ecebe4">
+          <text x="30" y="56">siatka na tym samym szkle</text><text x="330" y="56" fill="#7fc47f">2 min</text><text x="470" y="56" fill="#d8695f">godziny</text><text x="620" y="56" fill="#8b909b">dystorsja</text>
+          <text x="30" y="84">kule chromowa i szara</text><text x="330" y="84" fill="#7fc47f">1 min</text><text x="470" y="84" fill="#d8695f">zgadywanie</text><text x="620" y="84" fill="#8b909b">oświetlenie</text>
+          <text x="30" y="112">pomiar jednej odległości</text><text x="330" y="112" fill="#7fc47f">1 min</text><text x="470" y="112" fill="#d8695f">niepewna skala</text><text x="620" y="112" fill="#8b909b">skala sceny</text>
+          <text x="30" y="140">zdjęcia otoczenia z ręki</text><text x="330" y="140" fill="#7fc47f">5 min</text><text x="470" y="140" fill="#d8695f">nieodtwarzalne</text><text x="620" y="140" fill="#8b909b">tło i odbicia</text>
+          <text x="30" y="168">wysokość i pochylenie</text><text x="330" y="168" fill="#7fc47f">30 s</text><text x="470" y="168" fill="#d8695f">pomiar z obrazu</text><text x="620" y="168" fill="#8b909b">ustawienie kamery</text>
+          <text x="30" y="196">raport: szkło, T, ostrość</text><text x="330" y="196" fill="#7fc47f">0 — i tak powstaje</text><text x="470" y="196" fill="#d8695f">cztery pomiary</text><text x="620" y="196" fill="#8b909b">wszystko naraz</text>
+          <text x="30" y="224">czysty plate bez aktora</text><text x="330" y="224" fill="#e8a33d">jedno ujęcie</text><text x="470" y="224" fill="#d8695f">rekonstrukcja tła</text><text x="620" y="224" fill="#8b909b">zdejmowanie rzeczy</text>
+        </g>
+        <line x1="24" y1="236" x2="736" y2="236" stroke="#3a424d"/>
+      </svg>
+      <div class="diagram-caption">Sześć pierwszych pozycji kosztuje na planie łącznie kwadrans. Bez nich każda z nich kosztuje potem od godziny do „nie da się”.</div>
+    </div>
+
+    <p>Dwie pozycje z tej listy zasługują na komentarz, bo bywają pomijane jako oczywiste.</p>
+
+    <p><strong>Siatka musi być z tego samego szkła i z tej samej przysłony.</strong> Dystorsja zależy od obiektywu, a przy zoomie także od ogniskowej — siatka z innego szkła opisuje inny kadr. Przy zoomie warto mieć ją z obu końców zakresu i ze środka, bo dystorsja zmienia się w trakcie i potrafi zmienić znak.</p>
+
+    <p><strong>Zdjęcia otoczenia z ręki są warte więcej, niż kosztują.</strong> Nie chodzi o precyzyjną mapę oświetlenia, tylko o to, żeby wiedzieć, co stało dookoła — <span class="term-cyan">odbicia w scenie CG muszą mieć co odbijać</span>, a pamięć ludzka nie przechowuje układu jasnych i ciemnych plam w pomieszczeniu.</p>
+
+    <p>Ostatnia uwaga dotyczy formy. <strong>Zapisz te rzeczy tak, żeby dało się je znaleźć bez ciebie</strong> — w nazwie pliku, w notatce obok ujęcia, w tym samym katalogu. Materiał zebrany na planie i zagubiony w strukturze folderów jest praktycznie równoważny materiałowi niezebranemu, a kosztował więcej.</p>
+  </div>
+
+  <div class="panel practice">
+    <div class="panel-label">Z praktyki</div>
+    <p><strong>Zmierz kąt widzenia z obrazu, nawet gdy masz raport.</strong> Zajmuje to kilka minut i wychwytuje najczęstsze pomyłki: złą bramkę, nieudokumentowane przycięcie i zapisaną ogniskową zooma, która w trakcie ujęcia się zmieniała.</p>
+    <p><strong>Nigdy nie składaj na wyprostowanym plate'cie.</strong> Każde przepróbkowanie zmiękcza obraz i rozmazuje ziarno. Plate ma przejść przez łańcuch dokładnie raz — jako tło przy składaniu, w oryginalnej postaci.</p>
+    <p><strong>Zapisz skalę razem ze sceną, w metrach.</strong> Nie „jednostka to mniej więcej metr”, tylko konkretnie: co zmierzono, ile wyszło i skąd ta liczba. Jest to informacja, której nie da się odtworzyć z plików, gdy ujęcie wraca po miesiącu.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>punkt zbiegu</dt>
+      <dd>Miejsce w kadrze, w którym schodzą się obrazy prostych równoległych w scenie. Nośnik informacji o kącie widzenia.</dd>
+      <dt>zdjęcie dystorsji</dt>
+      <dd>Przekształcenie obrazu do idealnego rzutu perspektywicznego. Operacja robocza, nie wynikowa.</dd>
+      <dt>STMapa</dt>
+      <dd>Obraz, którego wartości pikseli mówią, skąd wziąć piksel źródłowy. Zapis dowolnego przekształcenia geometrii.</dd>
+      <dt>skala sceny</dt>
+      <dd>Przelicznik między jednostkami trackingu a metrami. Nie wynika z obrazu — trzeba ją wnieść z pomiaru.</dd>
+      <dt>przepróbkowanie</dt>
+      <dd>Ponowne policzenie wartości pikseli po przekształceniu geometrii. Każde kosztuje trochę ostrości.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Zostały wszystkie zjawiska z tej książki i pytanie, w jakiej kolejności je nakładać. <a href="rozdzial-36-kolejnosc-w-compie.html">Następny rozdział</a> pokazuje, że kolejność nie jest kwestią przyzwyczajenia: wynika wprost z tego, w jakiej kolejności zdarzały się w prawdziwej kamerze — a każde odstępstwo daje błąd, który da się nazwać z góry.</p>
+  </div>
 
   <div class="deeper">
     <div class="deeper-label">Idź głębiej</div>
@@ -57,6 +301,23 @@ window.SKY3D_MESSAGES = {
       <a class="nav-toc" href="../index.html">Spis treści</a>
       <a class="nav-next" href="rozdzial-36-kolejnosc-w-compie.html">Następny →</a>
   </div>
+
+<template id="adv-przeprobkowanie">
+  <h3>Co traci obraz przy każdym przepróbkowaniu</h3>
+  <p>Zasada „plate przechodzi przez łańcuch dokładnie raz” brzmi jak przesadna ostrożność. Warto zobaczyć, co dokładnie się traci, bo strata jest mierzalna i kumuluje się szybciej, niż podpowiada intuicja.</p>
+  <p><strong>Ostrość.</strong> Nowy piksel powstaje jako średnia ważona kilku starych. Każde takie uśrednienie jest filtrem dolnoprzepustowym — obniża odpowiedź na wysokich częstotliwościach przestrzennych, czyli dokładnie tam, gdzie leży drobny detal. Kaskada z <a href="../dodatki/dodatek-h-mtf.html">Dodatku H</a> stosuje się tu bez zmian: dwa przepróbkowania mnożą się przez siebie.</p>
+  <p><strong>Ziarno.</strong> Uśrednianie sąsiednich pikseli zmniejsza wariancję szumu i jednocześnie zwiększa jego zasięg przestrzenny — ziarno staje się słabsze i grubsze naraz. Jest to najbardziej rozpoznawalny objaw plate'u przepuszczonego przez zbyt wiele przekształceń, bo oko dobrze zna wygląd ziarna i wyłapuje zmianę bez świadomej analizy.</p>
+  <p><strong>Krawędzie zapisane z aliasingiem.</strong> Materiał, w którym pojawia się schodkowanie, po przepróbkowaniu dostaje schodki w nowych miejscach — i one już nie są zgodne z niczym w scenie.</p>
+  <p>Rachunek pokazuje skalę: przepróbkowanie filtrem sześciennym obniża odpowiedź przy połowie częstotliwości Nyquista o kilkanaście procent. Jedno przejście jest niewidoczne. Trzy — zdjęcie dystorsji, stabilizacja i przeskalowanie do rozdzielczości docelowej — dają już spadek, który da się porównać obok siebie z oryginałem.</p>
+  <p><strong>Stąd praktyczna reguła:</strong> jeśli przekształceń geometrii ma być kilka, złóż je w jedno i wykonaj raz. Zdjęcie dystorsji, przesunięcie i przeskalowanie dają się połączyć w jedną STMapę, a wtedy obraz jest próbkowany dokładnie raz, niezależnie od tego, ile operacji opisuje mapa. Sposób opisuje <a href="../dodatki/dodatek-v-stmapy.html">Dodatek V</a>.</p>
+</template>
+
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal-box">
+    <button class="modal-close" aria-label="Zamknij">&times;</button>
+    <div id="modal-body"></div>
+  </div>
+</div>
 
 </div>
 
