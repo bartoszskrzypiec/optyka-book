@@ -41,7 +41,126 @@ window.SKY3D_MESSAGES = {
   <h1>Kamery w rendererach — parametry</h1>
   <p class="subtitle">Te same pojęcia pod różnymi nazwami: co odpowiada przysłonie, ogniskowej i formatowi w Arnoldzie, RenderManie, Cyclesie i Karmie.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">Co tu jest</div>
+    <ul>
+      <li><strong>Słownik parametrów</strong> — te same wielkości pod różnymi nazwami, z zaznaczeniem, gdzie nazwa myli.</li>
+      <li><strong>Przeliczniki</strong> między ogniskową, kątem widzenia i rozmiarem bramki, w obie strony.</li>
+      <li><strong>Bramka a matryca</strong> — dlaczego to nie zawsze ta sama liczba i co z tym zrobić.</li>
+      <li><strong>Lista kontrolna</strong> ustawiania kamery do plate'u, w kolejności, w której warto to robić.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Nazwy · to samo pod różnymi etykietami</div>
+    <h2>Słownik parametrów kamery</h2>
+
+    <p>Interfejsy kamer różnią się nazwami bardziej niż zachowaniem. Poniższa tabela zestawia wielkości fizyczne z nazwami, pod którymi występują — i zaznacza te, przy których nazwa wprowadza w błąd.</p>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead>
+          <tr><th>Wielkość</th><th>Spotykane nazwy</th><th>Uwaga</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>ogniskowa</td><td>focal length, lens</td><td>bez rozmiaru bramki nie znaczy nic</td></tr>
+          <tr><td>szerokość bramki</td><td>aperture, film back, sensor width, gate</td><td><strong>„aperture” tutaj nie oznacza przysłony</strong></td></tr>
+          <tr><td>kąt widzenia</td><td>FOV, angle of view</td><td>poziomy, pionowy czy przekątny — sprawdź, który</td></tr>
+          <tr><td>przysłona</td><td>f-stop, aperture, lens radius</td><td>część programów podaje promień w jednostkach sceny</td></tr>
+          <tr><td>odległość ostrzenia</td><td>focus distance, focal distance</td><td>mylona z ogniskową przez podobieństwo nazw</td></tr>
+          <tr><td>przesunięcie kadru</td><td>film offset, shift, lens shift</td><td>zwykle w ułamkach szerokości bramki, nie w mm</td></tr>
+          <tr><td>kąt migawki</td><td>shutter angle, shutter time</td><td>jedne w stopniach, inne w ułamku klatki</td></tr>
+          <tr><td>proporcje kadru</td><td>aspect ratio, pixel aspect</td><td>dwie różne rzeczy o podobnych nazwach</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Trzy wiersze zasługują na szczególną ostrożność: „aperture” w znaczeniu bramki, „focal distance” w znaczeniu odległości ostrzenia i proporcje piksela mylone z proporcjami kadru.</p>
+
+    <p>Najczęstsza pomyłka bierze się z pierwszego z nich. <span class="term-violet">Słowo „aperture” w opisie kamery renderera zwykle nie znaczy przysłony</span>, tylko rozmiar bramki kadrowej — czyli szerokość obszaru światłoczułego. Wpisanie tam liczby przysłony daje kadr węższy o dwa rzędy wielkości i objawia się tym, że scena znika.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Przeliczniki · w obie strony</div>
+    <h2>Ogniskowa, kąt i bramka</h2>
+
+    <p>Trzy wielkości, dwa stopnie swobody. Znając dwie, trzecią liczy się jednym wzorem.</p>
+
+    <div class="formula">
+      FOV = 2·arctg(<span class="vec" data-tip="Szerokość bramki">w</span> / 2<span class="vec" data-tip="Ogniskowa">f</span>) &nbsp;&nbsp;·&nbsp;&nbsp; <span class="vec" data-tip="Ogniskowa">f</span> = <span class="vec" data-tip="Szerokość bramki">w</span> / (2·tg(FOV/2)) &nbsp;&nbsp;·&nbsp;&nbsp; <span class="vec" data-tip="Szerokość bramki">w</span> = 2<span class="vec" data-tip="Ogniskowa">f</span>·tg(FOV/2)
+      <span class="sub">Wszystkie trzy postacie tego samego związku. Kąt zawsze odpowiada temu wymiarowi bramki, który podstawiono jako w — dlatego kąt poziomy, pionowy i przekątny są trzema różnymi liczbami dla jednej kamery.</span>
+    </div>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead>
+          <tr><th>Ogniskowa</th><th class="num">S35 (24,89)</th><th class="num">Pełna klatka (36)</th><th class="num">65 mm (52,63)</th><th class="num">m4/3 (17,3)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>14 mm</td><td class="num">83,3°</td><td class="num">104,3°</td><td class="num">124,0°</td><td class="num">63,4°</td></tr>
+          <tr><td>18 mm</td><td class="num">69,3°</td><td class="num">90,0°</td><td class="num">111,3°</td><td class="num">51,3°</td></tr>
+          <tr><td>24 mm</td><td class="num">54,8°</td><td class="num">73,7°</td><td class="num">95,3°</td><td class="num">39,6°</td></tr>
+          <tr><td>35 mm</td><td class="num">39,1°</td><td class="num">54,4°</td><td class="num">73,9°</td><td class="num">27,8°</td></tr>
+          <tr><td>50 mm</td><td class="num">28,0°</td><td class="num">39,6°</td><td class="num">55,5°</td><td class="num">19,6°</td></tr>
+          <tr><td>85 mm</td><td class="num">16,7°</td><td class="num">23,9°</td><td class="num">34,4°</td><td class="num">11,6°</td></tr>
+          <tr><td>135 mm</td><td class="num">10,5°</td><td class="num">15,2°</td><td class="num">22,1°</td><td class="num">7,3°</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Poziomy kąt widzenia. Liczby w nagłówku to szerokości bramki w milimetrach.</p>
+
+    <p>Tabela pokazuje wprost skalę pomyłki, o której mówi <a href="../rozdzialy/rozdzial-33-kamera-w-rendererze.html">Rozdział 33</a>: pięćdziesiątka wpisana z bramką pełnej klatki zamiast Super 35 daje kąt 39,6° zamiast 28,0°, czyli kadr szerszy o ponad czterdzieści procent. Jest to różnica, której nie da się przeoczyć — ale też taka, którą łatwo przypisać złej ogniskowej w raporcie, zamiast złej bramce w ustawieniach.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Bramka · dlaczego nie zawsze rozmiar matrycy</div>
+    <h2>Skąd wziąć właściwą liczbę</h2>
+
+    <p>Wpisanie „rozmiaru matrycy” z karty katalogowej bywa błędem, bo kamera rzadko używa całej matrycy. Liczba, której szuka renderer, to <strong>szerokość obszaru faktycznie zapisanego w tym trybie</strong>, a nie fizyczna szerokość krzemu.</p>
+
+    <p>Trzy rzeczy potrafią te liczby rozjechać:</p>
+
+    <ul>
+      <li><strong>Tryb kadrowania.</strong> Ta sama kamera w trybie otwartej bramki, 16:9 i anamorficznym używa trzech różnych szerokości. Różnica sięga dwudziestu procent.</li>
+      <li><strong>Margines na stabilizację.</strong> Część kamer zapisuje więcej, niż pokazuje, i przycina przy wywołaniu. Wtedy bramka pliku różni się od bramki podglądu.</li>
+      <li><strong>Przycięcie w postprodukcji.</strong> Plate wykadrowany po zdjęciach ma inną efektywną bramkę niż oryginał — a ogniskowa z raportu odnosi się do oryginału.</li>
+    </ul>
+
+    <div class="worked">
+      <div class="wlabel">Rachunek · plate przycięty w postprodukcji</div>
+      <div class="step"><span class="k">Dane</span><span class="v">zdjęcia: 35 mm, bramka 24,89 mm, plik 4096 px szeroki</span></div>
+      <div class="step"><span class="k">Co dostałeś</span><span class="v">plate 3200 px — wykadrowany ze środka, bez przeskalowania</span></div>
+      <div class="step"><span class="k">Efektywna bramka</span><span class="v">24,89 · (3200/4096) = 19,45 mm</span></div>
+      <div class="step"><span class="k">Kąt przed</span><span class="v">2·arctg(24,89/70) = 39,1°</span></div>
+      <div class="step"><span class="k">Kąt po</span><span class="v">2·arctg(19,45/70) = 31,0°</span></div>
+      <div class="result">Do kamery wpisz ogniskową 35 mm i bramkę 19,45 mm — albo, równoważnie, kąt 31,0°. Ogniskowa się nie zmieniła; zmieniło się, ile z koła obrazowego widać.</div>
+      <div class="check">Kontrola: stosunek tangensów połówek kątów musi równać się stosunkowi bramek. tg(15,52°)/tg(19,57°) = 0,2778/0,3556 = 0,7812, a 3200/4096 = 0,7813. Zgadza się.</div>
+    </div>
+
+    <p>Reguła praktyczna wynikająca z tego rachunku jest krótka: <span class="term-cyan">ogniskowa jest własnością obiektywu i nie zmienia się nigdy, bramka jest własnością kadru i zmienia się przy każdym przycięciu</span>. Przy każdej niezgodności kadru sprawdzaj drugą, nie pierwszą.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Kolejność · lista kontrolna</div>
+    <h2>Ustawianie kamery do plate'u</h2>
+
+    <p>Kolejność ma znaczenie, bo każdy krok zakłada, że poprzednie już się zgadzają. Odwrócenie jej prowadzi do kompensowania jednego błędu drugim.</p>
+
+    <p><strong>1. Bramka i ogniskowa.</strong> Z raportu zdjęciowego i z dokumentacji kamery, uwzględniając przycięcia. Kąt widzenia niech policzy program.</p>
+
+    <p><strong>2. Weryfikacja na prostej.</strong> Znajdź w plate'cie prostą krawędź biegnącą ku horyzontowi i sprawdź, czy jej odpowiednik w scenie przecina krawędź kadru w tym samym miejscu. Niezgodność tutaj oznacza złą bramkę, nie złą pozycję.</p>
+
+    <p><strong>3. Wysokość i pochylenie.</strong> Zbieganie pionów jest funkcją wyłącznie tych dwóch rzeczy. Ustawia się je po kącie widzenia, nigdy przed.</p>
+
+    <p><strong>4. Odległość i kierunek.</strong> Dopiero teraz kadr da się dopasować przesuwając kamerę — i jeśli krok drugi przeszedł, dopasowanie będzie jednoznaczne.</p>
+
+    <p><strong>5. Odległość ostrzenia i przysłona.</strong> Z raportu, jeśli jest; z pomiaru rozmycia w plate'cie, jeśli nie ma. Protokół pomiaru opisuje <a href="dodatek-e-glebia-w-liczbach.html">Dodatek E</a>.</p>
+
+    <p><strong>6. Kąt migawki.</strong> Zmierzony z długości smugi, według rachunku z <a href="dodatek-r-rozmycie-ruchu.html">Dodatku R</a>.</p>
+
+    <p>Warto zauważyć, dlaczego ta kolejność, a nie inna. <strong>Kroki 1–2 ustalają geometrię obrazu, kroki 3–4 położenie w scenie, kroki 5–6 sposób zapisu.</strong> Błąd w pierwszej grupie da się ukryć błędem w drugiej — kamera przesunięta i o złym kącie potrafi trafić w kadr na jednej klatce i rozjechać się na wszystkich pozostałych. Dlatego pierwszą grupę zamyka się pomiarem, a nie dopasowaniem na oko.</p>
+
+    <p>Ostatnia uwaga, praktyczna: <span class="term-amber">zapisz te liczby razem z ujęciem</span>. Bramka, ogniskowa, wysokość, pochylenie, odległość ostrzenia, przysłona i kąt migawki — siedem wartości. Jest to komplet potrzebny, żeby odtworzyć kamerę bez powtarzania całej pracy, a przy poprawkach po kilku tygodniach jest to różnica między kwadransem a popołudniem.</p>
+  </div>
 
   <div class="site-nav">
     <a href="../index.html">← Spis treści</a>
