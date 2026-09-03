@@ -41,7 +41,132 @@ window.SKY3D_MESSAGES = {
   <h1>Kolejność operacji w compie — lista kontrolna</h1>
   <p class="subtitle">Pełny łańcuch od renderu liniowego do gotowej klatki, z uzasadnieniem każdego kroku i z zaznaczeniem miejsc, w których kolejność naprawdę zmienia obraz.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">Co tu jest</div>
+    <ul>
+      <li><strong>Pełna lista kontrolna ujęcia</strong> — od pomiarów przez ustawienie kamery po łańcuch compu, w kolejności wykonania.</li>
+      <li><strong>Dwadzieścia dwie pozycje</strong>, każda z pytaniem, na które odpowiada się „tak” albo „nie wiem” — i to drugie jest cenniejsze.</li>
+      <li><strong>Lista objawów</strong>: co widzisz → co jest przyczyną → gdzie w łańcuchu szukać.</li>
+      <li><strong>Minimalny zestaw</strong> dla ujęcia, na które nie ma czasu.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Etap 1 · zanim cokolwiek zaczniesz</div>
+    <h2>Pomiary i dane wejściowe</h2>
+
+    <p>Sześć pozycji, które warto mieć przed rozpoczęciem pracy, bo każda z nich zmienia to, co robisz dalej. Brak którejkolwiek nie blokuje pracy, ale zmienia ją w zgadywanie.</p>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead><tr><th class="num">#</th><th>Pytanie</th><th>Skąd</th><th>Bez tego</th></tr></thead>
+        <tbody>
+          <tr><td class="num">1</td><td>Jaka bramka i jaka ogniskowa?</td><td>raport + dokumentacja kamery</td><td>kadr nie zejdzie się poza środkiem</td></tr>
+          <tr><td class="num">2</td><td>Czy plate był przycinany albo skalowany?</td><td>porównanie rozdzielczości z oryginałem</td><td>zła efektywna bramka</td></tr>
+          <tr><td class="num">3</td><td>Jaka dystorsja?</td><td>siatka z tego samego szkła</td><td>element ucieka przy brzegach</td></tr>
+          <tr><td class="num">4</td><td>Jaka odległość ostrzenia i przysłona?</td><td>raport albo pomiar krążka</td><td>zły rozkład rozmycia w głąb</td></tr>
+          <tr><td class="num">5</td><td>Jaki kąt migawki?</td><td>raport albo pomiar smugi</td><td>element ma inną smugę niż tło</td></tr>
+          <tr><td class="num">6</td><td>Jaka skala sceny w metrach?</td><td>jeden pomiar z planu</td><td>wszystko zależne od odległości fałszywe</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Wszystkie sześć daje się odczytać z obrazu, jeśli nie ma raportu — protokoły w Dodatkach E, R i V oraz w <a href="../rozdzialy/rozdzial-35-geometria-plateu.html">Rozdziale 35</a>.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Etap 2 · kamera i render</div>
+    <h2>Zanim pójdzie na maszyny</h2>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead><tr><th class="num">#</th><th>Pytanie</th><th>Rozstrzyga</th></tr></thead>
+        <tbody>
+          <tr><td class="num">7</td><td>Bramka i ogniskowa wpisane, kąt policzony przez program?</td><td>Dodatek S</td></tr>
+          <tr><td class="num">8</td><td>Kąt widzenia zweryfikowany na prostej w kadrze?</td><td>R.35</td></tr>
+          <tr><td class="num">9</td><td>Wysokość i pochylenie ustawione przed przesuwaniem kamery?</td><td>R.5, R.33</td></tr>
+          <tr><td class="num">10</td><td>Czy ujęcie ma paralaksę — czy to w istocie panorama?</td><td>R.35</td></tr>
+          <tr><td class="num">11</td><td>Głębia: w rendererze czy w compie — i dlaczego?</td><td>R.34, Dodatek U</td></tr>
+          <tr><td class="num">12</td><td>Rozmycie ruchu: wektory wystarczą, czy ruch jest łukiem?</td><td>R.32, Dodatek R</td></tr>
+          <tr><td class="num">13</td><td>Składowe oświetlenia zapisane?</td><td>R.34 — zawsze tak</td></tr>
+          <tr><td class="num">14</td><td>Kanały pomocnicze zapisane, nawet jeśli plan ich nie zakłada?</td><td>R.34 — decyzja odroczona</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Pozycje 13 i 14 kosztują niewiele, a otwierają drugą drogę, gdy pierwsza zawiedzie. Jest to najtańsze ubezpieczenie w całej tej liście.</p>
+
+    <p>Warto zwrócić uwagę na pozycję 10, bo bywa pomijana, a jej pominięcie kosztuje najwięcej. <strong>Ujęcie bez paralaksy rozwiązuje się jako obrót</strong> — walka o głębię, której w nim nie ma, potrafi zająć dzień i skończyć się rozwiązaniem, które pływa.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Etap 3 · łańcuch compu</div>
+    <h2>Kolejność do odhaczenia</h2>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead><tr><th class="num">#</th><th>Ogniwo</th><th>Odcinek</th><th>Sprawdź</th></tr></thead>
+        <tbody>
+          <tr><td class="num">15</td><td>głębia ostrości</td><td>optyka</td><td>przed rozmyciem ruchu</td></tr>
+          <tr><td class="num">16</td><td>aberracja poprzeczna</td><td>optyka</td><td>rośnie z promieniem, nie stała</td></tr>
+          <tr><td class="num">17</td><td>flara i ghosty</td><td>optyka</td><td>przed nośnikiem, reaguje na źródło</td></tr>
+          <tr><td class="num">18</td><td>winietowanie</td><td>optyka</td><td>profil, nie jedna liczba</td></tr>
+          <tr><td class="num">19</td><td>rozmycie ruchu</td><td>nośnik</td><td>po głębi, przed zakończeniem skali</td></tr>
+          <tr><td class="num">20</td><td>halacja</td><td>nośnik</td><td>tylko przy przepaleniach</td></tr>
+          <tr><td class="num">21</td><td>zakończenie skali</td><td>nośnik</td><td>bark czy ściana — jak w plate'cie</td></tr>
+          <tr><td class="num">22</td><td>ziarno</td><td>nośnik</td><td>ostatnie, nic po nim</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Dystorsja nie ma tu własnego wiersza celowo — łączy się ją z pozostałymi operacjami geometrycznymi w jedno przejście, zgodnie z odstępstwem opisanym w <a href="../rozdzialy/rozdzial-36-kolejnosc-w-compie.html">Rozdziale 36</a>.</p>
+
+    <p>Trzy pozycje mają w tej tabeli największą wagę i warto wiedzieć które. <span class="term-amber">Numer 22, bo ziarno po czymkolwiek przestaje pasować do plate'u.</span> Numer 19, bo zamiana z 15 daje smugi o ostrych końcach. I numer 21, bo obcięcie w złym miejscu psuje wszystko, co po nim, w sposób nieodwracalny.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Objawy · od skutku do przyczyny</div>
+    <h2>Co widzisz, czego szukać</h2>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead><tr><th>Objaw</th><th>Prawdopodobna przyczyna</th><th>Gdzie</th></tr></thead>
+        <tbody>
+          <tr><td>element trzyma się w środku, ucieka przy brzegach</td><td>dystorsja nienałożona albo zła</td><td>poz. 3</td></tr>
+          <tr><td>ostra obwódka wokół nieostrego elementu</td><td>rozmycie z mapy głębi na krawędzi</td><td>poz. 11</td></tr>
+          <tr><td>obszar, w którym ziarno znika</td><td>flara nałożona po ziarnie</td><td>poz. 17 i 22</td></tr>
+          <tr><td>ziarno elementu drobniejsze niż w tle</td><td>operacja wykonana po ziarnie</td><td>poz. 22</td></tr>
+          <tr><td>smuga o zbyt ostrych końcach</td><td>rozmycie ruchu przed głębią</td><td>poz. 15 i 19</td></tr>
+          <tr><td>przepalenia elementu neutralnie białe</td><td>obcięcie wszystkich kanałów naraz</td><td>poz. 21</td></tr>
+          <tr><td>element zbyt płynny w szybkim ruchu</td><td>plate strobuje, element nie</td><td>poz. 12</td></tr>
+          <tr><td>piony proste tam, gdzie tło się skosi</td><td>rolling shutter nieodtworzony</td><td>R.32</td></tr>
+          <tr><td>rozmycie rosnące ku rogom kadru</td><td>mapa głębi euklidesowa zamiast osiowej</td><td>Dodatek U</td></tr>
+          <tr><td>obraz miękki mimo dobrego rendera</td><td>kilka przepróbkowań zamiast jednego</td><td>Dodatek V</td></tr>
+          <tr><td>rozmycie zjada jasne krawędzie</td><td>praca poza wartościami liniowymi</td><td>R.36</td></tr>
+          <tr><td>głębia ostrości jak w makrofotografii</td><td>zła skala sceny</td><td>poz. 6</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Tabela czytana od lewej: zaczynasz od tego, co widać, kończysz na pozycji listy, którą trzeba sprawdzić. Ostatni wiersz jest najbardziej podstępny, bo błąd jest spójny w całym ujęciu.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Minimum · gdy nie ma czasu</div>
+    <h2>Sześć rzeczy, których nie wolno pominąć</h2>
+
+    <p>Pełna lista ma dwadzieścia dwie pozycje i nie zawsze jest na nią czas. Gdyby trzeba było zejść do minimum, kolejność ważności jest następująca — i nie jest to ta sama kolejność, co kolejność wykonania.</p>
+
+    <p><strong>1. Bramka i ogniskowa.</strong> Bez tego nic dalej nie ma sensu, bo cała geometria jest przesunięta.</p>
+
+    <p><strong>2. Ziarno na końcu.</strong> Jedna decyzja, która sama w sobie odpowiada za sporą część wrażenia „naklejone”.</p>
+
+    <p><strong>3. Praca w liniowej.</strong> Nie kosztuje nic, a bez niej każda operacja optyczna jest błędna przy dużym kontraście.</p>
+
+    <p><strong>4. Dystorsja.</strong> Jedyna rzecz z tej listy, której brak widać na pierwszej klatce, jeśli w kadrze jest cokolwiek prostego.</p>
+
+    <p><strong>5. Zakończenie skali jak w plate'cie.</strong> Przepalenia są tam, gdzie oko patrzy najpierw.</p>
+
+    <p><strong>6. Rozmycie ruchu zgodne z kątem migawki.</strong> Nie musi być doskonałe; musi być tej samej długości co w tle.</p>
+
+    <p>Warto zauważyć, że pięć z tych sześciu to <span class="term-cyan">decyzje, nie praca</span> — kosztują minutę namysłu, a nie godziny. Jedyną pozycją wymagającą realnego wysiłku jest dystorsja, i to tylko wtedy, gdy nie ma siatki z planu. Jest to najlepszy argument za tym, żeby o siatkę poprosić.</p>
+  </div>
 
   <div class="site-nav">
     <a href="../index.html">← Spis treści</a>
