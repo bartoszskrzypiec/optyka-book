@@ -41,7 +41,87 @@ window.SKY3D_MESSAGES = {
   <h1>Bayer, demozaikowanie i utracona rozdzielczość</h1>
   <p class="subtitle">Co naprawdę mierzy piksel pod filterkiem, ile rozdzielczości kosztuje interpolacja, skąd mora i po co filtr dolnoprzepustowy.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">Co tu jest</div>
+    <ul>
+      <li><strong>Ile rozdzielczości kosztuje mozaika</strong> — osobno dla jasności i dla barwy, bo koszt jest zupełnie różny.</li>
+      <li><strong>Skąd bierze się mora</strong> i dlaczego na mozaice pojawia się w miejscach, w których matryca jednobarwna dałaby czysty obraz.</li>
+      <li><strong>Po co filtr dolnoprzepustowy</strong> i dlaczego z niego zrezygnowano.</li>
+      <li><strong>Co z tego wynika dla compu</strong> — trzy rzeczy, które render ma inaczej.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Próbkowanie · trzy siatki zamiast jednej</div>
+    <h2>Ile naprawdę jest pikseli</h2>
+
+    <p>Mozaika Bayera nie jest jedną siatką próbek, tylko trzema nałożonymi na siebie, o różnej gęstości. Warto policzyć każdą osobno, bo z tego wynika cała reszta.</p>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead>
+          <tr><th>Kanał</th><th class="num">Udział pikseli</th><th>Rozstaw próbek</th><th class="num">Nyquist</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Zielony</td><td class="num">50%</td><td>co drugi, na przemian</td><td class="num">pełny po skosie</td></tr>
+          <tr><td>Czerwony</td><td class="num">25%</td><td>co drugi w obu osiach</td><td class="num">połowa</td></tr>
+          <tr><td>Niebieski</td><td class="num">25%</td><td>co drugi w obu osiach</td><td class="num">połowa</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Nyquist podany względem matrycy jednobarwnej o tej samej liczbie pikseli. Zielony jest szczególny: leży na siatce szachownicowej, więc wzdłuż przekątnych próbkuje gęściej niż wzdłuż osi.</p>
+
+    <p>Konsekwencja jest asymetryczna i to jest w tym najciekawsze. <strong>Rozdzielczość barwna czerwieni i błękitu jest o połowę niższa</strong> niż nominalna — struktura o gęstości bliskiej granicy matrycy nie ma w tych kanałach ani jednej próbki na okres. Zieleń jest na tym tle uprzywilejowana i to ona ratuje obraz.</p>
+
+    <p>Dla jasności strata jest znacznie mniejsza, bo jasność bierze się głównie z zieleni. Empirycznie matryca Bayera odtwarza <span class="term-raster">rzędu siedemdziesięciu do osiemdziesięciu procent</span> rozdzielczości liniowej, jaką miałaby matryca jednobarwna o tej samej liczbie pikseli. Wartość zależy od algorytmu i od treści, więc jest to rząd wielkości, a nie stała — ale kierunek jest jednoznaczny.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Mora · aliasing, który ma kolor</div>
+    <h2>Dlaczego wzory się tęczują</h2>
+
+    <p>Aliasing pojawia się wtedy, gdy struktura w scenie jest gęstsza niż siatka próbek — wtedy zamiast niej rejestruje się fałszywy wzór o zupełnie innej gęstości. Zjawisko to zachodzi w każdym próbkowaniu i sam w sobie nie ma nic wspólnego z barwą.</p>
+
+    <p>Na mozaice jest jednak gorzej, i to z powodu, który wynika wprost z tabeli wyżej. <strong>Trzy kanały mają trzy różne siatki, więc aliasują różnie.</strong> Ta sama struktura daje w czerwieni jeden fałszywy wzór, w błękicie inny, a w zieleni jeszcze inny — i suma tych trzech ma barwę, której w scenie nie było.</p>
+
+    <p>Stąd charakterystyczny wygląd mory na tkaninach, siatkach i dachówkach: <span class="term-violet">nie jest to szara prążkowana struktura, tylko tęczowa</span>. Matryca jednobarwna dałaby w tym samym miejscu morę bez barwy, znacznie mniej rzucającą się w oczy.</p>
+
+    <p>Rozwiązanie jest jedno i znane od początku: rozmyć obraz <em>przed</em> próbkowaniem tak, żeby struktury gęstsze od siatki w ogóle do niej nie doleciały. Realizuje to filtr dolnoprzepustowy, czyli cienka warstwa dwójłomna naklejona na matrycę, rozdzielająca każdy punkt na kilka nieco przesuniętych. Jest to <strong>celowe zmiękczenie obrazu</strong> i dokładnie ta sama transakcja, co dyfrakcja w roli antyaliasingu opisana w bloku „Zaawansowane” w <a href="../rozdzialy/rozdzial-10-dyfrakcja.html">Rozdziale 10</a>.</p>
+
+    <p>W ostatniej dekadzie filtry te zaczęły znikać z kamer. Powód jest arytmetyczny: przy bardzo gęstych matrycach struktury zdolne wywołać morę są już tak drobne, że w większości scen po prostu nie występują — a rezygnacja z filtra oddaje kilka procent ostrości. Jest to <span class="term-cyan">zakład, nie usunięcie problemu</span>: kamera bez filtra na tkaninie w zbliżeniu wciąż daje morę, i to gorszą, bo nic jej nie łagodzi.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Demozaikowanie · zgadywanie z sąsiadów</div>
+    <h2>Co robi algorytm i gdzie zawodzi</h2>
+
+    <p>Demozaikowanie odtwarza dwie brakujące barwy w każdym pikselu. Najprostsze podejście — uśrednienie sąsiadów tego samego koloru — daje wynik poprawny na gładkich powierzchniach i zły na krawędziach, bo uśrednia przez granicę.</p>
+
+    <p>Algorytmy używane w praktyce najpierw <strong>wykrywają kierunek krawędzi</strong> i interpolują wzdłuż niej, a nie w poprzek. Działa to dobrze, dopóki kierunek da się rozpoznać. Zawodzi w trzech sytuacjach i warto je znać, bo wszystkie trzy zostawiają rozpoznawalny ślad:</p>
+
+    <ul>
+      <li><strong>Krawędź cienka jak piksel</strong> — nie ma z czego rozpoznać kierunku, więc algorytm zgaduje. Objaw: kolorowe kropki wzdłuż bardzo cienkich linii, zwykle na przemian czerwone i cyjanowe.</li>
+      <li><strong>Dwie krawędzie w jednym pikselu</strong> — na przykład narożnik albo krzyżująca się siatka. Objaw: barwne artefakty w węzłach, niezależne od tego, jakie barwy tam były.</li>
+      <li><strong>Struktura na granicy Nyquista</strong> — patrz sekcja o morze wyżej.</li>
+    </ul>
+
+    <p>Wszystkie trzy objawy występują wyłącznie na <em>drobnych, kontrastowych</em> szczegółach i wszystkie mają barwę. To jest ich cecha wspólna i to po niej rozpoznaje się artefakty demozaikowania, odróżniając je od aberracji chromatycznej z <a href="../rozdzialy/rozdzial-14-aberracja-chromatyczna.html">Rozdziału 14</a>. Aberracja jest promienista i rośnie ku brzegom kadru; artefakt demozaikowania pojawia się wszędzie tam, gdzie jest drobna struktura, <strong>także w samym środku</strong>.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">W CG · trzy rzeczy, które render ma inaczej</div>
+    <h2>Co z tego wynika dla compu</h2>
+
+    <p><strong>Render zna trzy barwy w każdym pikselu.</strong> Nie przeszedł przez mozaikę, więc nie ma ani jej ograniczenia rozdzielczości barwnej, ani jej artefaktów. Element CG z drobnym, nasyconym wzorem będzie więc czystszy niż ten sam wzór w plate'cie — i tym bardziej, im drobniejszy.</p>
+
+    <p><strong>Render nie ma filtra dolnoprzepustowego.</strong> Ma za to własny antyaliasing, działający zupełnie inaczej: przez zwielokrotnienie próbek, a nie przez rozmycie optyczne. Wynik jest ostrzejszy i pozbawiony charakterystycznego zmiękczenia, które filtr zostawia na całym obrazie.</p>
+
+    <p><strong>Render nie ma zależności między kanałami.</strong> W plate'cie zieleń jest ostrzejsza niż czerwień i błękit, bo była gęściej próbkowana. W renderze wszystkie trzy kanały mają tę samą ostrość — i to jest różnica mierzalna, choć rzadko sprawdzana.</p>
+
+    <p>Poprawka na wszystkie trzy naraz jest tańsza, niż wygląda: <span class="term-cyan">rozmyj lekko kanał czerwony i niebieski renderu, zostawiając zielony</span>. Odtwarza to zarazem niższą rozdzielczość barwną i różnicę ostrości między kanałami. Promień rzędu połowy piksela zwykle wystarcza — chodzi o zgodność charakteru, nie o symulację algorytmu.</p>
+
+    <p>Odtwarzania samych artefaktów demozaikowania zwykle się nie robi i słusznie. Są nieprzewidywalne, zależą od algorytmu wywoływania i pojawiają się w miejscach zależnych od treści. <strong>Element CG bez nich jest bezpieczniejszy niż element z nimi, ale wstawionymi w złych miejscach</strong> — bo brak artefaktu czyta się jako czystość, a artefakt w złym miejscu jako błąd.</p>
+  </div>
 
   <div class="site-nav">
     <a href="../index.html">← Spis treści</a>

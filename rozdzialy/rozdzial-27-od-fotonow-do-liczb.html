@@ -43,7 +43,261 @@ window.SKY3D_MESSAGES = {
   <h1>Od fotonów do liczb</h1>
   <p class="subtitle">Matryca nie mierzy koloru. Liczy fotony pod kolorowymi filterkami i zgaduje resztę — a szum, który przy tym widzisz, jest w większości własnością światła, nie elektroniki.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li><strong>Matryca nie mierzy koloru.</strong> Liczy fotony pod kolorowymi filterkami, a dwie brakujące barwy w każdym pikselu zgaduje z sąsiadów. Kolor jest wynikiem interpolacji, nie pomiaru.</li>
+      <li><strong>Szum jest w większości własnością światła, nie elektroniki.</strong> Fotony przylatują losowo, więc ich liczba ma rozrzut równy pierwiastkowi ze średniej — i to jest granica, której żadna kamera nie przekroczy.</li>
+      <li>Stąd reguła warta zapamiętania: <span class="term-amber">każda działka mniej światła to pół działki gorszy stosunek sygnału do szumu</span>. ISO nie jest czułością i tego nie zmienia.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Piksel · licznik, nie czujnik barwy</div>
+    <h2>Co naprawdę mierzy matryca</h2>
+
+    <p>Pojedynczy element matrycy jest studnią potencjału, w której gromadzą się elektrony wybite przez padające fotony. Na końcu naświetlania odczytuje się ich liczbę. To wszystko — <strong>jeden piksel zwraca jedną liczbę</strong>, a liczba ta mówi, ile światła przyszło, nie jakiego było koloru.</p>
+
+    <p>Kolor bierze się z filterków. Nad każdym pikselem leży filtr przepuszczający jedną z trzech barw, a filterki ułożone są w mozaikę, w której <span class="term-raster">zielonych jest dwa razy więcej niż czerwonych i niebieskich</span>. Nazywa się to mozaiką Bayera i jest standardem od lat siedemdziesiątych.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Mozaika Bayera</span><span>każdy piksel zna jedną barwę z trzech</span></div>
+      <svg viewBox="0 0 760 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Siatka filterków Bayera z dwoma zielonymi na każde cztery pola, obok pojedynczy piksel z zaznaczeniem, że dwie barwy są zgadywane z sąsiadów.">
+        <text x="120" y="22" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">MOZAIKA</text>
+        <g stroke="#0d0f11" stroke-width="1">
+          <rect x="40" y="32" width="40" height="40" fill="#d8695f" fill-opacity="0.55"/>
+          <rect x="80" y="32" width="40" height="40" fill="#7fc47f" fill-opacity="0.55"/>
+          <rect x="120" y="32" width="40" height="40" fill="#d8695f" fill-opacity="0.55"/>
+          <rect x="160" y="32" width="40" height="40" fill="#7fc47f" fill-opacity="0.55"/>
+          <rect x="40" y="72" width="40" height="40" fill="#7fc47f" fill-opacity="0.55"/>
+          <rect x="80" y="72" width="40" height="40" fill="#6ea8e8" fill-opacity="0.55"/>
+          <rect x="120" y="72" width="40" height="40" fill="#7fc47f" fill-opacity="0.55"/>
+          <rect x="160" y="72" width="40" height="40" fill="#6ea8e8" fill-opacity="0.55"/>
+          <rect x="40" y="112" width="40" height="40" fill="#d8695f" fill-opacity="0.55"/>
+          <rect x="80" y="112" width="40" height="40" fill="#7fc47f" fill-opacity="0.55"/>
+          <rect x="120" y="112" width="40" height="40" fill="#d8695f" fill-opacity="0.55"/>
+          <rect x="160" y="112" width="40" height="40" fill="#7fc47f" fill-opacity="0.55"/>
+          <rect x="40" y="152" width="40" height="40" fill="#7fc47f" fill-opacity="0.55"/>
+          <rect x="80" y="152" width="40" height="40" fill="#6ea8e8" fill-opacity="0.55"/>
+          <rect x="120" y="152" width="40" height="40" fill="#7fc47f" fill-opacity="0.55"/>
+          <rect x="160" y="152" width="40" height="40" fill="#6ea8e8" fill-opacity="0.55"/>
+        </g>
+        <text x="120" y="212" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">50% zielonych, po 25% czerwonych i niebieskich</text>
+
+        <text x="380" y="22" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">JEDEN PIKSEL</text>
+        <rect x="330" y="60" width="100" height="100" fill="#7fc47f" fill-opacity="0.35" stroke="#7fc47f" stroke-width="1.5"/>
+        <text x="380" y="100" font-family="IBM Plex Mono" font-size="11" fill="#7fc47f" text-anchor="middle">zmierzone</text>
+        <text x="380" y="118" font-family="IBM Plex Mono" font-size="14" fill="#7fc47f" text-anchor="middle">G</text>
+        <text x="380" y="142" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">jedna liczba</text>
+        <g font-family="IBM Plex Mono" font-size="11" text-anchor="middle">
+          <text x="352" y="186" fill="#d8695f">R ?</text>
+          <text x="408" y="186" fill="#6ea8e8">B ?</text>
+        </g>
+        <text x="380" y="212" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">zgadywane z sąsiadów</text>
+
+        <text x="620" y="22" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">DLACZEGO ZIELONY</text>
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">
+          <text x="500" y="66">Oko ma najwięcej czopków</text>
+          <text x="500" y="84">czułych w zieleni, więc</text>
+          <text x="500" y="102">to zielony kanał niesie</text>
+          <text x="500" y="120">niemal całą informację</text>
+          <text x="500" y="138">o jasności i o detalu.</text>
+          <text x="500" y="168" fill="#7fc47f">Dwa razy gęstsza siatka</text>
+          <text x="500" y="186" fill="#7fc47f">tam, gdzie to widać.</text>
+        </g>
+      </svg>
+      <div class="diagram-caption">Trzy czwarte informacji o barwie w każdym pikselu jest wyliczone, a nie zmierzone. To jest punkt wyjścia dla wszystkiego, co dzieje się dalej.</div>
+    </div>
+
+    <p>Wynika stąd konsekwencja, o której łatwo zapomnieć przy dopasowywaniu renderu: <strong>rozdzielczość barwna jest niższa niż rozdzielczość jasności</strong>. Drobna, kontrastowa struktura barwna — czerwony napis na niebieskim tle, wzór na tkaninie — jest rekonstruowana gorzej niż ta sama struktura w skali szarości. Render nie ma tego ograniczenia i dlatego bywa „za czysty” dokładnie na drobnych, nasyconych detalach.</p>
+
+    <p>Wybór zielonego na barwę podwojoną nie jest przy tym arbitralny i warto rozumieć jego podstawę. Oko czerpie informację o jasności i o detalu niemal wyłącznie z zakresu, w którym leży zieleń — czerwień i błękit niosą głównie barwę. Podwojenie gęstości akurat tam daje więc <span class="term-raster">najwięcej rozdzielczości tam, gdzie oko jej szuka</span>, przy tej samej liczbie pikseli. Jest to ten sam rodzaj rozumowania, co przy krążku rozmycia z <a href="rozdzial-08-glebia-ostrosci.html">Rozdziału 8</a>: konstrukcja dopasowana do widza, a nie do fizyki.</p>
+
+    <p>Istnieją matryce bez mozaiki, mierzące wszystkie trzy barwy w każdym punkcie — warstwowe albo z rozdzielaczem wiązki. Nie wyparły Bayera, bo płacą za to albo czułością, albo rozmiarem, albo ceną. <strong>Mozaika jest kompromisem, który wygrał</strong>, i to jest powód, dla którego praktycznie każdy plate, z jakim będziesz pracował, przeszedł przez interpolację.</p>
+
+    <p class="deeper-inline">Ile rozdzielczości kosztuje interpolacja, skąd mora i po co filtr dolnoprzepustowy — <a href="../dodatki/dodatek-m-bayer-i-demozaikowanie.html">Dodatek M</a>.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Szum · własność światła, nie kamery</div>
+    <h2>Dlaczego szum rośnie jak pierwiastek</h2>
+
+    <p>Fotony nie przylatują równomiernie. Przylatują losowo, a ich liczba w danym czasie jest zmienną losową o rozrzucie równym <strong>pierwiastkowi ze średniej</strong>. Jeśli piksel odbiera średnio dziesięć tysięcy fotonów, to w konkretnej klatce odbierze ich dziesięć tysięcy plus minus sto.</p>
+
+    <p>To jest szum fotonowy i jest własnością samego światła. <span class="term-violet">Nie da się go usunąć lepszą elektroniką</span>, bo nie powstaje w elektronice. Doskonała kamera o zerowym szumie własnym wciąż by go miała.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Stosunek sygnału do szumu</span><span>przesuń ekspozycję</span></div>
+      <div class="diagram-controls">
+        <label for="szumEksp">Ekspozycja</label>
+        <input id="szumEksp" type="range" min="0" max="10" step="1" value="0">
+        <span class="value-readout" id="szumOdczyt">pełne naświetlenie</span>
+      </div>
+      <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Wykres słupkowy sygnału i szumu przy różnych ekspozycjach, z odczytem stosunku sygnału do szumu i udziału szumu odczytu.">
+        <rect x="30" y="30" width="220" height="160" fill="#141619" stroke="#2a2f38"/>
+        <text x="140" y="22" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">PODGLĄD</text>
+        <rect id="szumPole" x="46" y="46" width="188" height="128" fill="#8b909b"/>
+        <g id="szumZiarna"></g>
+
+        <line x1="300" y1="190" x2="720" y2="190" stroke="#8b909b" stroke-width="1.2"/>
+        <line x1="300" y1="30" x2="300" y2="190" stroke="#8b909b" stroke-width="1.2"/>
+        <text x="510" y="212" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">liczba zebranych elektronów (skala log)</text>
+
+        <path id="szumKrzywa" fill="none" stroke="#4fc3c0" stroke-width="2.4"/>
+        <circle id="szumPunkt" cx="700" cy="40" r="5" fill="#e8a33d"/>
+        <text x="330" y="48" font-family="IBM Plex Mono" font-size="9.5" fill="#4fc3c0">stosunek sygnału do szumu</text>
+
+        <g font-family="IBM Plex Mono" font-size="10.5">
+          <text x="300" y="236" fill="#8b909b">elektronów</text><text x="430" y="236" fill="#ecebe4" id="szumN">50 000</text>
+          <text x="520" y="236" fill="#8b909b">SNR</text><text x="580" y="236" fill="#e8a33d" id="szumSNR">224</text>
+          <text x="640" y="236" fill="#8b909b">=</text><text x="662" y="236" fill="#e8a33d" id="szumEV">7,8 dz.</text>
+        </g>
+      </svg>
+      <div class="diagram-caption" id="szumPodpis">Pełne naświetlenie: 50 000 elektronów, szum fotonowy 224, stosunek sygnału do szumu 7,8 działki.</div>
+    </div>
+
+    <p>Z pierwiastka wynika reguła, którą warto mieć w głowie na planie. Zmniejszenie naświetlenia o jedną działkę połowi liczbę fotonów, a więc dzieli stosunek sygnału do szumu przez pierwiastek z dwóch — czyli o <strong>pół działki</strong>. Sześć działek mniej światła to trzy działki gorszy szum, a nie sześć.</p>
+
+    <p>Szum elektroniki, zwany szumem odczytu, dokłada się do tego jako stała — kilka elektronów niezależnie od sygnału. W jasnych partiach jest bez znaczenia, bo pierwiastek z dziesięciu tysięcy to sto, a odczyt to trzy. <span class="term-cyan">Zaczyna się liczyć dopiero w najgłębszych cieniach</span>, gdzie elektronów są dziesiątki — i to tam, i tylko tam, widać różnicę między dobrą a przeciętną matrycą.</p>
+
+    <p>Z reguły pierwiastka wynika też coś, co porządkuje rozmowę o formatach z <a href="../dodatki/dodatek-aa-formaty-i-ekwiwalencja.html">Dodatku AA</a>. Większa matryca przy tym samym kadrze i tej samej głębi ostrości zbiera <strong>więcej fotonów w sumie</strong>, bo ma większą powierzchnię. Nie dlatego, że jej piksele są lepsze — dlatego, że jest ich więcej albo są większe. To jest jedyna przewaga dużego formatu, która wytrzymuje uczciwe porównanie, i teraz widać, skąd się bierze: z liczby fotonów, czyli z pierwiastka.</p>
+
+    <p>Warto przy tym rozprawić się z pojęciem, które w rozmowach pada najczęściej i jest najbardziej mylące. <span class="term-violet">Nie istnieje coś takiego jak „czułość matrycy”</span> w sensie, w jakim miała ją emulsja. Emulsja reagowała chemicznie i jej próg był fizyczną własnością materiału. Matryca liczy wszystko, co przyleci, a to, co nazywamy jej czułością, jest wyłącznie decyzją o tym, jaką liczbę elektronów uznamy za biel.</p>
+
+    <p class="deeper-inline">Rachunek w EV, czym ISO różni się od czułości i skąd bierze się dual native ISO — <a href="../dodatki/dodatek-n-szum-w-liczbach.html">Dodatek N</a>.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">ISO · wzmocnienie, nie czułość</div>
+    <h2>Czego ISO nie robi</h2>
+
+    <p>Podniesienie ISO nie sprawia, że matryca zbiera więcej fotonów. Matryca zbiera dokładnie tyle, ile wpuści przysłona i czas — a ISO jest <strong>wzmocnieniem zastosowanym po odczycie</strong>, czyli mnożeniem liczby, która już powstała.</p>
+
+    <p>Wynika stąd rzecz, która przy pierwszym spotkaniu brzmi paradoksalnie: <span class="term-violet">wysokie ISO nie dodaje szumu</span>. Szum był tam wcześniej — wynikał z małej liczby fotonów. ISO tylko podnosi cały obraz razem z nim, żeby dało się go zobaczyć. Zdjęcie zrobione przy niskim ISO i rozjaśnione w postprodukcji ma ten sam szum, z dokładnością do szumu odczytu.</p>
+
+    <p>Ta poprawka na szum odczytu jest jednak realna i dlatego ISO wciąż ma znaczenie. Wzmocnienie zastosowane <em>przed</em> układem odczytowym podnosi sygnał ponad szum tego układu, a wzmocnienie po nim — nie. Stąd bierze się <strong>podwójne natywne ISO</strong>: kamera ma dwa tory wzmocnienia i przełącza się na drugi w miejscu, w którym staje się on korzystniejszy.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Tor sygnału</span><span>gdzie ISO wchodzi, a gdzie nie</span></div>
+      <svg viewBox="0 0 760 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Schemat toru: fotony, studnia potencjału, wzmocnienie, przetwornik i liczba, z zaznaczeniem, w którym miejscu powstaje szum fotonowy, a w którym szum odczytu.">
+        <defs><marker id="m27" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8b909b"/></marker></defs>
+        <g font-family="IBM Plex Mono" font-size="10">
+          <rect x="26" y="60" width="96" height="40" fill="#20242c" stroke="#e8a33d" stroke-width="1.4"/>
+          <text x="74" y="84" fill="#e8a33d" text-anchor="middle">fotony</text>
+          <rect x="166" y="60" width="112" height="40" fill="#20242c" stroke="#6e93be" stroke-width="1.4"/>
+          <text x="222" y="84" fill="#6e93be" text-anchor="middle">studnia</text>
+          <rect x="322" y="60" width="112" height="40" fill="#20242c" stroke="#9c82d8" stroke-width="1.8"/>
+          <text x="378" y="84" fill="#9c82d8" text-anchor="middle">wzmocnienie</text>
+          <rect x="478" y="60" width="112" height="40" fill="#20242c" stroke="#6e93be" stroke-width="1.4"/>
+          <text x="534" y="84" fill="#6e93be" text-anchor="middle">odczyt</text>
+          <rect x="634" y="60" width="100" height="40" fill="#20242c" stroke="#7fc47f" stroke-width="1.4"/>
+          <text x="684" y="84" fill="#7fc47f" text-anchor="middle">liczba</text>
+        </g>
+        <g stroke="#8b909b" stroke-width="1.4" fill="none" marker-end="url(#m27)">
+          <path d="M 122 80 L 162 80"/><path d="M 278 80 L 318 80"/>
+          <path d="M 434 80 L 474 80"/><path d="M 590 80 L 630 80"/>
+        </g>
+
+        <line x1="74" y1="104" x2="74" y2="132" stroke="#e8a33d" stroke-width="1" stroke-dasharray="3 3"/>
+        <text x="74" y="150" font-family="IBM Plex Mono" font-size="9.5" fill="#e8a33d" text-anchor="middle">szum fotonowy</text>
+        <text x="74" y="164" font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="middle">powstaje TU</text>
+
+        <line x1="534" y1="104" x2="534" y2="132" stroke="#6e93be" stroke-width="1" stroke-dasharray="3 3"/>
+        <text x="534" y="150" font-family="IBM Plex Mono" font-size="9.5" fill="#6e93be" text-anchor="middle">szum odczytu</text>
+        <text x="534" y="164" font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="middle">powstaje TU</text>
+
+        <line x1="378" y1="104" x2="378" y2="132" stroke="#9c82d8" stroke-width="1" stroke-dasharray="3 3"/>
+        <text x="378" y="150" font-family="IBM Plex Mono" font-size="9.5" fill="#9c82d8" text-anchor="middle">ISO działa TU</text>
+        <text x="378" y="164" font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="middle">przed odczytem</text>
+
+        <text x="26" y="198" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">ISO stoi MIĘDZY dwoma źródłami szumu — dlatego podnosi sygnał ponad jedno z nich, a ponad drugie nie.</text>
+        <text x="26" y="214" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">Rozjaśnienie w postprodukcji stoi na samym końcu i nie podnosi sygnału ponad żadne.</text>
+      </svg>
+      <div class="diagram-caption">Cała różnica między ISO a rozjaśnieniem w compie mieści się w tym, po której stronie układu odczytowego działa mnożenie.</div>
+    </div>
+
+    <p>Diagram tłumaczy przy okazji, dlaczego rozjaśnianie w postprodukcji <em>nie jest</em> równoważne podniesieniu ISO, mimo że dla szumu fotonowego byłoby. Wzmocnienie w kamerze stoi przed odczytem, więc podnosi sygnał ponad szum odczytu; mnożenie w compie stoi za nim i podnosi jedno i drugie razem. <strong>W jasnych partiach nie ma między nimi różnicy, w głębokich cieniach jest wyraźna</strong> — i to jest jedyna rzecz, którą ISO naprawdę kupuje.</p>
+
+    <button class="advanced-btn" data-modal-target="adv-iso">Zaawansowane: dlaczego istnieje drugie natywne ISO</button>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">W CG · gdzie render kłamie</div>
+    <h2>Czego renderer nie ma</h2>
+
+    <p>Render też ma szum — próbkowania, nie fotonowy. Wygląda podobnie i zachowuje się zupełnie inaczej, a mylenie ich jest jednym z częstszych źródeł nieudanych dopasowań.</p>
+
+    <p><strong>Szum próbkowania maleje z liczbą próbek</strong>, więc da się go usunąć czasem obliczeń. Szum fotonowy nie maleje z niczym poza ilością światła w scenie. W praktyce znaczy to, że render dąży do obrazu <em>czystego</em>, a plate ma nieusuwalną podłogę szumu — i element CG położony na plate'cie jest zawsze gładszy niż otoczenie.</p>
+
+    <p><strong>Szum próbkowania jest jednorodny</strong>, a fotonowy zależy od jasności: silniejszy względnie w cieniach, słabszy w światłach. Dodanie do renderu jednolitego szumu na całym obrazie daje więc coś, czego w materiale nigdy nie ma — i to jest widoczne nawet wtedy, gdy poziom jest dobrany prawidłowo.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Szum przez zakres tonalny</span><span>plate kontra render z dodanym szumem</span></div>
+      <svg viewBox="0 0 760 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Wykres względnego szumu w funkcji jasności: w plate rośnie ku cieniom według odwrotności pierwiastka, dodany szum jednorodny jest stały i rozjeżdża się na obu końcach.">
+        <line x1="80" y1="190" x2="700" y2="190" stroke="#8b909b" stroke-width="1.2"/>
+        <line x1="80" y1="30" x2="80" y2="190" stroke="#8b909b" stroke-width="1.2"/>
+        <g font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">
+          <text x="110" y="208">cienie</text><text x="390" y="208">półtony</text><text x="670" y="208">światła</text>
+        </g>
+        <text x="26" y="36" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">szum</text>
+
+        <path d="M 90 44 Q 160 96 240 126 Q 360 158 480 172 Q 590 180 700 184" fill="none" stroke="#6e93be" stroke-width="2.6"/>
+        <text x="240" y="112" font-family="IBM Plex Mono" font-size="10" fill="#6e93be">plate · rośnie ku cieniom</text>
+
+        <line x1="80" y1="150" x2="700" y2="150" stroke="#d8695f" stroke-width="2.4" stroke-dasharray="6 4"/>
+        <text x="470" y="142" font-family="IBM Plex Mono" font-size="10" fill="#d8695f">szum jednorodny dodany do renderu</text>
+
+        <g fill="#d8695f" fill-opacity="0.12">
+          <path d="M 90 44 Q 160 96 240 126 L 240 150 L 80 150 L 80 44 Z"/>
+        </g>
+        <g fill="#d8695f" fill-opacity="0.12">
+          <path d="M 480 172 Q 590 180 700 184 L 700 150 L 480 150 Z"/>
+        </g>
+        <text x="150" y="70" font-family="IBM Plex Mono" font-size="9.5" fill="#d8695f">za mało</text>
+        <text x="600" y="168" font-family="IBM Plex Mono" font-size="9.5" fill="#d8695f">za dużo</text>
+
+        <circle cx="360" cy="152" r="4" fill="#7fc47f"/>
+        <text x="360" y="136" font-family="IBM Plex Mono" font-size="9.5" fill="#7fc47f" text-anchor="middle">zgadza się tylko tu</text>
+
+        <text x="80" y="230" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">Dopasowanie do jednej wartości daje zgodność w jednym punkcie zakresu i rozjazd na obu końcach.</text>
+      </svg>
+      <div class="diagram-caption">Poziom można dobrać dowolnie — przesunie to tylko punkt przecięcia. Zgodność w całym zakresie wymaga modulacji, nie strojenia poziomu.</div>
+    </div>
+
+    <p>Poprawka jest prosta: <strong>szum dokładany do renderu musi być modulowany jasnością</strong>, według tego samego pierwiastka. W cieniach silny, w światłach słaby. Do tego dochodzi struktura przestrzenna i zależność od kanału, ale to już jest temat <a href="rozdzial-29-ziarno-to-nie-szum.html">Rozdziału 29</a>.</p>
+
+    <p>Warto zauważyć, dlaczego strojenie samego poziomu nigdy tego nie naprawia. Krzywa plate'u opada, a prosta dodanego szumu jest pozioma — <span class="term-violet">dwie różne funkcje przecinają się w jednym punkcie i rozchodzą wszędzie indziej</span>. Podnoszenie albo obniżanie poziomu przesuwa tylko miejsce przecięcia. Dopóki dodawany szum nie zależy od jasności, element będzie pasował w jednym miejscu zakresu i odstawał w dwóch pozostałych.</p>
+
+    <p>Ostatnia rzecz dotyczy kolejności i wraca w każdej części tej książki. Szum powstaje <span class="term-raster">w matrycy</span>, więc po całej optyce, a przed korekcją barwną. W compie idzie po flarze, po rozmyciu i po dystorsji, a przed gradingiem — inaczej zachowuje się jak deseń nałożony na gotowy obraz, a nie jak właściwość rejestracji.</p>
+  </div>
+
+  <div class="panel practice">
+    <div class="panel-label">Z praktyki</div>
+    <p><strong>Zmierz szum w cieniach i w światłach osobno.</strong> Dwie liczby zamiast jednej mówią, czy plate jest zdominowany szumem fotonowym (stosunek około pierwiastka), czy szumem odczytu w cieniach (podłoga stała). Dopasowanie do jednej wartości daje element pasujący w połowie zakresu i odstający na obu końcach.</p>
+    <p><strong>Nie odszumiaj plate'u, żeby dopasować render.</strong> Kusi, bo szybciej. Odszumianie usuwa razem z szumem drobny detal i zmienia charakter całego ujęcia, a element CG nadal jest gładszy. Odwrotny kierunek — dodanie szumu do renderu — jest tańszy i odwracalny.</p>
+    <p><strong>Sprawdź, czy plate nie był już odszumiany w kamerze.</strong> Wiele kamer odszumia w locie, a wynik ma charakterystyczną cechę: szum znika, ale drobna faktura też. Plate o czystych cieniach i dziwnie płaskiej skórze jest odszumiony — i wtedy render trzeba dopasować do tego stanu, a nie do surowego szumu.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>mozaika Bayera</dt>
+      <dd>Układ filterków barwnych nad pikselami, z dwukrotnie większą liczbą zielonych. Dwie z trzech barw w każdym pikselu są interpolowane.</dd>
+      <dt>szum fotonowy</dt>
+      <dd>Rozrzut liczby padających fotonów, równy pierwiastkowi z ich średniej liczby. Własność światła, nie kamery.</dd>
+      <dt>szum odczytu</dt>
+      <dd>Szum wnoszony przez elektronikę, stały niezależnie od sygnału. Widoczny wyłącznie w najgłębszych cieniach.</dd>
+      <dt>ISO</dt>
+      <dd>Wzmocnienie sygnału po odczycie. Nie zwiększa liczby zebranych fotonów, więc nie poprawia stosunku sygnału do szumu.</dd>
+      <dt>podwójne natywne ISO</dt>
+      <dd>Dwa tory wzmocnienia w matrycy, z których drugi włącza się tam, gdzie daje korzystniejszy stosunek sygnału do szumu odczytu.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Wiemy, jak fotony stają się liczbami. Zanim jednak do tego dojdzie, światło musi zatrzymać się w warstwie czułej — a ono nie zawsze się zatrzymuje. W <a href="rozdzial-28-halacja.html">następnym rozdziale</a> zobaczymy, co się dzieje, gdy przejdzie na wylot, odbije się od spodu i naświetli materiał drugi raz od tyłu. Stąd halacja, jej charakterystyczny czerwony kolor i jej cyfrowy odpowiednik, o którym mało kto wie.</p>
+  </div>
 
   <div class="deeper">
     <div class="deeper-label">Idź głębiej</div>
@@ -57,8 +311,102 @@ window.SKY3D_MESSAGES = {
       <a class="nav-next" href="rozdzial-28-halacja.html">Następny →</a>
   </div>
 
+  <template id="adv-iso">
+    <h3>Dlaczego istnieje drugie natywne ISO</h3>
+
+    <p>Podwójne natywne ISO wygląda na chwyt marketingowy i jest jedną z niewielu rzeczy w specyfikacjach kamer, które opisują coś rzeczywistego. Wyjaśnienie mieści się w jednym zdaniu: <strong>matryca ma dwa fizycznie różne tory wzmocnienia</strong>, a nie jeden regulowany.</p>
+
+    <p>Wzmocnienie umieszczone <em>przed</em> układem odczytowym podnosi sygnał ponad szum tego układu. Im większe, tym mniej szum odczytu znaczy — ale tym szybciej wzmocniony sygnał uderza w górną granicę przetwornika, czyli tym mniej zostaje zapasu w światłach.</p>
+
+    <p>Jest to więc handel: <span class="term-cyan">czystsze cienie za mniejszy zapas w światłach</span>. Producent nie musi jednak wybierać raz na zawsze. Może zbudować dwa tory — jeden nastawiony na maksymalny zapas, drugi na minimalny szum odczytu — i przełączać się między nimi.</p>
+
+    <p>Stąd charakterystyczna cecha takich kamer: krzywa szumu w funkcji ISO nie rośnie monotonicznie. Rośnie, potem w punkcie przełączenia <strong>spada</strong>, potem znów rośnie. Drugie natywne ISO jest właśnie tym punktem — i zdjęcie zrobione tuż poniżej niego bywa <em>bardziej</em> zaszumione niż zrobione powyżej.</p>
+
+    <p>Praktycznie znaczy to tyle: jeśli scena wymaga wysokiego ISO, warto przeskoczyć od razu na drugie natywne, zamiast zatrzymywać się tuż pod nim. A przy dopasowywaniu renderu do materiału z takiej kamery warto wiedzieć, że <strong>poziom szumu nie jest funkcją rosnącą ISO</strong> — i że dwa ujęcia z sąsiednich nastaw mogą mieć zauważalnie różny charakter cieni.</p>
+  </template>
+
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-panel">
+      <button class="modal-close" data-modal-close aria-label="Zamknij">×</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
 </div>
 
 <script src="../assets/interactive.js"></script>
+<script>
+/* Szum fotonowy. Sygnal to liczba elektronow N, szum fotonowy to pierwiastek
+   z N, szum odczytu stala. Sumuja sie kwadratowo, bo sa nieskorelowane.
+   Kazda dzialka mniej swiatla polowi N, wiec SNR spada o pierwiastek z dwoch,
+   czyli o POL dzialki — i to jest cala tresc tego widgetu. */
+(function () {
+  var sl = document.getElementById('szumEksp');
+  if (!sl) return;
+  var PELNA_STUDNIA = 50000, SZUM_ODCZYTU = 3;
+  var X0 = 310, X1 = 710, Y0 = 185, Y1 = 40;
+
+  function snr(N) { return N / Math.sqrt(N + SZUM_ODCZYTU * SZUM_ODCZYTU); }
+  function px(N) {                       // os logarytmiczna od 10 do 50000
+    var t = Math.log(Math.max(N, 10) / 10) / Math.log(PELNA_STUDNIA / 10);
+    return X0 + t * (X1 - X0);
+  }
+  function py(s) {                       // SNR w dzialkach, 0..8
+    var ev = Math.log(Math.max(s, 1)) / Math.LN2;
+    return Y0 - (ev / 8) * (Y0 - Y1);
+  }
+
+  var d = '';
+  for (var i = 0; i <= 60; i++) {
+    var N = 10 * Math.pow(PELNA_STUDNIA / 10, i / 60);
+    d += (i ? ' L ' : 'M ') + px(N).toFixed(1) + ' ' + py(snr(N)).toFixed(1);
+  }
+
+  function odswiez() {
+    var dzialek = parseFloat(sl.value);
+    var N = PELNA_STUDNIA / Math.pow(2, dzialek);
+    var s = snr(N);
+    var ev = Math.log(s) / Math.LN2;
+
+    document.getElementById('szumKrzywa').setAttribute('d', d);
+    document.getElementById('szumPunkt').setAttribute('cx', px(N).toFixed(1));
+    document.getElementById('szumPunkt').setAttribute('cy', py(s).toFixed(1));
+
+    // Podglad: jasnosc spada z ekspozycja, widoczne ziarno rosnie odwrotnie do SNR.
+    var jasnosc = Math.max(0.05, 1 / Math.pow(2, dzialek * 0.55));
+    var v = Math.round(210 * jasnosc + 20);
+    document.getElementById('szumPole').setAttribute('fill', 'rgb(' + v + ',' + v + ',' + v + ')');
+
+    var g = document.getElementById('szumZiarna');
+    while (g.firstChild) g.removeChild(g.firstChild);
+    var amplituda = Math.min(90, 1400 / s);
+    var ile = Math.min(420, Math.round(amplituda * 6));
+    for (var i = 0; i < ile; i++) {
+      var r = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+      r.setAttribute('x', (46 + Math.random() * 186).toFixed(1));
+      r.setAttribute('y', (46 + Math.random() * 126).toFixed(1));
+      r.setAttribute('width', '2'); r.setAttribute('height', '2');
+      r.setAttribute('fill', Math.random() < 0.5 ? '#ffffff' : '#000000');
+      r.setAttribute('fill-opacity', (amplituda / 160).toFixed(3));
+      g.appendChild(r);
+    }
+
+    document.getElementById('szumOdczyt').textContent =
+      dzialek === 0 ? 'pełne naświetlenie' : '−' + dzialek + ' działki';
+    document.getElementById('szumN').textContent =
+      Math.round(N).toLocaleString('pl-PL').replace(/ /g, ' ');
+    document.getElementById('szumSNR').textContent = s.toFixed(0);
+    document.getElementById('szumEV').textContent = ev.toFixed(1).replace('.', ',') + ' dz.';
+    document.getElementById('szumPodpis').textContent = dzialek === 0
+      ? 'Pełne naświetlenie: 50 000 elektronów, szum fotonowy 224, stosunek sygnału do szumu 7,8 działki.'
+      : 'Ekspozycja o ' + dzialek + ' działki niższa: ' + Math.round(N) +
+        ' elektronów, stosunek sygnału do szumu ' + ev.toFixed(1).replace('.', ',') +
+        ' działki — czyli o ' + (dzialek / 2).toFixed(1).replace('.', ',') +
+        ' gorszy. Połowa tego, co straciło światło.';
+  }
+  sl.addEventListener('input', odswiez);
+  odswiez();
+})();
+</script>
 </body>
 </html>
