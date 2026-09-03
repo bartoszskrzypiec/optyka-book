@@ -41,7 +41,117 @@ window.SKY3D_MESSAGES = {
   <h1>STMapy: budowa, próbkowanie, filtrowanie</h1>
   <p class="subtitle">Czym jest mapa współrzędnych, dlaczego musi być w pełnej precyzji, co się dzieje na krawędziach kadru i jak sprawdzić, że undistort jest odwracalny.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">Co tu jest</div>
+    <ul>
+      <li><strong>Czym jest STMapa</strong> i dlaczego obraz bywa lepszym zapisem przekształcenia niż wzór.</li>
+      <li><strong>Konwencje</strong>, na których najłatwiej się przewrócić: zakres, początek układu, kierunek osi Y.</li>
+      <li><strong>Pomiar dystorsji z siatki</strong> — protokół i wzór wielomianowy z sensownymi wartościami.</li>
+      <li><strong>Składanie przekształceń w jedno</strong>, żeby obraz był próbkowany dokładnie raz.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Definicja · obraz zamiast wzoru</div>
+    <h2>Co siedzi w STMapie</h2>
+
+    <p>STMapa jest obrazem, w którym wartości pikseli nie są barwami, tylko <strong>współrzędnymi</strong>. Piksel na pozycji (x, y) niesie w kanale czerwonym i zielonym informację: „weź piksel źródłowy stamtąd”.</p>
+
+    <div class="formula">
+      wynik(<span class="vec" data-tip="Współrzędne piksela wyjściowego">x, y</span>) = źródło(<span class="vec" data-tip="Kanał czerwony mapy w tym pikselu, przemnożony przez szerokość">R(x,y)·W</span>, <span class="vec" data-tip="Kanał zielony, przemnożony przez wysokość">G(x,y)·H</span>)
+      <span class="sub">R, G — wartości kanałów w zakresie 0–1. W, H — wymiary obrazu w pikselach. Mapa tożsamościowa ma R rosnące liniowo w poziomie i G w pionie — czyli wygląda jak gradient od czerni przez czerwień i zieleń do żółci.</span>
+    </div>
+
+    <p>Zaleta jest jedna i decydująca: <span class="term-cyan">STMapa opisuje dowolne przekształcenie, także takie, którego nie da się zapisać wzorem</span>. Dystorsja obiektywu rzadko jest idealnym wielomianem — bywa lekko niesymetryczna, bo szkło nie jest idealnie osiowe. Wielomian tego nie odda; mapa zmierzona z siatki odda dokładnie tyle, ile zmierzono.</p>
+
+    <p>Druga zaleta jest praktyczna: <strong>mapa jest danymi, a nie kodem</strong>. Przechodzi między programami bez tłumaczenia konwencji, daje się obejrzeć, porównać i wersjonować jak każdy inny obraz. Wzór trzeba przepisywać dla każdego narzędzia osobno, a każde ma inne uporządkowanie współczynników.</p>
+
+    <p>Wada też jest jedna: mapa ma skończoną rozdzielczość i skończoną precyzję. Zapisana w ośmiu bitach na kanał daje ziarnistość przesunięcia rzędu jednego piksela na kadrze 4K — czyli bezużyteczną. <strong>STMapa musi być zmiennoprzecinkowa albo co najmniej szesnastobitowa</strong>, i jest to najczęstsza przyczyna dziwnych, schodkowych artefaktów po jej zastosowaniu.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Konwencje · trzy sposoby na pomyłkę</div>
+    <h2>Co sprawdzić przed użyciem</h2>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead>
+          <tr><th>Konwencja</th><th>Warianty</th><th>Objaw pomyłki</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>zakres wartości</td><td>0–1 albo w pikselach</td><td>obraz zapada się do jednego piksela w rogu</td></tr>
+          <tr><td>kierunek osi Y</td><td>od góry albo od dołu</td><td>obraz odbity w pionie</td></tr>
+          <tr><td>początek układu</td><td>róg piksela albo jego środek</td><td>przesunięcie o pół piksela, czyli lekkie zmiękczenie</td></tr>
+          <tr><td>kierunek mapy</td><td>„skąd brać” albo „dokąd iść”</td><td>dystorsja nakłada się zamiast zdejmować</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Pierwsze trzy dają objawy widoczne od razu. Czwarty jest podstępny, bo przy słabej dystorsji wygląda na „prawie dobrze”.</p>
+
+    <p>Czwarty wiersz wart jest komentarza, bo jest źródłem najdłuższych poszukiwań. <strong>Mapa „skąd brać” i mapa „dokąd iść” to dwie różne rzeczy</strong> i jedna nie jest odwrotnością drugiej w sensie arytmetycznym — odwrócenie wymaga rozwiązania równania dla każdego piksela, bo przekształcenie nie jest zwykle wyrażalne wzorem w drugą stronę.</p>
+
+    <p>Test rozstrzygający zajmuje chwilę: <span class="term-amber">nałóż mapę na siebie samą dwa razy</span>. Jeśli konwencja jest ta sama i mapa jest odwrotnością siebie, wynik powinien być zgodny z oryginałem. Jeśli dystorsja się podwoiła, kierunek jest odwrotny do zakładanego.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Pomiar · z siatki na współczynniki</div>
+    <h2>Skąd wziąć dystorsję</h2>
+
+    <p>Model wielomianowy, wystarczający dla większości obiektywów, opisuje przesunięcie punktu wzdłuż promienia od środka kadru:</p>
+
+    <div class="formula">
+      r' = <span class="vec" data-tip="Odległość punktu od środka kadru, znormalizowana">r</span> · (1 + <span class="vec" data-tip="Współczynnik drugiego rzędu">k₁</span>·<span class="vec" data-tip="Odległość od środka">r</span>² + <span class="vec" data-tip="Współczynnik czwartego rzędu">k₂</span>·<span class="vec" data-tip="Odległość od środka">r</span>⁴)
+      <span class="sub">r — odległość od środka kadru, znormalizowana zwykle do połowy przekątnej albo połowy szerokości. k₁ ujemne daje beczkę, dodatnie poduszkę. k₂ poprawia dopasowanie przy brzegach i przy silnej dystorsji zmienia znak.</span>
+    </div>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead>
+          <tr><th>Typ obiektywu</th><th class="num">k₁</th><th class="num">k₂</th><th class="num">Przesunięcie w rogu</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>szeroki kinowy, dobrze skorygowany</td><td class="num">−0,003</td><td class="num">0,0005</td><td class="num">0,3% promienia</td></tr>
+          <tr><td>szeroki fotograficzny, typowy</td><td class="num">−0,05</td><td class="num">0,010</td><td class="num">4,0%</td></tr>
+          <tr><td>bardzo szeroki, wyraźna beczka</td><td class="num">−0,09</td><td class="num">0,020</td><td class="num">7,0%</td></tr>
+          <tr><td>tele z poduszką</td><td class="num">+0,015</td><td class="num">−0,001</td><td class="num">1,4%</td></tr>
+          <tr><td>rybie oko</td><td class="num">−0,35</td><td class="num">0,120</td><td class="num">23,0%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Wartości orientacyjne, przy normalizacji r do jedności w rogu kadru. Ostatnia kolumna to (r' − r)/r w rogu, czyli o ile procent promienia punkt się przesuwa.</p>
+
+    <p>Protokół pomiaru z siatki jest krótki i wart wykonania raz na obiektyw, a nie raz na ujęcie.</p>
+
+    <p><strong>Krok 1.</strong> Sfotografuj płaską siatkę prostokątną wypełniającą kadr, ustawioną równolegle do matrycy. Równoległość jest tu ważniejsza niż wszystko inne — pochylenie siatki wygląda w wyniku jak dystorsja asymetryczna.</p>
+
+    <p><strong>Krok 2.</strong> Znajdź w obrazie środek dystorsji. Zwykle nie leży dokładnie w środku kadru — odchylenie o kilka pikseli jest normalne i jego pominięcie daje resztkowy błąd rosnący ku jednemu brzegowi.</p>
+
+    <p><strong>Krok 3.</strong> Dopasuj k₁ i k₂ tak, żeby proste w wyprostowanym obrazie były proste. Kryterium ilościowe: odchylenie punktu środkowego krawędzi od odcinka łączącego jej końce, mierzone w pikselach. Poniżej pół piksela jest bardzo dobrze, poniżej dwóch wystarcza.</p>
+
+    <p><strong>Krok 4.</strong> Zapisz jako STMapę i sprawdź na oryginalnej siatce. To sprawdzenie łapie wszystkie cztery pomyłki konwencyjne z poprzedniej sekcji naraz.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Składanie · jedno próbkowanie zamiast trzech</div>
+    <h2>Łączenie przekształceń</h2>
+
+    <p>Modal w <a href="../rozdzialy/rozdzial-35-geometria-plateu.html">Rozdziale 35</a> pokazuje, ile kosztuje każde przepróbkowanie. STMapy dają na to prosty sposób: <strong>przekształcenia składa się na poziomie map, a dopiero wynik stosuje do obrazu</strong>.</p>
+
+    <p>Mechanizm jest ten sam, co przy zwykłym składaniu funkcji. Mając mapę A („skąd brać dla kroku pierwszego”) i mapę B dla kroku drugiego, mapę wypadkową otrzymuje się, stosując A do B — czyli traktując B jak obraz i przepuszczając ją przez A. Ponieważ mapy są zmiennoprzecinkowe, ta operacja nie kosztuje nic pod względem jakości.</p>
+
+    <div class="worked">
+      <div class="wlabel">Rachunek · trzy operacje, jedno próbkowanie</div>
+      <div class="step"><span class="k">Zadanie</span><span class="v">zdjąć dystorsję, ustabilizować, przeskalować 4096 → 2048</span></div>
+      <div class="step"><span class="k">Naiwnie</span><span class="v">trzy przepróbkowania, każde filtrem sześciennym</span></div>
+      <div class="step"><span class="k">Koszt jakości</span><span class="v">MTF przy połowie Nyquista: 0,87 × 0,87 × 0,87 = 0,66</span></div>
+      <div class="step"><span class="k">Ze składaniem</span><span class="v">trzy mapy złożone w jedną, jedno przepróbkowanie</span></div>
+      <div class="step"><span class="k">Koszt jakości</span><span class="v">0,87</span></div>
+      <div class="result">Ta sama geometria wyniku, o jedną trzecią więcej kontrastu na drobnym detalu.</div>
+      <div class="check">Kontrola: 0,66 to spadek o 0,60 działki kontrastu, czyli różnica, którą widać w porównaniu obok siebie. Kaskadowanie MTF przez mnożenie jest tą samą regułą, co w Dodatku H — a przepróbkowanie jest po prostu kolejnym ogniwem łańcucha.</div>
+    </div>
+
+    <p>Warto na koniec zauważyć konsekwencję, która wykracza poza geometrię. Skoro przekształcenia da się składać i stosować raz, to <span class="term-violet">porządek pracy w compie powinien odkładać wszystkie operacje geometryczne na jeden krok</span>, zamiast rozsiewać je po drzewie. Jest to jedna z reguł, które <a href="../rozdzialy/rozdzial-36-kolejnosc-w-compie.html">Rozdział 36</a> zbiera w całość — i jedna z niewielu, które poprawiają obraz nie zmieniając w nim nic poza liczbą przejść.</p>
+  </div>
 
   <div class="site-nav">
     <a href="../index.html">← Spis treści</a>

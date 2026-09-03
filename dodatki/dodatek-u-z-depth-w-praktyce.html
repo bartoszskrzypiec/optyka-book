@@ -41,7 +41,113 @@ window.SKY3D_MESSAGES = {
   <h1>Z-depth i deep w praktyce</h1>
   <p class="subtitle">Kalibracja znormalizowanej mapy do metrów, pułapki filtrowania kanału Z, kiedy deep jest jedynym wyjściem i ile kosztuje.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">Co tu jest</div>
+    <ul>
+      <li><strong>Cztery sposoby zapisu głębi</strong> i co który znaczy — bo „Z” bywa czterema różnymi rzeczami.</li>
+      <li><strong>Rachunek krążka rozmycia z mapy głębi</strong>, czyli jak przełożyć odległość na promień w pikselach.</li>
+      <li><strong>Cztery miejsca, gdzie mapa głębi zawodzi</strong>, z objawem każdego.</li>
+      <li><strong>Obejścia</strong>: rozmywanie warstwami, głębia z kryciem, i kiedy żadne nie pomoże.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Cztery Z · to samo słowo, cztery znaczenia</div>
+    <h2>Co dokładnie jest w tym kanale</h2>
+
+    <p>Zanim cokolwiek policzy się z mapy głębi, trzeba wiedzieć, którą wielkość ona zawiera. Cztery bywają nazywane tak samo, a różnią się na tyle, że pomylenie ich daje rozmycie błędne w całym kadrze.</p>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead>
+          <tr><th>Wariant</th><th>Co mierzy</th><th>Rozpoznasz po</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>odległość wzdłuż osi</td><td>składowa Z w układzie kamery</td><td>płaska ściana prostopadła do osi ma jedną wartość</td></tr>
+          <tr><td>odległość euklidesowa</td><td>długość promienia od źrenicy</td><td>ta sama ściana jaśnieje ku rogom kadru</td></tr>
+          <tr><td>głębia znormalizowana</td><td>wartość 0–1 między płaszczyznami obcięcia</td><td>zakres dokładnie 0–1, nieliniowo rozłożony</td></tr>
+          <tr><td>odwrotność odległości</td><td>1/Z</td><td>tło ma wartości bliskie zeru, nie ogromne</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Test rozpoznawczy zajmuje sekundę: wystaw w scenie płaską ścianę prostopadłą do osi i sprawdź, czy jest jednolita.</p>
+
+    <p>Różnica między dwoma pierwszymi wariantami rośnie z kątem polowym i jest większa, niż podpowiada intuicja. Punkt leżący w rogu kadru przy kącie polowym <em>θ</em> ma odległość euklidesową większą o czynnik 1/cos θ — czyli przy 24 mm na pełnej klatce, gdzie kąt rogu wynosi 42°, aż o 35 procent.</p>
+
+    <p><strong>Do rozmycia potrzebna jest odległość wzdłuż osi</strong>, bo to ona wchodzi we wzór na krążek. Użycie euklidesowej daje rozmycie rosnące ku rogom kadru w sposób, którego żaden obiektyw nie robi — a objaw jest łatwy do pomylenia z winietowaniem albo z krzywizną pola.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Rachunek · z odległości na piksele</div>
+    <h2>Krążek rozmycia z mapy</h2>
+
+    <p>Wzór jest ten sam, co w <a href="dodatek-e-glebia-w-liczbach.html">Dodatku E</a>, tylko rozwiązany w drugą stronę: zamiast pytać, jaka głębia mieści się w dopuszczalnym krążku, pytamy, jaki krążek daje dana odległość.</p>
+
+    <div class="formula">
+      c = <span class="vec" data-tip="Średnica źrenicy wejściowej, czyli f/N">D</span> · <span class="vec" data-tip="Ogniskowa">f</span> · |<span class="vec" data-tip="Odległość punktu">z</span> − <span class="vec" data-tip="Odległość ostrzenia">s</span>| / (<span class="vec" data-tip="Odległość punktu">z</span> · (<span class="vec" data-tip="Odległość ostrzenia">s</span> − <span class="vec" data-tip="Ogniskowa">f</span>))
+      <span class="sub">c — średnica krążka na matrycy, w tych samych jednostkach co f. D = f/N — średnica źrenicy. z — odległość punktu, s — odległość ostrzenia. Wszystkie odległości od źrenicy.</span>
+    </div>
+
+    <p>Na piksele przelicza się przez stosunek szerokości kadru w pikselach do szerokości bramki:</p>
+
+    <div class="formula">
+      c<sub>px</sub> = c · <span class="vec" data-tip="Szerokość kadru w pikselach">W</span> / <span class="vec" data-tip="Szerokość bramki w mm">w</span>
+      <span class="sub">Ten sam przelicznik, co w Dodatku R przy rozmyciu ruchu. Warto go policzyć raz na ujęcie i zapisać — wraca w każdym rachunku tego typu.</span>
+    </div>
+
+    <div class="worked">
+      <div class="wlabel">Rachunek · tło przy portretowej ogniskowej</div>
+      <div class="step"><span class="k">Dane</span><span class="v">f = 85 mm, T/2,0, ostrość na 3 m, tło na 12 m, S35 24,89 mm, 4096 px</span></div>
+      <div class="step"><span class="k">Źrenica</span><span class="v">D = 85/2,0 = 42,5 mm</span></div>
+      <div class="step"><span class="k">Licznik</span><span class="v">42,5 · 85 · |12000 − 3000| = 42,5 · 85 · 9000 = 32 512 500</span></div>
+      <div class="step"><span class="k">Mianownik</span><span class="v">12000 · (3000 − 85) = 12000 · 2915 = 34 980 000</span></div>
+      <div class="step"><span class="k">Krążek</span><span class="v">32 512 500 / 34 980 000 = 0,9295 mm</span></div>
+      <div class="step"><span class="k">Na piksele</span><span class="v">0,9295 · (4096/24,89) = 153 px</span></div>
+      <div class="result">Punktowe światło w tle rozlewa się na 153 piksele średnicy — ponad trzy i pół procent szerokości kadru.</div>
+      <div class="check">Kontrola przez odwrócenie: przy krążku dopuszczalnym 0,025 mm ten sam układ ma granice ostrości na 2,941 i 3,062 m, czyli głębię 12,1 cm. Tło na dwunastu metrach leży zatem prawie sto razy dalej niż tylna granica — a krążek 153 px jest tego liczbową miarą. Obie liczby wychodzą z tego samego wzoru, rozwiązanego w dwie strony.</div>
+    </div>
+
+    <p>Rachunek pokazuje przy okazji, dlaczego rozmycie z mapy głębi bywa kosztowne obliczeniowo: <span class="term-violet">promień jądra splotu sięga tu osiemdziesięciu pikseli</span>, a naiwny splot kosztuje kwadrat promienia. Stąd biorą się przybliżenia stosowane w narzędziach — i stąd ich artefakty.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Awarie · cztery miejsca i cztery objawy</div>
+    <h2>Gdzie mapa głębi kłamie</h2>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead>
+          <tr><th>Sytuacja</th><th>Dlaczego</th><th>Objaw</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>krawędź na tle o innej odległości</td><td>piksel niesie mieszankę, mapa wybiera jedną</td><td>ostra obwódka albo halo</td></tr>
+          <tr><td>przezroczystość</td><td>przez piksel widać dwie rzeczy naraz</td><td>szyba rozmywa się jak to, co za nią</td></tr>
+          <tr><td>ruchome rozmycie już w obrazie</td><td>mapa jest ostra, obraz nie</td><td>rozmyty przedmiot dostaje ostrą maskę rozmycia</td></tr>
+          <tr><td>przedmiot rozciągnięty w głąb</td><td>rozmycie liczone na piksel, nie na powierzchnię</td><td>skokowa zmiana rozmycia wzdłuż płaszczyzny</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Pierwszy wiersz jest najczęstszy, drugi najbardziej nieusuwalny, trzeci najczęściej mylony z błędem trackingu.</p>
+
+    <p>Trzeci wiersz zasługuje na osobne omówienie, bo jego przyczyna jest inna niż pozostałych. Mapa głębi zapisuje się <strong>bez rozmycia ruchu</strong> — jest ostra, bo próbkowana w jednej chwili. Obraz kolorowy jest rozmyty. Nakładając jedną na drugą, dostajemy rozmycie głębi o ostrych granicach na przedmiocie, który tych granic nie ma.</p>
+
+    <p>Obejście jest proste i warto je znać: <span class="term-cyan">rozmycie głębi wykonuje się przed rozmyciem ruchu</span>, na obu kanałach ostrych. Odpowiada to zresztą rzeczywistości, bo obiektyw rozmywa w głąb niezależnie od tego, co dzieje się w czasie, a nośnik całkuje dopiero potem. Jest to jeden z tych przypadków, gdzie właściwa kolejność w compie wynika wprost z kolejności w kamerze — temat <a href="../rozdzialy/rozdzial-36-kolejnosc-w-compie.html">Rozdziału 36</a>.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Obejścia · co pomaga i na ile</div>
+    <h2>Trzy sposoby ratowania krawędzi</h2>
+
+    <p><strong>Rozmywanie warstwami.</strong> Zamiast jednej mapy dla całej sceny, render zapisuje kilka warstw o rozłącznych zakresach głębi, każdą z własnym kryciem. Każdą rozmywa się osobno pełnym promieniem, a potem składa od tyłu do przodu. Rozwiązuje to pierwszy i czwarty wiersz tabeli, bo w obrębie warstwy krawędź ma prawidłowe krycie, a to, co za nią, istnieje w warstwie niżej.</p>
+
+    <p>Koszt: kilka razy więcej danych i konieczność ustalenia zakresów przy renderze. Zysk: wynik nie do odróżnienia od renderowanej głębi, jeśli warstw jest dość.</p>
+
+    <p><strong>Głębia razem z kryciem.</strong> Rozmywa się element wraz z jego kanałem krycia, przed złożeniem z tłem. Krawędź elementu staje się wtedy miękka tak jak on sam, więc obwódka znika. Nie pomaga to tam, gdzie przedmiot przecina sam siebie na różnych odległościach — ale na granicy z tłem, czyli w większości ujęć, wystarcza.</p>
+
+    <p><strong>Rozmycie kierunkowe od tyłu.</strong> Wariant, w którym piksele bliższe mają prawo rozlewać się na dalsze, ale nie odwrotnie. Odtwarza to zachowanie prawdziwego obiektywu, w którym nieostry pierwszy plan zachodzi na ostre tło, a nie na odwrót. Poprawia wygląd, nie usuwa braku danych.</p>
+
+    <p>Kiedy żaden nie pomoże? Gdy <strong>informacji nie ma i nie da się jej dorobić</strong>: przy elementach, w których krawędzi jest więcej niż wnętrza — włosy, dym, siatka, listowie pod światło. Wtedy obowiązuje reguła z <a href="../rozdzialy/rozdzial-34-render-czy-comp.html">Rozdziału 34</a> i głębię liczy się w rendererze. Jest to jedno z niewielu miejsc w tej książce, gdzie odpowiedź brzmi po prostu „tego nie da się zrobić taniej”.</p>
+  </div>
 
   <div class="site-nav">
     <a href="../index.html">← Spis treści</a>
