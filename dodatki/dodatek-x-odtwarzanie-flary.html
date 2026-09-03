@@ -41,7 +41,111 @@ window.SKY3D_MESSAGES = {
   <h1>Odtwarzanie flary w compie</h1>
   <p class="subtitle">Warstwy, z których składa się wiarygodna flara, skąd brać maski jasnych źródeł, jak nie zabić wydajności i po czym poznać flarę podrobioną.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">Co tu jest</div>
+    <ul>
+      <li><strong>Pięć warstw</strong>, z których składa się wiarygodna flara, w kolejności, w jakiej powstają w rzeczywistym torze.</li>
+      <li><strong>Skąd brać maskę</strong> jasnych źródeł i dlaczego próg trzeba postawić znacznie wyżej, niż podpowiada oko.</li>
+      <li><strong>Jak nie zabić wydajności</strong> — cztery rzeczy, które w tym łańcuchu kosztują najwięcej.</li>
+      <li><strong>Lista kontrolna</strong>: dziesięć pytań, po których poznaje się flarę podrobioną.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Warstwy · pięć, w ustalonej kolejności</div>
+    <h2>Z czego składa się flara</h2>
+
+    <p>Flara nie jest jednym zjawiskiem, tylko pięcioma, o pięciu różnych przyczynach opisanych w <a href="../rozdzialy/rozdzial-22-veiling-glare.html">Rozdziałach 22</a>–<a href="../rozdzialy/rozdzial-26-smugi-anamorficzne.html">26</a>. Składa się je jako osobne warstwy i <strong>kolejność nie jest dowolna</strong> — wynika z tego, w jakiej kolejności zjawiska zachodzą w obiektywie.</p>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead>
+          <tr><th class="num">#</th><th>Warstwa</th><th>Skąd</th><th>Sterowana przez</th><th>Rozdział</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="num">1</td><td>Ghosty</td><td>dwa odbicia</td><td>pozycja źródła</td><td>R.23</td></tr>
+          <tr><td class="num">2</td><td>Smugi</td><td>ghost astygmatyczny</td><td>pozycja źródła</td><td>R.26</td></tr>
+          <tr><td class="num">3</td><td>Gwiazdki</td><td>krawędzie przysłony</td><td>liczba listków, przysłona</td><td>R.25</td></tr>
+          <tr><td class="num">4</td><td>Poświata wokół świateł</td><td>rozproszenie bliskie</td><td>jasność źródła</td><td>R.22</td></tr>
+          <tr><td class="num">5</td><td>Podniesienie czerni</td><td>rozproszenie dalekie</td><td>całkowita jasność sceny</td><td>R.22</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Warstwy 1–3 są <em>strukturalne</em> — mają kształt i położenie. Warstwy 4–5 są <em>rozmyte</em> i nie mają struktury. Rozdzielenie tych dwóch grup jest najważniejszą decyzją w całej konstrukcji.</p>
+
+    <p>Kolejność w tabeli jest kolejnością składania. Trzy pierwsze warstwy powstają z konkretnych torów światła, więc dodaje się je jako obrazy o kształcie. Dwie ostatnie są sumą tysięcy torów bez struktury — dodaje się je jako rozmycia i wartości stałe.</p>
+
+    <p>Cała piątka wchodzi do obrazu <strong>przed ziarnem i przed korekcją barwną</strong>, bo w rzeczywistym torze powstaje w obiektywie, a więc przed matrycą. Wstawienie flary po gradingu daje efekt, który leży „na” obrazie zamiast w nim — i jest to jeden z tych błędów, których widz nie umie nazwać, a które psują ujęcie skutecznie.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Maska · skąd wiadomo, co świeci</div>
+    <h2>Wyciąganie jasnych źródeł</h2>
+
+    <p>Wszystkie pięć warstw potrzebuje tej samej rzeczy wejściowej: <strong>maski miejsc, które są bardzo jasne</strong>. Sposób jej wycięcia decyduje o połowie wiarygodności wyniku.</p>
+
+    <p>Zasada podstawowa brzmi: <span class="term-violet">próg wyżej, niż podpowiada oko</span>. Flara powstaje na źródłach jaśniejszych od reszty kadru o rzędy wielkości — słońce, żarówka, odbicie słońca w chromie. Biała koszula, chmura i śnieg <em>nie</em> dają flary, mimo że na podglądzie wyglądają jasno. Zbyt niski próg jest najczęstszą przyczyną flar, które „są wszędzie”.</p>
+
+    <p>Praktycznie: pracuj w danych liniowych, nie w obrazie po korekcji. W przestrzeni liniowej słońce ma wartość rzędu tysięcy, a biała koszula rzędu jedności — różnica jest oczywista i próg stawia się bez wahania. Po korekcji barwnej oba są blisko bieli i rozróżnienie znika.</p>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead>
+          <tr><th>Źródło maski</th><th>Kiedy użyć</th><th>Wada</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Próg na plate liniowym</td><td>gdy plate jest w danych liniowych</td><td>łapie też przepalenia bez źródła</td></tr>
+          <tr><td>Osobny render świateł</td><td>gdy źródło jest w CG</td><td>nie obejmuje świateł z plate'u</td></tr>
+          <tr><td>Ręczna maska śledzona</td><td>gdy źródeł jest kilka i są ważne</td><td>kosztuje pracę na ujęcie</td></tr>
+          <tr><td>Pozycja 3D ze sceny</td><td>gdy jest tracking kamery</td><td>najlepsza — daje też zanik poza polem</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Ostatni wiersz jest jedynym, który daje za darmo warunek zaniku poza polem widzenia — bo zna kąt między osią kamery a źródłem.</p>
+
+    <p>Warto zauważyć, że maska musi obejmować także <strong>źródła poza kadrem</strong>. Flara powstaje od światła wpadającego w obiektyw, a pole widzenia jest szersze niż kadr. Maska wycięta wyłącznie z widocznego obrazu nie zna słońca tuż za krawędzią — a to jest sytuacja, w której flara bywa najsilniejsza.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Wydajność · gdzie ucieka czas</div>
+    <h2>Co w tym łańcuchu kosztuje</h2>
+
+    <p>Flara potrafi być najdroższą częścią compu, i to niemal zawsze z jednego z czterech powodów.</p>
+
+    <p><strong>Rozmycia o dużym promieniu.</strong> Poświata wokół świateł wymaga rozmycia o promieniu rzędu kilkuset pikseli. Wykonane wprost kosztuje kwadratowo. Rozwiązanie jest standardowe: policz je w pomniejszonej rozdzielczości i podskaluj. Poświata nie ma detalu, więc nic się nie traci — a koszt spada kilkudziesięciokrotnie.</p>
+
+    <p><strong>Wiele warstw liczonych w pełnej rozdzielczości.</strong> Ta sama uwaga dotyczy wszystkiego bez struktury: warstwy 4 i 5 z pierwszej tabeli mogą być liczone małe. Struktury — ghosty, smugi, gwiazdki — trzeba liczyć w pełnej, bo mają krawędzie.</p>
+
+    <p><strong>Splot zamiast rozmycia kierunkowego.</strong> Smugę robi się rozmyciem anizotropowym, a nie splotem z długim jądrem poziomym. Efekt jest ten sam, koszt liniowy zamiast kwadratowego.</p>
+
+    <p><strong>Przeliczanie masek na każdej klatce.</strong> Jeśli źródło jest statyczne albo śledzone, maska może być policzona raz i przekształcona. Ponowne progowanie na każdej klatce daje przy okazji migotanie na granicy progu — czyli koszt i wadę naraz.</p>
+
+    <p>Ostatnia uwaga jest o kolejności pracy, nie o wydajności obliczeń. <span class="term-cyan">Zbuduj najpierw warstwę 5, potem 4, a struktury na końcu.</span> Podniesienie czerni i poświata odpowiadają za większość wrażenia „to było kręcone obiektywem”, kosztują najmniej i nie wymagają żadnego dopasowywania geometrii. Ghosty dokłada się wtedy, gdy ujęcie już siedzi — a często okazuje się, że nie są potrzebne.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Kontrola · dziesięć pytań</div>
+    <h2>Po czym poznać podróbkę</h2>
+
+    <p>Lista do przejścia przed oddaniem ujęcia. Każde pytanie odsyła do rozdziału, w którym opisana jest przyczyna — jeśli odpowiedź brzmi „nie”, tam jest wyjaśnienie, dlaczego to widać.</p>
+
+    <ul>
+      <li><strong>Czy wszystkie elementy leżą na jednej prostej</strong> przechodzącej przez środek kadru? (R.23)</li>
+      <li><strong>Czy prosta ta przechodzi przez obraz źródła</strong>, a elementy są po przeciwnej stronie środka? (R.23)</li>
+      <li><strong>Czy przy ruchu źródła sznur idzie w przeciwną stronę</strong> i przechodzi przez środek, gdy źródło mija oś? (R.23)</li>
+      <li><strong>Czy kształt plam zgadza się z przysłoną</strong> — wielokąt o tylu bokach, ile ma bokeh w tym samym ujęciu? (R.23)</li>
+      <li><strong>Czy liczba promieni gwiazdki zgadza się z liczbą listków</strong>, według reguły parzystości? (R.25)</li>
+      <li><strong>Czy promienie są prostopadłe do boków wielokąta bokeh?</strong> (R.25)</li>
+      <li><strong>Czy barwy pochodzą z jednej wąskiej palety</strong> i czy żadna nie jest mocno nasycona? (R.24)</li>
+      <li><strong>Czy smuga jest pozioma względem kadru</strong>, a nie względem świata, przy przechylonej kamerze? (R.26)</li>
+      <li><strong>Czy wszystko znika</strong>, gdy źródło opuszcza pole widzenia obiektywu — szersze niż kadr? (R.23)</li>
+      <li><strong>Czy czernie w całym kadrze są podniesione</strong> proporcjonalnie do jasności źródła? (R.22)</li>
+    </ul>
+
+    <p>Pytanie ostatnie jest tym, które najczęściej wypada negatywnie, i zarazem najtańszym do naprawienia. Flara złożona z samych struktur — plam, smug i gwiazdek — na idealnie czarnym tle wygląda jak nakładka, bo w rzeczywistym obiektywie <strong>nie da się mieć jednego bez drugiego</strong>. Światło, które utworzyło ghosta, jest tym samym światłem, którego reszta rozproszyła się po kadrze.</p>
+
+    <p>Jeśli z dziesięciu pytań trzeba wybrać trzy, warto wybrać pierwsze, dziewiąte i dziesiąte: <span class="term-cyan">oś, zanik i podniesione czernie</span>. Te trzy odpowiadają za większość wrażenia, a każde z nich da się sprawdzić w kilkanaście sekund.</p>
+  </div>
 
   <div class="site-nav">
     <a href="../index.html">← Spis treści</a>

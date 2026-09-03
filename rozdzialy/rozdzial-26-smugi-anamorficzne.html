@@ -43,7 +43,257 @@ window.SKY3D_MESSAGES = {
   <h1>Smugi anamorficzne: dlaczego poziome i niebieskie</h1>
   <p class="subtitle">Najbardziej rozpoznawalny efekt optyczny w kinie jest skutkiem ubocznym soczewki, która miała tylko ścisnąć obraz. Kierunek smugi wynika z geometrii, a kolor — z powłoki.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li><strong>Smuga jest ghostem, który stracił ostrość tylko w jednej osi.</strong> Cylinder z <a href="rozdzial-20-anamorf.html">Rozdziału 20</a> ma moc optyczną wyłącznie w poziomie, więc zabłąkane światło rozmywa się w poziomie i zostaje ostre w pionie.</li>
+      <li>Kierunek wynika więc z <span class="term-amber">geometrii, nie z konwencji</span>: smuga jest prostopadła do osi cylindra i obraca się razem z obiektywem. Kolor pochodzi z powłoki, dokładnie jak w <a href="rozdzial-24-powloki.html">Rozdziale 24</a>.</li>
+      <li>Podrabianie sypie się w trzech miejscach: <strong>smuga nie leży na osi flary, nie zwęża się przy przymknięciu i nie znika, gdy źródło opuszcza pole widzenia</strong>.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Mechanizm · astygmatyzm zabłąkanego światła</div>
+    <h2>Dlaczego smuga, a nie plama</h2>
+
+    <p>Ghost w obiektywie sferycznym jest plamą, bo cały układ, przez który przeszedł, działa jednakowo we wszystkich kierunkach. W anamorfie tak nie jest. Cylindryczne elementy mają moc optyczną <strong>tylko w jednej osi</strong> — i to wystarcza, żeby ghost przestał być plamą.</p>
+
+    <p>Zabłąkane światło przebywa dłuższą drogę niż obraz właściwy, więc trafia na matrycę nieostre. Nieostrość ta jest jednak <span class="term-cyan">różna w dwóch osiach</span>: w pionie, gdzie cylinder nie działa, rozmycie jest takie jak w zwykłym obiektywie, a w poziomie, gdzie cylinder ma pełną moc, znacznie większe. Punkt rozlewa się więc w linię — poziomą, czyli prostopadłą do pionowej osi cylindra.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Ghost astygmatyczny</span><span>ostry w jednej osi, rozlany w drugiej</span></div>
+      <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Przekrój pionowy i poziomy tego samego ghosta: w pionie skupia się blisko matrycy, w poziomie znacznie dalej, więc na matrycy powstaje pozioma linia.">
+        <g font-family="IBM Plex Mono" font-size="10" fill="#8b909b">
+          <text x="30" y="22">PRZEKRÓJ PIONOWY · cylinder nie działa</text>
+        </g>
+        <line x1="30" y1="70" x2="470" y2="70" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 6"/>
+        <rect x="150" y="44" width="10" height="52" fill="#9c82d8" fill-opacity="0.18" stroke="#9c82d8" stroke-width="1.1"/>
+        <line x1="430" y1="42" x2="430" y2="98" stroke="#6e93be" stroke-width="2.5"/>
+        <g stroke="#e8a33d" stroke-width="1.5" fill="none">
+          <path d="M 40 50 L 155 58 L 420 70"/><path d="M 40 90 L 155 82 L 420 70"/>
+        </g>
+        <circle cx="424" cy="70" r="3" fill="#e8a33d"/>
+        <text x="446" y="74" font-family="IBM Plex Mono" font-size="9" fill="#e8a33d">wąsko</text>
+
+        <g font-family="IBM Plex Mono" font-size="10" fill="#8b909b">
+          <text x="30" y="140">PRZEKRÓJ POZIOMY · cylinder działa</text>
+        </g>
+        <line x1="30" y1="188" x2="470" y2="188" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 6"/>
+        <path d="M 155 158 Q 176 188 155 218 Q 134 188 155 158 Z" fill="#9c82d8" fill-opacity="0.2" stroke="#9c82d8" stroke-width="1.3"/>
+        <line x1="430" y1="150" x2="430" y2="226" stroke="#6e93be" stroke-width="2.5"/>
+        <g stroke="#e8a33d" stroke-width="1.5" fill="none">
+          <path d="M 40 168 L 150 172 L 300 188 L 430 214"/>
+          <path d="M 40 208 L 150 204 L 300 188 L 430 162"/>
+        </g>
+        <line x1="430" y1="162" x2="430" y2="214" stroke="#e8a33d" stroke-width="4"/>
+        <text x="446" y="192" font-family="IBM Plex Mono" font-size="9" fill="#e8a33d">szeroko</text>
+        <text x="290" y="206" font-family="IBM Plex Mono" font-size="9" fill="#8b909b">ognisko poziome wypada wcześniej</text>
+
+        <line x1="500" y1="16" x2="500" y2="236" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 5"/>
+        <text x="640" y="22" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">NA MATRYCY</text>
+        <rect x="540" y="34" width="200" height="140" fill="#0d0f11" stroke="#2a2f38"/>
+        <rect x="556" y="98" width="168" height="12" fill="#6ea8e8" fill-opacity="0.5"/>
+        <rect x="586" y="100" width="108" height="8" fill="#9fd0ff" fill-opacity="0.7"/>
+        <circle cx="640" cy="104" r="5" fill="#f2f0e8"/>
+        <text x="640" y="196" font-family="IBM Plex Mono" font-size="10" fill="#6ea8e8" text-anchor="middle">pozioma smuga</text>
+        <text x="640" y="214" font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="middle">wąska w pionie, długa w poziomie</text>
+      </svg>
+      <div class="diagram-caption">Ten sam ghost w dwóch przekrojach. Nie ma tu żadnego dodatkowego zjawiska — jest jeden ghost, który w jednej osi zdążył się zejść, a w drugiej nie.</div>
+    </div>
+
+    <p>Wynika stąd rzecz, która porządkuje całe zagadnienie: <strong>smuga nie jest osobnym efektem, tylko ghostem oglądanym w układzie astygmatycznym</strong>. Wszystko, co Rozdział 23 mówi o ghostach, obowiązuje nadal — smugi układają się wzdłuż osi flary, mają kolor z powłoki i znikają, gdy źródło opuszcza pole widzenia. Zmienia się wyłącznie ich kształt.</p>
+
+    <p>Stąd też bierze się odpowiedź na pytanie o kierunek. Smuga jest <span class="term-cyan">prostopadła do osi cylindra</span>, a cylinder stoi pionowo, bo ściskać trzeba w poziomie. Obróć kamerę o dziewięćdziesiąt stopni — smuga obróci się razem z nią i będzie pionowa względem sceny, wciąż pozioma względem kadru. To jest test rozstrzygający: smuga należy do obiektywu, a nie do świata.</p>
+
+    <p>Warto zauważyć, jak niewiele trzeba było dołożyć do wiedzy z poprzednich rozdziałów, żeby to wyjaśnić. <strong>Nie pojawiło się tu ani jedno nowe zjawisko.</strong> Jest ghost z <a href="rozdzial-23-ghosting.html">Rozdziału 23</a>, jest astygmatyzm z <a href="rozdzial-12-poza-osia.html">Rozdziału 12</a> — tyle że wywołany celowo, konstrukcją, a nie wadą — i jest cylinder z <a href="rozdzial-20-anamorf.html">Rozdziału 20</a>. Najbardziej rozpoznawalny efekt optyczny w kinie okazuje się złożeniem trzech rzeczy, z których każda była już opisana.</p>
+
+    <p>Jest w tym pewna prawidłowość, która wraca w całej tej części. <span class="term-violet">Zjawiska, które w rozmowie o obrazie mają własne nazwy i własną mistykę, prawie zawsze okazują się kombinacjami kilku prostszych.</span> Wir z Rozdziału 12 to obcięcie plus krzywizna pola. Gwiazdki to dyfrakcja plus proste krawędzie. Smuga to ghost plus astygmatyzm. Rozłożenie na składniki jest tym, co pozwala je odtworzyć — bo składniki mają parametry, a nazwy nie mają.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Kolor · ta sama resztka, co wszędzie</div>
+    <h2>Dlaczego niebieskie</h2>
+
+    <p>Barwa smugi nie ma osobnego mechanizmu. Pochodzi z tego samego miejsca, co barwa każdego ghosta: z <strong>odbicia resztkowego powłoki</strong>, czyli z tego, czego warstwa nie zdążyła wygasić, jak opisuje <a href="rozdzial-24-powloki.html">Rozdział 24</a>.</p>
+
+    <p>Błękit stał się rozpoznawalny, bo powłoki na wielkich cylindrycznych elementach klasycznych anamorfów zostawiały resztkę właśnie w tym zakresie. Nie było to zamierzone — cylinder jest duży, pracuje pod dużym rozrzutem kątów padania, a powłokę trzeba było dla niego zaprojektować inaczej niż dla soczewek sferycznych. Barwa wyszła przy okazji.</p>
+
+    <p>Potem stało się to, co opisuje blok „Zaawansowane” w <a href="rozdzial-20-anamorf.html">Rozdziale 20</a>: <span class="term-violet">skutek uboczny został rozpoznany jako sygnał i zaczął być produkowany celowo</span>. Dzisiejsze konstrukcje bywają projektowane tak, żeby smuga miała określoną barwę, a filtry i wtyczki oferują ją jako parametr. Fizyka pozostaje ta sama; zmieniło się tylko to, że kolor jest dziś wyborem, a nie resztką.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Kierunek smugi</span><span>obróć obiektyw, obróci się i ona</span></div>
+      <div class="diagram-controls">
+        <label for="smugaObrot">Przechylenie kamery</label>
+        <input id="smugaObrot" type="range" min="-45" max="45" step="1" value="0">
+        <span class="value-readout" id="smugaOdczyt">0° · poziomo</span>
+      </div>
+      <svg viewBox="0 0 760 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Kadr ze smugą i osią cylindra: przy przechyleniu kamery smuga obraca się razem z kadrem, pozostając prostopadła do osi cylindra.">
+        <rect x="120" y="26" width="380" height="190" fill="#0d0f11" stroke="#2a2f38" stroke-width="1.5"/>
+        <text x="310" y="18" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">KADR</text>
+        <g id="smugaGrupa">
+          <line id="smugaOs" x1="310" y1="56" x2="310" y2="186" stroke="#9c82d8" stroke-width="1.4" stroke-dasharray="5 4"/>
+          <rect id="smugaPas" x="150" y="115" width="320" height="12" fill="#6ea8e8" fill-opacity="0.45"/>
+          <rect id="smugaRdzen" x="200" y="118" width="220" height="6" fill="#9fd0ff" fill-opacity="0.8"/>
+          <circle id="smugaZrodlo" cx="250" cy="121" r="7" fill="#f2f0e8"/>
+        </g>
+        <text x="530" y="60" font-family="IBM Plex Mono" font-size="9.5" fill="#9c82d8">fioletowa przerywana:</text>
+        <text x="530" y="76" font-family="IBM Plex Mono" font-size="9.5" fill="#9c82d8">oś cylindra</text>
+        <text x="530" y="104" font-family="IBM Plex Mono" font-size="9.5" fill="#6ea8e8">niebieska: smuga,</text>
+        <text x="530" y="120" font-family="IBM Plex Mono" font-size="9.5" fill="#6ea8e8">zawsze prostopadle</text>
+        <text x="530" y="160" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">Obie obracają się</text>
+        <text x="530" y="176" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">razem z obiektywem,</text>
+        <text x="530" y="192" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">nie ze sceną.</text>
+      </svg>
+      <div class="diagram-caption" id="smugaPodpis">Kamera bez przechylenia: oś cylindra pionowo, smuga poziomo — i tak samo w kadrze, i w świecie.</div>
+    </div>
+
+    <p>Dla oceny materiału ważniejsza od samej barwy jest jej <strong>zmienność</strong>. Skoro kolor pochodzi z powłoki, a powłoka działa inaczej pod różnymi kątami, to smuga od źródła w rogu kadru ma barwę nieco inną niż od źródła w środku. Jednolity błękit wszystkich smug w całej sekwencji jest więc sygnałem, że pochodzą z jednego elementu graficznego, a nie z obiektywu.</p>
+
+    <p>Obowiązuje tu też ograniczenie nasycenia z <a href="rozdzial-24-powloki.html">Rozdziału 24</a>, i to nawet mocniej niż przy zwykłych ghostach. Smuga jest rozciągnięta na dużej powierzchni, więc na jednostkę powierzchni przypada jej mało — jest z natury <strong>blada i półprzezroczysta</strong>. Nasycony, wyraźny błękit rozciągnięty przez pół kadru nie ma odpowiednika w resztkowym odbiciu; realna smuga bardziej rozjaśnia to, co pod nią leży, niż je zabarwia.</p>
+
+    <p>Ma to praktyczną konsekwencję przy składaniu. <span class="term-cyan">Smugę dodaje się, a nie nakłada</span> — jest światłem dołożonym do obrazu, więc powinna rozjaśniać ciemne partie mocno, a jasne prawie wcale. Nałożona trybem, który zastępuje piksele pod spodem, zakrywa detal zamiast go prześwietlać, i to jest różnica widoczna natychmiast wszędzie tam, gdzie smuga przechodzi przez fakturę.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Rozpoznanie · smuga kontra jej podróbka</div>
+    <h2>Trzy miejsca, w których podrabianie się sypie</h2>
+
+    <p>Smuga anamorficzna jest efektem podrabianym najczęściej ze wszystkich w tej książce — i najczęściej podrabianym źle, bo intuicja podpowiada, że to „pozioma kreska na jasnym świetle”. Kreska to za mało. Trzy rzeczy muszą się zgadzać.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Co musi się zgadzać</span><span>poprawnie kontra typowa podróbka</span></div>
+      <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Trzy pary kadrów: smuga na osi flary kontra przyklejona do źródła, smuga zwężająca się przy przymknięciu kontra stała, smuga znikająca poza polem widzenia kontra wisząca.">
+        <g font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">
+          <text x="140" y="20">LEŻY NA OSI FLARY</text><text x="390" y="20">ZWĘŻA SIĘ PRZY PRZYMKNIĘCIU</text><text x="640" y="20">ZNIKA POZA POLEM</text>
+        </g>
+
+        <rect x="40" y="30" width="200" height="86" fill="#0d0f11" stroke="#7fc47f" stroke-width="1.2"/>
+        <circle cx="140" cy="73" r="2" fill="#5a6068"/>
+        <circle cx="76" cy="46" r="7" fill="#f2f0e8"/>
+        <rect x="30" y="42" width="92" height="8" fill="#6ea8e8" fill-opacity="0.5"/>
+        <line x1="80" y1="48" x2="204" y2="100" stroke="#4fc3c0" stroke-width="0.7" stroke-dasharray="4 4"/>
+        <rect x="160" y="96" width="80" height="6" fill="#6ea8e8" fill-opacity="0.35"/>
+        <text x="140" y="132" font-family="IBM Plex Mono" font-size="9" fill="#7fc47f" text-anchor="middle">smugi też są ghostami</text>
+
+        <rect x="40" y="146" width="200" height="86" fill="#0d0f11" stroke="#d8695f" stroke-width="1.2"/>
+        <circle cx="140" cy="189" r="2" fill="#5a6068"/>
+        <circle cx="76" cy="162" r="7" fill="#f2f0e8"/>
+        <rect x="30" y="158" width="92" height="8" fill="#6ea8e8" fill-opacity="0.5"/>
+        <text x="140" y="248" font-family="IBM Plex Mono" font-size="9" fill="#d8695f" text-anchor="middle">tylko przy źródle, reszty brak</text>
+
+        <rect x="290" y="30" width="200" height="86" fill="#0d0f11" stroke="#7fc47f" stroke-width="1.2"/>
+        <rect x="300" y="52" width="180" height="14" fill="#6ea8e8" fill-opacity="0.45"/>
+        <text x="390" y="82" font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="middle">f/2 · gruba</text>
+        <rect x="316" y="96" width="148" height="5" fill="#6ea8e8" fill-opacity="0.6"/>
+        <text x="390" y="132" font-family="IBM Plex Mono" font-size="9" fill="#7fc47f" text-anchor="middle">f/8 · cieńsza i krótsza</text>
+
+        <rect x="290" y="146" width="200" height="86" fill="#0d0f11" stroke="#d8695f" stroke-width="1.2"/>
+        <rect x="300" y="168" width="180" height="14" fill="#6ea8e8" fill-opacity="0.45"/>
+        <rect x="300" y="200" width="180" height="14" fill="#6ea8e8" fill-opacity="0.45"/>
+        <text x="390" y="248" font-family="IBM Plex Mono" font-size="9" fill="#d8695f" text-anchor="middle">identyczna na każdej przysłonie</text>
+
+        <rect x="540" y="30" width="180" height="86" fill="#0d0f11" stroke="#7fc47f" stroke-width="1.2"/>
+        <text x="630" y="70" font-family="IBM Plex Mono" font-size="9.5" fill="#5a6068" text-anchor="middle">źródło daleko poza</text>
+        <text x="630" y="86" font-family="IBM Plex Mono" font-size="9.5" fill="#7fc47f" text-anchor="middle">smugi brak</text>
+        <text x="630" y="132" font-family="IBM Plex Mono" font-size="9" fill="#7fc47f" text-anchor="middle">tak jak każdy ghost</text>
+
+        <rect x="540" y="146" width="180" height="86" fill="#0d0f11" stroke="#d8695f" stroke-width="1.2"/>
+        <rect x="550" y="182" width="160" height="10" fill="#6ea8e8" fill-opacity="0.45"/>
+        <text x="630" y="248" font-family="IBM Plex Mono" font-size="9" fill="#d8695f" text-anchor="middle">wisi bez źródła w kadrze</text>
+      </svg>
+      <div class="diagram-caption">Górny rząd poprawnie, dolny to trzy typowe błędy. Wszystkie trzy wynikają z traktowania smugi jako grafiki, a nie jako ghosta.</div>
+    </div>
+
+    <p><strong>Smuga leży na osi flary.</strong> Jest ghostem, więc obowiązuje ją reguła z <a href="rozdzial-23-ghosting.html">Rozdziału 23</a>: prosta przez środek kadru, po przeciwnej stronie niż źródło. Najczęstsza podróbka przykleja jedną smugę do samego źródła i nie daje niczego po drugiej stronie — a w rzeczywistości smug jest kilka i rozłożone są wzdłuż tej samej osi, co plamy.</p>
+
+    <p><strong>Smuga reaguje na przysłonę.</strong> Przymknięcie zmniejsza źrenicę, więc ghost jest mniej rozmyty w obu osiach — smuga staje się cieńsza i krótsza. Stała smuga niezależna od nastawy jest błędem tym łatwiejszym do zauważenia, że w tym samym ujęciu widać zwykle bokeh, które na przysłonę reaguje.</p>
+
+    <p><strong>Smuga znika poza polem widzenia.</strong> Nie poza kadrem — poza polem widzenia obiektywu, które jest szersze. Smuga utrzymująca się, gdy źródło jest już daleko za krawędzią, jest sygnałem, że dodano ją niezależnie od geometrii ujęcia.</p>
+
+    <p>Warto zauważyć, że wszystkie trzy błędy mają jedną wspólną przyczynę: <span class="term-violet">potraktowanie smugi jako grafiki przyklejonej do jasnego piksela</span>, a nie jako obrazu utworzonego przez układ optyczny. Kto zacznie od kreski, musi potem pilnować trzech warunków ręcznie i przy każdym ruchu kamery sprawdzać, czy się nie rozjechały. Kto zacznie od ghosta, dostaje wszystkie trzy za darmo.</p>
+
+    <button class="advanced-btn" data-modal-target="adv-smugi-sferyk">Zaawansowane: skąd biorą się smugi w obiektywach sferycznych</button>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">W CG · smuga jako ghost, nie jako grafika</div>
+    <h2>Jak ją zrobić poprawnie</h2>
+
+    <p>Cała trudność znika, jeśli potraktuje się smugę jako to, czym jest. <strong>Nie dokładaj poziomej kreski — dołóż ghosta i rozmyj go anizotropowo.</strong> Wszystko pozostałe wynika samo.</p>
+
+    <p>Przepis ma trzy kroki. Zbuduj sznur ghostów według reguł z <a href="rozdzial-23-ghosting.html">Rozdziału 23</a>: na osi przez środek kadru, sterowany pozycją źródła. Rozmyj każdy element <em>tylko w poziomie</em>, kilkakrotnie mocniej niż w pionie. Nadaj im barwę odczytaną z plate'u, z tej samej wąskiej palety.</p>
+
+    <p>Zysk jest taki, że wszystkie trzy warunki z poprzedniej sekcji spełniają się <span class="term-cyan">automatycznie</span>. Smugi będą na osi, bo ghosty na niej są. Zareagują na przysłonę, jeśli rozmiar ghostów od niej zależy. Znikną poza polem widzenia, bo znika całe źródło. Nie trzeba pilnować żadnego z tych warunków osobno — wystarczy nie zaczynać od kreski.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Trzy kroki</span><span>od ghosta do smugi</span></div>
+      <svg viewBox="0 0 760 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Trzy etapy: sznur okrągłych ghostów, ten sam sznur rozmyty anizotropowo w poziomie, i wynik z dodanym wąskim jasnym rdzeniem.">
+        <defs><marker id="s26" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8b909b"/></marker></defs>
+        <g font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">
+          <text x="115" y="20">1 · SZNUR GHOSTÓW</text><text x="380" y="20">2 · ROZMYCIE W POZIOMIE</text><text x="645" y="20">3 · RDZEŃ</text>
+        </g>
+
+        <rect x="26" y="30" width="180" height="110" fill="#0d0f11" stroke="#2a2f38"/>
+        <circle cx="116" cy="85" r="2" fill="#5a6068"/>
+        <circle cx="56" cy="52" r="8" fill="#f2f0e8" fill-opacity="0.9"/>
+        <circle cx="140" cy="102" r="9" fill="#6ea8e8" fill-opacity="0.4"/>
+        <circle cx="176" cy="120" r="6" fill="#6ea8e8" fill-opacity="0.32"/>
+        <text x="116" y="160" font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="middle">na osi przez środek</text>
+
+        <rect x="290" y="30" width="180" height="110" fill="#0d0f11" stroke="#2a2f38"/>
+        <circle cx="380" cy="85" r="2" fill="#5a6068"/>
+        <rect x="292" y="46" width="120" height="12" fill="#f2f0e8" fill-opacity="0.45"/>
+        <rect x="336" y="96" width="132" height="14" fill="#6ea8e8" fill-opacity="0.32"/>
+        <rect x="392" y="116" width="78" height="9" fill="#6ea8e8" fill-opacity="0.26"/>
+        <text x="380" y="160" font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="middle">tylko w jednej osi</text>
+
+        <rect x="554" y="30" width="180" height="110" fill="#0d0f11" stroke="#7fc47f"/>
+        <circle cx="644" cy="85" r="2" fill="#5a6068"/>
+        <rect x="556" y="46" width="120" height="12" fill="#f2f0e8" fill-opacity="0.35"/>
+        <rect x="576" y="50" width="76" height="4" fill="#ffffff" fill-opacity="0.9"/>
+        <rect x="600" y="96" width="132" height="14" fill="#6ea8e8" fill-opacity="0.26"/>
+        <rect x="628" y="101" width="82" height="5" fill="#9fd0ff" fill-opacity="0.8"/>
+        <text x="644" y="160" font-family="IBM Plex Mono" font-size="9" fill="#7fc47f" text-anchor="middle">wąskie jasne jądro</text>
+
+        <g stroke="#8b909b" stroke-width="1.4" fill="none" marker-end="url(#s26)">
+          <path d="M 212 85 L 282 85"/><path d="M 476 85 L 546 85"/>
+        </g>
+        <text x="26" y="190" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">Krok pierwszy załatwia oś flary, reakcję na przysłonę i zanik poza polem widzenia — wszystko naraz.</text>
+        <text x="26" y="208" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">Kroki drugi i trzeci są kosmetyką. Zaczynanie od kroku drugiego jest tym, co daje podróbkę.</text>
+      </svg>
+      <div class="diagram-caption">Trzy kroki, z których tylko pierwszy wymaga myślenia. Pominięcie go jest jedyną przyczyną wszystkich trzech błędów z poprzedniej sekcji.</div>
+    </div>
+
+    <p>Zostaje jedna rzecz do dodania ręcznie: <strong>jasny rdzeń smugi</strong>. Prawdziwa smuga ma bardzo wąskie, jasne jądro i szeroki, słaby ogon — bo rozmycie astygmatyczne nie jest jednorodne. Rozmycie pudełkowe albo gaussowskie daje smugę zbyt równomierną. Dwie warstwy o różnej szerokości i różnej jasności załatwiają sprawę i to jest cała różnica między smugą, która czyta się jako optyka, a taką, która czyta się jako efekt.</p>
+
+    <p class="deeper-inline">Pełny przepis na warstwy flary — maski, kolejność, wydajność i po czym poznać podróbkę — <a href="../dodatki/dodatek-x-odtwarzanie-flary.html">Dodatek X</a>.</p>
+  </div>
+
+  <div class="panel practice">
+    <div class="panel-label">Z praktyki</div>
+    <p><strong>Obróć kadr w głowie, żeby sprawdzić, czy smuga jest prawdziwa.</strong> Smuga należy do obiektywu, więc w ujęciu z kamerą przechyloną jest przechylona razem z nią — pozioma względem kadru, ukośna względem świata. Smuga trzymająca poziom świata w przechylonym kadrze jest dodana.</p>
+    <p><strong>Licz smugi razem z plamami.</strong> W anamorfie ghosty i smugi to ten sam sznur, więc jedne i drugie są na tej samej prostej. Jeśli w plate'cie widać smugę, a nie widać towarzyszących jej plam, materiał był czyszczony albo smuga jest doklejona.</p>
+    <p><strong>Nie używaj smugi jako dowodu anamorfu.</strong> Obiektywy sferyczne też potrafią dawać smugi — z innych przyczyn, opisanych w bloku „Zaawansowane”. Dowodem anamorfu jest owalne bokeh, bo ono wynika z kształtu źrenicy, a nie z przypadkowej geometrii wewnątrz tubusa.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>smuga anamorficzna</dt>
+      <dd>Ghost rozmyty silniej w jednej osi niż w drugiej, przez cylindryczne elementy anamorfu. Prostopadła do osi cylindra.</dd>
+      <dt>ognisko astygmatyczne</dt>
+      <dd>Sytuacja, w której układ skupia w dwóch osiach w różnych odległościach. Obraz punktu jest wtedy linią, nie plamą.</dd>
+      <dt>rdzeń smugi</dt>
+      <dd>Wąskie, jasne jądro w środku smugi, otoczone szerokim słabym ogonem. Odróżnia smugę optyczną od rozmycia gaussowskiego.</dd>
+      <dt>oś flary</dt>
+      <dd>Prosta przez środek kadru i obraz źródła. Smugi leżą na niej tak samo jak plamy — bo są tym samym zjawiskiem.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Część V kończy się na tym, co światło robi, zanim dotrze do matrycy. <a href="rozdzial-27-od-fotonow-do-liczb.html">Część VI</a> zaczyna się tam, gdzie ta się kończy: od momentu, w którym fotony przestają być światłem i stają się liczbami. Okaże się, że matryca i taśma mają własny zestaw zjawisk — halację, ziarno, szum, zakres dynamiczny — i że mylenie ich z optyką jest jednym z najczęstszych źródeł nieudanych dopasowań.</p>
+  </div>
 
   <div class="deeper">
     <div class="deeper-label">Idź głębiej</div>
@@ -57,8 +307,56 @@ window.SKY3D_MESSAGES = {
       <a class="nav-next" href="rozdzial-27-od-fotonow-do-liczb.html">Następny →</a>
   </div>
 
+  <template id="adv-smugi-sferyk">
+    <h3>Skąd biorą się smugi w obiektywach sferycznych</h3>
+
+    <p>Smuga nie jest wyłącznością anamorfu i warto o tym wiedzieć, bo inaczej łatwo o błędny wniosek przy ocenie materiału. Obiektyw obrotowo symetryczny też potrafi ją dać — tylko z innych przyczyn i o innym zachowaniu.</p>
+
+    <p><strong>Krawędź czegokolwiek prostego w torze.</strong> To ten sam mechanizm, co gwiazdki z <a href="rozdzial-25-starburst.html">Rozdziału 25</a>: prosta krawędź rozprasza prostopadle do siebie. Przy bardzo jasnym źródle pojedynczy promień gwiazdki bywa tak długi i jasny, że czyta się jako smuga. Rozpoznaje się to po tym, że takich smug jest kilka, rozłożonych symetrycznie wokół źródła.</p>
+
+    <p><strong>Rysy i pęknięcia w powłoce.</strong> Zarysowana przednia soczewka daje smugi ustawione zgodnie z kierunkiem rys. Bywa to widoczne wyłącznie przy świetle w kadrze i wyłącznie na jednym egzemplarzu — czyli jest cechą sztuki, nie modelu.</p>
+
+    <p><strong>Filtry.</strong> Siatka w filtrze gwiazdkowym, ale też zwykły filtr dyfuzyjny o kierunkowej strukturze powierzchni, dają smugi ustawione zgodnie ze swoją geometrią. Te obracają się razem z filtrem, a nie z obiektywem — więc przy obracaniu filtra w oprawie zmieniają kierunek, czego żadna smuga optyczna nie robi.</p>
+
+    <p>Rozstrzygnięcie jest proste i wraca do <a href="rozdzial-20-anamorf.html">Rozdziału 20</a>: <span class="term-cyan">dowodem anamorfu jest owalne bokeh, nie smuga</span>. Owal wynika z kształtu źrenicy, czyli z konstrukcji; smuga może wziąć się z pół tuzina rzeczy, w tym z brudu na szkle. Jeśli w kadrze są nieostre światła, wystarczy na nie spojrzeć — i pytanie znika.</p>
+  </template>
+
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-panel">
+      <button class="modal-close" data-modal-close aria-label="Zamknij">×</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
 </div>
 
 <script src="../assets/interactive.js"></script>
+<script>
+/* Kierunek smugi. Cala rzecz w jednym zdaniu: smuga jest prostopadla do osi
+   cylindra, a cylinder jest przymocowany do obiektywu — wiec obie obracaja
+   sie razem z kamera, a nie ze scena. Obracamy cala grupe wokol srodka kadru. */
+(function () {
+  var sl = document.getElementById('smugaObrot');
+  if (!sl) return;
+  var CX = 310, CY = 121;
+
+  function odswiez() {
+    var kat = parseFloat(sl.value);
+    document.getElementById('smugaGrupa')
+      .setAttribute('transform', 'rotate(' + kat + ' ' + CX + ' ' + CY + ')');
+
+    var opis = Math.abs(kat) < 1 ? 'poziomo'
+             : (kat > 0 ? 'przechylona w prawo' : 'przechylona w lewo');
+    document.getElementById('smugaOdczyt').textContent =
+      kat.toFixed(0) + '° · ' + opis;
+    document.getElementById('smugaPodpis').textContent = Math.abs(kat) < 1
+      ? 'Kamera bez przechylenia: oś cylindra pionowo, smuga poziomo — i tak samo w kadrze, i w świecie.'
+      : 'Kamera przechylona o ' + Math.abs(kat).toFixed(0) + '°: smuga wciąż jest pozioma WZGLĘDEM KADRU, ' +
+        'ale ukośna względem świata. Smuga trzymająca poziom świata byłaby dodana.';
+  }
+  sl.addEventListener('input', odswiez);
+  odswiez();
+})();
+</script>
 </body>
 </html>
