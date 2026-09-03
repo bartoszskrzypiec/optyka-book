@@ -348,6 +348,18 @@ def cmd_sprawdz():
             if needle not in html:
                 problems.append(f'BRAK BLOKU   R.{ch["nr"]}: {label}')
 
+    # 4b. dodatek bez tresci
+    # Kontrola dopisana 2026-09-03: przez cala prace nad ksiazka brama
+    # sprawdzala PUSTY tylko dla rozdzialow, wiec Dodatek AG przelezal
+    # nienapisany az do konca i wyszedl dopiero przy recznym przegladzie.
+    for d in SPIS['dodatki']:
+        path = os.path.join(ROOT, 'dodatki', d['slug'] + '.html')
+        if not os.path.exists(path):
+            continue
+        html = open(path, encoding='utf-8').read()
+        if '<!-- TRESC -->' in html or 'class="section"' not in html:
+            problems.append(f'PUSTY        Dodatek {d["l"].upper()} {d["slug"]} — sam szkielet, brak tresci')
+
     # 5. modal wymaga hosta na stronie
     for path in all_pages():
         html = open(path, encoding='utf-8').read()

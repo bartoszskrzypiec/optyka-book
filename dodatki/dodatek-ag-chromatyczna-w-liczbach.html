@@ -41,7 +41,127 @@ window.SKY3D_MESSAGES = {
   <h1>Aberracja chromatyczna w liczbach</h1>
   <p class="subtitle">Ile wynosi rozjazd ogniskowych między czerwienią a błękitem dla typowego szkła, dlaczego achromat zbiega tylko dwa kolory i jak odróżnić LoCA od TCA pomiarem.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">Co tu jest</div>
+    <ul>
+      <li><strong>Rozjazd ogniskowych</strong> dla typowych szkieł — jedna liczba, z której wynika cała reszta.</li>
+      <li><strong>Rachunek achromatu</strong>: podział mocy między dwie soczewki, z kontrolą, że warunek achromatyzacji naprawdę się zeruje.</li>
+      <li><strong>Dlaczego achromat zbiega tylko dwa kolory</strong> i ile zostaje trzeciemu — widmo wtórne w liczbach.</li>
+      <li><strong>Jak odróżnić LoCA od TCA pomiarem</strong>, a nie na oko.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Jedna liczba · rozjazd ogniskowych</div>
+    <h2>Ile rozjeżdża pojedyncza soczewka</h2>
+
+    <p>Liczba Abbego jest zdefiniowana tak, żeby od razu dawała odpowiedź na pytanie praktyczne. Dla cienkiej soczewki różnica ogniskowych między błękitem a czerwienią wynosi po prostu:</p>
+
+    <div class="formula">
+      Δ<span class="vec" data-tip="Ogniskowa">f</span> = <span class="vec" data-tip="Ogniskowa dla linii żółtej (d)">f</span> / <span class="vec" data-tip="Liczba Abbego szkła">V</span>
+      <span class="sub">Δf — odległość między ogniskiem dla linii F (486 nm, błękit) a ogniskiem dla linii C (656 nm, czerwień). f — ogniskowa dla linii d (588 nm). V — liczba Abbego. Wzór jest ścisły w granicy cienkiej soczewki.</span>
+    </div>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead>
+          <tr><th>Szkło</th><th class="num">n<sub>d</sub></th><th class="num">V</th><th class="num">Δf na 100 mm</th><th>Typ</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>FK51</td><td class="num">1,4866</td><td class="num">84,47</td><td class="num">1,18 mm</td><td>fluorokron, szkło ED</td></tr>
+          <tr><td>BK7</td><td class="num">1,5168</td><td class="num">64,17</td><td class="num">1,56 mm</td><td>kron, szkło odniesienia</td></tr>
+          <tr><td>F2</td><td class="num">1,6200</td><td class="num">36,37</td><td class="num">2,75 mm</td><td>flint</td></tr>
+          <tr><td>SF11</td><td class="num">1,7847</td><td class="num">25,68</td><td class="num">3,89 mm</td><td>ciężki flint</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Wartości katalogowe szkieł powszechnie używanych jako odniesienie. Ostatnia kolumna to Δf = f/V przy ogniskowej 100 mm.</p>
+
+    <p>Skala tej liczby jest tym, co robi wrażenie. <strong>Pojedyncza soczewka z BK7 o ogniskowej 100 mm ma ogniska błękitu i czerwieni oddalone o półtora milimetra</strong> — przy głębi ostrości rzędu setnych milimetra na matrycy. Bez korekcji obraz nie miałby ani jednej płaszczyzny, w której wszystkie barwy są ostre.</p>
+
+    <p>Warto zauważyć proporcję między skrajnymi wierszami tabeli: <span class="term-violet">ciężki flint rozjeżdża ponad trzy razy mocniej niż szkło ED</span>. Ta różnica jest surowcem, z którego buduje się korekcję — bo achromat działa właśnie przez zderzenie szkieł o bardzo różnym V.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Achromat · podział mocy</div>
+    <h2>Rachunek na dwie soczewki</h2>
+
+    <p>Achromat to soczewka skupiająca ze szkła o dużym V sklejona z rozpraszającą o małym V. Warunki są dwa i oba muszą być spełnione jednocześnie:</p>
+
+    <div class="formula">
+      <span class="vec" data-tip="Moc pierwszej soczewki">P₁</span> + <span class="vec" data-tip="Moc drugiej soczewki">P₂</span> = <span class="vec" data-tip="Żądana moc całego układu">P</span>&nbsp;&nbsp;oraz&nbsp;&nbsp; <span class="vec" data-tip="Moc pierwszej">P₁</span>/<span class="vec" data-tip="Liczba Abbego pierwszego szkła">V₁</span> + <span class="vec" data-tip="Moc drugiej">P₂</span>/<span class="vec" data-tip="Liczba Abbego drugiego szkła">V₂</span> = 0
+      <span class="sub">P = 1/f — moc w dioptriach przy f w metrach. Pierwsze równanie daje żądaną ogniskową, drugie znosi rozjazd między liniami F i C. Dwa równania, dwie niewiadome — rozwiązanie jest jednoznaczne.</span>
+    </div>
+
+    <p>Rozwiązanie ma postać zamkniętą i warto ją mieć pod ręką, bo pokazuje, skąd bierze się cena achromatu:</p>
+
+    <div class="formula">
+      <span class="vec" data-tip="Ogniskowa soczewki skupiającej">f₁</span> = <span class="vec" data-tip="Ogniskowa całego układu">f</span>·(<span class="vec" data-tip="V szkła skupiającego">V₁</span> − <span class="vec" data-tip="V szkła rozpraszającego">V₂</span>)/<span class="vec" data-tip="V szkła skupiającego">V₁</span>,&nbsp;&nbsp; <span class="vec" data-tip="Ogniskowa soczewki rozpraszającej">f₂</span> = −<span class="vec" data-tip="Ogniskowa całego układu">f</span>·(<span class="vec" data-tip="V skupiającego">V₁</span> − <span class="vec" data-tip="V rozpraszającego">V₂</span>)/<span class="vec" data-tip="V rozpraszającego">V₂</span>
+      <span class="sub">Im bliżej siebie leżą V₁ i V₂, tym mniejszy licznik — a więc tym krótsze, silniej zakrzywione soczewki trzeba zderzyć, żeby uzyskać tę samą moc wypadkową.</span>
+    </div>
+
+    <div class="worked">
+      <div class="wlabel">Rachunek · achromat BK7 + F2 o ogniskowej 100 mm</div>
+      <div class="step"><span class="k">Dane</span><span class="v">f = 100 mm; V₁ = 64,17 (BK7), V₂ = 36,37 (F2)</span></div>
+      <div class="step"><span class="k">Różnica V</span><span class="v">64,17 − 36,37 = 27,80</span></div>
+      <div class="step"><span class="k">Soczewka skupiająca</span><span class="v">f₁ = 100 · 27,80 / 64,17 = 43,32 mm</span></div>
+      <div class="step"><span class="k">Soczewka rozpraszająca</span><span class="v">f₂ = −100 · 27,80 / 36,37 = −76,44 mm</span></div>
+      <div class="step"><span class="k">Moce</span><span class="v">P₁ = +23,08 D, P₂ = −13,08 D</span></div>
+      <div class="result">Żeby uzyskać 10 dioptrii wypadkowych, trzeba zderzyć 23,08 z −13,08 — czyli soczewki o mocach ponad dwukrotnie większych niż wynik.</div>
+      <div class="check">Kontrola obu warunków: 23,08 + (−13,08) = 10,00 D, czyli f = 100 mm. Oraz 23,08/64,17 + (−13,08)/36,37 = 0,000000. Drugie równanie zeruje się dokładnie, co potwierdza, że para zbiega linie F i C w jednym punkcie.</div>
+    </div>
+
+    <p>Rachunek pokazuje cenę korekcji wprost. <strong>Soczewki achromatu mają moce ponad dwukrotnie większe niż moc wypadkowa</strong>, więc są mocniej zakrzywione — a mocniejsza krzywizna oznacza więcej aberracji sferycznej i komy do zbalansowania gdzie indziej. Jest to dokładnie ten mechanizm, który <a href="../rozdzialy/rozdzial-15-korekcja-i-jej-cena.html">Rozdział 15</a> opisuje słowami: każde lekarstwo dokłada powierzchnie i dokłada pracy.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Widmo wtórne · trzeci kolor zostaje</div>
+    <h2>Dlaczego achromat zbiega tylko dwa</h2>
+
+    <p>Achromat spełnia dwa równania, więc może zbiec dwie długości fali. Trzecia — zwykle zielona, leżąca między nimi — trafia gdzie indziej, i ta pozostałość nazywa się widmem wtórnym.</p>
+
+    <p>Przyczyna jest głębsza niż liczba równań i warto ją zrozumieć, bo tłumaczy, dlaczego apochromat jest tak drogi. <strong>Liczba Abbego opisuje dyspersję jedną liczbą, a dyspersja nie jest liniowa.</strong> Dwa szkła mogą mieć bardzo różne V, a mimo to bardzo podobny <em>kształt</em> krzywej n(λ) — i wtedy po zniesieniu różnicy między F i C w środku zakresu zostaje resztka.</p>
+
+    <div class="formula">
+      Δ<span class="vec" data-tip="Ogniskowa">f</span><sub>wt</sub> ≈ <span class="vec" data-tip="Ogniskowa układu">f</span> · (<span class="vec" data-tip="Względna dyspersja częściowa pierwszego szkła">P₁</span> − <span class="vec" data-tip="Względna dyspersja częściowa drugiego szkła">P₂</span>) / (<span class="vec" data-tip="V pierwszego szkła">V₁</span> − <span class="vec" data-tip="V drugiego szkła">V₂</span>)
+      <span class="sub">Δf<sub>wt</sub> — pozostały rozjazd dla linii zielonej. P — względna dyspersja częściowa szkła, wielkość podawana w katalogach obok V. Zerowanie licznika wymaga pary szkieł o tej samej dyspersji częściowej przy różnym V — i takich par jest bardzo mało.</span>
+    </div>
+
+    <p>Stąd bierze się cała trudność. <span class="term-cyan">Szkła o „nietypowej” dyspersji częściowej — fluorokrony, fluoryt — są rzadkie, drogie i kłopotliwe w obróbce</span>, a bez nich apochromat po prostu nie wychodzi. Jest to jedyny powód, dla którego obiektywy oznaczone APO kosztują wielokrotnie więcej od zwykłych, i jest to powód czysto materiałowy, nie konstrukcyjny.</p>
+
+    <p>Rząd wielkości warto zapamiętać: <strong>widmo wtórne dobrego achromatu wynosi mniej więcej jedną dwudziestą tego, co rozjazd pojedynczej soczewki</strong>. Dla stumilimetrowego BK7 daje to około 0,08 mm zamiast 1,56 mm — poprawa dwudziestokrotna, ale nie zero. Apochromat schodzi jeszcze o rząd niżej i dopiero tam rozjazd przestaje być mierzalny w typowym użyciu.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Pomiar · LoCA czy TCA</div>
+    <h2>Rozstrzygnięcie w dwie minuty</h2>
+
+    <p>Obie odmiany dają kolorowe obwódki i bywają mylone, mimo że mają inne przyczyny, inne objawy i zupełnie różne konsekwencje dla pracy w compie.</p>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead>
+          <tr><th>Cecha</th><th>LoCA · podłużna</th><th>TCA · poprzeczna</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>gdzie w kadrze</td><td>wszędzie, także w samym środku</td><td>tylko poza osią, rośnie z promieniem</td></tr>
+          <tr><td>kierunek obwódki</td><td>zależy od strony ostrości</td><td>zawsze radialnie, od środka kadru</td></tr>
+          <tr><td>przed ostrością</td><td>obwódka jedna barwa (zwykle magenta)</td><td>bez zmian</td></tr>
+          <tr><td>za ostrością</td><td>obwódka barwa przeciwna (zwykle zielona)</td><td>bez zmian</td></tr>
+          <tr><td>w płaszczyźnie ostrości</td><td>znika</td><td>zostaje</td></tr>
+          <tr><td>przy przymykaniu</td><td>słabnie wyraźnie</td><td>prawie bez zmian</td></tr>
+          <tr><td>usuwalna w compie</td><td>nie — to różnica ostrości kanałów</td><td>tak — to przeskalowanie kanałów</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Wiersz ostatni jest tym, dla którego cała ta tabela istnieje: jedna z dwóch odmian da się usunąć trywialnie, a druga nie da się wcale.</p>
+
+    <p><strong>Protokół rozstrzygający.</strong> Sfotografuj kontrastową krawędź — najlepiej gałąź na tle nieba — w trzech ustawieniach ostrości: dokładnie na niej, wyraźnie przed i wyraźnie za. Trzy klatki wystarczają.</p>
+
+    <p>Jeśli obwódka <strong>zmienia barwę na przeciwną</strong> między przednim a tylnym ustawieniem, jest to LoCA. Jeśli utrzymuje tę samą barwę i ten sam kierunek — radialny, od środka kadru — jest to TCA. Jeśli występują obie, zobaczysz jedno i drugie naraz, i wtedy warto powtórzyć test w samym środku kadru, gdzie TCA z definicji nie ma.</p>
+
+    <p>Konsekwencja praktyczna dla compu jest ostra i warto ją zapamiętać. <span class="term-amber">TCA usuwa się i odtwarza jednym przeskalowaniem kanałów, proporcjonalnie do promienia</span> — jest to operacja geometryczna, tania i odwracalna. LoCA jest różnicą ostrości między kanałami, więc jej odtworzenie wymaga rozmycia kanałów o różne wielkości, a jej usunięcie nie jest możliwe, bo w kanale nieostrym detalu po prostu nie ma. Jest to ten sam rodzaj nieodwracalności, co przy obcięciu z <a href="../rozdzialy/rozdzial-31-zakres-dynamiczny.html">Rozdziału 31</a>.</p>
+  </div>
 
   <div class="site-nav">
     <a href="../index.html">← Spis treści</a>
