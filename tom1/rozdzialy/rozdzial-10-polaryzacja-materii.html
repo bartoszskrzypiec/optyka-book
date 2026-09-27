@@ -44,7 +44,181 @@ window.SKY3D_MESSAGES = {
   <h1>Polaryzacja materii</h1>
   <p class="subtitle">Jeden dipol to ciekawostka. Miliard miliardów dipoli w centymetrze sześciennym to nowa wielkość — polaryzacja ośrodka — która zamienia mikroskopową polaryzowalność w liczbę, którą znasz z katalogu materiałów.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li>Jeden indukowany dipol z Rozdziału 8 to ciekawostka. Zsumuj je po wszystkich cząsteczkach w metrze sześciennym i dostajesz nową wielkość, <span class="term-cyan">polaryzację ośrodka P</span> — moment dipolowy na jednostkę objętości, <strong>P = N·α·E</strong>. To ona, nie pojedyncza cząsteczka, robi całą optyczną robotę makroskopowego materiału.</li>
+      <li>P przekłada się na katalogową liczbę przez <strong>przenikalność względną εᵣ = 1 + Nα/ε₀</strong>, a przy częstotliwościach światła i w ośrodku niemagnetycznym zachodzi <strong>εᵣ = n²</strong>. Więcej cząsteczek w tej samej objętości (gaz → ciecz → ciało stałe) prawie zawsze znaczy wyższe n.</li>
+      <li>W gęstym ośrodku cząsteczka czuje nie tylko zewnętrzne E, ale i pole sąsiednich dipoli — <span class="term-cyan">pole lokalne</span> — więc n rośnie z gęstością szybciej, niż mówi prosty wzór. Osobna sprawa to woda: statyczne εᵣ (≈80, od obracających się trwałych dipoli) i optyczne n² (≈1,77, tylko od elektronów) to dwie różne liczby, bo trwałe dipole nie nadążają za polem światła.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Co widzisz · miraż nad rozgrzanym asfaltem</div>
+    <h2>Ośrodek jako morze dipoli</h2>
+
+    <p>Spójrz latem wzdłuż rozgrzanej szosy: powietrze tuż nad nawierzchnią faluje, a w oddali widać coś, co wygląda jak kałuża odbijająca niebo — kałuży tam oczywiście nie ma. Powietrze samo w sobie jest niewidoczne, ale to, co się z nim dzieje optycznie, jest sumą tego, co robi <em>każda pojedyncza</em> cząsteczka, pomnożonym przez ich ilość. Rozdział 8 pokazał, że jedna cząsteczka w polu E dostaje indukowany moment dipolowy p = α·E. Teraz czas zapytać, co się dzieje, gdy takich cząsteczek jest nie jedna, tylko <span class="term-cyan">N</span> na metr sześcienny.</p>
+
+    <p>Odpowiedź jest zwyczajną sumą: jeśli wszystkie dipole w danej objętości są (statystycznie) skierowane tak samo — bo wszystkie odpowiadają na to samo lokalne pole — to moment dipolowy przypadający na jednostkę objętości ośrodka, <strong>polaryzacja ośrodka P</strong>, jest po prostu iloczynem gęstości liczbowej i momentu jednej cząsteczki. Nazwa jest tu myląca bliźniaczo do <a href="rozdzial-02-pole-e-i-b.html">polaryzacji światła</a> z Rozdziału 2 — ale to dwie zupełnie inne wielkości o tej samej etymologii. Polaryzacja światła to kierunek drgań pola E fali; <span class="term-cyan">polaryzacja ośrodka P</span> to gęstość momentu dipolowego, jaką ta fala wywołuje w materii. W tej książce druga zawsze nosi dopisek „ośrodka” albo symbol wielkiej litery P, żeby nie było wątpliwości, o które chodzi.</p>
+
+    <div class="formula">
+      <span class="vec" data-tip="Polaryzacja ośrodka — moment dipolowy na jednostkę objętości, w kulombach na metr kwadratowy.">P</span> = <span class="vec" data-tip="Gęstość liczbowa cząsteczek, sztuk na metr sześcienny.">N</span> · <span class="vec" data-tip="Polaryzowalność jednej cząsteczki, z Rozdziału 8.">α</span> · <span class="vec" data-tip="Natężenie pola elektrycznego, które czuje cząsteczka.">E</span>
+      <span class="sub">P — polaryzacja ośrodka [C/m²], N — gęstość liczbowa cząsteczek [1/m³], α — polaryzowalność jednej cząsteczki [C·m²/V], E — pole elektryczne [V/m]. Ten sam wzór p = αE z Rozdziału 8, tylko pomnożony przez liczbę cząsteczek w objętości.</span>
+    </div>
+
+    <p>Poniższy widget liczy P wprost z tego wzoru dla przykładowej cząsteczki o polaryzowalności rzędu azotu (N₂, objętość polaryzowalności α/(4πε₀) ≈ 1,7·10⁻³⁰ m³ — standardowa liczba z Rozdziału 8). Przesuń suwak gęstości N w stronę cieczy, a zobaczysz, że przy tym samym polu E rośnie zarówno gęstość kropek na siatce (schematycznie — siatka nie jest w skali), jak i wynikowe P.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Siatka dipoli</span><span>P rośnie z gęstością i z polem</span></div>
+      <div class="diagram-controls">
+        <label for="slN10">Gęstość N</label>
+        <input id="slN10" type="range" min="25" max="28.7" step="0.001" value="25.398">
+        <span class="value-readout" id="nOdczyt10">2,50·10²⁵ 1/m³</span>
+      </div>
+      <div class="diagram-controls">
+        <label for="slE10">Pole E</label>
+        <input id="slE10" type="range" min="0" max="1000" step="1" value="900">
+        <span class="value-readout" id="eOdczyt10">900 V/m</span>
+      </div>
+      <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Siatka piętnastu punktów reprezentujących cząsteczki ośrodka, z krótkimi strzałkami pokazującymi indukowany moment dipolowy każdej z nich; tło ciemnieje wraz z gęstością N.">
+        <rect id="tloGestosc10" x="70" y="55" width="650" height="210" rx="10" fill="#4fc3c0" fill-opacity="0.06"/>
+        <g id="siatkaDipoli10" stroke="#4fc3c0" stroke-width="2.4"></g>
+        <g id="kropkiDipoli10" fill="#4fc3c0"></g>
+        <text x="80" y="42" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">SCHEMATYCZNA PRÓBKA OŚRODKA (nie w skali)</text>
+        <text x="700" y="42" font-family="IBM Plex Mono" font-size="10.5" fill="#4fc3c0" text-anchor="end">strzałka = p = αE</text>
+      </svg>
+      <div class="diagram-caption" id="pPodpis10">N ≈ 2,50·10²⁵ 1/m³, E = 900 V/m → P ≈ 4,26·10⁻¹² C/m².</div>
+    </div>
+
+    <p>Zwróć uwagę na skalę: nawet przy polu porównywalnym z natężeniem słonecznego światła (rząd 900 V/m, patrz Rozdział 2) i przy gęstości powietrza, P wychodzi liczbą rzędu 10⁻¹² C/m² — mikroskopijną. To właśnie ta drobna wielkość, zsumowana po wszystkich cząsteczkach na drodze fali, jest źródłem wszystkiego, co optyka dalej robi z ośrodkiem: od zakrzywienia promienia nad gorącą szosą po współczynnik załamania szkła.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Od P do n · przenikalność i pierwsza liczba katalogowa</div>
+    <h2>Skąd bierze się εᵣ, i dlaczego εᵣ = n²</h2>
+
+    <p>P samo w sobie nie jest liczbą, którą znajdziesz w katalogu materiałów — tam stoi <span class="term-cyan">współczynnik załamania n</span> albo jego elektryczny odpowiednik, <strong>przenikalność względna εᵣ</strong>. Most między nimi jest krótki: ośrodek reaguje na pole proporcjonalnie do niego (dopóki pole nie jest ekstremalnie silne), więc P = ε₀·χ·E, gdzie χ nazywa się <strong>podatnością elektryczną</strong>. Przenikalność względna to po prostu χ plus jeden — jedynka za to, że nawet próżnia „przenosi” pole, a χ za to, co dokłada materia:</p>
+
+    <div class="formula">
+      <span class="vec" data-tip="Przenikalność względna ośrodka, liczba bez miana.">εᵣ</span> = 1 + <span class="vec" data-tip="Podatność elektryczna, χ = P/(ε₀E).">χ</span> = 1 + <span class="vec" data-tip="Gęstość liczbowa cząsteczek.">N</span><span class="vec" data-tip="Polaryzowalność jednej cząsteczki.">α</span> / <span class="vec" data-tip="Przenikalność próżni, 8,854·10⁻¹² F/m.">ε₀</span>
+      <span class="sub">εᵣ — przenikalność względna, χ — podatność (εᵣ = 1 + χ), N — gęstość, α — polaryzowalność, ε₀ — przenikalność próżni. Dla rozrzedzonego gazu wystarczy pierwszy wyraz rozwinięcia: n ≈ 1 + Nα/(2ε₀).</span>
+    </div>
+
+    <p>Ostatni krok wynika z równań Maxwella dla ośrodka; tu bierzesz sam wynik, a fizyczny obraz tego, skąd w ośrodku bierze się wolniejsza fala, przyniesie <a href="rozdzial-15-zalamanie-skad-wolniejsza-fala.html">Rozdział 15</a>. Przy częstotliwościach światła, w ośrodku, który nie reaguje magnetycznie (prawie każdy przezroczysty materiał), zachodzi wprost <strong>εᵣ = n²</strong>. Elektryczna odpowiedź materii i optyczny współczynnik załamania to dwa opisy tej samej liczby.</p>
+
+    <p>Sprawdźmy to na powietrzu, żeby liczba nie wisiała w próżni. Gęstość liczbowa cząsteczek w powietrzu w warunkach normalnych to N ≈ 2,5·10²⁵ m⁻³, a polaryzowalność weźmy tę samą, N₂-podobną, α/(4πε₀) ≈ 1,7·10⁻³⁰ m³. Iloczyn Nα/ε₀ = N·4π·(α/4πε₀) ≈ 2,5·10²⁵ · 12,57 · 1,7·10⁻³⁰ ≈ 5,3·10⁻⁴. To jest χ. Ponieważ liczba jest mała, n ≈ 1 + χ/2 ≈ 1 + 2,7·10⁻⁴ — zgadza się z tabelaryczną wartością powietrza, n = 1,0003. Tabele podają często n − 1 ≈ 2,9·10⁻⁴, ale dla 0 °C, kiedy powietrze jest o 7% gęstsze; w temperaturze pokojowej, dla której liczyłeś N, jest to ≈ 2,7·10⁻⁴. Dwuliniowy rachunek na skrawku kartki odtwarza czwartą cyfrę po przecinku współczynnika załamania powietrza — to jest dokładnie to, co ta cała maszyneria ma robić.</p>
+
+    <p>Ten sam wzór mówi też coś jakościowo ważniejszego niż jedna liczba: <strong>n rośnie z gęstością N</strong>. Gaz ma n bliskie 1, bo cząsteczki są rzadko rozsiane; ciecz i ciało stałe mają tych samych cząsteczek (albo podobnych) tysiąc razy więcej w tej samej objętości, więc ich wkłady sumują się do dużo większego χ, a stąd większego n. To pierwsza, najprostsza przyczyna, dla której woda (n = 1,33) i szkło (n = 1,52) załamują mocniej niż powietrze — zanim jeszcze dojdzie druga przyczyna, opisana niżej.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>n w funkcji gęstości N</span><span>prosty model kontra pole lokalne</span></div>
+      <div class="diagram-controls">
+        <label for="slNviz2">Gęstość N (znacznik)</label>
+        <input id="slNviz2" type="range" min="25" max="28.7" step="0.001" value="25.398">
+        <span class="value-readout" id="nviz2Odczyt">2,50·10²⁵ 1/m³</span>
+      </div>
+      <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Dwie krzywe współczynnika załamania w funkcji logarytmu gęstości cząsteczek: prosty model liniowy i model z poprawką pola lokalnego, rozjeżdżające się przy wyższych gęstościach.">
+        <line x1="70" y1="240" x2="700" y2="240" stroke="#2a2f38" stroke-width="1"/>
+        <line x1="70" y1="30" x2="70" y2="240" stroke="#2a2f38" stroke-width="1"/>
+        <text x="70" y="258" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">gaz (powietrze)</text>
+        <text x="700" y="258" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="end">ciecz (5·10²⁸ 1/m³)</text>
+        <text x="385" y="276" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">gęstość N, skala logarytmiczna · α jak dla N₂</text>
+        <text x="60" y="234" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="end">1,0</text>
+        <text x="60" y="36" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="end">1,7</text>
+        <path id="krzywaProsta10" fill="none" stroke="#8a8f98" stroke-width="2" stroke-dasharray="6 4"/>
+        <path id="krzywaCM10" fill="none" stroke="#6e93be" stroke-width="2.4"/>
+        <text x="420" y="60" font-family="IBM Plex Mono" font-size="10.5" fill="#6e93be">z polem lokalnym (Clausius–Mossotti)</text>
+        <text x="420" y="180" font-family="IBM Plex Mono" font-size="10.5" fill="#8a8f98">prosty model εᵣ = 1 + Nα/ε₀</text>
+        <line id="znacznikLinia10" x1="200" y1="30" x2="200" y2="240" stroke="#ecebe4" stroke-width="1.3" stroke-dasharray="4 4"/>
+      </svg>
+      <div class="diagram-caption" id="nviz2Podpis">Przy gęstości gazu obie krzywe się prawie pokrywają — pole lokalne zaczyna się liczyć dopiero w gęstych ośrodkach.</div>
+    </div>
+
+    <p>Przy niskich N obie krzywe leżą praktycznie jedna na drugiej — dla rozrzedzonego gazu poprawka jest zaniedbywalna. Rozjeżdżają się dopiero w gęstych ośrodkach, i to jest temat następnej sekcji.</p>
+
+    <button class="advanced-btn" data-modal-target="adv-cm">Zaawansowane: Clausius–Mossotti jednym wzorem</button>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Gęste ośrodki i woda · pole lokalne i dipole, które nie nadążają</div>
+    <h2>Dlaczego εᵣ wody to nie to samo, co jej n²</h2>
+
+    <p>W rzadkim gazie każda cząsteczka jest osamotniona — jej najbliższa sąsiadka jest setki jej własnych rozmiarów dalej, więc jedyne pole, jakie cząsteczka czuje, to pole zewnętrzne E. W cieczy albo ciele stałym sąsiedzi są tuż obok, a każdy z nich sam jest drgającym dipolem, który dokłada własne, niewielkie pole w miejscu, gdzie stoi twoja cząsteczka. Sumę pola zewnętrznego i tych wszystkich wkładów od sąsiadów nazywa się <span class="term-cyan">polem lokalnym</span> — i to ono, nie samo E, faktycznie napędza polaryzację gęstego ośrodka. Pełny wzór na tę poprawkę (Clausius–Mossotti) jest w bloku „Zaawansowane” wyżej i w <a href="../dodatki/dodatek-c-clausius-mossotti.html">Dodatku C</a>; tutaj wystarczy zapamiętać kierunek efektu — w gęstym ośrodku n wychodzi wyższe, niż przewidywałby naiwny, prostoliniowy wzór z poprzedniej sekcji.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Pole lokalne</span><span>sąsiednie dipole dokładają swój wkład</span></div>
+      <svg id="poleLokalneSvg" viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Centralna cząsteczka otoczona sześcioma sąsiadami, z których każdy jest małym dipolem dokładającym własny wkład do pola odczuwanego przez środkową cząsteczkę.">
+        <circle cx="250" cy="150" r="7" fill="#4fc3c0"/>
+        <line x1="250" y1="150" x2="250" y2="122" stroke="#4fc3c0" stroke-width="2.4"/>
+        <text x="262" y="126" font-family="IBM Plex Mono" font-size="10" fill="#4fc3c0" text-anchor="middle">p</text>
+        <g id="sasiedziPoleLokalne10"></g>
+        <text x="250" y="24" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b" text-anchor="middle">SZEŚCIU NAJBLIŻSZYCH SĄSIADÓW</text>
+        <text x="250" y="280" font-family="IBM Plex Mono" font-size="10" fill="#e8a33d" text-anchor="middle">przerywane linie — wkład każdego sąsiada do pola lokalnego</text>
+      </svg>
+      <div class="diagram-caption">Centralna cząsteczka czuje nie tylko zewnętrzne E, ale i sumę pól wszystkich sąsiadów. W gazie sąsiedzi są za daleko, żeby to miało znaczenie; w cieczy — mają.</div>
+    </div>
+
+    <p>Woda jest najlepszym poligonem do sprawdzenia, gdzie ten prosty obraz się załamuje, bo jej cząsteczka ma coś, czego N₂ nie ma: <strong>trwały moment dipolowy</strong> (Rozdział 5, kąt H–O–H ≈ 104,5°). W polu <em>stałym</em> albo wolno zmiennym te trwałe dipole mają czas się obrócić i ustawić (średnio) wzdłuż pola — to daje ogromną odpowiedź, statyczną przenikalność εᵣ ≈ 80. Kusi więc policzyć n = √εᵣ ≈ 8,9 — i to jest dokładnie mit, który trzeba tu obalić: <strong>εᵣ = 80 nie znaczy n ≈ 9</strong>. Woda nie załamuje światła dziewięć razy mocniej niż próżnia; jej n to 1,33.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Trwały dipol wody w dwóch polach</span><span>obrót kontra zamrożenie</span></div>
+      <svg viewBox="0 0 760 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Po lewej cząsteczki wody w polu statycznym, wszystkie obrócone i ustawione zgodnie z zewnętrznym polem. Po prawej te same cząsteczki w polu optycznym, ustawione losowo, bo nie zdążyły się obrócić.">
+        <rect x="30" y="30" width="330" height="200" rx="10" fill="none" stroke="#2a2f38" stroke-width="1"/>
+        <rect x="400" y="30" width="330" height="200" rx="10" fill="none" stroke="#2a2f38" stroke-width="1"/>
+        <text x="195" y="20" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b" text-anchor="middle">POLE STATYCZNE (~0 Hz)</text>
+        <text x="565" y="20" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b" text-anchor="middle">POLE OPTYCZNE (~5,45·10¹⁴ Hz)</text>
+        <line x1="345" y1="200" x2="345" y2="60" stroke="#e8a33d" stroke-width="2" marker-end="url(#strzalkaE10)"/>
+        <defs>
+          <marker id="strzalkaE10" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#e8a33d"/></marker>
+        </defs>
+        <text x="345" y="52" font-family="IBM Plex Mono" font-size="10" fill="#e8a33d" text-anchor="middle">E</text>
+        <g id="czasteczkiStatyczne10" stroke="#4fc3c0" stroke-width="2" fill="none"></g>
+        <g id="czasteczkiOptyczne10" stroke="#4fc3c0" stroke-width="2" fill="none"></g>
+        <text x="195" y="248" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">dipole ustawiają się (średnio) wzdłuż E — εᵣ ≈ 80</text>
+        <text x="565" y="248" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">orientacje zamrożone, losowe — liczy się tylko chmura elektronów</text>
+      </svg>
+      <div class="diagram-caption">Ta sama cząsteczka, dwa pola: powolne zdąży obrócić cały dipol, szybkie — nie.</div>
+    </div>
+
+    <p>Powód rozjazdu jest czysto mechaniczny: obrócenie całej cząsteczki wody wymaga przesunięcia atomów, nie tylko chmury elektronów, a to jest ruch dużo wolniejszy. Kuchenka mikrofalowa grzeje wodę właśnie dlatego, że pracuje na częstotliwości (≈2,45 GHz), przy której trwałe dipole wody jeszcze się obracają, ale już z wyraźnym opóźnieniem za polem — a opóźnienie, jak w Rozdziale 9, oznacza energię traconą na tarcie o sąsiadów. Fala świetlna drga około 200 tysięcy razy szybciej — molekuła nie zdąży obrócić się nawet raz, zanim pole odwróci zwrot, więc <em>orientacyjny</em> wkład do polaryzacji zupełnie wypada z gry. Zostaje tylko szybka odpowiedź elektronowa z Rozdziału 8 i 9 — dokładnie ten sam mechanizm, co w N₂ czy szkle, a wyższy wynik niż w powietrzu bierze się głównie stąd, że cząsteczek wody w tej samej objętości jest ponad tysiąc razy więcej. Stąd n² ≈ 1,77, czyli n ≈ 1,33: liczba prawie siedem razy mniejsza niż √80, bo mierzy zupełnie inny, dużo szybszy proces.</p>
+
+    <p>Warto od razu odrzucić też pokrewny mit: <strong>n wody nie wynika z tego, że woda jest „ciężka”</strong>. Masa cząsteczki nie wchodzi do wzoru na P ani na εᵣ w żadnym miejscu — liczy się gęstość liczbowa N i polaryzowalność α, czyli to, jak łatwo pole odkształca chmurę elektronów, a nie to, ile waży jądro, które i tak stoi w miejscu (Rozdział 8). Cięższa cząsteczka o tej samej N i α dałaby dokładnie to samo n.</p>
+
+    <p>Ta sama zależność n od gęstości N, opisana w poprzedniej sekcji na przykładzie powietrza, tłumaczy też miraż z otwarcia rozdziału: gorące powietrze przy nawierzchni jest rzadsze niż chłodne powyżej, więc ma niższe N, niższe P, niższe n — a promień świetlny przechodzący przez taki pionowy gradient zakrzywia się w stronę chłodniejszych, gęstszych warstw.</p>
+
+    <div class="sim" id="mirazSim">
+      <div class="sim__stage"><canvas width="600" height="220"></canvas></div>
+      <div class="sim__bar">
+        <label for="slDT10">Różnica temperatur ΔT</label>
+        <input id="slDT10" type="range" min="0" max="40" step="1" value="20">
+      </div>
+      <div class="sim__caption" id="mirazPodpis">ΔT ≈ 20 °C nad gruntem.</div>
+    </div>
+
+  </div>
+
+  <div class="panel practice">
+    <div class="panel-label">Z praktyki</div>
+    <p><strong>Heat haze w compie to gradient N, nie efekt losowy.</strong> Nad gorącą nawierzchnią gorętsze powietrze jest rzadsze — mniejsze N, mniejsze P, mniejsze n. Promień świetlny biegnący blisko gruntu przechodzi przez pionowy gradient n i zakrzywia się ku chłodniejszym (gęstszym) warstwom powyżej — dokładnie ten sam mechanizm co miraż na pustyni. W nodzie zniekształcającym warto budować STMapę z szumu o wyraźnej anizotropii poziomej (fale ciepła drgają głównie pionowo, w wąskich pasmach), najsilniejszą tuż przy linii gorącego asfaltu czy horyzoncie, i zanikającą z wysokością — a nie z jednorodnego szumu izotropowego. Więcej o zakrzywianiu promieni w gradiencie ośrodka (miraże, fatamorgana) znajdziesz w <a href="https://bartoszskrzypiec.github.io/atmosfera_chmury_book/" target="_blank" rel="noopener">atmosfera_chmury_book</a>.</p>
+    <p><strong>Stały IOR w shaderze to migawka jednej gęstości.</strong> Kiedy w silniku wpisujesz n = 1,33 dla wody, zakładasz jedną, konkretną wartość N i jedną częstotliwość odpowiedzi. Zmiana temperatury, ciśnienia albo zasolenia zmienia N, a więc i n — drobno, ale to właśnie te drobne zmiany N robią całą optyczną robotę w gorącym powietrzu czy słonej wodzie.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>polaryzacja ośrodka (P)</dt>
+      <dd>Moment dipolowy przypadający na jednostkę objętości materii, P = N·α·E. Nie mylić z polaryzacją światła (kierunkiem drgań E) z Rozdziału 2 — to inna wielkość o podobnej nazwie.</dd>
+      <dt>przenikalność względna (εᵣ) i εᵣ = n²</dt>
+      <dd>Elektryczna miara odpowiedzi ośrodka na pole, εᵣ = 1 + Nα/ε₀. Przy częstotliwościach światła, w ośrodku niemagnetycznym, εᵣ jest równe n² — dwa opisy tej samej liczby.</dd>
+      <dt>pole lokalne</dt>
+      <dd>Suma pola zewnętrznego i pól wszystkich sąsiednich dipoli, jaką faktycznie czuje pojedyncza cząsteczka w gęstym ośrodku. W rozrzedzonym gazie zaniedbywalne, w cieczy i ciele stałym podnosi n ponad prosty model P = NαE. Pełny wzór (Clausius–Mossotti): Dodatek C.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Masz już liczbę makroskopową, n, i wiesz, skąd bierze się jej zależność od gęstości. Zostało pytanie, którym ten tom żył od Rozdziału 8: co się dzieje z energią, którą pole wpompowało w drgający dipol? Odpowiedź jest krótka — dipol sam staje się nadajnikiem. W <a href="rozdzial-11-dipol-promieniuje.html">następnym rozdziale</a> zobaczysz, jak wygląda fala, którą emituje pojedynczy drgający elektron, i dlaczego to jest dokładnie ten sam mechanizm, co antena radiowa.</p>
+  </div>
 
   <div class="deeper">
     <div class="deeper-label">Idź głębiej</div>
@@ -57,8 +231,310 @@ window.SKY3D_MESSAGES = {
       <a class="nav-next" href="rozdzial-11-dipol-promieniuje.html">Następny →</a>
   </div>
 
+  <template id="adv-cm">
+    <h3>Clausius–Mossotti jednym wzorem</h3>
+    <p>Poprawka pola lokalnego, o której mowa w tym rozdziale, ma jedną zwartą postać, znaną jako wzór Clausius–Mossotti (w optyce często cytowany jako Lorentz–Lorenz, z n² w miejscu εᵣ):</p>
+    <div class="formula">
+      (<span class="vec" data-tip="Przenikalność względna ośrodka.">εᵣ</span> − 1) / (<span class="vec" data-tip="Przenikalność względna ośrodka.">εᵣ</span> + 2) = <span class="vec" data-tip="Gęstość liczbowa cząsteczek.">N</span><span class="vec" data-tip="Polaryzowalność jednej cząsteczki.">α</span> / (3<span class="vec" data-tip="Przenikalność próżni.">ε₀</span>)
+      <span class="sub">εᵣ — przenikalność względna, N — gęstość cząsteczek, α — polaryzowalność, ε₀ — przenikalność próżni. Dla małych N (gaz) upraszcza się z powrotem do prostego εᵣ ≈ 1 + Nα/ε₀ z głównej treści rozdziału.</span>
+    </div>
+    <p>Bez wyprowadzenia: wynika z założenia, że pole lokalne, jakie czuje cząsteczka w jednorodnie spolaryzowanym ośrodku, to pole zewnętrzne plus P/(3ε₀) — wkład od uśrednionych sąsiadów w małej wyimaginowanej wnęce wokół cząsteczki. Im gęstszy ośrodek, tym większy ten dodatkowy wkład, i tym mocniej krzywa n(N) odchyla się od prostego modelu w stronę wyższych wartości — dokładnie tak, jak na wykresie w tym rozdziale. Pełne wyprowadzenie, łącznie z tym, co się dzieje blisko granicy Nα/(3ε₀) = 1 (tzw. katastrofa polaryzacyjna, związana z materiałami ferroelektrycznymi), jest w <a href="../dodatki/dodatek-c-clausius-mossotti.html">Dodatku C</a>.</p>
+  </template>
+
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-panel">
+      <button class="modal-close" data-modal-close aria-label="Zamknij">×</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
 </div>
 
 <script src="../../assets/interactive.js"></script>
+<script>
+/* Pomocnicze formatowanie: notacja naukowa z przecinkiem dziesietnym,
+   uzywana w kilku widgetach ponizej. */
+function sci10(x, dec) {
+  dec = dec === undefined ? 2 : dec;
+  if (x === 0) return '0';
+  var supMap = {'-':'⁻','0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'};
+  function sup(n) { return String(n).split('').map(function (c) { return supMap[c] || c; }).join(''); }
+  var e = Math.floor(Math.log10(Math.abs(x)));
+  var m = x / Math.pow(10, e);
+  m = Math.round(m * Math.pow(10, dec)) / Math.pow(10, dec);
+  if (Math.abs(m) >= 10) { m /= 10; e += 1; }
+  return m.toFixed(dec).replace('.', ',') + '·10' + sup(e);
+}
+</script>
+<script>
+/* Widget 1: siatka dipoli. Suwak logN daje log10(N) wprost (25..28.7,
+   od gestosci gazu do gestosci cieczy), suwak E pole w V/m. Alpha stala,
+   rzedu N2 (Rozdzial 8): objetosc polaryzowalnosci alpha/(4pi*eps0) = 1.7e-30 m3.
+   P = N*alpha*E = eps0 * (4*PI*N*ALPHA_PRIME) * E. */
+(function () {
+  var slN = document.getElementById('slN10');
+  var slE = document.getElementById('slE10');
+  if (!slN || !slE) return;
+
+  var EPS0 = 8.854e-12;
+  var ALPHA_PRIME = 1.7e-30; // m^3, N2-podobna
+
+  var PUNKTY = [];
+  var XS = [130, 265, 400, 535, 670];
+  var YS = [100, 170, 240];
+  XS.forEach(function (x) { YS.forEach(function (y) { PUNKTY.push([x, y]); }); });
+
+  var gStrzalki = document.getElementById('siatkaDipoli10');
+  var gKropki = document.getElementById('kropkiDipoli10');
+  PUNKTY.forEach(function (p, i) {
+    var kropka = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    kropka.setAttribute('cx', p[0]); kropka.setAttribute('cy', p[1]); kropka.setAttribute('r', 4);
+    gKropki.appendChild(kropka);
+    var strzalka = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    strzalka.setAttribute('id', 'dipStrz10_' + i);
+    strzalka.setAttribute('x1', p[0]); strzalka.setAttribute('y1', p[1]);
+    strzalka.setAttribute('x2', p[0]); strzalka.setAttribute('y2', p[1]);
+    gStrzalki.appendChild(strzalka);
+  });
+
+  var tlo = document.getElementById('tloGestosc10');
+  var nOdczyt = document.getElementById('nOdczyt10');
+  var eOdczyt = document.getElementById('eOdczyt10');
+  var pPodpis = document.getElementById('pPodpis10');
+
+  function odswiez() {
+    var log10N = parseFloat(slN.value);
+    var N = Math.pow(10, log10N);
+    var E = parseFloat(slE.value);
+
+    var alphaOverEps0 = 4 * Math.PI * ALPHA_PRIME;
+    var y = N * alphaOverEps0; // = N*alpha/eps0
+    var P = EPS0 * y * E;
+
+    var dlugosc = (E / 1000) * 42;
+    var kat = Math.PI / 4;
+    PUNKTY.forEach(function (p, i) {
+      var el = document.getElementById('dipStrz10_' + i);
+      el.setAttribute('x2', p[0] + dlugosc * Math.cos(kat));
+      el.setAttribute('y2', p[1] - dlugosc * Math.sin(kat));
+    });
+
+    var opacNorm = (log10N - 25) / (28.7 - 25);
+    tlo.setAttribute('fill-opacity', (0.06 + 0.34 * Math.max(0, Math.min(1, opacNorm))).toFixed(3));
+
+    nOdczyt.textContent = sci10(N) + ' 1/m³';
+    eOdczyt.textContent = E.toFixed(0) + ' V/m';
+    pPodpis.textContent = 'N ≈ ' + sci10(N) + ' 1/m³, E = ' + E.toFixed(0) + ' V/m → P ≈ ' + sci10(P) + ' C/m².';
+  }
+  slN.addEventListener('input', odswiez);
+  slE.addEventListener('input', odswiez);
+  odswiez();
+})();
+</script>
+<script>
+/* Widget 2: n(N) - prosty model kontra Clausius-Mossotti. Krzywe rysowane raz
+   (statyczne sciezki na logarytmicznej osi N), suwak przesuwa tylko znacznik
+   i odczyt liczbowy w obu modelach w wybranym punkcie. */
+(function () {
+  var sl = document.getElementById('slNviz2');
+  if (!sl) return;
+
+  var ALPHA_PRIME = 1.7e-30;
+  var X0 = 70, X1 = 700, Y0 = 240, Y1 = 30;
+  var LOGN_MIN = 25, LOGN_MAX = 28.7;
+  var N_MIN = 1.0, N_MAX = 1.7;
+
+  function xAt(logN) { return X0 + (logN - LOGN_MIN) / (LOGN_MAX - LOGN_MIN) * (X1 - X0); }
+  function yAt(n) {
+    var t = (n - N_MIN) / (N_MAX - N_MIN);
+    return Y0 + t * (Y1 - Y0);
+  }
+  function nProsty(logN) {
+    var N = Math.pow(10, logN);
+    var y = 4 * Math.PI * N * ALPHA_PRIME;
+    return Math.sqrt(1 + y);
+  }
+  function nCM(logN) {
+    var N = Math.pow(10, logN);
+    var y = 4 * Math.PI * N * ALPHA_PRIME;
+    var epsCM = (3 + 2 * y) / (3 - y);
+    return Math.sqrt(epsCM);
+  }
+
+  var dProsty = '', dCM = '';
+  for (var i = 0; i <= 100; i++) {
+    var logN = LOGN_MIN + (LOGN_MAX - LOGN_MIN) * i / 100;
+    var xp = xAt(logN).toFixed(1);
+    dProsty += (i === 0 ? 'M ' : ' L ') + xp + ' ' + yAt(nProsty(logN)).toFixed(1);
+    dCM += (i === 0 ? 'M ' : ' L ') + xp + ' ' + yAt(nCM(logN)).toFixed(1);
+  }
+  document.getElementById('krzywaProsta10').setAttribute('d', dProsty);
+  document.getElementById('krzywaCM10').setAttribute('d', dCM);
+
+  var znacznik = document.getElementById('znacznikLinia10');
+  var odczyt = document.getElementById('nviz2Odczyt');
+  var podpis = document.getElementById('nviz2Podpis');
+
+  function odswiez() {
+    var logN = parseFloat(sl.value);
+    var N = Math.pow(10, logN);
+    var x = xAt(logN).toFixed(1);
+    znacznik.setAttribute('x1', x); znacznik.setAttribute('x2', x);
+
+    var nP = nProsty(logN), nC = nCM(logN);
+    function fmtN(n) { return (n - 1 < 0.01) ? '1 + ' + sci10(n - 1, 1) : n.toFixed(3).replace('.', ','); }
+    odczyt.textContent = sci10(N) + ' 1/m³';
+    podpis.textContent = 'N ≈ ' + sci10(N) + ' 1/m³ → prosty model n ≈ ' +
+      fmtN(nP) + ', z polem lokalnym n ≈ ' + fmtN(nC) + '.';
+  }
+  sl.addEventListener('input', odswiez);
+  odswiez();
+})();
+</script>
+<script>
+/* Static: dwie grupy czasteczek wody (V-ksztalt) - lewa wszystkie obrocone
+   zgodnie z polem (staly obrot), prawa w ustalonych, "losowych" kierunkach
+   (staly, wpisany na sztywno rozklad, zeby strona byla identyczna przy
+   kazdym zaladowaniu). */
+(function () {
+  var gStat = document.getElementById('czasteczkiStatyczne10');
+  var gOpt = document.getElementById('czasteczkiOptyczne10');
+  if (!gStat || !gOpt) return;
+
+  function rysujCzasteczke(g, cx, cy, rotDeg) {
+    var r = rotDeg * Math.PI / 180;
+    var ramie = 26, katOtw = 52.25 * Math.PI / 180; // polowa 104.5 deg
+    function obrot(dx, dy) {
+      return [cx + dx * Math.cos(r) - dy * Math.sin(r), cy + dx * Math.sin(r) + dy * Math.cos(r)];
+    }
+    var o1 = obrot(0, -8);
+    var h1 = obrot(ramie * Math.sin(katOtw), -8 - ramie * Math.cos(katOtw));
+    var h2 = obrot(-ramie * Math.sin(katOtw), -8 - ramie * Math.cos(katOtw));
+    var l1 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    l1.setAttribute('x1', o1[0]); l1.setAttribute('y1', o1[1]);
+    l1.setAttribute('x2', h1[0]); l1.setAttribute('y2', h1[1]);
+    g.appendChild(l1);
+    var l2 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    l2.setAttribute('x1', o1[0]); l2.setAttribute('y1', o1[1]);
+    l2.setAttribute('x2', h2[0]); l2.setAttribute('y2', h2[1]);
+    g.appendChild(l2);
+    var pO = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    pO.setAttribute('cx', o1[0]); pO.setAttribute('cy', o1[1]); pO.setAttribute('r', 4);
+    pO.setAttribute('fill', '#4fc3c0'); pO.setAttribute('stroke', 'none');
+    g.appendChild(pO);
+  }
+
+  var pozycjeStat = [[100,90],[195,90],[290,90],[100,170],[195,170],[290,170],[100,210],[290,210]];
+  pozycjeStat.forEach(function (p) { rysujCzasteczke(gStat, p[0], p[1], 0); });
+
+  var pozycjeOpt = [[470,90],[565,90],[660,90],[470,170],[565,170],[660,170],[470,210],[660,210]];
+  var kątyLosowe = [40, 190, 300, 95, 250, 15, 160, 320];
+  pozycjeOpt.forEach(function (p, i) { rysujCzasteczke(gOpt, p[0], p[1], kątyLosowe[i]); });
+})();
+</script>
+<script>
+/* Canvas2D: miraz. Suwak roznicy temperatur steruje sila gradientu i
+   krzywizna promienia - im wieksza roznica, tym nizsze N przy gruncie,
+   nizsze n, silniejsze zakrzywienie. */
+(function () {
+  var host = document.getElementById('mirazSim');
+  if (!host) return;
+  var cv = host.querySelector('canvas');
+  if (!cv || !cv.getContext) return;
+  var ctx = cv.getContext('2d');
+  var W = cv.width, H = cv.height;
+  var sl = host.querySelector('#slDT10');
+  var podpis = document.getElementById('mirazPodpis');
+
+  function rysuj(dT) {
+    ctx.clearRect(0, 0, W, H);
+
+    var gTlo = ctx.createLinearGradient(0, 0, 0, H);
+    gTlo.addColorStop(0, '#141821');
+    gTlo.addColorStop(0.55, '#1b2230');
+    gTlo.addColorStop(1, '#2a2216');
+    ctx.fillStyle = gTlo;
+    ctx.fillRect(0, 0, W, H);
+
+    var pasySzum = Math.round(4 + dT / 6);
+    for (var i = 0; i < pasySzum; i++) {
+      var yy = H - 10 - i * (70 / pasySzum) - Math.random() * 3;
+      ctx.strokeStyle = 'rgba(79,195,192,' + (0.08 + 0.12 * (dT / 40)).toFixed(3) + ')';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      for (var x = 0; x <= W; x += 12) {
+        var wychyl = Math.sin(x * 0.05 + i) * (dT / 12);
+        if (x === 0) ctx.moveTo(x, yy + wychyl); else ctx.lineTo(x, yy + wychyl);
+      }
+      ctx.stroke();
+    }
+
+    ctx.strokeStyle = '#6e93be';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(0, H - 12); ctx.lineTo(W, H - 12);
+    ctx.stroke();
+
+    var zakrzywienie = dT * 0.9;
+    ctx.strokeStyle = '#e8a33d';
+    ctx.lineWidth = 2;
+    ctx.setLineDash([6, 5]);
+    ctx.beginPath();
+    for (var t = 0; t <= 1; t += 0.02) {
+      var xr = t * W;
+      var yr = (H - 40) - t * (H - 90) + Math.sin(t * Math.PI) * zakrzywienie;
+      if (t === 0) ctx.moveTo(xr, yr); else ctx.lineTo(xr, yr);
+    }
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    ctx.fillStyle = '#8b909b';
+    ctx.font = '11px "IBM Plex Mono", monospace';
+    ctx.fillText('gorąca nawierzchnia — niższe N, niższe n', 14, H - 18);
+
+    podpis.textContent = dT === 0 ? 'ΔT = 0: brak gradientu N i n — promień biegnie prosto.' : 'ΔT ≈ ' + dT.toFixed(0).replace('.', ',') +
+      ' °C nad gruntem. Im większa różnica temperatur, tym silniejszy gradient N i n, tym mocniej promień się zakrzywia.';
+  }
+
+  sl.addEventListener('input', function () { rysuj(parseFloat(sl.value)); });
+  rysuj(parseFloat(sl.value));
+})();
+</script>
+<script>
+/* Static (opcjonalna): pojedynczy dipol centralny i szesciu sasiadow,
+   kazdy ze swoja mala strzalka pola, zbiegajacych sie ku centrum - schemat
+   pola lokalnego. */
+(function () {
+  var host = document.getElementById('poleLokalneSvg');
+  if (!host) return;
+  var CX = 250, CY = 150, R = 95;
+  var g = document.getElementById('sasiedziPoleLokalne10');
+  if (!g) return;
+  for (var i = 0; i < 6; i++) {
+    var kat = i * Math.PI / 3;
+    var nx = CX + R * Math.cos(kat), ny = CY + R * Math.sin(kat);
+    var kropka = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    kropka.setAttribute('cx', nx); kropka.setAttribute('cy', ny); kropka.setAttribute('r', 5);
+    kropka.setAttribute('fill', '#4fc3c0');
+    g.appendChild(kropka);
+
+    var strzalka = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    strzalka.setAttribute('x1', nx); strzalka.setAttribute('y1', ny);
+    // w jednorodnym polu wszystkie dipole sa rownolegle do centralnego
+    strzalka.setAttribute('x2', nx);
+    strzalka.setAttribute('y2', ny - 16);
+    strzalka.setAttribute('stroke', '#4fc3c0'); strzalka.setAttribute('stroke-width', 2);
+    g.appendChild(strzalka);
+
+    var wklad = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    wklad.setAttribute('x1', nx); wklad.setAttribute('y1', ny);
+    wklad.setAttribute('x2', CX + (nx - CX) * 0.35);
+    wklad.setAttribute('y2', CY + (ny - CY) * 0.35);
+    wklad.setAttribute('stroke', '#e8a33d'); wklad.setAttribute('stroke-width', 1.2);
+    wklad.setAttribute('stroke-dasharray', '3 3');
+    g.appendChild(wklad);
+  }
+})();
+</script>
 </body>
 </html>

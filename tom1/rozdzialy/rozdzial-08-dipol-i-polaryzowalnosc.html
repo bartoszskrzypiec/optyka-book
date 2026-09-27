@@ -44,7 +44,203 @@ window.SKY3D_MESSAGES = {
   <h1>Dipol i polaryzowalność: elektron na sprężynie</h1>
   <p class="subtitle">Pole fali przesuwa chmurę elektronów względem jądra o ułamek średnicy atomu. Ten ułamek — łatwość, z jaką cząsteczka daje się rozciągnąć — nazywa się polaryzowalnością i jest pierwszą liczbą, od której zależy wygląd materiału.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li>Pole E cząsteczki obojętnej nie omija — <span class="term-amber">rozsuwa</span> w niej dodatni i ujemny ładunek w przeciwne strony, tworząc <span class="term-cyan">dipol indukowany</span> (induced dipole): p = α·E. Zniknij pole, zniknie i ten dipol — inaczej niż w <span class="term-cyan">dipolu trwałym</span> (permanent dipole) wody, który jest tam zawsze, bez udziału światła.</li>
+      <li>Wygodny obraz w głowie: chmura elektronów siedzi na <strong>sprężynie</strong> zaczepionej o jądro. Jądro prawie się nie rusza — jest co najmniej ~1836 razy cięższe od elektronu — więc to chmura ucieka na bok, a jądro ją ściąga z powrotem siłą F = −K·x.</li>
+      <li><span class="term-cyan">Polaryzowalność α</span> mówi, jak miękka jest ta sprężyna — jak łatwo dana cząsteczka daje się rozciągnąć. W polu światła słonecznego (E ≈ 900 V/m) chmura azotu przesuwa się o około <strong>attometr</strong> (10⁻¹⁸ m) — mniej więcej tysiąc razy mniej niż promień samego jądra, które ją trzyma.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Co widzisz · balon i skrawek papieru</div>
+    <h2>Obojętne nie znaczy niewrażliwe</h2>
+
+    <p>Potrzyj balon o włosy i zbliż go do drobnych skrawków papieru — poderwą się i przylgną do gumy, choć papier jest elektrycznie obojętny, bez żadnego nadmiaru ładunku. To pierwszy sygnał, że „obojętny” i „niewrażliwy na pole” to nie to samo. Naładowany balon niesie ze sobą pole <span class="term-amber">E</span>, a to pole wnika w każdą cząsteczkę papieru i robi z nią coś konkretnego: rozsuwa jej dodatni i ujemny ładunek w przeciwne strony.</p>
+
+    <p>Taki rozsunięty układ dwóch ładunków, +q i −q, oddalonych o odległość d, nazywa się <strong>dipolem</strong>, a jego siłę mierzy moment dipolowy. Jego strzałkę rysujemy w tym tomie od ładunku ujemnego do dodatniego — tak liczą fizycy i tak wychodzi z wzoru p = α·E niżej, gdzie dipol indukowany wskazuje zgodnie z polem:</p>
+
+    <div class="formula">
+      <span class="vec" data-tip="Moment dipolowy, w kulombometrach">p</span> = <span class="vec" data-tip="Wielkość rozsuniętego ładunku, w kulombach">q</span> · <span class="vec" data-tip="Odległość między środkami ładunku dodatniego i ujemnego">d</span>
+      <span class="sub">p — moment dipolowy [C·m], q — wielkość rozsuniętego ładunku [C], d — odległość między nimi [m]. Im większe i dalej rozsunięte ładunki, tym silniejszy dipol.</span>
+    </div>
+
+    <p>W papierze i w atomie neutralnego gazu ten dipol istnieje <em>tylko dopóki</em> trwa pole zewnętrzne — to <strong>dipol indukowany</strong>. Zabierz balon, pole zniknie, chmura elektronów wróci na miejsce i dipol zniknie razem z nim. To coś innego niż <strong>dipol trwały</strong> cząsteczki wody, poznany w <a href="rozdzial-05-wiazania.html">Rozdziale 5</a> — tam zgięta geometria H₂O (104,5°) tworzy dipol niezależnie od jakiegokolwiek pola, obecny nawet w ciemności. Odróżnianie tych dwóch przypadków jest ważne, bo w dalszej części tomu obie role wracają osobno, a mylenie ich prowadzi do złych wniosków: to dipol indukowany, nie trwały, tłumaczy, dlaczego balon przyciąga zarówno papier (cząsteczki celulozy mają też swój trwały dipol), jak i styropian, który żadnego trwałego dipola nie ma w ogóle.</p>
+
+    <p>Ten sam mechanizm, tylko między dwiema cząsteczkami zamiast między balonem a papierem, poznałeś już przy okazji sił van der Waalsa w Rozdziale 5: przypadkowe, chwilowe drgnięcie chmury w jednej cząsteczce indukuje dipol w sąsiedniej. Tam był to efekt uboczny w opowieści o wiązaniach; tutaj staje się głównym bohaterem, bo dokładnie ten sam mechanizm — pole rozsuwające ładunek w cząsteczce — jest tym, co robi z materią padające na nią światło.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Dipol trwały kontra indukowany</span><span>ten sam symbol, różne pochodzenie</span></div>
+      <svg viewBox="0 0 760 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Po lewej zgięta cząsteczka wody z trwałym dipolem widocznym nawet bez pola zewnętrznego. Po prawej symetryczny atom, który dipol zyskuje dopiero pod wpływem pola i traci go, gdy pole znika.">
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b" text-anchor="middle">
+          <text x="180" y="26">DIPOL TRWAŁY — H₂O</text>
+          <text x="180" y="200">obecny zawsze, bez pola</text>
+        </g>
+        <circle cx="180" cy="90" r="16" fill="#4fc3c0"/>
+        <text x="180" y="94" font-family="IBM Plex Mono" font-size="10" fill="#0d0f14" text-anchor="middle">O</text>
+        <circle cx="140" cy="130" r="10" fill="#8a8f98"/>
+        <circle cx="220" cy="130" r="10" fill="#8a8f98"/>
+        <line x1="180" y1="90" x2="140" y2="130" stroke="#5a6068" stroke-width="3"/>
+        <line x1="180" y1="90" x2="220" y2="130" stroke="#5a6068" stroke-width="3"/>
+        <line x1="180" y1="90" x2="180" y2="160" stroke="#4fc3c0" stroke-width="3" marker-end="url(#dipStrzalka)"/>
+        <text x="196" y="166" font-family="IBM Plex Mono" font-size="10.5" fill="#4fc3c0" text-anchor="middle">p</text>
+        <defs>
+          <marker id="dipStrzalka" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4fc3c0"/></marker>
+        </defs>
+
+        <line x1="380" y1="20" x2="380" y2="200" stroke="#2a2f38" stroke-width="1"/>
+
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b" text-anchor="middle">
+          <text x="580" y="26">DIPOL INDUKOWANY — atom w polu</text>
+          <text x="580" y="200">znika, gdy pole zanika</text>
+        </g>
+        <circle cx="580" cy="115" r="9" fill="#8a8f98"/>
+        <circle id="chmuraIndukowana" cx="566" cy="115" r="22" fill="#4fc3c0" opacity="0.45"/>
+        <line x1="564" y1="115" x2="582" y2="115" stroke="#4fc3c0" stroke-width="3" marker-end="url(#dipStrzalka)"/>
+        <line x1="530" y1="66" x2="630" y2="66" stroke="#e8a33d" stroke-width="3" marker-end="url(#eStrzalka2)"/>
+        <defs>
+          <marker id="eStrzalka2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#e8a33d"/></marker>
+        </defs>
+        <text x="580" y="56" font-family="IBM Plex Mono" font-size="10.5" fill="#e8a33d" text-anchor="middle">E</text>
+      </svg>
+      <div class="diagram-caption">Woda ma dipol z geometrii wiązań, niezależnie od pola. Atom obojętny dostaje dipol dopiero od pola E i traci go, gdy pole znika — to właśnie ten drugi przypadek jest tematem tego rozdziału. Chmura ucieka pod prąd pola, więc strzałka p (od − do +) wskazuje zgodnie z E. Uwaga: chemicy — i widget w Rozdziale 5 — rysują strzałkę dipola odwrotnie, ku biegunowi ujemnemu.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Model · sprężyna zaczepiona o jądro</div>
+    <h2>Chmura na sprężynie</h2>
+
+    <p>Wygodny obraz w głowie, do którego wrócisz w każdym kolejnym rozdziale tej części: <span class="term-cyan">chmurę elektronów</span> otaczającą jądro potraktuj jak masę zawieszoną na sprężynie, zaczepionej dokładnie w jądrze. Pole E stara się odciągnąć tę masę w bok — a sprężyna, czyli przyciąganie dodatnio naładowanego jądra, ciągnie ją z powrotem:</p>
+
+    <div class="formula">
+      <span class="vec" data-tip="Siła przywracająca chmurę do równowagi, w newtonach">F</span> = −<span class="vec" data-tip="Sztywność wiązania między chmurą a jądrem — im większa, tym trudniej chmurę przesunąć">K</span> · <span class="vec" data-tip="Wychylenie chmury z położenia równowagi, w metrach">x</span>
+      <span class="sub">F — siła przywracająca [N], K — sztywność „sprężyny” [N/m], x — wychylenie chmury z równowagi [m]. Znak minus: siła zawsze wraca ku równowadze, przeciwnie do wychylenia.</span>
+    </div>
+
+    <p>To jest analogia, nie dosłowny opis — w atomie nie ma żadnego drucianego zwoju. Działa dlatego, że przy małych wychyleniach (a takie właśnie tu zawsze mamy) siła przyciągania jądra rośnie w przybliżeniu liniowo z odległością, dokładnie jak w prawdziwej sprężynie rozciąganej o niewielki ułamek jej długości — dopiero przy dużym rozciągnięciu prawdziwa sprężyna, i prawdziwy atom, zaczynają zachowywać się nieliniowo. Jądro samo w tym przeciąganiu prawie się nie rusza: jest co najmniej <strong>~1836 razy cięższe</strong> od elektronu — tyle waży sam proton, czyli jądro wodoru, a jądro azotu, z siedmioma protonami i siedmioma neutronami, już około 25 tysięcy razy. Ta sama siła przyspiesza je więc o tyle słabiej, że to niemal wyłącznie chmura ucieka na bok, a jądro zostaje w miejscu jako kotwica.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Atom w polu E</span><span>suwak przesuwa chmurę</span></div>
+      <div class="diagram-controls">
+        <label for="poleESuwak">Pole E</label>
+        <input id="poleESuwak" type="range" min="0" max="1000" step="10" value="900">
+        <span class="value-readout" id="poleEOdczyt">900 V/m</span>
+      </div>
+      <svg viewBox="0 0 760 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Jądro w środku, chmura elektronowa przesuwana suwakiem w bok, strzałka pola E nad atomem i strzałka momentu dipolowego p rosnąca wraz z przesunięciem.">
+        <line x1="80" y1="120" x2="680" y2="120" stroke="#2a2f38" stroke-width="1"/>
+        <circle cx="380" cy="120" r="7" fill="#8a8f98"/>
+        <text x="380" y="150" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">jądro (prawie nieruchome)</text>
+        <circle id="chmuraAtom" cx="380" cy="120" r="34" fill="#4fc3c0" opacity="0.4"/>
+        <line id="pStrzalka" x1="380" y1="120" x2="380" y2="120" stroke="#4fc3c0" stroke-width="3" marker-end="url(#dipStrzalka)"/>
+        <text id="pEtykieta" x="380" y="95" font-family="IBM Plex Mono" font-size="10.5" fill="#4fc3c0" text-anchor="middle">p</text>
+        <line x1="380" y1="55" x2="500" y2="55" stroke="#e8a33d" stroke-width="3" marker-end="url(#eStrzalka3)"/>
+        <defs>
+          <marker id="eStrzalka3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#e8a33d"/></marker>
+        </defs>
+        <text x="440" y="40" font-family="IBM Plex Mono" font-size="10.5" fill="#e8a33d" text-anchor="middle">E</text>
+        <text x="120" y="195" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">rysunek w skrajnym powiększeniu — prawdziwe x jest attometrowe</text>
+      </svg>
+      <div class="diagram-caption" id="poleEPodpis">E = 900 V/m (światło słoneczne, jak w Rozdziale 2): x ≈ 1,1·10⁻¹⁸ m — około attometra, mniej więcej tysiąc razy mniej niż promień samego jądra (≈10⁻¹⁵ m).</div>
+    </div>
+
+    <p>Ta ostatnia liczba jest tu najważniejsza, więc policz ją krok po kroku. Z p = α·E (wzór poniżej) i p = e·x dla azotu (α w postaci objętościowej ≈ 1,7·10⁻³⁰ m³) wychodzi x ≈ 1,1·10⁻¹⁸ m — <strong>rząd attometrów</strong>, nie pikometrów. Dla porównania: atom ma rozmiar ≈ 10⁻¹⁰ m (0,1 nm, jak w <a href="rozdzial-04-atom.html">Rozdziale 4</a>), a jądro ≈ 10⁻¹⁵ m — więc x jest sto milionów razy mniejszy od atomu i nawet od jądra mniejszy około tysiąc razy. Chmura elektronów w świetle słonecznym drży o odległość mniejszą niż rozmiar cząstki, która ją trzyma na miejscu. Elektron nie odrywa się od atomu ani na chwilę — tylko nieznacznie w nim kołysze.</p>
+
+    <p>Ten sam rachunek daje też szybki sposób sprawdzenia, czy sprężyna z tej analogii w ogóle ma sens fizyczny. Z F = −K·x i p = α·E = e·x wynika K = e²/α — po podstawieniu liczb wychodzi K ≈ 135 N/m dla azotu. To wartość tego samego rzędu co sztywność prawdziwych wiązań chemicznych (setki N/m) — a więc „sprężyna” nie jest tylko luźną metaforą, tylko liczbowo sensownym odpowiednikiem czegoś, co w cząsteczce naprawdę trzyma elektrony na miejscu.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Trzy skale obok siebie</span><span>jądro, atom, wychylenie chmury</span></div>
+      <svg viewBox="0 0 760 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Trzy okręgi w silnym powiększeniu porównujące promień atomu, promień jądra i wychylenie chmury elektronowej w polu światła słonecznego — wychylenie jest tysiąc razy mniejsze niż samo jądro.">
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b" text-anchor="middle">
+          <circle cx="140" cy="100" r="70" fill="none" stroke="#4fc3c0" stroke-width="2"/>
+          <text x="140" y="185">atom · ≈10⁻¹⁰ m</text>
+
+          <circle cx="420" cy="100" r="6" fill="#8a8f98"/>
+          <text x="420" y="185">jądro · ≈10⁻¹⁵ m</text>
+
+          <circle cx="640" cy="100" r="1" fill="#4fc3c0"/>
+          <line x1="636" y1="100" x2="644" y2="100" stroke="#4fc3c0" stroke-width="2"/>
+          <text x="640" y="185">x (słońce) · ≈10⁻¹⁸ m</text>
+        </g>
+        <text x="30" y="24" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">każdy okrąg narysowany w innym, osobnym powiększeniu — inaczej ostatni byłby niewidoczny</text>
+      </svg>
+      <div class="diagram-caption">Nawet w silnym powiększeniu, potrzebnym żeby jądro było widoczne obok atomu, samo wychylenie chmury zostaje kropką bez wymiaru — musiałbyś powiększyć ten rysunek jeszcze tysiąc razy, żeby stało się kółkiem takiej wielkości jak jądro obok.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Miara miękkości · polaryzowalność α</div>
+    <h2>Polaryzowalność: jak miękka jest ta sprężyna</h2>
+
+    <p>Skoro F = −K·x, to sztywna sprężyna (duże K) da małe x przy danym polu, a miękka — duże. <strong>Polaryzowalność</strong> α (polarizability) jest dokładnie odwrotnością tej sztywności, tyle że wyrażoną wprost przez moment dipolowy, jaki dane pole wywołuje:</p>
+
+    <div class="formula">
+      <span class="vec" data-tip="Moment dipolowy indukowany w cząsteczce, w kulombometrach">p</span> = <span class="vec" data-tip="Polaryzowalność cząsteczki, w C·m²/V. Liczbowo wygodniej podawać jako objętość α/(4πε₀) w m³">α</span> · <span class="vec" data-tip="Natężenie pola elektrycznego w miejscu cząsteczki, w woltach na metr">E</span>
+      <span class="sub">p — indukowany moment dipolowy [C·m], α — polaryzowalność [C·m²/V], E — pole w miejscu cząsteczki [V/m]. α mierzy, jak łatwo dana chmura elektronów daje się rozciągnąć.</span>
+    </div>
+
+    <p>Duże, luźne chmury elektronów — dużo elektronów, słabo trzymanych, rozmyte na dużym obszarze — mają dużą α. Małe, ciasno związane chmury (hel, wodór) mają α małą, bo ich niewiele elektronów siedzi blisko jądra, na krótkiej, sztywnej „sprężynie”. Standardowa liczba tego tomu to azot, N₂: objętość polaryzowalności α/(4πε₀) ≈ 1,7·10⁻³⁰ m³. Na wykresie niżej ta sama miara dla kilku innych cząsteczek pokazuje ten sam trend na oko: im większa i bardziej rozmyta chmura (jak w pierścieniu benzenu z wieloma współdzielonymi elektronami, znanym z <a href="rozdzial-07-chemia-wegla.html">Rozdziału 7</a>), tym większa α.</p>
+
+    <p>Ten sam trend wraca w tej książce w co najmniej trzech kolejnych miejscach, więc warto zapamiętać go już teraz jako jedno zdanie: liczba elektronów, ich rozmycie i to, jak luźno są trzymane, przekładają się wprost na to, jak mocno dana cząsteczka odpowiada na pole światła. Ciężkie atomy z wieloma powłokami (ołów w szkle flintowym), elektrony rozmyte po całym pierścieniu sprzężonym (barwniki z Rozdziału 7) i swobodne elektrony w metalu (Rozdział 20) to trzy różne wcielenia dokładnie tego samego argumentu o miękkiej sprężynie.</p>
+
+    <p>Warto też od razu odróżnić dwa poziomy tego samego pytania, bo książka będzie się między nimi przełączać. Polaryzowalność α opisuje <em>jedną</em> cząsteczkę w izolacji — ile dipola wywoła w niej dane pole. To, co ostatecznie widzisz jako materiał — szkło, wodę, powietrze — to zbiorowy efekt miliardów takich cząsteczek naraz, stłoczonych razem w gęstym ośrodku. Przejście od pojedynczej α do gęstości materiału i jego współczynnika załamania jest właśnie tematem Rozdziału 10; tutaj zapamiętaj tylko, że to przejście w ogóle istnieje i że zaczyna się od liczby, którą już znasz.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Polaryzowalność kilku cząsteczek</span><span>objętość α/(4πε₀), ×10⁻³⁰ m³ — orientacyjnie</span></div>
+      <svg viewBox="0 0 760 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Wykres słupkowy objętości polaryzowalności dla wodoru, azotu, dwutlenku węgla i benzenu, rosnący wraz z wielkością i rozmyciem chmury elektronowej.">
+        <line x1="90" y1="180" x2="700" y2="180" stroke="#8b909b" stroke-width="1.5"/>
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#4fc3c0">
+          <rect x="130" y="168" width="60" height="12"/>
+          <text x="160" y="200" fill="#8b909b" text-anchor="middle" font-size="10">H · 0,67</text>
+
+          <rect x="270" y="152" width="60" height="28"/>
+          <text x="300" y="200" fill="#8b909b" text-anchor="middle" font-size="10">N₂ · 1,7</text>
+
+          <rect x="410" y="132" width="60" height="48"/>
+          <text x="440" y="200" fill="#8b909b" text-anchor="middle" font-size="10">CO₂ · 2,9</text>
+
+          <rect x="550" y="45" width="60" height="135"/>
+          <text x="580" y="200" fill="#8b909b" text-anchor="middle" font-size="10">benzen · 10,3</text>
+        </g>
+        <text x="90" y="30" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">większa, luźniejsza chmura → większa α</text>
+      </svg>
+      <div class="diagram-caption">Wartości orientacyjne, w jednostkach ×10⁻³⁰ m³. N₂ jest wzorcową liczbą tego tomu; reszta pokazuje tylko trend rzędu wielkości.</div>
+    </div>
+
+    <div class="sim" id="sprezynaSim">
+      <div class="sim__stage"><canvas width="600" height="180"></canvas></div>
+      <div class="sim__caption">Masa na sprężynie (po lewej) i chmura elektronowa w atomie (po prawej) reagują na to samo, wolno zmienne pole tym samym ruchem — to cała treść analogii „elektron na sprężynie”.</div>
+    </div>
+
+    <p>Warto już teraz zapamiętać jedną liczbę na potem: pole prawdziwego światła nie zmienia się wolno jak na powyższej animacji, tylko odwraca zwrot co 0,9 femtosekundy (<a href="rozdzial-02-pole-e-i-b.html">Rozdział 2</a>). Czy sprężyna nadąża za tak szybkim szarpnięciem, zależy od tego, jak blisko jest jej własnej częstości drgań własnych — a to jest już temat <a href="rozdzial-09-oscylator-rezonans-faza.html">następnego rozdziału</a>.</p>
+  </div>
+
+  <div class="panel practice">
+    <div class="panel-label">Z praktyki</div>
+    <p><strong>Wysoki IOR to makroskopowe echo dużej α.</strong> Szkło flintowe z ołowiem, dwutlenek tytanu w bieli pigmentowej, diament — wszystkie mają liczne, luźno trzymane chmury elektronów, łatwo rozciągane przez pole światła. Duża polaryzowalność pojedynczej cząsteczki, zsumowana po miliardach cząsteczek w gęstym ośrodku, wychodzi w skali makro jako wysoki współczynnik załamania. Mechanizm tego przejścia „pojedyncza cząsteczka → n ośrodka” dostaje własny rozdział (Rozdział 10), ale sama przyczyna zaczyna się dokładnie tutaj.</p>
+    <p><strong>Nie myl polaryzowalności α z polaryzacją światła.</strong> To pierwsze jest cechą jednej cząsteczki (jak łatwo ją rozciągnąć polem), to drugie — kierunkiem drgania pola E fali (Rozdział 2). Słowo brzmi podobnie, znaczy co innego, i w tym tomie zawsze rozstrzyga kontekst.</p>
+    <p><strong>Model sprężyny ma swoje granice, i warto je znać, zanim zaczniesz go nadużywać.</strong> Działa dobrze dla pól rzędu tych, jakie niesie zwykłe światło — attometrowe wychylenia, o których była mowa wyżej. Przy polu na tyle silnym, żeby wychylenie przestało być znikome (impulsy laserowe dużej mocy), sprężyna przestaje być liniowa i pojawiają się efekty, których F = −K·x już nie opisuje — to już optyka nieliniowa, poza zakresem tego tomu.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>dipol trwały (permanent dipole)</dt>
+      <dd>Rozsunięcie ładunku dodatniego i ujemnego w cząsteczce wynikające z jej geometrii, obecne niezależnie od pola zewnętrznego — jak w zgiętej wodzie (Rozdział 5).</dd>
+      <dt>dipol indukowany (induced dipole)</dt>
+      <dd>Rozsunięcie ładunku wywołane wyłącznie obecnością pola E; znika, gdy pole znika. p = α·E.</dd>
+      <dt>model sprężyny</dt>
+      <dd>Analogia: chmura elektronów jako masa na sprężynie zaczepionej o jądro, F = −K·x. Działa, bo wychylenia są tak małe, że siła przywracająca jest w przybliżeniu liniowa.</dd>
+      <dt>polaryzowalność α</dt>
+      <dd>Miara tego, jak łatwo pole E rozciąga chmurę elektronów danej cząsteczki: p = α·E. Liczbowo wygodnie podawać jako objętość α/(4πε₀) w m³ (N₂ ≈ 1,7·10⁻³⁰ m³).</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Wiesz już, że pole rozciąga chmurę elektronów tym mocniej, im większa jest jej polaryzowalność — ale ani słowem nie padło, jak szybko chmura za tym polem nadąża. A pole światła nie zmienia się wolno: odwraca zwrot co 0,9 femtosekundy. W <a href="rozdzial-09-oscylator-rezonans-faza.html">następnym rozdziale</a> sprężyna z tego rozdziału zyskuje własną częstość drgań, ω₀ — i okazuje się, że to, czy chmura nadąża w fazie, spóźnia się, czy w ogóle nie nadąża, rozstrzyga o rezonansie, pochłanianiu i, kilka rozdziałów dalej, o samym współczynniku załamania.</p>
+  </div>
 
   <div class="deeper">
     <div class="deeper-label">Idź głębiej</div>
@@ -60,5 +256,148 @@ window.SKY3D_MESSAGES = {
 </div>
 
 <script src="../../assets/interactive.js"></script>
+<script>
+/* Atom w polu E: suwak podaje E w V/m (0-1000, realistyczny zakres wokol
+   swiatla slonecznego ~900 V/m). Prawdziwe x liczone z p = alfa*E, alfa
+   z objetosci polaryzowalnosci azotu (~1,7e-30 m^3), p = e*x. Rysunek
+   przesuwa chmure w umownej, mocno wyolbrzymionej skali pikseli, zeby
+   cokolwiek bylo widac - liczba w podpisie jest ta prawdziwa.
+*/
+(function () {
+  var sl = document.getElementById('poleESuwak');
+  if (!sl) return;
+  var E_CHARGE = 1.602e-19;      // C
+  var EPS0 = 8.854e-12;          // F/m
+  var ALFA_VOL = 1.7e-30;        // m^3, objetosc polaryzowalnosci N2
+  var ALFA = 4 * Math.PI * EPS0 * ALFA_VOL; // C*m^2/V
+
+  var supMap = {'-':'⁻','0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'};
+  function sup(n) { return String(n).split('').map(function (c) { return supMap[c] || c; }).join(''); }
+  function sci(x) {
+    if (x === 0) return '0';
+    var e = Math.floor(Math.log10(Math.abs(x)));
+    var m = x / Math.pow(10, e);
+    m = Math.round(m * 100) / 100;
+    if (Math.abs(m) >= 10) { m /= 10; e += 1; }
+    return m.toFixed(1).replace('.', ',') + '·10' + sup(e);
+  }
+
+  var chmura = document.getElementById('chmuraAtom');
+  var pStrzalka = document.getElementById('pStrzalka');
+  var pEtykieta = document.getElementById('pEtykieta');
+  var odczyt = document.getElementById('poleEOdczyt');
+  var podpis = document.getElementById('poleEPodpis');
+  var CX = 380, CY = 120;
+  var PIKSELI_NA_ATOMETR = 22; // czysto wizualna skala, nie fizyczna
+
+  function odswiez() {
+    var Ev = parseFloat(sl.value);
+    var p = ALFA * Ev;                 // C*m
+    var x = p / E_CHARGE;              // m, wychylenie chmury
+    var xAm = x * 1e18;                // w attometrach, do wyswietlenia
+
+    var dx = Math.min(60, xAm * PIKSELI_NA_ATOMETR);
+    // elektrony (ladunek ujemny) uciekaja PRZECIW polu; p wskazuje od chmury (-) do jadra (+), czyli zgodnie z E
+    chmura.setAttribute('cx', (CX - dx).toFixed(1));
+    pStrzalka.setAttribute('x1', (CX - dx).toFixed(1));
+    pStrzalka.setAttribute('x2', CX.toFixed(1));
+    pEtykieta.setAttribute('x', (CX - dx / 2).toFixed(1));
+
+    odczyt.textContent = Ev.toFixed(0).replace('.', ',') + ' V/m';
+    if (Ev === 0) { podpis.textContent = 'E = 0: brak pola, brak dipola — chmura siedzi symetrycznie wokół jądra.'; return; }
+    var razy = 1e-15 / x;
+    var razyTxt = razy >= 100 ? String(Math.round(razy / 100) * 100) : String(Math.round(razy));
+    podpis.textContent = 'E = ' + Ev.toFixed(0).replace('.', ',') + ' V/m: x ≈ ' + sci(x) +
+      ' m — ' + xAm.toFixed(1).replace('.', ',') + ' am, ok. ' + razyTxt + ' razy mniej niż promień jądra (≈10⁻¹⁵ m).';
+  }
+  sl.addEventListener('input', odswiez);
+  odswiez();
+})();
+</script>
+<script>
+/* Masa na sprezynie obok atomu, obie napedzane tym samym, wolno
+   zmiennym "polem" - czysto ilustracyjna animacja bez fizycznych
+   jednostek, pokazujaca sam ruch w takt tego samego sygnalu. */
+(function () {
+  var host = document.getElementById('sprezynaSim');
+  if (!host) return;
+  var cv = host.querySelector('canvas');
+  if (!cv || !cv.getContext) return;
+  var ctx = cv.getContext('2d');
+  var W = cv.width, H = cv.height;
+  var MID = H / 2;
+  var t = 0;
+
+  function rysujSprezyne(x0, y0, x1, y1, zwoje) {
+    var dx = (x1 - x0) / zwoje;
+    ctx.beginPath();
+    ctx.moveTo(x0, y0);
+    for (var i = 0; i < zwoje; i++) {
+      var mx = x0 + dx * (i + 0.5);
+      var my = (i % 2 === 0) ? y0 - 10 : y0 + 10;
+      ctx.lineTo(mx, my);
+    }
+    ctx.lineTo(x1, y1);
+    ctx.strokeStyle = '#6a707c';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  }
+
+  function klatka() {
+    ctx.clearRect(0, 0, W, H);
+    var s = Math.sin(t);
+
+    ctx.font = '10.5px "IBM Plex Mono", monospace';
+    ctx.fillStyle = '#8b909b';
+    ctx.textAlign = 'center';
+    ctx.fillText('masa na sprężynie', W * 0.25, 22);
+    ctx.fillText('chmura na atomie', W * 0.75, 22);
+
+    // lewa strona: masa na sprezynie, zaczep u gory
+    var zaczepX = W * 0.25, zaczepY = 40;
+    var masaY = zaczepY + 70 + 22 * s;
+    rysujSprezyne(zaczepX, zaczepY, zaczepX, masaY - 14, 7);
+    ctx.fillStyle = '#4fc3c0';
+    ctx.fillRect(zaczepX - 22, masaY - 14, 44, 28);
+    ctx.fillStyle = '#5a6068';
+    ctx.fillRect(zaczepX - 30, zaczepY - 6, 60, 6);
+
+    // prawa strona: jadro plus chmura przesuwana w bok w rytm tego samego sygnalu
+    var jx = W * 0.75, jy = MID;
+    ctx.beginPath();
+    ctx.arc(jx, jy, 7, 0, Math.PI * 2);
+    ctx.fillStyle = '#8a8f98';
+    ctx.fill();
+    var chmuraX = jx + 46 * s;
+    ctx.beginPath();
+    ctx.arc(chmuraX, jy, 26, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(79,195,192,0.4)';
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(jx, jy);
+    ctx.lineTo(chmuraX, jy);
+    ctx.strokeStyle = '#4fc3c0';
+    ctx.lineWidth = 3;
+    ctx.stroke();
+
+    // wspolny sygnal pola na dole
+    ctx.strokeStyle = '#e8a33d';
+    ctx.beginPath();
+    for (var px = 20; px <= W - 20; px++) {
+      var phase = t - (px - W / 2) * 0.002;
+      var py = H - 22 - 12 * Math.sin(phase);
+      if (px === 20) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    }
+    ctx.stroke();
+    ctx.fillStyle = '#8b909b';
+    ctx.textAlign = 'left';
+    ctx.fillText('wspólne, wolno zmienne pole E', 20, H - 4);
+
+    t += 0.035;
+    requestAnimationFrame(klatka);
+  }
+  requestAnimationFrame(klatka);
+})();
+</script>
 </body>
 </html>

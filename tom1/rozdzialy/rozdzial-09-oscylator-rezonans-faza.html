@@ -44,7 +44,185 @@ window.SKY3D_MESSAGES = {
   <h1>Oscylator, rezonans i faza</h1>
   <p class="subtitle">Pchaj huśtawkę wolno, a pójdzie za twoją ręką. Pchaj za szybko, a zacznie jej się wymykać w przeciwfazie. Elektron w szkle robi dokładnie to samo — i ta jedna zmiana fazy wyjaśni, dlaczego n jest większe od jedności.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li>Elektron z <a href="rozdzial-08-dipol-i-polaryzowalnosc.html">Rozdziału 8</a> (masa na sprężynie) ma własną częstość drgań <span class="term-cyan">ω₀</span> — częstość rezonansową. Gdy pole pcha go z częstością ω znacznie niższą, elektron podąża za nim niemal <strong>w fazie</strong>, tak jak ciężkie drzwi popychane powoli.</li>
+      <li>Przy ω ≈ ω₀ amplituda drgań jest największa, a dokładnie przy ω = ω₀ elektron zostaje w tyle za polem o <strong>90°</strong> — to tam energia najmocniej zamienia się w ciepło przez <span class="term-violet">tłumienie γ</span>. Powyżej rezonansu elektron drga już w <strong>przeciwfazie</strong>, a jego amplituda maleje.</li>
+      <li>Widzialne światło pada na szkło i wodę daleko poniżej ich rezonansu elektronowego, głęboko w ultrafiolecie — odpowiedź jest mała i prawie w fazie. To pozornie techniczne stwierdzenie jest fundamentem współczynnika załamania, do którego dojdziesz w Rozdziale 15.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Co widzisz · huśtawka, którą pchasz w różnym tempie</div>
+    <h2>Poniżej rezonansu: odpowiedź, która nadąża</h2>
+
+    <p>Popchnij huśtawkę w rytmie, w jakim sama chce się kołysać, a wystarczą małe pchnięcia, żeby wzbić ją wysoko. Popchnij ją dużo wolniej niż ten naturalny rytm, a po prostu podąża za twoją ręką — jest tam, gdzie ty ją prowadzisz, mniej więcej w tej samej chwili. Kieliszek, w który uderzysz paznokciem, dzwoni jedną konkretną nutą — to jego własna częstość drgań, niezależna od tego, jak go uderzysz. Elektron przyczepiony do jądra sprężyną z <a href="rozdzial-08-dipol-i-polaryzowalnosc.html">Rozdziału 8</a> zachowuje się identycznie: zostawiony sam sobie, drgałby z własną, naturalną częstością <span class="term-cyan">ω₀</span>, wyznaczoną przez sztywność sprężyny K i masę elektronu, ω₀ = √(K/mₑ). To jest jego <strong>rezonans</strong>.</p>
+
+    <p>W realnym atomie elektron nigdy nie jest zostawiony sam sobie — non-stop napiera na niego pole fali świetlnej, oscylujące z częstością ω, którą narzuca kolor światła, nie sam elektron. Siła o wielkości e<span class="term-amber">E</span>(t) pcha go w rytmie pola, a to, jak elektron odpowiada, zależy wyłącznie od stosunku ω/ω₀. Kiedy ω jest dużo mniejsza od ω₀ — pole zmienia się dużo wolniej, niż elektron potrafiłby drgać sam z siebie — sprężyna ma cały czas, żeby nadążyć. Elektron podąża za polem niemal <strong>w fazie</strong>: kiedy pole jest maksymalne, wychylenie elektronu też jest maksymalne, w tym samym momencie. Amplituda tej odpowiedzi jest w tym reżimie prawie stała, bo liczy się głównie sztywność sprężyny, nie jej bezwładność:</p>
+
+    <div class="formula">
+      x₀ ≈ e<span class="vec" data-tip="Amplituda pola napędzającego, V/m.">E₀</span> / (mₑ·ω₀²) &nbsp;&nbsp;dla&nbsp;&nbsp; ω ≪ ω₀
+      <span class="sub">x₀ — amplituda wychylenia elektronu z równowagi, e — ładunek elementarny, E₀ — amplituda pola, mₑ — masa elektronu, ω₀ — częstość rezonansowa. To dokładnie ta sama wielkość, która w Rozdziale 8 dała polaryzowalność α = e²/K = e²/(mₑω₀²) — statyczny, „nudny” limit, w którym elektron zdąża za polem bez opóźnienia.</span>
+    </div>
+
+    <p>Zwróć uwagę, że w tym wzorze w ogóle nie ma jeszcze ω — amplituda jest praktycznie stała dla całego zakresu częstości dużo mniejszych od ω₀, nie tylko dla jednej konkretnej wartości. To dokładnie dlatego w Rozdziale 8 polaryzowalność α mogła wyglądać jak zwykła liczba, przypisana atomowi na stałe, a nie jak funkcja koloru padającego światła: dopóki jesteś daleko poniżej rezonansu, α rzeczywiście jest w przybliżeniu stała. Jądro w tym całym ruchu stoi w miejscu (a właściwie: drga o tyle mniej niż elektron, że można to pominąć) z tego samego powodu co w Rozdziale 8 — jest co najmniej ~1836 razy cięższe (tyle waży sam proton), więc ta sama siła przyspiesza je o tyle słabiej.</p>
+
+    <p>To właśnie ten spokojny, prawie-w-fazie reżim dotyczy widzialnego światła padającego na szkło albo wodę: ich elektrony mają rezonans głęboko w ultrafiolecie, a widzialna częstość jest wobec niego niska. Zanim to rozwiniesz w trzeciej sekcji, zobacz najpierw, co dzieje się, gdy tempo pchnięć dogania własny rytm elektronu.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Amplituda i faza odpowiedzi</span><span>w funkcji ω/ω₀ · amplituda unormowana do piku</span></div>
+      <div class="diagram-controls">
+        <label for="slGamma1">Tłumienie γ/ω₀</label>
+        <input id="slGamma1" type="range" min="0.05" max="0.6" step="0.01" value="0.15">
+        <span class="value-readout" id="gamma1Odczyt">0,15</span>
+      </div>
+      <svg viewBox="0 0 760 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Górny panel: amplituda odpowiedzi elektronu w funkcji stosunku czestosci wymuszajacej do rezonansowej, z pikiem przy omega/omega0=1. Dolny panel: faza opoznienia, rosnaca od 0 stopni ponizej rezonansu, przez 90 stopni dokladnie na rezonansie, do 180 stopni powyzej.">
+        <line x1="60" y1="150" x2="700" y2="150" stroke="#2a2f38" stroke-width="1"/>
+        <line x1="60" y1="20" x2="60" y2="150" stroke="#2a2f38" stroke-width="1"/>
+        <line id="rezLinia1" x1="273" y1="20" x2="273" y2="150" stroke="#8a8f98" stroke-width="1" stroke-dasharray="3 5"/>
+        <path id="krzywaAmp" fill="none" stroke="#4fc3c0" stroke-width="2"/>
+        <text x="64" y="34" font-family="IBM Plex Mono" font-size="10.5" fill="#4fc3c0">AMPLITUDA x₀(ω)</text>
+        <text x="248" y="166" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">ω/ω₀ = 1</text>
+
+        <line x1="60" y1="320" x2="700" y2="320" stroke="#2a2f38" stroke-width="1"/>
+        <line x1="60" y1="190" x2="60" y2="320" stroke="#2a2f38" stroke-width="1"/>
+        <line x1="60" y1="255" x2="700" y2="255" stroke="#2a2f38" stroke-width="1" stroke-dasharray="3 5"/>
+        <line id="rezLinia2" x1="273" y1="190" x2="273" y2="320" stroke="#8a8f98" stroke-width="1" stroke-dasharray="3 5"/>
+        <path id="krzywaFaza" fill="none" stroke="#4fc3c0" stroke-width="2" stroke-dasharray="6 3"/>
+        <text x="64" y="204" font-family="IBM Plex Mono" font-size="10.5" fill="#4fc3c0">FAZA OPÓŹNIENIA φ</text>
+        <text x="666" y="204" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">180°</text>
+        <text x="666" y="318" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">0°</text>
+        <text x="64" y="252" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">90°</text>
+        <text x="40" y="335" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">0</text>
+        <text x="690" y="335" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">3</text>
+        <text x="330" y="335" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">ω / ω₀</text>
+      </svg>
+      <div class="diagram-caption" id="gamma1Podpis">γ/ω₀ = 0,15. Pik jest ok. 6,7 razy wyższy niż odpowiedź przy niskich ω (poziom krzywej przy lewej krawędzi). Im mniejsze γ, tym wyższy i węższy pik.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Rezonans i powyżej · pik, 90°, przeciwfaza</div>
+    <h2>Na rezonansie i za nim: opóźnienie rośnie do 180°</h2>
+
+    <p>Dokładnie przy ω = ω₀ dzieje się coś, co nie zależy od tego, jak silne jest tłumienie: elektron zostaje w tyle za polem o dokładnie <strong>90°</strong> — ćwierć okresu. To zawsze ten sam kąt, niezależnie od γ. Zmienia się za to amplituda: bez tłumienia rosłaby bez ograniczeń, ale γ ją ogranicza, więc pik ma skończoną wysokość x₀(ω₀) = eE₀/(mₑ·γ·ω₀) — im mniejsze γ, tym wyższy i węższy pik (zobacz to na suwaku powyżej). (Ściśle biorąc, szczyt amplitudy leży odrobinę poniżej ω₀, przy dużym γ wyraźnie — widać to na wykresie przy γ/ω₀ = 0,6 — ale pochłanianie, o którym za chwilę, ma szczyt dokładnie w ω₀.) To właśnie tutaj, w tym opóźnieniu o 90°, energia napędu robi najwięcej pracy przeciwko sile tłumienia w jednym cyklu — czyli <span class="term-violet">pochłanianie</span> jest maksymalne dokładnie na rezonansie. To zapowiedź: pełny rachunek absorpcji i κ należy do Rozdziału 17, tutaj liczy się sam mechanizm fazowy.</p>
+
+    <p>Skąd w ogóle bierze się γ? Fizycznie to każda droga, którą energia drgań elektronu ucieka z powrotem w ciepło albo w inne promieniowanie — sam elektron nieuchronnie promieniuje trochę energii, gdy przyspiesza (Rozdział 11), a w gęstym ośrodku dochodzą zderzenia z sąsiednimi atomami. Z punktu widzenia tego rozdziału nieważne jest, ile konkretnie mechanizmów się na to składa — liczy się tylko jedna liczba, która mówi, jak szybko drganie traciłoby energię, gdyby napęd nagle zniknął. Im mniejsze γ względem ω₀, tym „dźwięczniejszy” oscylator — to ten sam kieliszek, który dzwoni długo i czysto, w przeciwieństwie do mokrej gąbki, która w ogóle nie dzwoni.</p>
+
+    <p>Powyżej rezonansu (ω ≫ ω₀) role się odwracają: bezwładność elektronu, nie sztywność sprężyny, decyduje o odpowiedzi. Elektron jest za ciężki (za wolny), żeby nadążyć za coraz szybszym pchnięciem — w efekcie porusza się w <strong>przeciwfazie</strong>, φ → 180°: w chwili, gdy pole pcha go w jedną stronę, on wciąż porusza się w drugą, bo nie zdążył odwrócić kierunku po poprzednim pchnięciu. Amplituda w tym reżimie maleje jak x₀ ∝ 1/ω² — im szybciej pole drga, tym mniej elektron w ogóle zdąża się poruszyć. Oba reżimy i pik między nimi opisuje jeden wzór:</p>
+
+    <div class="formula">
+      x₀(ω) = e<span class="vec" data-tip="Amplituda pola napędzającego.">E₀</span> / mₑ &nbsp;·&nbsp; 1 / √((<span class="vec" data-tip="Częstość rezonansowa elektronu.">ω₀</span>² − ω²)² + <span class="vec" data-tip="Tłumienie oscylatora, 1/s.">γ</span>²ω²)
+      <span class="sub">x₀(ω) — amplituda wychylenia dla wymuszenia o częstości ω. Dla ω ≪ ω₀ wyrażenie sprowadza się do stałej z poprzedniej sekcji; dla ω = ω₀ do eE₀/(mₑγω₀); dla ω ≫ ω₀ do eE₀/(mₑω²).</span>
+    </div>
+
+    <div class="formula">
+      tg φ = <span class="vec" data-tip="Tłumienie.">γ</span>·ω / (<span class="vec" data-tip="Częstość rezonansowa.">ω₀</span>² − ω²)
+      <span class="sub">φ — opóźnienie fazowe odpowiedzi względem siły napędzającej, rosnące monotonicznie od 0° (ω ≪ ω₀), przez 90° (ω = ω₀), do 180° (ω ≫ ω₀). Konwencja znaku w całym tomie to zależność czasowa e^(−iωt).</span>
+    </div>
+
+    <button class="advanced-btn" data-modal-target="adv-zespolona">Zaawansowane: jedna liczba zespolona zamiast dwóch wzorów</button>
+
+    <p>Warto od razu zapamiętać, czego ten pik <em>nie</em> mówi. Na rezonansie elektron nie zaczyna nagle promieniować silniej „za darmo” — dominującym efektem jest strata energii w tłumieniu, nie wzmocnione promieniowanie wsteczne. I odwrotnie: szkło bywa nazywane przezroczystym, bo „nie ma rezonansów” — to nieprawda, ma je, tylko poza widzialnym zakresem, o czym mówi kolejna sekcja.</p>
+
+    <div class="sim" id="oscylatorSim">
+      <div class="sim__stage"><canvas width="600" height="280"></canvas></div>
+      <div class="sim__bar">
+        <label for="slOmega2">Częstość wymuszenia ω/ω₀</label>
+        <input id="slOmega2" type="range" min="0.1" max="3" step="0.01" value="0.35">
+        <span class="value-readout" id="omega2Odczyt">0,35</span>
+      </div>
+      <div class="sim__caption" id="oscylator2Podpis">ω/ω₀ = 0,35 (poniżej rezonansu). Siła (amber) i wychylenie elektronu (cyan) niemal się pokrywają — mała faza opóźnienia.</div>
+    </div>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Moc pochłaniana</span><span>w funkcji ω/ω₀</span></div>
+      <div class="diagram-controls">
+        <label for="slGamma3">Tłumienie γ/ω₀</label>
+        <input id="slGamma3" type="range" min="0.05" max="0.6" step="0.01" value="0.15">
+        <span class="value-readout" id="gamma3Odczyt">0,15</span>
+      </div>
+      <svg viewBox="0 0 760 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Wykres mocy pochlanianej w funkcji stosunku czestosci wymuszajacej do rezonansowej, z jednym pikiem przy omega/omega0=1.">
+        <line x1="60" y1="180" x2="700" y2="180" stroke="#2a2f38" stroke-width="1"/>
+        <line x1="60" y1="20" x2="60" y2="180" stroke="#2a2f38" stroke-width="1"/>
+        <line id="rezLinia3" x1="273" y1="20" x2="273" y2="180" stroke="#8a8f98" stroke-width="1" stroke-dasharray="3 5"/>
+        <path id="krzywaMoc" fill="none" stroke="#9c82d8" stroke-width="2.2"/>
+        <text x="64" y="34" font-family="IBM Plex Mono" font-size="10.5" fill="#9c82d8">P_pochłaniana(ω)</text>
+        <text x="248" y="196" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">ω/ω₀ = 1</text>
+        <text x="40" y="200" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">0</text>
+        <text x="690" y="200" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">3</text>
+        <text x="330" y="200" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">ω / ω₀</text>
+      </svg>
+      <div class="diagram-caption" id="gamma3Podpis">γ/ω₀ = 0,15. Pik leży dokładnie tam, gdzie faza mija 90° — to nie przypadek: oba efekty mają wspólne źródło w γ.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Gdzie są rezonanse · materiał jako zestaw oscylatorów</div>
+    <h2>UV, widzialne, podczerwień: ten sam wzór, inna masa i sprężyna</h2>
+
+    <p>Żaden realny materiał nie ma jednego oscylatora — ma ich cały zestaw, każdy o innej częstości rezonansowej, bo różne elektrony (i różne wiązania) mają różną „sztywność sprężyny” i różną bezwładność, a ω₀ = √(K/m) rośnie z K i maleje z m. Ciasno związany elektron walencyjny w małej, sztywnej cząsteczce jak SiO₂ czy H₂O ma wysokie ω₀ — jego rezonans leży głęboko w ultrafiolecie: silne pochłanianie kwarcu i wody zaczyna się dopiero poniżej ok. 180 nm (przerwa SiO₂ ≈ 9 eV to ok. 140 nm), a główne rezonanse leżą jeszcze głębiej. Elektron rozmyty po długim <span class="term-cyan">wiązaniu sprzężonym</span> z <a href="rozdzial-07-chemia-wegla.html">Rozdziału 7</a> ma efektywnie znacznie „miększą sprężynę” — jego rezonans może wypaść wprost w widzialnym, tak jak w β-karotenie (450–480 nm): to właśnie dlatego marchew jest pomarańczowa. Same wiązania chemiczne, całe atomy drgające na sprężynie wiązania (nie tylko elektron), mają znów inny rezonans. Sprężyna wiązania ma sztywność podobnego rzędu co ta z Rozdziału 8 — setki N/m — ale drga na niej masa całego atomu, tysiące razy większa od masy elektronu. Ponieważ ω₀ = √(K/m), tysiące razy większa masa to kilkadziesiąt razy niższa częstość (√1836 ≈ 43), więc rezonans wiązań ląduje w podczerwieni: rozciąganie O–H w okolicach 3 µm, Si–O bliżej 9–10 µm.</p>
+
+    <p>Widzialne światło (380–750 nm, 1,65–3,26 eV) leży więc w wąskiej szczelinie między tymi dwoma światami: powyżej rezonansów wiązań w podczerwieni i poniżej rezonansów elektronowych szkła i wody w ultrafiolecie. Dla obu tych materiałów widzialna częstość jest niska względem ich UV-owego ω₀ — to dokładnie ten „prawie w fazie” reżim z pierwszej sekcji, i to dlatego szkło i woda w ogóle są przezroczyste: żaden z ich głównych rezonansów nie leży tam, gdzie patrzy oko. Zapamiętaj tę jedną zależność na później — to ona, w Rozdziale 15, zamieni się w liczbę n większą od jedności.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Oś rezonansów</span><span>podczerwień — widzialne — ultrafiolet, skala log(λ)</span></div>
+      <svg viewBox="0 0 760 170" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Pozioma os dlugosci fali w skali logarytmicznej od 100 nanometrow do 12 mikrometrow. Pasmo widzialne 380 do 750 nanometrow zaznaczone bursztynowym tlem. Znaczniki rezonansow: elektronowe szkla i wody ponizej okolo 180 nanometrow w ultrafiolecie, chromofor typu beta-karoten kolo 450 do 480 nanometrow w widzialnym, rozciaganie O-H kolo 3 mikrometrow i Si-O kolo 9 do 10 mikrometrow w podczerwieni.">
+        <line x1="60" y1="120" x2="700" y2="120" stroke="#2a2f38" stroke-width="1"/>
+        <rect x="238" y="40" width="92" height="80" fill="#e8a33d" opacity="0.16"/>
+        <text x="248" y="34" font-family="IBM Plex Mono" font-size="10" fill="#e8a33d">WIDZIALNE 380–750 nm</text>
+
+        <rect x="60" y="100" width="78" height="40" fill="#4fc3c0" opacity="0.18"/>
+        <line x1="138" y1="100" x2="138" y2="140" stroke="#4fc3c0" stroke-width="2"/>
+        <text x="40" y="155" font-family="IBM Plex Mono" font-size="9.5" fill="#4fc3c0">szkło/woda UV</text>
+        <text x="50" y="167" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">poniżej ≈180 nm</text>
+
+        <line x1="265" y1="100" x2="265" y2="140" stroke="#4fc3c0" stroke-width="2"/>
+        <text x="245" y="155" font-family="IBM Plex Mono" font-size="9.5" fill="#4fc3c0">chromofor</text>
+        <text x="235" y="167" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">450–480 nm</text>
+
+        <line x1="510" y1="100" x2="510" y2="140" stroke="#4fc3c0" stroke-width="2"/>
+        <text x="475" y="155" font-family="IBM Plex Mono" font-size="9.5" fill="#4fc3c0">O–H</text>
+        <text x="472" y="167" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">≈3 µm</text>
+
+        <line x1="669" y1="100" x2="669" y2="140" stroke="#4fc3c0" stroke-width="2"/>
+        <text x="635" y="155" font-family="IBM Plex Mono" font-size="9.5" fill="#4fc3c0">Si–O</text>
+        <text x="630" y="167" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">≈9–10 µm</text>
+
+        <text x="52" y="134" font-family="IBM Plex Mono" font-size="9" fill="#8b909b">100 nm</text>
+        <text x="676" y="134" font-family="IBM Plex Mono" font-size="9" fill="#8b909b">12 µm</text>
+        <text x="235" y="140" font-family="IBM Plex Mono" font-size="9" fill="#8b909b">↑</text>
+        <text x="380" y="60" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">←</text>
+      </svg>
+      <div class="diagram-caption">Cyan — rezonanse materii. Widzialne siedzi w szczelinie: nisko względem UV szkła i wody, wysoko względem IR wiązań.</div>
+    </div>
+  </div>
+
+  <div class="panel practice">
+    <div class="panel-label">Z praktyki</div>
+    <p><strong>Tabele współczynnika załamania podają wartość „przy 589 nm”</strong>, nie dlatego, że to jakaś magiczna długość fali, tylko dlatego, że n zależy od odległości bieżącej częstości od ω₀ — a ta odległość zmienia się z kolorem. Stały IOR wpisany na sztywno w shaderze ignoruje ten „ogon” krzywej rezonansowej; dokładniejszy render dyspersji wymaga znajomości całej krzywej, nie jednej liczby (Rozdział 16).</p>
+    <p><strong>Szerokość piku to szerokość pasma pochłaniania.</strong> Wąski pik wycina z białego światła tylko cienki pasek widma — kolor wychodzi blady, jak lawendowy odcień szkła z neodymem. Szerokie pasmo, które zabiera np. całą niebieską połowę widma, daje kolor mocny i nasycony (Rozdział 22). W cieczach i ciałach stałych pasma są dodatkowo poszerzone przez otoczenie, więc prawie zawsze szerokie. Suwak „absorption color” tego nie odda: to kształt widma, nie jeden kolor.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>rezonans, częstość rezonansowa (ω₀)</dt>
+      <dd>Naturalna częstość drgań oscylatora — elektronu na sprężynie z Rozdziału 8 — przy której nawet mała siła daje dużą odpowiedź.</dd>
+      <dt>tłumienie (γ)</dt>
+      <dd>Wielkość opisująca straty energii oscylatora — tarcie, promieniowanie, zderzenia. Ustala wysokość i szerokość piku rezonansowego oraz jest tam, gdzie fizycznie mieszka pochłanianie (rozwinięcie: Rozdział 17).</dd>
+      <dt>faza odpowiedzi (φ)</dt>
+      <dd>Opóźnienie ruchu elektronu względem siły, która go napędza. Rośnie monotonicznie od 0° dla ω ≪ ω₀, przez 90° dokładnie na rezonansie, do 180° dla ω ≫ ω₀.</dd>
+      <dt>oscylator Lorentza</dt>
+      <dd>Model elektronu jako masy na sprężynie z tłumieniem, napędzanego oscylującym polem — najprostszy model, który daje poprawną krzywą n(ω) i κ(ω) materiału. Pełne wyprowadzenie: Dodatek B.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Masz już pełny obraz jednego elektronu: sprężynę i polaryzowalność z Rozdziału 8, teraz częstość, rezonans i fazę. W <a href="rozdzial-10-polaryzacja-materii.html">następnym rozdziale</a> zbierasz miliardy takich elektronów w jeden ośrodek i pytasz, jak ich wspólna odpowiedź, P = NαE, zamienia się w przenikalność εᵣ i (dopiero za chwilę) w n. Sama faza wróci już w Rozdziale 11 — drgający elektron nie tylko się porusza, ale i promieniuje własną falkę, która niesie tę samą fazę dalej w przestrzeń — a w Rozdziale 15 ten sam kąt 90° z tego rozdziału stanie się kluczem do tego, czym naprawdę jest współczynnik załamania.</p>
+  </div>
 
   <div class="deeper">
     <div class="deeper-label">Idź głębiej</div>
@@ -57,8 +235,168 @@ window.SKY3D_MESSAGES = {
       <a class="nav-next" href="rozdzial-10-polaryzacja-materii.html">Następny →</a>
   </div>
 
+  <template id="adv-zespolona">
+    <h3>Jedna liczba zespolona zamiast dwóch wzorów</h3>
+    <p>Amplituda x₀(ω) i faza φ(ω) wyglądają jak dwa niezależne wzory, ale wychodzą z jednego rachunku, jeśli od razu zapiszesz siłę napędzającą i wychylenie jako liczby zespolone, zamiast osobno amplitudy i fazy. Przy zależności czasowej e^(−iωt), przyjętej w całym tym tomie, ustalona odpowiedź oscylatora tłumionego to:</p>
+    <p style="font-family:'IBM Plex Mono',monospace;">x̃(ω) = (e·E₀/mₑ) / (ω₀² − ω² − i·γ·ω)</p>
+    <p>x̃(ω) to pojedyncza liczba zespolona, ale niesie oba rozdziałowe wyniki naraz: jej moduł |x̃(ω)| to dokładnie x₀(ω) z tego rozdziału, a jej argument (kąt, pod jakim leży na płaszczyźnie zespolonej) to +φ(ω) — przy konwencji e^(−iωt) dodatni kąt oznacza właśnie opóźnienie za siłą: x(t) = |x̃|·cos(ωt − φ). Nie trzeba osobno pilnować amplitudy i fazy — jedno dzielenie liczb zespolonych daje obie naraz. To ten sam trik, którym w Rozdziale 17 zapisze się zespolony współczynnik załamania ñ = n + iκ jako jedną liczbę zamiast pary (n, κ) liczonej osobno. Pełne wyprowadzenie: <a href="../dodatki/dodatek-b-oscylator-lorentza.html">Dodatek B</a>; podstawy liczb zespolonych i notacji fazorowej: <a href="../matematyka/podstawy-matematyczne.html">primer matematyczny</a>.</p>
+  </template>
+
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-panel">
+      <button class="modal-close" data-modal-close aria-label="Zamknij">×</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
 </div>
 
 <script src="../../assets/interactive.js"></script>
+<script>
+/* 1. Amplituda x0(omega) i faza phi(omega) oscylatora tlumionego, w
+      jednostkach unormowanych (omega0=1, eE0/m=1). Suwak steruje gamma/omega0.
+      Skala amplitudy jest przeskalowywana co przeladowanie, bo pik rosnie
+      jak 1/gamma i przy malym gamma wychodziby poza panel. */
+(function () {
+  var sl = document.getElementById('slGamma1');
+  if (!sl) return;
+  var X0 = 60, X1 = 700, WMAX = 3;
+  var AY0 = 150, AY1 = 20;   // gorny panel: amplituda
+  var PY0 = 320, PY1 = 190;  // dolny panel: faza
+
+  function amp(w, g) { return 1 / Math.sqrt(Math.pow(1 - w * w, 2) + g * g * w * w); }
+  function faza(w, g) { return Math.atan2(g * w, 1 - w * w); }
+  function px(w) { return X0 + (w / WMAX) * (X1 - X0); }
+
+  function odswiez() {
+    var g = parseFloat(sl.value);
+    var N = 240, i, w, maxA = 0, vals = [];
+    for (i = 0; i <= N; i++) { w = (i / N) * WMAX; vals.push(amp(w, g)); if (vals[i] > maxA) maxA = vals[i]; }
+
+    var dA = '', dF = '';
+    for (i = 0; i <= N; i++) {
+      w = (i / N) * WMAX;
+      var ya = AY0 - (vals[i] / maxA) * (AY0 - AY1);
+      dA += (i === 0 ? 'M ' : ' L ') + px(w).toFixed(1) + ' ' + ya.toFixed(1);
+      var f = faza(w, g); // 0..PI
+      var yf = PY0 - (f / Math.PI) * (PY0 - PY1);
+      dF += (i === 0 ? 'M ' : ' L ') + px(w).toFixed(1) + ' ' + yf.toFixed(1);
+    }
+    document.getElementById('krzywaAmp').setAttribute('d', dA);
+    document.getElementById('krzywaFaza').setAttribute('d', dF);
+    document.getElementById('gamma1Odczyt').textContent = g.toFixed(2).replace('.', ',');
+    document.getElementById('gamma1Podpis').textContent =
+      'γ/ω₀ = ' + g.toFixed(2).replace('.', ',') + '. Pik jest ok. ' + maxA.toFixed(1).replace('.', ',') +
+      ' razy wyższy niż odpowiedź przy niskich ω (poziom krzywej przy lewej krawędzi). Im mniejsze γ, tym wyższy i węższy pik.';
+  }
+  sl.addEventListener('input', odswiez);
+  odswiez();
+})();
+
+/* 2. Animowany oscylator: sila napedzajaca (amber, gorna strzalka) i
+      wychylenie elektronu na sprezynie (cyan), rysowane w czasie rzeczywistym
+      wedlug analitycznego rozwiazania ustalonego x(t) = x0(w)*cos(wt - phi(w)).
+      Tlumienie gamma/omega0 jest tu ustalone na 0.2 (nie ma wlasnego suwaka),
+      suwak steruje tylko czestoscia wymuszenia w. */
+(function () {
+  var sl = document.getElementById('slOmega2');
+  var canvas = document.querySelector('#oscylatorSim canvas');
+  if (!sl || !canvas) return;
+  var ctx = canvas.getContext('2d');
+  var G = 0.2;
+  var t = 0;
+
+  function amp(w) { return 1 / Math.sqrt(Math.pow(1 - w * w, 2) + G * G * w * w); }
+  function faza(w) { return Math.atan2(G * w, 1 - w * w); }
+
+  function rysuj() {
+    var w = parseFloat(sl.value);
+    var a = amp(w), phi = faza(w);
+    var maxAmp = amp(1); // najwieksza mozliwa amplituda w tym zakresie (na rezonansie)
+
+    ctx.clearRect(0, 0, 600, 280);
+
+    var cx = 460, cy = 140, zakres = 90;
+    var xForce = zakres * Math.cos(w * t);
+    var xElek = (a / maxAmp) * zakres * Math.cos(w * t - phi);
+
+    // os spoczynku
+    ctx.strokeStyle = '#2a2f38'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(cx - zakres - 40, cy); ctx.lineTo(cx + zakres + 40, cy); ctx.stroke();
+
+    // sciana + sprezyna + elektron (cyan)
+    ctx.strokeStyle = '#8a8f98'; ctx.beginPath();
+    ctx.moveTo(cx - zakres - 40, cy - 30); ctx.lineTo(cx - zakres - 40, cy + 30); ctx.stroke();
+    var ex = cx + xElek;
+    ctx.strokeStyle = '#4fc3c0'; ctx.lineWidth = 1.6; ctx.beginPath();
+    var segs = 10, sx0 = cx - zakres - 40, sy = cy;
+    ctx.moveTo(sx0, sy);
+    for (var s = 1; s < segs; s++) {
+      var fx = sx0 + (ex - sx0) * (s / segs);
+      var fy = sy + (s % 2 === 0 ? -10 : 10);
+      ctx.lineTo(fx, fy);
+    }
+    ctx.lineTo(ex, sy);
+    ctx.stroke();
+    ctx.fillStyle = '#4fc3c0'; ctx.beginPath(); ctx.arc(ex, sy, 11, 0, 2 * Math.PI); ctx.fill();
+
+    // strzalka sily (amber), nad elektronem
+    var fxTip = cx + xForce;
+    ctx.strokeStyle = '#e8a33d'; ctx.lineWidth = 2.4;
+    ctx.beginPath(); ctx.moveTo(cx, cy - 70); ctx.lineTo(fxTip, cy - 70); ctx.stroke();
+    ctx.fillStyle = '#e8a33d';
+    ctx.beginPath();
+    var dir = fxTip >= cx ? 1 : -1;
+    ctx.moveTo(fxTip, cy - 70); ctx.lineTo(fxTip - dir * 8, cy - 75); ctx.lineTo(fxTip - dir * 8, cy - 65); ctx.fill();
+    ctx.font = '10.5px "IBM Plex Mono", monospace'; ctx.fillStyle = '#e8a33d';
+    ctx.fillText('siła F(t)', cx - zakres - 40, cy - 82);
+    ctx.fillStyle = '#4fc3c0';
+    ctx.fillText('elektron x(t)', cx - zakres - 40, cy + 40);
+
+    var phiDeg = phi * 180 / Math.PI;
+    var rezim = w < 0.85 ? 'poniżej rezonansu' : w > 1.15 ? 'powyżej rezonansu' : 'blisko rezonansu';
+    document.getElementById('omega2Odczyt').textContent = w.toFixed(2).replace('.', ',');
+    document.getElementById('oscylator2Podpis').textContent =
+      'ω/ω₀ = ' + w.toFixed(2).replace('.', ',') + ' (' + rezim + '). Opóźnienie fazy φ ≈ ' +
+      phiDeg.toFixed(0) + '°.';
+  }
+
+  function petla() { t += 0.06; rysuj(); requestAnimationFrame(petla); }
+  petla();
+})();
+
+/* 3. Moc pochlaniana w funkcji omega/omega0: proporcjonalna do gamma*omega^2*x0(omega)^2,
+      znormalizowana numerycznie do wlasnego maksimum (dla solidnosci, zamiast
+      zakladac ze pik wypada dokladnie w omega=omega0). */
+(function () {
+  var sl = document.getElementById('slGamma3');
+  if (!sl) return;
+  var X0 = 60, X1 = 700, WMAX = 3, Y0 = 180, Y1 = 20;
+
+  function moc(w, g) {
+    var x0 = 1 / Math.sqrt(Math.pow(1 - w * w, 2) + g * g * w * w);
+    return g * w * w * x0 * x0;
+  }
+  function px(w) { return X0 + (w / WMAX) * (X1 - X0); }
+
+  function odswiez() {
+    var g = parseFloat(sl.value);
+    var N = 240, i, w, maxP = 0, vals = [];
+    for (i = 0; i <= N; i++) { w = (i / N) * WMAX; vals.push(moc(w, g)); if (vals[i] > maxP) maxP = vals[i]; }
+    var d = '';
+    for (i = 0; i <= N; i++) {
+      w = (i / N) * WMAX;
+      var y = Y0 - (vals[i] / maxP) * (Y0 - Y1);
+      d += (i === 0 ? 'M ' : ' L ') + px(w).toFixed(1) + ' ' + y.toFixed(1);
+    }
+    document.getElementById('krzywaMoc').setAttribute('d', d);
+    document.getElementById('gamma3Odczyt').textContent = g.toFixed(2).replace('.', ',');
+    document.getElementById('gamma3Podpis').textContent =
+      'γ/ω₀ = ' + g.toFixed(2).replace('.', ',') + '. Pik leży dokładnie tam, gdzie faza mija 90° — to nie przypadek: oba efekty mają wspólne źródło w γ.';
+  }
+  sl.addEventListener('input', odswiez);
+  odswiez();
+})();
+</script>
 </body>
 </html>
