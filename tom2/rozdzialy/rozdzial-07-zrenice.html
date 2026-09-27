@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rozdział 7 — Źrenica wejściowa i wyjściowa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/style.css">
+<link rel="stylesheet" href="../../assets/widgets.css">
+<link rel="stylesheet" href="../../assets/viz3d.css">
+<script>
+window.SKY3D_MESSAGES = {
+  file:   { title: 'Widget 3D nie uruchamia sie z pliku na dysku',
+            why:   'Strona jest otwarta spod adresu file://, a przegladarka nie wczytuje stamtad silnika 3D. Otworz ksiazke przez lokalny serwer — na przyklad rozszerzeniem Live Server w VS Code.' },
+  siec:   { title: 'Nie udalo sie wczytac silnika 3D',
+            why:   'Plik assets/sky3d.js albo three.js nie doladowal sie. Reszta rozdzialu jest kompletna bez widgetu.' },
+  webgl:  { title: 'Ten widget potrzebuje WebGL',
+            why:   'Przegladarka nie udostepnia WebGL-a.' },
+  shader: { title: 'Karta graficzna odrzucila ten widget',
+            why:   'Sterownik nie skompilowal shadera sceny. W konsoli jest pelny komunikat.' }
+};
+</script>
+<script src="../../assets/sky3d-fallback.js"></script>
+</head>
+<body>
+<nav class="topnav">
+  <a class="topnav__brand" href="../index.html">Optyka <span>dla Artystów Technicznych</span></a>
+  <div class="topnav__links">
+  <a href="../index.html">Spis treści</a>
+  <a href="rozdzial-06-przyslona-f-i-t.html">← Poprzedni</a>
+  <a href="rozdzial-08-glebia-ostrosci.html">Następny →</a>
+  </div>
+</nav>
+
+<div class="page">
+
+  <div class="viewport-readout">
+    <span>Źrenica · obraz przysłony</span><span>Wejściowa · od przodu</span><span>Wyjściowa · od tyłu</span><span>Stąd · bokeh i winieta</span>
+  </div>
+
+  <div class="eyebrow">Rozdział 7 / Kadr</div>
+  <h1>Źrenica wejściowa i wyjściowa</h1>
+  <p class="subtitle">Obiektyw nie patrzy przez swoją przednią soczewkę, tylko przez jej obraz. Kiedy to zaskoczy, kocie oko, winietowanie optyczne i punkt bezparalaksowy przestają być trzema osobnymi tajemnicami.</p>
+
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li><strong>Źrenica nie jest przysłoną.</strong> Jest jej <em>obrazem</em> — tym, co widzisz, zaglądając w obiektyw od przodu (źrenica wejściowa) albo od tyłu (wyjściowa). Szkło stojące przed przysłoną powiększa ją, zwykle o kilkanaście procent.</li>
+      <li>Jedno pojęcie tłumaczy naraz trzy rzeczy, które wyglądają na niezwiązane: <span class="term-amber">kocie oko</span> w rogu kadru, <span class="term-amber">winietowanie optyczne</span> i punkt, wokół którego trzeba obracać kamerę.</li>
+      <li>Położenie źrenicy wyjściowej decyduje o tym, pod jakim kątem światło pada na rogi matrycy — a to jest w epoce cyfrowej osobny problem, którego taśma nie miała.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Definicja · zajrzyj w obiektyw</div>
+    <h2>To, co widać, nie jest tym, co jest</h2>
+
+    <p>Zdejmij obiektyw z korpusu i zajrzyj w niego od przodu. Zobaczysz otwór przysłony — ale nie zobaczysz go takim, jaki jest. Patrzysz na niego przez wszystkie soczewki stojące przed nim, a one działają jak lupa. <strong>Widzisz obraz przysłony, nie przysłonę.</strong></p>
+
+    <p>Ten obraz ma własną nazwę: <span class="term-cyan">źrenica wejściowa</span>. To ona, a nie mechaniczny otwór, jest tym, co liczy się we wszystkich rachunkach z poprzedniego rozdziału. Kiedy piszemy N = f/D, D jest średnicą źrenicy wejściowej — i dlatego przednia soczewka jasnego obiektywu bywa większa, niż wynikałoby z prostego dzielenia.</p>
+
+    <p>Symetrycznie: zaglądając od tyłu, widzisz przysłonę przez soczewki stojące za nią, i to jest <span class="term-cyan">źrenica wyjściowa</span>. Obie źrenice są obrazami tego samego otworu, ale zwykle mają różne rozmiary i leżą w różnych miejscach — czasem daleko poza fizycznym obiektywem.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Trzy różne rzeczy</span><span>przysłona i jej dwa obrazy</span></div>
+      <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Przekrój obiektywu z przysłoną w środku, źrenicą wejściową powiększoną przez przednie soczewki i źrenicą wyjściową powiększoną przez tylne.">
+        <line x1="20" y1="150" x2="740" y2="150" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 6"/>
+
+        <path d="M 250 84 Q 272 150 250 216 Q 228 150 250 84 Z" fill="#4fc3c0" fill-opacity="0.13" stroke="#4fc3c0" stroke-width="1.4"/>
+        <path d="M 470 88 Q 492 150 470 212 Q 448 150 470 88 Z" fill="#4fc3c0" fill-opacity="0.13" stroke="#4fc3c0" stroke-width="1.4"/>
+
+        <g stroke="#8b909b" stroke-width="4">
+          <line x1="360" y1="98" x2="360" y2="132"/>
+          <line x1="360" y1="168" x2="360" y2="202"/>
+        </g>
+        <text x="360" y="88" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">przysłona</text>
+        <text x="360" y="222" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">otwór 20 mm</text>
+
+        <g stroke="#e8a33d" stroke-width="2.4" stroke-dasharray="6 4">
+          <line x1="180" y1="88" x2="180" y2="212"/>
+        </g>
+        <text x="180" y="76" font-family="IBM Plex Mono" font-size="10.5" fill="#e8a33d" text-anchor="middle">źrenica wejściowa</text>
+        <text x="180" y="236" font-family="IBM Plex Mono" font-size="10.5" fill="#e8a33d" text-anchor="middle">23 mm · to jest D</text>
+
+        <g stroke="#9c82d8" stroke-width="2.4" stroke-dasharray="6 4">
+          <line x1="600" y1="104" x2="600" y2="196"/>
+        </g>
+        <text x="600" y="92" font-family="IBM Plex Mono" font-size="10.5" fill="#9c82d8" text-anchor="middle">źrenica wyjściowa</text>
+        <text x="600" y="220" font-family="IBM Plex Mono" font-size="10.5" fill="#9c82d8" text-anchor="middle">17 mm</text>
+
+        <line x1="700" y1="90" x2="700" y2="210" stroke="#6e93be" stroke-width="3"/>
+        <text x="700" y="232" font-family="IBM Plex Mono" font-size="10" fill="#6e93be" text-anchor="middle">matryca</text>
+
+        <text x="30" y="274" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">Trzy pionowe kreski, trzy różne rozmiary i położenia — a fizycznie istnieje tylko środkowa.</text>
+      </svg>
+      <div class="diagram-caption">Obie źrenice są obrazami przysłony. Żadnej z nich nie da się dotknąć, a obie decydują o obrazie.</div>
+    </div>
+
+    <p>Rozmiar źrenicy wejściowej ma jeszcze jedną, czysto praktyczną konsekwencję: wyznacza minimalną średnicę przedniej soczewki. Obiektyw 85 mm o jasności f/1,4 potrzebuje źrenicy sześćdziesięciu milimetrów, więc przednie szkło nie może być mniejsze — i stąd bierze się zależność, którą widać na półce w sklepie, że jasność da się oszacować z samego wyglądu obiektywu. Zależność ta zawodzi tylko w retrofokusach, gdzie przednia soczewka bywa duża z zupełnie innego powodu, o czym w Rozdziale 18.</p>
+
+    <p>Stosunek rozmiarów obu źrenic nazywa się powiększeniem źrenicowym i jest liczbą charakteryzującą konstrukcję. <strong>W układzie symetrycznym wynosi jeden</strong> — obie źrenice są równe. W teleobiektywie źrenica wyjściowa jest mniejsza od wejściowej, w retrofokusie odwrotnie. Ta liczba wraca potem w rachunkach na głębię ostrości przy bliskiej odległości i jest jednym z powodów, dla których proste wzory na głębię zawodzą w makro.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Poza osią · skąd kocie oko</div>
+    <h2>Źrenica widziana z rogu kadru jest inna</h2>
+
+    <p>Do tej pory patrzyliśmy w obiektyw wzdłuż osi. Teraz spójrz na niego z boku — tak, jak patrzy na niego punkt leżący w rogu kadru. Zobaczysz coś innego: <strong>okrągła źrenica przestaje być okrągła</strong>.</p>
+
+    <p>Powód jest czysto mechaniczny. Obiektyw jest rurą o pewnej długości, a każda jego oprawa — przednia, tylna, oprawy poszczególnych soczewek — jest okrągłym otworem. Patrząc wzdłuż osi, wszystkie te otwory nakładają się na siebie koncentrycznie i przez wszystkie widać całą źrenicę. Patrząc pod kątem, przesuwają się względem siebie i zaczynają wzajemnie <span class="term-violet">obcinać</span>. Wspólna część dwóch przesuniętych kół to soczewkowaty kształt — i to jest kocie oko.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Obcięcie mechaniczne</span><span>kształt źrenicy zależy od miejsca w kadrze</span></div>
+      <div class="diagram-controls">
+        <label for="pozycjaWKadrze">Odległość od środka kadru</label>
+        <input id="pozycjaWKadrze" type="range" min="0" max="100" step="1" value="0">
+        <span class="value-readout" id="pozycjaOdczyt">środek kadru</span>
+      </div>
+      <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Trzy okrągłe otwory oprawy przesuwają się względem siebie w miarę oddalania od środka kadru, a ich część wspólna zmienia się z koła w kształt kociego oka.">
+        <text x="30" y="26" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">OPRAWY WIDZIANE Z TEGO PUNKTU KADRU</text>
+        <circle id="oprawaPrzod" cx="200" cy="150" r="82" fill="none" stroke="#8b909b" stroke-width="1.4" stroke-dasharray="4 4"/>
+        <circle cx="200" cy="150" r="82" fill="none" stroke="#4fc3c0" stroke-width="1.8"/>
+        <circle id="oprawaTyl" cx="200" cy="150" r="82" fill="none" stroke="#8b909b" stroke-width="1.4" stroke-dasharray="4 4"/>
+        <path id="wspolna" fill="#e8a33d" fill-opacity="0.32" stroke="#e8a33d" stroke-width="1.8"/>
+        <text x="200" y="262" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b" text-anchor="middle">cyjan: przysłona · szare: oprawy przednia i tylna</text>
+
+        <text x="470" y="26" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">TAK WYGLĄDA NIEOSTRY PUNKT</text>
+        <rect x="440" y="46" width="290" height="200" fill="#20242c" stroke="#2a2f38"/>
+        <path id="bokehKsztalt" fill="#e8a33d" fill-opacity="0.55" stroke="#e8a33d" stroke-width="1.4"/>
+        <text x="585" y="272" font-family="IBM Plex Mono" font-size="10.5" fill="#e8a33d" text-anchor="middle" id="bokehEtykieta">okrągłe — pełna źrenica</text>
+      </svg>
+      <div class="diagram-caption" id="pozycjaPodpis">W środku kadru wszystkie oprawy nakładają się i przepuszczają całą źrenicę.</div>
+    </div>
+
+    <p>Z tego jednego mechanizmu wynikają dwie rzeczy, które w potocznym języku traktuje się jako osobne. Pierwsza to <strong>kształt bokeh</strong>: skoro nieostry punkt jest obrazem źrenicy, to w rogu kadru będzie miał kształt kociego oka. Druga to <strong>winietowanie optyczne</strong>: obcięta źrenica ma mniejsze pole, więc przepuszcza mniej światła — i rogi kadru są ciemniejsze.</p>
+
+    <p>To są dwa objawy jednej przyczyny, i dlatego zachowują się identycznie: <span class="term-cyan">jedno i drugie znika po przymknięciu przysłony</span>. Przymknięta przysłona jest mniejsza od otworów opraw, więc przestaje być przez nie obcinana — bokeh w rogu wraca do wielokąta, a rogi kadru się rozjaśniają. Ta wspólna reakcja na przymknięcie jest najprostszym testem odróżniającym winietowanie optyczne od naturalnego, o którym w <a href="rozdzial-30-winietowanie.html">Rozdziale 30</a>.</p>
+
+    <p>Obcięcie rośnie z kątem, pod jakim patrzy się w obiektyw — a szeroki kąt z definicji obejmuje kąty duże. Stąd obserwacja, którą potwierdzi każdy test: <strong>im szerszy obiektyw, tym silniejsze winietowanie i tym wyraźniejsze kocie oko</strong>, przy tej samej klasie konstrukcji.</p>
+
+    <button class="advanced-btn" data-modal-target="adv-szerokie">Zaawansowane: dlaczego dobre szerokie kąty są takie ciężkie</button>
+
+    <div class="subsection">
+      <h3>Kocie oko jest kierunkowe</h3>
+      <p>Drobny szczegół, który odróżnia dobrze odtworzone kocie oko od podrobionego: <strong>jego oś jest zawsze skierowana ku środkowi kadru</strong>. Obcięcie następuje po tej stronie źrenicy, która jest dalej od osi optycznej, więc soczewkowaty kształt „patrzy” do środka obrazu, a jego ostre końce leżą na linii łączącej go ze środkiem.</p>
+      <p>W lewym górnym rogu kadru kocie oko jest więc pochylone inaczej niż w prawym dolnym — dokładnie o sto osiemdziesiąt stopni. Efekt układa się promieniście wokół środka i to jest najprostszy sposób, żeby na gotowym materiale odróżnić prawdziwe obcięcie mechaniczne od filtra, który nakłada ten sam kształt wszędzie jednakowo.</p>
+
+      <div class="diagram-frame">
+        <div class="diagram-hud"><span>Układ promienisty</span><span>ten sam obiektyw, dziewięć miejsc kadru</span></div>
+        <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Siatka trzy na trzy w obrębie kadru: w środku bokeh jest okrągłe, a im dalej od środka, tym bardziej soczewkowate, zawsze zwrócone osią ku środkowi.">
+          <rect x="130" y="30" width="500" height="240" fill="#20242c" stroke="#2a2f38" stroke-width="1.5"/>
+          <line x1="380" y1="30" x2="380" y2="270" stroke="#2a2f38" stroke-width="0.8" stroke-dasharray="3 5"/>
+          <line x1="130" y1="150" x2="630" y2="150" stroke="#2a2f38" stroke-width="0.8" stroke-dasharray="3 5"/>
+          <g fill="#e8a33d" fill-opacity="0.5" stroke="#e8a33d" stroke-width="1.2">
+            <ellipse cx="380" cy="150" rx="26" ry="26"/>
+            <ellipse cx="510" cy="150" rx="15" ry="26"/>
+            <ellipse cx="250" cy="150" rx="15" ry="26"/>
+            <ellipse cx="380" cy="70"  rx="26" ry="15"/>
+            <ellipse cx="380" cy="230" rx="26" ry="15"/>
+            <ellipse cx="510" cy="70"  rx="15" ry="26" transform="rotate(45 510 70)"/>
+            <ellipse cx="250" cy="70"  rx="15" ry="26" transform="rotate(-45 250 70)"/>
+            <ellipse cx="510" cy="230" rx="15" ry="26" transform="rotate(-45 510 230)"/>
+            <ellipse cx="250" cy="230" rx="15" ry="26" transform="rotate(45 250 230)"/>
+          </g>
+          <circle cx="380" cy="150" r="4" fill="#8b909b"/>
+          <g stroke="#8b909b" stroke-width="0.8" opacity="0.45">
+            <line x1="380" y1="150" x2="510" y2="70"/><line x1="380" y1="150" x2="250" y2="70"/>
+            <line x1="380" y1="150" x2="510" y2="230"/><line x1="380" y1="150" x2="250" y2="230"/>
+          </g>
+          <text x="30" y="288" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">Oś każdego kształtu leży na linii do środka kadru. Filtr nakładający jeden kształt wszędzie tego nie odtworzy.</text>
+        </svg>
+        <div class="diagram-caption">Obcięcie jest funkcją kąta, a kąt jest funkcją odległości od osi — dlatego efekt układa się promieniście, a nie jednorodnie.</div>
+      </div>
+
+      <p>Ma to bezpośrednie przełożenie na comp. Jeśli dokładasz kocie oko do renderu, nie wystarczy podmienić kształtu źrenicy na soczewkowaty — trzeba go jeszcze <strong>obracać w zależności od położenia w kadrze i wygaszać ku środkowi</strong>. Bez tego efekt wygląda na naklejony, i to jest jeden z najczęstszych sposobów, w jakie podrobiony bokeh zdradza się na pierwszy rzut oka.</p>
+    </div>
+
+    <p class="deeper-inline">Katalog kształtów bokeh z przyczynami — <a href="../dodatki/dodatek-af-katalog-bokeh.html">Dodatek AF</a>.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Położenie · problem, którego taśma nie miała</div>
+    <h2>Jak daleko leży źrenica wyjściowa</h2>
+
+    <p>Druga cecha źrenicy wyjściowej, poza rozmiarem, to jej <em>odległość</em> od matrycy. Decyduje ona o tym, pod jakim kątem światło pada na rogi matrycy — i to jest cecha, która przez sto lat nikogo nie obchodziła, a stała się istotna dopiero wraz z cyfrą.</p>
+
+    <p>Jeśli źrenica wyjściowa leży bardzo daleko, promienie biegnące do rogu kadru padają na matrycę niemal prostopadle. Taki układ nazywa się <span class="term-cyan">telecentrycznym po stronie obrazu</span> i jest ideałem. Jeśli leży blisko — a tak bywa w kompaktowych szerokich kątach i w konstrukcjach do krótkiego odcinka roboczego — promienie w rogach padają skośnie, czasem pod trzydziestoma stopniami i więcej.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Kąt padania na matrycę</span><span>źrenica blisko kontra daleko</span></div>
+      <svg viewBox="0 0 760 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Dwa układy: źrenica blisko matrycy daje skośne padanie w rogach, źrenica daleko daje padanie niemal prostopadłe.">
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">
+          <text x="20" y="24">ŹRENICA BLISKO · promienie skośne w rogach</text>
+          <text x="410" y="24">ŹRENICA DALEKO · niemal prostopadle</text>
+        </g>
+        <g>
+          <line x1="160" y1="70" x2="160" y2="150" stroke="#9c82d8" stroke-width="2.4" stroke-dasharray="6 4"/>
+          <text x="140" y="62" font-family="IBM Plex Mono" font-size="9.5" fill="#9c82d8">źrenica</text>
+          <line x1="330" y1="60" x2="330" y2="230" stroke="#6e93be" stroke-width="3"/>
+          <text x="300" y="248" font-family="IBM Plex Mono" font-size="9.5" fill="#6e93be">matryca</text>
+          <g stroke="#e8a33d" stroke-width="1.8" fill="none">
+            <path d="M 160 90 L 330 70"/><path d="M 160 130 L 330 70"/>
+            <path d="M 160 90 L 330 145"/><path d="M 160 130 L 330 145"/>
+            <path d="M 160 90 L 330 220"/><path d="M 160 130 L 330 220"/>
+          </g>
+          <path d="M 306 220 A 26 26 0 0 0 312 200" fill="none" stroke="#c23b3b" stroke-width="1.4"/>
+          <text x="256" y="206" font-family="IBM Plex Mono" font-size="11" fill="#c23b3b">28°</text>
+        </g>
+        <line x1="380" y1="14" x2="380" y2="264" stroke="#2a2f38" stroke-width="1" stroke-dasharray="4 5"/>
+        <g>
+          <line x1="420" y1="70" x2="420" y2="150" stroke="#9c82d8" stroke-width="2.4" stroke-dasharray="6 4"/>
+          <text x="402" y="62" font-family="IBM Plex Mono" font-size="9.5" fill="#9c82d8">źrenica</text>
+          <line x1="720" y1="60" x2="720" y2="230" stroke="#6e93be" stroke-width="3"/>
+          <g stroke="#e8a33d" stroke-width="1.8" fill="none">
+            <path d="M 420 90 L 720 78"/><path d="M 420 130 L 720 78"/>
+            <path d="M 420 90 L 720 145"/><path d="M 420 130 L 720 145"/>
+            <path d="M 420 90 L 720 212"/><path d="M 420 130 L 720 212"/>
+          </g>
+          <path d="M 698 212 A 22 22 0 0 0 700 200" fill="none" stroke="#4fc3c0" stroke-width="1.4"/>
+          <text x="656" y="202" font-family="IBM Plex Mono" font-size="11" fill="#4fc3c0">8°</text>
+        </g>
+      </svg>
+      <div class="diagram-caption">Ten sam kadr, ta sama ogniskowa, dwa zupełnie inne kąty padania w rogu. Emulsji to nie obchodziło; matrycę bardzo.</div>
+    </div>
+
+    <p>Dlaczego emulsji to nie obchodziło? Bo była w praktyce płaską warstwą czułą na światło niezależnie od kierunku. Piksel matrycy jest natomiast <strong>studnią</strong>: pod mikrosoczewką, pod filtrem barwnym, otoczony ściankami. Światło padające skośnie może w tę studnię nie trafić albo trafić w sąsiednią — a że mikrosoczewki i filtry mają grubość, skośny promień przechodzi też przez inną drogę optyczną niż prostopadły.</p>
+
+    <p>Objawy są dwa i oba znasz z materiału, nawet jeśli nie wiedziałeś, skąd się biorą. Pierwszy to dodatkowy spadek jasności w rogach, dokładający się do winietowania z poprzedniej sekcji. Drugi to <span class="term-raster">przebarwienie rogów</span> — zwykle w stronę magenty albo cyjanu, bo trzy kanały tracą przy skośnym padaniu różne ilości światła. Producenci matryc odpowiadają na to przesuwaniem mikrosoczewek ku brzegom sensora, a producenci obiektywów — pilnowaniem, żeby źrenica wyjściowa nie siedziała za blisko.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Gdzie stoi kamera · powrót do punktu obrotu</div>
+    <h2>Źrenica wejściowa jest kamerą</h2>
+
+    <p>W <a href="rozdzial-04-soczewka-cienka.html">Rozdziale 4</a> pojawiło się stwierdzenie, że z punktu widzenia perspektywy kamera jest tam, gdzie leży źrenica wejściowa. Mając teraz definicję, możemy zobaczyć, dlaczego.</p>
+
+    <p>Każdy promień, który dociera na matrycę, musiał przejść przez źrenicę. Zbiór wszystkich kierunków, z których obiektyw w ogóle przyjmuje światło, to zbiór kierunków przechodzących przez ten jeden okrąg. <strong>Cały układ zachowuje się więc jak dziurka umieszczona dokładnie w środku źrenicy wejściowej</strong> — reszta szkła decyduje o tym, gdzie te promienie potem trafią, ale nie o tym, skąd przyszły.</p>
+
+    <p>Konsekwencja: perspektywa obrazu jest dokładnie taka, jaką miałaby dziurka w tym miejscu. Obróć obiektyw wokół tego punktu, a nic w geometrii sceny się nie zmieni — bo dziurka została na miejscu. Obróć wokół czegokolwiek innego, a dziurka zatoczy łuk i bliskie obiekty przesuną się względem dalekich.</p>
+
+    <p>Praktyczne miejsca, w których to wraca:</p>
+
+    <ul>
+      <li><strong>Panoramy</strong> — głowica panoramiczna ma regulację właśnie po to, żeby ustawić oś obrotu w źrenicy wejściowej. Bez tego zdjęcia nie sklejają się na bliskim planie.</li>
+      <li><strong>Dopasowanie kamery w CG</strong> — pivot wirtualnej kamery powinien siedzieć w tym samym miejscu. Przy statycznym ujęciu bez znaczenia, przy panoramie decyduje o tym, czy tracking się utrzyma.</li>
+      <li><strong>Fotogrametria</strong> — cała rekonstrukcja opiera się na modelu dziurki, a punktem tej dziurki jest źrenica wejściowa. Dlatego kalibracja kamery zwraca „centrum projekcji”, a nie położenie matrycy.</li>
+    </ul>
+
+    <p>Warto przy tym pamiętać, że źrenica wejściowa <strong>przesuwa się przy ostrzeniu i przy zmianie ogniskowej</strong>. W zoomie potrafi wędrować o kilka centymetrów przez cały zakres — i to jest jeden z powodów, dla których panoram nie robi się zoomem, a tracking ujęcia z transfokacją jest trudniejszy niż ze stałki.</p>
+
+    <p class="deeper-inline">Jak zmierzyć położenie źrenicy linijką i dlaczego to ona, a nie format, decyduje o głębi ostrości — <a href="../dodatki/dodatek-ae-geometria-zrenic.html">Dodatek AE</a>.</p>
+  </div>
+
+  <div class="panel practice">
+    <div class="panel-label">Z praktyki</div>
+    <p><strong>Kształt bokeh w rogu mówi ci, czy obiektyw jest otwarty.</strong> Patrząc na materiał, sprawdź nieostre światła przy krawędzi kadru. Wyraźne kocie oko oznacza pełny albo prawie pełny otwór; okrągłe albo wielokątne krążki w rogu — przysłonę przymkniętą na tyle, że przestała być obcinana. To jest jedna z pewniejszych wskazówek przy odtwarzaniu nastaw z gotowego ujęcia.</p>
+    <p><strong>Przebarwienie rogów w plate to nie błąd balansu bieli.</strong> Jeśli rogi ciągną w magentę albo cyjan, a środek jest neutralny, przyczyną jest najprawdopodobniej kąt padania na matrycę — czyli kombinacja konkretnego obiektywu z konkretnym korpusem. Poprawia się to maską radialną, nie globalnym balansem, bo globalny zepsuje środek.</p>
+    <p><strong>W rendererze źrenica jest punktem, nie bryłą.</strong> Standardowa kamera losuje po płaskim dysku o zerowej grubości, więc nie zna obcinania mechanicznego i nigdy sama nie da kociego oka. Jeśli tego efektu potrzebujesz, trzeba go albo podać teksturą źrenicy zależną od pozycji w kadrze, albo dołożyć w compie — i to jest jeden z niewielu przypadków, w których comp wygrywa z renderem prostotą.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>przysłona (stop)</dt>
+      <dd>Fizyczny otwór ograniczający wiązkę. Jedyny z trzech bytów w tym rozdziale, którego można dotknąć.</dd>
+      <dt>źrenica wejściowa</dt>
+      <dd>Obraz przysłony widziany od przodu obiektywu. To jej średnica występuje we wzorze na liczbę f, i to w jej środku „stoi” kamera.</dd>
+      <dt>źrenica wyjściowa</dt>
+      <dd>Obraz przysłony widziany od tyłu. Jej rozmiar i odległość od matrycy decydują o kącie padania światła w rogach kadru.</dd>
+      <dt>powiększenie źrenicowe</dt>
+      <dd>Stosunek średnic źrenicy wyjściowej do wejściowej. Równe 1 w układzie symetrycznym, mniejsze w teleobiektywie, większe w retrofokusie.</dd>
+      <dt>obcięcie mechaniczne (vignetting)</dt>
+      <dd>Częściowe zasłonięcie źrenicy przez oprawy przy patrzeniu poza osią. Źródło kociego oka i winietowania optycznego naraz.</dd>
+      <dt>telecentryczność po stronie obrazu</dt>
+      <dd>Właściwość układu, w którym promienie główne padają na matrycę prostopadle niezależnie od miejsca w kadrze. Osiągalna przez odsunięcie źrenicy wyjściowej daleko od matrycy.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Mamy komplet pojęć, żeby zająć się najbardziej praktycznym pytaniem tej części: co w kadrze jest ostre, a co nie. W <a href="rozdzial-08-glebia-ostrosci.html">następnym rozdziale</a> okaże się, że ostrość jest tylko w jednej płaszczyźnie, a wszystko, co nazywamy głębią ostrości, jest umową o tym, jak duże rozmycie jeszcze zgodzimy się zignorować.</p>
+  </div>
+
+  <div class="deeper">
+    <div class="deeper-label">Idź głębiej</div>
+    <a href="../dodatki/dodatek-ae-geometria-zrenic.html">Dodatek AE — Geometria źrenic</a>
+  </div>
+
+  <div class="site-nav chapter-nav">
+      <a class="nav-prev" href="rozdzial-06-przyslona-f-i-t.html">← Poprzedni</a>
+      <a class="nav-toc" href="../index.html">Spis treści</a>
+      <a class="nav-next" href="rozdzial-08-glebia-ostrosci.html">Następny →</a>
+  </div>
+
+  <template id="adv-szerokie">
+    <h3>Dlaczego dobre szerokie kąty są takie ciężkie</h3>
+
+    <p>Punkt w rogu kadru obiektywu 20 mm widzi wnętrze tubusa pod czterdziestoma kilkoma stopniami; ten sam róg przy 85 mm — pod kilkunastoma. Im większy ten kąt, tym mocniej oprawy rozjeżdżają się względem siebie i tym więcej źrenicy obcinają.</p>
+
+    <p>Konstruktor ma na to tylko jedną odpowiedź: <strong>poszerzyć wszystko, co stoi na drodze wiązki</strong>. Większa przednia soczewka, szersza oprawa, grubszy tubus. Dlatego dobrze skorygowane szerokie kąty są nieproporcjonalnie duże i ciężkie względem swojej jasności — masa idzie nie w światło, tylko w to, żeby rogi kadru dostały pełną źrenicę.</p>
+
+    <p>Stąd też bierze się kłopot, który widać przy zmianie formatu: <em>obiektyw zaprojektowany pod mniejszą matrycę zachowuje się źle na większej</em>, nawet jeśli koło obrazu formalnie starcza. Oprawy policzono pod węższy zakres kątów, więc przy szerszym kadrze rogi zaczynają być obcinane znacznie wcześniej. Obraz jest — ale jest ciemny i rysowany obciętą źrenicą.</p>
+  </template>
+
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-panel">
+      <button class="modal-close" data-modal-close aria-label="Zamknij">×</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+</div>
+
+<script src="../../assets/interactive.js"></script>
+<script>
+/* Obciecie mechaniczne zrenicy. Trzy wspolosiowe otwory (oprawa przednia,
+   przyslona, oprawa tylna) rozjezdzaja sie, gdy patrzymy z coraz dalszego
+   punktu kadru. Czesc wspolna liczona numerycznie po katach, zeby ksztalt
+   kociego oka byl prawdziwy, a nie narysowany na oko. */
+(function () {
+  var sl = document.getElementById('pozycjaWKadrze');
+  if (!sl) return;
+  var CX = 200, CY = 150, R = 82;        // przyslona
+  var PRZES = 78;                        // maksymalne rozjechanie opraw
+
+  function przeciecie(dx) {
+    /* Czesc wspolna trzech kol o promieniu R, przesunietych o -dx, 0, +dx.
+       Liczymy obwiednie probkujac kat i biorac najmniejszy promien, przy
+       ktorym punkt lezy jeszcze we wszystkich trzech kolach. */
+    var pkt = [];
+    for (var a = 0; a < 360; a += 3) {
+      var rad = a * Math.PI / 180, lo = 0, hi = R;
+      for (var it = 0; it < 22; it++) {
+        var m = (lo + hi) / 2;
+        var x = m * Math.cos(rad), y = m * Math.sin(rad);
+        var ok = (x + dx) * (x + dx) + y * y <= R * R &&
+                 (x - dx) * (x - dx) + y * y <= R * R;
+        if (ok) lo = m; else hi = m;
+      }
+      pkt.push([CX + lo * Math.cos(rad), CY + lo * Math.sin(rad)]);
+    }
+    return pkt;
+  }
+
+  function sciezka(pkt, sx, sy, skala) {
+    var d = '';
+    for (var i = 0; i < pkt.length; i++) {
+      var x = sx + (pkt[i][0] - CX) * skala;
+      var y = sy + (pkt[i][1] - CY) * skala;
+      d += (i === 0 ? 'M ' : ' L ') + x.toFixed(1) + ' ' + y.toFixed(1);
+    }
+    return d + ' Z';
+  }
+
+  function odswiez() {
+    var v = parseFloat(sl.value) / 100;
+    var dx = v * PRZES;
+    document.getElementById('oprawaPrzod').setAttribute('cx', (CX - dx).toFixed(1));
+    document.getElementById('oprawaTyl').setAttribute('cx', (CX + dx).toFixed(1));
+
+    var pkt = przeciecie(dx);
+    document.getElementById('wspolna').setAttribute('d', sciezka(pkt, CX, CY, 1));
+    document.getElementById('bokehKsztalt').setAttribute('d', sciezka(pkt, 585, 146, 0.92));
+
+    // pole wzgledem pelnego kola — stad spadek jasnosci w rogu
+    var pole = 0;
+    for (var i = 0; i < pkt.length; i++) {
+      var rx = pkt[i][0] - CX, ry = pkt[i][1] - CY;
+      pole += (rx * rx + ry * ry);
+    }
+    var wzgl = pole / (pkt.length * R * R);
+    var procent = Math.round(wzgl * 100);
+    var ev = Math.log(Math.max(wzgl, 0.01)) / Math.LN2;
+
+    var gdzie = v < 0.08 ? 'środek kadru'
+              : v < 0.45 ? Math.round(v * 100) + '% ku rogowi'
+              : v < 0.85 ? Math.round(v * 100) + '% ku rogowi'
+              : 'sam róg kadru';
+    document.getElementById('pozycjaOdczyt').textContent = gdzie;
+    document.getElementById('bokehEtykieta').textContent =
+      v < 0.08 ? 'okrągłe — pełna źrenica' : 'kocie oko — źrenica obcięta';
+    document.getElementById('pozycjaPodpis').textContent =
+      v < 0.08
+        ? 'W środku kadru wszystkie oprawy nakładają się i przepuszczają całą źrenicę.'
+        : 'Przy ' + Math.round(v * 100) + '% drogi ku rogowi źrenica ma ' + procent +
+          '% pierwotnego pola — czyli ' + Math.abs(ev).toFixed(1).replace('.', ',') +
+          ' EV mniej światła i kształt kociego oka zamiast koła.';
+  }
+  sl.addEventListener('input', odswiez);
+  odswiez();
+})();
+</script>
+</body>
+</html>

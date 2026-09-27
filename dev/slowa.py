@@ -3,8 +3,13 @@
 Atmosfera stracila porownywalnosc wynikow miedzy sesjami przez to, ze
 licznika nie zapisala.
 
-    python dev/slowa.py                  — wszystkie rozdzialy
-    python dev/slowa.py rozdzialy/x.html — jedna strona
+    python dev/slowa.py                  — rozdzialy wszystkich tomow
+    python dev/slowa.py --tom 2          — rozdzialy tylko Tomu 2
+    python dev/slowa.py tom2/rozdzialy/x.html — jedna strona (dowolna sciezka)
+
+"Tom" to katalog tomN/ obok dev/spis-tomN.json. Bez --tom skrypt znajduje
+kazdy tom, dla ktorego taki plik istnieje (dzis tylko tom2, tom1 dolaczy
+sam, gdy powstanie dev/spis-tom1.json).
 
 Liczy WYLACZNIE proze w <div class="section">: pomija TL;DR, "Z praktyki",
 Slowniczek, "Co dalej", nawigacje i podpisy pod diagramami. Cel na rozdzial:
@@ -14,13 +19,28 @@ Prog obnizony 2026-09-02 z 2000-3500. Powod: rozdzialy w starym formacie
 wychodzily za geste dla artysty — R.7 upychal osiem nowych pojec naraz.
 Nadmiar nie ginie: krotkie rozwiniecia ida do blokow "Zaawansowane" na tej
 samej stronie, duze tematy z wlasnym rachunkiem do dodatkow z mapy "ext"
-w spis.json.
+w spis-tomN.json.
 """
 import io, os, re, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CEL_SLOW = (1200, 1600)
 CEL_WIZ = (4, 6)
+
+
+def find_volumes():
+    """Numery tomow, dla ktorych istnieje dev/spis-tomN.json."""
+    ns = []
+    dev_dir = os.path.join(ROOT, 'dev')
+    for fn in os.listdir(dev_dir):
+        m = re.match(r'spis-tom(\d+)\.json$', fn)
+        if m:
+            ns.append(int(m.group(1)))
+    return sorted(ns)
+
+
+def rozdzialy_dir(n):
+    return os.path.join(ROOT, f'tom{n}', 'rozdzialy')
 
 
 def zlicz(path):
@@ -39,10 +59,25 @@ def flaga(v, lo, hi):
 
 
 def main():
-    cele = sys.argv[1:]
+    argv = sys.argv[1:]
+    tom = None
+    cele = []
+    i = 0
+    while i < len(argv):
+        if argv[i] == '--tom':
+            tom = int(argv[i + 1])
+            i += 2
+        else:
+            cele.append(argv[i])
+            i += 1
+
     if not cele:
-        d = os.path.join(ROOT, 'rozdzialy')
-        cele = [os.path.join(d, f) for f in sorted(os.listdir(d)) if f.endswith('.html')]
+        tomy = [tom] if tom is not None else find_volumes()
+        for n in tomy:
+            d = rozdzialy_dir(n)
+            if os.path.isdir(d):
+                cele += [os.path.join(d, f) for f in sorted(os.listdir(d)) if f.endswith('.html')]
+
     razem_s = razem_w = 0
     for p in cele:
         s, w = zlicz(p)

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dodatek D — Krążek Airy'ego i granica dyfrakcyjna</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/style.css">
+<link rel="stylesheet" href="../../assets/widgets.css">
+<link rel="stylesheet" href="../../assets/viz3d.css">
+<script>
+window.SKY3D_MESSAGES = {
+  file:   { title: 'Widget 3D nie uruchamia sie z pliku na dysku',
+            why:   'Strona jest otwarta spod adresu file://, a przegladarka nie wczytuje stamtad silnika 3D. Otworz ksiazke przez lokalny serwer — na przyklad rozszerzeniem Live Server w VS Code.' },
+  siec:   { title: 'Nie udalo sie wczytac silnika 3D',
+            why:   'Plik assets/sky3d.js albo three.js nie doladowal sie. Reszta rozdzialu jest kompletna bez widgetu.' },
+  webgl:  { title: 'Ten widget potrzebuje WebGL',
+            why:   'Przegladarka nie udostepnia WebGL-a.' },
+  shader: { title: 'Karta graficzna odrzucila ten widget',
+            why:   'Sterownik nie skompilowal shadera sceny. W konsoli jest pelny komunikat.' }
+};
+</script>
+<script src="../../assets/sky3d-fallback.js"></script>
+</head>
+<body>
+<nav class="topnav">
+  <a class="topnav__brand" href="../index.html">Optyka <span>dla Artystów Technicznych</span></a>
+  <div class="topnav__links">
+  <a href="../index.html">← Spis treści</a>
+  </div>
+</nav>
+
+<div class="page">
+
+  <div class="viewport-readout">
+    <span>Dodatek D</span><span>Wzory · tak</span><span>Poziom · głębiej</span><span>EXT OF · R.10, R.25</span>
+  </div>
+
+  <div class="eyebrow">Dodatek D / Głębiej</div>
+  <h1>Krążek Airy'ego i granica dyfrakcyjna</h1>
+  <p class="subtitle">Skąd się bierze 2,44·λ·N, przy jakiej przysłonie dyfrakcja wygrywa z pikselem na S35 i pełnej klatce, oraz dlaczego nieparzysta liczba listków podwaja promienie.</p>
+
+  <div class="panel">
+    <div class="panel-label">Co tu jest</div>
+    <ul>
+      <li><strong>Skąd bierze się 2,44</strong> — pełne pochodzenie liczby, która w rozdziale pojawia się bez uzasadnienia.</li>
+      <li><strong>Tabela progów</strong>: przy której przysłonie krążek Airy'ego dogania piksel na sześciu realnych kombinacjach formatu i rozdzielczości.</li>
+      <li><strong>Dlaczego nieparzysta liczba listków podwaja promienie</strong> gwiazdek — z konstrukcją geometryczną.</li>
+      <li><strong>Protokół pomiaru</strong> na własnym sprzęcie, dający liczby zamiast tabelek z internetu.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Pochodzenie · dlaczego akurat 2,44</div>
+    <h2>Skąd bierze się ta liczba</h2>
+
+    <p>Otwór kołowy oświetlony falą płaską nie daje na obrazie punktu, tylko jasne jądro otoczone słabnącymi pierścieniami. Rozkład jasności w tym obrazie opisuje funkcja, której pierwsze miejsce zerowe wypada przy <strong>1,22 długości fali na jednostkę kąta źrenicy</strong> — i cała reszta jest już tylko przeliczaniem jednostek.</p>
+
+    <div class="formula">
+      θ = 1,22 · <span class="vec" data-tip="Długość fali światła">λ</span> / <span class="vec" data-tip="Średnica źrenicy wejściowej">D</span>  →  r = 1,22 · <span class="vec" data-tip="Długość fali">λ</span> · <span class="vec" data-tip="Liczba przysłony, czyli f/D">N</span>  →  d = 2,44 · <span class="vec" data-tip="Długość fali">λ</span> · <span class="vec" data-tip="Liczba przysłony">N</span>
+      <span class="sub">θ — kąt do pierwszego minimum. r — promień jądra na matrycy, po pomnożeniu przez ogniskową: 1,22·λ·f/D = 1,22·λ·N. d — średnica, czyli dwa razy tyle. Stąd 2,44, i stąd fakt, że w całym wzorze nie ma ogniskowej: została skrócona przez D.</span>
+    </div>
+
+    <p>To ostatnie spostrzeżenie jest ważniejsze, niż wygląda. <span class="term-cyan">Rozmiar krążka Airy'ego zależy wyłącznie od liczby przysłony</span>, a nie od ogniskowej ani od formatu. Dwudziestka przy f/11 i dwustumilimetrowy teleobiektyw przy f/11 dają na matrycy dokładnie tę samą plamkę. Różni je tylko to, jak duża część kadru w tej plamce się mieści — i dlatego dyfrakcja jest problemem małych matryc, choć sama o formacie nic nie wie.</p>
+
+    <p>Podstawiając za λ długość fali w środku zakresu widzialnego, 550 nm, dostaje się wersję roboczą, którą warto pamiętać:</p>
+
+    <div class="formula">
+      d ≈ 1,34 · <span class="vec" data-tip="Liczba przysłony">N</span>  [µm]
+      <span class="sub">d — średnica jądra krążka Airy'ego w mikrometrach. Dla światła czerwonego (650 nm) wychodzi 1,59·N, dla niebieskiego (450 nm) — 1,10·N. Stąd fakt, że kanał niebieski jest przy mocno przymkniętej przysłonie ostrzejszy od czerwonego.</span>
+    </div>
+
+    <p>W jądrze siedzi <strong>84% energii</strong>; pierwszy pierścień niesie około 7%, drugi niecałe 3%. Dlatego w praktyce liczy się średnicę jądra i pomija pierścienie — choć to właśnie one odpowiadają za charakterystyczną poświatę wokół bardzo jasnych punktów na mocno przymkniętej przysłonie.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Progi · gdzie to zaczyna kosztować</div>
+    <h2>Kiedy krążek dogania piksel</h2>
+
+    <p>Dyfrakcja nie ma progu — narasta płynnie. Próg pojawia się dopiero wtedy, gdy zestawi się ją z <em>drugą</em> skalą w układzie, czyli z rozmiarem piksela. Poniższa tabela robi dokładnie to, dla sześciu realnych kombinacji. Rozstaw pikseli liczony jest wprost z szerokości formatu przez liczbę pikseli w poziomie, więc każdą liczbę da się sprawdzić dzieleniem.</p>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead>
+          <tr><th>Kamera / format</th><th>Szerokość ÷ piksele</th><th class="num">Rozstaw</th><th class="num">d = 1 px</th><th class="num">d = 2 px</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Pełna klatka 24 Mpx</td><td>36,0 mm ÷ 6000</td><td class="num">6,00 µm</td><td class="num">f/4,5</td><td class="num">f/8,9</td></tr>
+          <tr><td>Pełna klatka 45 Mpx</td><td>36,0 mm ÷ 8256</td><td class="num">4,36 µm</td><td class="num">f/3,2</td><td class="num">f/6,5</td></tr>
+          <tr><td>Pełna klatka 61 Mpx</td><td>36,0 mm ÷ 9504</td><td class="num">3,79 µm</td><td class="num">f/2,8</td><td class="num">f/5,6</td></tr>
+          <tr><td>Super 35, 4K</td><td>24,9 mm ÷ 4096</td><td class="num">6,08 µm</td><td class="num">f/4,5</td><td class="num">f/9,1</td></tr>
+          <tr><td>Super 35, 6K</td><td>24,9 mm ÷ 6144</td><td class="num">4,05 µm</td><td class="num">f/3,0</td><td class="num">f/6,0</td></tr>
+          <tr><td>Duży format, 4,5K</td><td>36,7 mm ÷ 4448</td><td class="num">8,25 µm</td><td class="num">f/6,1</td><td class="num">f/12,3</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Kolumna „d = 1 px” to przysłona, przy której jądro krążka zrównuje się z jednym pikselem: N = rozstaw / 1,34. Kolumna „d = 2 px” to dwukrotność — próg, powyżej którego dyfrakcja jest bezspornie wąskim gardłem układu.</p>
+
+    <p>Z tabeli wychodzi wniosek, który bywa niepopularny wśród kupujących sprzęt: <strong>gęstsza matryca zawęża użyteczny zakres przysłon</strong>. Sześćdziesięciojednomegapikselowa pełna klatka przekracza pierwszy próg już przy f/2,8, podczas gdy duży format o wielkich pikselach dojeżdża spokojnie do f/6. Rozdzielczość, za którą się zapłaciło, jest dostępna tylko przy szeroko otwartej przysłonie — a wtedy walczy o nią z głębią ostrości i z aberracjami.</p>
+
+    <p>Drugi wniosek dotyczy pracy z materiałem. Jeśli wiesz, na czym kręcono ujęcie, tabela mówi ci, <span class="term-cyan">ile miękkości w plate'cie jest dyfrakcją, a nie rozmyciem ruchu ani błędem ostrości</span>. Miękkość dyfrakcyjna jest jednorodna w całym kadrze i niezależna od odległości — to ją odróżnia od wszystkich pozostałych.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Gwiazdki w liczbach · skala i jej skalowanie</div>
+    <h2>Jak długie są promienie</h2>
+
+    <p>Mechanizm gwiazdek opisuje <a href="../rozdzialy/rozdzial-25-starburst.html">Rozdział 25</a>. Tu chodzi o jedną rzecz: <strong>od czego zależy ich długość</strong> — bo odpowiedź jest zaskakująco prosta i przydaje się przy odtwarzaniu.</p>
+
+    <p>Rozproszenie na prostej krawędzi ma tę samą skalę kątową, co dyfrakcja na otworze: długość fali podzielona przez rozmiar otworu. Przeliczona na matrycę, przez pomnożenie przez odległość obrazu, daje wielkość, w której ogniskowa się skraca — dokładnie tak samo jak przy krążku Airy'ego w pierwszej sekcji tego dodatku.</p>
+
+    <div class="formula">
+      skala = <span class="vec" data-tip="Długość fali">λ</span> · <span class="vec" data-tip="Liczba przysłony">N</span>
+      <span class="sub">Skala rozproszenia na matrycy. Wychodzi z pomnożenia kąta λ/D przez odległość obrazu f, przy D = f/N — ogniskowa się skraca. Nie jest to długość widocznego promienia, tylko jednostka, w której ta długość się mierzy.</span>
+    </div>
+
+    <div class="dtab-wrap">
+      <table class="dtab">
+        <thead>
+          <tr><th>Przysłona</th><th class="num">Skala λ·N</th><th class="num">Względem f/5,6</th><th>Co widać</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>f/2</td><td class="num">1,10 µm</td><td class="num">0,36×</td><td>listki schowane — brak promieni</td></tr>
+          <tr><td>f/4</td><td class="num">2,20 µm</td><td class="num">0,71×</td><td>ledwie zaznaczone</td></tr>
+          <tr><td>f/5,6</td><td class="num">3,08 µm</td><td class="num">1,00×</td><td>wyraźne, krótkie</td></tr>
+          <tr><td>f/11</td><td class="num">6,05 µm</td><td class="num">1,96×</td><td>długie i ostre</td></tr>
+          <tr><td>f/16</td><td class="num">8,80 µm</td><td class="num">2,86×</td><td>bardzo długie</td></tr>
+          <tr><td>f/22</td><td class="num">12,10 µm</td><td class="num">3,93×</td><td>przez pół kadru</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="dtab-caption">Liczone dla λ = 550 nm. Kolumna trzecia jest tą, która ma znaczenie praktyczne: mówi, ile razy dłuższe będą promienie względem nastawy odniesienia.</p>
+
+    <p>Trzy wnioski z tej tabeli warto mieć w głowie.</p>
+
+    <p><strong>Długość jest wprost proporcjonalna do liczby przysłony.</strong> Przymknięcie o dwie działki — z f/5,6 na f/11 — podwaja promienie. Nie ma tu żadnej nieliniowości ani progu; jedyny próg jest na drugim końcu, gdzie listki chowają się poza oprawę i promienie znikają zupełnie.</p>
+
+    <p><strong>Ogniskowa nie ma znaczenia.</strong> Skala zależy tylko od <em>N</em>, bo ogniskowa skraca się w rachunku — tak samo jak przy krążku Airy'ego. Szeroki kąt i teleobiektyw przy tej samej przysłonie dają promienie tej samej długości w milimetrach na matrycy. W kadrze wyglądają więc identycznie, o ile format jest ten sam.</p>
+
+    <p><strong>Tabela nie podaje długości widocznego promienia</strong> i jest to celowe. Widoczny promień sięga setek razy dalej niż podana skala, bo rozproszenie na prostej krawędzi opada znacznie wolniej niż pierścienie krążka Airy'ego — a jak daleko dokładnie, zależy od jasności źródła i od kontrastu tła. <span class="term-cyan">Stała jest proporcja, nie wartość bezwzględna</span>, i to właśnie proporcji potrzeba przy odtwarzaniu.</p>
+
+    <p>Dla compu wynika stąd prosty przepis. Zmierz długość promienia w jednym ujęciu z materiału, zapisz przy jakiej przysłonie je nakręcono, i przeskaluj proporcjonalnie do <em>N</em> dla pozostałych. Jedno dopasowanie wystarcza na całą sekwencję, o ile znasz nastawy — a jeśli ich nie znasz, długość promienia sama je zdradza.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Pomiar · kwadrans zamiast tabelek</div>
+    <h2>Jak zmierzyć to na własnym sprzęcie</h2>
+    <p>Wszystko powyżej daje się zweryfikować w kwadrans i warto to zrobić raz, żeby mieć liczby dla konkretnej kamery zamiast tabelek z internetu.</p>
+    <p>Ustaw kamerę na statywie przed czymś o drobnej, kontrastowej strukturze — banknot, wydruk drobnego tekstu, gałązka pod światło. Zrób serię przy każdej przysłonie od pełnego otwarcia do najciaśniejszej, nie ruszając ostrości. Potem obejrzyj wyniki w skali stu procent i znajdź moment, w którym drobny detal przestaje przyrastać.</p>
+    <p>Zobaczysz dwie rzeczy naraz. Od pełnego otwarcia detalu przybywa, bo maleją aberracje. Od pewnej przysłony przestaje przybywać, a zaczyna ubywać — i to jest twój słodki punkt z <a href="../rozdzialy/rozdzial-06-przyslona-f-i-t.html">Rozdziału 6</a>, zmierzony, a nie odgadnięty. Jeśli wypadnie wcześniej, niż mówią tabele, znaczy to, że masz gęstą matrycę; jeśli później — że obiektyw ma sporo do skorygowania.</p>
+    <p>Przy okazji dostajesz drugą liczbę, która przyda się w compie: <strong>promień rozmycia w pikselach</strong> przy każdej przysłonie. Wystarczy zmierzyć szerokość przejścia na kontrastowej krawędzi. To jest dokładnie ta wartość, którą trzeba wpisać, odtwarzając miękkość ujęcia kręconego na mocno przymkniętej przysłonie.</p>
+  </div>
+
+  <div class="site-nav">
+    <a href="../index.html">← Spis treści</a>
+    <a href="../rozdzialy/rozdzial-10-dyfrakcja.html">↑ Rozdział 10: Dyfrakcja: granica ostrości i gwiazdki</a>
+  </div>
+
+</div>
+
+<script src="../../assets/interactive.js"></script>
+</body>
+</html>
