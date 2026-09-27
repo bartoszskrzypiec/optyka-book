@@ -44,7 +44,225 @@ window.SKY3D_MESSAGES = {
   <h1>Od cząsteczki do ciała stałego</h1>
   <p class="subtitle">Kiedy atomów jest nie dwa, a 10²³, ich poziomy energii zlewają się w pasma. Szerokość przerwy między pasmami jest najważniejszą liczbą w optyce materiałów: mówi, czy coś będzie przezroczyste, kolorowe czy lustrzane.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li>Weź pojedynczy atom, a jego elektrony siedzą na kilku ostrych, oddzielnych poziomach energii. Zbliż do niego <span class="term-cyan">10²³ takich samych atomów</span> — poziomy się rozszczepiają, aż odstępy między nimi stają się nieodróżnialne od zera. Powstaje <span class="term-cyan">pasmo</span>: praktyczne kontinuum energii, z którego elektrony mogą korzystać.</li>
+      <li>Między najwyższym zapełnionym pasmem (<span class="term-cyan">walencyjnym</span>) a następnym, zwykle pustym (<span class="term-cyan">przewodnictwa</span>), potrafi ziać <span class="term-violet">przerwa energetyczna</span> E_g — zakres energii, w którym po prostu nie ma żadnych dozwolonych stanów elektronu.</li>
+      <li>Szerokość tej przerwy w elektronowoltach, zestawiona z energią fotonu widzialnego (1,65–3,26 eV), rozstrzyga wygląd materiału: <span class="term-raster">przezroczysty</span>, gdy przerwa jest szersza od całego widzialnego pasma, <span class="term-raster">kolorowy</span>, gdy przerwa leży w środku tego pasma, i <span class="term-raster">ciemny</span>, gdy przerwy praktycznie nie ma.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Co widzisz · kwarc, krzem, siarczek kadmu</div>
+    <h2>Ten sam rodzaj atomów, zupełnie inny wygląd</h2>
+
+    <p>Weź trzy stałe substancje zbudowane z sąsiadujących w układzie okresowym, lekkich pierwiastków. Kwarc, czyli krystaliczny dwutlenek krzemu, jest bezbarwny i przezroczysty jak najlepsze szkło optyczne. Krzem, jeden atom niżej w tej samej grupie, jest matowoszary i błyszczy tak, że łatwo pomylić go z metalem, choć metalem nie jest. Siarczek kadmu, CdS, to nieprzezroczysty proszek w intensywnym, nasyconym żółtym — dawny pigment znany jako żółcień kadmowa. Żadna z tych trzech różnic nie wynika z tego, jaki to „rodzaj" materii — to wciąż zwykłe ciała stałe zbudowane z elektrycznie obojętnych atomów. Wynika z jednej liczby, którą poznasz w tym rozdziale.</p>
+
+    <p>Zanim do niej dojdziesz, warto uporządkować, w jaki sposób w ogóle atomy mogą się ułożyć względem siebie. <span class="term-cyan">Gaz</span> to cząsteczki na tyle oddalone od siebie, że prawie nie oddziałują — każda zachowuje się niemal jak pojedynczy, izolowany atom z Rozdziału 4. <span class="term-cyan">Ciecz</span> ma sąsiadów blisko, ale bez trwałego porządku — układ sąsiedztwa bezustannie się przetasowuje. <span class="term-cyan">Kryształ</span> to regularna sieć, powtarzająca ten sam wzór komórki na całą objętość — kwarc, sól, diament. <span class="term-cyan">Szkło amorficzne</span> ma tę samą gęstość i te same wiązania co kryształ o tym samym składzie, ale bez dalekiego porządku: usieciowanie „zamrożone" zanim zdążyło się poukładać w regularną sieć — stopiony dwutlenek krzemu, wystarczająco szybko schłodzony, staje się szkłem okiennym zamiast kwarcu. <span class="term-cyan">Polimer</span> to długie łańcuchy, częściowo splątane, częściowo lokalnie uporządkowane. <span class="term-cyan">Metal</span> to jony osadzone we wspólnej puli uwolnionych elektronów — do tego przypadku, szczególnego pod każdym względem, wrócisz osobno w Rozdziale 20.</p>
+
+    <p>Zauważ, że kwarc i szkło okienne mają dokładnie ten sam wzór chemiczny, SiO₂, i oba są przezroczyste — mimo że jeden jest uporządkowany na całą objętość, a drugi wcale. To pierwsza wskazówka, że samo uporządkowanie geometryczne nie jest tym, co ostatecznie decyduje o przezroczystości czy kolorze. Decyduje coś, co dzieje się z poziomami energii elektronów, niezależnie od tego, czy sąsiedztwo atomów jest regularne, czy nie — wystarczy, że w ogóle jest gęste i bliskie. Do tego mechanizmu przechodzisz w następnej sekcji.</p>
+
+    <button class="advanced-btn" data-modal-target="adv-szklo">Zaawansowane: szkło nie płynie</button>
+
+  <div class="diagram-frame">
+    <div class="diagram-hud"><span>Uporządkowanie atomów</span><span>ten sam skład, inny rozkład</span></div>
+    <svg viewBox="0 0 760 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cztery panele porownujace rozklad atomow: regularna siatka krysztalu, nieregularna siec szkla amorficznego, dlugi lancuch polimeru i rzadkie, swobodnie poruszajace sie czasteczki gazu.">
+      <g font-family="IBM Plex Mono" font-size="11" fill="#8b909b" text-anchor="middle">
+        <text x="105" y="26">kryształ</text>
+        <text x="295" y="26">szkło amorficzne</text>
+        <text x="485" y="26">polimer</text>
+        <text x="675" y="26">gaz</text>
+      </g>
+      <rect x="20" y="36" width="170" height="150" rx="6" fill="none" stroke="#2a2f38"/>
+      <rect x="210" y="36" width="170" height="150" rx="6" fill="none" stroke="#2a2f38"/>
+      <rect x="400" y="36" width="170" height="150" rx="6" fill="none" stroke="#2a2f38"/>
+      <rect x="590" y="36" width="170" height="150" rx="6" fill="none" stroke="#2a2f38"/>
+
+      <g fill="#4fc3c0">
+        <circle cx="55" cy="65" r="6"/><circle cx="105" cy="65" r="6"/><circle cx="155" cy="65" r="6"/>
+        <circle cx="55" cy="105" r="6"/><circle cx="105" cy="105" r="6"/><circle cx="155" cy="105" r="6"/>
+        <circle cx="55" cy="145" r="6"/><circle cx="105" cy="145" r="6"/><circle cx="155" cy="145" r="6"/>
+        <circle cx="55" cy="175" r="6"/><circle cx="105" cy="175" r="6"/><circle cx="155" cy="175" r="6"/>
+      </g>
+      <g stroke="#2a4a48" stroke-width="1.5">
+        <line x1="55" y1="65" x2="155" y2="65"/><line x1="55" y1="105" x2="155" y2="105"/>
+        <line x1="55" y1="145" x2="155" y2="145"/><line x1="55" y1="175" x2="155" y2="175"/>
+        <line x1="55" y1="65" x2="55" y2="175"/><line x1="105" y1="65" x2="105" y2="175"/><line x1="155" y1="65" x2="155" y2="175"/>
+      </g>
+
+      <g fill="#4fc3c0">
+        <circle cx="240" cy="70" r="6"/><circle cx="285" cy="60" r="6"/><circle cx="330" cy="80" r="6"/>
+        <circle cx="360" cy="115" r="6"/><circle cx="320" cy="140" r="6"/><circle cx="270" cy="150" r="6"/>
+        <circle cx="230" cy="125" r="6"/><circle cx="295" cy="105" r="6"/>
+      </g>
+      <g stroke="#2a4a48" stroke-width="1.5">
+        <line x1="240" y1="70" x2="285" y2="60"/><line x1="285" y1="60" x2="330" y2="80"/>
+        <line x1="330" y1="80" x2="295" y2="105"/><line x1="295" y1="105" x2="240" y2="70"/>
+        <line x1="295" y1="105" x2="360" y2="115"/><line x1="360" y1="115" x2="320" y2="140"/>
+        <line x1="320" y1="140" x2="270" y2="150"/><line x1="270" y1="150" x2="230" y2="125"/>
+        <line x1="230" y1="125" x2="240" y2="70"/><line x1="230" y1="125" x2="295" y2="105"/>
+      </g>
+
+      <path d="M 420 165 Q 435 100 460 140 T 500 90 T 540 130 T 555 65" fill="none" stroke="#2a4a48" stroke-width="3"/>
+      <g fill="#4fc3c0">
+        <circle cx="420" cy="165" r="5.5"/><circle cx="440" cy="118" r="5.5"/><circle cx="460" cy="140" r="5.5"/>
+        <circle cx="480" cy="102" r="5.5"/><circle cx="500" cy="90" r="5.5"/><circle cx="520" cy="118" r="5.5"/>
+        <circle cx="540" cy="130" r="5.5"/><circle cx="555" cy="65" r="5.5"/>
+      </g>
+
+      <g fill="#4fc3c0">
+        <circle cx="620" cy="60" r="6"/><circle cx="700" cy="80" r="6"/><circle cx="650" cy="150" r="6"/>
+        <circle cx="730" cy="150" r="6"/><circle cx="610" cy="140" r="6"/>
+      </g>
+      <g stroke="#4fc3c0" stroke-width="1" stroke-dasharray="2 3" fill="none">
+        <path d="M 620 60 q 8 -10 16 -2"/><path d="M 700 80 q 10 6 6 16"/>
+        <path d="M 650 150 q -10 -4 -14 4"/><path d="M 730 150 q 8 -8 4 -16"/>
+      </g>
+    </svg>
+    <div class="diagram-caption">Kryształ i szkło mogą mieć ten sam skład chemiczny (obie kolumny lewe: SiO₂) — różni je tylko porządek dalekiego zasięgu, nie liczba i typ wiązań między najbliższymi sąsiadami.</div>
+  </div>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Mechanizm · z poziomów robi się pasmo</div>
+    <h2>Kiedy 10²³ atomów dzieli poziomy energii</h2>
+
+    <p>W Rozdziale 4 poziomy energii elektronu w pojedynczym, izolowanym atomie były ostre i policzalne — stąd wąskie linie widmowe sodu czy neonu. Teraz zbliż do takiego atomu drugi, identyczny. Chmury elektronowe zaczynają na siebie wpływać — dokładnie tak, jak przy powstawaniu wiązania w Rozdziale 5 — i każdy pojedynczy poziom energii <span class="term-cyan">rozszczepia się na dwa</span>, bardzo blisko siebie, ale już nie identyczne.</p>
+
+    <p>Dołóż kolejne atomy. Cztery atomy dają cztery blisko siebie leżące podpoziomy tam, gdzie był jeden. Osiem daje osiem. Całkowity rozrzut energii, jaki to rozszczepienie w ogóle może objąć, jest ograniczony siłą oddziaływania z najbliższymi sąsiadami i nie rośnie w nieskończoność wraz z liczbą atomów — więc im więcej podpoziomów upycha się w tym samym, skończonym przedziale energii, tym gęściej muszą leżeć. Przy liczbie atomów rzędu 10²³, jaka siedzi w każdym kawałku prawdziwego ciała stałego, odstępy między sąsiednimi podpoziomami są tak małe, że dla elektronu — i dla nadlatującego fotonu — są nieodróżnialne od zera. To, co zaczęło się jako jeden ostry poziom, staje się <span class="term-cyan">pasmem</span>: praktycznym kontinuum dozwolonych energii.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Od poziomu do pasma</span><span>ten sam mechanizm co w Rozdziale 5, powtórzony 10²³ razy</span></div>
+      <div class="diagram-controls">
+        <label for="pasmoN">Liczba sprzężonych atomów</label>
+        <input id="pasmoN" type="range" min="0" max="4" step="1" value="0">
+        <span class="value-readout" id="pasmoOdczytN">N = 2 atomy</span>
+      </div>
+      <svg viewBox="0 0 760 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Pojedynczy poziom energii rozszczepiajacy sie na coraz wiecej blisko lezacych podpoziomow w miare zwiekszania liczby sprzezonych atomow, az staje sie ciagle zacieniowanym pasmem.">
+        <line x1="120" y1="200" x2="120" y2="50" stroke="#8b909b" stroke-width="1.5"/>
+        <text x="120" y="38" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b" text-anchor="middle">energia ↑</text>
+        <rect id="pasmoPasmo" x="300" y="60" width="160" height="140" fill="#4fc3c0" opacity="0"/>
+        <g id="pasmoPoziomy"></g>
+        <text x="380" y="222" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b" text-anchor="middle">poziom jednego atomu, sprzężony z sąsiadami</text>
+      </svg>
+      <div class="diagram-caption" id="pasmoPodpis">Poziom pojedynczego atomu rozszczepia się na 2 poziomy o niemal tej samej energii.</div>
+    </div>
+
+    <p>To, co nazywasz <span class="term-cyan">pasmem walencyjnym</span>, to po prostu najwyższe pasmo, w którym w normalnych warunkach siedzą elektrony walencyjne. Pasmo tuż nad nim, zwykle puste, to <span class="term-cyan">pasmo przewodnictwa</span>. Między nimi bywa <span class="term-violet">przerwa energetyczna</span> E_g — nie „trudny do osiągnięcia" zakres energii, tylko taki, w którym w ogóle nie istnieje żaden dozwolony stan elektronu. Elektron nie może tam „na chwilę wpaść"; może tylko przeskoczyć od razu z jednego pasma do drugiego.</p>
+
+    <p>Zwróć uwagę, że nic w tym mechanizmie nie wymaga regularnej sieci krystalicznej. Pasmo powstaje z tego, że atomy mają bliskich, gęsto upakowanych sąsiadów, z którymi silnie oddziałują — nieważne, czy ten układ sąsiedztwa powtarza się w każdą stronę (kryształ), czy jest przypadkowy, ale wciąż gęsty i wciąż silnie powiązany (szkło, polimer). Dlatego szkło amorficzne ma pasma i przerwę energetyczną tak samo jak kryształ o tym samym składzie — to nie jest „chaos jak w gazie". W gazie atomy są od siebie zbyt daleko, żeby w ogóle się sprzęgać, więc zachowują własne, ostre, atomowe poziomy — to jedyny ze stanów uporządkowania, w którym pasmo naprawdę się nie tworzy.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Liczba, która przesądza · E_g kontra widzialny foton</div>
+    <h2>Przerwa decyduje, czy foton przejdzie</h2>
+
+    <p>Elektron może przeskoczyć z pasma walencyjnego do pasma przewodnictwa tylko wtedy, gdy pochłonie <span class="term-amber">foton</span> o energii co najmniej tak dużej, jak przerwa E_g — dokładnie ta sama zasada „poziom plus przejście" z Rozdziału 4, tylko że teraz „poziomy" są całymi pasmami. Fotonów o mniejszej energii materiał po prostu nie ma jak pochłonąć tą drogą — przelatują, jakby przerwy nie było.</p>
+
+    <div class="formula">
+      <span class="vec" data-tip="Długość fali, przy której energia fotonu dokładnie równa się przerwie energetycznej E_g — krawędź, od której zaczyna się pochłanianie.">λ_krawędzi</span> ≈ 1240 / <span class="vec" data-tip="Przerwa energetyczna w elektronowoltach.">E_g[eV]</span> nm
+      <span class="sub">λ_krawędzi — długość fali graniczna w nanometrach, E_g — przerwa energetyczna w eV. Ten sam wzór co E_γ ≈ 1240/λ z Rozdziału 1, tylko odwrócony względem szukanej wielkości.</span>
+    </div>
+
+    <p>Szybka kontrola: podstaw górną granicę widzialnego fotonu, 3,26 eV, i wychodzi λ_krawędzi ≈ 1240/3,26 ≈ 380 nm — dokładnie górny kraniec widma z Rozdziału 1. Podstaw dolną granicę, 1,65 eV, i wychodzi ≈ 1240/1,65 ≈ 750 nm — dokładnie dolny kraniec. Wzór jest po prostu tym samym E_γ = hc/λ zapisanym od drugiej strony, więc taka zgodność nie jest przypadkiem — jest testem, że nic się nie rozjechało.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Pasmo, przerwa i widzialny foton</span><span>suwak: szerokość przerwy</span></div>
+      <div class="diagram-controls">
+        <label for="gapEg">Przerwa energetyczna E_g</label>
+        <input id="gapEg" type="range" min="0" max="9" step="0.05" value="2.4">
+        <span class="value-readout" id="gapOdczyt">E_g = 2,40 eV</span>
+      </div>
+      <svg viewBox="0 0 760 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram pasma walencyjnego i przewodnictwa z regulowana przerwa energetyczna, na tle nieruchomego pasa energii fotonow widzialnych, oraz odczyt klasyfikacji materialu i orientacyjny kolor wynikowy.">
+        <line x1="150" y1="230" x2="150" y2="40" stroke="#8b909b" stroke-width="1.5"/>
+        <text x="150" y="28" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b" text-anchor="middle">energia ↑</text>
+        <text x="150" y="245" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">0 eV</text>
+
+        <rect id="gapWidzialne" x="180" y="0" width="320" height="0" fill="#e8a33d" opacity="0.25"/>
+        <text x="510" y="163" font-family="IBM Plex Mono" font-size="10" fill="#e8a33d">1,65–3,26 eV</text>
+        <text x="510" y="176" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">okno widzialnego fotonu</text>
+
+        <rect x="180" y="230" width="320" height="20" fill="#4fc3c0"/>
+        <text x="340" y="244" font-family="IBM Plex Mono" font-size="10" fill="#0d0f14" text-anchor="middle">pasmo walencyjne</text>
+        <rect id="gapPrzewodnictwa" x="180" y="0" width="320" height="40" fill="#4fc3c0"/>
+        <text id="gapEtykietaPrzew" x="340" y="0" font-family="IBM Plex Mono" font-size="10" fill="#0d0f14" text-anchor="middle">pasmo przewodnictwa</text>
+
+        <rect id="gapSwatch" x="560" y="60" width="90" height="70" rx="6" fill="none" stroke="#6e93be" stroke-width="2"/>
+        <text x="605" y="146" font-family="IBM Plex Mono" font-size="9.5" fill="#6e93be" text-anchor="middle">kolor wynikowy</text>
+        <text x="605" y="160" font-family="IBM Plex Mono" font-size="9" fill="#8b909b" text-anchor="middle">(orientacyjnie)</text>
+        <text id="gapKlasyfikacja" x="605" y="40" font-family="IBM Plex Mono" font-size="11" fill="#ecebe4" text-anchor="middle">półprzewodnik</text>
+      </svg>
+      <div class="diagram-caption" id="gapPodpis">E_g = 2,40 eV → λ_krawędzi ≈ 517 nm: pochłania fiolet–zieleń, przepuszcza i odbija żółć–czerwień. Kolor orientacyjny, uproszczony model.</div>
+    </div>
+
+    <p>Trzy sytuacje, ten sam mechanizm. Gdy E_g jest szersza niż całe okno widzialnego fotonu (powyżej 3,26 eV), nawet najbardziej energetyczny fiolet nie ma jak przeskoczyć przerwy — materiał jest <span class="term-raster">przezroczysty</span> w całym widzialnym zakresie. Kwarc, SiO₂, ma E_g ≈ 9 eV (λ_krawędzi ≈ 138 nm, głęboki nadfiolet); diament ma E_g ≈ 5,5 eV (λ_krawędzi ≈ 225 nm, wciąż nadfiolet). W obu przypadkach przerwa leży tak daleko od widzialnego okna, że materiał wychodzi bezbarwny i na wylot przezroczysty.</p>
+
+    <p>Gdy E_g mieści się w środku widzialnego okna, fotony powyżej progu (krótsze niż λ_krawędzi) są pochłaniane, a te poniżej progu przechodzą albo się odbijają — materiał wychodzi <span class="term-raster">kolorowy</span>, bo to, co widzisz, jest tym, czego akurat nie udało się pochłonąć. Siarczek kadmu, CdS, ma E_g ≈ 2,4 eV, czyli λ_krawędzi ≈ 517 nm: pochłania fiolet, błękit i zieleń, a przepuszcza i odbija żółć, pomarańcz i czerwień — stąd nasycona żółć tego związku (mechanizm chemii barwy dopiero rozwija Rozdział 22 — tu liczy się sama zasada).</p>
+
+    <p>Gdy E_g jest węższa niż dolna granica widzialnego okna (poniżej 1,65 eV) albo jej praktycznie nie ma, każdy widzialny foton, nawet najsłabszy czerwony, niesie dość energii, żeby gdzieś w materiale zrobić ten skok — cały widzialny zakres zostaje pochłonięty i materiał wychodzi <span class="term-raster">ciemny</span>, mimo że w środku nie ma ani grama prawdziwego metalu. Krzem ma E_g ≈ 1,1 eV, czyli λ_krawędzi ≈ 1100 nm — daleko w bliskiej podczerwieni. Dlatego krzem pochłania cały widzialny zakres i wygląda matowoszaro; jego lekki połysk bierze się z odbicia na samej powierzchni, nie z niczego, co dzieje się głębiej. Prawdziwy metal idzie o krok dalej: pasmo walencyjne i przewodnictwa nie tylko się zbliżają, tylko realnie <span class="term-cyan">nakładają</span> — nie ma żadnego progu, bo nie ma żadnej przerwy do przekroczenia. Ten szczególny przypadek, razem z tym, dlaczego metale świecą tak, jak świecą, rozwija Rozdział 20.</p>
+
+  <div class="diagram-frame">
+    <div class="diagram-hud"><span>Przerwa energetyczna wybranych materiałów</span><span>oś liniowa, eV</span></div>
+    <svg viewBox="0 0 760 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Os liniowa przerwy energetycznej od 0 do 9 elektronowoltow z zaznaczonymi materialami oraz zacienionym oknem energii fotonow widzialnych.">
+      <line x1="50" y1="120" x2="710" y2="120" stroke="#8b909b" stroke-width="1.5"/>
+      <rect x="382" y="60" width="139" height="60" fill="#e8a33d" opacity="0.22"/>
+      <text x="451" y="52" font-family="IBM Plex Mono" font-size="10" fill="#e8a33d" text-anchor="middle">widzialne · 1,65–3,26 eV</text>
+      <g font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">
+        <line x1="50" y1="114" x2="50" y2="126" stroke="#8b909b"/><text x="50" y="142">0</text>
+        <line x1="123" y1="114" x2="123" y2="126" stroke="#8b909b"/><text x="123" y="142">1</text>
+        <line x1="196" y1="114" x2="196" y2="126" stroke="#8b909b"/><text x="196" y="142">2</text>
+        <line x1="269" y1="114" x2="269" y2="126" stroke="#8b909b"/><text x="269" y="142">3</text>
+        <line x1="342" y1="114" x2="342" y2="126" stroke="#8b909b"/><text x="342" y="142">4</text>
+        <line x1="415" y1="114" x2="415" y2="126" stroke="#8b909b"/><text x="415" y="142">5</text>
+        <line x1="488" y1="114" x2="488" y2="126" stroke="#8b909b"/><text x="488" y="142">6</text>
+        <line x1="561" y1="114" x2="561" y2="126" stroke="#8b909b"/><text x="561" y="142">7</text>
+        <line x1="634" y1="114" x2="634" y2="126" stroke="#8b909b"/><text x="634" y="142">8</text>
+        <line x1="707" y1="114" x2="707" y2="126" stroke="#8b909b"/><text x="707" y="142">9 eV</text>
+      </g>
+      <g fill="#4fc3c0">
+        <circle cx="52" cy="120" r="5"/><circle cx="130" cy="120" r="5"/><circle cx="225" cy="120" r="5"/>
+        <circle cx="279" cy="120" r="5"/><circle cx="292" cy="120" r="5"/><circle cx="452" cy="120" r="5"/>
+        <circle cx="707" cy="120" r="5"/>
+      </g>
+      <g font-family="IBM Plex Mono" font-size="9.5" fill="#4fc3c0">
+        <text x="52" y="100" text-anchor="middle">grafit ≈ 0</text>
+        <text x="130" y="160" text-anchor="middle">Si 1,1</text>
+        <text x="225" y="100" text-anchor="middle">CdS 2,4</text>
+        <text x="279" y="160" text-anchor="middle">TiO₂ ≈ 3,1</text>
+        <text x="292" y="176" text-anchor="middle">ZnO 3,3</text>
+        <text x="452" y="100" text-anchor="middle">diament 5,5</text>
+        <text x="707" y="100" text-anchor="middle">SiO₂ ≈ 9</text>
+      </g>
+    </svg>
+    <div class="diagram-caption">Im dalej marker leży od zacienionego okna, tym mniej materiał ma wspólnego z widzialnym fotonem — na lewo od okna wszystko jest pochłaniane, na prawo nic.</div>
+  </div>
+  </div>
+
+  <div class="panel practice">
+    <div class="panel-label">Z praktyki</div>
+    <p><strong>Matryca krzemowa widzi dalej niż twoje oko — i to jest problem, który trzeba filtrować.</strong> Krzemowy czujnik, z tą samą przerwą E_g ≈ 1,1 eV co w przykładzie wyżej, pozostaje czuły na fotony aż do około 1100 nm, czyli głęboko w bliskiej podczerwieni — Twoje oko wyłącza się przy 750 nm. Bez dodatkowego filtra kamera „widziałaby" pasmo, którego nie widzisz Ty, co psuje kolor i kontrast (zieleń liści, czarne tkaniny). Dlatego przed matrycą stoi filtr IR-cut, odcinający właśnie ten nadmiarowy zakres.</p>
+    <p><strong>Zdejmij ten filtr (albo osłab go filtrem IRND), a wyskakują niespodzianki.</strong> Niektóre syntetyczne czarne tkaniny pochłaniają widzialne światło niemal całkowicie, ale wcale nie pochłaniają równie dobrze bliskiej podczerwieni — ich barwnik ma krawędź pochłaniania ustawioną tak, by dawać czerń oku, a nie sensorowi. Filtr IRND, który przepuszcza dużo IR razem z ograniczaniem widzialnego światła, pozwala tej resztkowej podczerwieni dotrzeć do matrycy — stąd charakterystyczna, „fioletowa czerń" niektórych materiałów w ujęciach kręconych z mocnym IRND.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>stany uporządkowania</dt>
+      <dd>Sposób, w jaki atomy są ułożone względem siebie: gaz (rzadko, bez oddziaływania), ciecz (blisko, bez trwałego porządku), kryształ (regularna sieć), szkło amorficzne (gęste, ale bez dalekiego porządku), polimer (długie łańcuchy), metal (jony we wspólnej puli elektronów).</dd>
+      <dt>pasmo (walencyjne, przewodnictwa)</dt>
+      <dd>Zbiór poziomów energii tak blisko siebie, że tworzą praktyczne kontinuum — powstaje, gdy bardzo wiele atomów sprzęga swoje pojedyncze, dyskretne poziomy. Pasmo walencyjne jest najwyżej normalnie zapełnionym pasmem, pasmo przewodnictwa — kolejnym w górę, zwykle pustym.</dd>
+      <dt>przerwa energetyczna (E_g)</dt>
+      <dd>Zakres energii między pasmem walencyjnym a przewodnictwa, w którym nie istnieją żadne dozwolone stany elektronu. Elektron musi przeskoczyć całą przerwę naraz, pochłaniając foton o energii co najmniej E_g.</dd>
+      <dt>krawędź absorpcji (λ_krawędzi)</dt>
+      <dd>Długość fali odpowiadająca energii E_g, λ_krawędzi ≈ 1240/E_g[eV] nm. Fotony krótsze od niej (energetyczniejsze) mogą zostać pochłonięte, dłuższe — nie.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Przerwa energetyczna, jaką tu poznałeś, tłumaczy przezroczystość i kolor prostych, nieorganicznych ciał stałych — kryształów i szkieł zbudowanych z kilku typów atomów w regularnej albo sieciowej strukturze. Węgiel gra według nieco innych reguł: zamiast trójwymiarowej sieci buduje łańcuchy i pierścienie, a odpowiednikiem przerwy energetycznej staje się długość wiązania sprzężonego wzdłuż cząsteczki. W <a href="rozdzial-07-chemia-wegla.html">następnym rozdziale</a> zobaczysz, dlaczego większość związków organicznych jest bezbarwna, a niektóre — jak barwniki w liściu czy krwi — intensywnie kolorowe.</p>
+  </div>
 
   <div class="deeper">
     <div class="deeper-label">Idź głębiej</div>
@@ -57,8 +275,138 @@ window.SKY3D_MESSAGES = {
       <a class="nav-next" href="rozdzial-07-chemia-wegla.html">Następny →</a>
   </div>
 
+  <template id="adv-szklo">
+    <h3>Zaawansowane: szkło nie płynie</h3>
+    <p>Popularna anegdota głosi, że witraże w średniowiecznych katedrach są grubsze u dołu, bo szkło jest tak naprawdę bardzo powolną cieczą, która przez stulecia spłynęła pod własnym ciężarem. To pociągający obrazek — i fizycznie fałszywy.</p>
+    <p>Szkło jest amorficznym ciałem stałym, ale w temperaturze pokojowej ma lepkość o dziesiątki rzędów wielkości większą niż jakikolwiek płyn, który na co dzień nazwałbyś „gęstym" — w praktyce nieskończoną w skali ludzkiego życia. Mierzalny przepływ takiej masy wymagałby czasu porównywalnego z wiekiem Wszechświata, nie kilkuset lat. Gdyby szkło naprawdę płynęło w tempie sugerowanym przez stare okna, starożytne szklane naczynia i soczewki, dużo starsze od gotyckich witraży, dawno straciłyby kształt — a nie straciły.</p>
+    <p>Nierówna grubość dawnych szyb ma dużo bardziej przyziemne wyjaśnienie: metoda produkcji. Szkło koronowe (crown glass) formowano, wirując roztopioną bańkę na pręcie, co dawało krążek grubszy przy środku i cieńszy przy brzegach. Szklarz przycinał z takiego krążka szyby i — bez żadnej fizycznej konieczności, po prostu z rozsądku — wstawiał je grubszą krawędzią w dół, dla stabilności w ołowianej ramie. Efekt wygląda jak ślad powolnego spływu, ale powstał w warsztacie, jednorazowo, a nie przez wieki.</p>
+  </template>
+
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-panel">
+      <button class="modal-close" data-modal-close aria-label="Zamknij">×</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
 </div>
 
 <script src="../../assets/interactive.js"></script>
+<script>
+/* Poziom pojedynczego atomu rozszczepiajacy sie na N podpoziomow w miare
+   zwiekszania liczby sprzezonych atomow (suwak dyskretny, 5 krokow); przy
+   ostatnim kroku podpoziomy zlewaja sie w ciagle zacieniowane pasmo. */
+(function () {
+  var sl = document.getElementById('pasmoN');
+  if (!sl) return;
+  var LICZBY = [2, 4, 8, 16, null];
+  var ETYKIETY = ['N = 2 atomy', 'N = 4 atomy', 'N = 8 atomów', 'N = 16 atomów', 'N ≈ 10²³ atomów (kryształ)'];
+  var g = document.getElementById('pasmoPoziomy');
+  var pasmo = document.getElementById('pasmoPasmo');
+  var odczyt = document.getElementById('pasmoOdczytN');
+  var podpis = document.getElementById('pasmoPodpis');
+
+  function rysuj() {
+    var i = parseInt(sl.value, 10);
+    var n = LICZBY[i];
+    while (g.firstChild) g.removeChild(g.firstChild);
+
+    if (n) {
+      pasmo.setAttribute('opacity', '0');
+      var top = 70, bottom = 190, mid = (top + bottom) / 2;
+      var span = 30 + i * 30;
+      for (var k = 0; k < n; k++) {
+        var frac = n === 1 ? 0.5 : k / (n - 1);
+        var y = mid - span / 2 + frac * span;
+        var line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', '300'); line.setAttribute('x2', '460');
+        line.setAttribute('y1', y.toFixed(1)); line.setAttribute('y2', y.toFixed(1));
+        line.setAttribute('stroke', '#4fc3c0');
+        line.setAttribute('stroke-width', n > 8 ? '1' : '2');
+        g.appendChild(line);
+      }
+      podpis.textContent = 'Poziom pojedynczego atomu rozszczepia się na ' + n + ' poziomów o niemal tej samej energii.';
+    } else {
+      pasmo.setAttribute('opacity', '0.55');
+      podpis.textContent = 'Przy liczbie atomów rzędu 10²³ odstępy między sąsiednimi poziomami są nieodróżnialne od zera — dla elektronu i dla fotonu to ciągłe pasmo.';
+    }
+    odczyt.textContent = ETYKIETY[i];
+  }
+  sl.addEventListener('input', rysuj);
+  rysuj();
+})();
+</script>
+<script>
+/* Diagram pasma walencyjnego/przewodnictwa z regulowana przerwa E_g,
+   na tle nieruchomego okna energii fotonu widzialnego (1,65-3,26 eV).
+   Skala: 0 eV -> y=230 (gorna krawedz pasma walencyjnego), 13.333 px/eV. */
+(function () {
+  var sl = document.getElementById('gapEg');
+  if (!sl) return;
+  var SKALA = 13.333;
+  var Y0 = 230;
+  var przew = document.getElementById('gapPrzewodnictwa');
+  var etykietaPrzew = document.getElementById('gapEtykietaPrzew');
+  var widzialne = document.getElementById('gapWidzialne');
+  var swatch = document.getElementById('gapSwatch');
+  var klasa = document.getElementById('gapKlasyfikacja');
+  var odczyt = document.getElementById('gapOdczyt');
+  var podpis = document.getElementById('gapPodpis');
+
+  var yGorne = (Y0 - 1.65 * SKALA);   // gorna krawedz "okna" widzialnego (1,65 eV)
+  var yDolne = (Y0 - 3.26 * SKALA);   // dolna krawedz (wyzsza energia = mniejsze y) -- 3,26 eV
+  widzialne.setAttribute('y', yDolne.toFixed(1));
+  widzialne.setAttribute('height', (yGorne - yDolne).toFixed(1));
+
+  function hslDoHex(h, s, l) {
+    s /= 100; l /= 100;
+    var c = (1 - Math.abs(2 * l - 1)) * s;
+    var x = c * (1 - Math.abs((h / 60) % 2 - 1));
+    var m = l - c / 2, r = 0, g = 0, b = 0;
+    if (h < 60) { r = c; g = x; } else if (h < 120) { r = x; g = c; }
+    else if (h < 180) { g = c; b = x; } else if (h < 240) { g = x; b = c; }
+    else if (h < 300) { r = x; b = c; } else { r = c; b = x; }
+    var toHex = function (v) { var n = Math.round((v + m) * 255); return ('0' + n.toString(16)).slice(-2); };
+    return '#' + toHex(r) + toHex(g) + toHex(b);
+  }
+
+  function formatEV(v) { return v.toFixed(2).replace('.', ','); }
+  function formatNM(v) { return Math.round(v).toString().replace('.', ','); }
+
+  function odswiez() {
+    var eg = parseFloat(sl.value);
+    odczyt.textContent = 'E_g = ' + formatEV(eg) + ' eV';
+
+    var yBottom = Y0 - eg * SKALA;
+    var yTop = yBottom - 40;
+    przew.setAttribute('y', yTop.toFixed(1));
+    etykietaPrzew.setAttribute('y', (yBottom - 14).toFixed(1));
+
+    var lam = eg > 0 ? 1240 / eg : Infinity;
+
+    if (eg >= 3.26) {
+      klasa.textContent = 'izolator · przezroczysty';
+      swatch.setAttribute('fill', 'none');
+      podpis.textContent = 'E_g = ' + formatEV(eg) + ' eV → λ_krawędzi ≈ ' + (isFinite(lam) ? formatNM(lam) : '—') +
+        ' nm, głęboko poza widzialnym: żaden widzialny foton nie ma dość energii — materiał przezroczysty.';
+    } else if (eg <= 1.65) {
+      klasa.textContent = eg <= 0.05 ? 'metal · brak przerwy' : 'ciemny · wszystko pochłonięte';
+      swatch.setAttribute('fill', '#1c1c1c');
+      podpis.textContent = eg <= 0.05
+        ? 'E_g ≈ 0: pasma się nakładają, nie ma przerwy do przekroczenia — każdy foton znajduje gdzie zostać pochłonięty (mechanizm metalu — Rozdział 20).'
+        : 'E_g = ' + formatEV(eg) + ' eV → λ_krawędzi ≈ ' + formatNM(lam) + ' nm, poza czerwonym krańcem widzialnego: każdy widzialny foton ma dość energii — materiał pochłania cały zakres i wygląda ciemno.';
+    } else {
+      var t = (lam - 380) / (750 - 380);
+      var barwa = hslDoHex(58 - t * 58, 72, 50);
+      klasa.textContent = 'półprzewodnik · kolorowy';
+      swatch.setAttribute('fill', barwa);
+      podpis.textContent = 'E_g = ' + formatEV(eg) + ' eV → λ_krawędzi ≈ ' + formatNM(lam) +
+        ' nm: pochłania fotony krótsze od tej długości, przepuszcza i odbija dłuższe. Kolor orientacyjny, uproszczony model.';
+    }
+  }
+  sl.addEventListener('input', odswiez);
+  odswiez();
+})();
+</script>
 </body>
 </html>

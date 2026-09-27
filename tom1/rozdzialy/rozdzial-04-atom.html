@@ -44,7 +44,257 @@ window.SKY3D_MESSAGES = {
   <h1>Atom: jądro, elektrony i dlaczego pierwiastki się różnią</h1>
   <p class="subtitle">Sód świeci na pomarańczowo, neon na czerwono, a węgiel buduje drzewa. Różnią się tylko liczbą protonów — ale ta liczba ustawia elektrony w powłokach, a elektrony decydują o wszystkim, co zobaczysz.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li>Atom to prawie pusta przestrzeń wokół <span class="term-cyan">jądra</span> (~10⁻¹⁵ m), otoczonego <span class="term-cyan">chmurą elektronów</span> (~10⁻¹⁰ m — sto tysięcy razy większą). Liczba protonów w jądrze, <strong>Z</strong>, wyznacza pierwiastek, a obojętny atom ma dokładnie tyle samo elektronów co protonów.</li>
+      <li>Elektrony nie krążą po torach jak planety — siedzą w <span class="term-cyan">orbitalach</span>, chmurach prawdopodobieństwa, po najwyżej dwa na chmurę (<strong>zakaz Pauliego</strong>), wypełniających kolejne <strong>powłoki</strong>: H(1), C(2,4), N(2,5), O(2,6), Ne(2,8), Na(2,8,1), Cl(2,8,7).</li>
+      <li>Elektrony w atomie siedzą na dyskretnych <span class="term-cyan">poziomach energii</span>, mierzonych w eV. <span class="term-amber">Foton</span>, który atom pochłania albo emituje, ma energię dokładnie równą różnicy dwóch poziomów — stąd wąskie linie widmowe sodu czy neonu, zamiast ciągłej poświaty.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Co widzisz · linie zamiast ciągłego widma</div>
+    <h2>Każdy pierwiastek świeci inaczej</h2>
+
+    <p>Uliczna lampa sodowa świeci na pomarańczowo. Neonówka w szyldzie na czerwono. A gdy Fraunhofer w 1814 roku rozłożył światło Słońca dokładnym pryzmatem, zobaczył w ciągłej tęczy setki cienkich, ciemnych kresek — miejsc, gdzie brakuje konkretnych barw. Wszystkie trzy zjawiska mają jedno wspólne wytłumaczenie: <strong>materia rozmawia ze światłem przez konkretne, dyskretne linie, nie przez cały zakres naraz</strong> — a to, jakie to linie, zależy wyłącznie od tego, z jakiego pierwiastka zbudowany jest atom, który akurat świeci albo pochłania.</p>
+
+    <p>Żeby zrozumieć skąd biorą się linie, trzeba najpierw rozłożyć atom na części. W środku siedzi <strong>jądro atomowe</strong> — zbita kulka protonów i neutronów o promieniu rzędu 10⁻¹⁵ metra. Dookoła, w promieniu około 10⁻¹⁰ metra, rozciąga się <span class="term-cyan">chmura elektronów</span> — obszar, w którym z bardzo dużym prawdopodobieństwem znajdziesz elektrony, gdybyś próbował je zlokalizować. Różnica skal jest kolosalna: chmura elektronowa jest jakieś sto tysięcy razy większa niż jądro, które ją trzyma. Licząc objętość, to tak, jakby ziarnko maku siedziało pośrodku stadionu piłkarskiego, a mimo to reszta stadionu nie jest pusta — wypełnia ją naładowana ujemnie chmura, gotowa reagować na pole E z <a href="rozdzial-02-pole-e-i-b.html">Rozdziału 2</a> dokładnie tak, jak fala „widzi” materię z <a href="rozdzial-01-czym-jest-swiatlo.html">Rozdziału 1</a>: nie jako pustkę, tylko jako coś, co ma gdzie oddziaływać.</p>
+
+    <p>Liczba protonów w jądrze ma swoją nazwę — <strong>liczba atomowa Z</strong> — i to ona, jedna liczba, w całości decyduje, z jakim pierwiastkiem masz do czynienia. Wodór ma Z = 1, węgiel Z = 6, sód Z = 11, neon Z = 10. Zmień liczbę protonów o jeden, a dostajesz zupełnie inny pierwiastek o innych właściwościach chemicznych i optycznych — dodaj albo odejmij neutron, a wciąż będzie to ten sam pierwiastek, tylko inny izotop. Ponieważ proton ma ładunek dodatni, a elektron ujemny o dokładnie tej samej wielkości, <strong>obojętny elektrycznie atom musi mieć tyle samo elektronów co protonów</strong> — to właśnie ta liczba elektronów, rozmieszczona w chmurze wokół jądra, decyduje o wszystkim, co dalej w tym rozdziale.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Jądro i chmura, dwa zbliżenia</span><span>skala nie do jednego rysunku</span></div>
+      <svg viewBox="0 0 760 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Po lewej duże kółko oznaczające chmurę elektronową atomu o promieniu 10 do minus 10 metra z niewidocznym jądrem pośrodku; po prawej powiększenie tego samego jądra, widocznego dopiero w tym przybliżeniu.">
+        <g font-family="IBM Plex Mono" font-size="10.5" text-anchor="middle">
+          <circle cx="190" cy="130" r="95" fill="#4fc3c0" fill-opacity="0.10" stroke="#4fc3c0" stroke-width="1.5"/>
+          <circle cx="190" cy="130" r="2" fill="#8a8f98"/>
+          <text x="190" y="30" fill="#4fc3c0">chmura elektronów · ~10⁻¹⁰ m</text>
+          <text x="190" y="245" fill="#8b909b">jądro tu jest, ale nierysowalnie małe</text>
+          <line x1="192" y1="130" x2="330" y2="130" stroke="#8b909b" stroke-width="1" stroke-dasharray="3 4"/>
+          <text x="420" y="70" fill="#8b909b" text-anchor="start">powiększenie ~100 000×</text>
+          <line x1="330" y1="130" x2="440" y2="130" stroke="#8b909b" stroke-width="1" marker-end="url(#atomStrzalka)"/>
+          <defs>
+            <marker id="atomStrzalka" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8b909b"/></marker>
+          </defs>
+          <circle cx="600" cy="130" r="70" fill="none" stroke="#3a424d" stroke-width="1"/>
+          <circle cx="600" cy="130" r="24" fill="#8a8f98"/>
+          <text x="600" y="30" fill="#8a8f98">jądro · ~10⁻¹⁵ m</text>
+          <text x="600" y="222" fill="#8b909b">protony (Z) + neutrony</text>
+        </g>
+      </svg>
+      <div class="diagram-caption">Gdyby jądro narysować w skali lewego kółka, miałoby promień mniejszy niż grubość linii tego rysunku — dlatego potrzebne są dwa osobne zbliżenia, nie jedno.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Materia · orbital jako chmura, nie tor</div>
+    <h2>Chmury, zakaz Pauliego i powłoki</h2>
+
+    <p>Najstarszy obrazek atomu, wciąż widoczny na niejednym logo, przedstawia elektrony krążące po torach wokół jądra jak planety wokół Słońca. To jest model historyczny (Bohr, 1913) i warto go znać, bo poprawnie przewidział poziomy energii wodoru — ale <strong>dosłownie jest fałszywy</strong>. Klasycznie krążący, przyspieszający ładunek nieustannie promieniowałby energię i po ułamku sekundy spiralnie spadłby na jądro — a atomy w rzeczywistości są stabilne latami. Poprawny obraz jest inny: elektron w atomie nie ma konkretnego toru ani konkretnej pozycji w danej chwili — jest rozmyty po całym <strong>orbitalu</strong>, obszarze przestrzeni, w którym prawdopodobieństwo znalezienia go jest wysokie. Nazwa „orbital” w tej książce zawsze znaczy chmurę, nigdy tor.</p>
+
+    <p>Chmury mają różne kształty: najmniejsza i najbardziej wewnętrzna, oznaczana <strong>1s</strong>, jest kulista. Kolejna, większa kulista chmura to <strong>2s</strong>. Obok niej pojawiają się trzy chmury w kształcie hantli, <strong>2p</strong>, ustawione wzajemnie prostopadle — wzdłuż trzech osi przestrzeni. Na każdą taką chmurę, niezależnie od kształtu, mieszczą się <strong>najwyżej dwa elektrony</strong> — to <strong>zakaz Pauliego</strong>, jedna z tych reguł, które warto zapamiętać słownie, bez pytania dlaczego akurat dwa (odpowiada za to spin, temat spoza zakresu tej książki).</p>
+
+    <p>Chmury grupują się w <strong>powłoki</strong> o rosnącej pojemności: pierwsza powłoka (K) mieści najwyżej 2 elektrony (samo 1s), druga (L) najwyżej 8 (2s i trzy 2p), trzecia (M) w praktyce też zaczyna od 8 dla pierwszych pierwiastków tego okresu — od potasu dalej robi się bardziej złożona i ten prosty schemat 2–8–8 przestaje wystarczać, ale dla pierwszych trzech okresów układu okresowego działa bez wyjątków. Elektrony wypełniają powłoki od najniższej energii w górę, jedna po drugiej:</p>
+
+    <ul>
+      <li><strong>H</strong> (Z=1): powłoka K — 1 elektron.</li>
+      <li><strong>C</strong> (Z=6): K, L — 2, 4.</li>
+      <li><strong>N</strong> (Z=7): 2, 5.</li>
+      <li><strong>O</strong> (Z=8): 2, 6.</li>
+      <li><strong>Ne</strong> (Z=10): 2, 8 — powłoka L pełna.</li>
+      <li><strong>Na</strong> (Z=11): 2, 8, 1 — jeden elektron zaczyna nową powłokę M.</li>
+      <li><strong>Cl</strong> (Z=17): 2, 8, 7.</li>
+    </ul>
+
+    <div class="viz3d" id="orbitale3D">
+      <div class="viz3d__head">
+        <p class="viz3d__title">Orbitale jako chmury punktów: H / C / Na</p>
+        <p class="viz3d__sub">Każdy punkt to jedno próbne „gdzie mógłby akurat być” dla elektronu w danej chmurze — nie ścieżka, tylko rozrzut prawdopodobieństwa. Cyan = chmura elektronowa, szary = jądro (nie w skali).</p>
+      </div>
+      <div class="viz3d__stage">
+        <canvas></canvas>
+        <div class="viz3d__badge">przeciągnij, żeby obrócić</div>
+        <div class="viz3d__fallback">
+          <strong>Ten widget potrzebuje WebGL</strong>
+          <span>Sekcje obok opisują ten sam obraz w słowach — widget jest ilustracją, nie nośnikiem argumentu.</span>
+        </div>
+      </div>
+      <div class="viz3d__presets">
+        <button data-pierwiastek="H" class="is-active">H</button>
+        <button data-pierwiastek="C">C</button>
+        <button data-pierwiastek="Na">Na</button>
+      </div>
+      <p class="viz3d__note">H pokazuje samą chmurę 1s. C dokłada większą kulistą 2s i trzy hantlowate płaty 2p wzdłuż osi x/y/z — kształt hantli i to, że trzy chmury przenikają się pod kątem prostym, znika na płaskim rysunku. Na dokłada jeszcze jedną, dużą i rozmytą chmurę 3s — to ten pojedynczy, luźno trzymany elektron walencyjny, o którym mowa niżej. Uproszczenie: prawdziwe 2s i 3s mają dodatkowo węzły radialne (obszary zerowego prawdopodobieństwa), tu pominięte dla czytelności.</p>
+    </div>
+
+    <p>Zwróć uwagę, że sam kształt chmury 1s czy 2p <em>nie zależy</em> od tego, ile elektronów w niej realnie siedzi — kształt jest własnością samego orbitalu, wynikającą z tego, jak elektron może „zmieścić się” wokół jądra. To, ile elektronów dany atom ma i które chmury zdążył wypełnić, zależy tylko od Z. Węgiel w tym widgecie ma częściowo wypełnione 2p (2 z 6 możliwych miejsc), ale trzy płaty hantli wyglądają identycznie, jakby były pełne — różni się tylko to, co ostatecznie w nich usiądzie.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Liczba · poziom energii i eV</div>
+    <h2>Poziomy energii i przejścia — skąd biorą się linie</h2>
+
+    <p>Elektron w danej chmurze nie ma dowolnej energii — ma jedną z kilku ściśle ustalonych wartości, inną dla każdej powłoki i każdego pierwiastka. Wyobraź to sobie jako drabinę: elektron może stać na dowolnym szczeblu, ale nigdy pomiędzy szczeblami. Kiedy elektron przeskakuje z wyższego szczebla na niższy, nadwyżka energii musi gdzieś odejść — i odchodzi dokładnie jako jeden foton, o energii równej różnicy poziomów:</p>
+
+    <div class="formula">
+      <span class="vec" data-tip="Energia wyemitowanego albo pochłoniętego fotonu, w eV">E_γ</span> = <span class="vec" data-tip="Energia szczebla, na którym elektron kończy (emisja) albo docelowo ląduje (absorpcja)">E_wyższy</span> − <span class="vec" data-tip="Energia szczebla niższego">E_niższy</span> = <span class="vec" data-tip="Stała Plancka razy prędkość światła, podzielone przez długość fali">hc/λ</span>
+      <span class="sub">E_γ — energia fotonu [eV], E_wyższy i E_niższy — energie dwóch poziomów, między którymi skacze elektron. Ten sam wzór działa w obie strony: elektron spadający w dół emituje foton tej energii, elektron dostający foton dokładnie tej energii skacze w górę.</span>
+    </div>
+
+    <p>To dlatego lampa sodowa świeci właśnie na 589 nanometrów, a nie na dowolnym innym kolorze: elektron walencyjny sodu ma dostępny przeskok o energii <strong>2,1 eV</strong>, i tylko taki — E_γ = hc/λ przeliczone wprost daje 589 nm, dokładnie tę pomarańczową linię. Neon ma inny zestaw szczebli, więc świeci gdzie indziej — głównie w czerwieni, około 640 nm. Poniższa drabina pozwala samemu sprawdzić tę zależność w obie strony.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Drabina poziomów sodu</span><span>przejście 3s → 3p daje linię D</span></div>
+      <div class="diagram-controls">
+        <label for="poziomSlider">Różnica energii ΔE (suwak eksploracyjny)</label>
+        <input id="poziomSlider" type="range" min="1.2" max="5.5" step="0.01" value="2.1">
+        <span class="value-readout" id="poziomOdczyt">2,10 eV</span>
+      </div>
+      <svg viewBox="0 0 760 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Dwa poziome szczeble energii sodu, 3s na dole i 3p wyzej o 2,1 elektronowolta, ze strzalka przejscia; obok pasek widma z ruchomym znacznikiem odpowiadajacym wybranej roznicy energii.">
+        <line x1="60" y1="210" x2="260" y2="210" stroke="#4fc3c0" stroke-width="3"/>
+        <text x="60" y="228" font-family="IBM Plex Mono" font-size="10.5" fill="#4fc3c0">3s (poziom podstawowy, 0 eV)</text>
+        <line x1="60" y1="80" x2="260" y2="80" stroke="#4fc3c0" stroke-width="3"/>
+        <text x="60" y="66" font-family="IBM Plex Mono" font-size="10.5" fill="#4fc3c0">3p (2,1 eV)</text>
+        <line id="strzalkaPrzejscie" x1="160" y1="204" x2="160" y2="86" stroke="#e8a33d" stroke-width="2.5" marker-end="url(#poziomStrzalka)"/>
+        <defs>
+          <marker id="poziomStrzalka" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#e8a33d"/></marker>
+        </defs>
+        <text x="330" y="40" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">suwak: hipotetyczne ΔE gdziekolwiek na osi —</text>
+        <text x="330" y="56" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">żeby zobaczyć, jak eV przekłada się na λ</text>
+        <rect x="330" y="90" width="380" height="30" fill="url(#widmoGradPoziom)"/>
+        <defs>
+          <linearGradient id="widmoGradPoziom" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#6b3fa0"/><stop offset="30%" stop-color="#3f4fd0"/>
+            <stop offset="55%" stop-color="#4fbf5a"/><stop offset="75%" stop-color="#e8d43d"/>
+            <stop offset="100%" stop-color="#c23b3b"/>
+          </linearGradient>
+        </defs>
+        <text x="330" y="138" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">380 nm</text>
+        <text x="710" y="138" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="end">750 nm</text>
+        <line id="znacznikWidmo" x1="500" y1="84" x2="500" y2="126" stroke="#ecebe4" stroke-width="1.5"/>
+        <text x="330" y="170" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b" id="poziomOpisPasmo">w zakresie widzialnym</text>
+        <text x="330" y="192" font-family="IBM Plex Mono" font-size="10.5" fill="#e8a33d" id="poziomOpisLambda">λ ≈ 589 nm</text>
+      </svg>
+      <div class="diagram-caption" id="poziomPodpis">Przy ΔE = 2,10 eV suwak trafia dokładnie w prawdziwe przejście sodu 3s→3p: linia D, 589 nm — ta sama, którą widzisz w lampie ulicznej. Przesuń suwak poza tę wartość, żeby zobaczyć hipotetyczne przejścia w UV albo w podczerwieni.</div>
+    </div>
+
+    <p>Ta sama drabina działa w obie strony, i to jest sedno tego, dlaczego ciemne linie Fraunhofera i jasne linie lampy sodowej to <em>dokładnie te same</em> długości fali. Elektron na niskim szczeblu, trafiony fotonem o energii dokładnie równej ΔE, pochłania go i skacze w górę — tak gaz sodu w chłodniejszej zewnętrznej warstwie Słońca wycina z przechodzącego przez nią ciągłego widma dokładnie linię 589 nm, zostawiając ciemną kreskę. Elektron, który spadnie z powrotem w dół, emituje foton tej samej energii — tak świeci lampa sodowa. Absorpcja i emisja to ten sam przeskok, czytany w dwie strony.</p>
+
+    <button class="advanced-btn" data-modal-target="adv-poziomy">Zaawansowane: skąd w ogóle dyskretne poziomy</button>
+
+    <p class="deeper-inline">Pełne wyprowadzenie poziomów energii wodoru i wzór na ich wartości — <a href="../dodatki/dodatek-k-poziomy-energii-i-fotony.html">Dodatek K</a>. Emisja liniowa gazów w innym kontekście, przy zorzy polarnej — <a href="https://bartoszskrzypiec.github.io/atmosfera_chmury_book/" target="_blank" rel="noopener">atmosfera_chmury_book</a>.</p>
+
+    <div class="sim" id="widmoLinie">
+      <div class="sim__stage"><canvas width="600" height="170"></canvas></div>
+      <div class="sim__bar">
+        <button class="sim__btn is-active" data-tryb="emisja">emisja</button>
+        <button class="sim__btn" data-tryb="absorpcja">absorpcja</button>
+      </div>
+      <div class="sim__caption" id="widmoLiniePodpis">Emisja: niemal całe światło lampy sodowej niesie linia D przy 589 nm. Dwie dużo słabsze, ale prawdziwe linie sodu leżą przy 616 i 498 nm — w realnej lampie tysiące razy przyćmione przez linię D.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Wzorzec · układ okresowy jako mapa zachowania</div>
+    <h2>Ostatnia powłoka decyduje o wszystkim</h2>
+
+    <p>Elektrony w pełnych, wewnętrznych powłokach są ciasno związane i praktycznie nie biorą udziału w niczym, co materiał robi na zewnątrz — ani w wiązaniach chemicznych, ani w większości oddziaływań ze światłem widzialnym. Cała „osobowość” pierwiastka — z czym się wiąże, jak reaguje, na jakiej długości fali świeci — jest zapisana w <strong>elektronach walencyjnych</strong>: tych z ostatniej, niepełnej powłoki. Układ okresowy, mimo że zwykle rysowany jako tabelka uporządkowana po Z, jest w praktyce <strong>mapą tego, ile elektronów walencyjnych ma dany atom</strong> — a to jest bezpośrednio odczytywalne z numeru grupy (kolumny).</p>
+
+    <p>Trzy typy zachowania, które będziesz rozpoznawać w reszcie tego tomu: <strong>gaz szlachetny</strong> (Ne: 2,8 — ostatnia powłoka pełna) nie ma powodu, żeby cokolwiek oddać albo przyjąć — stąd chemiczna obojętność i bardzo wysoka energia potrzebna, żeby cokolwiek mu wyrwać. <strong>Metal alkaliczny</strong> (Na: 2,8,1) ma dokładnie jeden elektron ponad zamkniętą powłokę, trzymany wyjątkowo luźno — łatwo go oddać (stąd gwałtowna reaktywność sodu z wodą) i łatwo go pobudzić fotonem o niewielkiej energii, stąd akurat ta linia 589 nm ląduje w widzialnym, a nie w dalekim ultrafiolecie jak u neonu. <strong>Węgiel</strong> (2,4) ma powłokę wypełnioną dokładnie w połowie — cztery elektroniki walencyjne, które daje się użyć do czterech pełnoprawnych wiązań w niemal dowolnym kierunku, co jest fundamentem chemii organicznej i tematem <a href="rozdzial-05-wiazania.html">następnego rozdziału</a>.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Okresy 1–3 układu okresowego</span><span>liczba = elektrony walencyjne</span></div>
+      <svg viewBox="0 0 760 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Uklad okresowy, okresy 1 do 3, tylko glowne grupy (metale przejsciowe pominiete); kazdy pierwiastek jako kwadrat z symbolem i liczba elektronow walencyjnych. Wegiel wyrozniony fioletowa ramka jako czterowartosciowy. Sod, przyklad z tekstu obok, ma jeden elektron walencyjny w trzeciej powloce.">
+        <g font-family="IBM Plex Mono" font-size="12" text-anchor="middle">
+          <!-- kolumny (tylko glowne grupy): 1, 2, 13, 14, 15, 16, 17, 18 -->
+          <!-- okres 1: H, He -->
+          <rect x="20" y="20" width="46" height="46" rx="4" fill="#4fc3c0" fill-opacity="0.12" stroke="#4fc3c0"/>
+          <text x="43" y="46" fill="#ecebe4">H</text><text x="43" y="59" font-size="8.5" fill="#8b909b">1</text>
+          <rect x="630" y="20" width="46" height="46" rx="4" fill="#4fc3c0" fill-opacity="0.12" stroke="#4fc3c0"/>
+          <text x="653" y="46" fill="#ecebe4">He</text><text x="653" y="59" font-size="8.5" fill="#8b909b">2 (pełna)</text>
+
+          <!-- okres 2: Li, Be, B, C, N, O, F, Ne -->
+          <rect x="20" y="90" width="46" height="46" rx="4" fill="#4fc3c0" fill-opacity="0.12" stroke="#4fc3c0"/>
+          <text x="43" y="116" fill="#ecebe4">Li</text><text x="43" y="129" font-size="8.5" fill="#8b909b">1</text>
+          <rect x="90" y="90" width="46" height="46" rx="4" fill="#4fc3c0" fill-opacity="0.12" stroke="#4fc3c0"/>
+          <text x="113" y="116" fill="#ecebe4">Be</text><text x="113" y="129" font-size="8.5" fill="#8b909b">2</text>
+          <rect x="280" y="90" width="46" height="46" rx="4" fill="#4fc3c0" fill-opacity="0.12" stroke="#4fc3c0"/>
+          <text x="303" y="116" fill="#ecebe4">B</text><text x="303" y="129" font-size="8.5" fill="#8b909b">3</text>
+          <rect x="350" y="90" width="46" height="46" rx="4" fill="#9c82d8" fill-opacity="0.18" stroke="#9c82d8" stroke-width="2"/>
+          <text x="373" y="116" fill="#ecebe4">C</text><text x="373" y="129" font-size="8.5" fill="#9c82d8">4</text>
+          <rect x="420" y="90" width="46" height="46" rx="4" fill="#4fc3c0" fill-opacity="0.12" stroke="#4fc3c0"/>
+          <text x="443" y="116" fill="#ecebe4">N</text><text x="443" y="129" font-size="8.5" fill="#8b909b">5</text>
+          <rect x="490" y="90" width="46" height="46" rx="4" fill="#4fc3c0" fill-opacity="0.12" stroke="#4fc3c0"/>
+          <text x="513" y="116" fill="#ecebe4">O</text><text x="513" y="129" font-size="8.5" fill="#8b909b">6</text>
+          <rect x="560" y="90" width="46" height="46" rx="4" fill="#4fc3c0" fill-opacity="0.12" stroke="#4fc3c0"/>
+          <text x="583" y="116" fill="#ecebe4">F</text><text x="583" y="129" font-size="8.5" fill="#8b909b">7</text>
+          <rect x="630" y="90" width="46" height="46" rx="4" fill="#4fc3c0" fill-opacity="0.12" stroke="#4fc3c0"/>
+          <text x="653" y="116" fill="#ecebe4">Ne</text><text x="653" y="129" font-size="8.5" fill="#8b909b">8 (pełna)</text>
+
+          <!-- okres 3: Na, Mg, Al, Si, P, S, Cl, Ar -->
+          <rect x="20" y="160" width="46" height="46" rx="4" fill="#4fc3c0" fill-opacity="0.12" stroke="#4fc3c0"/>
+          <text x="43" y="186" fill="#ecebe4">Na</text><text x="43" y="199" font-size="8.5" fill="#8b909b">1</text>
+          <rect x="90" y="160" width="46" height="46" rx="4" fill="#4fc3c0" fill-opacity="0.12" stroke="#4fc3c0"/>
+          <text x="113" y="186" fill="#ecebe4">Mg</text><text x="113" y="199" font-size="8.5" fill="#8b909b">2</text>
+          <rect x="280" y="160" width="46" height="46" rx="4" fill="#4fc3c0" fill-opacity="0.12" stroke="#4fc3c0"/>
+          <text x="303" y="186" fill="#ecebe4">Al</text><text x="303" y="199" font-size="8.5" fill="#8b909b">3</text>
+          <rect x="350" y="160" width="46" height="46" rx="4" fill="#4fc3c0" fill-opacity="0.12" stroke="#4fc3c0"/>
+          <text x="373" y="186" fill="#ecebe4">Si</text><text x="373" y="199" font-size="8.5" fill="#8b909b">4</text>
+          <rect x="420" y="160" width="46" height="46" rx="4" fill="#4fc3c0" fill-opacity="0.12" stroke="#4fc3c0"/>
+          <text x="443" y="186" fill="#ecebe4">P</text><text x="443" y="199" font-size="8.5" fill="#8b909b">5</text>
+          <rect x="490" y="160" width="46" height="46" rx="4" fill="#4fc3c0" fill-opacity="0.12" stroke="#4fc3c0"/>
+          <text x="513" y="186" fill="#ecebe4">S</text><text x="513" y="199" font-size="8.5" fill="#8b909b">6</text>
+          <rect x="560" y="160" width="46" height="46" rx="4" fill="#4fc3c0" fill-opacity="0.12" stroke="#4fc3c0"/>
+          <text x="583" y="186" fill="#ecebe4">Cl</text><text x="583" y="199" font-size="8.5" fill="#8b909b">7</text>
+          <rect x="630" y="160" width="46" height="46" rx="4" fill="#4fc3c0" fill-opacity="0.12" stroke="#4fc3c0"/>
+          <text x="653" y="186" fill="#ecebe4">Ar</text><text x="653" y="199" font-size="8.5" fill="#8b909b">8 (pełna)</text>
+
+          <text x="208" y="110" font-size="9" fill="#5a606c">(metale</text>
+          <text x="208" y="122" font-size="9" fill="#5a606c">przejściowe</text>
+          <text x="208" y="134" font-size="9" fill="#5a606c">pominięte)</text>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="10" fill="#8b909b">
+          <text x="8" y="47">1</text>
+          <text x="8" y="117">2</text>
+          <text x="8" y="187">3</text>
+        </g>
+      </svg>
+      <div class="diagram-caption">Okresy 1–3, tylko główne grupy (metale przejściowe, jak żelazo czy miedź, wracają w Rozdziale 20). Liczba w komórce to elektrony walencyjne — ta sama informacja, którą podaje numer kolumny. Węgiel wyróżniony fioletem: cztery elektrony walencyjne, punkt wyjścia do Rozdziału 5. Sód (Na), przykład z tekstu obok, ma jeden elektron walencyjny w nowo otwartej trzeciej powłoce — dokładnie układ 2,8,1 z listy wyżej.</div>
+    </div>
+  </div>
+
+  <div class="panel practice">
+    <div class="panel-label">Z praktyki</div>
+    <p><strong>Lampa sodowa na planie nocnym psuje kolor tak, jak żaden RGB-owy „żółty” tego nie zrobi.</strong> Prawdziwa lampa sodowa emituje praktycznie jedną długość fali, 589 nm — każdy przedmiot w kadrze odbija albo tę jedną linię, albo nic, więc cała scena wychodzi w odcieniach jednej barwy, niezależnie od tego, jaki kolor miała w świetle dziennym (to ta sama metameria, o której była mowa w <a href="rozdzial-01-czym-jest-swiatlo.html">Rozdziale 1</a>). „Żółte” światło w rendererze, złożone z R, G i B w odpowiednich proporcjach, wciąż niesie te trzy niezależne kanały — więc odbite od czerwonego i zielonego przedmiotu wciąż da różne wartości RGB, mimo że oko odbierze je jako podobny odcień. Żeby uczciwie zasymulować sodową poświatę, nie wystarczy pomalować światło na pomarańczowo: trzeba albo użyć renderera spektralnego z prawdziwie wąskopasmowym źródłem (<a href="https://bartoszskrzypiec.github.io/raytracing-book/" target="_blank" rel="noopener">raytracing-book</a>), albo w compie mocno zdesaturować obraz pod maską oświetlenia sodowego, zamiast tylko go zabarwić.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>jądro atomowe</dt>
+      <dd>Zbita kulka protonów i neutronów w środku atomu, promień rzędu 10⁻¹⁵ m. Liczba protonów w jądrze to liczba atomowa Z.</dd>
+      <dt>liczba atomowa (Z)</dt>
+      <dd>Liczba protonów w jądrze; wyznacza pierwiastek. Obojętny atom ma tyle samo elektronów co protonów.</dd>
+      <dt>orbital</dt>
+      <dd>Chmura prawdopodobieństwa, w której elektron najpewniej się znajdzie — nigdy tor. Kształty: kulisty (s), hantlowaty w trzech kierunkach (p).</dd>
+      <dt>zakaz Pauliego</dt>
+      <dd>Na jedną chmurę (orbital) mieszczą się najwyżej dwa elektrony.</dd>
+      <dt>powłoka</dt>
+      <dd>Grupa orbitali o zbliżonej energii, wypełniana od najniższej w górę: K (do 2 elektronów), L (do 8), M (w praktyce od 8 dla pierwszych pierwiastków tego okresu).</dd>
+      <dt>elektron walencyjny</dt>
+      <dd>Elektron z ostatniej, niepełnej powłoki — jedyny biorący udział w wiązaniach chemicznych i w większości oddziaływań ze światłem widzialnym.</dd>
+      <dt>poziom energetyczny / przejście</dt>
+      <dd>Elektron w atomie ma dostępne tylko wybrane, dyskretne wartości energii. Przeskok między dwoma poziomami wiąże się z emisją albo absorpcją fotonu o energii dokładnie równej ich różnicy, E_γ = E_wyższy − E_niższy.</dd>
+      <dt>eV (elektronowolt)</dt>
+      <dd>Jednostka energii wygodna w skali atomowej. Foton widzialny to 1,65–3,26 eV; linia D sodu to 2,1 eV; energia jonizacji wodoru to 13,6 eV.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Wiesz już, ile elektronów walencyjnych ma dany atom i dlaczego akurat tyle. Ale pojedynczy atom rzadko istnieje sam — sód, węgiel, tlen i wodór, które właśnie poznałeś, w naturze łączą się w cząsteczki i kryształy: sól, wodę, cukier, powietrze. W <a href="rozdzial-05-wiazania.html">następnym rozdziale</a> zobaczysz, jak te same elektrony walencyjne, które tu odróżniały gaz szlachetny od metalu alkalicznego, decydują też o tym, jak silnie — i w jaki sposób — atomy się ze sobą łączą.</p>
+  </div>
 
   <div class="deeper">
     <div class="deeper-label">Idź głębiej</div>
@@ -57,8 +307,244 @@ window.SKY3D_MESSAGES = {
       <a class="nav-next" href="rozdzial-05-wiazania.html">Następny →</a>
   </div>
 
+  <template id="adv-poziomy">
+    <h3>Skąd w ogóle dyskretne poziomy</h3>
+    <p>Elektron w atomie nie jest swobodny — jest uwięziony w chmurze wokół jądra, podobnie jak fala na strunie gitary jest uwięziona między dwoma zamocowanymi końcami. Struna nie może drgać na dowolnej częstotliwości: mieści się na niej tylko cała liczba połówek fali, więc dozwolone są tylko wybrane dźwięki — podstawowy ton i jego harmoniczne, nic pomiędzy. Elektron w atomie jest w analogicznej sytuacji, tylko „struną” jest przestrzeń wokół jądra, a tym, co musi się na niej zmieścić całkowitą liczbę razy, jest fala materii elektronu, nie fala dźwiękowa.</p>
+    <p>Stąd dyskretne poziomy: tylko niektóre „kształty” tej uwięzionej fali pasują do rozmiaru chmury bez sprzeczności samej ze sobą — pozostałe po prostu się nie mieszczą, tak jak struna gitary nie może zagrać dowolnej częstotliwości pomiędzy dwiema sąsiednimi harmonicznymi. Pełne, ilościowe wyprowadzenie tego dla najprostszego przypadku — atomu wodoru z jednym elektronem, gdzie poziomy wychodzą wprost ze wzoru E_n = −13,6 eV/n² — jest w <a href="../dodatki/dodatek-k-poziomy-energii-i-fotony.html">Dodatku K</a>. Dla cięższych atomów rachunek jest dużo bardziej złożony, ale sama zasada — fala uwięziona, więc dyskretne dozwolone kształty — zostaje ta sama.</p>
+  </template>
+
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-panel">
+      <button class="modal-close" data-modal-close aria-label="Zamknij">×</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
 </div>
 
 <script src="../../assets/interactive.js"></script>
+<script>
+/* Drabina poziomów sodu: suwak reprezentuje hipotetyczne ΔE (1,2-5,5 eV),
+   przelicza na lambda = 1240/ΔE i pokazuje znacznik na pasku widma.
+   Prawdziwe przejscie sodu 3s->3p (2,1 eV, 589 nm) jest narysowane na stale
+   jako drugi szczebel drabiny. */
+(function () {
+  var sl = document.getElementById('poziomSlider');
+  if (!sl) return;
+  var X0 = 330, X1 = 710, NM0 = 380, NM1 = 750;
+
+  function nmDoX(nm) {
+    var t = (nm - NM0) / (NM1 - NM0);
+    t = Math.max(-0.15, Math.min(1.15, t));
+    return X0 + t * (X1 - X0);
+  }
+
+  function odswiez() {
+    var dE = parseFloat(sl.value);
+    var nm = 1240 / dE;
+
+    document.getElementById('poziomOdczyt').textContent = dE.toFixed(2).replace('.', ',') + ' eV';
+    document.getElementById('znacznikWidmo').setAttribute('x1', nmDoX(nm).toFixed(1));
+    document.getElementById('znacznikWidmo').setAttribute('x2', nmDoX(nm).toFixed(1));
+
+    var pasmo;
+    if (nm < 380) pasmo = 'w ultrafiolecie, poza widzialnym';
+    else if (nm > 750) pasmo = 'w podczerwieni, poza widzialnym';
+    else pasmo = 'w zakresie widzialnym';
+    document.getElementById('poziomOpisPasmo').textContent = pasmo;
+    document.getElementById('poziomOpisLambda').textContent = 'λ ≈ ' + nm.toFixed(0) + ' nm';
+
+    var uwaga = Math.abs(dE - 2.1) < 0.03
+      ? 'Suwak trafia dokładnie w prawdziwe przejście sodu 3s→3p: linia D, 589 nm — ta sama, którą widzisz w lampie ulicznej.'
+      : 'Hipotetyczne ΔE = ' + dE.toFixed(2).replace('.', ',') + ' eV odpowiada λ ≈ ' + nm.toFixed(0) + ' nm, ' + pasmo + '. Ustaw suwak na 2,10 eV, żeby wrócić do prawdziwej linii sodu.';
+    document.getElementById('poziomPodpis').textContent = uwaga;
+  }
+  sl.addEventListener('input', odswiez);
+  odswiez();
+})();
+</script>
+<script>
+/* Widmo emisyjne (linie na czarnym tle) kontra absorpcyjne (te same linie
+   jako ciemne kreski na ciaglym widmie) - te same dlugosci fali, dwa
+   sposoby ich zobaczenia.
+   Linie sodu, zweryfikowane w bazie NIST Atomic Spectra Database (Na I):
+   589,0/589,6 nm to dublet D - glowna, jaskrawa linia (natezenie rzedu
+   40000-80000 w skali NIST). Linie kolo 616 nm i 498 nm sa realne, ale
+   tysiace razy slabsze (natezenie rzedu 1-2) - w prawdziwej lampie sodowej
+   praktycznie niewidoczne golym okiem. Dlatego rysujemy D jako grubą,
+   jasną kreske, a dwie pozostale jako wyraznie cieńsze i przygaszone -
+   uczciwie, zamiast trzech rownowaznych linii. */
+(function () {
+  var host = document.getElementById('widmoLinie');
+  if (!host) return;
+  var cv = host.querySelector('canvas');
+  if (!cv || !cv.getContext) return;
+  var ctx = cv.getContext('2d');
+  var W = cv.width, H = cv.height;
+  var XL = 40, XR = W - 40, YT = 20, YB = 110;
+
+  var LINIE = [
+    { nm: 589, kolor: '#ffc266', szerokosc: 6, alfa: 1 },
+    { nm: 616, kolor: '#ff9d5c', szerokosc: 2, alfa: 0.45 },
+    { nm: 498, kolor: '#5adfd0', szerokosc: 2, alfa: 0.45 }
+  ];
+
+  function nmDoX(nm) { return XL + (nm - 380) / (750 - 380) * (XR - XL); }
+
+  function rysujCiagle() {
+    var g = ctx.createLinearGradient(XL, 0, XR, 0);
+    g.addColorStop(0, '#6b3fa0'); g.addColorStop(0.30, '#3f4fd0');
+    g.addColorStop(0.55, '#4fbf5a'); g.addColorStop(0.75, '#e8d43d');
+    g.addColorStop(1, '#c23b3b');
+    ctx.fillStyle = g;
+    ctx.fillRect(XL, YT, XR - XL, YB - YT);
+  }
+
+  function rysuj(tryb) {
+    ctx.fillStyle = '#0d0f14';
+    ctx.fillRect(0, 0, W, H);
+
+    if (tryb === 'emisja') {
+      ctx.fillStyle = '#15171d';
+      ctx.fillRect(XL, YT, XR - XL, YB - YT);
+      LINIE.forEach(function (l) {
+        var x = nmDoX(l.nm);
+        ctx.globalAlpha = l.alfa;
+        ctx.fillStyle = l.kolor;
+        ctx.fillRect(x - l.szerokosc / 2, YT, l.szerokosc, YB - YT);
+        ctx.globalAlpha = 1;
+      });
+    } else {
+      rysujCiagle();
+      LINIE.forEach(function (l) {
+        var x = nmDoX(l.nm);
+        ctx.globalAlpha = l.alfa;
+        ctx.fillStyle = '#0d0f14';
+        ctx.fillRect(x - l.szerokosc / 2, YT, l.szerokosc, YB - YT);
+        ctx.globalAlpha = 1;
+      });
+    }
+
+    ctx.fillStyle = '#8b909b';
+    ctx.font = '11px "IBM Plex Mono", monospace';
+    ctx.fillText('380 nm', XL, YB + 20);
+    ctx.textAlign = 'right';
+    ctx.fillText('750 nm', XR, YB + 20);
+    ctx.textAlign = 'left';
+  }
+
+  var OPISY = {
+    emisja: 'Emisja: niemal całe światło lampy sodowej niesie linia D przy 589 nm (gruba kreska). Dwie cieńsze, przygaszone kreski (616 i 498 nm) to prawdziwe linie sodu z bazy NIST — ale tysiące razy słabsze, w realnej lampie niewidoczne gołym okiem.',
+    absorpcja: 'Absorpcja: to samo ciągłe widmo, z ciemną kreską dokładnie tam, gdzie sód emituje najmocniej (589 nm) — i dwiema ledwo zaznaczonymi, bo linie 616 i 498 nm są realne, ale znikomo słabe.'
+  };
+  var podpis = document.getElementById('widmoLiniePodpis');
+  host.querySelectorAll('.sim__btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var tryb = btn.getAttribute('data-tryb');
+      host.querySelectorAll('.sim__btn').forEach(function (b) { b.classList.toggle('is-active', b === btn); });
+      rysuj(tryb);
+      podpis.textContent = OPISY[tryb];
+    });
+  });
+  rysuj('emisja');
+  podpis.textContent = OPISY.emisja;
+})();
+</script>
+<script type="module">
+import { createDiagram3D } from '../../assets/sky3d.js';
+
+const host = document.getElementById('orbitale3D');
+if (host) {
+  // Prosty generator pseudolosowy z ustalonym ziarnem — zeby chmura punktow
+  // byla taka sama przy kazdym wczytaniu strony, nie migotala miedzy odswiezeniami.
+  let seed = 1234567;
+  function rand() {
+    seed = (seed * 1664525 + 1013904223) >>> 0;
+    return seed / 4294967296;
+  }
+  function losowyKierunek() {
+    const u = rand() * 2 - 1;
+    const t = rand() * 2 * Math.PI;
+    const r = Math.sqrt(Math.max(0, 1 - u * u));
+    return [r * Math.cos(t), r * Math.sin(t), u];
+  }
+
+  const parts = [];
+  parts.push({ type: 'sphere', color: '#8a8f98', r: 0.09, seg: 12, layer: 'jadro' });
+  parts.push({ type: 'label', text: 'jądro (nie w skali)', at: [0, -0.3, 0], color: 'muted', layer: 'jadro' });
+
+  /* chmura 1s: kulista, promien 0,25-0,8 */
+  const pts1s = [];
+  for (let i = 0; i < 60; i++) {
+    const [dx, dy, dz] = losowyKierunek();
+    const r = 0.25 + 0.55 * rand();
+    pts1s.push([dx * r, dy * r, dz * r]);
+  }
+  pts1s.forEach((p) => parts.push({ type: 'sphere', color: '#4fc3c0', r: 0.035, seg: 6, at: p, layer: '1s' }));
+  parts.push({ type: 'label', text: '1s', at: [0, 0.95, 0], color: '#4fc3c0', layer: '1s' });
+
+  /* chmura 2s: kulista, wieksza, promien 0,9-1,6 */
+  const pts2s = [];
+  for (let i = 0; i < 55; i++) {
+    const [dx, dy, dz] = losowyKierunek();
+    const r = 0.9 + 0.7 * rand();
+    pts2s.push([dx * r, dy * r, dz * r]);
+  }
+  pts2s.forEach((p) => parts.push({ type: 'sphere', color: '#4fc3c0', r: 0.03, seg: 6, at: p, layer: '2s' }));
+  parts.push({ type: 'label', text: '2s', at: [0, 1.7, 0], color: '#4fc3c0', layer: '2s' });
+
+  /* chmura 2p: trzy hantle wzdluz x, y, z, kazda po dwa platy */
+  const osie2p = [[1, 0, 0], [0, 1, 0], [0, 0, 1]];
+  osie2p.forEach((os) => {
+    for (let i = 0; i < 24; i++) {
+      const znak = rand() < 0.5 ? -1 : 1;
+      const d = 0.4 + 0.9 * rand();
+      const rozrzut = (1 - d / 1.4) * 0.55 * rand();
+      const kat = rand() * 2 * Math.PI;
+      // dwie osie prostopadle do 'os'
+      const perp1 = os[0] !== 0 ? [0, 1, 0] : [1, 0, 0];
+      const perp2 = [
+        os[1] * perp1[2] - os[2] * perp1[1],
+        os[2] * perp1[0] - os[0] * perp1[2],
+        os[0] * perp1[1] - os[1] * perp1[0],
+      ];
+      const px = znak * d * os[0] + rozrzut * (Math.cos(kat) * perp1[0] + Math.sin(kat) * perp2[0]);
+      const py = znak * d * os[1] + rozrzut * (Math.cos(kat) * perp1[1] + Math.sin(kat) * perp2[1]);
+      const pz = znak * d * os[2] + rozrzut * (Math.cos(kat) * perp1[2] + Math.sin(kat) * perp2[2]);
+      parts.push({ type: 'sphere', color: '#4fc3c0', r: 0.03, seg: 6, at: [px, py, pz], layer: '2p' });
+    }
+  });
+  parts.push({ type: 'label', text: '2p × 3 (hantle wzdłuż x/y/z)', at: [1.5, 0.3, 0], color: '#4fc3c0', layer: '2p' });
+
+  /* chmura walencyjna 3s (Na): duza, rozmyta, promien 1,8-2,7 */
+  const pts3s = [];
+  for (let i = 0; i < 70; i++) {
+    const [dx, dy, dz] = losowyKierunek();
+    const r = 1.8 + 0.9 * rand();
+    pts3s.push([dx * r, dy * r, dz * r]);
+  }
+  pts3s.forEach((p) => parts.push({ type: 'sphere', color: '#4fc3c0', r: 0.03, seg: 6, opacity: 0.55, at: p, layer: '3s' }));
+  parts.push({ type: 'label', text: '3s — walencyjny, luźno trzymany (Na)', at: [0, 2.8, 0], color: '#4fc3c0', layer: '3s' });
+
+  const widget = createDiagram3D(host, {
+    parts,
+    camera: { dist: 8.5, phi: 1.05, theta: 0.5 },
+    hiddenLayers: ['2s', '2p', '3s'],
+  });
+
+  if (widget.ok) {
+    const przyciski = host.querySelectorAll('[data-pierwiastek]');
+    const WARSTWY = { H: ['1s'], C: ['1s', '2s', '2p'], Na: ['1s', '2s', '2p', '3s'] };
+    const wszystkie = ['1s', '2s', '2p', '3s'];
+    przyciski.forEach((b) => {
+      b.addEventListener('click', () => {
+        const wlaczone = WARSTWY[b.dataset.pierwiastek] || ['1s'];
+        wszystkie.forEach((n) => widget.setLayer(n, wlaczone.indexOf(n) !== -1));
+        przyciski.forEach((x) => x.classList.toggle('is-active', x === b));
+      });
+    });
+  }
+}
+</script>
 </body>
 </html>

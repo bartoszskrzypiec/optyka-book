@@ -44,7 +44,217 @@ window.SKY3D_MESSAGES = {
   <h1>Wiązania: jak z atomów powstają cząsteczki</h1>
   <p class="subtitle">Atomy łączą się, bo razem mają niższą energię niż osobno. Sposób, w jaki się łączą — dzieląc elektrony, oddając je albo wrzucając do wspólnej puli — przesądza, czy wyjdzie gaz, sól, metal czy woda.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li>Atomy łączą się w cząsteczki, bo razem mają <span class="term-cyan">niższą energię</span> niż osobno — dokładnie tak samo, jak piłka sama stacza się w dołek. Typ dołka decyduje o typie wiązania: <span class="term-cyan">kowalencyjne</span> (wspólna para elektronów), <span class="term-cyan">jonowe</span> (przekazany elektron) albo <span class="term-cyan">metaliczne</span> (wspólna pula elektronów na cały kryształ).</li>
+      <li>Obok tych silnych wiązań istnieją dużo słabsze: <span class="term-cyan">wodorowe</span> (rzędu 0,2 eV) i <span class="term-cyan">siły van der Waalsa</span> (jeszcze słabsze). To one, a nie wiązania kowalencyjne, trzymają razem cząsteczki wody w cieczy i łańcuchy celulozy w papierze.</li>
+      <li>Kształt cząsteczki decyduje o jej <span class="term-cyan">biegunowości</span>: zgięta woda (104,5°) ma trwały dipol, liniowe CO₂ (180°) — nie, bo dwa identyczne przeciągania znoszą się dokładnie. Ta jedna różnica geometryczna tłumaczy, dlaczego woda i olej się nie mieszają.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Punkt wyjścia · dlaczego atomy się łączą</div>
+    <h2>Sól, cukier, woda, powietrze — te same kilka pierwiastków</h2>
+
+    <p>Sól kuchenna, cukier, woda i powietrze, którym oddychasz, zbudowane są z zaledwie kilkunastu pierwiastków — a mimo to nie mogłyby się bardziej różnić: kryształ, który chrzęści pod zębami, biały proszek, który się rozpuszcza, przezroczysta ciecz i niewidzialny gaz. Różnicę robi nie to, z czego są zbudowane, tylko <strong>jak atomy się ze sobą łączą</strong>. Rozdział 4 zostawił cię z atomami, które mają swoje elektrony walencyjne na zewnętrznej powłoce — teraz zobaczysz, co się dzieje, kiedy dwa takie atomy się spotykają.</p>
+
+    <p>Odpowiedź na pytanie „dlaczego w ogóle się łączą” jest zaskakująco prosta: <span class="term-cyan">bo razem mają niższą energię niż osobno</span>. Układ fizyczny, tak samo jak piłka na zboczu, sam zjeżdża w stronę niższej energii, jeśli tylko ma taką drogę. Dwa oddzielne atomy wodoru mają więcej energii niż cząsteczka H₂ — więc gdy się spotkają, złączą się, a nadmiar energii wypromieniują albo oddadzą otoczeniu.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Energia dwóch atomów</span><span>w funkcji odległości</span></div>
+      <svg viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Wykres energii dwóch zbliżających się atomów: bardzo blisko energia gwałtownie rośnie (odpychanie chmur elektronowych), w jednym punkcie jest minimum — to długość wiązania, a przy dużej odległości energia dąży do zera.">
+        <line x1="60" y1="220" x2="680" y2="220" stroke="#3a424d" stroke-width="1.5"/>
+        <text x="680" y="238" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b" text-anchor="end">odległość między jądrami r</text>
+        <line x1="60" y1="220" x2="60" y2="30" stroke="#3a424d" stroke-width="1.5"/>
+        <text x="66" y="40" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">energia U(r)</text>
+        <path d="M 100 40 C 160 110, 210 210, 260 235 C 300 250, 340 250, 380 235 C 430 215, 480 165, 560 130 C 610 108, 650 95, 675 88"
+              fill="none" stroke="#4fc3c0" stroke-width="3"/>
+        <line x1="60" y1="150" x2="680" y2="150" stroke="#5a606c" stroke-width="1" stroke-dasharray="3,4"/>
+        <text x="66" y="146" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">U = 0 (atomy nieskończenie daleko)</text>
+        <circle cx="316" cy="243" r="4" fill="#e8a33d"/>
+        <line x1="316" y1="150" x2="316" y2="243" stroke="#e8a33d" stroke-width="1" stroke-dasharray="2,3"/>
+        <text x="316" y="120" font-family="IBM Plex Mono" font-size="11" fill="#e8a33d" text-anchor="middle">minimum: długość wiązania</text>
+        <text x="316" y="105" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">głębokość dołka = energia wiązania</text>
+        <text x="140" y="70" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">bardzo blisko: chmury elektronowe</text>
+        <text x="140" y="84" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">się odpychają — energia rośnie gwałtownie</text>
+        <text x="540" y="70" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">daleko: żadnego</text>
+        <text x="540" y="84" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">oddziaływania</text>
+      </svg>
+      <div class="diagram-caption">Kształt tego dołka — jak głęboki i jak szeroki — jest inny dla każdej pary pierwiastków i każdego typu wiązania. Głębokość dołka to właśnie „energia wiązania”, o której będzie mowa niżej.</div>
+    </div>
+
+    <p>Zbyt blisko siebie atomy się jednak odpychają — ich chmury elektronowe (Rozdział 4) zaczynają się nakładać, a to kosztuje energię. Gdzieś pomiędzy tymi dwoma efektami leży minimum: konkretna odległość, przy której układ jest najbardziej stabilny. To ta odległość jest tym, co w chemii nazywa się <strong>długością wiązania</strong>, a głębokość dołka — <strong>energią wiązania</strong>: tyle trzeba dostarczyć, żeby wiązanie zerwać.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Silne wiązania · trzy sposoby na obniżenie energii</div>
+    <h2>Kowalencyjne, jonowe, metaliczne</h2>
+
+    <p>Sposobów na osiągnięcie tego dołka energii są w praktyce trzy, a to, który wygrywa, zależy od tego, jak bardzo dwa atomy „chcą” tych samych elektronów.</p>
+
+    <p><strong>Wiązanie kowalencyjne</strong>: dwa atomy o podobnym apetycie na elektrony <em>dzielą</em> parę elektronów, która krąży wokół obu jąder naraz — coś jak dwoje ludzi trzymających wspólnie jeden przedmiot. Tak łączy się H₂ (jedna wspólna para), tak samo C–H i O–H w cząsteczkach organicznych. Niektóre atomy dzielą więcej niż jedną parę: w O₂ dwa atomy tlenu dzielą dwie pary (wiązanie podwójne), a w N₂ — aż trzy (wiązanie potrójne), co czyni azot cząsteczkowy wyjątkowo obojętnym chemicznie i tłumaczy, dlaczego stanowi 78% powietrza, nie reagując prawie z niczym.</p>
+
+    <p><strong>Wiązanie jonowe</strong>: gdy apetyty są bardzo nierówne, słabiej trzymany elektron po prostu <em>przechodzi</em> z jednego atomu na drugi, zamiast być dzielony. Sód oddaje swój jeden luźny elektron walencyjny (Rozdział 4: układ 2–8–1) chlorowi, który go przyjmuje — oba atomy stają się teraz naładowanymi jonami, Na⁺ i Cl⁻, i trzymają się razem czystym przyciąganiem elektrostatycznym przeciwnych ładunków. Kryształ soli kuchennej to regularna sieć takich naprzemiennych jonów, nie pojedyncze „cząsteczki NaCl” pływające osobno.</p>
+
+    <p><strong>Wiązanie metaliczne</strong>: w metalu żaden atom nie zatrzymuje swoich elektronów walencyjnych ani ich nie oddaje sąsiadowi — wszystkie atomy razem wrzucają je do jednej wspólnej puli, która swobodnie przepływa przez cały kryształ, jak morze otaczające zanurzone w nim jony dodatnie. Ta swobodna „chmura” elektronów odpowiada między innymi za to, że metale przewodzą prąd i tak charakterystycznie odbijają światło — mechanizm dokładnie na tym budowany jest w Rozdziale 20.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Trzy silne wiązania + jedno słabe</span><span>schematycznie</span></div>
+      <svg viewBox="0 0 720 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cztery schematy: kowalencyjne jako para elektronów między dwoma jądrami, jonowe jako przekazany elektron między dwoma jonami, metaliczne jako siatka jonów dodatnich w morzu elektronów, wodorowe jako przerywany mostek między dwiema cząsteczkami.">
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b" text-anchor="middle">
+          <circle cx="110" cy="90" r="20" fill="none" stroke="#4fc3c0" stroke-width="2.5"/>
+          <circle cx="170" cy="90" r="20" fill="none" stroke="#4fc3c0" stroke-width="2.5"/>
+          <circle cx="134" cy="86" r="3.4" fill="#e8a33d"/>
+          <circle cx="146" cy="94" r="3.4" fill="#e8a33d"/>
+          <text x="140" y="140">kowalencyjne</text>
+          <text x="140" y="154">wspólna para</text>
+
+          <circle cx="300" cy="82" r="18" fill="none" stroke="#e8a33d" stroke-width="2.5"/>
+          <text x="300" y="86" fill="#e8a33d">Na⁺</text>
+          <circle cx="370" cy="82" r="22" fill="none" stroke="#4fc3c0" stroke-width="2.5"/>
+          <text x="370" y="86" fill="#4fc3c0">Cl⁻</text>
+          <path d="M 318 78 L 348 78" stroke="#e8a33d" stroke-width="1.5" marker-end="url(#dipStrzalka)"/>
+          <text x="335" y="140">jonowe</text>
+          <text x="335" y="154">przekazany elektron</text>
+
+          <g>
+            <circle cx="500" cy="70" r="7" fill="#4fc3c0"/><circle cx="530" cy="70" r="7" fill="#4fc3c0"/><circle cx="560" cy="70" r="7" fill="#4fc3c0"/>
+            <circle cx="500" cy="95" r="7" fill="#4fc3c0"/><circle cx="530" cy="95" r="7" fill="#4fc3c0"/><circle cx="560" cy="95" r="7" fill="#4fc3c0"/>
+            <circle cx="500" cy="120" r="7" fill="#4fc3c0"/><circle cx="530" cy="120" r="7" fill="#4fc3c0"/><circle cx="560" cy="120" r="7" fill="#4fc3c0"/>
+            <rect x="480" y="55" width="100" height="80" fill="#e8a33d" opacity="0.12"/>
+          </g>
+          <text x="530" y="154">metaliczne</text>
+          <text x="530" y="168">wspólna pula (amber)</text>
+
+          <g>
+            <text x="660" y="70" fill="#4fc3c0">O</text><text x="640" y="86" fill="#8b909b">H</text><text x="678" y="86" fill="#8b909b">H</text>
+            <line x1="655" y1="72" x2="645" y2="83" stroke="#5a606c" stroke-width="2"/>
+            <line x1="663" y1="72" x2="673" y2="83" stroke="#5a606c" stroke-width="2"/>
+            <line x1="645" y1="95" x2="645" y2="115" stroke="#8b909b" stroke-width="1.5" stroke-dasharray="3,3"/>
+            <text x="660" y="130" fill="#4fc3c0">O</text><text x="640" y="146" fill="#8b909b">H</text><text x="678" y="146" fill="#8b909b">H</text>
+            <line x1="655" y1="132" x2="645" y2="143" stroke="#5a606c" stroke-width="2"/>
+            <line x1="663" y1="132" x2="673" y2="143" stroke="#5a606c" stroke-width="2"/>
+          </g>
+          <text x="655" y="210">wodorowe (słabe)</text>
+          <text x="655" y="224">przerywany mostek</text>
+        </g>
+        <defs>
+          <marker id="dipStrzalka" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#e8a33d"/></marker>
+        </defs>
+      </svg>
+      <div class="diagram-caption">Kowalencyjne i jonowe to nie dwa rozłączne światy, tylko dwa krańce jednej skali „jak nierówno podzielony jest elektron” — większość rzeczywistych wiązań leży gdzieś pomiędzy.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Słabe wiązania · skala energii</div>
+    <h2>Wodorowe i van der Waalsa: dużo słabsze, ale wszędzie</h2>
+
+    <p>Wiązania kowalencyjne i jonowe trzymają razem atomy <em>wewnątrz</em> jednej cząsteczki. Ale coś musi trzymać razem <em>całe cząsteczki</em> wody w kropli, zamiast pozwolić im się rozlecieć jako gaz w temperaturze pokojowej — a to już zupełnie inna, dużo słabsza rodzina sił.</p>
+
+    <p><strong>Wiązanie wodorowe</strong> powstaje tam, gdzie atom wodoru przyczepiony do silnie „zachłannego” atomu (tlenu, azotu) ma niedosyt elektronu na tyle duży, że przyciąga samotną parę elektronów z sąsiedniej cząsteczki. W wodzie każda cząsteczka H₂O tworzy takie mostki z kilkoma sąsiadkami naraz — to one, a nie wiązania O–H wewnątrz cząsteczki, pękają i powstają na nowo miliardy razy na sekundę, kiedy woda płynie, paruje albo zamarza. Ten sam mechanizm trzyma włókna celulozy w papierze i łańcuchy keratyny we włosie.</p>
+
+    <p><strong>Siły van der Waalsa</strong> są jeszcze słabsze i działają między dowolnymi, nawet całkowicie obojętnymi cząsteczkami — chwilowe, przypadkowe drgnięcie chmury elektronowej w jednej cząsteczce indukuje odpowiadające mu drgnięcie w sąsiedniej, i te dwa chwilowe dipole się przyciągają. To jedyne, co skrapla gazy szlachetne w ciecz, i jedyne, co trzyma razem długie łańcuchy węglowe w niektórych plastikach — do tego wątku wrócisz w Rozdziale 7.</p>
+
+    <p>Skala tych energii jest kluczowa dla reszty tej książki, bo pokazuje, że światło widzialne prawie nigdy nie zrywa wiązań: typowe wiązanie kowalencyjne O–H ma energię rzędu <strong>4,8 eV</strong>, wiązanie wodorowe — jedynie około <strong>0,2 eV</strong>, a foton widzialny niesie <strong>1,65–3,26 eV</strong>. Foton zielonego światła z łatwością rozerwałby pojedyncze wiązanie wodorowe, ale nie ma szans na wiązanie kowalencyjne — stąd woda pod wpływem światła widzialnego nie rozkłada się na wodór i tlen, choć jej sieć mostków wodorowych bez przerwy się przebudowuje.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Drabina energii (skala log)</span><span>wiązania kontra fotony</span></div>
+      <div class="diagram-controls">
+        <label for="drabinaFoton">Długość fali fotonu</label>
+        <input id="drabinaFoton" type="range" min="200" max="800" step="5" value="550">
+        <span class="value-readout" id="drabinaFotonOdczyt">550 nm</span>
+      </div>
+      <svg viewBox="0 0 720 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Pozioma oś energii w skali logarytmicznej od 0,05 do 15 eV z zaznaczonymi progami: van der Waals, wiązanie wodorowe, pasmo światła widzialnego i wiązanie kowalencyjne O-H; suwak przesuwa znacznik energii wybranego fotonu.">
+        <line x1="60" y1="150" x2="680" y2="150" stroke="#3a424d" stroke-width="1.5"/>
+        <g font-family="IBM Plex Mono" font-size="10" fill="#8b909b">
+          <text x="60" y="170">0,05 eV</text>
+          <text x="680" y="170" text-anchor="end">15 eV</text>
+        </g>
+        <rect x="230" y="140" width="90" height="20" fill="#9c82d8" opacity="0.35"/>
+        <text x="275" y="135" font-family="IBM Plex Mono" font-size="10" fill="#9c82d8" text-anchor="middle">widzialne 1,65–3,26 eV</text>
+        <circle id="vdwPunkt" cx="120" cy="150" r="5" fill="#6e93be"/>
+        <text x="120" y="195" font-family="IBM Plex Mono" font-size="10" fill="#6e93be" text-anchor="middle">van der Waalsa</text>
+        <text x="120" y="208" font-family="IBM Plex Mono" font-size="10" fill="#6e93be" text-anchor="middle">≈ 0,05–0,1 eV</text>
+        <circle id="hbPunkt" cx="205" cy="150" r="5" fill="#4fc3c0"/>
+        <text x="205" y="195" font-family="IBM Plex Mono" font-size="10" fill="#4fc3c0" text-anchor="middle">wodorowe</text>
+        <text x="205" y="208" font-family="IBM Plex Mono" font-size="10" fill="#4fc3c0" text-anchor="middle">≈ 0,2 eV</text>
+        <circle id="ohPunkt" cx="470" cy="150" r="5" fill="#4fc3c0"/>
+        <text x="470" y="195" font-family="IBM Plex Mono" font-size="10" fill="#4fc3c0" text-anchor="middle">kowalencyjne O–H</text>
+        <text x="470" y="208" font-family="IBM Plex Mono" font-size="10" fill="#4fc3c0" text-anchor="middle">≈ 4,8 eV</text>
+        <line id="fotonKreska" x1="275" y1="60" x2="275" y2="150" stroke="#e8a33d" stroke-width="2.5"/>
+        <text id="fotonEtykieta" x="275" y="50" font-family="IBM Plex Mono" font-size="11" fill="#e8a33d" text-anchor="middle">2,25 eV</text>
+      </svg>
+      <div class="diagram-caption" id="drabinaPodpis">550 nm → 2,25 eV: wystarczy, by zerwać wiązanie wodorowe albo van der Waalsa, za mało na wiązanie kowalencyjne O–H.</div>
+    </div>
+
+    <button class="advanced-btn" data-modal-target="adv-zrywanie">Zaawansowane: czy światło zrywa wiązania</button>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Geometria · kształt decyduje o biegunowości</div>
+    <h2>Kształt cząsteczki i trwały dipol</h2>
+
+    <p>Wiązanie mówi, <em>że</em> dwa atomy są połączone, ale nie mówi, <em>pod jakim kątem</em>. A ten kąt ma ogromne znaczenie, bo od niego zależy, czy cząsteczka jest <strong>biegunowa</strong> (ma trwały dipol elektryczny) czy nie — a to z kolei rozstrzyga, czy dana substancja miesza się z wodą, czy z olejem.</p>
+
+    <p>W cząsteczce wody tlen przyciąga wspólne elektrony mocniej niż wodór, więc okolice tlenu są nieco bardziej ujemne, a okolice obu wodorów — nieco bardziej dodatnie. Gdyby H₂O była liniowa (jak CO₂), te dwa przeciągnięcia w przeciwne strony by się dokładnie zniosły. Ale woda jest <strong>zgięta pod kątem 104,5°</strong> — dwa nadmiary ładunku dodatniego przy wodorach nie leżą naprzeciw jedynego nadmiaru ujemnego przy tlenie, więc nic się nie znosi. Wypadkowy <span class="term-cyan">dipol trwały</span> wody (około 1,85 D, czyli w jednostkach SI ≈ 6,2·10⁻³⁰ C·m) jest jednym z najważniejszych faktów w tej książce — to on sprawia, że woda rozpuszcza sól i cukier, a nie miesza się z olejem.</p>
+
+    <p>Dwutlenek węgla ma dokładnie odwrotną geometrię: <strong>liniowy, 180°</strong>, O=C=O. Węgiel przeciąga elektrony w stronę obu tlenów jednakowo silnie i w dokładnie przeciwnych kierunkach — te dwa wektory znoszą się co do joty, więc mimo silnie spolaryzowanych pojedynczych wiązań C=O cała cząsteczka wypadkowego dipola nie ma. Metan CH₄ ma cztery identyczne wiązania C–H rozstawione w przestrzeni pod kątem <strong>109,5°</strong> (tetraedr) — również symetrycznie, więc też bez wypadkowego dipola. Amoniak NH₃ jest bliżej wody: trzy wiązania N–H i jedna wolna para elektronów na azocie dają kąt <strong>≈107°</strong> i wyraźny trwały dipol, choć słabszy niż w wodzie.</p>
+
+    <div class="viz3d" id="czasteczki3D">
+      <div class="viz3d__head">
+        <p class="viz3d__title">Kształty czterech cząsteczek i ich dipol</p>
+        <p class="viz3d__sub">Cyan = atom centralny, szary = wodór, strzałka cyan = wektor momentu dipolowego (skierowany ku biegunowi ujemnemu). Obróć scenę, żeby zobaczyć, że kąt i symetria — nie same wiązania — decydują, czy dipol się znosi.</p>
+      </div>
+      <div class="viz3d__stage">
+        <canvas></canvas>
+        <div class="viz3d__badge">przeciągnij, żeby obrócić</div>
+        <div class="viz3d__fallback">
+          <strong>Ten widget potrzebuje WebGL</strong>
+          <span>Akapity obok opisują te same geometrie w liczbach — widget jest ilustracją, nie nośnikiem argumentu.</span>
+        </div>
+      </div>
+      <div class="viz3d__presets">
+        <button data-czasteczka="h2o" class="is-active">H₂O</button>
+        <button data-czasteczka="co2">CO₂</button>
+        <button data-czasteczka="ch4">CH₄</button>
+        <button data-czasteczka="nh3">NH₃</button>
+      </div>
+      <p class="viz3d__note">H₂O (104,5°) i NH₃ (≈107°): dipol wyraźny. CO₂ (180°) i CH₄ (109,5°, tetraedr): symetria znosi go do zera, mimo że pojedyncze wiązania są spolaryzowane.</p>
+    </div>
+
+    <p class="deeper-inline">Więcej konkretnych cząsteczek — celuloza, keratyna, hem, chlorofil, β-karoten i inne — w <a href="../dodatki/dodatek-l-atlas-czasteczek.html">Dodatku L</a>.</p>
+  </div>
+
+  <div class="panel practice">
+    <div class="panel-label">Z praktyki</div>
+    <p><strong>Olej i woda w symulacji cieczy to nie jedna substancja z dwoma kolorami — to dwie fazy o różnym współczynniku załamania.</strong> Woda ma n ≈ 1,33, typowy olej roślinny czy mineralny ≈ 1,47; różnica bierze się właśnie z biegunowości: woda jest polarna i miesza się tylko z innymi substancjami polarnymi, olej — niepolarny — miesza się z niepolarnymi. Nadaj obu fazom te dwie różne wartości IOR, zamiast jednej uśrednionej, a granica między nimi zacznie się załamywać i odbijać tak, jak w rzeczywistości.</p>
+    <p><strong>Emulsja (mleko, sos winegret przed wstrząśnięciem po chwili) wygląda mlecznobiało, choć obie fazy z osobna są przezroczyste.</strong> Powód nie leży w kolorze żadnej z nich, tylko w tysiącach mikroskopijnych granic ośrodków o różnym n rozproszonych w objętości — każda z nich rozprasza trochę światła we wszystkich kierunkach. To już mechanizm rozpraszania Mie z Rozdziału 14, nie coś, co da się wytłumaczyć samym wiązaniem czy dipolem.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>wiązanie kowalencyjne</dt>
+      <dd>Dwa atomy dzielą wspólną parę (lub więcej par) elektronów. Przykłady: H₂, C–H, O–H, O=O, N≡N.</dd>
+      <dt>wiązanie jonowe</dt>
+      <dd>Jeden atom oddaje elektron drugiemu; powstałe jony trzymają się przyciąganiem elektrostatycznym. Przykład: sieć Na⁺ i Cl⁻ w soli kuchennej.</dd>
+      <dt>wiązanie metaliczne</dt>
+      <dd>Wszystkie atomy wrzucają elektrony walencyjne do wspólnej, swobodnie przepływającej puli otaczającej sieć jonów dodatnich. Podstawa przewodnictwa i odbicia światła przez metale (Rozdział 20).</dd>
+      <dt>wiązanie wodorowe</dt>
+      <dd>Słabe przyciąganie (≈0,2 eV) między atomem wodoru przy silnie zachłannym atomie a samotną parą elektronów sąsiedniej cząsteczki. Trzyma razem wodę ciekłą, celulozę, keratynę.</dd>
+      <dt>siły van der Waalsa</dt>
+      <dd>Jeszcze słabsze przyciąganie między chwilowymi, indukowanymi dipolami dowolnych cząsteczek — jedyne, co skrapla gazy szlachetne.</dd>
+      <dt>dipol trwały, biegunowość cząsteczki</dt>
+      <dd>Cząsteczka jest biegunowa, gdy jej geometria nie znosi wypadkowo nierównego podziału elektronów między atomami — jak w zgiętej wodzie (104,5°). Symetryczna geometria, jak liniowe CO₂ czy tetraedryczny CH₄, znosi dipol do zera.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Wszystko dotąd dotyczyło pojedynczej cząsteczki albo garstki atomów. Ale szkło w obiektywie, metal w oprawce i barwnik w emulsji to nie pojedyncze cząsteczki — to 10²³ atomów naraz, stłoczonych razem. W <a href="rozdzial-06-od-czasteczki-do-ciala-stalego.html">następnym rozdziale</a> zobaczysz, co się dzieje z poziomami energii, kiedy jest ich aż tyle: rozmywają się w pasma, a przerwa między pasmami zadecyduje, czy materiał jest przezroczysty, kolorowy czy nieprzezroczysty jak metal.</p>
+  </div>
 
   <div class="deeper">
     <div class="deeper-label">Idź głębiej</div>
@@ -57,8 +267,171 @@ window.SKY3D_MESSAGES = {
       <a class="nav-next" href="rozdzial-06-od-czasteczki-do-ciala-stalego.html">Następny →</a>
   </div>
 
+  <template id="adv-zrywanie">
+    <h3>Czy światło zrywa wiązania</h3>
+    <p>Foton widzialny (1,65–3,26 eV) niesie za mało energii, żeby zerwać typowe wiązanie kowalencyjne czy jonowe — te leżą rzędu kilku elektronowoltów, jak O–H (4,8 eV). Dlatego oświetlenie wodą czy szkłem światłem widzialnym nie rozkłada ich chemicznie: energia po prostu przepływa dalej (albo jest częściowo pochłaniana i oddawana jako ciepło), zamiast rwać wiązania.</p>
+    <p>Ultrafiolet to inna historia — im krótsza fala, tym więcej energii na foton, a niektóre wiązania w długich łańcuchach polimerów (papier, niektóre tworzywa, pigmenty organiczne) są słabsze niż typowe O–H. Kiedy taki foton UV trafi w odpowiednio słabe miejsce łańcucha, potrafi je zerwać — to właśnie mechanizm fotodegradacji, który stoi za żółknięciem starego papieru czy spękaną, matowiejącą powierzchnią plastiku wystawionego na słońce. Do tego wątku, razem z konkretnymi liczbami, wrócisz w Rozdziale 24.</p>
+  </template>
+
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-panel">
+      <button class="modal-close" data-modal-close aria-label="Zamknij">×</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
 </div>
 
 <script src="../../assets/interactive.js"></script>
+<script>
+/* 1. Drabina energii: suwak dlugosci fali fotonu vs progi wiazan. */
+(function () {
+  var sl = document.getElementById('drabinaFoton');
+  if (!sl) return;
+
+  var X0 = 60, X1 = 680, E0 = Math.log(0.05), E1 = Math.log(15);
+  function xOfE(eV) {
+    var t = (Math.log(eV) - E0) / (E1 - E0);
+    return X0 + t * (X1 - X0);
+  }
+
+  function odswiez() {
+    var nm = parseFloat(sl.value);
+    var eV = 1240 / nm;
+    var x = xOfE(eV);
+
+    document.getElementById('fotonKreska').setAttribute('x1', x.toFixed(1));
+    document.getElementById('fotonKreska').setAttribute('x2', x.toFixed(1));
+    document.getElementById('fotonEtykieta').setAttribute('x', x.toFixed(1));
+    document.getElementById('fotonEtykieta').textContent = eV.toFixed(2).replace('.', ',') + ' eV';
+    document.getElementById('drabinaFotonOdczyt').textContent = nm.toFixed(0) + ' nm';
+
+    var komentarz;
+    if (eV < 0.15) komentarz = 'za mało nawet na wiązanie wodorowe — tylko van der Waalsa jest w zasięgu';
+    else if (eV < 3.5) komentarz = 'wystarczy, by zerwać wiązanie wodorowe albo van der Waalsa, za mało na wiązanie kowalencyjne O–H';
+    else komentarz = 'energia w zasięgu nawet wiązania kowalencyjnego O–H — to już głęboki ultrafiolet';
+    document.getElementById('drabinaPodpis').textContent =
+      nm.toFixed(0) + ' nm → ' + eV.toFixed(2).replace('.', ',') + ' eV: ' + komentarz + '.';
+  }
+  sl.addEventListener('input', odswiez);
+  odswiez();
+})();
+</script>
+<script type="module">
+import { createDiagram3D } from '../../assets/sky3d.js';
+
+const host = document.getElementById('czasteczki3D');
+if (host) {
+  const CENTRAL = '#4fc3c0';
+  const HYDRO = '#9aa0aa';
+  const BOND = '#5a606c';
+  const DIPOL = '#4fc3c0';
+
+  function atom(at, r, color, layer) {
+    return { type: 'sphere', r: r, seg: 24, at, color, opacity: 0.9, layer };
+  }
+  function bond(a, b, layer) {
+    return { type: 'polyline', color: BOND, points: [a, b], layer };
+  }
+  function dipol(from, to, layer) {
+    return { type: 'arrow', color: DIPOL, from, to, layer };
+  }
+
+  const parts = [];
+
+  /* --- H2O: zgieta, 104,5 stopnia, dipol ku O (gora) --- */
+  {
+    const O = [0, 0.35, 0];
+    const half = (104.5 / 2) * Math.PI / 180;
+    const L = 1.0;
+    const H1 = [L * Math.sin(half), 0.35 - L * Math.cos(half), 0];
+    const H2 = [-L * Math.sin(half), 0.35 - L * Math.cos(half), 0];
+    parts.push(atom(O, 0.28, CENTRAL, 'h2o'));
+    parts.push(atom(H1, 0.16, HYDRO, 'h2o'));
+    parts.push(atom(H2, 0.16, HYDRO, 'h2o'));
+    parts.push(bond(O, H1, 'h2o'));
+    parts.push(bond(O, H2, 'h2o'));
+    parts.push(dipol([0, 0.35, 0], [0, 1.15, 0], 'h2o'));
+    parts.push({ type: 'label', text: 'O', at: [0, 0.75, 0], color: CENTRAL, layer: 'h2o' });
+    parts.push({ type: 'label', text: 'H', at: [H1[0] + 0.2, H1[1] - 0.1, 0], color: HYDRO, layer: 'h2o' });
+    parts.push({ type: 'label', text: 'H', at: [H2[0] - 0.2, H2[1] - 0.1, 0], color: HYDRO, layer: 'h2o' });
+    parts.push({ type: 'label', text: '104,5°', at: [0, -0.35, 0.3], color: '#8b909b', layer: 'h2o' });
+    parts.push({ type: 'label', text: 'p ≈ 1,85 D', at: [0, 1.35, 0], color: DIPOL, layer: 'h2o' });
+  }
+
+  /* --- CO2: liniowa, 180 stopni, brak dipola --- */
+  {
+    const C = [0, 0, 0];
+    const O1 = [1.15, 0, 0];
+    const O2 = [-1.15, 0, 0];
+    parts.push(atom(C, 0.24, CENTRAL, 'co2'));
+    parts.push(atom(O1, 0.24, CENTRAL, 'co2'));
+    parts.push(atom(O2, 0.24, CENTRAL, 'co2'));
+    parts.push(bond(C, O1, 'co2'));
+    parts.push(bond(C, O2, 'co2'));
+    parts.push({ type: 'label', text: 'C', at: [0, 0.35, 0], color: CENTRAL, layer: 'co2' });
+    parts.push({ type: 'label', text: 'O', at: [1.15, 0.35, 0], color: CENTRAL, layer: 'co2' });
+    parts.push({ type: 'label', text: 'O', at: [-1.15, 0.35, 0], color: CENTRAL, layer: 'co2' });
+    parts.push({ type: 'label', text: '180° — brak dipola, wektory się znoszą', at: [0, -0.5, 0.3], color: '#8b909b', layer: 'co2' });
+  }
+
+  /* --- CH4: tetraedr, 109,5 stopnia, brak dipola --- */
+  {
+    const s = 0.72;
+    const C = [0, 0, 0];
+    const Hs = [
+      [s, s, s], [s, -s, -s], [-s, s, -s], [-s, -s, s],
+    ];
+    parts.push(atom(C, 0.24, CENTRAL, 'ch4'));
+    Hs.forEach((h, i) => {
+      parts.push(atom(h, 0.15, HYDRO, 'ch4'));
+      parts.push(bond(C, h, 'ch4'));
+      parts.push({ type: 'label', text: 'H', at: [h[0] * 1.25, h[1] * 1.25, h[2] * 1.25], color: HYDRO, layer: 'ch4' });
+    });
+    parts.push({ type: 'label', text: 'C', at: [0, 0.3, 0], color: CENTRAL, layer: 'ch4' });
+    parts.push({ type: 'label', text: '109,5° — symetria, brak dipola', at: [0, -1.15, 0], color: '#8b909b', layer: 'ch4' });
+  }
+
+  /* --- NH3: piramida trygonalna, ~107 stopnia, dipol ku N (wolna para) --- */
+  {
+    const N = [0, 0.45, 0];
+    const alpha = 68 * Math.PI / 180; // kat od osi -y (od wolnej pary)
+    const L = 1.0;
+    const az = [0, 2 * Math.PI / 3, 4 * Math.PI / 3];
+    const Hs = az.map((a) => [
+      L * Math.sin(alpha) * Math.cos(a),
+      0.45 - L * Math.cos(alpha),
+      L * Math.sin(alpha) * Math.sin(a),
+    ]);
+    parts.push(atom(N, 0.26, CENTRAL, 'nh3'));
+    Hs.forEach((h) => {
+      parts.push(atom(h, 0.15, HYDRO, 'nh3'));
+      parts.push(bond(N, h, 'nh3'));
+    });
+    parts.push({ type: 'label', text: 'N', at: [0, 0.85, 0], color: CENTRAL, layer: 'nh3' });
+    parts.push(dipol([0, 0.45, 0], [0, 1.3, 0], 'nh3'));
+    parts.push({ type: 'label', text: '≈107° — wolna para ciągnie dipol', at: [0, -0.75, 0.3], color: '#8b909b', layer: 'nh3' });
+    parts.push({ type: 'label', text: 'słabszy niż w H₂O', at: [0, 1.5, 0], color: DIPOL, layer: 'nh3' });
+  }
+
+  const widget = createDiagram3D(host, {
+    parts,
+    camera: { dist: 6.5, phi: 1.1, theta: 0.6 },
+    hiddenLayers: ['co2', 'ch4', 'nh3'],
+  });
+
+  if (widget.ok) {
+    const przyciski = host.querySelectorAll('[data-czasteczka]');
+    const wszystkie = ['h2o', 'co2', 'ch4', 'nh3'];
+    przyciski.forEach((b) => {
+      b.addEventListener('click', () => {
+        const w = b.dataset.czasteczka;
+        wszystkie.forEach((n) => widget.setLayer(n, n === w));
+        przyciski.forEach((x) => x.classList.toggle('is-active', x === b));
+      });
+    });
+  }
+}
+</script>
 </body>
 </html>

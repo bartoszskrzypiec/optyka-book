@@ -44,11 +44,201 @@ window.SKY3D_MESSAGES = {
   <h1>Chemia węgla: cząsteczki, z których zrobiony jest świat CG</h1>
   <p class="subtitle">Drewno, plastik, skóra, włosy, liście — prawie wszystko, co teksturujesz, to łańcuchy i pierścienie węgla. Czy taka cząsteczka ma kolor, zależy głównie od jednego: jak długi jest w niej ciąg naprzemiennych wiązań.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li>Węgiel ma <span class="term-cyan">cztery wiązania</span> do rozdania, a atomy węgla równie chętnie łączą się ze sobą, co z wodorem czy tlenem. Stąd cała różnorodność chemii organicznej: proste <span class="term-cyan">łańcuchy</span> (polietylen) i zamknięte <span class="term-cyan">pierścienie</span> (benzen) z tego samego jednego pierwiastka.</li>
+      <li>Naprzemienne pojedyncze i podwójne wiązania tworzą <span class="term-violet">układ sprzężony</span> — elektrony przestają należeć do jednego wiązania i rozmywają się wzdłuż całego ciągu, jakby poruszały się w dłuższym pudełku. Im dłuższe pudełko, tym bliżej siebie leżą poziomy energii, tym mniejszej energii (dłuższej fali) potrzeba, żeby elektron między nimi przeskoczył.</li>
+      <li>Krótki ciąg sprzężony pochłania tylko w ultrafiolecie — cząsteczka wygląda bezbarwnie. Wydłuż go do jedenastu wiązań C=C, jak w <span class="term-raster">β-karotenie</span>, a pochłanianie wjeżdża w widzialne (450–480 nm, niebiesko-zielone) i zostaje ci pomarańcz marchewki.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Co widzisz · parafina, marchew, liść, krew</div>
+    <h2>Jeden pierwiastek, cztery wiązania, cały świat organiczny</h2>
+
+    <p>Świeca z parafiny jest biała. Marchew jest pomarańczowa. Liść jest zielony. Krew jest czerwona. Wszystkie cztery zbudowane są w ogromnej większości z tego samego zestawu pierwiastków — węgla, wodoru, tlenu, odrobiny azotu — a mimo to jedna z nich nie ma koloru w ogóle, a pozostałe trzy mają kolor bardzo konkretny i bardzo różny. Odpowiedź nie leży w tym, <em>z jakich</em> atomów są zbudowane, tylko w tym, <em>jak są połączone</em>.</p>
+
+    <p>Węgiel ma sześć elektronów, z czego cztery na zewnętrznej powłoce — cztery <span class="term-cyan">wiązania</span> do rozdania (<a href="rozdzial-04-atom.html">Rozdział 4</a>). To więcej niż ma tlen (dwa) czy azot (trzy), i to jest cała tajemnica bogactwa chemii organicznej: atom węgla może wiązać się z czterema sąsiadami naraz, w tym z innymi atomami węgla. Powtórz to tysiąc razy i dostajesz dwie podstawowe architektury szkieletu.</p>
+
+    <p>Pierwsza to <span class="term-cyan">łańcuch</span>: węgiel za węglem, każdy z dwoma wolnymi wiązaniami do wodoru, jak w polietylenie — plastiku, z którego robi się reklamówki i wyściółki kubełków. Druga to <span class="term-cyan">pierścień</span>: sześć węgli zamkniętych w sześciokąt, jak w benzenie, cegiełce, z której zbudowana jest ogromna część chemii organicznej, od leków po barwniki. Obie struktury mają ten sam budulec i tę samą liczbę wiązań na atom — różni je wyłącznie geometria połączeń.</p>
+
+    <p>Stąd bierze się skala chemii organicznej, która na pierwszy rzut oka wygląda na przesadzoną: ze zaledwie kilku pierwiastków — węgla, wodoru, tlenu, azotu, odrobiny siarki i fosforu — dają się złożyć miliony różnych cząsteczek. Powód jest czysto kombinatoryczny. Węgiel wiąże się z czterema sąsiadami, a każdy z tych sąsiadów może być innym atomem węgla (w łańcuchu albo w pierścieniu), wodorem, tlenem, azotem — albo kolejnym rozgałęzieniem. Ta sama zasada budowy, powtórzona tysiące razy w różnych konfiguracjach, daje z jednej strony sztywny, bezbarwny polietylen, a z drugiej strony barwną, aromatyczną cząsteczkę o zupełnie innej roli biologicznej czy optycznej. Prawie wszystko, co teksturujesz jako „materiał organiczny” w produkcji — drewno, skórę, włosy, liście, żywicę — to warianty dokładnie tej samej kombinatoryki węgla, wodoru i tlenu, różniące się tym, jak te atomy są ułożone względem siebie.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Dwie architektury szkieletu węglowego</span><span>łańcuch i pierścień</span></div>
+      <svg viewBox="0 0 760 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Po lewej fragment łańcucha polietylenu jako zygzak węgli z bocznymi wodorami. Po prawej pierścień benzenu jako sześciokąt węgli z naprzemiennymi pojedynczymi i podwójnymi wiązaniami.">
+        <text x="20" y="26" font-family="IBM Plex Mono" font-size="11" fill="#8b909b">POLIETYLEN · łańcuch, same pojedyncze wiązania</text>
+        <g stroke="#4fc3c0" stroke-width="2.4" fill="none">
+          <path d="M 40 130 L 90 90 L 140 130 L 190 90 L 240 130 L 290 90 L 330 130"/>
+        </g>
+        <g fill="#4fc3c0">
+          <circle cx="40" cy="130" r="5"/><circle cx="90" cy="90" r="5"/><circle cx="140" cy="130" r="5"/>
+          <circle cx="190" cy="90" r="5"/><circle cx="240" cy="130" r="5"/><circle cx="290" cy="90" r="5"/><circle cx="330" cy="130" r="5"/>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">
+          <text x="90" y="72">C</text><text x="190" y="72">C</text><text x="290" y="72">C</text>
+          <text x="40" y="150">C</text><text x="140" y="150">C</text><text x="240" y="150">C</text><text x="330" y="150">C</text>
+        </g>
+        <text x="195" y="184" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">…każdy węgiel dodatkowo z dwoma H, bez rysunku dla czytelności…</text>
+
+        <text x="440" y="26" font-family="IBM Plex Mono" font-size="11" fill="#8b909b">BENZEN · pierścień, naprzemiennie 1× i 2×</text>
+        <g transform="translate(560,120)">
+          <polygon points="0,-60 52,-30 52,30 0,60 -52,30 -52,-30" fill="none" stroke="#4fc3c0" stroke-width="2.4"/>
+          <line x1="6" y1="-53" x2="46" y2="-31" stroke="#9c82d8" stroke-width="2.4"/>
+          <line x1="6" y1="53" x2="46" y2="31" stroke="#9c82d8" stroke-width="2.4"/>
+          <line x1="-6" y1="-53" x2="-46" y2="-31" stroke="#9c82d8" stroke-width="2.4"/>
+          <g fill="#4fc3c0">
+            <circle cx="0" cy="-60" r="5"/><circle cx="52" cy="-30" r="5"/><circle cx="52" cy="30" r="5"/>
+            <circle cx="0" cy="60" r="5"/><circle cx="-52" cy="30" r="5"/><circle cx="-52" cy="-30" r="5"/>
+          </g>
+        </g>
+        <text x="560" y="200" font-family="IBM Plex Mono" font-size="10" fill="#9c82d8" text-anchor="middle">fioletowe kreski — podwójne wiązania, naprzemiennie z pojedynczymi</text>
+      </svg>
+      <div class="diagram-caption">Ten sam pierwiastek, ta sama liczba wiązań na atom — łańcuch albo pierścień to już wybór geometrii, nie chemii.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Sprzężenie · elektrony rozmyte wzdłuż ciągu</div>
+    <h2>Naprzemienne wiązania robią z elektronów falę w dłuższym pudełku</h2>
+
+    <p>W polietylenie każde wiązanie węgiel–węgiel jest pojedyncze i niezależne od sąsiednich — elektron w nim siedzi lokalnie, tak jakby był zamknięty w bardzo krótkim pudełku, i do przeskoczenia na wyższy poziom energii potrzebuje fotonu z dużą energią, głęboko w ultrafiolecie. Żaden foton widzialny (1,65–3,26 eV) nie jest w stanie tego zrobić — dlatego czysty polietylen jest bezbarwny: nic w widzialnym zakresie go nie pochłania.</p>
+
+    <p>W benzenie i w podobnych cząsteczkach wiązania <strong>naprzemiennie pojedyncze i podwójne</strong> tworzą coś innego: <span class="term-violet">układ sprzężony</span> (conjugated bond). Elektrony z wiązań podwójnych przestają być przypisane do jednej konkretnej pary atomów — rozmywają się wzdłuż całego ciągu naprzemiennych wiązań, jak jedna fala rozciągnięta na cały łańcuch zamiast kilku niezależnych, krótkich fragmentów.</p>
+
+    <p>Tu przydaje się prosty obraz z fizyki, bez żadnego formalizmu: elektron uwięziony w pudełku ma dozwolone poziomy energii, a odstęp między nimi maleje, gdy pudełko jest dłuższe (dokładny rachunek — w <a href="../dodatki/dodatek-k-poziomy-energii-i-fotony.html">Dodatku K</a>). Krótki układ sprzężony to krótkie pudełko — duże odstępy między poziomami, potrzeba fotonu z dużą energią, czyli krótkiej fali, żeby elektron przeskoczył. Wydłuż układ sprzężony — pudełko robi się dłuższe, poziomy gęstnieją, wystarcza coraz mniejsza energia, czyli coraz dłuższa fala. <strong>Dłuższy ciąg sprzężony pochłania dłuższą falę.</strong> To jedyna liczba, którą naprawdę musisz zapamiętać z tego rozdziału.</p>
+
+    <p>Zwróć uwagę, że nic w tym opisie nie odwołuje się do konkretnego pierwiastka poza węglem ani do żadnego formalizmu kwantowego — to czysto geometryczny argument o długości „pudełka”, w którym poruszają się rozmyte elektrony. Dlatego działa tak samo dla prostego, syntetycznego barwnika azowego używanego w farbach, jak i dla wyrafinowanej cząsteczki, którą roślina hoduje od milionów lat. Chemik projektujący nowy barwnik robi dokładnie to, co pokazuje poniższy suwak: dokłada albo odejmuje wiązania podwójne w ciągu sprzężonym, żeby przesunąć pasmo pochłaniania w stronę czerwieni albo fioletu.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Długość sprzężenia → pochłaniana fala → kolor</span><span>model uproszczony — pudełko, nie prawdziwy rachunek kwantowy</span></div>
+      <div class="diagram-controls">
+        <label for="sprzezenieN">Liczba sprzężonych C=C</label>
+        <input id="sprzezenieN" type="range" min="2" max="12" step="1" value="3">
+        <span class="value-readout" id="sprzezenieOdczyt">3 wiązania</span>
+      </div>
+      <svg viewBox="0 0 760 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Po lewej poziomy energii, których odstęp maleje wraz z liczbą sprzężonych wiązań. Po prawej łatka koloru, jaki zostaje po odjęciu pochłoniętej barwy.">
+        <text x="20" y="24" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">POZIOMY W „PUDEŁKU” O DŁUGOŚCI CIĄGU</text>
+        <g id="sprzezeniePoziomy" stroke="#4fc3c0" stroke-width="2"></g>
+        <line x1="60" y1="180" x2="60" y2="40" stroke="#8b909b" stroke-width="1"/>
+        <text x="60" y="196" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">niska E</text>
+        <text x="60" y="32" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">wysoka E</text>
+        <line id="sprzezenieSkok" x1="60" y1="100" x2="60" y2="70" stroke="#9c82d8" stroke-width="2.5" marker-end="url(#sprzStrzalka)"/>
+        <defs>
+          <marker id="sprzStrzalka" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9c82d8"/></marker>
+        </defs>
+
+        <text x="430" y="24" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">POCHŁANIA</text>
+        <rect x="430" y="40" width="120" height="30" fill="#3a3f4a" id="sprzezenieAbsBar"/>
+        <text x="430" y="90" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">ZOSTAJE (kolor wynikowy)</text>
+        <rect x="430" y="106" width="120" height="70" rx="6" id="sprzezenieKolor" fill="#c9c6bd" stroke="#6e93be" stroke-width="2"/>
+      </svg>
+      <div class="diagram-caption" id="sprzezeniePodpis">3 sprzężone C=C: odstęp poziomów wciąż duży, pochłania w ultrafiolecie — cząsteczka wygląda bezbarwnie.</div>
+    </div>
+
+    <p class="deeper-inline">Ilościowy wariant tego rachunku (E ∝ 1/L²) i skąd bierze się dokładny numeryczny odstęp — Dodatek K.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Liczby i galeria · od bezbarwnego do pomarańczu, żelaza i magnezu</div>
+    <h2>Jedenaście wiązań C=C robi z marchewki pomarańcz</h2>
+
+    <p>Marchew zawdzięcza kolor <span class="term-raster">β-karotenowi</span> — długiej cząsteczce z ciągiem <strong>jedenastu naprzemiennych wiązań C=C</strong> ciągnącym się przez cały jej środek. To wystarczająco długie „pudełko”, żeby odstęp poziomów energii spadł do wartości odpowiadającej fotonom widzialnym: β-karoten pochłania w paśmie <strong>≈ 450–480 nm</strong>, czyli niebieski i część zieleni. Odejmij niebiesko-zielony z białego światła, a to, co zostaje i trafia do oka, jest pomarańczowe — dokładnie kolor, jaki znasz.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>β-karoten</span><span>schemat, nie rzeczywista geometria cząsteczki</span></div>
+      <svg viewBox="0 0 760 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Zygzakowaty łańcuch węgli przez środek cząsteczki beta-karotenu z wyróżnionym na fioletowo ciągiem jedenastu naprzemiennych wiązań podwójnych, zakończony po obu stronach pierścieniami.">
+        <polygon points="40,90 60,70 80,90 60,110" fill="none" stroke="#4fc3c0" stroke-width="2"/>
+        <polygon points="680,90 700,70 720,90 700,110" fill="none" stroke="#4fc3c0" stroke-width="2"/>
+        <g stroke="#9c82d8" stroke-width="2.6" fill="none">
+          <path d="M 84 90 L 120 60 L 156 90 L 192 60 L 228 90 L 264 60 L 300 90 L 336 60 L 372 90 L 408 60 L 444 90 L 480 60 L 516 90 L 552 60 L 588 90 L 624 60 L 660 90"/>
+        </g>
+        <text x="380" y="140" font-family="IBM Plex Mono" font-size="11" fill="#9c82d8" text-anchor="middle">← 11 sprzężonych wiązań C=C, cały środek cząsteczki →</text>
+        <text x="380" y="26" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b" text-anchor="middle">pierścień po obu końcach, sprzężenie — po środku</text>
+      </svg>
+      <div class="diagram-caption">Elektrony sprzężenia rozmywają się wzdłuż całych jedenastu wiązań naraz — to one, a nie pierścienie na końcach, decydują o kolorze.</div>
+    </div>
+
+    <p>Podobny mechanizm, ale z inną architekturą, stoi za czerwienią krwi i zielenią liścia. Obie cząsteczki — <span class="term-cyan">hem</span> w hemoglobinie i <span class="term-cyan">chlorofil</span> — mają w środku ten sam motyw: <strong>pierścień porfirynowy</strong>, cztery mniejsze pierścienie sprzężone w jeden większy, z pojedynczym atomem metalu dokładnie pośrodku. W hemie tym atomem jest <strong>żelazo</strong> (Fe), w chlorofilu — <strong>magnez</strong> (Mg). Kolor obu cząsteczek pochodzi głównie z tego samego sprzężonego pierścienia, nie z samego metalu w środku — żelazo w hemie przenosi tlen i nieznacznie przesuwa pasma absorpcji, ale to sprzężenie robi ciężką robotę optyczną. Hem pochłania mocno w fiolecie (pasmo Soreta, ≈ 415 nm) i dwoma słabszymi pasmami w zieleni (≈ 540 i 575 nm), stąd czerwień krwi. Chlorofil pochłania w niebieskim (≈ 430 nm) i czerwieni (≈ 660 nm), a przepuszcza i odbija zieleń pomiędzy nimi — dlatego liść jest zielony.</p>
+
+    <p>To samo rozróżnienie — kolor od pierścienia, nie od metalu — tłumaczy jeden z trwalszych mitów wokół krwi: że jej czerwień „pochodzi od żelaza”, tak jak rdza jest czerwona od żelaza w tlenku. Żelazo w hemie jest kluczowe do wiązania tlenu (to ono zmienia się chemicznie, gdy krew tętnicza robi się jaśniejsza niż żylna), ale to sprzężony pierścień wokół niego pochłania widzialne światło i wyznacza barwę. Zamień w laboratorium żelazo na inny metal przejściowy — pierścień wciąż będzie pochłaniał w podobnej okolicy widma, bo to jego sprzężenie, a nie tożsamość metalu, robi większość optycznej roboty.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Pierścień porfirynowy: ten sam motyw, dwa metale</span><span>schemat, nie rzeczywista geometria</span></div>
+      <svg viewBox="0 0 760 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Dwa schematyczne pierścienie porfirynowe, złożone z czterech mniejszych pierścieni sprzężonych w jeden większy, z atomem żelaza pośrodku po lewej (hem) i atomem magnezu pośrodku po prawej (chlorofil).">
+        <g transform="translate(190,105)">
+          <circle r="70" fill="none" stroke="#9c82d8" stroke-width="2.4"/>
+          <circle cx="0" cy="-46" r="20" fill="none" stroke="#9c82d8" stroke-width="1.6"/>
+          <circle cx="46" cy="0" r="20" fill="none" stroke="#9c82d8" stroke-width="1.6"/>
+          <circle cx="0" cy="46" r="20" fill="none" stroke="#9c82d8" stroke-width="1.6"/>
+          <circle cx="-46" cy="0" r="20" fill="none" stroke="#9c82d8" stroke-width="1.6"/>
+          <circle r="14" fill="#3a3f4a" stroke="#6e93be" stroke-width="2"/>
+          <text y="5" font-family="IBM Plex Mono" font-size="13" fill="#e8a33d" text-anchor="middle">Fe</text>
+          <text y="98" font-family="IBM Plex Mono" font-size="11" fill="#8b909b" text-anchor="middle">HEM</text>
+        </g>
+        <g transform="translate(570,105)">
+          <circle r="70" fill="none" stroke="#9c82d8" stroke-width="2.4"/>
+          <circle cx="0" cy="-46" r="20" fill="none" stroke="#9c82d8" stroke-width="1.6"/>
+          <circle cx="46" cy="0" r="20" fill="none" stroke="#9c82d8" stroke-width="1.6"/>
+          <circle cx="0" cy="46" r="20" fill="none" stroke="#9c82d8" stroke-width="1.6"/>
+          <circle cx="-46" cy="0" r="20" fill="none" stroke="#9c82d8" stroke-width="1.6"/>
+          <circle r="14" fill="#3a3f4a" stroke="#6e93be" stroke-width="2"/>
+          <text y="5" font-family="IBM Plex Mono" font-size="13" fill="#e8a33d" text-anchor="middle">Mg</text>
+          <text y="98" font-family="IBM Plex Mono" font-size="11" fill="#8b909b" text-anchor="middle">CHLOROFIL</text>
+        </g>
+        <text x="380" y="16" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b" text-anchor="middle">sprzężony pierścień (fiolet) robi kolor — metal w środku tylko go stroi</text>
+      </svg>
+      <div class="diagram-caption">Ten sam sprzężony pierścień porfirynowy, dwa różne metale pośrodku: żelazo daje czerwień krwi, magnez zieleń liścia.</div>
+    </div>
+
+    <p>Ten sam mechanizm — dłuższe lub inaczej ułożone sprzężenie zmienia kolor — wraca w wielu materiałach, które będziesz teksturować, choć każdemu z nich poświęcimy osobny rozdział. <span class="term-cyan">Celuloza</span> (włókna drewna i papieru) i czysty <span class="term-cyan">polietylen</span> nie mają sprzężenia i są bezbarwne, dopóki coś ich nie zabarwi z zewnątrz; <span class="term-cyan">lignina</span>, spoiwo drewna, ma krótkie sprzężone fragmenty i dlatego stare papiery żółkną, gdy się utleniają (<a href="rozdzial-24-drewno-papier-tkanina.html">Rozdział 24</a>). <span class="term-cyan">Keratyna</span> włosów i skóry i <span class="term-cyan">kolagen</span> skóry są w większości bezbarwnymi białkami — kolor skóry i włosów robi osobny barwnik, <span class="term-raster">melanina</span>, cząsteczka z bardzo długim, nieregularnym sprzężeniem, które pochłania niemal całe widmo naraz (dlatego bywa niemal czarna) (<a href="rozdzial-25-skora-wlosy-organika.html">Rozdział 25</a>). Same barwniki i pigmenty — jak w ogóle działają, rozpuszczone czy w ziarnach — to temat <a href="rozdzial-22-kolor-z-absorpcji.html">Rozdziału 22</a>; ta galeria jest tylko zapowiedzią, do której tamten rozdział i Dodatek L wracają ze szczegółami.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Galeria: bezbarwne kontra barwne</span><span>szkielet węglowy i jedno zdanie „dlaczego” dla każdej cząsteczki</span></div>
+      <svg viewBox="0 0 760 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Siatka ośmiu miniaturowych ikon cząsteczek: celuloza, lignina, polietylen i keratyna oznaczone jako bezbarwne, kolagen jako prawie bezbarwny, oraz melanina, hemoglobina i chlorofil oznaczone jako barwne dzięki sprzężeniu.">
+        <g font-family="IBM Plex Mono" font-size="10" text-anchor="middle">
+          <g transform="translate(80,40)"><circle r="16" fill="none" stroke="#4fc3c0" stroke-width="2"/><text y="34" fill="#4fc3c0">celuloza</text><text y="50" fill="#8b909b" font-size="9">bez sprzężenia</text></g>
+          <g transform="translate(210,40)"><circle r="16" fill="none" stroke="#4fc3c0" stroke-width="2"/><text y="34" fill="#4fc3c0">lignina</text><text y="50" fill="#8b909b" font-size="9">krótkie fragmenty</text></g>
+          <g transform="translate(340,40)"><circle r="16" fill="none" stroke="#4fc3c0" stroke-width="2"/><text y="34" fill="#4fc3c0">polietylen</text><text y="50" fill="#8b909b" font-size="9">bez sprzężenia</text></g>
+          <g transform="translate(470,40)"><circle r="16" fill="none" stroke="#4fc3c0" stroke-width="2"/><text y="34" fill="#4fc3c0">keratyna</text><text y="50" fill="#8b909b" font-size="9">białko, bezbarwna</text></g>
+          <g transform="translate(600,40)"><circle r="16" fill="none" stroke="#4fc3c0" stroke-width="2"/><text y="34" fill="#4fc3c0">kolagen</text><text y="50" fill="#8b909b" font-size="9">białko, bezbarwny</text></g>
+          <g transform="translate(145,130)"><circle r="16" fill="#3a3f4a" stroke="#9c82d8" stroke-width="2.5"/><text y="34" fill="#9c82d8">melanina</text><text y="50" fill="#8b909b" font-size="9">sprzężenie nieregularne, szerokie</text></g>
+          <g transform="translate(400,130)"><circle r="16" fill="#8f4a45" stroke="#9c82d8" stroke-width="2.5"/><text y="34" fill="#9c82d8">hem</text><text y="50" fill="#8b909b" font-size="9">pierścień porfirynowy + Fe</text></g>
+          <g transform="translate(630,130)"><circle r="16" fill="#3f6b47" stroke="#9c82d8" stroke-width="2.5"/><text y="34" fill="#9c82d8">chlorofil</text><text y="50" fill="#8b909b" font-size="9">pierścień porfirynowy + Mg</text></g>
+        </g>
+      </svg>
+      <div class="diagram-caption">Górny rząd: bez sprzężenia albo z sprzężeniem za krótkim, żeby dosięgnąć widzialnego — bezbarwne. Dolny rząd: długie albo zamknięte w pierścień sprzężenie — kolor.</div>
+    </div>
+  </div>
+
+  <div class="panel practice">
+    <div class="panel-label">Z praktyki</div>
+    <p><strong>Maska starzenia materiału powinna przesuwać kolor, nie tylko go przyciemniać.</strong> Kiedy lignina w papierze albo dodatki w plastiku się utleniają, wydłuża się w nich układ sprzężony — pasmo pochłaniania wjeżdża głębiej w niebieski koniec widma. Efekt widoczny na oko to żółknięcie, nie równomierne ciemnienie. Shader „wieku” zbudowany jako sam spadek jasności ignoruje ten przesunięty kolor i wygląda nierealistycznie.</p>
+    <p><strong>„Organiczne” nie znaczy „kolorowe”.</strong> Zdecydowana większość cząsteczek organicznych — w tym cała celuloza i większość białek w twoim modelu postaci — nie ma żadnego sprzężenia dłuższego niż kilka wiązań i jest optycznie bezbarwna. Kolor w naturze jest wyjątkiem wymagającym specjalnej architektury molekuły, nie regułą.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>szkielet węglowy (łańcuch, pierścień)</dt>
+      <dd>Struktura, jaką tworzą atomy węgla połączone czterema wiązaniami: prosty łańcuch (polietylen) albo zamknięty pierścień (benzen). Ten sam budulec, inna geometria.</dd>
+      <dt>wiązanie sprzężone (conjugated bond)</dt>
+      <dd>Ciąg naprzemiennych wiązań pojedynczych i podwójnych, w którym elektrony rozmywają się wzdłuż całego ciągu zamiast siedzieć w jednym wiązaniu.</dd>
+      <dt>długość sprzężenia → kolor</dt>
+      <dd>Im dłuższy ciąg sprzężony, tym gęściej upakowane poziomy energii i tym dłuższą (mniej energetyczną) falę cząsteczka pochłania — krótkie sprzężenie to UV i brak koloru, długie (jak w β-karotenie) wjeżdża w widzialne.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Wiesz już, dlaczego niektóre cząsteczki mają kolor, a większość nie — to sprzężenie, nie sam skład pierwiastkowy. Ale nawet bezbarwna cząsteczka nie jest wobec światła zupełnie obojętna: pole fali wciąż przesuwa w niej chmurę elektronów, choćby o ułamek promienia atomu. W <a href="rozdzial-08-dipol-i-polaryzowalnosc.html">następnym rozdziale</a> ten efekt dostaje imię — polaryzowalność — i pierwszy prosty model: elektron na sprężynie.</p>
+  </div>
 
   <div class="deeper">
     <div class="deeper-label">Idź głębiej</div>
     <a href="../dodatki/dodatek-l-atlas-czasteczek.html">Dodatek L — Atlas cząsteczek</a>
+    <a href="../dodatki/dodatek-k-poziomy-energii-i-fotony.html">Dodatek K — Poziomy energii i fotony</a>
   </div>
 
   <div class="site-nav chapter-nav">
@@ -60,5 +250,108 @@ window.SKY3D_MESSAGES = {
 </div>
 
 <script src="../../assets/interactive.js"></script>
+<script>
+/* Model "elektron w pudelku": NIE wzor lambda ~ N^2 (taki wzor dawalby dla
+   N=2 okolo 15 nm - gleboko w rentgenie, fizycznie bez sensu). Zamiast tego
+   tabela kotwiczona w zmierzonych widmach realnych polienow, z gladka
+   interpolacja tam, gdzie nie mamy wprost zmierzonej czasteczki:
+     N=2  butadien        217 nm  (zmierzone, UV-Vis)
+     N=3  heksatrien       258 nm  (zmierzone, UV-Vis)
+     N=4  oktatetraen      290 nm  (zmierzone, UV-Vis)
+     N=11 beta-karoten     450 nm  (zmierzone, glowne pasmo w heksanie)
+   N=5..10 i N=12 sa interpolowane tak, by przyrost na kazde kolejne wiazanie
+   malal wraz z N (nasycenie) - to jakosciowo zgodne z modelem pudelka: przy
+   dlugim lancuchu przerwa poziomow spada wolniej niz na poczatku serii.
+   To wciaz jest model uproszczony (etykieta w HUD-zie), nie prawdziwy
+   rachunek kwantowy (ten jest w Dodatku K) — ale teraz oparty na realnych
+   liczbach zamiast bledengo prawa potęgowego.
+   Kolor wynikowy: bialy minus pasmo pochloniete wokol lambda_abs, zgrubny
+   ale kierunkowo poprawny (UV -> brak zmiany, niebiesko-zielony -> pomarancz). */
+(function () {
+  var sl = document.getElementById('sprzezenieN');
+  if (!sl) return;
+  var poziomy = document.getElementById('sprzezeniePoziomy');
+  var skok = document.getElementById('sprzezenieSkok');
+  var absBar = document.getElementById('sprzezenieAbsBar');
+  var kolor = document.getElementById('sprzezenieKolor');
+  var odczyt = document.getElementById('sprzezenieOdczyt');
+  var podpis = document.getElementById('sprzezeniePodpis');
+
+  var LAMBDA_TABELA = {
+    2: 217, 3: 258, 4: 290, 5: 326, 6: 360,
+    7: 380, 8: 398, 9: 415, 10: 433, 11: 450, 12: 465
+  };
+
+  function lambdaDoRGB(nm) {
+    // Bardzo zgrubne, kierunkowo poprawne mapowanie widzialnego pasma na RGB,
+    // uzywane tylko do pokolorowania paska "pochlania" ponizej 380-750 nm.
+    if (nm < 380) return [70, 70, 78];
+    var stops = [
+      [380, [107, 63, 160]], [440, [63, 79, 208]], [490, [79, 191, 90]],
+      [560, [232, 212, 61]], [610, [232, 138, 61]], [700, [194, 59, 59]],
+      [750, [140, 40, 40]]
+    ];
+    for (var i = 0; i < stops.length - 1; i++) {
+      var a = stops[i], b = stops[i + 1];
+      if (nm >= a[0] && nm <= b[0]) {
+        var t = (nm - a[0]) / (b[0] - a[0]);
+        return [0, 1, 2].map(function (k) { return Math.round(a[1][k] + t * (b[1][k] - a[1][k])); });
+      }
+    }
+    return [90, 90, 96];
+  }
+
+  function dopelnienie(nm) {
+    if (nm < 380 || nm > 750) return [201, 198, 189]; // poza widzialnym: prawie bez zmiany (jasny szary)
+    var abs = lambdaDoRGB(nm);
+    // "Zostaje" = odejmij pochloniete kanaly od bieli, z podloga, zeby nie wyjsc na czarno.
+    return abs.map(function (c) { return Math.max(40, 255 - c); });
+  }
+
+  function rgbStr(c) { return 'rgb(' + c[0] + ',' + c[1] + ',' + c[2] + ')'; }
+
+  function odswiez() {
+    var n = parseInt(sl.value, 10);
+    var lambda = LAMBDA_TABELA[n];
+    var pasmo = lambda < 380 ? 'ultrafiolecie' : (lambda > 750 ? 'podczerwieni' : 'widzialne');
+
+    // Poziomy energii: N+1 kresek, gestniejace ku gorze wraz z N (odstep ~ 1/N^2
+    // w skali rysunkowej, przyciete, zeby zawsze zmiescic sie w ramce 40..180).
+    var linie = '';
+    var top = 40, bottom = 180;
+    var liczbaPoziomow = Math.min(n + 1, 9);
+    for (var i = 0; i < liczbaPoziomow; i++) {
+      var frac = Math.pow(i / (liczbaPoziomow - 1), 1.5);
+      var y = bottom - frac * (bottom - top);
+      linie += '<line x1="45" y1="' + y.toFixed(1) + '" x2="200" y2="' + y.toFixed(1) + '"/>';
+    }
+    poziomy.innerHTML = linie;
+
+    var y0 = bottom, y1 = bottom - (bottom - top) / (liczbaPoziomow - 1);
+    skok.setAttribute('y1', y0.toFixed(1));
+    skok.setAttribute('y2', y1.toFixed(1));
+
+    var absRgb = lambda < 380 ? [70, 70, 78] : lambdaDoRGB(Math.min(lambda, 750));
+    absBar.setAttribute('fill', rgbStr(absRgb));
+    kolor.setAttribute('fill', rgbStr(dopelnienie(lambda)));
+
+    odczyt.textContent = n + (n === 1 ? ' wiązanie' : ' wiązania');
+
+    var lambdaTxt = lambda.toFixed(0).replace('.', ',') + ' nm';
+    var opis;
+    if (pasmo === 'ultrafiolecie') {
+      opis = n + ' sprzężone C=C: odstęp poziomów wciąż duży, pochłania w ' + pasmo + ' (~' + lambdaTxt + ') — cząsteczka wygląda bezbarwnie.';
+    } else if (pasmo === 'widzialne') {
+      opis = n + ' sprzężonych C=C: pochłanianie wjeżdża w widzialne, ~' + lambdaTxt + ' — tyle ma β-karoten (N=11, ~465 nm), stąd pomarańcz.';
+    } else {
+      opis = n + ' sprzężonych C=C: pochłanianie zeszłoby już w ' + pasmo + ' (~' + lambdaTxt + ') — dłużej niż sięga realny układ sprzężony.';
+    }
+    podpis.textContent = opis;
+  }
+
+  sl.addEventListener('input', odswiez);
+  odswiez();
+})();
+</script>
 </body>
 </html>
