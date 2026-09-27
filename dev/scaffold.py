@@ -543,11 +543,54 @@ def _sprawdz_wolumin(vol, problems, ostrzezenia):
                     f'upewnij sie, ze symbole sa zdefiniowane w prozie obok')
 
 
+def _sprawdz_przekierowania(problems):
+    """Zaslepki pod starymi adresami (root-level rozdzialy/, dodatki/,
+    matematyka/), zostawione po przenosinach tresci do tomN/ (patrz
+    dev/przekierowania.py). Kazda MUSI miec meta redirect-stub i celowac
+    w istniejacy plik — inaczej to juz nie zaslepka, tylko martwy link albo
+    zapomniana prawdziwa strona bez tresci. Te pliki sa wylaczone z reszty
+    kontroli (_sprawdz_wolumin patrzy tylko do tomN/), bo to nie strony
+    z tresc, tylko przekierowania.
+    """
+    for old_dir in ('rozdzialy', 'dodatki', 'matematyka'):
+        d = os.path.join(ROOT, old_dir)
+        if not os.path.isdir(d):
+            continue
+        for name in sorted(os.listdir(d)):
+            if not name.endswith('.html'):
+                continue
+            path = os.path.join(d, name)
+            rel = os.path.relpath(path, ROOT).replace('\\', '/')
+            html = open(path, encoding='utf-8').read()
+            m = re.search(r'<meta name="redirect-stub" content="([^"]+)">', html)
+            if not m:
+                problems.append(
+                    f'T0 PRZEKIEROWANIE {rel}: brak meta redirect-stub — nie '
+                    f'jest to rozpoznawalne jako zaslepka')
+                continue
+            target = m.group(1)
+            target_abs = os.path.join(ROOT, target)
+            if not os.path.exists(target_abs):
+                problems.append(
+                    f'T0 PRZEKIEROWANIE {rel}: cel "{target}" nie istnieje')
+
+    # martwe linki z okladki root-level index.html
+    root_index = os.path.join(ROOT, 'index.html')
+    if os.path.exists(root_index):
+        html = open(root_index, encoding='utf-8').read()
+        base = os.path.dirname(root_index)
+        for href in re.findall(r'href="([^"#:]+\.html)(?:#[^"]*)?"', html):
+            target = os.path.normpath(os.path.join(base, href))
+            if not os.path.exists(target):
+                problems.append(f'T0 MARTWY LINK index.html -> {href}')
+
+
 def cmd_sprawdz(tom=None):
     problems = []
     ostrzezenia = []
     for vol in load_volumes(tom):
         _sprawdz_wolumin(vol, problems, ostrzezenia)
+    _sprawdz_przekierowania(problems)
 
     if ostrzezenia:
         print(f'{len(ostrzezenia)} ostrzezen (nie blokuja):\n')
