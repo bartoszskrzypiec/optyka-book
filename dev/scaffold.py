@@ -533,6 +533,9 @@ def _sprawdz_wolumin(vol, problems, ostrzezenia):
         elif glebokosc != 0:
             problems.append(f'{L} DIVY         {rel}: {glebokosc} niedomknietych <div>')
 
+    # 10. lokalne zasoby (script/link) i importy modulow ES musza istniec
+    _sprawdz_zasoby(strony, problems, L)
+
     # 9. wzor musi definiowac swoje symbole
     #    Zasada rodziny: kiedy .formula wprowadza zmienna, trzeba powiedziec,
     #    co ona znaczy. Mechanicznie da sie sprawdzic tylko obecnosc .sub —
@@ -549,6 +552,50 @@ def _sprawdz_wolumin(vol, problems, ostrzezenia):
                 ostrzezenia.append(
                     f'{L} WZOR BEZ .sub {os.path.relpath(path, ROOT)}: "{frag}" — '
                     f'upewnij sie, ze symbole sa zdefiniowane w prozie obok')
+
+
+def _external(url):
+    """True, jesli adres nie wskazuje na plik lokalny (http(s), protokol-relatywny,
+    data: URI, mailto: itp.) — takich nie sprawdzamy na dysku."""
+    return bool(re.match(r'^(?:[a-z][a-z0-9+.\-]*:|//)', url, re.I))
+
+
+def _sprawdz_zasoby(paths, problems, label):
+    """Kontrola 10: kazda lokalna sciezka w <script src>, <link href> oraz
+    kazdy import modulu ES (`from '...'` i `import('...')` wewnatrz
+    <script type="module">) musi wskazywac na plik, ktory naprawde istnieje.
+
+    Dopisane po tym, jak zla wzgledna sciezka do assets/sky3d.js w Tomie 2,
+    Rozdziale 33 przetrwala przenosiny tresci do tom2/ niezauwazona —
+    przegladarka po prostu nie odpalala widgetu, a "sprawdz" tego nie lapal,
+    bo martwe linki kontrolowane byly tylko dla href=".html".
+    """
+    for path in paths:
+        html = open(path, encoding='utf-8').read()
+        base = os.path.dirname(path)
+        rel = os.path.relpath(path, ROOT)
+
+        for tag, attr in (('script', 'src'), ('link', 'href')):
+            for m in re.finditer(rf'<{tag}\b[^>]*?\s{attr}="([^"]+)"', html):
+                url = m.group(1)
+                if _external(url):
+                    continue
+                target = os.path.normpath(os.path.join(base, url))
+                if not os.path.exists(target):
+                    problems.append(
+                        f'{label} ZASOB       {rel}: <{tag} {attr}="{url}"> nie istnieje')
+
+        for mod in re.finditer(r'<script\s+type="module"[^>]*>(.*?)</script>', html, re.S):
+            body = mod.group(1)
+            importy = re.findall(r'''\bfrom\s+['"]([^'"]+)['"]''', body)
+            importy += re.findall(r'''\bimport\(\s*['"]([^'"]+)['"]''', body)
+            for url in importy:
+                if _external(url):
+                    continue
+                target = os.path.normpath(os.path.join(base, url))
+                if not os.path.exists(target):
+                    problems.append(
+                        f'{label} IMPORT       {rel}: modul "{url}" nie istnieje')
 
 
 def _sprawdz_przekierowania(problems):
@@ -591,6 +638,7 @@ def _sprawdz_przekierowania(problems):
             target = os.path.normpath(os.path.join(base, href))
             if not os.path.exists(target):
                 problems.append(f'T0 MARTWY LINK index.html -> {href}')
+        _sprawdz_zasoby([root_index], problems, 'T0')
 
 
 def cmd_sprawdz(tom=None):

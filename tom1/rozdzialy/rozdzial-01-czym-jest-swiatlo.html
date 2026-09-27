@@ -43,7 +43,228 @@ window.SKY3D_MESSAGES = {
   <h1>Czym właściwie jest światło</h1>
   <p class="subtitle">W rendererze światło to liczba RGB na promieniu. W świecie to fala pola elektromagnetycznego o długości kilku tysięcy średnic atomu, która na dodatek przychodzi porcjami — i oba te fakty będą ci potrzebne.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li>Renderer traktuje światło jak liczbę RGB przypiętą do promienia. Fizycznie to <span class="term-amber">fala pola elektromagnetycznego</span> — ma długość λ i częstotliwość f, powiązane przez c = λ·f — a to, co widzisz jako kolor, mieści się w wąskiej szczelinie od 380 do 750 nanometrów.</li>
+      <li>Ta sama fala ma drugi opis: <span class="term-amber">porcję energii</span>, foton, o energii E_γ = hc/λ. W nanometrach i elektronowoltach to po prostu E_γ ≈ 1240/λ. Fala i porcja to nie dwie konkurujące teorie, tylko dwa narzędzia rachunkowe do tej samej rzeczy.</li>
+      <li><span class="term-raster">Kolor nie jest długością fali</span> — jest odpowiedzią trzech typów czopków (albo trzech kanałów matrycy) na całe widmo naraz. Dlatego dwa zupełnie różne widma mogą dać identyczny kolor (metameria), a lampa sodowa, świecąca jedną linią 589 nm, jest fizycznie czymś innym niż żółty piksel RGB.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Co widzisz · pryzmat i lampa sodowa</div>
+    <h2>Fala, która niesie kolor</h2>
+
+    <p>Przełóż białe światło przez pryzmat i rozłoży się w ciągłą wstęgę barw, od fioletu do czerwieni, bez żadnych przerw. Zapal obok lampę sodową uliczną i przełóż jej światło przez ten sam pryzmat — dostaniesz jedną, ostrą, pomarańczową kreskę. Prawie żadnego innego koloru. Ten kontrast jest pierwszym śladem tego, czym naprawdę jest światło.</p>
+
+    <p>Białe światło żarówki to mieszanka <span class="term-amber">fal elektromagnetycznych</span> o wszystkich długościach naraz, w proporcjach opisanych ciągłą krzywą. Lampa sodowa emituje niemal wyłącznie jedną długość, 589 nanometrów, bo elektrony w atomach sodu przeskakują między dwoma konkretnymi poziomami energii i nic innego po drodze im się nie zdarza — do tego przeskoku wrócimy w rozdziałach o atomie. Na razie ważne jest samo pojęcie: <strong>światło jest falą</strong>, a długość tej fali, λ, jest tym, co fizycznie odróżnia jedną barwę od drugiej.</p>
+
+    <div class="sim" id="widmoSim">
+      <div class="sim__stage"><canvas width="600" height="160"></canvas></div>
+      <div class="sim__bar">
+        <button class="sim__btn" data-zrodlo="zarowka">żarówka</button>
+        <button class="sim__btn" data-zrodlo="sod">lampa sodowa</button>
+        <button class="sim__btn" data-zrodlo="neon">neonówka</button>
+      </div>
+      <div class="sim__caption" id="widmoPodpis">Żarówka: widmo ciągłe, wszystkie długości fali naraz.</div>
+    </div>
+
+    <p>Różnica między tymi trzema widmami nie jest kwestią gustu producenta lampy. Żarówka grzeje włókno do żaru — a rozgrzane ciało stałe emituje wszystkie długości fali naraz, bo drgania atomów w sieci krystalicznej nie są ograniczone do kilku ściśle wybranych częstotliwości. Sód i neon w rurce wyładowczej to osobne atomy w gazie, każdy z własnym, dyskretnym zestawem dozwolonych poziomów energii — dlatego świecą tylko na tych kilku długościach, które akurat pasują do różnicy między poziomami, i na żadnej innej.</p>
+
+    <p>Fala ma też częstotliwość f — liczbę drgań na sekundę — i obie wielkości wiąże ze sobą prędkość, z jaką fala się porusza:</p>
+
+    <div class="formula">
+      <span class="vec" data-tip="Prędkość światła w próżni: 2,998·10⁸ m/s, w tekście zaokrąglana do 300 000 km/s.">c</span> = <span class="vec" data-tip="Długość fali — odległość między kolejnymi grzbietami. W nanometrach dla światła widzialnego.">λ</span> · <span class="vec" data-tip="Częstotliwość — liczba drgań pola na sekundę, w hercach.">f</span>
+      <span class="sub">c — prędkość światła w próżni, λ — długość fali, f — częstotliwość. Im krótsza fala, tym wyższa częstotliwość — iloczyn jest stały.</span>
+    </div>
+
+    <p>Dla zieleni przy 550 nanometrów wychodzi f ≈ 5,45·10¹⁴ Hz — pole zmienia kierunek pięćset bilionów razy na sekundę, czyli co T ≈ 1,8 femtosekundy. Żaden układ elektroniczny nie zarejestruje pojedynczego drgania tej fali; wszystko, co matryca albo oko mierzy, jest już uśrednione po miliardach takich okresów.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Widmo elektromagnetyczne</span><span>skala logarytmiczna długości fali</span></div>
+      <div class="diagram-controls">
+        <label for="emLambda">Długość fali</label>
+        <input id="emLambda" type="range" min="-3" max="10" step="0.01" value="2.74">
+        <span class="value-readout" id="emOdczytLambda">550 nm</span>
+      </div>
+      <svg viewBox="0 0 760 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Pasek widma elektromagnetycznego od promieniowania gamma po fale radiowe, w skali logarytmicznej długości fali, z wąskim widocznym paskiem barw pośrodku i suwakiem wskazującym wybraną długość.">
+        <g id="emPasma" font-family="IBM Plex Mono" font-size="10" fill="#e8a33d" fill-opacity="0.22">
+          <rect x="60" y="90" width="49.2" height="40"/>
+          <rect x="109.2" y="90" width="147.7" height="40"/>
+          <rect x="256.9" y="90" width="77.8" height="40"/>
+          <rect x="349.2" y="90" width="153.9" height="40"/>
+          <rect x="503.1" y="90" width="196.9" height="40"/>
+        </g>
+        <rect id="emWidzialne" x="334.7" y="90" width="14.5" height="40" fill="url(#emGrad)"/>
+        <defs>
+          <linearGradient id="emGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#6b3fa0"/>
+            <stop offset="30%" stop-color="#3f4fd0"/>
+            <stop offset="55%" stop-color="#4fbf5a"/>
+            <stop offset="75%" stop-color="#e8d43d"/>
+            <stop offset="100%" stop-color="#c23b3b"/>
+          </linearGradient>
+        </defs>
+        <g font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b" text-anchor="middle">
+          <text x="84" y="146">gamma</text>
+          <text x="183" y="146">rentgen</text>
+          <text x="295" y="146">UV</text>
+          <text x="426" y="146">podczerwień</text>
+          <text x="601" y="146">fale radiowe</text>
+        </g>
+        <line x1="341.9" y1="90" x2="341.9" y2="50" stroke="#e8a33d" stroke-width="1"/>
+        <text x="341.9" y="40" font-family="IBM Plex Mono" font-size="10.5" fill="#e8a33d" text-anchor="middle">widzialne · 380–750 nm</text>
+        <text x="341.9" y="24" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">wąska szczelina w całym widmie</text>
+        <line id="emMarkerLinia" x1="342" y1="90" x2="342" y2="130" stroke="#ecebe4" stroke-width="1.5"/>
+        <polygon id="emMarker" points="342,130 335,142 349,142" fill="#ecebe4"/>
+        <line x1="60" y1="196" x2="700" y2="196" stroke="#2a2f38" stroke-width="1"/>
+        <text x="60" y="214" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">długie fale, mała energia fotonu</text>
+        <text x="700" y="214" font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="end">krótkie fale, duża energia fotonu</text>
+      </svg>
+      <div class="diagram-caption" id="emPodpis">550 nm · światło widzialne — f ≈ 5,45·10¹⁴ Hz, T ≈ 1,82·10⁻¹⁵ s, E_γ ≈ 2,25 eV.</div>
+    </div>
+
+    <p>Zwróć uwagę, jak wąski jest pasek światła widzialnego na tle całego widma — kilkanaście pikseli na rysunku obejmującym trzynaście rzędów wielkości. Radio, mikrofale, podczerwień, ultrafiolet, rentgen i gamma to dokładnie ta sama fala EM, różniąca się tylko λ i f. Fakt, że akurat ten wąski wycinek jest dla nas „światłem”, nie jest przypadkiem — wraca w bloku „Zaawansowane” niżej.</p>
+
+    <button class="advanced-btn" data-modal-target="adv-okno">Zaawansowane: dlaczego akurat 380–750 nm</button>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Skala · fala kontra atom</div>
+    <h2>Fala jest ogromna wobec tego, co mija</h2>
+
+    <p>Atom ma średnicę rzędu <span class="term-cyan">0,1 nanometra</span>; jego jądro jest jeszcze pięćdziesiąt tysięcy razy mniejsze. Fala widzialna o długości 550 nanometrów jest więc od pojedynczego atomu większa o czynnik rzędu <strong>pięciu tysięcy</strong>. To nie jest drobna różnica skali — to jest różnica, która decyduje, jak fala „widzi” materię.</p>
+
+    <p>Dla fali o takiej długości pojedynczy atom jest niewidoczny — zbyt mały, żeby cokolwiek z nim „zrobić” osobno. Fala reaguje dopiero na uporządkowane zbiorowości atomów, warstwy grubości ułamka swojej długości. To dlatego szkło, mimo że zbudowane z dyskretnych atomów oddalonych od siebie o dziesiąte części nanometra, zachowuje się dla światła jak ośrodek gładki i ciągły — a nie jak chmura drobnych przeszkód rozpraszających je we wszystkie strony. Do tej właśnie różnicy skali wrócimy w rozdziale o tym, dlaczego szkło jest przezroczyste, a mgła nie.</p>
+
+    <p>Ta sama proporcja — rozmiar przeszkody względem λ — wraca w tej książce bez końca i rozstrzyga rzeczy z pozoru odległe od siebie: dlaczego niebo jest niebieskie, a mgła biała (<a href="rozdzial-13-rayleigh.html">Rozdział 13</a>), i dlaczego przymykanie przysłony w pewnym momencie przestaje poprawiać ostrość (<a href="../../tom2/rozdzialy/rozdzial-10-dyfrakcja.html">Tom 2, Rozdział 10</a>).</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Skale, które się porównują</span><span>oś logarytmiczna</span></div>
+      <svg viewBox="0 0 760 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Oś logarytmiczna porównująca rozmiar atomu, cząsteczki azotu, wirusa, długość fali światła 550 nanometrów i grubość ludzkiego włosa.">
+        <line x1="50" y1="170" x2="720" y2="170" stroke="#8b909b" stroke-width="1.5"/>
+        <g font-family="IBM Plex Mono" font-size="10" fill="#8b909b" text-anchor="middle">
+          <line x1="70" y1="164" x2="70" y2="176" stroke="#8b909b"/><text x="70" y="194">0,1 nm</text>
+          <line x1="230" y1="164" x2="230" y2="176" stroke="#8b909b"/><text x="230" y="194">10 nm</text>
+          <line x1="390" y1="164" x2="390" y2="176" stroke="#8b909b"/><text x="390" y="194">1 µm</text>
+          <line x1="550" y1="164" x2="550" y2="176" stroke="#8b909b"/><text x="550" y="194">100 µm</text>
+          <line x1="700" y1="164" x2="700" y2="176" stroke="#8b909b"/><text x="700" y="194">1 cm</text>
+        </g>
+        <g font-family="IBM Plex Mono" font-size="10.5">
+          <circle cx="70" cy="170" r="5" fill="#4fc3c0"/>
+          <line x1="70" y1="164" x2="70" y2="112" stroke="#4fc3c0" stroke-width="1"/>
+          <text x="70" y="102" fill="#4fc3c0" text-anchor="middle">atom · 0,1 nm</text>
+
+          <circle cx="118" cy="170" r="5" fill="#4fc3c0"/>
+          <line x1="118" y1="176" x2="118" y2="218" stroke="#4fc3c0" stroke-width="1"/>
+          <text x="118" y="232" fill="#4fc3c0" text-anchor="middle">N₂ · 0,3 nm</text>
+
+          <circle cx="358" cy="170" r="5" fill="#4fc3c0"/>
+          <line x1="358" y1="164" x2="358" y2="112" stroke="#4fc3c0" stroke-width="1"/>
+          <text x="358" y="102" fill="#4fc3c0" text-anchor="middle">wirus · 100 nm</text>
+
+          <circle cx="382" cy="170" r="5" fill="#e8a33d"/>
+          <line x1="382" y1="176" x2="382" y2="218" stroke="#e8a33d" stroke-width="1"/>
+          <text x="382" y="232" fill="#e8a33d" text-anchor="middle">λ światła · 550 nm</text>
+
+          <circle cx="614" cy="170" r="5" fill="#4fc3c0"/>
+          <line x1="614" y1="164" x2="614" y2="112" stroke="#4fc3c0" stroke-width="1"/>
+          <text x="614" y="102" fill="#4fc3c0" text-anchor="middle">włos · 70 µm</text>
+        </g>
+        <text x="50" y="30" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">każdy krok w prawo to dziesięciokrotność</text>
+      </svg>
+      <div class="diagram-caption">Fala światła jest tysiące razy większa od atomu i tysiące razy mniejsza od włosa — dokładnie pośrodku między dwiema skalami, którymi zwykle myślisz.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Porcje · foton</div>
+    <h2>Ta sama fala, policzona w porcjach</h2>
+
+    <p>Fala tłumaczy dyfrakcję, interferencję i polaryzację — wszystko, co spotkasz w dalszej części tomu. Nie tłumaczy jednak jednej rzeczy: dlaczego matryca albo oko rejestrują światło <em>ziarniście</em>, jakby przychodziło porcjami, a nie ciągłym strumieniem. Przy bardzo słabym oświetleniu czujnik nie rejestruje coraz słabszego sygnału — rejestruje coraz rzadsze, pojedyncze zdarzenia. Ta porcja nazywa się <span class="term-amber">fotonem</span>.</p>
+
+    <p>Foton nie jest kulką lecącą po torze — to najczęstszy błąd w wyobrażaniu go sobie. Jest to po prostu <strong>ilość energii, jaką fala danej częstotliwości może oddać albo zabrać za jednym razem</strong>, i nic więcej. Energia jednego fotonu rośnie wprost proporcjonalnie do częstotliwości fali:</p>
+
+    <div class="formula">
+      <span class="vec" data-tip="Energia pojedynczego fotonu, zwykle wyrażana w elektronowoltach (eV).">E_γ</span> = <span class="vec" data-tip="Stała Plancka: 6,626·10⁻³⁴ J·s, albo 4,136·10⁻¹⁵ eV·s.">h</span> · <span class="vec" data-tip="Częstotliwość fali w hercach.">f</span> = <span class="vec" data-tip="Stała Plancka razy prędkość światła.">h</span><span class="vec" data-tip="Prędkość światła w próżni.">c</span> / <span class="vec" data-tip="Długość fali w nanometrach dla wygodnej wersji wzoru z liczbą 1240.">λ</span>
+      <span class="sub">E_γ — energia fotonu, h — stała Plancka, f — częstotliwość, c — prędkość światła, λ — długość fali. Wygodna wersja liczbowa: E_γ[eV] ≈ 1240 / λ[nm].</span>
+    </div>
+
+    <p>Dla granic widma widzialnego wychodzi <strong>1,65 eV przy 750 nm i 3,26 eV przy 380 nm</strong> — zielone 550 nm daje 2,25 eV. To skala energii chemicznych wiązań, nie przypadkiem: przekonasz się o tym w bloku „Zaawansowane” niżej i w rozdziałach o tym, jak materia w ogóle reaguje na światło. Matryca w kamerze dosłownie liczy te porcje — każdy piksel zlicza fotony, które w niego trafiły w czasie ekspozycji, a szum, który widzisz w cieniach nocnego ujęcia, jest w dużej mierze statystyką zliczania zbyt małej ich liczby. Mechanizm tego liczenia rozwija <a href="../../tom2/rozdzialy/rozdzial-27-od-fotonow-do-liczb.html">Tom 2, Rozdział 27</a>.</p>
+
+    <p>Fala i foton nie są dwiema konkurującymi teoriami światła między którymi trzeba wybrać. Są dwoma opisami tej samej rzeczy, każdy wygodny do innych pytań: fala odpowiada, <em>gdzie</em> światło trafi i jak się rozłoży w przestrzeni, foton — <em>ile energii</em> niesie pojedyncze zdarzenie rejestracji. Renderer spektralny i matryca w kamerze używają obu opisów naraz, bez sprzeczności — i nie ma tu żadnego głębszego paradoksu, o którym trzeba filozofować. „Falo-cząstkowy dualizm” brzmi tajemniczo tylko dopóki nie zapytasz wprost, do czego akurat potrzebujesz odpowiedzi: do rozkładu energii w przestrzeni, czy do tego, jak duże porcje ta energia tworzy.</p>
+
+    <p>Warto też z góry odrzucić drugi obrazek, równie kuszący co błędny: że foton jest małą kulką, która leci po prostej niczym pocisk, tyle że bardzo mała. Ten model natychmiast psuje się przy pierwszym pytaniu o dyfrakcję czy interferencję — zjawiskach, które wymagają fali z fazą, a nie punktowej cząstki. Bezpieczniejszy obraz w głowie: <span class="term-amber">to zawsze jest fala</span>, a „foton” to tylko nazwa dla tego, w jak dużych porcjach ta fala oddaje albo pobiera energię przy oddziaływaniu z materią.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Kolor · wielkość, nie nazwa</div>
+    <h2>Kolor to nie długość fali</h2>
+
+    <p>Skoro λ jest fizyczną miarą barwy, kuszące jest powiedzieć, że „kolor to długość fali”. To skrót, który w tej książce trzeba od razu odrzucić. Prawdziwe światło, poza laserem czy lampą sodową, niesie <strong>całe widmo naraz</strong> — mieszankę wielu długości fali w różnych proporcjach. To, co nazywasz kolorem, jest odpowiedzią twojego oka (albo matrycy) na tę całą mieszankę, skompresowaną do zaledwie trzech liczb.</p>
+
+    <p>Oko ma trzy typy czopków, każdy z inną krzywą czułości na długość fali — w przybliżeniu krótkofalowy, średniofalowy i długofalowy. Matryca robi dokładnie to samo trzema filtrami barwnymi przed pikselami. Dowolne widmo, choćby najbardziej poszarpane, sprowadza się do trzech liczb: ile odpowiedziała każda z trzech krzywych.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Widmo → trzy odpowiedzi → jeden kolor</span><span>kształt krzywych, nie ich barwa</span></div>
+      <svg viewBox="0 0 760 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Krzywa widma wejściowego po lewej, trzy krzywe czułości oznaczone S, M, L pośrodku, łatka wynikowego koloru sRGB po prawej.">
+        <text x="20" y="26" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">WIDMO WEJŚCIOWE</text>
+        <path d="M 20 130 Q 60 60 100 130 T 180 100" fill="none" stroke="#9c82d8" stroke-width="2"/>
+        <text x="20" y="150" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">380</text>
+        <text x="160" y="150" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b">750 nm</text>
+
+        <text x="240" y="26" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">TRZY CZUŁOŚCI OKA / MATRYCY</text>
+        <path d="M 240 140 Q 268 70 296 140" fill="none" stroke="#6e93be" stroke-width="2"/>
+        <path d="M 300 140 Q 340 55 380 140" fill="none" stroke="#6e93be" stroke-width="2" stroke-dasharray="6 4"/>
+        <path d="M 384 140 Q 430 75 480 140" fill="none" stroke="#6e93be" stroke-width="2" stroke-dasharray="2 3"/>
+        <text x="268" y="158" font-family="IBM Plex Mono" font-size="9.5" fill="#6e93be" text-anchor="middle">S</text>
+        <text x="340" y="158" font-family="IBM Plex Mono" font-size="9.5" fill="#6e93be" text-anchor="middle">M</text>
+        <text x="430" y="158" font-family="IBM Plex Mono" font-size="9.5" fill="#6e93be" text-anchor="middle">L</text>
+
+        <path d="M 480 100 L 540 100" stroke="#ecebe4" stroke-width="1.5" marker-end="url(#emStrzalka)"/>
+        <defs>
+          <marker id="emStrzalka" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ecebe4"/></marker>
+        </defs>
+
+        <text x="640" y="26" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">WYNIK</text>
+        <rect x="590" y="50" width="100" height="90" rx="6" fill="#5aa062" stroke="#6e93be" stroke-width="2"/>
+        <text x="640" y="160" font-family="IBM Plex Mono" font-size="9.5" fill="#6e93be" text-anchor="middle">jeden kolor sRGB</text>
+        <text x="640" y="176" font-family="IBM Plex Mono" font-size="9.5" fill="#8b909b" text-anchor="middle">trzy liczby zamiast widma</text>
+      </svg>
+      <div class="diagram-caption">Krzywe czułości są tu narysowane w kolorze raster, bo liczy się ich kształt jako filtra — nie fizyczna barwa, której same nie mają.</div>
+    </div>
+
+    <p>Stąd bierze się <strong>metameria</strong>: dwa różne widma, które dają identyczną trójkę odpowiedzi, wyglądają dla ciebie jako dokładnie ten sam kolor, mimo że fizycznie są zupełnie różnymi mieszankami fal. To codzienność w produkcji — próbka farby dopasowana pod światło dzienne potrafi „zejść” pod żarówką LED, bo widma są różne, choć w jednym oświetleniu dawały ten sam odczyt. Ten temat, łącznie z tym, jak renderery reprezentują kolor i dlaczego trzy kanały czasem nie wystarczają, rozwija <a href="https://bartoszskrzypiec.github.io/lookdev-book/" target="_blank" rel="noopener">lookdev-book</a>.</p>
+
+    <p class="deeper-inline">Konsekwencje dla rendererów widmowych kontra RGB — Rozdział 16 (dyspersja) i Rozdział 24 (powłoki), Tom 2.</p>
+  </div>
+
+  <div class="panel practice">
+    <div class="panel-label">Z praktyki</div>
+    <p><strong>Renderer RGB kontra spektralny: co tracisz przy trzech „długościach fali”.</strong> Renderer trzykanałowy udaje, że każdy piksel niesie dokładnie trzy liczby — czerwień, zieleń, błękit jako reprezentanci trzech pasm. To wystarcza, dopóki liczysz proste odbicia. Zaczyna kłamać, gdy w scenie pojawia się coś, co reaguje na widmo w sposób nieliniowy w wąskim zakresie: dyspersja w pryzmacie albo szkle o dużej mocy, cienkowarstwowa powłoka, sód uliczny. Renderer spektralny dzieli widmo na kilkanaście do kilkudziesięciu pasm i dopiero na końcu konwertuje do RGB — drożej, ale poprawnie.</p>
+    <p><strong>Lampa sodowa jest pułapką przy zgraniu koloru.</strong> Ponieważ emituje niemal jedną długość fali, żadna korekcja bilansu bieli nie odtworzy pod nią neutralnych kolorów — nie ma tam widma, z którego dałoby się je „wydobyć”. Jeśli w kadrze jest lampa sodowa, licz się z tym, że wszystko poza jej wąskim pasmem po prostu wyjdzie martwe.</p>
+    <p><strong>Kiedy licznik fotonów w rendererze zaczyna szumieć, to nie bug.</strong> Przy niskich poziomach światła zliczasz dosłownie pojedyncze porcje energii — im mniej próbek na piksel, tym bliżej jesteś realnego szumu śrutowego matrycy, nie artefaktu silnika.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>widmo elektromagnetyczne</dt>
+      <dd>Pełny zakres fal EM od radiowych po gamma, różniących się wyłącznie długością fali i częstotliwością. Światło widzialne to wąski wycinek: 380–750 nm.</dd>
+      <dt>długość fali (λ) i częstotliwość (f)</dt>
+      <dd>Dwie powiązane miary fali: c = λ·f. Krótsza fala oznacza wyższą częstotliwość i wyższą energię fotonu.</dd>
+      <dt>foton i elektronowolt (eV)</dt>
+      <dd>Foton to porcja energii niesiona przez falę o danej częstotliwości, E_γ = hc/λ. Elektronowolt jest wygodną jednostką energii w tej skali — światło widzialne mieści się między 1,65 a 3,26 eV.</dd>
+      <dt>kolor ≠ długość fali</dt>
+      <dd>Kolor jest odpowiedzią trzech typów czopków (albo trzech kanałów matrycy) na całe widmo naraz, nie fizyczną wielkością samego światła. Dwa różne widma mogą dać identyczny kolor — to metameria.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Ustaliliśmy, że światło jest falą pola elektromagnetycznego. Zostało jeszcze pytanie, co dokładnie faluje i jak to działa na materię — bo to właśnie pole, a nie sama fala w oderwaniu od niczego, jest tym, co pcha elektrony w atomach i uruchamia całą resztę tego tomu. W <a href="rozdzial-02-pole-e-i-b.html">następnym rozdziale</a> rozbierzemy falę na pole E i pole B, i zobaczymy, dlaczego w optyce prawie zawsze liczy się tylko jedno z nich.</p>
+  </div>
 
   <div class="deeper">
     <div class="deeper-label">Idź głębiej</div>
@@ -56,8 +277,155 @@ window.SKY3D_MESSAGES = {
       <a class="nav-next" href="rozdzial-02-pole-e-i-b.html">Następny →</a>
   </div>
 
+  <template id="adv-okno">
+    <h3>Dlaczego akurat 380–750 nm</h3>
+    <p>Okno widzialności nie jest przypadkiem biologii — jest skrzyżowaniem trzech niezależnych ograniczeń, z których każde samo zawęziłoby użyteczny zakres światła gdzieś w tę samą okolicę.</p>
+    <p>Po pierwsze, Słońce. Powierzchnia Słońca ma temperaturę około 5800 K, a promieniowanie ciała o takiej temperaturze ma maksimum mocy właśnie w okolicach żółtej zieleni — to samo prawo Wiena, które przesuwa maksimum żarówki w stronę czerwieni przy niższej temperaturze włókna. Ewolucja budowała detektor tam, gdzie fotonów jest najwięcej za darmo.</p>
+    <p>Po drugie, atmosfera i woda. Ozon w górnych warstwach atmosfery odcina praktycznie całe promieniowanie poniżej około 300 nm, zanim dotrze do powierzchni. Para wodna i CO₂ odcinają pasma w bliskiej podczerwieni. Między tymi dwoma ścianami zostaje właśnie okno kilkuset nanometrów, w którym atmosfera jest w miarę przezroczysta.</p>
+    <p>Po trzecie, chemia samego oka. Energia fotonu w tym oknie, 1,65–3,26 eV, jest tego samego rzędu co energie pojedynczych wiązań chemicznych w cząsteczkach barwników wzrokowych — wystarczająco duża, żeby zmienić kształt cząsteczki i wywołać sygnał nerwowy, ale nie na tyle duża, żeby rutynowo rwać wiązania i niszczyć tkankę, jak robi to ultrafiolet. Górna granica pasma wynika w dużej mierze z szumu termicznego samego barwnika, a nie z braku fotonów — to jest przybliżenie, warte sprawdzenia, jeśli temat cię wciągnie, bo dokładny mechanizm progu 750 nm bywa w źródłach opisywany różnie.</p>
+    <p>Żadne z tych trzech ograniczeń nie tłumaczy okna samo z siebie — dopiero wspólnie zawężają je do tego samego kilkusetnanometrowego pasma, w którym akurat żyjemy.</p>
+  </template>
+
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-panel">
+      <button class="modal-close" data-modal-close aria-label="Zamknij">×</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
 </div>
 
 <script src="../../assets/interactive.js"></script>
+<script>
+/* Widmo EM: suwak podaje log10(lambda w nm) wprost, zakres -3..10 (od promieniowania
+   gamma po fale dlugie radiowe). Odczyt f, T i E_gamma liczony wprost ze wzorow
+   c = lambda*f i E = h*c/lambda, formatowany w notacji naukowej z przecinkiem. */
+(function () {
+  var sl = document.getElementById('emLambda');
+  if (!sl) return;
+  var C = 2.998e8;      // m/s
+  var H_EV = 4.136e-15; // eV*s
+
+  var supMap = {'-':'⁻','0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'};
+  function sup(n) {
+    return String(n).split('').map(function (c) { return supMap[c] || c; }).join('');
+  }
+  function sci(x) {
+    if (x === 0) return '0';
+    var e = Math.floor(Math.log10(Math.abs(x)));
+    var m = x / Math.pow(10, e);
+    m = Math.round(m * 100) / 100;
+    if (Math.abs(m) >= 10) { m /= 10; e += 1; }
+    return m.toFixed(2).replace('.', ',') + '·10' + sup(e);
+  }
+  function formatNm(nm) {
+    if (nm >= 0.01 && nm < 1000000) {
+      var dec = nm >= 100 ? 0 : (nm >= 10 ? 1 : (nm >= 1 ? 2 : 3));
+      return nm.toFixed(dec).replace('.', ',') + ' nm';
+    }
+    return sci(nm) + ' nm';
+  }
+  function pasmo(v) {
+    if (v < -2) return 'promieniowanie gamma';
+    if (v < 1) return 'promieniowanie rentgenowskie';
+    if (v < 2.5798) return 'ultrafiolet';
+    if (v <= 2.8751) return 'światło widzialne';
+    if (v < 6) return 'podczerwień';
+    return 'fale radiowe';
+  }
+  var X0 = 60, X1 = 700, V0 = -3, V1 = 10;
+  function xAt(v) { return X0 + (v - V0) / (V1 - V0) * (X1 - X0); }
+
+  var marker = document.getElementById('emMarker');
+  var markerLinia = document.getElementById('emMarkerLinia');
+  var podpis = document.getElementById('emPodpis');
+  var odczyt = document.getElementById('emOdczytLambda');
+
+  function odswiez() {
+    var v = parseFloat(sl.value);
+    var nm = Math.pow(10, v);
+    var lambdaM = nm * 1e-9;
+    var f = C / lambdaM;
+    var T = 1 / f;
+    var Eg = H_EV * f;
+
+    var x = xAt(v).toFixed(1);
+    marker.setAttribute('points', x + ',130 ' + (x - 7) + ',142 ' + (Number(x) + 7) + ',142');
+    markerLinia.setAttribute('x1', x); markerLinia.setAttribute('x2', x);
+
+    odczyt.textContent = formatNm(nm);
+    podpis.textContent = formatNm(nm) + ' · ' + pasmo(v) + ' — f ≈ ' + sci(f) +
+      ' Hz, T ≈ ' + sci(T) + ' s, E_γ ≈ ' + sci(Eg) + ' eV.';
+  }
+  sl.addEventListener('input', odswiez);
+  odswiez();
+})();
+</script>
+<script>
+/* Widmo ciagle (zarowka) kontra liniowe (sod, neon). Zarowka: gradient
+   ciagly na calym zakresie 380-750 nm. Sod/neon: tlo prawie czarne,
+   jasne pojedyncze kreski tylko przy dlugosciach fali, na ktorych atom
+   faktycznie emituje. */
+(function () {
+  var host = document.getElementById('widmoSim');
+  if (!host) return;
+  var cv = host.querySelector('canvas');
+  if (!cv || !cv.getContext) return;
+  var ctx = cv.getContext('2d');
+  var W = cv.width, H = cv.height;
+  var XL = 40, XR = W - 40, YT = 24, YB = 116;
+
+  var LINIE = {
+    sod:  [{ nm: 589, kolor: '#ffc266' }],
+    neon: [{ nm: 585, kolor: '#ffd28a' }, { nm: 640, kolor: '#ff8a4d' }, { nm: 703, kolor: '#e0554f' }]
+  };
+  var OPISY = {
+    zarowka: 'Żarówka: widmo ciągłe, wszystkie długości fali naraz.',
+    sod: 'Lampa sodowa: prawie cała energia w jednej linii, 589 nm.',
+    neon: 'Neonówka: kilka wąskich linii, dominująca w pomarańczy ok. 640 nm.'
+  };
+
+  function nmDoX(nm) { return XL + (nm - 380) / (750 - 380) * (XR - XL); }
+
+  function rysuj(tryb) {
+    ctx.fillStyle = '#0d0f14';
+    ctx.fillRect(0, 0, W, H);
+
+    if (tryb === 'zarowka') {
+      var g = ctx.createLinearGradient(XL, 0, XR, 0);
+      g.addColorStop(0, '#6b3fa0'); g.addColorStop(0.30, '#3f4fd0');
+      g.addColorStop(0.55, '#4fbf5a'); g.addColorStop(0.75, '#e8d43d');
+      g.addColorStop(1, '#c23b3b');
+      ctx.fillStyle = g;
+      ctx.fillRect(XL, YT, XR - XL, YB - YT);
+    } else {
+      ctx.fillStyle = '#15171d';
+      ctx.fillRect(XL, YT, XR - XL, YB - YT);
+      (LINIE[tryb] || []).forEach(function (l) {
+        var x = nmDoX(l.nm);
+        ctx.fillStyle = l.kolor;
+        ctx.fillRect(x - 3, YT, 6, YB - YT);
+      });
+    }
+
+    ctx.fillStyle = '#8b909b';
+    ctx.font = '11px "IBM Plex Mono", monospace';
+    ctx.fillText('380 nm', XL, YB + 20);
+    ctx.textAlign = 'right';
+    ctx.fillText('750 nm', XR, YB + 20);
+    ctx.textAlign = 'left';
+  }
+
+  var podpis = document.getElementById('widmoPodpis');
+  host.querySelectorAll('.sim__btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var tryb = btn.getAttribute('data-zrodlo');
+      rysuj(tryb);
+      podpis.textContent = OPISY[tryb];
+    });
+  });
+  rysuj('zarowka');
+})();
+</script>
 </body>
 </html>

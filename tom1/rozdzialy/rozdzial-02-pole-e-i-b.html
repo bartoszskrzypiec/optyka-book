@@ -44,7 +44,214 @@ window.SKY3D_MESSAGES = {
   <h1>Pole E i B: fala, która pcha ładunki</h1>
   <p class="subtitle">Fala świetlna to nie coś, co faluje — to pole, które w każdym punkcie pcha ładunek to w jedną, to w drugą stronę, kilkaset bilionów razy na sekundę. Cała reszta tego tomu to odpowiedź materii na to pchnięcie.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li>Fala świetlna to nie coś, co samo faluje — to <span class="term-amber">pole elektryczne E</span>, obecne w każdym punkcie przestrzeni, które pcha każdy napotkany ładunek: <span class="term-amber">F = qE</span>. Nie ma ładunku, nie ma siły — ale pole tam jest i tak.</li>
+      <li>Polu E towarzyszy <span class="term-amber">pole magnetyczne B</span>, prostopadłe do E i do kierunku, w którym fala biegnie. Ponieważ B = E/c, siła magnetyczna na swobodny ładunek jest ułamku v/c mniejsza od elektrycznej — w optyce liczy się prawie wyłącznie E.</li>
+      <li>Kierunek, w którym drga E, to <strong>polaryzacja światła</strong>: liniowa, kołowa albo — jak w większości naturalnego światła — żadna konkretna, czyli niespolaryzowana. Polaryzator przepuszcza tylko jedną składową, według prawa Malusa I = I₀cos²θ.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Punkt wyjścia · siła czekająca na ładunek</div>
+    <h2>Pole, które czeka na ładunek</h2>
+
+    <p>Załóż okulary polaryzacyjne i spójrz na taflę wody albo na mokrą jezdnię w słońcu — olśniewający odblask gaśnie, choć nic w scenie się nie zmieniło. Obróć filtr polaryzacyjny o dziewięćdziesiąt stopni nad ekranem laptopa, a ekran zrobi się czarny. Oba te triki działają, bo światło ma coś, czego promień z rysunku soczewki nigdy nie pokazuje: <strong>kierunek, w którym coś w nim drga</strong>.</p>
+
+    <p>Tym czymś jest pole elektryczne. Warto od razu odróżnić pole od siły, bo to rozróżnienie prowadzi przez cały ten rozdział. <span class="term-amber">Pole E istnieje w danym punkcie przestrzeni niezależnie od tego, czy coś tam jest</span> — to zapisana w przestrzeni gotowość do popchnięcia. Dopiero kiedy w tym punkcie pojawi się ładunek elektryczny, pole ujawnia się jako realna siła:</p>
+
+    <div class="formula">
+      <span class="vec" data-tip="Siła działająca na ładunek, w newtonach">F</span> = <span class="vec" data-tip="Ładunek elektryczny, w kulombach. Dla elektronu ujemny, |e| = 1,602·10⁻¹⁹ C">q</span> · <span class="vec" data-tip="Natężenie pola elektrycznego w tym punkcie, w woltach na metr">E</span>
+      <span class="sub">F — siła [N], q — ładunek [C], E — natężenie pola elektrycznego [V/m]. Kierunek siły to kierunek E (dla ładunku ujemnego — kierunek przeciwny).</span>
+    </div>
+
+    <p>Fala świetlna to właśnie pole E, które w każdym punkcie przestrzeni <em>oscyluje</em> — rośnie do maksimum w jedną stronę, wraca przez zero, rośnie w drugą, i tak dalej, setki bilionów razy na sekundę. Elektron, który akurat tam się znajdzie — w atomie szkła, w cząsteczce barwnika, w krysztale matrycy — dostaje od tego pola nieustanne szturchnięcia w rytm tej oscylacji. To jedno zdanie jest fundamentem całej reszty tego tomu: każdy kolejny rozdział opisuje, co z takim popychanym elektronem się dzieje i co z tego wynika dla światła, które go mija.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Elektron pod pchnięciem pola</span><span>schemat, bez rezonansu</span></div>
+      <div class="diagram-controls">
+        <label for="chwilaElektron">Moment w cyklu</label>
+        <input id="chwilaElektron" type="range" min="0" max="100" step="1" value="25">
+        <span class="value-readout" id="chwilaElektronOdczyt">25% okresu</span>
+      </div>
+      <svg viewBox="0 0 760 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Elektron w punkcie przestrzeni wychylany w górę i w dół przez pole elektryczne, którego strzałka rośnie i maleje w tym samym rytmie.">
+        <line x1="80" y1="130" x2="680" y2="130" stroke="#3a424d" stroke-width="1.5"/>
+        <circle cx="380" cy="130" r="3" fill="#3a424d"/>
+        <text x="380" y="152" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b" text-anchor="middle">położenie równowagi</text>
+        <line id="poleStrzalka" x1="380" y1="130" x2="380" y2="70" stroke="#e8a33d" stroke-width="3" marker-end="url(#eStrzalka)"/>
+        <defs>
+          <marker id="eStrzalka" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#e8a33d"/></marker>
+        </defs>
+        <text x="392" y="60" font-family="IBM Plex Mono" font-size="11" fill="#e8a33d">E (chwilowe)</text>
+        <circle id="elektronPunkt" cx="380" cy="90" r="9" fill="#4fc3c0"/>
+        <text x="120" y="40" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">elektron (cyan) trzymany w miejscu, popychany przez pole (amber)</text>
+        <text x="120" y="230" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">wychylenie w tym schemacie idzie zgodnie ze zwrotem chwilowego E —</text>
+        <text x="120" y="248" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">dokładny przebieg z bezwładnością i ewentualnym rezonansem: Rozdział 9</text>
+      </svg>
+      <div class="diagram-caption" id="elektronPodpis">25% okresu: pole rośnie ku górze, elektron podąża za nim. Rzeczywiste wychylenie jest o wiele rzędów wielkości mniejsze niż promień atomu — liczba w bloku „Zaawansowane" niżej.</div>
+    </div>
+
+    <p>Zwróć uwagę, że nic tu jeszcze nie mówi, <em>dlaczego</em> dany materiał reaguje na to popychanie tak, a nie inaczej — to reszta tomu, poczynając od budowy atomu w <a href="rozdzial-04-atom.html">Rozdziale 4</a>. Tutaj interesuje nas wyłącznie samo pole: skąd się bierze, jaki ma kształt w przestrzeni i co jeszcze mu towarzyszy.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Geometria fali · E, B i kierunek biegu</div>
+    <h2>Fala płaska: dwa pola naraz, pod kątem prostym</h2>
+
+    <p>Pole E nie podróżuje samo. Oscylującemu polu elektrycznemu zawsze towarzyszy oscylujące pole magnetyczne, <strong>B</strong> — a oba są ustawione w przestrzeni w jeden konkretny, sztywny sposób. W fali płaskiej, czyli takiej, jaką z dobrym przybliżeniem jest promień słońca padający na obiektyw, kierunek E, kierunek B i kierunek biegu fali są <span class="term-amber">wzajemnie prostopadłe</span> — cała trójka tworzy układ jak trzy krawędzie kartonowego pudełka spotykające się w rogu.</p>
+
+    <p>To jest właściwość, którą płaski rysunek łatwo spłaszcza do nieporozumienia, dlatego widget obok warto obrócić rączką, a nie tylko na niego popatrzeć. Ustawiony domyślnie pokazuje falę spolaryzowaną liniowo: E drga w jednej płaszczyźnie (amber), B — w płaszczyźnie prostopadłej do E, narysowane cieńszymi, półprzezroczystymi odcinkami, żeby odróżnić je od E bez wprowadzania nowego koloru. Obie strzałki rosną i maleją razem, w tym samym rytmie, przesuwając się wzdłuż osi biegu fali.</p>
+
+    <div class="viz3d" id="poleFala3D">
+      <div class="viz3d__head">
+        <p class="viz3d__title">Fala płaska: E ⊥ B ⊥ kierunek</p>
+        <p class="viz3d__sub">Obróć scenę i przełącz polaryzację. Amber = E, cieńsze półprzezroczyste odcinki = B (narysowane w tej samej skali co E dla czytelności — naprawdę B jest tysiące razy mniejsze liczbowo, bo ma inne jednostki).</p>
+      </div>
+      <div class="viz3d__stage">
+        <canvas></canvas>
+        <div class="viz3d__badge">przeciągnij, żeby obrócić</div>
+        <div class="viz3d__fallback">
+          <strong>Ten widget potrzebuje WebGL</strong>
+          <span>Akapity obok opisują tę samą rzecz w całości — widget jest ilustracją, nie nośnikiem argumentu.</span>
+        </div>
+      </div>
+      <div class="viz3d__presets">
+        <button data-warstwa="liniowa" class="is-active">Liniowa</button>
+        <button data-warstwa="kolowa">Kołowa</button>
+        <button data-warstwa="niespolaryzowana">Niespolaryzowana</button>
+      </div>
+      <p class="viz3d__note">Kołowa: koniec strzałki E kreśli w przestrzeni spiralę wokół osi biegu fali. Z boku ta sama spirala wygląda jak zwykła sinusoida — dlatego dopiero widok przestrzenny (albo patrzenie prosto wzdłuż osi, jak w diagramie niżej) odróżnia ją od liniowej. Niespolaryzowana: kierunek E skacze losowo od punktu do punktu, bez żadnej wspólnej płaszczyzny.</p>
+    </div>
+
+    <p>Dlaczego w ogóle warto śledzić B, skoro w kolejnych rozdziałach prawie nie wróci? Bo bez niego trudno uwierzyć, że pole magnetyczne fali świetlnej naprawdę istnieje, a zignorowanie go wymaga uzasadnienia, nie założenia. Siła, jaką pole B wywiera na poruszający się ładunek, jest proporcjonalna do jego prędkości i do wielkości pola:</p>
+
+    <div class="formula">
+      <span class="vec" data-tip="Indukcja pola magnetycznego fali, w teslach">B</span> = <span class="vec" data-tip="Natężenie pola elektrycznego fali, w woltach na metr">E</span> / <span class="vec" data-tip="Prędkość światła w próżni: 2,998·10⁸ m/s, czyli 300 000 km/s">c</span>
+      <span class="sub">B — indukcja pola magnetycznego [T], E — natężenie pola elektrycznego fali [V/m], c — prędkość światła w próżni. Siła magnetyczna na swobodny ładunek jest w stosunku v/c mniejsza od siły elektrycznej — dla elektronu drgającego w atomie ten stosunek jest znikomy, więc w optyce śledzimy praktycznie samo E.</span>
+    </div>
+
+    <p>Jest jeszcze jedna liczba warta zapamiętania, bo będzie wracać przy okazji rezonansu i tłumienia: dla zielonego odniesienia tej książki, 550 nanometrów, pełny okres drgań pola trwa około <strong>1,8 femtosekundy</strong> — pole zmienia zwrot na przeciwny co 0,9 femtosekundy. Żaden mechanizm mechaniczny nie nadąża za czymś tak szybkim; elektron w atomie, dzięki znikomej masie, nadąża.</p>
+
+    <button class="advanced-btn" data-modal-target="adv-woltmetr">Zaawansowane: ile to jest wolt na metr</button>
+
+    <p class="deeper-inline">Pełny zapis tego wszystkiego równaniami Maxwella, bez pomijania niczego — <a href="../dodatki/dodatek-a-maxwell-bez-strachu.html">Dodatek A</a>.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Kierunek drgania · trzy stany polaryzacji</div>
+    <h2>Polaryzacja światła: kierunek, w którym drga E</h2>
+
+    <p>Skoro pole E drga w płaszczyźnie prostopadłej do kierunku biegu fali, to wciąż zostaje pytanie, <em>w którą stronę w tej płaszczyźnie</em>. Odpowiedź na to pytanie to <strong>polaryzacja światła</strong> (polarization of light) — termin, który warto od razu odróżnić od polaryzacji ośrodka, oznaczanej <strong>P</strong>, o której będzie mowa dopiero przy materii; goła „polaryzacja" bez kontekstu w tej książce nie występuje.</p>
+
+    <p>Są trzy stany, które będziesz odróżniać przez resztę tomu. <strong>Liniowa</strong>: E drga cały czas w jednej ustalonej płaszczyźnie — jak sznur poruszany w górę i w dół. <strong>Kołowa</strong>: E ma stałą długość, ale jego kierunek obraca się w miarę biegu fali, więc koniec strzałki kreśli spiralę — dokładnie tę, którą pokazywał widget wyżej. <strong>Niespolaryzowane</strong>: to, co wychodzi ze zwykłej żarówki czy ze Słońca — kierunek E skacze losowo, bilion razy na sekundę, bo światło jest sumą niezależnych fal od miliardów niezsynchronizowanych atomów. Żadna z tych trzech płaszczyzn nie jest uprzywilejowana; to właśnie znaczy „bez polaryzacji”.</p>
+
+    <p><strong>Polaryzator</strong> to filtr, który przepuszcza tylko składową E równoległą do swojej osi, a resztę pochłania. Padnij niespolaryzowanym światłem na polaryzator: po drugiej stronie wychodzi dokładnie połowa energii, teraz uporządkowana w jedną płaszczyznę. Ustaw za nim drugi polaryzator pod kątem θ do pierwszego, a przez niego przejdzie tylko rzut tej już uporządkowanej fali na nową oś — to prawo Malusa:</p>
+
+    <div class="formula">
+      <span class="vec" data-tip="Natężenie światła po drugim polaryzatorze">I</span> = <span class="vec" data-tip="Natężenie światła po pierwszym polaryzatorze, już spolaryzowanego liniowo">I₀</span> · cos²<span class="vec" data-tip="Kąt między osiami dwóch polaryzatorów">θ</span>
+      <span class="sub">I₀ — natężenie po pierwszym polaryzatorze, θ — kąt między osiami obu filtrów, I — natężenie na wyjściu. Przy θ = 0° przechodzi wszystko, przy θ = 90° — nic.</span>
+    </div>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Dwa polaryzatory</span><span>prawo Malusa</span></div>
+      <div class="diagram-controls">
+        <label for="katPolaryzator">Kąt między osiami</label>
+        <input id="katPolaryzator" type="range" min="0" max="90" step="1" value="45">
+        <span class="value-readout" id="katPolOdczyt">45°</span>
+      </div>
+      <svg viewBox="0 0 760 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Niespolaryzowane światło pada na pierwszy polaryzator ustawiony pionowo, a potem na drugi, obracany suwakiem; grubość wiązki na wyjściu maleje wraz z kątem między nimi.">
+        <line x1="30" y1="120" x2="190" y2="120" stroke="#e8a33d" stroke-width="10" opacity="0.35"/>
+        <text x="30" y="100" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">niespolaryzowane</text>
+
+        <line x1="230" y1="50" x2="230" y2="190" stroke="#4fc3c0" stroke-width="6"/>
+        <text x="200" y="210" font-family="IBM Plex Mono" font-size="10.5" fill="#4fc3c0" text-anchor="middle">polaryzator 1</text>
+
+        <line x1="270" y1="120" x2="430" y2="120" stroke="#e8a33d" stroke-width="6"/>
+        <text x="350" y="100" font-family="IBM Plex Mono" font-size="10.5" fill="#e8a33d" text-anchor="middle">spolaryzowane pionowo</text>
+
+        <line id="polaryzator2" x1="470" y1="50" x2="470" y2="190" stroke="#4fc3c0" stroke-width="6"/>
+        <text x="470" y="210" font-family="IBM Plex Mono" font-size="10.5" fill="#4fc3c0" text-anchor="middle">polaryzator 2</text>
+
+        <line id="wiazkaWyjscie" x1="510" y1="120" x2="720" y2="120" stroke="#e8a33d" stroke-width="10"/>
+        <text x="720" y="100" font-family="IBM Plex Mono" font-size="10.5" fill="#e8a33d" text-anchor="end" id="wyjscieOpis">I/I₀ = 0,50</text>
+      </svg>
+      <div class="diagram-caption" id="polPodpis">Kąt 45°: przechodzi połowa natężenia — dokładnie w punkcie, w którym cos²θ spada najszybciej.</div>
+    </div>
+
+    <p>Suwak wart jest chwili zabawy dla dwóch skrajnych ustawień. Przy zerze wiązka na wyjściu jest tak samo gruba jak po pierwszym filtrze — drugi polaryzator w niczym nie przeszkadza, bo jest ustawiony dokładnie tak samo. Przy dziewięćdziesięciu stopniach wiązka znika całkowicie: to klasyczny układ „skrzyżowanych polaryzatorów”, na którym opiera się większość testów materiałów dwójłomnych i ciekłokrystaliczny ekran, który gaśnie, kiedy obrócisz nad nim filtr.</p>
+
+    <div class="sim" id="niespolSim">
+      <div class="sim__stage"><canvas width="600" height="220"></canvas></div>
+      <div class="sim__bar">
+        <button id="niespolLosuj" class="advanced-btn" type="button">Losuj kolejną chwilę</button>
+        <span class="value-readout" id="niespolOdczyt">kierunek losowy</span>
+      </div>
+      <div class="sim__caption" id="niespolPodpis">Każde kliknięcie to inna chwila w niespolaryzowanej wiązce: kierunek E po lewej skacze losowo, ale za polaryzatorem (prawa strona, oś pionowa) zawsze zostaje tylko rzut na tę jedną oś.</div>
+    </div>
+
+    <p>Ta symulacja tłumaczy też, skąd bierze się owo „przechodzi połowa energii” z akapitu wyżej: uśrednij rzut losowego kierunku na ustaloną oś po bardzo wielu chwilach, a średnia z cos²θ dla θ rozłożonego równomiernie wynosi dokładnie jedną drugą. Prawo Malusa dla światła uporządkowanego i owo „pół” dla światła niespolaryzowanego to ten sam wzór, tylko uśredniony po różnych rzeczach.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Widok wprost w oś biegu fali</span><span>dlaczego kołowa i liniowa mylą się z boku</span></div>
+      <svg viewBox="0 0 760 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Trzy kółka widziane wzdłuż kierunku biegu fali: liniowa polaryzacja to odcinek, kołowa to okrąg, niespolaryzowana to plątanina krótkich odcinków we wszystkich kierunkach.">
+        <g font-family="IBM Plex Mono" font-size="11" text-anchor="middle" fill="#8b909b">
+          <circle cx="160" cy="100" r="70" fill="none" stroke="#2a2f38" stroke-width="1"/>
+          <line x1="100" y1="100" x2="220" y2="100" stroke="#e8a33d" stroke-width="3"/>
+          <text x="160" y="196">liniowa</text>
+
+          <circle cx="380" cy="100" r="70" fill="none" stroke="#2a2f38" stroke-width="1"/>
+          <circle cx="380" cy="100" r="60" fill="none" stroke="#e8a33d" stroke-width="3"/>
+          <text x="380" y="196">kołowa</text>
+
+          <circle cx="600" cy="100" r="70" fill="none" stroke="#2a2f38" stroke-width="1"/>
+          <g stroke="#e8a33d" stroke-width="2.4" opacity="0.85">
+            <line x1="600" y1="60" x2="600" y2="140"/>
+            <line x1="560" y1="100" x2="640" y2="100"/>
+            <line x1="572" y1="72" x2="628" y2="128"/>
+            <line x1="572" y1="128" x2="628" y2="72"/>
+            <line x1="585" y1="65" x2="615" y2="135"/>
+            <line x1="615" y1="65" x2="585" y2="135"/>
+          </g>
+          <text x="600" y="196">niespolaryzowana</text>
+        </g>
+        <text x="30" y="24" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">patrzysz wzdłuż osi biegu fali, prosto w koniec strzałki E</text>
+      </svg>
+      <div class="diagram-caption">Z boku (rzut na płaszczyznę zawierającą kierunek biegu) kołowa i liniowa to obie zwykłe sinusoidy — dopiero patrząc wzdłuż osi widać różnicę: odcinek kontra okrąg. Stąd widget 3D wyżej.</div>
+    </div>
+
+    <p class="deeper-inline">Co dzieje się z polaryzacją przy odbiciu i dlaczego istnieje kąt, przy którym odbite światło jest spolaryzowane w stu procentach — Tom 2, <a href="../../tom2/rozdzialy/rozdzial-03-fresnel-kazda-powierzchnia-swieci.html">Rozdział 3</a>. Katalog filtrów polaryzacyjnych używanych na planie i w postprodukcji — Tom 2, <a href="../../tom2/dodatki/dodatek-ab-filtry.html">Dodatek AB</a>.</p>
+  </div>
+
+  <div class="panel practice">
+    <div class="panel-label">Z praktyki</div>
+    <p><strong>Filtr polaryzacyjny na obiektywie zdejmuje odblask w momencie zdjęcia, nie później.</strong> Obracasz go, aż nierówny, jasny refleks z wody albo z liścia zniknie — bo trafiłeś w kąt, przy którym ten konkretny odblask jest prawie w stu procentach spolaryzowany. W compie tej operacji nie da się cofnąć: informacja o kierunku drgania E nie jest zapisana w pikselu RGB, więc nie ma czego „odkręcić” filtrem w Nuke'u.</p>
+    <p><strong>Dlatego renderer zwykle w ogóle nie liczy polaryzacji.</strong> Ślad po niej jest jednak obecny pośrednio: kanał specular / reflection w AOV to w dużej mierze ta sama energia, którą w naturze niósłby odblask spolaryzowany — stąd rozdzielanie diffuse i specular w compie jest cyfrowym odpowiednikiem tego, co polaryzator robi optycznie na planie.</p>
+    <p><strong>Skrzyżowane polaryzatory to szybki test na dwójłomność materiału</strong> w rekwizytach czy w taśmie klejącej na planie — naprężone lub anizotropowe fragmenty rozjaśniają się kolorowo między dwoma skrzyżowanymi filtrami, mimo że pojedynczo każdy z nich wygasza światło do zera.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>pole elektryczne (E)</dt>
+      <dd>Wielkość zdefiniowana w każdym punkcie przestrzeni, opisująca siłę, jaką odczułby tam ładunek próbny: F = qE. W fali świetlnej oscyluje setki bilionów razy na sekundę.</dd>
+      <dt>pole magnetyczne (B)</dt>
+      <dd>Towarzyszy każdemu oscylującemu polu E, prostopadłe do niego i do kierunku biegu fali. B = E/c; siła magnetyczna na swobodny ładunek jest w stosunku v/c mniejsza od elektrycznej.</dd>
+      <dt>fala płaska</dt>
+      <dd>Model fali, w którym E, B i kierunek biegu są wzajemnie prostopadłe, a czoła fali są płaskie — dobre przybliżenie promieni słonecznych i światła z bardzo odległego źródła.</dd>
+      <dt>polaryzacja światła</dt>
+      <dd>Kierunek, w którym drga pole E. Liniowa — stały kierunek; kołowa — kierunek obraca się, kreśląc spiralę wzdłuż biegu fali; niespolaryzowana — kierunek skacze losowo. Nie mylić z polaryzacją ośrodka P.</dd>
+      <dt>polaryzator</dt>
+      <dd>Filtr przepuszczający tylko składową E równoległą do swojej osi. Dwa skrzyżowane pod 90° nie przepuszczają nic.</dd>
+      <dt>prawo Malusa</dt>
+      <dd>I = I₀cos²θ — natężenie światła spolaryzowanego liniowo po przejściu przez polaryzator ustawiony pod kątem θ do jego kierunku drgania.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Pole E w jednym punkcie przestrzeni rośnie i maleje w rytmie, który właśnie poznałeś. Ale światło w scenie prawie nigdy nie przychodzi z jednego kierunku — zwykle spotykają się dwie albo więcej fal naraz, i to, co robią wtedy razem, zależy od tego, w którym momencie cyklu akurat się mijają. W <a href="rozdzial-03-faza-i-dodawanie-fal.html">następnym rozdziale</a> dostaniesz do ręki narzędzie, które opisuje ten moment jednym obracającym się wskaźnikiem — i pozwoli dodawać fale tak łatwo, jak dodaje się wektory.</p>
+  </div>
 
   <div class="deeper">
     <div class="deeper-label">Idź głębiej</div>
@@ -57,8 +264,239 @@ window.SKY3D_MESSAGES = {
       <a class="nav-next" href="rozdzial-03-faza-i-dodawanie-fal.html">Następny →</a>
   </div>
 
+  <template id="adv-woltmetr">
+    <h3>Ile to jest wolt na metr</h3>
+    <p>Natężenie pola E podane w woltach na metr brzmi abstrakcyjnie, dopóki nie podstawi się prawdziwej liczby. Światło słoneczne w pełnym słońcu niesie moc rzędu 1000 W/m². Ponieważ gęstość mocy fali elektromagnetycznej rośnie z kwadratem amplitudy pola, odwrócenie tej zależności (przez impedancję próżni, ok. 377 Ω) daje szczytowe natężenie pola rzędu <strong>E ≈ 900 V/m</strong>. To liczba zaskakująco duża jak na coś, co nie poraża — dlatego, że oscyluje kierunek za kierunkiem, bilion razy na sekundę, i żaden ładunek makroskopowy nie zdąża zareagować na coś innego niż wartość uśrednioną, bliską zeru.</p>
+    <p>To samo pole popycha pojedynczy elektron w atomie o odległość, którą da się oszacować z jego masy i tego, jak mocno jest przywiązany do jądra. Wychodzi z tego przesunięcie o wiele rzędów wielkości mniejsze niż promień atomu — jak małe dokładnie i skąd bierze się ta liczba dla konkretnego atomu, zobaczysz w <a href="../dodatki/dodatek-a-maxwell-bez-strachu.html">Dodatku A</a>. Elektron nie odrywa się od atomu; tylko nieznacznie się w nim kołysze.</p>
+  </template>
+
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-panel">
+      <button class="modal-close" data-modal-close aria-label="Zamknij">×</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
 </div>
 
 <script src="../../assets/interactive.js"></script>
+<script>
+/* 1. Elektron pchany polem E w jednym punkcie — schemat bez rezonansu. */
+(function () {
+  var sl = document.getElementById('chwilaElektron');
+  if (!sl) return;
+  var CX = 380, CY = 130, AMP = 60;
+
+  function odswiez() {
+    var proc = parseFloat(sl.value);
+    var theta = (proc / 100) * 2 * Math.PI;
+    var s = Math.sin(theta);
+
+    var yPole = CY - AMP * s;
+    document.getElementById('poleStrzalka').setAttribute('y2', yPole.toFixed(1));
+
+    var yElektron = CY - AMP * 0.55 * s;
+    document.getElementById('elektronPunkt').setAttribute('cy', yElektron.toFixed(1));
+
+    document.getElementById('chwilaElektronOdczyt').textContent = proc.toFixed(0) + '% okresu';
+
+    var kierunek = s > 0.05 ? 'ku górze' : (s < -0.05 ? 'ku dołowi' : 'przez zero');
+    document.getElementById('elektronPodpis').textContent =
+      proc.toFixed(0) + '% okresu: pole zwrócone ' + kierunek +
+      ', elektron podąża za nim. Rzeczywiste wychylenie jest o wiele rzędów wielkości mniejsze niż promień atomu — liczba w bloku „Zaawansowane" niżej.';
+  }
+  sl.addEventListener('input', odswiez);
+  odswiez();
+})();
+
+/* 2. Dwa polaryzatory — prawo Malusa. */
+(function () {
+  var sl = document.getElementById('katPolaryzator');
+  if (!sl) return;
+
+  function odswiez() {
+    var deg = parseFloat(sl.value);
+    var rad = deg * Math.PI / 180;
+    var iStosunek = Math.pow(Math.cos(rad), 2);
+
+    var cx = 470, cy = 120, half = 70;
+    var dx = half * Math.sin(rad);
+    var dy = half * Math.cos(rad);
+    document.getElementById('polaryzator2').setAttribute('x1', (cx - dx).toFixed(1));
+    document.getElementById('polaryzator2').setAttribute('y1', (cy - dy).toFixed(1));
+    document.getElementById('polaryzator2').setAttribute('x2', (cx + dx).toFixed(1));
+    document.getElementById('polaryzator2').setAttribute('y2', (cy + dy).toFixed(1));
+
+    var grubosc = Math.max(0.4, 10 * iStosunek);
+    document.getElementById('wiazkaWyjscie').setAttribute('stroke-width', grubosc.toFixed(1));
+    document.getElementById('wiazkaWyjscie').setAttribute('opacity', (0.25 + 0.75 * iStosunek).toFixed(2));
+
+    document.getElementById('katPolOdczyt').textContent = deg.toFixed(0) + '°';
+    document.getElementById('wyjscieOpis').textContent = 'I/I₀ = ' + iStosunek.toFixed(2).replace('.', ',');
+
+    var komentarz;
+    if (deg < 5) komentarz = 'drugi filtr w niczym nie przeszkadza — ustawiony tak samo jak pierwszy';
+    else if (deg > 85) komentarz = 'skrzyżowane polaryzatory — nic nie przechodzi';
+    else komentarz = 'przechodzi rzut na nową oś, zgodnie z cos²θ';
+    document.getElementById('polPodpis').textContent =
+      'Kąt ' + deg.toFixed(0) + '°: przechodzi ' + (iStosunek * 100).toFixed(0) + '% natężenia — ' + komentarz + '.';
+  }
+  sl.addEventListener('input', odswiez);
+  odswiez();
+})();
+
+/* 3. Niespolaryzowane swiatlo: losowy kierunek E, rzut za polaryzatorem. */
+(function () {
+  var host = document.getElementById('niespolSim');
+  if (!host) return;
+  var cv = host.querySelector('canvas');
+  if (!cv || !cv.getContext) return;
+  var ctx = cv.getContext('2d');
+  var btn = document.getElementById('niespolLosuj');
+  var odczyt = document.getElementById('niespolOdczyt');
+  var podpis = document.getElementById('niespolPodpis');
+
+  var W = cv.width, H = cv.height;
+  var LX = W * 0.27, RX = W * 0.73, CY = H / 2, R = 70;
+
+  function rysujStrzalke(x, y, dx, dy, kolor) {
+    ctx.strokeStyle = kolor;
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x + dx, y + dy);
+    ctx.stroke();
+    var ang = Math.atan2(dy, dx);
+    ctx.beginPath();
+    ctx.moveTo(x + dx, y + dy);
+    ctx.lineTo(x + dx - 10 * Math.cos(ang - 0.4), y + dy - 10 * Math.sin(ang - 0.4));
+    ctx.lineTo(x + dx - 10 * Math.cos(ang + 0.4), y + dy - 10 * Math.sin(ang + 0.4));
+    ctx.closePath();
+    ctx.fillStyle = kolor;
+    ctx.fill();
+  }
+
+  function rysuj(kat) {
+    ctx.clearRect(0, 0, W, H);
+
+    ctx.font = '10.5px "IBM Plex Mono"';
+    ctx.fillStyle = '#8b909b';
+    ctx.textAlign = 'center';
+    ctx.fillText('przed polaryzatorem', LX, 26);
+    ctx.fillText('za polaryzatorem (oś pionowa)', RX, 26);
+
+    ctx.strokeStyle = '#2a2f38';
+    ctx.beginPath(); ctx.arc(LX, CY, R, 0, Math.PI * 2); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(RX, CY - R); ctx.lineTo(RX, CY + R); ctx.stroke();
+
+    rysujStrzalke(LX, CY, R * Math.cos(kat), -R * Math.sin(kat), '#e8a33d');
+
+    var rzut = Math.cos(kat - Math.PI / 2);
+    rysujStrzalke(RX, CY, 0, -R * rzut, '#e8a33d');
+
+    var stopnie = ((kat * 180 / Math.PI) % 360 + 360) % 360;
+    odczyt.textContent = stopnie.toFixed(0) + '°, rzut ' + Math.abs(rzut).toFixed(2).replace('.', ',');
+  }
+
+  var kat = Math.random() * Math.PI * 2;
+  rysuj(kat);
+
+  if (btn) {
+    btn.addEventListener('click', function () {
+      kat = Math.random() * Math.PI * 2;
+      rysuj(kat);
+      podpis.textContent = 'Nowa losowa chwila: kierunek E po lewej skoczył gdzie indziej, ale po prawej zawsze zostaje tylko rzut na oś polaryzatora.';
+    });
+  }
+})();
+</script>
+<script type="module">
+import { createDiagram3D } from '../../assets/sky3d.js';
+
+const host = document.getElementById('poleFala3D');
+if (host) {
+  const parts = [];
+  const K = (2 * Math.PI) / 1.6;   // dlugosc fali umowna: 1,6 jednostki
+  const A = 0.62;                   // amplituda E
+  const AB = 0.4;                   // amplituda B (rysowana krotsza dla czytelnosci)
+  const ZMIN = -1.6, ZMAX = 1.6;
+
+  /* os biegu fali */
+  parts.push({ type: 'polyline', color: '#6a707c', points: [[0, 0, ZMIN - 0.25], [0, 0, ZMAX + 0.35]] });
+  parts.push({ type: 'arrow', color: '#6a707c', from: [0, 0, ZMAX + 0.1], to: [0, 0, ZMAX + 0.42] });
+  parts.push({ type: 'label', text: 'kierunek biegu fali', at: [0, -0.3, ZMAX + 0.5], color: '#6a707c' });
+
+  const N = 9;
+  const zList = [];
+  for (let i = 0; i < N; i++) zList.push(ZMIN + (i * (ZMAX - ZMIN)) / (N - 1));
+
+  /* --- warstwa: liniowa (domyslna) --- */
+  const linE = [];
+  const linB = [];
+  for (const z of zList) {
+    const ey = A * Math.sin(K * z);
+    const bx = AB * Math.sin(K * z);
+    linE.push([0, ey, z]);
+    linB.push([bx, 0, z]);
+    if (Math.abs(ey) > 0.05) {
+      parts.push({ type: 'arrow', color: '#e8a33d', from: [0, 0, z], to: [0, ey, z], layer: 'liniowa' });
+    }
+    if (Math.abs(bx) > 0.05) {
+      parts.push({ type: 'polyline', color: '#e8a33d', opacity: 0.4, points: [[0, 0, z], [bx, 0, z]], layer: 'liniowa' });
+    }
+  }
+  parts.push({ type: 'polyline', color: '#e8a33d', opacity: 0.5, points: linE, layer: 'liniowa' });
+  parts.push({ type: 'polyline', color: '#e8a33d', opacity: 0.3, points: linB, layer: 'liniowa' });
+  parts.push({ type: 'label', text: 'E', at: [0, A + 0.22, ZMIN], color: '#e8a33d', layer: 'liniowa' });
+  parts.push({ type: 'label', text: 'B (pol-przezroczyste)', at: [AB + 0.3, 0, ZMIN + 0.3], color: '#e8a33d', layer: 'liniowa' });
+
+  /* --- warstwa: kolowa --- */
+  const kolE = [];
+  for (let i = 0; i <= 48; i++) {
+    const z = ZMIN + (i * (ZMAX - ZMIN)) / 48;
+    kolE.push([A * Math.cos(K * z), A * Math.sin(K * z), z]);
+  }
+  parts.push({ type: 'polyline', color: '#e8a33d', opacity: 0.55, points: kolE, layer: 'kolowa' });
+  for (const z of zList) {
+    parts.push({
+      type: 'arrow', color: '#e8a33d', layer: 'kolowa',
+      from: [0, 0, z], to: [A * Math.cos(K * z), A * Math.sin(K * z), z],
+    });
+  }
+  parts.push({ type: 'label', text: 'E kreśli spiralę', at: [A + 0.3, 0.2, ZMIN], color: '#e8a33d', layer: 'kolowa' });
+
+  /* --- warstwa: niespolaryzowana --- */
+  const losoweKaty = [0.4, 2.9, 1.1, 4.6, 0.2, 3.7, 5.5, 1.8, 4.1];
+  const losoweAmp = [0.9, 0.6, 1.0, 0.7, 0.85, 0.5, 0.95, 0.65, 0.8];
+  for (let i = 0; i < N; i++) {
+    const z = zList[i];
+    const r = A * losoweAmp[i];
+    const a = losoweKaty[i];
+    parts.push({
+      type: 'arrow', color: '#e8a33d', layer: 'niespolaryzowana',
+      from: [0, 0, z], to: [r * Math.cos(a), r * Math.sin(a), z],
+    });
+  }
+  parts.push({ type: 'label', text: 'kierunek skacze losowo', at: [0, A + 0.3, ZMIN + 0.4], color: '#e8a33d', layer: 'niespolaryzowana' });
+
+  const widget = createDiagram3D(host, {
+    parts,
+    camera: { dist: 7.2, phi: 1.05, theta: 0.5 },
+    hiddenLayers: ['kolowa', 'niespolaryzowana'],
+  });
+
+  if (widget.ok) {
+    const przyciski = host.querySelectorAll('[data-warstwa]');
+    const wszystkie = ['liniowa', 'kolowa', 'niespolaryzowana'];
+    przyciski.forEach((b) => {
+      b.addEventListener('click', () => {
+        const w = b.dataset.warstwa;
+        wszystkie.forEach((n) => widget.setLayer(n, n === w));
+        przyciski.forEach((x) => x.classList.toggle('is-active', x === b));
+      });
+    });
+  }
+}
+</script>
 </body>
 </html>

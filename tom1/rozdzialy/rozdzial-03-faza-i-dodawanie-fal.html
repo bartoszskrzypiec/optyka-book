@@ -44,8 +44,181 @@ window.SKY3D_MESSAGES = {
   <h1>Faza i dodawanie fal</h1>
   <p class="subtitle">Dwie fale mogą dać dwa razy więcej światła albo zero. O tym, co wyjdzie, decyduje jedna liczba — przesunięcie fazy — i to ona za kilka rozdziałów wyjaśni, dlaczego szkło jest przezroczyste, a niebo niebieskie.</p>
 
-  <!-- TRESC -->
+  <div class="panel">
+    <div class="panel-label">TL;DR</div>
+    <ul>
+      <li>Fala niesie nie tylko amplitudę, ale i <span class="term-amber">fazę</span> — kąt mówiący, w którym miejscu swojego cyklu drgań akurat jest. Wygodnie rysować ją jako obracającą się strzałkę, <strong>fazor</strong>.</li>
+      <li>Dwie fale w fazie dają dwa razy większą amplitudę, czyli <strong>cztery razy więcej energii</strong>. W przeciwfazie znoszą się do zera. Pod kątem pośrednim wychodzi coś między — i to wychodzi z prostego dodawania wektorów, nie z nowego prawa fizyki.</li>
+      <li>Zwykłe światło jest <span class="term-violet">niespójne</span>: fazy poszczególnych źródeł skaczą losowo, więc dodają się natężenia, nie amplitudy. To dlatego renderer może bezkarnie sumować radiancje — i dlatego jeden szczególny przypadek, w którym fazy <em>są</em> ustalone, będzie tematem dobrej połowy dalszej książki.</li>
+    </ul>
+  </div>
 
+  <div class="section">
+    <div class="section-eyebrow">Co widzisz · fala niesie kąt</div>
+    <h2>Faza to zegar, nie liczba</h2>
+
+    <p>Wrzuć dwa kamyki do stawu w różnych miejscach. Kręgi rozchodzą się od każdego z osobna, a tam, gdzie się nakładają, dzieje się coś więcej niż proste sumowanie wysokości fal — w jednych miejscach woda podskakuje wyżej niż od pojedynczego kamyka, w innych stoi prawie płasko, mimo że oba źródła cały czas pracują. To samo widać jako prążki na powierzchni wody skierowanej pod światło, albo w każdej kałuży, na którą pada deszcz z dwóch stron jednocześnie.</p>
+
+    <p>Powód jest prosty, jeśli spojrzysz na falę nie jako na kształt, tylko jako na <strong>zegar</strong>. W każdym punkcie i w każdej chwili fala jest gdzieś w swoim cyklu drgań — na szczycie, w dolinie, w połowie drogi między nimi. To „gdzie w cyklu” nazywa się <span class="term-amber">fazą</span>, oznacza się φ i mierzy w radianach albo w stopniach, tak jak wskazówkę zegara. Najwygodniej rysować ją właśnie jako wskazówkę: strzałkę o stałej długości, obracającą się ze stałą prędkością kątową. Taką strzałkę nazywa się <strong>fazorem</strong>, a jej rzut na oś pionową w każdej chwili jest dokładnie wychyleniem fali w tym punkcie. Obróć fazor o pełny obrót — dostaniesz jeden pełny okres sinusoidy. Przesuń suwak w widgecie i sprawdź to na własne oczy: fazor kręci się, a kropka na sinusoidzie po prawej jedzie dokładnie w rytm jego pionowego rzutu.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Fazor</span><span>obracająca się strzałka i jej rzut</span></div>
+      <div class="diagram-controls">
+        <label for="slFaza1">Faza φ</label>
+        <input id="slFaza1" type="range" min="0" max="360" step="1" value="40">
+        <span class="value-readout" id="faza1Odczyt">40°</span>
+      </div>
+      <svg viewBox="0 0 760 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Po lewej fazor jako strzałka obracająca się na okręgu. Po prawej sinusoida, po której jedzie kropka na wysokości równej pionowemu rzutowi fazora.">
+        <circle cx="140" cy="130" r="80" fill="none" stroke="#2a2f38" stroke-width="1"/>
+        <line x1="60" y1="130" x2="220" y2="130" stroke="#2a2f38" stroke-width="1" stroke-dasharray="3 5"/>
+        <line x1="140" y1="50" x2="140" y2="210" stroke="#2a2f38" stroke-width="1" stroke-dasharray="3 5"/>
+        <line id="fazorLinia1" x1="140" y1="130" x2="220" y2="130" stroke="#e8a33d" stroke-width="2.6"/>
+        <circle id="fazorGrot1" cx="220" cy="130" r="5" fill="#e8a33d"/>
+        <line id="rzutLinia1" x1="220" y1="130" x2="380" y2="130" stroke="#6e93be" stroke-width="1" stroke-dasharray="4 4"/>
+        <text x="60" y="24" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">FAZOR</text>
+
+        <line x1="380" y1="130" x2="700" y2="130" stroke="#2a2f38" stroke-width="1"/>
+        <line x1="380" y1="50" x2="380" y2="210" stroke="#2a2f38" stroke-width="1"/>
+        <path id="sinusoida1" fill="none" stroke="#4fc3c0" stroke-width="1.6" opacity="0.85"/>
+        <circle id="kropka1" cx="380" cy="130" r="5" fill="#6e93be"/>
+        <text x="386" y="24" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">RZUT W CZASIE (φ = 0…360°)</text>
+        <text x="382" y="222" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">0°</text>
+        <text x="678" y="222" font-family="IBM Plex Mono" font-size="10" fill="#8b909b">360°</text>
+      </svg>
+      <div class="diagram-caption" id="faza1Podpis">φ = 40°. Fazor jest 40° po drodze od szczytu; sinusoida rośnie.</div>
+    </div>
+
+    <p>Skąd bierze się konkretna wartość φ w danym miejscu przestrzeni, mówi jeden prosty wzór. Jeśli porównujesz dwa punkty leżące w odległości Δs wzdłuż kierunku biegu fali, ich fazy różnią się o:</p>
+
+    <div class="formula">
+      Δ<span class="vec" data-tip="Różnica fazy między dwoma punktami, w radianach.">φ</span> = 2π · Δ<span class="vec" data-tip="Różnica dróg optycznych między dwoma punktami, w tych samych jednostkach co λ.">s</span> / <span class="vec" data-tip="Długość fali w danym ośrodku.">λ</span>
+      <span class="sub">Δφ — różnica faz [rad], Δs — różnica dróg, λ — długość fali. Przesunięcie o całą długość fali (Δs = λ) to Δφ = 2π, czyli powrót do tego samego miejsca w cyklu — fazor „nie zauważa” pełnego obrotu.</span>
+    </div>
+
+    <p>To ten sam wzór, który za chwilę pozwoli policzyć, kiedy dwie fale się wzmocnią, a kiedy zgaszą — wystarczy znać różnicę dróg, jaką każda z nich przebyła, i podzielić ją przez λ. Warto zapamiętać skalę: dla zielonego światła (λ = 550 nm) różnica dróg zaledwie 275 nm — mniej niż połowa długości fali, ułamek grubości ludzkiego włosa — wystarczy, żeby przestawić fazor o pełne 180° i zamienić wzmocnienie w zgaszenie. Optyka falowa jest wrażliwa na odległości, o których w geometrii promienia (Rozdział 1, Tom 2) nikt by nawet nie pomyślał.</p>
+
+    <p>Ten sam rachunek działa też w czasie, nie tylko w przestrzeni: skoro fazor obraca się ze stałą prędkością, można równie dobrze pytać, o ile faza przesunie się w ciągu jakiegoś odcinka czasu, zamiast o ile przesunie się wzdłuż jakiegoś odcinka drogi. Dla zielonego odniesienia jeden pełny obrót fazora, czyli jeden okres T, trwa około 1,8 femtosekundy — i to jest tempo, w którym trzeba by nadążać, żeby „zobaczyć” fazę bezpośrednio. Żaden detektor tego nie potrafi; to, co rejestruje matryca albo oko, jest zawsze uśrednieniem po wielu takich obrotów. Dlatego cała reszta tego rozdziału dotyczy tego, co zostaje z fazy <em>po</em> uśrednieniu — a nie samej fazy z osobna.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Dodawanie · geometria wektorów, nie nowe prawo</div>
+    <h2>Dwa fazory, jeden wynik: od zera do podwojenia</h2>
+
+    <p>Skoro fazor to strzałka, dodawanie dwóch fal to zwykłe dodawanie dwóch wektorów: ustawiasz je tip-to-tail i patrzysz, co wyszło. Gdy oba fazory wskazują ten sam kierunek — fale są <strong>w fazie</strong> — ich suma jest po prostu dłuższa: amplituda się podwaja, a ponieważ natężenie idzie z kwadratem amplitudy (I ∝ A²), <span class="term-amber">natężenie rośnie czterokrotnie</span>, nie dwukrotnie. To jest interferencja konstruktywna, i to jest dokładnie to miejsce w stawie, gdzie woda podskakuje najwyżej.</p>
+
+    <p>Gdy fazory wskazują przeciwne kierunki — fale są <strong>w przeciwfazie</strong>, Δφ = 180° — dodają się do zera. Suma po prostu znika, mimo że oba źródła cały czas pracują z pełną mocą. To interferencja destruktywna, i to jest ten spokojny placek na powierzchni wody. Między tymi dwiema skrajnościami leży cały wachlarz wyników pośrednich, a przy Δφ = 90° dwie fale o jednakowej amplitudzie A dają sumę o amplitudzie A√2 — mniej niż podwojenie, bo część długości fazorów „zużywa się” na obrót, a nie na wydłużenie.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Suma dwóch fal</span><span>sinusoidy i ich fazory</span></div>
+      <div class="diagram-controls">
+        <label for="slDeltaFaza">Przesunięcie fazy Δφ</label>
+        <input id="slDeltaFaza" type="range" min="0" max="360" step="1" value="0">
+        <span class="value-readout" id="deltaFazaOdczyt">0°</span>
+      </div>
+      <svg viewBox="0 0 760 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Dwie sinusoidy przesunięte o zadaną fazę i ich suma, oraz odpowiadający im rysunek dwóch fazorów dodanych tip-to-tail.">
+        <line x1="40" y1="90" x2="720" y2="90" stroke="#2a2f38" stroke-width="1" stroke-dasharray="3 5"/>
+        <path id="sinusA2" fill="none" stroke="#4fc3c0" stroke-width="1.6" opacity="0.8"/>
+        <path id="sinusB2" fill="none" stroke="#9c82d8" stroke-width="1.6" opacity="0.8"/>
+        <path id="sinusSuma2" fill="none" stroke="#e8a33d" stroke-width="2.4"/>
+        <text x="46" y="34" font-family="IBM Plex Mono" font-size="10.5" fill="#4fc3c0">fala A</text>
+        <text x="130" y="34" font-family="IBM Plex Mono" font-size="10.5" fill="#9c82d8">fala B</text>
+        <text x="214" y="34" font-family="IBM Plex Mono" font-size="10.5" fill="#e8a33d">suma A+B</text>
+
+        <line x1="40" y1="180" x2="720" y2="180" stroke="#2a2f38" stroke-width="1"/>
+        <text x="46" y="200" font-family="IBM Plex Mono" font-size="10.5" fill="#8b909b">FAZORY (tip-to-tail)</text>
+        <line id="wektorA3" x1="150" y1="270" x2="230" y2="270" stroke="#4fc3c0" stroke-width="2.4"/>
+        <line id="wektorB3" x1="230" y1="270" x2="300" y2="270" stroke="#9c82d8" stroke-width="2.4"/>
+        <line id="wektorSuma3" x1="150" y1="270" x2="300" y2="270" stroke="#e8a33d" stroke-width="1.4" stroke-dasharray="5 4"/>
+        <circle id="grotSuma3" cx="300" cy="270" r="5" fill="#e8a33d"/>
+      </svg>
+      <div class="diagram-caption" id="suma2Podpis">Δφ = 0°. Fazory się pokrywają — amplituda sumy jest podwojona, natężenie poczwórne.</div>
+    </div>
+
+    <p>Ten sam rysunek fazorów, tylko z bardzo nierówną długością obu wektorów, jest jednym z najważniejszych obrazków w tej książce — pojawi się ponownie, gdy w Rozdziale 15 policzysz, dlaczego szkło w ogóle zagina światło. Chodzi o sytuację, w której jeden fazor jest duży, a drugi — mały i ustawiony <strong>prostopadle</strong> do niego. Wypróbuj to na poniższym widgecie: mały fazor dodany pod kątem 90° do dużego prawie nie zmienia jego długości (efekt drugiego rzędu, znikomy dla naprawdę małego dodatku), ale zauważalnie <span class="term-violet">obraca kierunek sumy</span>. Innymi słowy: <strong>mały wkład pod kątem prostym do dużego głównie zmienia fazę, nie amplitudę</strong>. Zapamiętaj ten obrazek — to jest dokładnie mechanizm, przez który cienka warstwa atomów potrafi opóźnić czoło fali, nie zabierając mu prawie żadnej energii.</p>
+
+    <div class="diagram-frame">
+      <div class="diagram-hud"><span>Duży fazor + mały fazor</span><span>kiedy dodatek tylko obraca sumę</span></div>
+      <div class="diagram-controls">
+        <label for="slKatMaly">Kąt małego fazora</label>
+        <input id="slKatMaly" type="range" min="0" max="360" step="1" value="90">
+        <span class="value-readout" id="katMalyOdczyt">90°</span>
+      </div>
+      <svg viewBox="0 0 760 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Duży fazor wzdłuż osi poziomej i doczepiony do jego grotu mały fazor pod zadanym kątem; wypadkowa jest sumą obu.">
+        <line x1="60" y1="140" x2="700" y2="140" stroke="#2a2f38" stroke-width="1" stroke-dasharray="3 5"/>
+        <line id="fazorDuzy3" x1="170" y1="140" x2="350" y2="140" stroke="#e8a33d" stroke-width="3"/>
+        <circle cx="170" cy="140" r="3.5" fill="#8b909b"/>
+        <line id="fazorMaly3" x1="350" y1="140" x2="395" y2="140" stroke="#e8a33d" stroke-width="2" opacity="0.65"/>
+        <circle id="grotMaly3" cx="395" cy="140" r="4.5" fill="#e8a33d" opacity="0.85"/>
+        <line id="fazorSuma3" x1="170" y1="140" x2="350" y2="140" stroke="#9c82d8" stroke-width="1.6" stroke-dasharray="5 4"/>
+        <path id="lukObrotu3" fill="none" stroke="#9c82d8" stroke-width="1.2"/>
+        <text x="230" y="126" font-family="IBM Plex Mono" font-size="10.5" fill="#e8a33d">A (duży)</text>
+        <text x="358" y="176" font-family="IBM Plex Mono" font-size="10" fill="#e8a33d">B (mały)</text>
+      </svg>
+      <div class="diagram-caption" id="suma3Podpis">Kąt 90°: długość sumy prawie się nie zmienia, a jej kierunek obraca się o kilka stopni.</div>
+    </div>
+
+    <button class="advanced-btn" data-modal-target="adv-energia">Zaawansowane: energia nie znika w przeciwfazie — to gdzieś idzie</button>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">Spójność · kiedy wolno dodawać fazory, a kiedy trzeba dodawać natężenia</div>
+    <h2>Spójne kontra niespójne</h2>
+
+    <p>Cała powyższa arytmetyka fazorów działa tylko pod jednym warunkiem: różnica faz Δφ między dwiema falami musi być <strong>ustalona</strong> — taka sama teraz, sekundę temu i za sekundę. Taki układ nazywa się <span class="term-amber">spójnym</span> (coherent). Dwa głośniki podłączone do jednego sygnału są spójne. Dwa kamyki wrzucone do stawu w tym samym rytmie — też. Wtedy masz prawo dodawać amplitudy i dopiero na końcu podnosić wynik do kwadratu:</p>
+
+    <div class="formula">
+      <span class="vec" data-tip="Natężenie sumy dwóch fal, proporcjonalne do kwadratu amplitudy.">I</span> = <span class="vec" data-tip="Amplituda pierwszej fali.">A₁</span>² + <span class="vec" data-tip="Amplituda drugiej fali.">A₂</span>² + 2<span class="vec" data-tip="Amplituda pierwszej fali.">A₁</span><span class="vec" data-tip="Amplituda drugiej fali.">A₂</span>·cos Δφ
+      <span class="sub">I — natężenie wypadkowe, A₁ i A₂ — amplitudy obu fal, Δφ — ich stała różnica faz. Dla Δφ = 0: I = (A₁+A₂)². Dla Δφ = 180°: I = (A₁−A₂)², czyli zero przy równych amplitudach.</span>
+    </div>
+
+    <p>Realne światło — żarówka, słońce, dowolna lampa — jest inne. Każdy atom w źródle emituje swoją falkę niezależnie od sąsiadów, a jego faza startowa jest przypadkowa i zmienia się co ułamek sekundy (albo szybciej). Taki układ jest <span class="term-violet">niespójny</span> (incoherent): Δφ między dowolną parą źródeł skacze losowo, więc <em>uśredniony w czasie</em> człon 2A₁A₂cosΔφ wynosi zero — dodatnie i ujemne wartości cosinusa znoszą się nawzajem. Zostaje tylko suma kwadratów. Dla N jednakowych, niezależnych źródeł to prosta różnica potęg:</p>
+
+    <div class="formula">
+      I<sub>spójne</sub> ∝ N² &nbsp;&nbsp;|&nbsp;&nbsp; I<sub>niespójne</sub> ∝ N
+      <span class="sub">N identycznych źródeł o tej samej amplitudzie: spójnie dodane dają natężenie rosnące z kwadratem N (fazory stoją w jednej linii, długość sumy = N·A); niespójnie dodane dają natężenie rosnące liniowo z N (fazory błądzą losowo, długość sumy rośnie średnio jak √N, więc jej kwadrat — jak N).</span>
+    </div>
+
+    <p>Poniższy widget pokazuje obie sytuacje naraz dla tej samej liczby źródeł N. Po lewej fazory ustawione w jednej linii — spójna suma, prosta droga do coraz dłuższego wektora. Po prawej te same N fazorów, ale każdy pod losowym kątem — errantyczny spacer, który kończy się dużo bliżej startu niż wyprostowana linia. Wykres obok pokazuje, jak rozjeżdżają się obie krzywe natężenia wraz z rosnącym N: jedna pnie się jak parabola, druga jak linia prosta.</p>
+
+    <div class="sim" id="spojnoscSim">
+      <div class="sim__stage"><canvas width="600" height="300"></canvas></div>
+      <div class="sim__bar">
+        <label for="slN">Liczba źródeł N</label>
+        <input id="slN" type="range" min="2" max="60" step="1" value="20">
+        <span class="value-readout" id="nOdczyt">20</span>
+      </div>
+      <div class="sim__caption" id="spojnoscPodpis">N = 20. Spójnie: I ∝ N² = 400. Niespójnie (ten konkretny rzut): I ≈ N.</div>
+    </div>
+
+    <p>Zwykłe światło, z jakim masz do czynienia na planie i w scenie renderowanej, jest niespójne — i to jest dobra wiadomość, bo dzięki temu renderer może po prostu sumować radiancje ze wszystkich źródeł i odbić, bez pilnowania faz. Jest dokładnie jeden powszechny wyjątek, w którym fazy <em>przestają</em> być losowe: fala odbita od dwóch powierzchni tej samej cienkiej warstwy przebywa ustaloną, geometrycznie zadaną różnicę dróg — a to znaczy, że jest spójna sama ze sobą. Właśnie tam wraca cały ten rozdział: przy cienkich warstwach i powłokach z <a href="../../tom2/rozdzialy/rozdzial-24-powloki.html">Tomu 2, Rozdziału 24</a>, i przy dyfrakcji z <a href="../../tom2/rozdzialy/rozdzial-10-dyfrakcja.html">Tomu 2, Rozdziału 10</a>. Fazory i ich dodawanie — narzędzie, nie ozdobnik — są od teraz gotowe do użycia w obu miejscach, a formalny zapis fazora jako liczby zespolonej znajdziesz w <a href="../matematyka/podstawy-matematyczne.html">primerze matematycznym</a>.</p>
+  </div>
+
+  <div class="panel practice">
+    <div class="panel-label">Z praktyki</div>
+    <p><strong>Sumowanie radiancji w rendererze działa, bo światło w scenie jest niespójne.</strong> Kiedy path tracer zbiera wkład od wielu odbić i wielu źródeł, dodaje ich natężenia wprost, bez pilnowania faz — i to jest fizycznie poprawne, dopóki źródła rzeczywiście drgają niezależnie. Jedynym miejscem, gdzie ta zasada nie wystarcza, jest shader cienkiej warstwy (thin-film): tam trzeba jawnie policzyć różnicę dróg i cosinus z Δφ, bo dwa odbicia od tej samej warstwy <em>są</em> spójne.</p>
+    <p><strong>Interferencja nie jest laboratoryjną ciekawostką.</strong> Dzieje się w każdym kawałku szkła, w każdej powłoce przeciwodblaskowej i w każdej bańce mydlanej — po prostu zwykle na tyle drobno przestrzennie albo spektralnie, że oko uśrednia efekt do gładkiego koloru. Kiedy warstwa jest wystarczająco cienka i regularna, ten sam mechanizm daje widoczne tęczowe paski — plamę oleju na mokrym asfalcie.</p>
+  </div>
+
+  <div class="panel glossary">
+    <div class="panel-label">Słowniczek</div>
+    <dl>
+      <dt>faza (φ)</dt>
+      <dd>Miejsce w cyklu drgań fali w danym punkcie i czasie, mierzone jako kąt. Różnica faz między dwiema falami decyduje o wyniku ich sumowania.</dd>
+      <dt>fazor</dt>
+      <dd>Strzałka o stałej długości, obracająca się ze stałą prędkością kątową; jej pionowy rzut w każdej chwili odtwarza wychylenie fali. Wygodne narzędzie do dodawania fal bez rysowania całych sinusoid.</dd>
+      <dt>interferencja konstruktywna / destruktywna</dt>
+      <dd>Wzmocnienie (fazy zgodne, Δφ = 0) albo zniesienie (fazy przeciwne, Δφ = 180°) sumy dwóch fal. Wynik pośredni dla dowolnego innego Δφ wypada wprost z dodawania fazorów.</dd>
+      <dt>spójność (koherencja)</dt>
+      <dd>Utrzymywanie się stałej różnicy faz między dwiema falami w czasie. Warunek konieczny do tego, żeby wolno było dodawać amplitudy zamiast natężeń.</dd>
+      <dt>natężenie (I)</dt>
+      <dd>Wielkość proporcjonalna do kwadratu amplitudy fali, I ∝ A². To ją mierzy detektor, matryca i oko — nigdy samej amplitudy.</dd>
+    </dl>
+  </div>
+
+  <div class="next">
+    <div class="panel-label" style="color:var(--violet);">Co dalej</div>
+    <p>Masz już dwa narzędzia: pole E jako siłę pchającą ładunki (Rozdział 2) i fazory jako sposób dodawania fal (ten rozdział). W <a href="rozdzial-04-atom.html">następnym rozdziale</a> dokładamy trzeci składnik — samą materię. Zobaczysz, z czego zbudowany jest atom i dlaczego to, ile ma elektronów, decyduje o tym, jak reaguje na przechodzące przez niego pole. Fazory wrócą, gdy w Rozdziale 11 elektron zacznie promieniować własną falkę, a w Rozdziale 15 ten sam duży-fazor-plus-mały-fazor obrót wyjaśni, czym naprawdę jest współczynnik załamania.</p>
+  </div>
 
   <div class="site-nav chapter-nav">
       <a class="nav-prev" href="rozdzial-02-pole-e-i-b.html">← Poprzedni</a>
@@ -53,8 +226,267 @@ window.SKY3D_MESSAGES = {
       <a class="nav-next" href="rozdzial-04-atom.html">Następny →</a>
   </div>
 
+  <template id="adv-energia">
+    <h3>Energia nie znika w przeciwfazie — ona się przenosi</h3>
+    <p>Kiedy dwie fale w danym punkcie znoszą się do zera, kusi, żeby zapytać: gdzie podziała się cała ta energia? Odpowiedź brzmi: <strong>nigdzie nie zniknęła — po prostu nie jest równo rozłożona</strong>. Interferencja nie usuwa energii z układu, tylko przemieszcza ją z miejsc destruktywnych do konstruktywnych.</p>
+    <p>Zsumuj energię po całym obszarze, w którym dwie fale się nakładają — nie w jednym punkcie, tylko po całej płaszczyźnie prążków — a dostaniesz dokładnie sumę energii, jaką niosłyby obie fale osobno. Tam, gdzie prążek jest ciemny, brakująca energia znajduje się w sąsiednim jasnym prążku, który jest jaśniejszy, niż byłby przy zwykłym (niespójnym) sumowaniu natężeń. Zasada zachowania energii nigdy nie jest łamana — łamie się tylko intuicja, że natężenie w jednym punkcie da się przewidzieć bez wiedzy o tym, co się dzieje w punktach sąsiednich.</p>
+    <p>To samo tłumaczy, dlaczego powłoka przeciwodblaskowa naprawdę zmniejsza odbicie, a nie tylko je „przemalowuje” gdzie indziej na tej samej powierzchni: energia, która nie odbija się do tyłu, bo dwa odbite promyki się tam znoszą, musi przejść do przodu, w głąb szkła. Zysk na odbiciu jest więc dokładnie zyskiem na transmisji — i to jest cały sekret powłok, do którego wrócisz w Tomie 2, Rozdziale 24.</p>
+  </template>
+
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-panel">
+      <button class="modal-close" data-modal-close aria-label="Zamknij">×</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
 </div>
 
 <script src="../../assets/interactive.js"></script>
+<script>
+/* 1. Fazor i jego rzut na sinusoide. Fazor to strzalka o dlugosci R obracajaca
+      sie na okregu; jej pionowe polozenie w kazdej chwili jest amplituda fali. */
+(function () {
+  var sl = document.getElementById('slFaza1');
+  if (!sl) return;
+  var CX = 140, CY = 130, R = 80, X0 = 380, X1 = 700;
+  function rad(d) { return d * Math.PI / 180; }
+
+  var d = '';
+  for (var t = 0; t <= 360; t += 4) {
+    var xx = X0 + (t / 360) * (X1 - X0);
+    var yy = CY - R * Math.sin(rad(t));
+    d += (t === 0 ? 'M ' : ' L ') + xx.toFixed(1) + ' ' + yy.toFixed(1);
+  }
+  document.getElementById('sinusoida1').setAttribute('d', d);
+
+  function odswiez() {
+    var phi = parseFloat(sl.value), r = rad(phi);
+    var px = CX + R * Math.cos(r), py = CY - R * Math.sin(r);
+
+    var lin = document.getElementById('fazorLinia1');
+    lin.setAttribute('x2', px); lin.setAttribute('y2', py);
+    document.getElementById('fazorGrot1').setAttribute('cx', px);
+    document.getElementById('fazorGrot1').setAttribute('cy', py);
+
+    var xcur = X0 + (phi / 360) * (X1 - X0);
+    var rz = document.getElementById('rzutLinia1');
+    rz.setAttribute('x1', px); rz.setAttribute('y1', py);
+    rz.setAttribute('x2', xcur); rz.setAttribute('y2', py);
+
+    document.getElementById('kropka1').setAttribute('cx', xcur);
+    document.getElementById('kropka1').setAttribute('cy', py);
+
+    document.getElementById('faza1Odczyt').textContent = phi.toFixed(0) + '°';
+    var etap = phi < 90 ? 'rośnie ku szczytowi' : phi < 180 ? 'opada ze szczytu'
+             : phi < 270 ? 'opada ku dolinie' : 'rośnie z doliny';
+    document.getElementById('faza1Podpis').textContent =
+      'φ = ' + phi.toFixed(0) + '°. Wychylenie fali ' + etap + '.';
+  }
+  sl.addEventListener('input', odswiez);
+  odswiez();
+})();
+
+/* 2. Suma dwoch sinusoid przesunietych o Delta-phi, plus rysunek fazorow
+      dodanych tip-to-tail. Obie amplitudy jednakowe (A=1). */
+(function () {
+  var sl = document.getElementById('slDeltaFaza');
+  if (!sl) return;
+  var X0 = 40, X1 = 720, CY = 90, AS = 40;
+  var TAIL_X = 150, TAIL_Y = 270, LA = 70, LB = 70;
+  function rad(d) { return d * Math.PI / 180; }
+  function px(deg) { return X0 + (deg / 720) * (X1 - X0); }
+
+  function budujSciezke(shiftDeg, sumuj) {
+    var d = '';
+    for (var t = 0; t <= 720; t += 4) {
+      var y;
+      if (sumuj) {
+        y = CY - AS * (Math.sin(rad(t)) + Math.sin(rad(t) + rad(shiftDeg)));
+      } else {
+        y = CY - AS * Math.sin(rad(t) + rad(shiftDeg));
+      }
+      d += (t === 0 ? 'M ' : ' L ') + px(t).toFixed(1) + ' ' + y.toFixed(1);
+    }
+    return d;
+  }
+
+  function odswiez() {
+    var dphi = parseFloat(sl.value);
+    document.getElementById('sinusA2').setAttribute('d', budujSciezke(0, false));
+    document.getElementById('sinusB2').setAttribute('d', budujSciezke(dphi, false));
+    document.getElementById('sinusSuma2').setAttribute('d', budujSciezke(dphi, true));
+
+    var r = rad(dphi);
+    var ax = TAIL_X + LA, ay = TAIL_Y;
+    var bx = ax + LB * Math.cos(r), by = ay - LB * Math.sin(r);
+
+    var wA = document.getElementById('wektorA3');
+    wA.setAttribute('x1', TAIL_X); wA.setAttribute('y1', TAIL_Y);
+    wA.setAttribute('x2', ax); wA.setAttribute('y2', ay);
+
+    var wB = document.getElementById('wektorB3');
+    wB.setAttribute('x1', ax); wB.setAttribute('y1', ay);
+    wB.setAttribute('x2', bx); wB.setAttribute('y2', by);
+
+    var wS = document.getElementById('wektorSuma3');
+    wS.setAttribute('x1', TAIL_X); wS.setAttribute('y1', TAIL_Y);
+    wS.setAttribute('x2', bx); wS.setAttribute('y2', by);
+    document.getElementById('grotSuma3').setAttribute('cx', bx);
+    document.getElementById('grotSuma3').setAttribute('cy', by);
+
+    var iRatio = 4 * Math.pow(Math.cos(r / 2), 2);
+    document.getElementById('deltaFazaOdczyt').textContent = dphi.toFixed(0) + '°';
+    document.getElementById('suma2Podpis').textContent =
+      'Δφ = ' + dphi.toFixed(0) + '°. I(suma) / I(jednej fali) = 4·cos²(Δφ/2) = ' +
+      iRatio.toFixed(2).replace('.', ',') + '.';
+  }
+  sl.addEventListener('input', odswiez);
+  odswiez();
+})();
+
+/* 3. Duzy fazor + maly fazor doczepiony pod zadanym katem. Pokazuje wprost
+      mechanizm, ktory w Rozdziale 15 wyjasnia przesuniecie fazy w szkle:
+      maly wklad prostopadly do duzego glownie obraca sume. */
+(function () {
+  var sl = document.getElementById('slKatMaly');
+  if (!sl) return;
+  var OX = 170, OY = 140, L1 = 180, L2 = 45;
+  function rad(d) { return d * Math.PI / 180; }
+
+  function odswiez() {
+    var theta = parseFloat(sl.value), r = rad(theta);
+    var tipDuzyX = OX + L1, tipDuzyY = OY;
+    var tipX = tipDuzyX + L2 * Math.cos(r), tipY = tipDuzyY - L2 * Math.sin(r);
+
+    document.getElementById('fazorDuzy3').setAttribute('x2', tipDuzyX);
+    document.getElementById('fazorDuzy3').setAttribute('y2', tipDuzyY);
+
+    var fm = document.getElementById('fazorMaly3');
+    fm.setAttribute('x1', tipDuzyX); fm.setAttribute('y1', tipDuzyY);
+    fm.setAttribute('x2', tipX); fm.setAttribute('y2', tipY);
+    document.getElementById('grotMaly3').setAttribute('cx', tipX);
+    document.getElementById('grotMaly3').setAttribute('cy', tipY);
+
+    var suma = document.getElementById('fazorSuma3');
+    suma.setAttribute('x1', OX); suma.setAttribute('y1', OY);
+    suma.setAttribute('x2', tipX); suma.setAttribute('y2', tipY);
+
+    var dx = tipX - OX, dy = OY - tipY;
+    var dlugoscSumy = Math.sqrt(dx * dx + dy * dy);
+    var katSumy = Math.atan2(dy, dx) * 180 / Math.PI;
+    var zmianaProc = (dlugoscSumy / L1 - 1) * 100;
+
+    var R_LUK = 40;
+    var d = 'M ' + (OX + R_LUK) + ' ' + OY + ' A ' + R_LUK + ' ' + R_LUK + ' 0 ' +
+      (Math.abs(katSumy) > 180 ? 1 : 0) + ' 0 ' +
+      (OX + R_LUK * Math.cos(rad(katSumy))).toFixed(1) + ' ' +
+      (OY - R_LUK * Math.sin(rad(katSumy))).toFixed(1);
+    document.getElementById('lukObrotu3').setAttribute('d', d);
+
+    document.getElementById('katMalyOdczyt').textContent = theta.toFixed(0) + '°';
+    document.getElementById('suma3Podpis').textContent =
+      'θ = ' + theta.toFixed(0) + '°. Długość sumy: ' +
+      (zmianaProc >= 0 ? '+' : '') + zmianaProc.toFixed(1).replace('.', ',') +
+      '% względem samego dużego fazora. Kierunek obrócony o ' +
+      katSumy.toFixed(1).replace('.', ',') + '°.';
+  }
+  sl.addEventListener('input', odswiez);
+  odswiez();
+})();
+
+/* 4. Spojne kontra niespojne dodawanie N fazorow jednakowej dlugosci.
+      Spojne: wszystkie pod tym samym katem, suma rosnie liniowo (I ~ N^2).
+      Niespojne: katy rozlozone deterministycznym "zlotym katem" 137.508 deg,
+      co daje rozklad wizualnie rownowazny losowemu, ale powtarzalny miedzy
+      przeladowaniami suwaka. */
+(function () {
+  var sl = document.getElementById('slN');
+  var canvas = document.querySelector('#spojnoscSim canvas');
+  if (!sl || !canvas) return;
+  var ctx = canvas.getContext('2d');
+  var ZLOTY_KAT = 137.508 * Math.PI / 180;
+
+  function rysuj(N) {
+    ctx.clearRect(0, 0, 600, 300);
+
+    var phases = [];
+    for (var i = 0; i < N; i++) phases.push(i * ZLOTY_KAT);
+
+    var coh = [[0, 0]], inc = [[0, 0]], x, y, i2;
+    x = 0; y = 0;
+    for (i2 = 0; i2 < N; i2++) { x += 1; coh.push([x, y]); }
+    x = 0; y = 0;
+    for (i2 = 0; i2 < N; i2++) { x += Math.cos(phases[i2]); y += Math.sin(phases[i2]); inc.push([x, y]); }
+
+    var all = coh.concat(inc);
+    var minX = Math.min.apply(null, all.map(function (p) { return p[0]; }));
+    var maxX = Math.max.apply(null, all.map(function (p) { return p[0]; }));
+    var minY = Math.min.apply(null, all.map(function (p) { return p[1]; }));
+    var maxY = Math.max.apply(null, all.map(function (p) { return p[1]; }));
+
+    var panelX = 20, panelY = 34, panelW = 230, panelH = 220;
+    var skala = Math.min(panelW / (maxX - minX || 1), panelH / (maxY - minY || 1));
+
+    function toCanvas(p) {
+      return [panelX + (p[0] - minX) * skala, panelY + panelH - (p[1] - minY) * skala];
+    }
+
+    function rysujSciezke(pts, kolor) {
+      ctx.strokeStyle = kolor; ctx.lineWidth = 2; ctx.beginPath();
+      pts.forEach(function (p, idx) {
+        var c = toCanvas(p);
+        if (idx === 0) ctx.moveTo(c[0], c[1]); else ctx.lineTo(c[0], c[1]);
+      });
+      ctx.stroke();
+    }
+    rysujSciezke(coh, '#e8a33d');
+    rysujSciezke(inc, '#9c82d8');
+
+    ctx.font = '11px "IBM Plex Mono", monospace';
+    ctx.fillStyle = '#e8a33d'; ctx.fillText('spójne', panelX, panelY - 12);
+    ctx.fillStyle = '#9c82d8'; ctx.fillText('niespójne', panelX + 90, panelY - 12);
+
+    var plotX = 320, plotY = 34, plotW = 250, plotH = 220;
+    ctx.strokeStyle = '#2a2f38'; ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(plotX, plotY); ctx.lineTo(plotX, plotY + plotH); ctx.lineTo(plotX + plotW, plotY + plotH);
+    ctx.stroke();
+
+    var maxI = N * N;
+    function pxN(n) { return plotX + (n / N) * plotW; }
+    function pyI(I) { return plotY + plotH - Math.min(1, I / maxI) * plotH; }
+
+    ctx.strokeStyle = '#e8a33d'; ctx.lineWidth = 2; ctx.beginPath();
+    for (var n = 1; n <= N; n++) {
+      var xc = pxN(n), yc = pyI(n * n);
+      if (n === 1) ctx.moveTo(xc, yc); else ctx.lineTo(xc, yc);
+    }
+    ctx.stroke();
+
+    var ostatnieI = 0;
+    ctx.strokeStyle = '#9c82d8'; ctx.lineWidth = 2; ctx.beginPath();
+    for (n = 1; n <= N; n++) {
+      var p = inc[n], Iinc = p[0] * p[0] + p[1] * p[1];
+      var xc2 = pxN(n), yc2 = pyI(Iinc);
+      if (n === 1) ctx.moveTo(xc2, yc2); else ctx.lineTo(xc2, yc2);
+      ostatnieI = Iinc;
+    }
+    ctx.stroke();
+
+    ctx.fillStyle = '#8b909b';
+    ctx.fillText('I(N)', plotX, plotY - 12);
+    ctx.fillText('N=' + N, plotX + plotW - 34, plotY + plotH + 16);
+
+    document.getElementById('nOdczyt').textContent = N.toFixed(0);
+    document.getElementById('spojnoscPodpis').textContent =
+      'N = ' + N.toFixed(0) + '. Spójnie: I ∝ N² = ' + maxI.toFixed(0) +
+      '. Niespójnie (ten konkretny rzut faz): I ≈ ' + ostatnieI.toFixed(0) + '.';
+  }
+
+  sl.addEventListener('input', function () { rysuj(parseInt(sl.value, 10)); });
+  rysuj(parseInt(sl.value, 10));
+})();
+</script>
 </body>
 </html>
