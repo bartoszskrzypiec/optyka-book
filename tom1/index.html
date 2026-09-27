@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Optyka dla Artystów Technicznych — Tom 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/widgets.css">
+<link rel="stylesheet" href="../assets/viz3d.css">
+<script>
+window.SKY3D_MESSAGES = {
+  file:   { title: 'Widget 3D nie uruchamia sie z pliku na dysku',
+            why:   'Strona jest otwarta spod adresu file://, a przegladarka nie wczytuje stamtad silnika 3D. Otworz ksiazke przez lokalny serwer — na przyklad rozszerzeniem Live Server w VS Code.' },
+  siec:   { title: 'Nie udalo sie wczytac silnika 3D',
+            why:   'Plik assets/sky3d.js albo three.js nie doladowal sie. Reszta rozdzialu jest kompletna bez widgetu.' },
+  webgl:  { title: 'Ten widget potrzebuje WebGL',
+            why:   'Przegladarka nie udostepnia WebGL-a.' },
+  shader: { title: 'Karta graficzna odrzucila ten widget',
+            why:   'Sterownik nie skompilowal shadera sceny. W konsoli jest pelny komunikat.' }
+};
+</script>
+<script src="../assets/sky3d-fallback.js"></script>
+</head>
+<body>
+<nav class="topnav">
+  <a class="topnav__brand" href="index.html">Optyka <span>dla Artystów Technicznych</span></a>
+  <span class="topnav__tom">Tom 1 — Światło i materia</span>
+  <div class="topnav__links">
+  <a href="../index.html">← Okładka</a>
+  <a href="../tom2/index.html">Tom 2</a>
+  <a href="matematyka/podstawy-matematyczne.html">Zanim zaczniesz</a>
+  <a href="#dodatki">Dodatki</a>
+  <a href="https://github.com/bartoszskrzypiec/optyka-book">GitHub</a>
+  </div>
+</nav>
+
+<div class="page">
+
+  <div class="viewport-readout">
+    <span>Rozdziałów · 27</span><span>Dodatków · 13</span><span>Części · 7</span><span>Wzory · w tekście</span>
+  </div>
+
+  <div class="eyebrow">Tom 1 — Światło i materia</div>
+  <h1>Optyka dla Artystów Technicznych</h1>
+  <p class="subtitle">Co materia robi ze światłem — od elektronu do koloru, który widzisz w kadrze.</p>
+
+  <div class="panel">
+    <div class="panel-label">Jak to czytać</div>
+    <ul>
+      <li><strong>Po kolei.</strong> Ten tom buduje od samego światła, przez atom i drgający ładunek, do konkretnych materiałów — nic nie pojawia się, zanim nie ma czym tego wytłumaczyć.</li>
+      <li><strong>Wzory są w tekście, ale nigdy na początku.</strong> Kolejność jest zawsze ta sama: co widzisz → dlaczego tak jest → liczba, która to przypina. Pełne wyprowadzenia siedzą w dodatkach.</li>
+      <li><strong>Nie musisz znać fizyki kwantowej.</strong> Matematyka, której używamy, mieści się na jednej stronie — <a href="matematyka/podstawy-matematyczne.html">Zanim zaczniesz</a>. Wracaj tam, kiedy wzór zacznie wyglądać groźnie.</li>
+    </ul>
+  </div>
+
+  <div class="part">
+    <div class="part-label amber">Część I · Światło, zanim spotka materię</div>
+    <p class="index-hook">Trzy rozdziały o samym świetle: czym jest, jak wygląda jego pole i jak dodają się fale. Wszystko, co dalej robi materia, jest odpowiedzią na to pole.</p>
+    <div class="index-list">
+      <a class="index-row" href="rozdzialy/rozdzial-01-czym-jest-swiatlo.html">
+        <span class="index-num">Rozdział 1 <span class="stan">w przygotowaniu</span></span>
+        <span class="index-title">Czym właściwie jest światło</span>
+        <span class="index-hook">W rendererze światło to liczba RGB na promieniu. W świecie to fala pola elektromagnetycznego o długości kilku tysięcy średnic atomu, która na dodatek przychodzi porcjami — i oba te fakty będą ci potrzebne.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-02-pole-e-i-b.html">
+        <span class="index-num">Rozdział 2 <span class="stan">w przygotowaniu</span></span>
+        <span class="index-title">Pole E i B: fala, która pcha ładunki</span>
+        <span class="index-hook">Fala świetlna to nie coś, co faluje — to pole, które w każdym punkcie pcha ładunek to w jedną, to w drugą stronę, kilkaset bilionów razy na sekundę. Cała reszta tego tomu to odpowiedź materii na to pchnięcie.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-03-faza-i-dodawanie-fal.html">
+        <span class="index-num">Rozdział 3 <span class="stan">w przygotowaniu</span></span>
+        <span class="index-title">Faza i dodawanie fal</span>
+        <span class="index-hook">Dwie fale mogą dać dwa razy więcej światła albo zero. O tym, co wyjdzie, decyduje jedna liczba — przesunięcie fazy — i to ona za kilka rozdziałów wyjaśni, dlaczego szkło jest przezroczyste, a niebo niebieskie.</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="part">
+    <div class="part-label cyan">Część II · Z czego zbudowana jest materia</div>
+    <p class="index-hook">Wstęp chemiczny bez formalizmu kwantowego: atomy, wiązania, pasma i chemia węgla. Tyle, żeby każdy materiał z Części VI miał konkretne elektrony, które da się pchnąć.</p>
+    <div class="index-list">
+      <a class="index-row" href="rozdzialy/rozdzial-04-atom.html">
+        <span class="index-num">Rozdział 4 <span class="stan">w przygotowaniu</span></span>
+        <span class="index-title">Atom: jądro, elektrony i dlaczego pierwiastki się różnią</span>
+        <span class="index-hook">Sód świeci na pomarańczowo, neon na czerwono, a węgiel buduje drzewa. Różnią się tylko liczbą protonów — ale ta liczba ustawia elektrony w powłokach, a elektrony decydują o wszystkim, co zobaczysz.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-05-wiazania.html">
+        <span class="index-num">Rozdział 5 <span class="stan">w przygotowaniu</span></span>
+        <span class="index-title">Wiązania: jak z atomów powstają cząsteczki</span>
+        <span class="index-hook">Atomy łączą się, bo razem mają niższą energię niż osobno. Sposób, w jaki się łączą — dzieląc elektrony, oddając je albo wrzucając do wspólnej puli — przesądza, czy wyjdzie gaz, sól, metal czy woda.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-06-od-czasteczki-do-ciala-stalego.html">
+        <span class="index-num">Rozdział 6 <span class="stan">w przygotowaniu</span></span>
+        <span class="index-title">Od cząsteczki do ciała stałego</span>
+        <span class="index-hook">Kiedy atomów jest nie dwa, a 10²³, ich poziomy energii zlewają się w pasma. Szerokość przerwy między pasmami jest najważniejszą liczbą w optyce materiałów: mówi, czy coś będzie przezroczyste, kolorowe czy lustrzane.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-07-chemia-wegla.html">
+        <span class="index-num">Rozdział 7 <span class="stan">w przygotowaniu</span></span>
+        <span class="index-title">Chemia węgla: cząsteczki, z których zrobiony jest świat CG</span>
+        <span class="index-hook">Drewno, plastik, skóra, włosy, liście — prawie wszystko, co teksturujesz, to łańcuchy i pierścienie węgla. Czy taka cząsteczka ma kolor, zależy głównie od jednego: jak długi jest w niej ciąg naprzemiennych wiązań.</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="part">
+    <div class="part-label">Część III · Materia, która drga</div>
+    <p class="index-hook">Jeden model, który niesie resztę tomu: elektron na sprężynie, pchany polem fali. Z jego rezonansu i fazy wynika prawie każdy kolor i każde załamanie.</p>
+    <div class="index-list">
+      <a class="index-row" href="rozdzialy/rozdzial-08-dipol-i-polaryzowalnosc.html">
+        <span class="index-num">Rozdział 8 <span class="stan">w przygotowaniu</span></span>
+        <span class="index-title">Dipol i polaryzowalność: elektron na sprężynie</span>
+        <span class="index-hook">Pole fali przesuwa chmurę elektronów względem jądra o ułamek średnicy atomu. Ten ułamek — łatwość, z jaką cząsteczka daje się rozciągnąć — nazywa się polaryzowalnością i jest pierwszą liczbą, od której zależy wygląd materiału.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-09-oscylator-rezonans-faza.html">
+        <span class="index-num">Rozdział 9 <span class="stan">w przygotowaniu</span></span>
+        <span class="index-title">Oscylator, rezonans i faza</span>
+        <span class="index-hook">Pchaj huśtawkę wolno, a pójdzie za twoją ręką. Pchaj za szybko, a zacznie jej się wymykać w przeciwfazie. Elektron w szkle robi dokładnie to samo — i ta jedna zmiana fazy wyjaśni, dlaczego n jest większe od jedności.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-10-polaryzacja-materii.html">
+        <span class="index-num">Rozdział 10 <span class="stan">w przygotowaniu</span></span>
+        <span class="index-title">Polaryzacja materii</span>
+        <span class="index-hook">Jeden dipol to ciekawostka. Miliard miliardów dipoli w centymetrze sześciennym to nowa wielkość — polaryzacja ośrodka — która zamienia mikroskopową polaryzowalność w liczbę, którą znasz z katalogu materiałów.</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="part">
+    <div class="part-label amber">Część IV · Jedna cząsteczka, wiele cząsteczek</div>
+    <p class="index-hook">Drgający ładunek sam staje się źródłem światła. Co z tego wychodzi, zależy od tego, ile tych źródeł jest, jak są ułożone i jak duże są w porównaniu z falą.</p>
+    <div class="index-list">
+      <a class="index-row" href="rozdzialy/rozdzial-11-dipol-promieniuje.html">
+        <span class="index-num">Rozdział 11 <span class="stan">w przygotowaniu</span></span>
+        <span class="index-title">Dipol promieniuje: emisja i rozpraszanie jednej cząsteczki</span>
+        <span class="index-hook">Drgający elektron sam staje się maleńką anteną. Świeci na boki, nigdy wzdłuż swojego ruchu, i tym mocniej, im szybciej drga — to cały przepis na rozpraszanie, zanim dołożysz drugą cząsteczkę.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-12-interferencja-wielu-dipoli.html">
+        <span class="index-num">Rozdział 12 <span class="stan">w przygotowaniu</span></span>
+        <span class="index-title">Interferencja wielu dipoli</span>
+        <span class="index-hook">Każda cząsteczka szkła rozprasza światło we wszystkich kierunkach, a mimo to szkło jest przezroczyste. Fale z sąsiednich cząsteczek znoszą się wszędzie poza jednym kierunkiem — do przodu.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-13-rayleigh.html">
+        <span class="index-num">Rozdział 13 <span class="stan">w przygotowaniu</span></span>
+        <span class="index-title">Rayleigh: λ⁻⁴ z mechanizmu</span>
+        <span class="index-hook">Niebo jest niebieskie nie przez kurz ani odbicie oceanu, tylko przez to, że każda cząsteczka azotu jest anteną, która świeci tym mocniej, im krótsza fala. Czwarta potęga w tym prawie nie jest magią — wynika z dwóch rzeczy, które już znasz.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-14-mie.html">
+        <span class="index-num">Rozdział 14 <span class="stan">w przygotowaniu</span></span>
+        <span class="index-title">Mie: kiedy cząstka dorasta do fali</span>
+        <span class="index-hook">Kropla w chmurze jest sto razy większa od fali światła i nie ma już ulubionego koloru — dlatego chmura jest biała, a nie niebieska. Między cząsteczką a kroplą jest cały zakres rozmiarów, w którym rozpraszanie robi rzeczy najdziwniejsze.</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="part">
+    <div class="part-label violet">Część V · Od cząsteczki do materiału</div>
+    <p class="index-hook">Współczynnik n, dyspersja, absorpcja i odbicie — cztery liczby, które renderer bierze za dane, wyprowadzone tu z tego, co robią elektrony.</p>
+    <div class="index-list">
+      <a class="index-row" href="rozdzialy/rozdzial-15-zalamanie-skad-wolniejsza-fala.html">
+        <span class="index-num">Rozdział 15 <span class="stan">w przygotowaniu</span></span>
+        <span class="index-title">Załamanie i n: skąd wolniejsza fala</span>
+        <span class="index-hook">Światło w szkle nie jest pochłaniane i wysyłane ponownie. Fala padająca biegnie dalej z prędkością c, a elektrony szkła dokładają do niej własną, spóźnioną falę — i to ich suma wygląda jak fala wolniejsza.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-16-dyspersja.html">
+        <span class="index-num">Rozdział 16 <span class="stan">w przygotowaniu</span></span>
+        <span class="index-title">Dyspersja: n(λ) jako ogon rezonansu</span>
+        <span class="index-hook">Szkło załamuje niebieski mocniej niż czerwony, bo jego elektrony mają rezonans w ultrafiolecie, a niebieski jest do tego rezonansu bliżej. Pryzmat i aberracja chromatyczna to ogon krzywej, której szczyt leży poza zasięgiem oka.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-17-absorpcja-i-zespolone-n.html">
+        <span class="index-num">Rozdział 17 <span class="stan">w przygotowaniu</span></span>
+        <span class="index-title">Absorpcja i zespolone n</span>
+        <span class="index-hook">Blisko rezonansu elektron przestaje tylko opóźniać falę i zaczyna ją zjadać. Obie rzeczy mieszczą się w jednej liczbie zespolonej — n + iκ — z której druga połowa mówi, na jakiej głębokości światło zniknie.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-18-granica-dwoch-osrodkow.html">
+        <span class="index-num">Rozdział 18 <span class="stan">w przygotowaniu</span></span>
+        <span class="index-title">Granica dwóch ośrodków: Fresnel z mikroskopu</span>
+        <span class="index-hook">Odbicie od szyby to fala wysłana wstecz przez elektrony tuż pod powierzchnią. Z tego jednego obrazu wynika, ile odbija szkło, dlaczego metal odbija prawie wszystko i skąd bierze się kąt, pod którym odbicie gaśnie.</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="part">
+    <div class="part-label raster">Część VI · Materiały</div>
+    <p class="index-hook">Siedem rozdziałów, w których mechanizmy z poprzednich części spotykają konkretne rzeczy: szkło, metal, sadzę, farbę, drewno i skórę. Tu mikroskop zamienia się w lookdev.</p>
+    <div class="index-list">
+      <a class="index-row" href="rozdzialy/rozdzial-19-gaz-woda-szklo.html">
+        <span class="index-num">Rozdział 19 <span class="stan">w przygotowaniu</span></span>
+        <span class="index-title">Gaz, woda, szkło: dlaczego przezroczyste</span>
+        <span class="index-hook">Przezroczystość nie jest brakiem oddziaływania — szkło oddziałuje ze światłem na każdym nanometrze. Jest skutkiem dwóch warunków naraz: rezonanse leżą poza widmem, a materia jest dość jednorodna, żeby nic nie uciekało w bok.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-20-metal.html">
+        <span class="index-num">Rozdział 20 <span class="stan">w przygotowaniu</span></span>
+        <span class="index-title">Metal: swobodne elektrony, złoto i miedź</span>
+        <span class="index-hook">Metal błyszczy nie dlatego, że jest gładki, tylko dlatego, że jego elektrony nie są przywiązane do atomów. Taka chmura odsyła falę z powrotem, zanim ta wejdzie na głębokość kilkunastu nanometrów — chyba że fala jest dość szybka, żeby chmura nie nadążyła.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-21-sadza-wegiel-czern.html">
+        <span class="index-num">Rozdział 21 <span class="stan">w przygotowaniu</span></span>
+        <span class="index-title">Sadza, węgiel i czerń</span>
+        <span class="index-hook">Czerń to nie brak koloru, tylko osobny problem: trzeba pochłonąć każdą długość fali i jednocześnie nie odbić nic od powierzchni. Sadza rozwiązuje pierwszą połowę chemią, a najczarniejsze materiały świata drugą — geometrią.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-22-kolor-z-absorpcji.html">
+        <span class="index-num">Rozdział 22 <span class="stan">w przygotowaniu</span></span>
+        <span class="index-title">Kolor z absorpcji: chromofor, barwnik, pigment</span>
+        <span class="index-hook">Pomidor jest czerwony, bo jego cząsteczki zjadają niebieski i zielony. Ta sama cząsteczka rozpuszczona daje barwnik, zmielona w ziarno — pigment, a skrzydło motyla dostaje swój błękit bez żadnej barwnej cząsteczki.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-23-plastik-lakier-farba.html">
+        <span class="index-num">Rozdział 23 <span class="stan">w przygotowaniu</span></span>
+        <span class="index-title">Plastik, lakier, farba</span>
+        <span class="index-hook">Czerwony plastik ma biały odblask, a czerwona karoseria — dwa odbicia naraz. To nie konwencja shaderów, tylko budowa: przezroczyste spoiwo o n ≈ 1,5, w nim barwne ziarna, a na wierzchu często jeszcze jedna warstwa.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-24-drewno-papier-tkanina.html">
+        <span class="index-num">Rozdział 24 <span class="stan">w przygotowaniu</span></span>
+        <span class="index-title">Drewno, papier, tkanina</span>
+        <span class="index-hook">Celuloza jest przezroczysta, a kartka jest biała. Różnicę robi powietrze między włóknami — i dlatego mokry papier prześwituje, mokry materiał ciemnieje, a drewno pod lakierem nabiera głębi.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-25-skora-wlosy-organika.html">
+        <span class="index-num">Rozdział 25 <span class="stan">w przygotowaniu</span></span>
+        <span class="index-title">Skóra, włosy, organika</span>
+        <span class="index-hook">Skóra to warstwy półprzezroczystej tkanki z dwoma barwnikami — melaniną i hemoglobiną — w której światło błądzi milimetrami. Włos to szklisty walec z łuskami. Z tych dwóch zdań wynika większość tego, co robi shader skóry i włosów.</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="part">
+    <div class="part-label">Część VII · Świat w dużej skali</div>
+    <p class="index-hook">Te same mechanizmy rozciągnięte na kilometry powietrza i miliardy kropel. Tom zamyka tabela: każdy kolor świata przypisany do jednego z kilku mechanizmów.</p>
+    <div class="index-list">
+      <a class="index-row" href="rozdzialy/rozdzial-26-atmosfera-chmury-mgla-dym.html">
+        <span class="index-num">Rozdział 26 <span class="stan">w przygotowaniu</span></span>
+        <span class="index-title">Atmosfera, chmury, mgła, dym</span>
+        <span class="index-hook">Niebieskie niebo, biała chmura, szara mgła, niebieskawy dym na tle ciemnym i brązowy na tle jasnym — to te same dwa mechanizmy z Części IV, tylko z inną wielkością cząstek.</span>
+      </a>
+      <a class="index-row" href="rozdzialy/rozdzial-27-tecza-halo-kolor-swiata.html">
+        <span class="index-num">Rozdział 27 <span class="stan">w przygotowaniu</span></span>
+        <span class="index-title">Tęcza, halo i skąd bierze się kolor świata</span>
+        <span class="index-hook">Tęcza stoi zawsze 42° od cienia twojej głowy, a halo 22° od Słońca. Na koniec tomu wszystkie kolory świata dają się ułożyć w krótką tabelę — i każdy z nich trafia do jednego z kilku mechanizmów.</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="part" id="dodatki">
+    <div class="part-label violet">Dodatki · dla tych, którzy chcą głębiej</div>
+    <p class="index-hook">Tu mieszkają wyprowadzenia i policzone przykłady. Żaden rozdział nie wymaga dodatku, żeby dało się go zrozumieć — dodatek jest dla tego, kto po przeczytaniu rozdziału chce zobaczyć rachunek. Oznaczenie [WZORY] mówi, że w środku jest matematyka; [CG] — że rzecz dotyczy renderu albo compu.</p>
+    <div class="index-list">
+      <a class="index-row" href="dodatki/dodatek-a-maxwell-bez-strachu.html">
+        <span class="index-num">Dodatek A · rozwija R.1, R.2 [WZORY] <span class="stan">w przygotowaniu</span></span>
+        <span class="index-title">Maxwell bez strachu</span>
+        <span class="index-hook">Cztery równania Maxwella czytane słowami, fala płaska jako ich rozwiązanie, c = 1/√(ε₀μ₀) i to, dlaczego w optyce prawie zawsze wystarcza pole E.</span>
+      </a>
+      <a class="index-row" href="dodatki/dodatek-b-oscylator-lorentza.html">
+        <span class="index-num">Dodatek B · rozwija R.8, R.9, R.16 [WZORY] <span class="stan">w przygotowaniu</span></span>
+        <span class="index-title">Oscylator Lorentza</span>
+        <span class="index-hook">Równanie ruchu elektronu na sprężynie z tłumieniem, jego rozwiązanie zespolone, amplituda i faza w funkcji częstości oraz droga od α(ω) do wzoru Sellmeiera.</span>
+      </a>
+      <a class="index-row" href="dodatki/dodatek-c-clausius-mossotti.html">
+        <span class="index-num">Dodatek C · rozwija R.10, R.15 [WZORY] <span class="stan">w przygotowaniu</span></span>
+        <span class="index-title">Clausius–Mossotti i Lorentz–Lorenz</span>
+        <span class="index-hook">Jak z polaryzowalności jednej cząsteczki i gęstości dostać ε i n — z poprawką na pole lokalne, bez której gęste ośrodki wychodzą źle — i sprawdzenie na powietrzu, wodzie i lodzie.</span>
+      </a>
+      <a class="index-row" href="dodatki/dodatek-d-promieniowanie-dipola.html">
+        <span class="index-num">Dodatek D · rozwija R.11, R.13 [WZORY] <span class="stan">w przygotowaniu</span></span>
+        <span class="index-title">Promieniowanie dipola i λ⁻⁴</span>
+        <span class="index-hook">Pole i moc drgającego dipola (wzór Larmora), rozkład sin²θ, przekrój czynny Rayleigha i skąd dokładnie biorą się cztery potęgi.</span>
+      </a>
+      <a class="index-row" href="dodatki/dodatek-e-mie-w-liczbach.html">
+        <span class="index-num">Dodatek E · rozwija R.14, R.26, R.27 [WZORY] <span class="stan">w przygotowaniu</span></span>
+        <span class="index-title">Mie w liczbach</span>
+        <span class="index-hook">Parametr rozmiaru, sprawność ekstynkcji Q i paradoks Q → 2, funkcja fazowa i czynnik asymetrii g, przybliżenie Henyeya–Greensteina oraz liczby dla kropli, dymu i mgły.</span>
+      </a>
+      <a class="index-row" href="dodatki/dodatek-f-ewald-oseen.html">
+        <span class="index-num">Dodatek F · rozwija R.12, R.15 [WZORY] <span class="stan">w przygotowaniu</span></span>
+        <span class="index-title">Twierdzenie Ewalda–Oseena</span>
+        <span class="index-hook">Pole warstwy dipoli, dlaczego jest opóźnione o ćwierć okresu, jak suma takich warstw gasi falę padającą i zastępuje ją falą o prędkości c/n.</span>
+      </a>
+      <a class="index-row" href="dodatki/dodatek-g-drude-i-czestotliwosc-plazmowa.html">
+        <span class="index-num">Dodatek G · rozwija R.20 [WZORY] <span class="stan">w przygotowaniu</span></span>
+        <span class="index-title">Drude i częstotliwość plazmowa</span>
+        <span class="index-hook">Oscylator bez sprężyny: model Drudego, częstotliwość plazmowa z gęstości elektronów, dlaczego metal przepuszcza ultrafiolet i gdzie model zawodzi przy złocie i miedzi.</span>
+      </a>
+      <a class="index-row" href="dodatki/dodatek-h-n-kappa-beer-lambert.html">
+        <span class="index-num">Dodatek H · rozwija R.17, R.18 [WZORY] <span class="stan">w przygotowaniu</span></span>
+        <span class="index-title">n, κ, Beer–Lambert i głębokość wnikania</span>
+        <span class="index-hook">Fala w ośrodku o zespolonym n, związek κ ze współczynnikiem absorpcji, prawo Beera–Lamberta, głębokość wnikania oraz wzory Fresnela dla metalu.</span>
+      </a>
+      <a class="index-row" href="dodatki/dodatek-i-tabela-n-i-kappa.html">
+        <span class="index-num">Dodatek I · rozwija R.16, R.19, R.20, R.21 <span class="stan">w przygotowaniu</span></span>
+        <span class="index-title">Tabela n i κ materiałów</span>
+        <span class="index-hook">Współczynniki n i κ dla gazów, wody, lodu, szkieł, plastików, metali i węgla przy kilku długościach fali, z przerwą energetyczną tam, gdzie ma sens.</span>
+      </a>
+      <a class="index-row" href="dodatki/dodatek-j-od-n-i-kappa-do-shadera.html">
+        <span class="index-num">Dodatek J · rozwija R.18, R.20, R.23, R.25 [CG] <span class="stan">w przygotowaniu</span></span>
+        <span class="index-title">Od n i κ do parametrów shadera</span>
+        <span class="index-hook">Jak przeliczyć n i κ na F₀, kolor krawędzi metalu, IOR i współczynniki objętości σₐ, σₛ — i które suwaki shadera odpowiadają którym mechanizmom z tego tomu.</span>
+      </a>
+      <a class="index-row" href="dodatki/dodatek-k-poziomy-energii-i-fotony.html">
+        <span class="index-num">Dodatek K · rozwija R.4, R.6 [WZORY] <span class="stan">w przygotowaniu</span></span>
+        <span class="index-title">Poziomy energii i fotony</span>
+        <span class="index-hook">Skąd biorą się dyskretne poziomy (fala uwięziona w pudełku), jak z poziomów robią się pasma, E = hc/λ w elektronowoltach i tabela przerw energetycznych.</span>
+      </a>
+      <a class="index-row" href="dodatki/dodatek-l-atlas-czasteczek.html">
+        <span class="index-num">Dodatek L · rozwija R.5, R.7, R.22, R.24, R.25 <span class="stan">w przygotowaniu</span></span>
+        <span class="index-title">Atlas cząsteczek</span>
+        <span class="index-hook">Struktury w SVG: woda, CO₂, azot i tlen, celuloza, lignina, polietylen, keratyna, kolagen, melanina, hemoglobina, chlorofil, β-karoten i TiO₂ — każda z jednym zdaniem o tym, co robi ze światłem.</span>
+      </a>
+      <a class="index-row" href="dodatki/dodatek-m-slownik-pl-en.html">
+        <span class="index-num">Dodatek M · rozwija R.1 <span class="stan">w przygotowaniu</span></span>
+        <span class="index-title">Słownik pojęć Tomu 1 PL–EN</span>
+        <span class="index-hook">Polskie terminy tego tomu z angielskimi odpowiednikami, których użyjesz w dokumentacji renderera, w artykułach i w rozmowie na planie.</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="part">
+    <div class="part-label">Zanim zaczniesz</div>
+    <div class="index-list">
+      <a class="index-row" href="matematyka/podstawy-matematyczne.html">
+        <span class="index-num">Primer <span class="stan">w przygotowaniu</span></span>
+        <span class="index-title">Zanim zaczniesz: matematyka, której użyjemy</span>
+        <span class="index-hook">Sinusoida i jej trzy parametry, faza jako kąt, wektor i jego składowe, liczby zespolone jako strzałki (e^{iφ}), potęgi i to, co robi λ⁻⁴, oraz zanik wykładniczy. Tyle wystarczy na cały tom — wracaj tu, kiedy wzór w rozdziale zacznie wyglądać groźnie.</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    <p>Książka jest w budowie — rozdziały powstają po kolei, a każdy jest kompletny w chwili, w której trafia na stronę. Puste strony to szkielety, nie fragmenty.</p>
+    <p>Drugi tom tej samej książki: <a href="../tom2/index.html">Optyka dla Artystów Technicznych, Tom 2</a>.</p>
+    <p>Szósta z rodziny książek o grafice:
+      <a href="https://bartoszskrzypiec.github.io/raytracing-book/">Ray Tracing</a>,
+      <a href="https://bartoszskrzypiec.github.io/lookdev-book/">Lookdev</a>,
+      <a href="https://bartoszskrzypiec.github.io/pipeline-book/">Pipeline</a>,
+      <a href="https://bartoszskrzypiec.github.io/pxrsurface-guide/">PxrSurface Guide</a>,
+      <a href="https://bartoszskrzypiec.github.io/atmosfera_chmury_book/">Atmosfera i chmury</a>.</p>
+  </div>
+
+</div>
+
+<script src="../assets/interactive.js"></script>
+</body>
+</html>

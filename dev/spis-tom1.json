@@ -1,0 +1,531 @@
+{
+  "tytul": "Optyka dla Artystów Technicznych",
+  "marka": [
+    "Optyka",
+    "dla Artystów Technicznych"
+  ],
+  "tom": 1,
+  "tytul_tomu": "Światło i materia",
+  "podtytul": "Co materia robi ze światłem — od elektronu do koloru, który widzisz w kadrze.",
+  "czesci": [
+    {
+      "nr": "I",
+      "tytul": "Światło, zanim spotka materię",
+      "kolor": "amber",
+      "wstep": "Trzy rozdziały o samym świetle: czym jest, jak wygląda jego pole i jak dodają się fale. Wszystko, co dalej robi materia, jest odpowiedzią na to pole.",
+      "od": 1,
+      "do": 3
+    },
+    {
+      "nr": "II",
+      "tytul": "Z czego zbudowana jest materia",
+      "kolor": "cyan",
+      "wstep": "Wstęp chemiczny bez formalizmu kwantowego: atomy, wiązania, pasma i chemia węgla. Tyle, żeby każdy materiał z Części VI miał konkretne elektrony, które da się pchnąć.",
+      "od": 4,
+      "do": 7
+    },
+    {
+      "nr": "III",
+      "tytul": "Materia, która drga",
+      "kolor": "",
+      "wstep": "Jeden model, który niesie resztę tomu: elektron na sprężynie, pchany polem fali. Z jego rezonansu i fazy wynika prawie każdy kolor i każde załamanie.",
+      "od": 8,
+      "do": 10
+    },
+    {
+      "nr": "IV",
+      "tytul": "Jedna cząsteczka, wiele cząsteczek",
+      "kolor": "amber",
+      "wstep": "Drgający ładunek sam staje się źródłem światła. Co z tego wychodzi, zależy od tego, ile tych źródeł jest, jak są ułożone i jak duże są w porównaniu z falą.",
+      "od": 11,
+      "do": 14
+    },
+    {
+      "nr": "V",
+      "tytul": "Od cząsteczki do materiału",
+      "kolor": "violet",
+      "wstep": "Współczynnik n, dyspersja, absorpcja i odbicie — cztery liczby, które renderer bierze za dane, wyprowadzone tu z tego, co robią elektrony.",
+      "od": 15,
+      "do": 18
+    },
+    {
+      "nr": "VI",
+      "tytul": "Materiały",
+      "kolor": "raster",
+      "wstep": "Siedem rozdziałów, w których mechanizmy z poprzednich części spotykają konkretne rzeczy: szkło, metal, sadzę, farbę, drewno i skórę. Tu mikroskop zamienia się w lookdev.",
+      "od": 19,
+      "do": 25
+    },
+    {
+      "nr": "VII",
+      "tytul": "Świat w dużej skali",
+      "kolor": "",
+      "wstep": "Te same mechanizmy rozciągnięte na kilometry powietrza i miliardy kropel. Tom zamyka tabela: każdy kolor świata przypisany do jednego z kilku mechanizmów.",
+      "od": 26,
+      "do": 27
+    }
+  ],
+  "rozdzialy": [
+    {
+      "nr": 1,
+      "slug": "rozdzial-01-czym-jest-swiatlo",
+      "tytul": "Czym właściwie jest światło",
+      "eyebrow": "Światło",
+      "hook": "W rendererze światło to liczba RGB na promieniu. W świecie to fala pola elektromagnetycznego o długości kilku tysięcy średnic atomu, która na dodatek przychodzi porcjami — i oba te fakty będą ci potrzebne.",
+      "readout": [
+        "Widmo · 380–750 nm",
+        "Foton · 1,65–3,26 eV",
+        "Atom · 0,1 nm",
+        "Modele · fala i porcja"
+      ]
+    },
+    {
+      "nr": 2,
+      "slug": "rozdzial-02-pole-e-i-b",
+      "tytul": "Pole E i B: fala, która pcha ładunki",
+      "eyebrow": "Światło",
+      "hook": "Fala świetlna to nie coś, co faluje — to pole, które w każdym punkcie pcha ładunek to w jedną, to w drugą stronę, kilkaset bilionów razy na sekundę. Cała reszta tego tomu to odpowiedź materii na to pchnięcie.",
+      "readout": [
+        "Pola · E ⊥ B ⊥ kierunek",
+        "Okres · 1,8 fs",
+        "Siła · głównie od E",
+        "Polaryzacja · kierunek E"
+      ]
+    },
+    {
+      "nr": 3,
+      "slug": "rozdzial-03-faza-i-dodawanie-fal",
+      "tytul": "Faza i dodawanie fal",
+      "eyebrow": "Światło",
+      "hook": "Dwie fale mogą dać dwa razy więcej światła albo zero. O tym, co wyjdzie, decyduje jedna liczba — przesunięcie fazy — i to ona za kilka rozdziałów wyjaśni, dlaczego szkło jest przezroczyste, a niebo niebieskie.",
+      "readout": [
+        "Faza · kąt",
+        "Suma · wektorów",
+        "Spójne · amplitudy",
+        "Niespójne · natężenia"
+      ]
+    },
+    {
+      "nr": 4,
+      "slug": "rozdzial-04-atom",
+      "tytul": "Atom: jądro, elektrony i dlaczego pierwiastki się różnią",
+      "eyebrow": "Materia",
+      "hook": "Sód świeci na pomarańczowo, neon na czerwono, a węgiel buduje drzewa. Różnią się tylko liczbą protonów — ale ta liczba ustawia elektrony w powłokach, a elektrony decydują o wszystkim, co zobaczysz.",
+      "readout": [
+        "Jądro · 10⁻¹⁵ m",
+        "Atom · 10⁻¹⁰ m",
+        "Poziomy · eV",
+        "Sód · 589 nm"
+      ]
+    },
+    {
+      "nr": 5,
+      "slug": "rozdzial-05-wiazania",
+      "tytul": "Wiązania: jak z atomów powstają cząsteczki",
+      "eyebrow": "Materia",
+      "hook": "Atomy łączą się, bo razem mają niższą energię niż osobno. Sposób, w jaki się łączą — dzieląc elektrony, oddając je albo wrzucając do wspólnej puli — przesądza, czy wyjdzie gaz, sól, metal czy woda.",
+      "readout": [
+        "Typy · pięć",
+        "O–H · 4,8 eV",
+        "Wodorowe · 0,2 eV",
+        "Woda · 104,5°"
+      ]
+    },
+    {
+      "nr": 6,
+      "slug": "rozdzial-06-od-czasteczki-do-ciala-stalego",
+      "tytul": "Od cząsteczki do ciała stałego",
+      "eyebrow": "Materia",
+      "hook": "Kiedy atomów jest nie dwa, a 10²³, ich poziomy energii zlewają się w pasma. Szerokość przerwy między pasmami jest najważniejszą liczbą w optyce materiałów: mówi, czy coś będzie przezroczyste, kolorowe czy lustrzane.",
+      "readout": [
+        "Stany · gaz, ciecz, ciało stałe",
+        "Pasma · z poziomów",
+        "Przerwa · 0–9 eV",
+        "Widzialne · 1,65–3,26 eV"
+      ]
+    },
+    {
+      "nr": 7,
+      "slug": "rozdzial-07-chemia-wegla",
+      "tytul": "Chemia węgla: cząsteczki, z których zrobiony jest świat CG",
+      "eyebrow": "Materia",
+      "hook": "Drewno, plastik, skóra, włosy, liście — prawie wszystko, co teksturujesz, to łańcuchy i pierścienie węgla. Czy taka cząsteczka ma kolor, zależy głównie od jednego: jak długi jest w niej ciąg naprzemiennych wiązań.",
+      "readout": [
+        "Węgiel · 4 wiązania",
+        "Sprzężenie · naprzemienne",
+        "Dłuższy łańcuch · czerwieńszy",
+        "Karoten · 11 wiązań C=C"
+      ]
+    },
+    {
+      "nr": 8,
+      "slug": "rozdzial-08-dipol-i-polaryzowalnosc",
+      "tytul": "Dipol i polaryzowalność: elektron na sprężynie",
+      "eyebrow": "Drganie",
+      "hook": "Pole fali przesuwa chmurę elektronów względem jądra o ułamek średnicy atomu. Ten ułamek — łatwość, z jaką cząsteczka daje się rozciągnąć — nazywa się polaryzowalnością i jest pierwszą liczbą, od której zależy wygląd materiału.",
+      "readout": [
+        "Model · masa na sprężynie",
+        "Dipol · p = q·d",
+        "Miara · α",
+        "Przesunięcie · ≪ 0,1 nm"
+      ]
+    },
+    {
+      "nr": 9,
+      "slug": "rozdzial-09-oscylator-rezonans-faza",
+      "tytul": "Oscylator, rezonans i faza",
+      "eyebrow": "Drganie",
+      "hook": "Pchaj huśtawkę wolno, a pójdzie za twoją ręką. Pchaj za szybko, a zacznie jej się wymykać w przeciwfazie. Elektron w szkle robi dokładnie to samo — i ta jedna zmiana fazy wyjaśni, dlaczego n jest większe od jedności.",
+      "readout": [
+        "Rezonans · ω₀",
+        "Poniżej · w fazie",
+        "Powyżej · przeciwfaza",
+        "Tłumienie · γ"
+      ]
+    },
+    {
+      "nr": 10,
+      "slug": "rozdzial-10-polaryzacja-materii",
+      "tytul": "Polaryzacja materii",
+      "eyebrow": "Drganie",
+      "hook": "Jeden dipol to ciekawostka. Miliard miliardów dipoli w centymetrze sześciennym to nowa wielkość — polaryzacja ośrodka — która zamienia mikroskopową polaryzowalność w liczbę, którą znasz z katalogu materiałów.",
+      "readout": [
+        "Gęstość · N",
+        "Polaryzacja · P",
+        "Przenikalność · ε",
+        "Związek · ε = n²"
+      ]
+    },
+    {
+      "nr": 11,
+      "slug": "rozdzial-11-dipol-promieniuje",
+      "tytul": "Dipol promieniuje: emisja i rozpraszanie jednej cząsteczki",
+      "eyebrow": "Rozpraszanie",
+      "hook": "Drgający elektron sam staje się maleńką anteną. Świeci na boki, nigdy wzdłuż swojego ruchu, i tym mocniej, im szybciej drga — to cały przepis na rozpraszanie, zanim dołożysz drugą cząsteczkę.",
+      "readout": [
+        "Kształt · pączek",
+        "Oś drgań · ciemna",
+        "Moc · ∝ ω⁴",
+        "Opóźnienie · r/c"
+      ]
+    },
+    {
+      "nr": 12,
+      "slug": "rozdzial-12-interferencja-wielu-dipoli",
+      "tytul": "Interferencja wielu dipoli",
+      "eyebrow": "Rozpraszanie",
+      "hook": "Każda cząsteczka szkła rozprasza światło we wszystkich kierunkach, a mimo to szkło jest przezroczyste. Fale z sąsiednich cząsteczek znoszą się wszędzie poza jednym kierunkiem — do przodu.",
+      "readout": [
+        "Źródła · miliardy",
+        "Bok · znoszą się",
+        "Przód · sumują się",
+        "Nieporządek · rozprasza"
+      ]
+    },
+    {
+      "nr": 13,
+      "slug": "rozdzial-13-rayleigh",
+      "tytul": "Rayleigh: λ⁻⁴ z mechanizmu",
+      "eyebrow": "Rozpraszanie",
+      "hook": "Niebo jest niebieskie nie przez kurz ani odbicie oceanu, tylko przez to, że każda cząsteczka azotu jest anteną, która świeci tym mocniej, im krótsza fala. Czwarta potęga w tym prawie nie jest magią — wynika z dwóch rzeczy, które już znasz.",
+      "readout": [
+        "Prawo · λ⁻⁴",
+        "Niebieski/czerwony · ≈ 5,9×",
+        "90° · pełna polaryzacja",
+        "Rozmiar · ≪ λ"
+      ]
+    },
+    {
+      "nr": 14,
+      "slug": "rozdzial-14-mie",
+      "tytul": "Mie: kiedy cząstka dorasta do fali",
+      "eyebrow": "Rozpraszanie",
+      "hook": "Kropla w chmurze jest sto razy większa od fali światła i nie ma już ulubionego koloru — dlatego chmura jest biała, a nie niebieska. Między cząsteczką a kroplą jest cały zakres rozmiarów, w którym rozpraszanie robi rzeczy najdziwniejsze.",
+      "readout": [
+        "Parametr · x = 2πa/λ",
+        "x ≪ 1 · Rayleigh",
+        "x ≈ 1 · rezonanse",
+        "x ≫ 1 · do przodu"
+      ]
+    },
+    {
+      "nr": 15,
+      "slug": "rozdzial-15-zalamanie-skad-wolniejsza-fala",
+      "tytul": "Załamanie i n: skąd wolniejsza fala",
+      "eyebrow": "Ośrodek",
+      "hook": "Światło w szkle nie jest pochłaniane i wysyłane ponownie. Fala padająca biegnie dalej z prędkością c, a elektrony szkła dokładają do niej własną, spóźnioną falę — i to ich suma wygląda jak fala wolniejsza.",
+      "readout": [
+        "Mit · pochłoń i wyślij",
+        "Mechanizm · suma fal",
+        "Szkło · n ≈ 1,52",
+        "Klucz · opóźnienie fazy"
+      ]
+    },
+    {
+      "nr": 16,
+      "slug": "rozdzial-16-dyspersja",
+      "tytul": "Dyspersja: n(λ) jako ogon rezonansu",
+      "eyebrow": "Ośrodek",
+      "hook": "Szkło załamuje niebieski mocniej niż czerwony, bo jego elektrony mają rezonans w ultrafiolecie, a niebieski jest do tego rezonansu bliżej. Pryzmat i aberracja chromatyczna to ogon krzywej, której szczyt leży poza zasięgiem oka.",
+      "readout": [
+        "Rezonans · w UV",
+        "Niebieski · bliżej",
+        "Szkło · 1,51–1,53",
+        "Abbe · V ≈ 64"
+      ]
+    },
+    {
+      "nr": 17,
+      "slug": "rozdzial-17-absorpcja-i-zespolone-n",
+      "tytul": "Absorpcja i zespolone n",
+      "eyebrow": "Ośrodek",
+      "hook": "Blisko rezonansu elektron przestaje tylko opóźniać falę i zaczyna ją zjadać. Obie rzeczy mieszczą się w jednej liczbie zespolonej — n + iκ — z której druga połowa mówi, na jakiej głębokości światło zniknie.",
+      "readout": [
+        "Liczba · n + iκ",
+        "Zanik · wykładniczy",
+        "Głębokość · λ/(4πκ)",
+        "Woda · czerwień ginie w metrach"
+      ]
+    },
+    {
+      "nr": 18,
+      "slug": "rozdzial-18-granica-dwoch-osrodkow",
+      "tytul": "Granica dwóch ośrodków: Fresnel z mikroskopu",
+      "eyebrow": "Ośrodek",
+      "hook": "Odbicie od szyby to fala wysłana wstecz przez elektrony tuż pod powierzchnią. Z tego jednego obrazu wynika, ile odbija szkło, dlaczego metal odbija prawie wszystko i skąd bierze się kąt, pod którym odbicie gaśnie.",
+      "readout": [
+        "Szkło · F₀ ≈ 4%",
+        "Woda · F₀ ≈ 2%",
+        "Metal · F₀ > 50%",
+        "Brewster · 56°"
+      ]
+    },
+    {
+      "nr": 19,
+      "slug": "rozdzial-19-gaz-woda-szklo",
+      "tytul": "Gaz, woda, szkło: dlaczego przezroczyste",
+      "eyebrow": "Materiały",
+      "hook": "Przezroczystość nie jest brakiem oddziaływania — szkło oddziałuje ze światłem na każdym nanometrze. Jest skutkiem dwóch warunków naraz: rezonanse leżą poza widmem, a materia jest dość jednorodna, żeby nic nie uciekało w bok.",
+      "readout": [
+        "Warunek · brak rezonansu",
+        "Warunek · jednorodność",
+        "Szkło · przerwa ≈ 9 eV",
+        "Woda · błękit z drgań O–H"
+      ]
+    },
+    {
+      "nr": 20,
+      "slug": "rozdzial-20-metal",
+      "tytul": "Metal: swobodne elektrony, złoto i miedź",
+      "eyebrow": "Materiały",
+      "hook": "Metal błyszczy nie dlatego, że jest gładki, tylko dlatego, że jego elektrony nie są przywiązane do atomów. Taka chmura odsyła falę z powrotem, zanim ta wejdzie na głębokość kilkunastu nanometrów — chyba że fala jest dość szybka, żeby chmura nie nadążyła.",
+      "readout": [
+        "Elektrony · swobodne",
+        "Wnikanie · ≈ 10 nm",
+        "Próg · ωₚ",
+        "Złoto · przejścia z pasma d"
+      ]
+    },
+    {
+      "nr": 21,
+      "slug": "rozdzial-21-sadza-wegiel-czern",
+      "tytul": "Sadza, węgiel i czerń",
+      "eyebrow": "Materiały",
+      "hook": "Czerń to nie brak koloru, tylko osobny problem: trzeba pochłonąć każdą długość fali i jednocześnie nie odbić nic od powierzchni. Sadza rozwiązuje pierwszą połowę chemią, a najczarniejsze materiały świata drugą — geometrią.",
+      "readout": [
+        "Pasmo · bez przerwy",
+        "Absorpcja · całe widmo",
+        "Odbicie · wciąż ≈ 4%",
+        "Pułapka · struktura"
+      ]
+    },
+    {
+      "nr": 22,
+      "slug": "rozdzial-22-kolor-z-absorpcji",
+      "tytul": "Kolor z absorpcji: chromofor, barwnik, pigment",
+      "eyebrow": "Materiały",
+      "hook": "Pomidor jest czerwony, bo jego cząsteczki zjadają niebieski i zielony. Ta sama cząsteczka rozpuszczona daje barwnik, zmielona w ziarno — pigment, a skrzydło motyla dostaje swój błękit bez żadnej barwnej cząsteczki.",
+      "readout": [
+        "Kolor · co zostaje",
+        "Chromofor · sprzężenie",
+        "Pigment · ziarno",
+        "Struktura · interferencja"
+      ]
+    },
+    {
+      "nr": 23,
+      "slug": "rozdzial-23-plastik-lakier-farba",
+      "tytul": "Plastik, lakier, farba",
+      "eyebrow": "Materiały",
+      "hook": "Czerwony plastik ma biały odblask, a czerwona karoseria — dwa odbicia naraz. To nie konwencja shaderów, tylko budowa: przezroczyste spoiwo o n ≈ 1,5, w nim barwne ziarna, a na wierzchu często jeszcze jedna warstwa.",
+      "readout": [
+        "Spoiwo · n ≈ 1,5",
+        "Odblask · 4%, bez koloru",
+        "Kolor · z pigmentu",
+        "Lakier · druga warstwa"
+      ]
+    },
+    {
+      "nr": 24,
+      "slug": "rozdzial-24-drewno-papier-tkanina",
+      "tytul": "Drewno, papier, tkanina",
+      "eyebrow": "Materiały",
+      "hook": "Celuloza jest przezroczysta, a kartka jest biała. Różnicę robi powietrze między włóknami — i dlatego mokry papier prześwituje, mokry materiał ciemnieje, a drewno pod lakierem nabiera głębi.",
+      "readout": [
+        "Włókno · celuloza, n ≈ 1,53",
+        "Biel · z granic",
+        "Lignina · żółknie",
+        "Mokre · ciemniejsze"
+      ]
+    },
+    {
+      "nr": 25,
+      "slug": "rozdzial-25-skora-wlosy-organika",
+      "tytul": "Skóra, włosy, organika",
+      "eyebrow": "Materiały",
+      "hook": "Skóra to warstwy półprzezroczystej tkanki z dwoma barwnikami — melaniną i hemoglobiną — w której światło błądzi milimetrami. Włos to szklisty walec z łuskami. Z tych dwóch zdań wynika większość tego, co robi shader skóry i włosów.",
+      "readout": [
+        "Skóra · warstwy",
+        "Barwniki · melanina, hemoglobina",
+        "Włos · keratyna, n ≈ 1,55",
+        "Łuski · ≈ 3°"
+      ]
+    },
+    {
+      "nr": 26,
+      "slug": "rozdzial-26-atmosfera-chmury-mgla-dym",
+      "tytul": "Atmosfera, chmury, mgła, dym",
+      "eyebrow": "Świat",
+      "hook": "Niebieskie niebo, biała chmura, szara mgła, niebieskawy dym na tle ciemnym i brązowy na tle jasnym — to te same dwa mechanizmy z Części IV, tylko z inną wielkością cząstek.",
+      "readout": [
+        "Niebo · Rayleigh",
+        "Chmura · Mie, 10 µm",
+        "Dym · 0,1–1 µm",
+        "Zasięg · ekstynkcja"
+      ]
+    },
+    {
+      "nr": 27,
+      "slug": "rozdzial-27-tecza-halo-kolor-swiata",
+      "tytul": "Tęcza, halo i skąd bierze się kolor świata",
+      "eyebrow": "Świat",
+      "hook": "Tęcza stoi zawsze 42° od cienia twojej głowy, a halo 22° od Słońca. Na koniec tomu wszystkie kolory świata dają się ułożyć w krótką tabelę — i każdy z nich trafia do jednego z kilku mechanizmów.",
+      "readout": [
+        "Tęcza · 42°",
+        "Halo · 22°",
+        "Źródło · dyspersja",
+        "Mechanizmy · tabela"
+      ]
+    }
+  ],
+  "dodatki": [
+    {
+      "l": "a",
+      "slug": "dodatek-a-maxwell-bez-strachu",
+      "tytul": "Maxwell bez strachu",
+      "opis": "Cztery równania Maxwella czytane słowami, fala płaska jako ich rozwiązanie, c = 1/√(ε₀μ₀) i to, dlaczego w optyce prawie zawsze wystarcza pole E.",
+      "ext": [1, 2],
+      "wzory": true
+    },
+    {
+      "l": "b",
+      "slug": "dodatek-b-oscylator-lorentza",
+      "tytul": "Oscylator Lorentza",
+      "opis": "Równanie ruchu elektronu na sprężynie z tłumieniem, jego rozwiązanie zespolone, amplituda i faza w funkcji częstości oraz droga od α(ω) do wzoru Sellmeiera.",
+      "ext": [8, 9, 16],
+      "wzory": true
+    },
+    {
+      "l": "c",
+      "slug": "dodatek-c-clausius-mossotti",
+      "tytul": "Clausius–Mossotti i Lorentz–Lorenz",
+      "opis": "Jak z polaryzowalności jednej cząsteczki i gęstości dostać ε i n — z poprawką na pole lokalne, bez której gęste ośrodki wychodzą źle — i sprawdzenie na powietrzu, wodzie i lodzie.",
+      "ext": [10, 15],
+      "wzory": true
+    },
+    {
+      "l": "d",
+      "slug": "dodatek-d-promieniowanie-dipola",
+      "tytul": "Promieniowanie dipola i λ⁻⁴",
+      "opis": "Pole i moc drgającego dipola (wzór Larmora), rozkład sin²θ, przekrój czynny Rayleigha i skąd dokładnie biorą się cztery potęgi.",
+      "ext": [11, 13],
+      "wzory": true
+    },
+    {
+      "l": "e",
+      "slug": "dodatek-e-mie-w-liczbach",
+      "tytul": "Mie w liczbach",
+      "opis": "Parametr rozmiaru, sprawność ekstynkcji Q i paradoks Q → 2, funkcja fazowa i czynnik asymetrii g, przybliżenie Henyeya–Greensteina oraz liczby dla kropli, dymu i mgły.",
+      "ext": [14, 26, 27],
+      "wzory": true
+    },
+    {
+      "l": "f",
+      "slug": "dodatek-f-ewald-oseen",
+      "tytul": "Twierdzenie Ewalda–Oseena",
+      "opis": "Pole warstwy dipoli, dlaczego jest opóźnione o ćwierć okresu, jak suma takich warstw gasi falę padającą i zastępuje ją falą o prędkości c/n.",
+      "ext": [12, 15],
+      "wzory": true
+    },
+    {
+      "l": "g",
+      "slug": "dodatek-g-drude-i-czestotliwosc-plazmowa",
+      "tytul": "Drude i częstotliwość plazmowa",
+      "opis": "Oscylator bez sprężyny: model Drudego, częstotliwość plazmowa z gęstości elektronów, dlaczego metal przepuszcza ultrafiolet i gdzie model zawodzi przy złocie i miedzi.",
+      "ext": [20],
+      "wzory": true
+    },
+    {
+      "l": "h",
+      "slug": "dodatek-h-n-kappa-beer-lambert",
+      "tytul": "n, κ, Beer–Lambert i głębokość wnikania",
+      "opis": "Fala w ośrodku o zespolonym n, związek κ ze współczynnikiem absorpcji, prawo Beera–Lamberta, głębokość wnikania oraz wzory Fresnela dla metalu.",
+      "ext": [17, 18],
+      "wzory": true
+    },
+    {
+      "l": "i",
+      "slug": "dodatek-i-tabela-n-i-kappa",
+      "tytul": "Tabela n i κ materiałów",
+      "opis": "Współczynniki n i κ dla gazów, wody, lodu, szkieł, plastików, metali i węgla przy kilku długościach fali, z przerwą energetyczną tam, gdzie ma sens.",
+      "ext": [16, 19, 20, 21]
+    },
+    {
+      "l": "j",
+      "slug": "dodatek-j-od-n-i-kappa-do-shadera",
+      "tytul": "Od n i κ do parametrów shadera",
+      "opis": "Jak przeliczyć n i κ na F₀, kolor krawędzi metalu, IOR i współczynniki objętości σₐ, σₛ — i które suwaki shadera odpowiadają którym mechanizmom z tego tomu.",
+      "ext": [18, 20, 23, 25],
+      "cg": true
+    },
+    {
+      "l": "k",
+      "slug": "dodatek-k-poziomy-energii-i-fotony",
+      "tytul": "Poziomy energii i fotony",
+      "opis": "Skąd biorą się dyskretne poziomy (fala uwięziona w pudełku), jak z poziomów robią się pasma, E = hc/λ w elektronowoltach i tabela przerw energetycznych.",
+      "ext": [4, 6],
+      "wzory": true
+    },
+    {
+      "l": "l",
+      "slug": "dodatek-l-atlas-czasteczek",
+      "tytul": "Atlas cząsteczek",
+      "opis": "Struktury w SVG: woda, CO₂, azot i tlen, celuloza, lignina, polietylen, keratyna, kolagen, melanina, hemoglobina, chlorofil, β-karoten i TiO₂ — każda z jednym zdaniem o tym, co robi ze światłem.",
+      "ext": [5, 7, 22, 24, 25]
+    },
+    {
+      "l": "m",
+      "slug": "dodatek-m-slownik-pl-en",
+      "tytul": "Słownik pojęć Tomu 1 PL–EN",
+      "opis": "Polskie terminy tego tomu z angielskimi odpowiednikami, których użyjesz w dokumentacji renderera, w artykułach i w rozmowie na planie.",
+      "ext": [1]
+    }
+  ],
+  "matematyka": [
+    {
+      "slug": "podstawy-matematyczne",
+      "tytul": "Zanim zaczniesz: matematyka, której użyjemy",
+      "opis": "Sinusoida i jej trzy parametry, faza jako kąt, wektor i jego składowe, liczby zespolone jako strzałki (e^{iφ}), potęgi i to, co robi λ⁻⁴, oraz zanik wykładniczy. Tyle wystarczy na cały tom — wracaj tu, kiedy wzór w rozdziale zacznie wyglądać groźnie."
+    }
+  ]
+}

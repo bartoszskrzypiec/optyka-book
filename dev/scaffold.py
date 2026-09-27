@@ -91,6 +91,13 @@ class Volume:
         self.index = os.path.join(self.root, 'index.html')
         self.marka = self.spis['marka']
         self.label = f'T{n}'
+        # Etykieta tomu w topnavie. Tylko spis-tomN.json, ktory ja deklaruje
+        # (dzis tom1) dostaje widoczny znacznik "Tom N — tytul" obok marki —
+        # tom2/spis nie ma tych kluczy, wiec jego strony wygladaja jak dawniej.
+        if 'tytul_tomu' in self.spis:
+            self.tom_label = f'Tom {self.spis.get("tom", n)} — {self.spis["tytul_tomu"]}'
+        else:
+            self.tom_label = None
 
 
 def find_volumes():
@@ -132,16 +139,17 @@ def head(title, asset_depth=1):
     )
 
 
-def topnav(links, marka, depth=1):
+def topnav(links, marka, depth=1, tom_label=None):
     # depth tutaj jest wzgledem KORZENIA TOMU (gdzie lezy tomN/index.html),
     # nie wzgledem ROOT repo — rozdzialy/dodatki/matematyka sa zawsze jeden
     # poziom pod korzeniem tomu, wiec depth=1 bez wzgledu na to, ile poziomow
     # ponizej ROOT lezy sam tom.
     up = '../' * depth
     inner = '\n  '.join(f'<a href="{h}">{t}</a>' for t, h in links)
+    tom_html = f'\n  <span class="topnav__tom">{tom_label}</span>' if tom_label else ''
     return (
         '<nav class="topnav">\n'
-        f'  <a class="topnav__brand" href="{up}index.html">{marka[0]} <span>{marka[1]}</span></a>\n'
+        f'  <a class="topnav__brand" href="{up}index.html">{marka[0]} <span>{marka[1]}</span></a>{tom_html}\n'
         f'  <div class="topnav__links">\n  {inner}\n  </div>\n'
         '</nav>\n'
     )
@@ -185,7 +193,7 @@ def rozdzial_page(vol, ch, prev_ch, next_ch, dodatki_for):
 
     return (
         head(f'Rozdział {ch["nr"]} — {ch["tytul"]}', asset_depth)
-        + topnav(links, vol.marka)
+        + topnav(links, vol.marka, tom_label=vol.tom_label)
         + '\n<div class="page">\n\n'
         + readout(ch['readout'])
         + f'\n  <div class="eyebrow">Rozdział {ch["nr"]} / {ch["eyebrow"]}</div>\n'
@@ -215,7 +223,7 @@ def dodatek_page(vol, d, ch_by_nr):
     links = [('← Spis treści', '../index.html')]
     return (
         head(f'Dodatek {d["l"].upper()} — {d["tytul"]}', asset_depth)
-        + topnav(links, vol.marka)
+        + topnav(links, vol.marka, tom_label=vol.tom_label)
         + '\n<div class="page">\n\n'
         + readout(chips)
         + f'\n  <div class="eyebrow">Dodatek {d["l"].upper()} / Głębiej</div>\n'
@@ -240,7 +248,7 @@ def matematyka_page(vol, m):
     links = [('← Spis treści', '../index.html')]
     return (
         head(f'{m["tytul"]} — {vol.spis["tytul"]}', asset_depth)
-        + topnav(links, vol.marka)
+        + topnav(links, vol.marka, tom_label=vol.tom_label)
         + '\n<div class="page">\n\n'
         + readout(['Zanim zaczniesz', 'Poziom · podstawy', 'Wzory · tak', 'Wracaj tu w razie czego'])
         + '\n  <div class="eyebrow">Zanim zaczniesz</div>\n'
